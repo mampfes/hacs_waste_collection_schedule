@@ -1,10 +1,8 @@
 # Omrin
 
-Support for waste collection schedules provided by [Omrin](https://www.omrin.nl)
-in the municipalities of Achtkarspelen, Ameland, Eemsdelta, Elburg, Ermelo,
-Harderwijk, Harlingen, Heerenveen, Het Hogeland, Leeuwarden, Nunspeet,
-Oldebroek, Ooststellingwerf, Opsterland, Pekela, Schiermonnikoog, Terschelling,
-Tytsjerksteradiel, Waadhoeke, Westerwolde, and Weststellingwerf.
+Support for schedules provided by [Omrin](https://www.omrin.nl).
+
+Source for Omrin waste collection schedules.
 
 ## Configuration via configuration.yaml
 
@@ -15,25 +13,19 @@ waste_collection_schedule:
       args:
         postal_code: POSTAL_CODE
         house_number: HOUSE_NUMBER
-        suffix: HOUSE_NUMBER_SUFFIX  # optional
+        suffix: SUFFIX
 ```
 
 ### Configuration Variables
 
-**postal_code**
+**postal_code**  
 *(string) (required)*
 
-Dutch postal code, for example `3851LJ`.
+**house_number**  
+*(string) (required)*
 
-**house_number**
-*(string | integer) (required)*
-
-House number.
-
-**suffix**
+**suffix**  
 *(string) (optional)*
-
-House number suffix, if applicable.
 
 ## Example
 
@@ -42,6 +34,11 @@ waste_collection_schedule:
   sources:
     - name: omrin_nl
       args:
-        postal_code: "3851LJ"
-        house_number: "4"
+        postal_code: 3851MA
+        house_number: '3'
+        suffix: ''
 ```
+
+## How to get the source arguments
+
+Enter the postcode, house number and, if you have one, the house number suffix of your address, as in the Omrin Afvalapp.

@@ -7483,10 +7483,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street": "Strada"
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_tsceskybrod_cz": {
@@ -7494,9 +7495,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street": "Strada"
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Il nome della vostra via."
+        }
       },
       "args_affaldonline_dk": {
         "title": "Configurazione Sorgente",
@@ -13782,10 +13785,11 @@
           "calendar_title": "Nome Calendario",
           "collect_residual_waste_weekly": "Collect Residual Waste Weekly",
           "even_house_number": "Even House Number",
-          "street": "Strada"
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_heidelberg_de": {
@@ -13795,9 +13799,11 @@
           "calendar_title": "Nome Calendario",
           "collect_residual_waste_weekly": "Collect Residual Waste Weekly",
           "even_house_number": "Even House Number",
-          "street": "Strada"
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Il nome della vostra via."
+        }
       },
       "args_heilbronn_de": {
         "title": "Configurazione Sorgente",
@@ -15631,10 +15637,12 @@
           "ortsteil": "Quartiere",
           "papier_rhythm": "Papier Rhythm",
           "rest_rhythm": "Rest Rhythm",
-          "strasse": "Strada"
+          "strasse": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "ortsteil": "Il vostro quartiere o parte del comune.",
+          "strasse": "Il nome della vostra via."
         }
       },
       "reconfigure_potsdam_de": {
@@ -15647,9 +15655,12 @@
           "ortsteil": "Quartiere",
           "papier_rhythm": "Papier Rhythm",
           "rest_rhythm": "Rest Rhythm",
-          "strasse": "Strada"
+          "strasse": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "ortsteil": "Il vostro quartiere o parte del comune.",
+          "strasse": "Il nome della vostra via."
+        }
       },
       "args_rh_entsorgung_de": {
         "title": "Configurazione Sorgente",
@@ -18388,13 +18399,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Comune",
+          "city": "Città",
           "street": "Via"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "city": "Il comune servito da CEM Ambiente (ad esempio 'Vimodrone').",
-          "street": "Il nome della via come indicato da CEM Ambiente per il comune selezionato (ad esempio 'Via Aldo Moro')."
+          "city": "La vostra città o paese.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_cem_ambiente_it": {
@@ -18402,12 +18413,12 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Comune",
+          "city": "Città",
           "street": "Via"
         },
         "data_description": {
-          "city": "Il comune servito da CEM Ambiente (ad esempio 'Vimodrone').",
-          "street": "Il nome della via come indicato da CEM Ambiente per il comune selezionato (ad esempio 'Via Aldo Moro')."
+          "city": "La vostra città o paese.",
+          "street": "Il nome della vostra via."
         }
       },
       "args_consorziomedionovarese_it": {
@@ -18438,15 +18449,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address": "Indirizzo",
+          "address": "Via",
           "city": "Città",
-          "house_number": "Numero Civico"
+          "house_number": "Numero civico"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "address": "Il nome della via del tuo indirizzo a Milano (ad esempio, 'Via Monte Rosa').",
-          "city": "La città del tuo indirizzo (ad esempio, 'Milano').",
-          "house_number": "Il numero civico del tuo indirizzo a Milano (ad esempio, '91')."
+          "address": "Il nome della vostra via.",
+          "city": "La vostra città o paese.",
+          "house_number": "Il vostro numero civico."
         }
       },
       "reconfigure_amsa_it": {
@@ -18454,14 +18465,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address": "Indirizzo",
+          "address": "Via",
           "city": "Città",
-          "house_number": "Numero Civico"
+          "house_number": "Numero civico"
         },
         "data_description": {
-          "address": "Il nome della via del tuo indirizzo a Milano (ad esempio, 'Via Monte Rosa').",
-          "city": "La città del tuo indirizzo (ad esempio, 'Milano').",
-          "house_number": "Il numero civico del tuo indirizzo a Milano (ad esempio, '91')."
+          "address": "Il nome della vostra via.",
+          "city": "La vostra città o paese.",
+          "house_number": "Il vostro numero civico."
         }
       },
       "args_geovest_it": {
@@ -19251,11 +19262,14 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "commune": "Comune",
-          "localite": "Localite",
-          "rue": "Rue"
+          "localite": "Quartiere",
+          "rue": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "localite": "Il vostro quartiere o parte del comune.",
+          "rue": "Il nome della vostra via."
         }
       },
       "reconfigure_luxembourg_lu": {
@@ -19264,10 +19278,14 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "commune": "Comune",
-          "localite": "Localite",
-          "rue": "Rue"
+          "localite": "Quartiere",
+          "rue": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "localite": "Il vostro quartiere o parte del comune.",
+          "rue": "Il nome della vostra via."
+        }
       },
       "args_sica_lu": {
         "title": "Configurazione Sorgente",
@@ -19352,41 +19370,19 @@
         },
         "data_description": {}
       },
-      "args_omrin_nl": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "house_number": "Civico",
-          "postal_code": "Codice Postale CAP",
-          "suffix": "Suffisso"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_omrin_nl": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "house_number": "Civico",
-          "postal_code": "Codice Postale CAP",
-          "suffix": "Suffisso"
-        },
-        "data_description": {}
-      },
       "args_ximmio_nl": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "company": "Compagnia",
-          "house_number": "Civico",
-          "post_code": "Codice Postale CAP"
+          "company": "Company",
+          "house_number": "Numero civico",
+          "post_code": "CAP"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Il vostro numero civico.",
+          "post_code": "Il vostro codice postale (CAP)."
         }
       },
       "reconfigure_ximmio_nl": {
@@ -19394,11 +19390,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "company": "Compagnia",
-          "house_number": "Civico",
-          "post_code": "Codice Postale CAP"
+          "company": "Company",
+          "house_number": "Numero civico",
+          "post_code": "CAP"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Il vostro numero civico.",
+          "post_code": "Il vostro codice postale (CAP)."
+        }
       },
       "args_mijnafvalwijzer_nl": {
         "title": "Configurazione Sorgente",
@@ -19434,13 +19433,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Aggiunta",
-          "house_number": "Civico",
-          "postcode": "Codice Postale CAP",
-          "region": "Regione"
+          "addition": "Addition",
+          "house_number": "Numero civico",
+          "postcode": "CAP"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Il vostro numero civico.",
+          "postcode": "Il vostro codice postale (CAP)."
         }
       },
       "reconfigure_afvalstoffendienst_nl": {
@@ -19448,12 +19448,14 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Aggiunta",
-          "house_number": "Civico",
-          "postcode": "Codice Postale CAP",
-          "region": "Regione"
+          "addition": "Addition",
+          "house_number": "Numero civico",
+          "postcode": "CAP"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Il vostro numero civico.",
+          "postcode": "Il vostro codice postale (CAP)."
+        }
       },
       "args_hvcgroep_nl": {
         "title": "Configurazione Sorgente",
@@ -19488,13 +19490,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Aggiunta",
-          "house_number": "Civico",
+          "addition": "Addition",
+          "house_number": "Numero civico",
           "organization": "Organization",
-          "post_code": "Codice Postale CAP"
+          "post_code": "CAP"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Il vostro numero civico.",
+          "post_code": "Il vostro codice postale (CAP)."
         }
       },
       "reconfigure_burgerportaal_nl": {
@@ -19502,12 +19506,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "addition": "Aggiunta",
-          "house_number": "Civico",
+          "addition": "Addition",
+          "house_number": "Numero civico",
           "organization": "Organization",
-          "post_code": "Codice Postale CAP"
+          "post_code": "CAP"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Il vostro numero civico.",
+          "post_code": "Il vostro codice postale (CAP)."
+        }
       },
       "args_deafvalapp_nl": {
         "title": "Configurazione Sorgente",
@@ -19821,13 +19828,12 @@
           "calendar_title": "Nome Calendario",
           "house_number": "Numero civico",
           "postcode": "CAP",
-          "suffix": "Suffisso del numero civico"
+          "suffix": "Suffix"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "house_number": "Numero civico, ad es. 3",
-          "postcode": "CAP olandese, ad es. 3131VX",
-          "suffix": "Suffisso opzionale del numero civico, ad es. A"
+          "house_number": "Il vostro numero civico.",
+          "postcode": "Il vostro codice postale (CAP)."
         }
       },
       "reconfigure_irado_nl": {
@@ -19837,12 +19843,40 @@
           "calendar_title": "Nome Calendario",
           "house_number": "Numero civico",
           "postcode": "CAP",
-          "suffix": "Suffisso del numero civico"
+          "suffix": "Suffix"
         },
         "data_description": {
-          "house_number": "Numero civico, ad es. 3",
-          "postcode": "CAP olandese, ad es. 3131VX",
-          "suffix": "Suffisso opzionale del numero civico, ad es. A"
+          "house_number": "Il vostro numero civico.",
+          "postcode": "Il vostro codice postale (CAP)."
+        }
+      },
+      "args_omrin_nl": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Numero civico",
+          "postal_code": "CAP",
+          "suffix": "Suffix"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Il vostro numero civico.",
+          "postal_code": "Il vostro codice postale (CAP)."
+        }
+      },
+      "reconfigure_omrin_nl": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "house_number": "Numero civico",
+          "postal_code": "CAP",
+          "suffix": "Suffix"
+        },
+        "data_description": {
+          "house_number": "Il vostro numero civico.",
+          "postal_code": "Il vostro codice postale (CAP)."
         }
       },
       "args_rd4_nl": {
@@ -21264,13 +21298,16 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
+          "gmina": "Comune",
+          "miejscowosc": "Città",
           "rodzaj": "Rodzaj",
-          "ulica": "Ulica"
+          "ulica": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "gmina": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "miejscowosc": "La vostra città o paese.",
+          "ulica": "Il nome della vostra via."
         }
       },
       "reconfigure_czystyregion_pl": {
@@ -21278,12 +21315,16 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
+          "gmina": "Comune",
+          "miejscowosc": "Città",
           "rodzaj": "Rodzaj",
-          "ulica": "Ulica"
+          "ulica": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "gmina": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "miejscowosc": "La vostra città o paese.",
+          "ulica": "Il nome della vostra via."
+        }
       },
       "args_ecoszczecin_pl": {
         "title": "Configurazione Sorgente",
@@ -21319,11 +21360,14 @@
           "calendar_title": "Nome Calendario",
           "building_type": "Building Type",
           "city": "Città",
-          "house": "Casa",
-          "street": "Strada"
+          "house": "Numero civico",
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "La vostra città o paese.",
+          "house": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_smiecioplan_pl": {
@@ -21333,10 +21377,14 @@
           "calendar_title": "Nome Calendario",
           "building_type": "Building Type",
           "city": "Città",
-          "house": "Casa",
-          "street": "Strada"
+          "house": "Numero civico",
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "La vostra città o paese.",
+          "house": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_maslow_pl": {
         "title": "Configurazione Sorgente",
@@ -21427,7 +21475,6 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "location": "Posizione",
-          "location_id": "ID Posizione",
           "property_type": "Property Type"
         },
         "data_description": {
@@ -21440,7 +21487,6 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "location": "Posizione",
-          "location_id": "ID Posizione",
           "property_type": "Property Type"
         },
         "data_description": {}
@@ -22452,7 +22498,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_affarsverken_se": {
@@ -22462,7 +22509,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_aen_minasidor_se": {
         "title": "Configurazione Sorgente",
@@ -22611,33 +22660,6 @@
         },
         "data_description": {
           "pickup_address": "Il vostro indirizzo completo."
-        }
-      },
-      "args_roslagsvatten_se": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "municipality": "Municipality",
-          "street_address": "Indirizzo Strada"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "municipality": "Comune, uno di: 'osteraker', 'vaxholm' o 'ekero'",
-          "street_address": "Indirizzo (es. Andromedavägen 1, Åkersberga)"
-        }
-      },
-      "reconfigure_roslagsvatten_se": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "municipality": "Municipality",
-          "street_address": "Indirizzo Strada"
-        },
-        "data_description": {
-          "municipality": "Comune, uno di: 'osteraker', 'vaxholm' o 'ekero'",
-          "street_address": "Indirizzo (es. Andromedavägen 1, Åkersberga)"
         }
       },
       "args_fev_se": {
@@ -23179,16 +23201,43 @@
           "street_address": "Il vostro indirizzo completo."
         }
       },
+      "args_roslagsvatten_se": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "municipality": "Municipality",
+          "street_address": "Indirizzo"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_address": "Il vostro indirizzo completo."
+        }
+      },
+      "reconfigure_roslagsvatten_se": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "municipality": "Municipality",
+          "street_address": "Indirizzo"
+        },
+        "data_description": {
+          "street_address": "Il vostro indirizzo completo."
+        }
+      },
       "args_samiljo_se": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "street": "Strada"
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "La vostra città o paese.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_samiljo_se": {
@@ -23197,9 +23246,12 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "street": "Strada"
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "La vostra città o paese.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_sjobo_se": {
         "title": "Configurazione Sorgente",

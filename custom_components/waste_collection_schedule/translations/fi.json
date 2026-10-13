@@ -7469,7 +7469,8 @@
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_tsceskybrod_cz": {
@@ -7479,7 +7480,9 @@
           "calendar_title": "Kalenterin nimi",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Kadun nimi."
+        }
       },
       "args_affaldonline_dk": {
         "title": "Määritä lähde",
@@ -13773,7 +13776,8 @@
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_heidelberg_de": {
@@ -13785,7 +13789,9 @@
           "even_house_number": "Even House Number",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Kadun nimi."
+        }
       },
       "args_heilbronn_de": {
         "title": "Määritä lähde",
@@ -15616,13 +15622,15 @@
           "calendar_title": "Kalenterin nimi",
           "bio_rhythm": "Bio Rhythm",
           "gelb_rhythm": "Gelb Rhythm",
-          "ortsteil": "Ortsteil",
+          "ortsteil": "Kaupunginosa",
           "papier_rhythm": "Papier Rhythm",
           "rest_rhythm": "Rest Rhythm",
-          "strasse": "Strasse"
+          "strasse": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "ortsteil": "Kaupunginosasi tai kunnan osa.",
+          "strasse": "Kadun nimi."
         }
       },
       "reconfigure_potsdam_de": {
@@ -15632,12 +15640,15 @@
           "calendar_title": "Kalenterin nimi",
           "bio_rhythm": "Bio Rhythm",
           "gelb_rhythm": "Gelb Rhythm",
-          "ortsteil": "Ortsteil",
+          "ortsteil": "Kaupunginosa",
           "papier_rhythm": "Papier Rhythm",
           "rest_rhythm": "Rest Rhythm",
-          "strasse": "Strasse"
+          "strasse": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "ortsteil": "Kaupunginosasi tai kunnan osa.",
+          "strasse": "Kadun nimi."
+        }
       },
       "args_rh_entsorgung_de": {
         "title": "Määritä lähde",
@@ -18380,7 +18391,9 @@
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_cem_ambiente_it": {
@@ -18391,7 +18404,10 @@
           "city": "Kaupunki",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "street": "Kadun nimi."
+        }
       },
       "args_consorziomedionovarese_it": {
         "title": "Määritä lähde",
@@ -18421,12 +18437,15 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "address": "Osoite",
+          "address": "Katu",
           "city": "Kaupunki",
           "house_number": "Talon numero"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Kadun nimi.",
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "house_number": "Talon numero."
         }
       },
       "reconfigure_amsa_it": {
@@ -18434,11 +18453,15 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "address": "Osoite",
+          "address": "Katu",
           "city": "Kaupunki",
           "house_number": "Talon numero"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Kadun nimi.",
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "house_number": "Talon numero."
+        }
       },
       "args_geovest_it": {
         "title": "Määritä lähde",
@@ -19203,12 +19226,15 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "commune": "Commune",
-          "localite": "Localite",
-          "rue": "Rue"
+          "commune": "Kunta",
+          "localite": "Kaupunginosa",
+          "rue": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "localite": "Kaupunginosasi tai kunnan osa.",
+          "rue": "Kadun nimi."
         }
       },
       "reconfigure_luxembourg_lu": {
@@ -19216,11 +19242,15 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "commune": "Commune",
-          "localite": "Localite",
-          "rue": "Rue"
+          "commune": "Kunta",
+          "localite": "Kaupunginosa",
+          "rue": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "localite": "Kaupunginosasi tai kunnan osa.",
+          "rue": "Kadun nimi."
+        }
       },
       "args_sica_lu": {
         "title": "Määritä lähde",
@@ -19305,30 +19335,6 @@
         },
         "data_description": {}
       },
-      "args_omrin_nl": {
-        "title": "Määritä lähde",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "house_number": "Talon numero",
-          "postal_code": "Postal Code",
-          "suffix": "Suffix"
-        },
-        "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
-        }
-      },
-      "reconfigure_omrin_nl": {
-        "title": "Määritä lähde uudelleen",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "house_number": "Talon numero",
-          "postal_code": "Postal Code",
-          "suffix": "Suffix"
-        },
-        "data_description": {}
-      },
       "args_ximmio_nl": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -19336,10 +19342,12 @@
           "calendar_title": "Kalenterin nimi",
           "company": "Company",
           "house_number": "Talon numero",
-          "post_code": "Post Code"
+          "post_code": "Postinumero"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "house_number": "Talon numero.",
+          "post_code": "Postinumerosi."
         }
       },
       "reconfigure_ximmio_nl": {
@@ -19349,9 +19357,12 @@
           "calendar_title": "Kalenterin nimi",
           "company": "Company",
           "house_number": "Talon numero",
-          "post_code": "Post Code"
+          "post_code": "Postinumero"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Talon numero.",
+          "post_code": "Postinumerosi."
+        }
       },
       "args_mijnafvalwijzer_nl": {
         "title": "Määritä lähde",
@@ -19389,11 +19400,12 @@
           "calendar_title": "Kalenterin nimi",
           "addition": "Addition",
           "house_number": "Talon numero",
-          "postcode": "Postinumero",
-          "region": "Region"
+          "postcode": "Postinumero"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "house_number": "Talon numero.",
+          "postcode": "Postinumerosi."
         }
       },
       "reconfigure_afvalstoffendienst_nl": {
@@ -19403,10 +19415,12 @@
           "calendar_title": "Kalenterin nimi",
           "addition": "Addition",
           "house_number": "Talon numero",
-          "postcode": "Postinumero",
-          "region": "Region"
+          "postcode": "Postinumero"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Talon numero.",
+          "postcode": "Postinumerosi."
+        }
       },
       "args_hvcgroep_nl": {
         "title": "Määritä lähde",
@@ -19444,10 +19458,12 @@
           "addition": "Addition",
           "house_number": "Talon numero",
           "organization": "Organization",
-          "post_code": "Post Code"
+          "post_code": "Postinumero"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "house_number": "Talon numero.",
+          "post_code": "Postinumerosi."
         }
       },
       "reconfigure_burgerportaal_nl": {
@@ -19458,9 +19474,12 @@
           "addition": "Addition",
           "house_number": "Talon numero",
           "organization": "Organization",
-          "post_code": "Post Code"
+          "post_code": "Postinumero"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Talon numero.",
+          "post_code": "Postinumerosi."
+        }
       },
       "args_deafvalapp_nl": {
         "title": "Määritä lähde",
@@ -19777,7 +19796,9 @@
           "suffix": "Suffix"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "house_number": "Talon numero.",
+          "postcode": "Postinumerosi."
         }
       },
       "reconfigure_irado_nl": {
@@ -19789,7 +19810,39 @@
           "postcode": "Postinumero",
           "suffix": "Suffix"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Talon numero.",
+          "postcode": "Postinumerosi."
+        }
+      },
+      "args_omrin_nl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "house_number": "Talon numero",
+          "postal_code": "Postinumero",
+          "suffix": "Suffix"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "house_number": "Talon numero.",
+          "postal_code": "Postinumerosi."
+        }
+      },
+      "reconfigure_omrin_nl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "house_number": "Talon numero",
+          "postal_code": "Postinumero",
+          "suffix": "Suffix"
+        },
+        "data_description": {
+          "house_number": "Talon numero.",
+          "postal_code": "Postinumerosi."
+        }
       },
       "args_rd4_nl": {
         "title": "Määritä lähde",
@@ -21210,13 +21263,16 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
+          "gmina": "Kunta",
+          "miejscowosc": "Kaupunki",
           "rodzaj": "Rodzaj",
-          "ulica": "Ulica"
+          "ulica": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "gmina": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "miejscowosc": "Kaupunkisi tai paikkakuntasi.",
+          "ulica": "Kadun nimi."
         }
       },
       "reconfigure_czystyregion_pl": {
@@ -21224,12 +21280,16 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
+          "gmina": "Kunta",
+          "miejscowosc": "Kaupunki",
           "rodzaj": "Rodzaj",
-          "ulica": "Ulica"
+          "ulica": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "gmina": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "miejscowosc": "Kaupunkisi tai paikkakuntasi.",
+          "ulica": "Kadun nimi."
+        }
       },
       "args_ecoszczecin_pl": {
         "title": "Määritä lähde",
@@ -21265,11 +21325,14 @@
           "calendar_title": "Kalenterin nimi",
           "building_type": "Building Type",
           "city": "Kaupunki",
-          "house": "House",
+          "house": "Talon numero",
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "house": "Talon numero.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_smiecioplan_pl": {
@@ -21279,10 +21342,14 @@
           "calendar_title": "Kalenterin nimi",
           "building_type": "Building Type",
           "city": "Kaupunki",
-          "house": "House",
+          "house": "Talon numero",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "house": "Talon numero.",
+          "street": "Kadun nimi."
+        }
       },
       "args_maslow_pl": {
         "title": "Määritä lähde",
@@ -21373,7 +21440,6 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "location": "Location",
-          "location_id": "Location Id",
           "property_type": "Property Type"
         },
         "data_description": {
@@ -21386,7 +21452,6 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "location": "Location",
-          "location_id": "Location Id",
           "property_type": "Property Type"
         },
         "data_description": {}
@@ -22393,7 +22458,8 @@
           "address": "Osoite"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
         }
       },
       "reconfigure_affarsverken_se": {
@@ -22403,7 +22469,9 @@
           "calendar_title": "Kalenterin nimi",
           "address": "Osoite"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
       },
       "args_aen_minasidor_se": {
         "title": "Määritä lähde",
@@ -22553,28 +22621,6 @@
         "data_description": {
           "pickup_address": "Koko osoitteesi."
         }
-      },
-      "args_roslagsvatten_se": {
-        "title": "Määritä lähde",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "municipality": "Kunta",
-          "street_address": "Street Address"
-        },
-        "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
-        }
-      },
-      "reconfigure_roslagsvatten_se": {
-        "title": "Määritä lähde uudelleen",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "municipality": "Kunta",
-          "street_address": "Street Address"
-        },
-        "data_description": {}
       },
       "args_fev_se": {
         "title": "Määritä lähde",
@@ -23115,6 +23161,31 @@
           "street_address": "Koko osoitteesi."
         }
       },
+      "args_roslagsvatten_se": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Municipality",
+          "street_address": "Osoite"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street_address": "Koko osoitteesi."
+        }
+      },
+      "reconfigure_roslagsvatten_se": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Municipality",
+          "street_address": "Osoite"
+        },
+        "data_description": {
+          "street_address": "Koko osoitteesi."
+        }
+      },
       "args_samiljo_se": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -23124,7 +23195,9 @@
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_samiljo_se": {
@@ -23135,7 +23208,10 @@
           "city": "Kaupunki",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "street": "Kadun nimi."
+        }
       },
       "args_sjobo_se": {
         "title": "Määritä lähde",

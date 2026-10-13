@@ -1791,7 +1791,6 @@
   "popuvky_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/popuvky_cz.md",
     "howto": {
-      "de": "Öffnen Sie die Abfuhrkalender-Seite und notieren Sie, welche Route zu Ihrer Adresse passt: 'Popůvky (Brno-venkov)' für den Ort selbst oder 'Popůvky - chatová oblast' für das Hüttengebiet.",
       "en": "Open the collection calendar page and note which collection route matches your address: 'Popůvky (Brno-venkov)' for the village itself, or 'Popůvky - chatová oblast' for the cottage/recreational area."
     },
     "urls": {}
@@ -1823,7 +1822,7 @@
   "tsceskybrod_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tsceskybrod_cz.md",
     "howto": {
-      "en": "Visit [https://www.tsceskybrod.cz/pravidelny-svoz-odpadu](https://www.tsceskybrod.cz/pravidelny-svoz-odpadu) and enter the street or location name exactly as listed in the table."
+      "en": "Visit https://www.tsceskybrod.cz/pravidelny-svoz-odpadu and enter the street or location name exactly as listed in the table."
     },
     "urls": {}
   },
@@ -3117,7 +3116,10 @@
   },
   "heidelberg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/heidelberg_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Geben Sie die Straße exakt so an, wie sie auf heidelberg.de/abfall aufgeführt ist. Wenn für die Straße eine 14-tägige Restmüllabfuhr möglich ist, deaktivieren Sie `collect_residual_waste_weekly` und geben Sie an, ob Ihre Hausnummer gerade ist.",
+      "en": "Enter your street exactly as listed on heidelberg.de/abfall. Where the street allows a fortnightly residual waste round, switch off `collect_residual_waste_weekly` and state whether your house number is even."
+    },
     "urls": {}
   },
   "heilbronn_de": {
@@ -3477,7 +3479,10 @@
   },
   "potsdam_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/potsdam_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Ortsteil und Straße wie im Abfallkalender der Stadt Potsdam. Die Rhythmen entsprechen der Auswahl im Kalender: Restabfall, Bioabfall und Altpapier je 1 = 2x pro Woche, 2 = wöchentlich, 3 = 14-tägig, 4 = 4-wöchentlich; Bioabfall zusätzlich 5 = Kombileerung.",
+      "en": "District and street as in the Potsdam waste calendar. The rhythms match the choice in the calendar for general waste, organic waste and paper: 1 = twice a week, 2 = weekly, 3 = every two weeks, 4 = every four weeks; organic waste also 5 = combined emptying."
+    },
     "urls": {}
   },
   "rh_entsorgung_de": {
@@ -4073,7 +4078,7 @@
   "amsa_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/amsa_it.md",
     "howto": {
-      "en": "You need to provide the street name and house number of your address, as well as the city.",
+      "en": "Provide the street name and house number of your address, as well as the city.",
       "it": "Devi fornire il nome della via e il numero civico del tuo indirizzo, oltre alla città."
     },
     "urls": {}
@@ -4284,7 +4289,9 @@
   },
   "luxembourg_lu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/luxembourg_lu.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your commune as listed in the open data set on data.public.lu (the 'Commune' column, with accents). Communes that split their schedule also need the locality ('Localité') and, for some localities, the street ('Rue'). A missing or wrong value lists the valid ones."
+    },
     "urls": {}
   },
   "sica_lu": {
@@ -4303,7 +4310,9 @@
   },
   "valorlux_lu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valorlux_lu.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your commune as listed on the Valorlux calendar page, e.g. 'Mersch'. Communes with several collection tours (e.g. 'Luxembourg' with 'Tour 1') also need the zone; a missing or wrong value lists the valid ones."
+    },
     "urls": {}
   },
   "wastecollection_mt": {
@@ -4311,14 +4320,11 @@
     "howto": {},
     "urls": {}
   },
-  "omrin_nl": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/omrin_nl.md",
-    "howto": {},
-    "urls": {}
-  },
   "ximmio_nl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ximmio_nl.md",
-    "howto": {},
+    "howto": {
+      "en": "Select your waste company, then enter the postcode and house number of your home address as on your company's waste calendar website."
+    },
     "urls": {}
   },
   "mijnafvalwijzer_nl": {
@@ -4330,7 +4336,9 @@
   },
   "afvalstoffendienst_nl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/afvalstoffendienst_nl.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the postcode, house number and (optional) addition of your home address."
+    },
     "urls": {}
   },
   "hvcgroep_nl": {
@@ -4405,11 +4413,14 @@
   "irado_nl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/irado_nl.md",
     "howto": {
-      "de": "Geben Sie die Postleitzahl (z. B. 3131VX) und die Hausnummer ein, die Sie auch auf https://www.irado.nl/afvalkalender verwenden würden",
-      "en": "Enter the postcode (e.g. 3131VX) and house number you would use at https://www.irado.nl/afvalkalender",
-      "fr": "Saisissez le code postal (par ex. 3131VX) et le numéro de maison que vous utiliseriez sur https://www.irado.nl/afvalkalender",
-      "it": "Inserisci il CAP (ad es. 3131VX) e il numero civico che utilizzeresti su https://www.irado.nl/afvalkalender",
-      "nl": "Vul de postcode (bijv. 3131VX) en het huisnummer in die je zou gebruiken op https://www.irado.nl/afvalkalender"
+      "en": "Enter the postcode (e.g. 3131VX) and house number you would use at https://www.irado.nl/afvalkalender"
+    },
+    "urls": {}
+  },
+  "omrin_nl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/omrin_nl.md",
+    "howto": {
+      "en": "Enter the postcode, house number and, if you have one, the house number suffix of your address, as in the Omrin Afvalapp."
     },
     "urls": {}
   },
@@ -4771,8 +4782,7 @@
   "smiecioplan_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/smiecioplan_pl.md",
     "howto": {
-      "de": "Gehen Sie auf https://smiecioplan.pl und suchen Sie nach Ihrer Adresse. Verwenden Sie die Stadt, den Straßennamen (Großbuchstaben) und die Hausnummer.",
-      "en": "Go to https://smiecioplan.pl and search for your address. Use the city, street name (uppercase), and house number."
+      "en": "Go to [smiecioplan.pl](https://smiecioplan.pl) and search for your address. Use the city (szczecin, gdansk, gdynia or sopot), the street name in uppercase and the house number. Some addresses (e.g. in Gdynia) have separate schedules for single-family (`single`) and multi-family (`multi`) buildings; leave `building_type` empty if your address only has one schedule."
     },
     "urls": {}
   },
@@ -4797,13 +4807,15 @@
   },
   "gmina_zgierz_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_zgierz_pl.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the name of your village (location_name) as listed in the yearly schedule on https://bip.gminazgierz.pl, for example `Grotniki`. The schedule groups the villages into the regions Rejon I to IV."
+    },
     "urls": {}
   },
   "gmina_sroda_slaska_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md",
     "howto": {
-      "en": "Visit https://www.com-d.pl/komunalne/harm/sroda-slaska, select your locality or Środa Śląska district, and enter the final part of its URL."
+      "en": "Visit https://www.com-d.pl/komunalne/harm/sroda-slaska, select your locality or Środa Śląska district, and enter the final part of its URL as `location`. `property_type` is `all` (default), `single_family` or `multi_family`; select the dwelling type when the provider publishes separate schedules."
     },
     "urls": {}
   },
@@ -5053,7 +5065,9 @@
   },
   "affarsverken_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/affarsverken_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the address as the Affärsverken website writes it, street and number followed by the locality, e.g. `Albatrossvägen 5, Ramdala`."
+    },
     "urls": {}
   },
   "aen_minasidor_se": {
@@ -5096,11 +5110,6 @@
     "howto": {
       "en": "Enter your pickup address as it appears in the 'När kommer sopbilen?' search on the [Borlänge Energi waste page](https://www.borlange-energi.se/avfall-och-atervinning/sophamtning), e.g. `Mats Knuts Väg 100`."
     },
-    "urls": {}
-  },
-  "roslagsvatten_se": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roslagsvatten_se.md",
-    "howto": {},
     "urls": {}
   },
   "fev_se": {
@@ -5255,9 +5264,18 @@
     },
     "urls": {}
   },
+  "roslagsvatten_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/roslagsvatten_se.md",
+    "howto": {
+      "en": "Enter the address as the Roslagsvatten schedule search writes it, street and number followed by the locality, e.g. `Andromedavägen 1, Åkersberga`, and pick your municipality."
+    },
+    "urls": {}
+  },
   "samiljo_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/samiljo_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the street name with number and the city as they appear in the calendar search on https://www.samiljo.se. Collections in a holiday week are marked 'Helgvecka' in the description."
+    },
     "urls": {}
   },
   "sjobo_se": {

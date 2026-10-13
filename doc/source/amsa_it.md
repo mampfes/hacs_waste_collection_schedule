@@ -1,38 +1,44 @@
 # AMSA
 
-Support for schedules provided by [AMSA]("https://www.amsa.it/it/milano"), Italy.
+Support for schedules provided by [AMSA](https://www.amsa.it/it/milano).
+
+Source for AMSA (Milan, Italy) waste collection.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: amsa_it
       args:
-        address: HOUSE_ADDRESS
+        address: ADDRESS
         house_number: HOUSE_NUMBER
         city: CITY
 ```
 
-## Configuration variables
+### Configuration Variables
 
-**address**
-*(string) (required)* : The address for your house.
+**address**  
+*(string) (required)*
 
-**house_number**
-*(string) (required)* : The house number for your house.
+**house_number**  
+*(string) (required)*
 
-**city**
-*(string) (optional)* : The city of your house, if needed specification, preferably in Italian.
+**city**  
+*(string) (optional)*
 
-Example:
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: amsa_it
       args:
-        address: "Viale Monte Rosa"
-        house_number: "91"
-        city: "Milano"
+        address: Via Monte Rosa
+        house_number: '91'
+        city: Milano
 ```
+
+## How to get the source arguments
+
+Provide the street name and house number of your address, as well as the city.

@@ -22402,7 +22402,9 @@
     {
       "title": "Agrate Brianza",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Agrate Brianza"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -22424,7 +22426,9 @@
     {
       "title": "Aicurzio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Aicurzio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -22644,7 +22648,9 @@
     {
       "title": "Arcore",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Arcore"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -22878,7 +22884,9 @@
     {
       "title": "Basiano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Basiano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -22928,7 +22936,9 @@
     {
       "title": "Bellinzago Lombardo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Bellinzago Lombardo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -22948,7 +22958,9 @@
     {
       "title": "Bellusco",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Bellusco"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -22962,7 +22974,9 @@
     {
       "title": "Bernareggio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Bernareggio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23072,7 +23086,9 @@
     {
       "title": "Borgo San Giovanni",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Borgo San Giovanni"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23218,7 +23234,9 @@
     {
       "title": "Brugherio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Brugherio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23266,7 +23284,9 @@
     {
       "title": "Burago Di Molgora",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Burago Di Molgora"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23288,7 +23308,9 @@
     {
       "title": "Busnago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Busnago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23302,7 +23324,9 @@
     {
       "title": "Bussero",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Bussero"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23396,7 +23420,9 @@
     {
       "title": "Cambiago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cambiago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23430,7 +23456,9 @@
     {
       "title": "Camparada",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Camparada"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23498,7 +23526,9 @@
     {
       "title": "Caponago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Caponago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23556,7 +23586,9 @@
     {
       "title": "Carnate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Carnate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23584,7 +23616,9 @@
     {
       "title": "Carpiano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Carpiano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23618,7 +23652,9 @@
     {
       "title": "Carugate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Carugate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23646,7 +23682,9 @@
     {
       "title": "Casaletto Lodigiano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Casaletto Lodigiano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23660,7 +23698,9 @@
     {
       "title": "Casalmaiocco",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Casalmaiocco"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23704,7 +23744,9 @@
     {
       "title": "Caselle Lurani",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Caselle Lurani"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23726,7 +23768,9 @@
     {
       "title": "Cassano D'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cassano D'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23740,7 +23784,9 @@
     {
       "title": "Cassina De' Pecchi",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cassina De' Pecchi"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23904,7 +23950,9 @@
     {
       "title": "Cavenago Di Brianza",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cavenago Di Brianza"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23940,7 +23988,9 @@
     {
       "title": "Cernusco Sul Naviglio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cernusco Sul Naviglio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23962,7 +24012,9 @@
     {
       "title": "Cerro Al Lambro",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cerro Al Lambro"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23990,7 +24042,9 @@
     {
       "title": "Cervignano D'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cervignano D'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24190,7 +24244,9 @@
     {
       "title": "Cologno Monzese",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cologno Monzese"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24210,7 +24266,9 @@
     {
       "title": "Colturano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Colturano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24224,7 +24282,9 @@
     {
       "title": "Comazzo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Comazzo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24296,7 +24356,9 @@
     {
       "title": "Concorezzo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Concorezzo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24352,7 +24414,9 @@
     {
       "title": "Cornate D'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cornate D'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24366,7 +24430,9 @@
     {
       "title": "Correzzana",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Correzzana"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24602,7 +24668,9 @@
     {
       "title": "Dresano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Dresano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24962,7 +25030,9 @@
     {
       "title": "Gessate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Gessate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25028,7 +25098,9 @@
     {
       "title": "Gorgonzola",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Gorgonzola"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25058,7 +25130,9 @@
     {
       "title": "Grezzago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Grezzago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25178,7 +25252,9 @@
     {
       "title": "Inzago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Inzago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25560,7 +25636,9 @@
     {
       "title": "Lesmo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Lesmo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25608,7 +25686,9 @@
     {
       "title": "Liscate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Liscate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25690,7 +25770,9 @@
     {
       "title": "Macherio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Macherio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25830,7 +25912,9 @@
     {
       "title": "Masate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Masate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25852,7 +25936,9 @@
     {
       "title": "Massalengo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Massalengo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25886,7 +25972,9 @@
     {
       "title": "Mediglia",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Mediglia"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25908,7 +25996,9 @@
     {
       "title": "Melegnano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Melegnano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25930,7 +26020,9 @@
     {
       "title": "Melzo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Melzo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25964,7 +26056,9 @@
     {
       "title": "Merlino",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Merlino"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25984,7 +26078,9 @@
     {
       "title": "Mezzago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Mezzago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26318,7 +26414,9 @@
     {
       "title": "Mulazzano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Mulazzano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26498,7 +26596,9 @@
     {
       "title": "Ornago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Ornago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26590,7 +26690,9 @@
     {
       "title": "Pantigliate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Pantigliate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26648,7 +26750,9 @@
     {
       "title": "Paullo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Paullo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26712,7 +26816,9 @@
     {
       "title": "Pessano Con Bornago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Pessano Con Bornago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26850,7 +26956,9 @@
     {
       "title": "Pozzo D'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Pozzo D'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26864,7 +26972,9 @@
     {
       "title": "Pozzuolo Martesana",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Pozzuolo Martesana"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27114,7 +27224,9 @@
     {
       "title": "Rodano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Rodano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27152,7 +27264,9 @@
     {
       "title": "Roncello",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Roncello"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27174,7 +27288,9 @@
     {
       "title": "Ronco Briantino",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Ronco Briantino"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27250,7 +27366,9 @@
     {
       "title": "Salerano sul Lambro",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Salerano sul Lambro"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27390,7 +27508,9 @@
     {
       "title": "San Zenone Al Lambro",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "San Zenone Al Lambro"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27434,7 +27554,9 @@
     {
       "title": "Sant'Angelo Lodigiano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Sant'Angelo Lodigiano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27586,7 +27708,9 @@
     {
       "title": "Settala",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Settala"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27704,7 +27828,9 @@
     {
       "title": "Sordio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Sordio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27790,7 +27916,9 @@
     {
       "title": "Sulbiate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Sulbiate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27928,7 +28056,9 @@
     {
       "title": "Torrevecchia Pia",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Torrevecchia Pia"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27978,7 +28108,9 @@
     {
       "title": "Trezzano Rosa",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Trezzano Rosa"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27992,7 +28124,9 @@
     {
       "title": "Trezzo Sull'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Trezzo Sull'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28006,7 +28140,9 @@
     {
       "title": "Tribiano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Tribiano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28054,7 +28190,9 @@
     {
       "title": "Truccazzano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Truccazzano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28136,7 +28274,9 @@
     {
       "title": "Usmate Velate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Usmate Velate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28222,7 +28362,9 @@
     {
       "title": "Vaprio D'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vaprio D'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28266,7 +28408,9 @@
     {
       "title": "Vedano Al Lambro",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vedano Al Lambro"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28376,7 +28520,9 @@
     {
       "title": "Vignate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vignate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28424,7 +28570,9 @@
     {
       "title": "Villasanta",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Villasanta"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28444,7 +28592,9 @@
     {
       "title": "Vimercate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vimercate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28466,7 +28616,9 @@
     {
       "title": "Vimodrone",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vimodrone"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28500,7 +28652,9 @@
     {
       "title": "Vizzolo Predabissi",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vizzolo Predabissi"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28754,12 +28908,6 @@
   ],
   "Netherlands": [
     {
-      "title": "Achtkarspelen",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
       "title": "ACV Group",
       "module": "ximmio_nl",
       "default_params": {
@@ -28786,12 +28934,6 @@
         "service": "alphenaandenrijn"
       },
       "id": "hvcgroep_nl"
-    },
-    {
-      "title": "Ameland",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
     },
     {
       "title": "Area Afval",
@@ -28900,24 +29042,6 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_edam_volendam_nl"
-    },
-    {
-      "title": "Eemsdelta",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Elburg",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Ermelo",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
     },
     {
       "title": "GAD",
@@ -29112,34 +29236,10 @@
       "id": "ics_goes_nl"
     },
     {
-      "title": "Harderwijk",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Harlingen",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Heerenveen",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
       "title": "Helmond",
       "module": "deafvalapp_nl",
       "default_params": {},
       "id": "deafvalapp_nl"
-    },
-    {
-      "title": "Het Hogeland",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
     },
     {
       "title": "HVC Groep",
@@ -29160,12 +29260,6 @@
       "module": "deafvalapp_nl",
       "default_params": {},
       "id": "deafvalapp_nl"
-    },
-    {
-      "title": "Leeuwarden",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
     },
     {
       "title": "Maashorst",
@@ -29198,37 +29292,7 @@
       "id": "ximmio_nl"
     },
     {
-      "title": "Nunspeet",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Oldebroek",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
       "title": "Omrin",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Ooststellingwerf",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Opsterland",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Pekela",
       "module": "omrin_nl",
       "default_params": {},
       "id": "omrin_nl"
@@ -29300,12 +29364,6 @@
       "id": "saver_nl"
     },
     {
-      "title": "Schiermonnikoog",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
       "title": "Spaarnelanden",
       "module": "hvcgroep_nl",
       "default_params": {
@@ -29320,12 +29378,6 @@
       "id": "straatbeeld_online"
     },
     {
-      "title": "Terschelling",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
       "title": "Twente Milieu",
       "module": "ximmio_nl",
       "default_params": {
@@ -29334,36 +29386,12 @@
       "id": "ximmio_nl"
     },
     {
-      "title": "Tytsjerksteradiel",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Waadhoeke",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
       "title": "Waardlanden",
       "module": "ximmio_nl",
       "default_params": {
         "company": "waardlanden"
       },
       "id": "ximmio_nl"
-    },
-    {
-      "title": "Westerwolde",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Weststellingwerf",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
     },
     {
       "title": "Woerden / Oudewater",
@@ -31427,14 +31455,6 @@
       "id": "edpevent_se"
     },
     {
-      "title": "Eker\u00f6",
-      "module": "roslagsvatten_se",
-      "default_params": {
-        "municipality": "ekero"
-      },
-      "id": "roslagsvatten_se"
-    },
-    {
       "title": "Falu Energi & Vatten (FEV)",
       "module": "fev_se",
       "default_params": {},
@@ -31885,14 +31905,6 @@
       "id": "vattenmiljoresurs_se"
     },
     {
-      "title": "Vaxholm",
-      "module": "roslagsvatten_se",
-      "default_params": {
-        "municipality": "vaxholm"
-      },
-      "id": "roslagsvatten_se"
-    },
-    {
       "title": "VIVAB Soph\u00e4mtning",
       "module": "vivab_se",
       "default_params": {},
@@ -31957,14 +31969,6 @@
       "module": "ostersund_se",
       "default_params": {},
       "id": "ostersund_se"
-    },
-    {
-      "title": "\u00d6ster\u00e5ker",
-      "module": "roslagsvatten_se",
-      "default_params": {
-        "municipality": "osteraker"
-      },
-      "id": "roslagsvatten_se"
     }
   ],
   "Switzerland": [

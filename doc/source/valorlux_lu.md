@@ -1,8 +1,10 @@
 # Valorlux
 
-Support for Valorlux PMC collections.
+Support for schedules provided by [Valorlux](https://www.valorlux.lu).
 
-## Configuration
+Source for Valorlux waste collection.
+
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
@@ -13,14 +15,24 @@ waste_collection_schedule:
         zone: ZONE
 ```
 
-### Arguments
+### Configuration Variables
 
 **commune**  
 *(string) (required)*
 
-The name of your commune (municipality). This will be a dropdown list in the UI.
-
 **zone**  
 *(string) (optional)*
 
-Some cities are split into multiple collection zones (e.g., Luxembourg, Differdange). If your city has zones, a dropdown will appear. You can find your correct zone on the [Valorlux calendar website](https://calendar.valorlux.lu/index_2020.html).
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: valorlux_lu
+      args:
+        commune: Mersch
+```
+
+## How to get the source arguments
+
+Enter your commune as listed on the Valorlux calendar page, e.g. 'Mersch'. Communes with several collection tours (e.g. 'Luxembourg' with 'Tour 1') also need the zone; a missing or wrong value lists the valid ones.

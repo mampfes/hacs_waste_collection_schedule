@@ -7466,10 +7466,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Street"
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_tsceskybrod_cz": {
@@ -7477,9 +7478,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Street"
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Dit gadenavn"
+        }
       },
       "args_affaldonline_dk": {
         "title": "Konfigurer Kilde",
@@ -13765,10 +13768,11 @@
           "calendar_title": "Kalender Titel",
           "collect_residual_waste_weekly": "Collect Residual Waste Weekly",
           "even_house_number": "Even House Number",
-          "street": "Street"
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_heidelberg_de": {
@@ -13778,9 +13782,11 @@
           "calendar_title": "Kalender Titel",
           "collect_residual_waste_weekly": "Collect Residual Waste Weekly",
           "even_house_number": "Even House Number",
-          "street": "Street"
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Dit gadenavn"
+        }
       },
       "args_heilbronn_de": {
         "title": "Konfigurer Kilde",
@@ -15617,7 +15623,9 @@
           "strasse": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "ortsteil": "Dit distrikt eller del af kommunen",
+          "strasse": "Dit gadenavn"
         }
       },
       "reconfigure_potsdam_de": {
@@ -15632,7 +15640,10 @@
           "rest_rhythm": "Rest Rhythm",
           "strasse": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "ortsteil": "Dit distrikt eller del af kommunen",
+          "strasse": "Dit gadenavn"
+        }
       },
       "args_rh_entsorgung_de": {
         "title": "Konfigurer Kilde",
@@ -18371,11 +18382,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "street": "Street"
+          "city": "By",
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_cem_ambiente_it": {
@@ -18383,10 +18396,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "street": "Street"
+          "city": "By",
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Din by",
+          "street": "Dit gadenavn"
+        }
       },
       "args_consorziomedionovarese_it": {
         "title": "Konfigurer Kilde",
@@ -18416,12 +18432,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
-          "city": "City",
-          "house_number": "House Number"
+          "address": "Gade",
+          "city": "By",
+          "house_number": "Husnummer"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Dit gadenavn",
+          "city": "Din by",
+          "house_number": "Dit husnummer"
         }
       },
       "reconfigure_amsa_it": {
@@ -18429,11 +18448,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
-          "city": "City",
-          "house_number": "House Number"
+          "address": "Gade",
+          "city": "By",
+          "house_number": "Husnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Dit gadenavn",
+          "city": "Din by",
+          "house_number": "Dit husnummer"
+        }
       },
       "args_geovest_it": {
         "title": "Konfigurer Kilde",
@@ -19198,12 +19221,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "commune": "Commune",
-          "localite": "Localite",
-          "rue": "Rue"
+          "commune": "Kommune",
+          "localite": "Distrikt",
+          "rue": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "localite": "Dit distrikt eller del af kommunen",
+          "rue": "Dit gadenavn"
         }
       },
       "reconfigure_luxembourg_lu": {
@@ -19211,11 +19237,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "commune": "Commune",
-          "localite": "Localite",
-          "rue": "Rue"
+          "commune": "Kommune",
+          "localite": "Distrikt",
+          "rue": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "localite": "Dit distrikt eller del af kommunen",
+          "rue": "Dit gadenavn"
+        }
       },
       "args_sica_lu": {
         "title": "Konfigurer Kilde",
@@ -19300,41 +19330,19 @@
         },
         "data_description": {}
       },
-      "args_omrin_nl": {
-        "title": "Konfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
-          "postal_code": "Postal Code",
-          "suffix": "Suffix"
-        },
-        "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
-        }
-      },
-      "reconfigure_omrin_nl": {
-        "title": "Omkonfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
-          "postal_code": "Postal Code",
-          "suffix": "Suffix"
-        },
-        "data_description": {}
-      },
       "args_ximmio_nl": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
           "company": "Company",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "post_code": "Postnummer"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "house_number": "Dit husnummer",
+          "post_code": "Dit postnummer"
         }
       },
       "reconfigure_ximmio_nl": {
@@ -19343,10 +19351,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "company": "Company",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "post_code": "Postnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Dit husnummer",
+          "post_code": "Dit postnummer"
+        }
       },
       "args_mijnafvalwijzer_nl": {
         "title": "Konfigurer Kilde",
@@ -19383,12 +19394,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "addition": "Addition",
-          "house_number": "House Number",
-          "postcode": "Postnummer",
-          "region": "Region"
+          "house_number": "Husnummer",
+          "postcode": "Postnummer"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "house_number": "Dit husnummer",
+          "postcode": "Dit postnummer"
         }
       },
       "reconfigure_afvalstoffendienst_nl": {
@@ -19397,11 +19409,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "addition": "Addition",
-          "house_number": "House Number",
-          "postcode": "Postnummer",
-          "region": "Region"
+          "house_number": "Husnummer",
+          "postcode": "Postnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Dit husnummer",
+          "postcode": "Dit postnummer"
+        }
       },
       "args_hvcgroep_nl": {
         "title": "Konfigurer Kilde",
@@ -19437,12 +19451,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "addition": "Addition",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "organization": "Organization",
           "post_code": "Postnummer"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "house_number": "Dit husnummer",
+          "post_code": "Dit postnummer"
         }
       },
       "reconfigure_burgerportaal_nl": {
@@ -19451,11 +19467,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "addition": "Addition",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "organization": "Organization",
           "post_code": "Postnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Dit husnummer",
+          "post_code": "Dit postnummer"
+        }
       },
       "args_deafvalapp_nl": {
         "title": "Konfigurer Kilde",
@@ -19767,12 +19786,14 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "postcode": "Postnummer",
           "suffix": "Suffix"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "house_number": "Dit husnummer",
+          "postcode": "Dit postnummer"
         }
       },
       "reconfigure_irado_nl": {
@@ -19780,11 +19801,43 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "postcode": "Postnummer",
           "suffix": "Suffix"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Dit husnummer",
+          "postcode": "Dit postnummer"
+        }
+      },
+      "args_omrin_nl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Husnummer",
+          "postal_code": "Postnummer",
+          "suffix": "Suffix"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "house_number": "Dit husnummer",
+          "postal_code": "Dit postnummer"
+        }
+      },
+      "reconfigure_omrin_nl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Husnummer",
+          "postal_code": "Postnummer",
+          "suffix": "Suffix"
+        },
+        "data_description": {
+          "house_number": "Dit husnummer",
+          "postal_code": "Dit postnummer"
+        }
       },
       "args_rd4_nl": {
         "title": "Konfigurer Kilde",
@@ -21205,13 +21258,16 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
+          "gmina": "Kommune",
+          "miejscowosc": "By",
           "rodzaj": "Rodzaj",
-          "ulica": "Ulica"
+          "ulica": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "gmina": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "miejscowosc": "Din by",
+          "ulica": "Dit gadenavn"
         }
       },
       "reconfigure_czystyregion_pl": {
@@ -21219,12 +21275,16 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "gmina": "Gmina",
-          "miejscowosc": "Miejscowosc",
+          "gmina": "Kommune",
+          "miejscowosc": "By",
           "rodzaj": "Rodzaj",
-          "ulica": "Ulica"
+          "ulica": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "gmina": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "miejscowosc": "Din by",
+          "ulica": "Dit gadenavn"
+        }
       },
       "args_ecoszczecin_pl": {
         "title": "Konfigurer Kilde",
@@ -21259,12 +21319,15 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "building_type": "Building Type",
-          "city": "City",
-          "house": "House",
-          "street": "Street"
+          "city": "By",
+          "house": "Husnummer",
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by",
+          "house": "Dit husnummer",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_smiecioplan_pl": {
@@ -21273,11 +21336,15 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "building_type": "Building Type",
-          "city": "City",
-          "house": "House",
-          "street": "Street"
+          "city": "By",
+          "house": "Husnummer",
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Din by",
+          "house": "Dit husnummer",
+          "street": "Dit gadenavn"
+        }
       },
       "args_maslow_pl": {
         "title": "Konfigurer Kilde",
@@ -21368,7 +21435,6 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "location": "Location",
-          "location_id": "Location Id",
           "property_type": "Property Type"
         },
         "data_description": {
@@ -21381,7 +21447,6 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "location": "Location",
-          "location_id": "Location Id",
           "property_type": "Property Type"
         },
         "data_description": {}
@@ -22385,10 +22450,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_affarsverken_se": {
@@ -22396,9 +22462,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       },
       "args_aen_minasidor_se": {
         "title": "Konfigurer Kilde",
@@ -22548,28 +22616,6 @@
         "data_description": {
           "pickup_address": "Din fulde adresse"
         }
-      },
-      "args_roslagsvatten_se": {
-        "title": "Konfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "municipality": "Municipality",
-          "street_address": "Street Address"
-        },
-        "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
-        }
-      },
-      "reconfigure_roslagsvatten_se": {
-        "title": "Omkonfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "municipality": "Municipality",
-          "street_address": "Street Address"
-        },
-        "data_description": {}
       },
       "args_fev_se": {
         "title": "Konfigurer Kilde",
@@ -23110,16 +23156,43 @@
           "street_address": "Din fulde adresse"
         }
       },
+      "args_roslagsvatten_se": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Municipality",
+          "street_address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street_address": "Din fulde adresse"
+        }
+      },
+      "reconfigure_roslagsvatten_se": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Municipality",
+          "street_address": "Adresse"
+        },
+        "data_description": {
+          "street_address": "Din fulde adresse"
+        }
+      },
       "args_samiljo_se": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "street": "Street"
+          "city": "By",
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_samiljo_se": {
@@ -23127,10 +23200,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "street": "Street"
+          "city": "By",
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Din by",
+          "street": "Dit gadenavn"
+        }
       },
       "args_sjobo_se": {
         "title": "Konfigurer Kilde",

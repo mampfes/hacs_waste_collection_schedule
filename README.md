@@ -3959,12 +3959,10 @@ If you already have enough information for your municipality/region, you are ver
 <details>
 <summary>Netherlands</summary>
 
-- [Achtkarspelen](/doc/source/omrin_nl.md) / omrin.nl
 - [ACV Group](/doc/source/ximmio_nl.md) / acv-afvalkalender.nl
 - [Afval Wijzer](/doc/source/mijnafvalwijzer_nl.md) / mijnafvalwijzer.nl
 - [Afvalstoffendienst.nl](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
 - [Alpen an den Rijn](/doc/source/hvcgroep_nl.md) / alphenaandenrijn.nl
-- [Ameland](/doc/source/omrin_nl.md) / omrin.nl
 - [Area Afval](/doc/source/ximmio_nl.md) / area-afval.nl
 - [Avalex](/doc/source/ximmio_nl.md) / avalex.nl
 - [Avri](/doc/source/ximmio_nl.md) / avri.nl
@@ -3980,9 +3978,6 @@ If you already have enough information for your municipality/region, you are ver
 - [De Afvalapp](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
 - [Den Haag](/doc/source/hvcgroep_nl.md) / denhaag.nl
 - [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
-- [Eemsdelta](/doc/source/omrin_nl.md) / omrin.nl
-- [Elburg](/doc/source/omrin_nl.md) / omrin.nl
-- [Ermelo](/doc/source/omrin_nl.md) / omrin.nl
 - [GAD](/doc/source/hvcgroep_nl.md) / gad.nl
 - [Gemeente Almere](/doc/source/ximmio_nl.md) / almere.nl
 - [Gemeente Assen](/doc/source/burgerportaal_nl.md) / assen.nl
@@ -4008,25 +4003,15 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeente Waalre](/doc/source/hvcgroep_nl.md) / waalre.nl
 - [Gemeente Westland](/doc/source/ximmio_nl.md) / gemeentewestland.nl
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
-- [Harderwijk](/doc/source/omrin_nl.md) / omrin.nl
-- [Harlingen](/doc/source/omrin_nl.md) / omrin.nl
-- [Heerenveen](/doc/source/omrin_nl.md) / omrin.nl
 - [Helmond](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
-- [Het Hogeland](/doc/source/omrin_nl.md) / omrin.nl
 - [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
 - [Irado](/doc/source/irado_nl.md) / irado.nl
 - [Land van Cuijk](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
-- [Leeuwarden](/doc/source/omrin_nl.md) / omrin.nl
 - [Maashorst](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
 - [Meerlanden](/doc/source/ximmio_nl.md) / meerlanden.nl
 - [Mijn Afval Zaken - BUCH](/doc/source/hvcgroep_nl.md) / mijnafvalzaken.nl
 - [Mijn Blink](/doc/source/ximmio_nl.md) / mijnblink.nl
-- [Nunspeet](/doc/source/omrin_nl.md) / omrin.nl
-- [Oldebroek](/doc/source/omrin_nl.md) / omrin.nl
 - [Omrin](/doc/source/omrin_nl.md) / omrin.nl
-- [Ooststellingwerf](/doc/source/omrin_nl.md) / omrin.nl
-- [Opsterland](/doc/source/omrin_nl.md) / omrin.nl
-- [Pekela](/doc/source/omrin_nl.md) / omrin.nl
 - [PreZero](/doc/source/hvcgroep_nl.md) / prezero.nl
 - [Purmerend](/doc/source/hvcgroep_nl.md) / purmerend.nl
 - [RAD BV](/doc/source/ximmio_nl.md) / radbv.nl
@@ -4036,16 +4021,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Rova](/doc/source/rova_nl.md) / rova.nl
 - [RWM](/doc/source/hvcgroep_nl.md) / rwm.nl
 - [Saver](/doc/source/saver_nl.md) / saver.nl
-- [Schiermonnikoog](/doc/source/omrin_nl.md) / omrin.nl
 - [Spaarnelanden](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
 - [Straatbeeld Online](/doc/source/straatbeeld_online.md) / afvalkalender.straatbeeld.online
-- [Terschelling](/doc/source/omrin_nl.md) / omrin.nl
 - [Twente Milieu](/doc/source/ximmio_nl.md) / twentemilieu.nl
-- [Tytsjerksteradiel](/doc/source/omrin_nl.md) / omrin.nl
-- [Waadhoeke](/doc/source/omrin_nl.md) / omrin.nl
 - [Waardlanden](/doc/source/ximmio_nl.md) / waardlanden.nl
-- [Westerwolde](/doc/source/omrin_nl.md) / omrin.nl
-- [Weststellingwerf](/doc/source/omrin_nl.md) / omrin.nl
 - [Woerden / Oudewater](/doc/source/ximmio_nl.md) / woerden.nl
 - [Ximmio](/doc/source/ximmio_nl.md) / ximmio.nl
 - [ZRD](/doc/source/hvcgroep_nl.md) / zrd.nl
@@ -4368,7 +4347,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Dala Vatten och Avfall](/doc/source/avfallsapp_se.md) / dalavatten.se
 - [Danderyds kommun](/doc/source/edpevent_se.md) / danderyd.se
 - [EDPEvent - Multi Source](/doc/source/edpevent_se.md) / edpevent.se
-- [Ekerö](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [Falu Energi & Vatten (FEV)](/doc/source/fev_se.md) / fev.se
 - [Finspång](/doc/source/avfallsapp_se.md) / finspang.se
 - [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
@@ -4434,7 +4412,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Vafab Miljö](/doc/source/edpevent_se.md) / vafabmiljo.se
 - [Vallentuna](/doc/source/avfallsapp_se.md) / vallentuna.se
 - [Vatten och Miljöresurs](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se
-- [Vaxholm](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
 - [VMAB](/doc/source/vmab_se.md) / vmab.se
 - [Vänersborg](/doc/source/avfallsapp_se.md) / vanersborg.se
@@ -4445,7 +4422,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Ökrab Sophämntning](/doc/source/okrab_se.md) / okrab.se
 - [Örebro kommun](/doc/source/edpevent_se.md) / orebro.se
 - [Östersunds kommun](/doc/source/ostersund_se.md) / ostersund.se
-- [Österåker](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 </details>
 
 <details>

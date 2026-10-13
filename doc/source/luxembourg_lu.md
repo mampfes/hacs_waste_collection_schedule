@@ -1,6 +1,8 @@
-# Luxembourg (All Communes)
+# Luxembourg
 
-Support for schedules provided by [data.public.lu](https://data.public.lu/fr/datasets/calendrier-des-dechets-collectes-par-commune/).
+Support for schedules provided by [Luxembourg](https://data.public.lu).
+
+Source for Luxembourg waste collection using data.public.lu
 
 ## Configuration via configuration.yaml
 
@@ -10,24 +12,20 @@ waste_collection_schedule:
     - name: luxembourg_lu
       args:
         commune: COMMUNE
-        # localite: LOCALITE
-        # rue: RUE
+        localite: LOCALITE
+        rue: RUE
 ```
 
 ### Configuration Variables
 
-**commune**<br>
-*(string) (required)* The commune name as found in the CSV.
+**commune**  
+*(string) (required)*
 
-**localite**<br>
-*(string) (optional)* The locality name (required for communes that are subdivided by localities).
+**localite**  
+*(string) (optional)*
 
-**rue**<br>
-*(string) (optional)* The street name (required for localities that are subdivided by streets).
-
-## How to get the arguments
-
-Download/open the CSV from data.public.lu and copy the values from the columns **Commune**, **Localité** and **Rue** exactly (including accents).
+**rue**  
+*(string) (optional)*
 
 ## Example
 
@@ -39,3 +37,6 @@ waste_collection_schedule:
         commune: Beaufort
 ```
 
+## How to get the source arguments
+
+Enter your commune as listed in the open data set on data.public.lu (the 'Commune' column, with accents). Communes that split their schedule also need the locality ('Localité') and, for some localities, the street ('Rue'). A missing or wrong value lists the valid ones.
