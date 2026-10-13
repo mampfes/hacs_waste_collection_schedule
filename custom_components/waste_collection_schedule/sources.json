@@ -30993,6 +30993,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "REMONDIS (res.remondis.pl)",
+      "module": "res_remondis_pl",
+      "default_params": {},
+      "id": "res_remondis_pl"
+    },
+    {
       "title": "Rybnik",
       "module": "rybnik_pl",
       "default_params": {},

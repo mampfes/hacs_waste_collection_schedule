@@ -4281,6 +4281,7 @@ If you already have enough information for your municipality/region, you are ver
 - [PreZero Bielsko-Biała](/doc/source/prezero_bielsko_pl.md) / prezero-bielsko.pl/harmonogram-odbioru-odpadow
 - [Proszówki](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Przedsiębiorstwo Gospodarki Komunalnej w Wołowie Sp. z o.o.](/doc/source/sims_pl.md) / sisms.pl
+- [REMONDIS (res.remondis.pl)](/doc/source/res_remondis_pl.md) / res.remondis.pl/harmonogram
 - [Rybnik](/doc/source/rybnik_pl.md) / rybnik.eu
 - [Siedlec](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [SISMS.pl / BLISKO](/doc/source/sims_pl.md) / sisms.pl

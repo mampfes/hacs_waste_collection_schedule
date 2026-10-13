@@ -21723,6 +21723,37 @@
           "street": "Dit gadenavn"
         }
       },
+      "args_res_remondis_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "By",
+          "house_number": "Husnummer",
+          "street": "Gade"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by",
+          "house_number": "Dit husnummer",
+          "street": "Dit gadenavn"
+        }
+      },
+      "reconfigure_res_remondis_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "By",
+          "house_number": "Husnummer",
+          "street": "Gade"
+        },
+        "data_description": {
+          "city": "Din by",
+          "house_number": "Dit husnummer",
+          "street": "Dit gadenavn"
+        }
+      },
       "args_rybnik_pl": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",

@@ -4877,6 +4877,11 @@
     },
     "urls": {}
   },
+  "res_remondis_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/res_remondis_pl.md",
+    "howto": {},
+    "urls": {}
+  },
   "rybnik_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rybnik_pl.md",
     "howto": {
