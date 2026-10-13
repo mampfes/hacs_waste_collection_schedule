@@ -1,56 +1,65 @@
-import json
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Dorset Council"
-DESCRIPTION = "The local authority for the non-metropolitan county of Dorset in England"
-URL = "https://www.dorsetcouncil.gov.uk/"
-TEST_CASES = {
-    "Test_001": {"uprn": 100040606062},
-    "Test_002": {"uprn": 100040606087},
-    "Test_003": {"uprn": "100040606071"},
-}
-ICON_MAP = {
-    "Recycling": Icons.RECYCLING,
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Garden Waste": Icons.GARDEN,
-    "Food Waste": Icons.BIO_KITCHEN,
-}
-
-API_URLS = {
-    "Recycling": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/recyclingday/{uprn}",
-    "Rubbish": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/refuseday/{uprn}",
-    "Garden Waste": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/gardenwasteday/{uprn}",
-    "Food Waste": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/foodwasteday/{uprn}",
-}
+_API = "https://geoapi.dorsetcouncil.gov.uk/v1/Services"
+_SERVICES = ("refuseday", "recyclingday", "gardenwasteday", "foodwasteday")
 
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn: str = str(uprn)
+@final
+class Source(BaseSource):
+    TITLE = "Dorset Council"
+    DESCRIPTION = (
+        "The local authority for the non-metropolitan county of Dorset in England"
+    )
+    URL = "https://www.dorsetcouncil.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        entries = []
-        for bin, url in API_URLS.items():
-            r = requests.get(url.format(uprn=self._uprn))
-            json_data = json.loads(r.content)
-            try:
-                date = datetime.strptime(
-                    json_data["values"][0]["dateNextVisit"], "%Y-%m-%d"
-                ).date()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=bin,
-                        icon=ICON_MAP.get(bin),
-                    )
-                )
-            except (
-                IndexError
-            ):  # If a specific bin is not used at address (e.g. Garden waste)
-                pass
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": 100040606062},
+        "Test_002": {"uprn": 100040606087},
+        "Test_003": {"uprn": "100040606071"},
+    }
 
-        return entries
+    PARAMS = (uprn(),)
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "An easy way to discover your Unique Property Reference Number (UPRN) "
+            "is by going to [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) "
+            "and entering your address details."
+        ),
+    }
+
+    # One call per service; a service the property does not have (e.g. garden
+    # waste) answers with an empty `values` list.
+    retrieve = retrievers.FanOutRetriever(
+        targets=lambda source, _: [
+            f"{_API}/{service}/{source.params['uprn']}" for service in _SERVICES
+        ],
+    )
+
+    parse = parsers.EachResponse(parsers.JsonParser("values"))
+
+    transform = JsonTransformer(
+        date_key="dateNextVisit",
+        type_key="type",
+        type_value_map={
+            "Refuse": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden": wt.GARDEN_WASTE,
+            "Food": wt.FOOD_WASTE,
+        },
+    )
