@@ -1477,6 +1477,14 @@ class HtmlMonthHeadedRows(Parser["list[tuple[datetime.date, str]]"]):
             -1, the last).
         label_separator: split the label at this text, one row each.
         table: CSS selector for the table (default the first ``table``).
+        all_tables: read every table the selector matches rather than the
+            first, for a page with one table per month. Each table's heading
+            sets the month for its own rows.
+        day_pattern: regex whose first match in the day cell (group 1, or the
+            whole match) is the day number, for a cell that reads
+            "Thursday 15 October" rather than "15".
+        current_year: a heading naming only the month ("October") falls in the
+            current year (a year-less heading is skipped otherwise).
     """
 
     def __init__(
@@ -1486,11 +1494,17 @@ class HtmlMonthHeadedRows(Parser["list[tuple[datetime.date, str]]"]):
         label_column: int = -1,
         label_separator: "str | None" = None,
         table: str = "table",
+        all_tables: bool = False,
+        day_pattern: "str | None" = None,
+        current_year: bool = False,
     ):
         self.day_column = day_column
         self.label_column = label_column
         self.label_separator = label_separator
         self.table = table
+        self.all_tables = all_tables
+        self.day_pattern = re.compile(day_pattern) if day_pattern else None
+        self.current_year = current_year
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -1498,40 +1512,54 @@ class HtmlMonthHeadedRows(Parser["list[tuple[datetime.date, str]]"]):
         from waste_collection_schedule import recurrence
 
         soup = BeautifulSoup(response.text, "html.parser")
-        table = soup.select_one(self.table)
-        if table is None:
-            return []
+        tables = soup.select(self.table)
+        if not self.all_tables:
+            tables = tables[:1]
 
-        month: tuple[int, int] | None = None
         rows: list[tuple[datetime.date, str]] = []
-        for row in table.find_all("tr"):
-            values = [c.get_text(" ", strip=True) for c in row.find_all(["th", "td"])]
-            if len(values) == 1:
-                parts = values[0].split()
-                number = recurrence.month(parts[0]) if parts else None
-                if number is not None and len(parts) > 1 and parts[1].isdigit():
-                    month = (int(parts[1]), number)
-                continue
-            if month is None or len(values) < 2:
-                continue
-            try:
-                day = values[self.day_column]
-                label = values[self.label_column]
-            except IndexError:
-                continue
-            if not day.isdigit():
-                continue
-            labels = (
-                label.split(self.label_separator) if self.label_separator else [label]
-            )
-            for name in labels:
-                name = name.strip()
-                if not name:
+        for table in tables:
+            month: tuple[int, int] | None = None
+            for row in table.find_all("tr"):
+                values = [
+                    c.get_text(" ", strip=True) for c in row.find_all(["th", "td"])
+                ]
+                if len(values) == 1:
+                    parts = values[0].split()
+                    number = recurrence.month(parts[0]) if parts else None
+                    if number is None:
+                        continue
+                    if len(parts) > 1 and parts[1].isdigit():
+                        month = (int(parts[1]), number)
+                    elif self.current_year and len(parts) == 1:
+                        month = (datetime.date.today().year, number)
+                    continue
+                if month is None or len(values) < 2:
                     continue
                 try:
-                    rows.append((datetime.date(month[0], month[1], int(day)), name))
-                except ValueError:
+                    day = values[self.day_column]
+                    label = values[self.label_column]
+                except IndexError:
                     continue
+                if self.day_pattern is not None:
+                    found = self.day_pattern.search(day)
+                    if found is None:
+                        continue
+                    day = found.group(1) if found.groups() else found.group(0)
+                if not day.isdigit():
+                    continue
+                labels = (
+                    label.split(self.label_separator)
+                    if self.label_separator
+                    else [label]
+                )
+                for name in labels:
+                    name = name.strip()
+                    if not name:
+                        continue
+                    try:
+                        rows.append((datetime.date(month[0], month[1], int(day)), name))
+                    except ValueError:
+                        continue
         return rows
 
 
