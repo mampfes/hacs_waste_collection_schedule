@@ -1,0 +1,41 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://new-sictomlons.letri.com/graphql 505269c861",
+      "method": "POST",
+      "url": "https://new-sictomlons.letri.com/graphql",
+      "final_url": "https://new-sictomlons.letri.com/graphql",
+      "body": "{\"body\":{\"query\":\"\\nquery GetCommune($slug: ID!) {\\n    commune(id: $slug, idType: SLUG) {\\n        title\\n        slug\\n        collecte_bac_bleu {\\n            frequenceBleu\\n            jourCollecteBleu\\n        }\\n        collecte_bac_gris {\\n            frequenceGris\\n            jourCollecteGris\\n        }\\n    }\\n}\\n\",\"variables\":{\"slug\":\"lons-le-saunier-les-toupes\"}}}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 17:00:40 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "content-length": "295",
+        "server": "envoy",
+        "edge-cache-engine": "varnish",
+        "edge-request-id": "4a24adf3a008edad1783c4090eccfd63",
+        "access-control-allow-origin": "https://peaceful-davinci-847b10.netlify.app",
+        "access-control-allow-headers": "Authorization, Content-Type",
+        "access-control-max-age": "600",
+        "x-robots-tag": "noindex",
+        "x-content-type-options": "nosniff",
+        "x-graphql-url": "https://new-sictomlons.letri.com/graphql",
+        "x-graphql-query-id": "a745895e54d3fa9dcb975a14279077b5",
+        "x-graphql-keys": "a745895e54d3fa9dcb975a14279077b5 graphql:Query cG9zdDoyODk=",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET, POST, OPTIONS",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br",
+        "edge-cache-engine-mode": "ACTIVE",
+        "age": "0",
+        "alt-svc": "h3=\":443\";ma=86400",
+        "x-request-id": "4a24adf3a008edad1783c4090eccfd63",
+        "edge-cache-engine-hit": "MISS",
+        "x-envoy-upstream-service-time": "1067"
+      },
+      "content_b64": "eyJkYXRhIjp7ImNvbW11bmUiOnsidGl0bGUiOiJMb25zIExlIFNhdW5pZXIgKENlbnRyZSwgUXVhcnRpZXJzIExlcyBNb3VpbGxcdTAwZThyZXMsIExlcyBSb2NoZXR0ZXMsIExlcyBUb3VwZXMpIiwic2x1ZyI6ImxvbnMtbGUtc2F1bmllci1sZXMtdG91cGVzIiwiY29sbGVjdGVfYmFjX2JsZXUiOnsiZnJlcXVlbmNlQmxldSI6IlRvdXRlcyBsZXMgc2VtYWluZXMiLCJqb3VyQ29sbGVjdGVCbGV1IjpbIk1lcmNyZWRpIl19LCJjb2xsZWN0ZV9iYWNfZ3JpcyI6eyJmcmVxdWVuY2VHcmlzIjoiVG91dGVzIGxlcyBzZW1haW5lcyIsImpvdXJDb2xsZWN0ZUdyaXMiOlsiTWVyY3JlZGkiXX19fSwiZXh0ZW5zaW9ucyI6eyJkZWJ1ZyI6W3sidHlwZSI6IkRFQlVHX0xPR1NfSU5BQ1RJVkUiLCJtZXNzYWdlIjoiR3JhcGhRTCBEZWJ1ZyBsb2dnaW5nIGlzIG5vdCBhY3RpdmUuIFRvIHNlZSBkZWJ1ZyBsb2dzLCBHUkFQSFFMX0RFQlVHIG11c3QgYmUgZW5hYmxlZC4ifV19fQ=="
+    }
+  ]
+}
