@@ -65,7 +65,29 @@ def _chesterfield_gov_uk(
             _set_json(interaction, {"auraConfig": {"context": context}})
 
 
+def _cem_ambiente_it(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep only the configured municipality and street of the two index lists.
+
+    ``listComuni`` carries every municipality's full profile (~400 KB) and
+    ``listVie`` every street; the schedule request is the only thing a replay
+    needs besides the two rows that resolve the arguments.
+    """
+    wanted = {"listComuni": args["city"], "listVie": args["street"]}
+    for interaction in interactions:
+        endpoint = interaction["url"].rsplit("/", 1)[-1]
+        if endpoint in wanted:
+            data = _json(interaction)
+            name = str(wanted[endpoint]).strip().casefold()
+            data["body"] = [
+                row for row in data["body"] if str(row["nome"]).casefold() == name
+            ]
+            _set_json(interaction, data)
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "cem_ambiente_it": _cem_ambiente_it,
     "sica_lu": _sica_lu,
     "chesterfield_gov_uk": _chesterfield_gov_uk,
 }

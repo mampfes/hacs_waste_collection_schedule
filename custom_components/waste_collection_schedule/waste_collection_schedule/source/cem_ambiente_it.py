@@ -1,239 +1,152 @@
-from datetime import datetime
 from difflib import get_close_matches
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "CEM Ambiente"
-DESCRIPTION = "Source for CEM Ambiente (CEM FACILE), covering municipalities in the Milano / Monza e Brianza / Lodi area of Italy."
-URL = "https://www.cemambiente.it"
-COUNTRY = "it"
+API = "https://cemfacile.cemambiente.it/public"
 
-API_URL = "https://cemfacile.cemambiente.it"
-
-# The API rejects requests carrying the default python-requests User-Agent
-# (and similarly "bare" requests) with a 403. Sending headers that mimic a
-# regular browser/app request avoids the block.
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) "
-        "AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1"
-    ),
-    "Content-Type": "application/json",
-}
-
-EXTRA_INFO = [
-    {"title": "Agrate Brianza", "country": "it"},
-    {"title": "Aicurzio", "country": "it"},
-    {"title": "Arcore", "country": "it"},
-    {"title": "Basiano", "country": "it"},
-    {"title": "Bellinzago Lombardo", "country": "it"},
-    {"title": "Bellusco", "country": "it"},
-    {"title": "Bernareggio", "country": "it"},
-    {"title": "Borgo San Giovanni", "country": "it"},
-    {"title": "Brugherio", "country": "it"},
-    {"title": "Burago Di Molgora", "country": "it"},
-    {"title": "Busnago", "country": "it"},
-    {"title": "Bussero", "country": "it"},
-    {"title": "Cambiago", "country": "it"},
-    {"title": "Camparada", "country": "it"},
-    {"title": "Caponago", "country": "it"},
-    {"title": "Carnate", "country": "it"},
-    {"title": "Carpiano", "country": "it"},
-    {"title": "Carugate", "country": "it"},
-    {"title": "Casaletto Lodigiano", "country": "it"},
-    {"title": "Casalmaiocco", "country": "it"},
-    {"title": "Caselle Lurani", "country": "it"},
-    {"title": "Cassano D'Adda", "country": "it"},
-    {"title": "Cassina De' Pecchi", "country": "it"},
-    {"title": "Cavenago Di Brianza", "country": "it"},
-    {"title": "Cernusco Sul Naviglio", "country": "it"},
-    {"title": "Cerro Al Lambro", "country": "it"},
-    {"title": "Cervignano D'Adda", "country": "it"},
-    {"title": "Cologno Monzese", "country": "it"},
-    {"title": "Colturano", "country": "it"},
-    {"title": "Comazzo", "country": "it"},
-    {"title": "Concorezzo", "country": "it"},
-    {"title": "Cornate D'Adda", "country": "it"},
-    {"title": "Correzzana", "country": "it"},
-    {"title": "Dresano", "country": "it"},
-    {"title": "Gessate", "country": "it"},
-    {"title": "Gorgonzola", "country": "it"},
-    {"title": "Grezzago", "country": "it"},
-    {"title": "Inzago", "country": "it"},
-    {"title": "Lesmo", "country": "it"},
-    {"title": "Liscate", "country": "it"},
-    {"title": "Macherio", "country": "it"},
-    {"title": "Masate", "country": "it"},
-    {"title": "Massalengo", "country": "it"},
-    {"title": "Mediglia", "country": "it"},
-    {"title": "Melegnano", "country": "it"},
-    {"title": "Melzo", "country": "it"},
-    {"title": "Merlino", "country": "it"},
-    {"title": "Mezzago", "country": "it"},
-    {"title": "Mulazzano", "country": "it"},
-    {"title": "Ornago", "country": "it"},
-    {"title": "Pantigliate", "country": "it"},
-    {"title": "Paullo", "country": "it"},
-    {"title": "Pessano Con Bornago", "country": "it"},
-    {"title": "Pozzo D'Adda", "country": "it"},
-    {"title": "Pozzuolo Martesana", "country": "it"},
-    {"title": "Rodano", "country": "it"},
-    {"title": "Roncello", "country": "it"},
-    {"title": "Ronco Briantino", "country": "it"},
-    {"title": "Salerano sul Lambro", "country": "it"},
-    {"title": "San Zenone Al Lambro", "country": "it"},
-    {"title": "Sant'Angelo Lodigiano", "country": "it"},
-    {"title": "Settala", "country": "it"},
-    {"title": "Sordio", "country": "it"},
-    {"title": "Sulbiate", "country": "it"},
-    {"title": "Torrevecchia Pia", "country": "it"},
-    {"title": "Trezzano Rosa", "country": "it"},
-    {"title": "Trezzo Sull'Adda", "country": "it"},
-    {"title": "Tribiano", "country": "it"},
-    {"title": "Truccazzano", "country": "it"},
-    {"title": "Usmate Velate", "country": "it"},
-    {"title": "Vaprio D'Adda", "country": "it"},
-    {"title": "Vedano Al Lambro", "country": "it"},
-    {"title": "Vignate", "country": "it"},
-    {"title": "Villasanta", "country": "it"},
-    {"title": "Vimercate", "country": "it"},
-    {"title": "Vimodrone", "country": "it"},
-    {"title": "Vizzolo Predabissi", "country": "it"},
-]
-
-TEST_CASES = {
-    "Vimodrone, Via Aldo Moro": {"city": "Vimodrone", "street": "Via Aldo Moro"},
-    "Cologno Monzese, Via Cadore": {"city": "Cologno Monzese", "street": "Via Cadore"},
-    "Vimercate, Via Cesare Battisti": {
-        "city": "Vimercate",
-        "street": "Via Cesare Battisti",
-    },
-}
-
-ICON_MAP = {
-    "UMI": Icons.BIO_KITCHEN,  # Raccolta Umido (food waste)
-    "VER": Icons.GARDEN,  # Raccolta Verde (garden waste)
-    "CAR": Icons.PAPER,  # Raccolta Carta
-    "VET": Icons.GLASS,  # Raccolta Vetro
-    "MUL": Icons.PLASTIC_PACKAGING,  # Raccolta Multipak (plastic + metal)
-    "APL": Icons.PLASTIC_PACKAGING,  # Raccolta Altre Plastiche
-    "SEC": Icons.GENERAL_WASTE,  # Raccolta Secco
-    "ECU": Icons.GENERAL_WASTE,  # Raccolta Ecuosacco
-    "STP": Icons.GENERAL_WASTE,  # Raccolta Ecuosacco puntuale
-}
+_MUNICIPALITIES = (
+    "Agrate Brianza, Aicurzio, Arcore, Basiano, Bellinzago Lombardo, Bellusco, "
+    "Bernareggio, Borgo San Giovanni, Brugherio, Burago Di Molgora, Busnago, "
+    "Bussero, Cambiago, Camparada, Caponago, Carnate, Carpiano, Carugate, "
+    "Casaletto Lodigiano, Casalmaiocco, Caselle Lurani, Cassano D'Adda, "
+    "Cassina De' Pecchi, Cavenago Di Brianza, Cernusco Sul Naviglio, "
+    "Cerro Al Lambro, Cervignano D'Adda, Cologno Monzese, Colturano, Comazzo, "
+    "Concorezzo, Cornate D'Adda, Correzzana, Dresano, Gessate, Gorgonzola, "
+    "Grezzago, Inzago, Lesmo, Liscate, Macherio, Masate, Massalengo, Mediglia, "
+    "Melegnano, Melzo, Merlino, Mezzago, Mulazzano, Ornago, Pantigliate, Paullo, "
+    "Pessano Con Bornago, Pozzo D'Adda, Pozzuolo Martesana, Rodano, Roncello, "
+    "Ronco Briantino, Salerano sul Lambro, San Zenone Al Lambro, "
+    "Sant'Angelo Lodigiano, Settala, Sordio, Sulbiate, Torrevecchia Pia, "
+    "Trezzano Rosa, Trezzo Sull'Adda, Tribiano, Truccazzano, Usmate Velate, "
+    "Vaprio D'Adda, Vedano Al Lambro, Vignate, Villasanta, Vimercate, "
+    "Vimodrone, Vizzolo Predabissi"
+).split(", ")
 
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter the municipality (comune) and street (via) exactly as they are "
-    "known to CEM Ambiente, e.g. as shown on https://www.cemambiente.it/cemfacile/. "
-    "If the exact spelling isn't found, the error message will list the closest "
-    "matching street names for your municipality.",
-    "it": "Inserisci il comune e la via esattamente come sono indicati da CEM "
-    "Ambiente, ad esempio come mostrato su https://www.cemambiente.it/cemfacile/. "
-    "Se l'ortografia esatta non viene trovata, il messaggio di errore elencherà le "
-    "vie più simili per il tuo comune.",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "city": "The municipality served by CEM Ambiente (e.g. 'Vimodrone').",
-        "street": "The street name as listed by CEM Ambiente for the selected "
-        "municipality (e.g. 'Via Aldo Moro').",
-    },
-    "it": {
-        "city": "Il comune servito da CEM Ambiente (ad esempio 'Vimodrone').",
-        "street": "Il nome della via come indicato da CEM Ambiente per il comune "
-        "selezionato (ad esempio 'Via Aldo Moro').",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "city": "City",
-        "street": "Street",
-    },
-    "it": {
-        "city": "Comune",
-        "street": "Via",
-    },
-}
+def _match(rows: list, wanted: str, argument: str) -> dict:
+    """The row whose name equals ``wanted`` (case-insensitively), else raise."""
+    target = str(wanted).strip().casefold()
+    for row in rows:
+        if str(row.get("nome", "")).casefold() == target:
+            return row
+    names = [str(row.get("nome", "")) for row in rows]
+    raise SourceArgumentNotFoundWithSuggestions(
+        argument,
+        wanted,
+        get_close_matches(str(wanted), names, n=5, cutoff=0.4) or sorted(names),
+    )
 
 
-class Source:
-    def __init__(self, city: str, street: str):
-        self._city: str = city
-        self._street: str = street
+def _pick_municipality(response, *keys, city, **_) -> int:
+    return _match(response.json().get("body", []), city, "city")["idSiunet"]
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update(HEADERS)
 
-        r = session.post(f"{API_URL}/public/listComuni", json={})
-        r.raise_for_status()
-        comuni = r.json().get("body", [])
+def _pick_street(response, *keys, street, **_) -> dict:
+    via = _match(response.json().get("body", []), street, "street")
+    return {"idVia": via["idVia"], "nomeVia": via["nome"]}
 
-        comune = next(
-            (
-                c
-                for c in comuni
-                if str(c.get("nome", "")).casefold() == self._city.strip().casefold()
+
+@final
+class Source(BaseSource):
+    TITLE = "CEM Ambiente"
+    DESCRIPTION = (
+        "Source for CEM Ambiente (CEM FACILE), covering municipalities in the "
+        "Milano / Monza e Brianza / Lodi area of Italy."
+    )
+    URL = "https://www.cemambiente.it"
+    COUNTRY = "it"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Vimodrone, Via Aldo Moro": {"city": "Vimodrone", "street": "Via Aldo Moro"},
+        "Cologno Monzese, Via Cadore": {
+            "city": "Cologno Monzese",
+            "street": "Via Cadore",
+        },
+        "Vimercate, Via Cesare Battisti": {
+            "city": "Vimercate",
+            "street": "Via Cesare Battisti",
+        },
+    }
+
+    REGIONS = tuple(region(name, city=name) for name in _MUNICIPALITIES)
+
+    PARAMS = (city(), street())
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.ORGANIC,
+        wt.GARDEN_WASTE,
+        wt.PAPER,
+        wt.GLASS,
+        wt.RECYCLABLES,
+        wt.PLASTIC,
+        wt.GENERAL_WASTE,
+        wt.OTHER,
+    ]
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the municipality (comune) and street (via) exactly as they are "
+            "known to CEM Ambiente, e.g. as shown on "
+            "https://www.cemambiente.it/cemfacile/. If the exact spelling isn't "
+            "found, the error message will list the closest matching street names "
+            "for your municipality."
+        ),
+        "it": (
+            "Inserisci il comune e la via esattamente come sono indicati da CEM "
+            "Ambiente, ad esempio come mostrato su "
+            "https://www.cemambiente.it/cemfacile/. Se l'ortografia esatta non "
+            "viene trovata, il messaggio di errore elencherà le vie più simili per "
+            "il tuo comune."
+        ),
+    }
+
+    retrieve = retrievers.Request(
+        f"{API}/getCalendario",
+        method="POST",
+        json=lambda id_siunet, via, **_: {"idSiunet": id_siunet, **via},
+        before=(
+            retrievers.Lookup(
+                f"{API}/listComuni", method="POST", json={}, pick=_pick_municipality
             ),
-            None,
-        )
-        if comune is None:
-            all_names = [c.get("nome", "") for c in comuni]
-            suggestions = get_close_matches(self._city, all_names, n=5, cutoff=0.4)
-            raise SourceArgumentNotFoundWithSuggestions(
-                "city", self._city, suggestions or sorted(all_names)
-            )
-
-        id_siunet = comune["idSiunet"]
-
-        r = session.post(f"{API_URL}/public/listVie", json={"idSiunet": id_siunet})
-        r.raise_for_status()
-        vie = r.json().get("body", [])
-
-        via = next(
-            (
-                v
-                for v in vie
-                if str(v.get("nome", "")).casefold() == self._street.strip().casefold()
+            retrievers.Lookup(
+                f"{API}/listVie",
+                method="POST",
+                json=lambda id_siunet, **_: {"idSiunet": id_siunet},
+                pick=_pick_street,
             ),
-            None,
-        )
-        if via is None:
-            all_streets = [v.get("nome", "") for v in vie]
-            suggestions = get_close_matches(self._street, all_streets, n=5, cutoff=0.4)
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, suggestions or sorted(all_streets)
-            )
+        ),
+    )
 
-        r = session.post(
-            f"{API_URL}/public/getCalendario",
-            json={
-                "idSiunet": id_siunet,
-                "idVia": via["idVia"],
-                "nomeVia": via["nome"],
-            },
-        )
-        r.raise_for_status()
-        servizi = r.json().get("body", [])
+    parse = parsers.JsonParser("body")
 
-        entries: list[Collection] = []
-        for item in servizi:
-            date_str = item.get("data")
-            servizio = item.get("servizio")
-            if not date_str or not servizio:
-                continue
-
-            date = datetime.fromisoformat(date_str).date()
-
-            tipologia = item.get("tipologiaServizio") or ""
-            code = tipologia.split(" - ")[0].strip()
-            icon = ICON_MAP.get(code)
-
-            entries.append(Collection(date=date, t=servizio, icon=icon))
-
-        return entries
+    transform = JsonTransformer(
+        date_key="data",
+        # "UMI - Raccolta Umido": the leading code names the service.
+        type_key=lambda record: (
+            str(record["tipologiaServizio"]).split(" - ")[0].strip()
+        ),
+        parse_date=date_parsers.for_format("%Y-%m-%dT%H:%M:%S"),
+        type_value_map={
+            "UMI": wt.ORGANIC,
+            "VER": wt.GARDEN_WASTE,
+            "CAR": wt.PAPER,
+            "VET": wt.GLASS,
+            # Multipak: plastic and metal packaging collected together.
+            "MUL": wt.RECYCLABLES,
+            "APL": wt.PLASTIC,
+            "SEC": wt.GENERAL_WASTE,
+            "ECU": wt.GENERAL_WASTE,
+            "STP": wt.GENERAL_WASTE,
+            # Manual and mechanical street sweeping.
+            "MAN": wt.OTHER,
+            "SPA": wt.OTHER,
+        },
+    )
