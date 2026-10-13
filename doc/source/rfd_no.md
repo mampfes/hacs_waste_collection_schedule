@@ -1,12 +1,14 @@
 # Renovasjonsselskapet for Drammensregionen IKS (RfD)
 
-Support for schedules provided by [Renovasjonsselskapet for Drammensregionen IKS (RfD)](https://www.rfd.no), serving the Drammen region, Norway.
+Support for schedules provided by [Renovasjonsselskapet for Drammensregionen IKS (RfD)](https://www.rfd.no).
+
+Source for RfD waste collection schedules
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rfd_no
       args:
         address: ADDRESS
@@ -15,24 +17,18 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **address**  
-*(String) (required)*
-
-The address as shown in the RfD address search results, for example `Bragernes Torg 13, Drammen`.
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: rfd_no
       args:
         address: Bragernes Torg 13, Drammen
 ```
 
-## Collection types
+## How to get the source arguments
 
-The schedule page on rfd.no lists residual waste (`Restavfall`) and food waste (`Matavfall`) separately, and they are collected on different schedules. The source reports them as two separate types. The other types are `Papiravfall`, `Plastemballasje`, `Glass- og metallemballasje` and `Hageavfall`.
-
-## How to get the source argument
-
-Visit [https://www.rfd.no/avfallshenting](https://www.rfd.no/avfallshenting), search for your address, and use the address exactly as shown in the result list.
+Search for your address at rfd.no/avfallshenting. Use the address exactly as shown in the result list, for example 'Bragernes Torg 13, Drammen'.
