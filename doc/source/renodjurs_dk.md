@@ -1,38 +1,34 @@
-# Reno Djurs I/S
+# Reno Djurs
 
-Support for schedules provided by [Reno Djurs i/s](https://renodjurs.dk/), serving Odder and Skanderborg kommuner, Denmark.
+Support for schedules provided by [Reno Djurs](https://renodjurs.dk).
+
+Reno Djurs collections for Djursland
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: renodjurs_dk
       args:
-        id: See description
+        id: ID
 ```
 
 ### Configuration Variables
 
 **id**  
-_(String) (required)_
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: renodjurs_dk
       args:
-        id: "45000"
+        id: '46000'
 ```
 
-## How to get the id
+## How to get the source arguments
 
-Go to the [Min Side Reno Djurs I/S](https://minside.renodjurs.dk/) page, enter your address.
-
-In the URL (web page address) copy the number after `id=`
-
-`I.e.` [`https://minside.renodjurs.dk/Ordninger.aspx?id=45000`](https://minside.renodjurs.dk/Ordninger.aspx?id=45000)
-
-Then it's the `45000` part used in the integration
+Open https://minside.renodjurs.dk, search your address and copy the number after `id=` in the address bar of the 'Ordninger' page.

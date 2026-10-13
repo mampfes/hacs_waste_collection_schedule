@@ -1875,7 +1875,9 @@
   },
   "renodjurs_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renodjurs_dk.md",
-    "howto": {},
+    "howto": {
+      "en": "Open https://minside.renodjurs.dk, search your address and copy the number after `id=` in the address bar of the 'Ordninger' page."
+    },
     "urls": {}
   },
   "renosyd_dk": {
@@ -1893,7 +1895,9 @@
   },
   "ressourceindsamling_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ressourceindsamling_dk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the street name and house number as they appear on https://www.ressourceindsamling.dk/ (for example Kløvertoften and 61)."
+    },
     "urls": {}
   },
   "vestfor_dk": {
@@ -2118,7 +2122,9 @@
   },
   "sivom_rivedroite_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your district exactly as named on the collection map at https://www.sivom-rivedroite.fr/ (e.g. 'BASSENS 3')."
+    },
     "urls": {}
   },
   "toulouse_metropole_fr": {
@@ -4867,7 +4873,9 @@
   },
   "poznan_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/poznan_pl.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the street name and building number exactly as offered on https://www.poznan.pl/mim/odpady/harmonogramy.html."
+    },
     "urls": {}
   },
   "prezero_bielsko_pl": {
@@ -4891,7 +4899,9 @@
   },
   "warszawa19115_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warszawa19115_pl.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address as `street_address`, in the form the [Warsaw 19115 portal](https://warszawa19115.pl/harmonogramy-wywozu-odpadow) suggests it (for example `MARSZAŁKOWSKA 84/92, 00-514 Śródmieście`), or the portal's numeric address point id as `geolocation_id`."
+    },
     "urls": {}
   },
   "wieliczka_kiedyodpady_pl": {
@@ -4903,7 +4913,9 @@
   },
   "ekosystem_wroc_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ekosystem_wroc_pl.md",
-    "howto": {},
+    "howto": {
+      "en": "Visit the Ekosystem schedule search (https://ekosystem.wroc.pl/gospodarowanie-odpadami/harmonogram-wywozu-odpadow/), search for your address and get the schedule. The URL contains your location id as the parameter `lokalizacja`."
+    },
     "urls": {}
   },
   "lodz_pl": {
@@ -5155,7 +5167,9 @@
   },
   "lumire_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lumire_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the street address and house number as found by the address search at https://www.lumire.se/ (for example, Ringgatan 20)."
+    },
     "urls": {}
   },
   "lund_se": {
@@ -5182,7 +5196,9 @@
   },
   "nvaa_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nvaa_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the address as the self-service site writes it, street and number followed by the locality, e.g. `Hamndalsvägen 2, Norrtälje`."
+    },
     "urls": {}
   },
   "rambo_se": {
@@ -5213,7 +5229,9 @@
   },
   "pireva_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pireva_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address exactly as it is written in the address search on https://www.pireva.se/tomningsschema/ (street, number and, for some properties, a name, e.g. 'Kolugnsvägen 1 Räddningstjänsten Mf')."
+    },
     "urls": {}
   },
   "gotland_se": {
@@ -5308,7 +5326,7 @@
   "varmdo_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/varmdo_se.md",
     "howto": {
-      "en": "Enter your street name as shown on the Värmdö kommun waste collection page."
+      "en": "Enter your street address as shown in the Värmdö kommun address search, ideally with the house number."
     },
     "urls": {}
   },
