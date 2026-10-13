@@ -55,8 +55,19 @@ def _sica_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None
             )
 
 
+def _chesterfield_gov_uk(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep only the Aura ``context`` of the Lightning Out bootstrap (~450 KB)."""
+    for interaction in interactions:
+        if interaction["url"].endswith(".app"):
+            context = _json(interaction)["auraConfig"]["context"]
+            _set_json(interaction, {"auraConfig": {"context": context}})
+
+
 SCRUBBERS: dict[str, Scrubber] = {
     "sica_lu": _sica_lu,
+    "chesterfield_gov_uk": _chesterfield_gov_uk,
 }
 
 
