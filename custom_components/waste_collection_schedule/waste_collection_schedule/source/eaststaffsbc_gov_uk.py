@@ -1,99 +1,82 @@
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import location_id
+from waste_collection_schedule.service.JaduBinCollections import strip_ordinal
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "East Staffordshire Borough Council"
-DESCRIPTION = "Source for East Staffordshire Borough Council"
-URL = "https://www.eaststaffsbc.gov.uk/"
-TEST_CASES = {
-    "Marlpit Lane": {"uid": 103368},
-    "Church Lane": {"uid": "103281"},
-}
-ICON_MAP = {
-    "Blue Bin": Icons.RECYCLING,
-    "Brown Bin": Icons.BIO_KITCHEN,
-    "Weekly Food Waste": Icons.BIO_KITCHEN,
-    "Blue Bag": Icons.NEWSPAPER,
-    "Grey Bin": Icons.GENERAL_WASTE,
-}
 API_URL = "https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates"
 
+# The block's text runs together with its bin labels ("...OctoberBlue Bag"), so
+# the month has to be matched by name rather than as a word.
+_DATE_PATTERN = (
+    r"\w+, \d+(?:st|nd|rd|th) "
+    r"(?:January|February|March|April|May|June|July|August|September|October"
+    r"|November|December)"
+)
 
-def parse_date_with_rollover(date_str, last_date=None):
-    """
-    Convert 'Tuesday, 21st April' -> datetime.date.
-
-    Handle year-end rollover (Dec -> Jan)
-    """
-    today = datetime.today()
-    # Remove ordinal suffixes
-    clean = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", date_str)
-    # Parse without year
-    parsed = datetime.strptime(clean, "%A, %d %B")
-    # Assume collection is in the current year
-    candidate = parsed.replace(year=today.year)
-    if last_date:
-        # If this date is earlier than the previous one assume collection is next year
-        if candidate.date() < last_date:
-            candidate = candidate.replace(year=last_date.year + 1)
-        else:
-            candidate = candidate.replace(year=last_date.year)
-    else:
-        # First date: if it's already in the past, assume next year
-        if candidate.date() < today.date():
-            candidate = candidate.replace(year=today.year + 1)
-    return candidate.date()
+_NEAREST_YEAR = date_parsers.nearest_year("%A, %d %B")
 
 
-class Source:
-    def __init__(self, uid: str | int):
-        self._uid: str = str(uid)
+def _date(text: str):
+    """ "Tuesday, 13th October" -> the date, the year being the nearest to today."""
+    return _NEAREST_YEAR(strip_ordinal(text))
 
-    def fetch(self) -> list[Collection]:
 
-        s = requests.Session()
-        r = s.get(f"{API_URL}/{self._uid}")
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
+@final
+class Source(BaseSource):
+    TITLE = "East Staffordshire Borough Council"
+    DESCRIPTION = "Source for East Staffordshire Borough Council"
+    URL = "https://www.eaststaffsbc.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        entries = []
-        last_date = None
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-        # "Next Collection" section
-        next_section = soup.select_one(".collection-next")
-        if next_section:
-            date_text = (
-                next_section.find("h2")
-                .get_text(strip=True)
-                .replace("Your next collection:", "")
-                .strip()
-            )
-            parsed_date = parse_date_with_rollover(date_text, last_date)
-            last_date = parsed_date
-            next_bins = [
-                item.get_text(strip=True)
-                for item in next_section.select(".containers .field__item")
-            ]
-            for bin in next_bins:
-                entries.append(
-                    Collection(date=parsed_date, t=bin, icon=ICON_MAP.get(bin))
-                )
+    TEST_CASES: ClassVar[dict] = {
+        "Marlpit Lane": {"uid": 103368},
+        "Church Lane": {"uid": "103281"},
+    }
 
-        # "Other Collections" section
-        for li in soup.find("h2", string="Other collections").find_next_siblings("li"):
-            containers = li.select(".containers .field__item")
-            if not containers:
-                continue
-            date_text = li.contents[0].strip()
-            parsed_date = parse_date_with_rollover(date_text, last_date)
-            last_date = parsed_date
-            other_bins = [item.get_text(strip=True) for item in containers]
-            for bin in other_bins:
-                entries.append(
-                    Collection(date=parsed_date, t=bin, icon=ICON_MAP.get(bin))
-                )
+    PARAMS = (location_id("uid"),)
 
-        return entries
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Search for your address on the "
+            "[East Staffordshire collection dates page]"
+            "(https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates). "
+            "The number at the end of the resulting address "
+            "(`.../collection-dates/<uid>`) is your `uid`."
+        ),
+    }
+
+    retrieve = retrievers.HttpGetRetriever(url=lambda uid, **_: f"{API_URL}/{uid}")
+
+    # The "next collection" block and every later date are each one block with
+    # its own date line and the bins collected that day.
+    parse = parsers.HtmlLabelledDates(
+        ".collection-next, .bin_collections > li",
+        label=".containers .field__item",
+        all_labels=True,
+        date=":scope",
+        date_pattern=_DATE_PATTERN,
+        parse_date=_date,
+    )
+
+    transform = RowTransformer(
+        type_value_map={
+            "Blue Bin": wt.RECYCLABLES,
+            "Brown Bin": wt.GARDEN_WASTE,
+            "Weekly Food Waste": wt.FOOD_WASTE,
+            "Blue Bag": wt.PAPER,
+            "Grey Bin": wt.GENERAL_WASTE,
+        },
+    )
