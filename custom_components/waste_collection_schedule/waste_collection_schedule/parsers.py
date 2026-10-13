@@ -2195,7 +2195,9 @@ class PdfWordLayout(NamedTuple):
     vectors: list[PdfVector]
 
 
-def _pdf_word_layout(response: Response) -> PdfWordLayout:
+def _pdf_word_layout(
+    response: Response, *, include_form_text: bool = False
+) -> PdfWordLayout:
     """Retain individual word centres even when lines span several grid cells."""
     from io import BytesIO
 
@@ -2257,7 +2259,9 @@ def _pdf_word_layout(response: Response) -> PdfWordLayout:
             )
 
     for page, layout in enumerate(
-        extract_pages(BytesIO(response.content), laparams=LAParams())
+        extract_pages(
+            BytesIO(response.content), laparams=LAParams(all_texts=include_form_text)
+        )
     ):
         visit(layout, page)
     return PdfWordLayout(lines, words, vectors)
@@ -2269,17 +2273,26 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
     Coordinates use the PDF origin at bottom left and zero-based page numbers.
     Greyscale fills are normalised to RGB triples for comparison with RGB
     legends. An optional minimum word/vector count detects empty or changed
-    documents. The one-item list composes with ``parsers.EachResponse``.
+    documents. Set ``include_form_text`` for text inside Form XObjects, which
+    needs pdfminer's ``all_texts`` grouping to become positioned words.
+    The one-item list composes with ``parsers.EachResponse``.
     """
 
-    def __init__(self, *, min_words: int = 1, min_vectors: int = 0):
+    def __init__(
+        self,
+        *,
+        min_words: int = 1,
+        min_vectors: int = 0,
+        include_form_text: bool = False,
+    ):
         self.min_words = min_words
         self.min_vectors = min_vectors
+        self.include_form_text = include_form_text
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> list[PdfWordLayout]:
-        layout = _pdf_word_layout(response)
+        layout = _pdf_word_layout(response, include_form_text=self.include_form_text)
         response_shape.expect(
             len(layout.words) >= self.min_words
             and len(layout.vectors) >= self.min_vectors,

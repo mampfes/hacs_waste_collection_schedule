@@ -4,8 +4,13 @@ import json
 import re
 
 from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import (  # type: ignore[attr-defined]
+    Collection,
+    Icons,
+    response_shape,
+)
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.service.EastLindseyCalendar import GardenCalendarParser
 
 TITLE = "East Lindsey District Council"
 DESCRIPTION = "Source for East Lindsey District Council waste collection."
@@ -157,7 +162,6 @@ class Source:
             ("wastenextref", "Refuse"),
             ("wastenextrec", "Recycling"),
             ("wastenextpur", "Purple Bin"),
-            ("greenfirst", "Garden Waste"),
         ]:
             raw = result.get(field, "")
             date = _parse_date(raw)
@@ -168,6 +172,28 @@ class Source:
                         t=waste_type,
                         icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
                     )
+                )
+
+        # greenfirst is the start of the season, not an upcoming collection.
+        # The public PDF is the council's dated schedule, including winter
+        # gaps and any shifted collections.
+        pdf_id = result.get("greenpdfid")
+        if pdf_id not in (None, "", "null"):
+            day = str(result.get("greenday", "")).strip()
+            week = str(result.get("greenweek", "")).strip()
+            response_shape.expect(
+                str(pdf_id).isdigit()
+                and day in ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+                and week in ("A", "B"),
+                source_name="e_lindsey_gov_uk",
+                detail="garden calendar lookup has invalid id/day/week fields",
+            )
+            pdf_url = f"{URL}/media/{pdf_id}/file/PDF/{day}{week}.pdf"
+            calendar_response = session.get(pdf_url, timeout=30)
+            calendar_response.raise_for_status()
+            for date in GardenCalendarParser()(calendar_response):
+                collections.append(
+                    Collection(date=date, t="Garden Waste", icon=Icons.GARDEN)
                 )
 
         return collections
