@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://lumire.se/api/waste-pickup c741e6fee4",
+      "method": "GET",
+      "url": "https://lumire.se/api/waste-pickup",
+      "final_url": "https://lumire.se/api/waste-pickup?q=Ymergatan+5",
+      "body": "{\"params\":[[\"q\",\"Ymergatan 5\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "content-type": "application/json",
+        "vary": "Accept-Encoding",
+        "cache-control": "no-cache, private",
+        "date": "Tue, 13 Oct 2026 09:48:08 GMT",
+        "access-control-allow-origin": "*",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "x-cache": "BYPASS",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJhZGRyZXNzZXMiOlt7ImFkZHJlc3MiOiJZbWVyZ2F0YW4gNSwgTHVsZVx1MDBlNSIsImJ1aWxkaW5nSWQiOiI3MDA4NTA0In1dfQ=="
+    },
+    {
+      "key": "GET https://lumire.se/api/waste-pickup/7008504 ",
+      "method": "GET",
+      "url": "https://lumire.se/api/waste-pickup/7008504",
+      "final_url": "https://lumire.se/api/waste-pickup/7008504",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "content-type": "application/json",
+        "vary": "Accept-Encoding",
+        "cache-control": "no-cache, private",
+        "date": "Tue, 13 Oct 2026 09:48:10 GMT",
+        "access-control-allow-origin": "*",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "x-cache": "MISS",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJkYXRhIjpbeyJpZCI6IjI0MjEyOCIsImJ1aWxkaW5nSWQiOiI3MDA4NTA0IiwiZGVzY3JpcHRpb24iOiJLXHUwMGU0cmwgQSwgMzcwIGwgdHZcdTAwZTVmYWNrLCBwYXBwZXJzZlx1MDBmNnJwYWNrbmluZ2FyIG9jaCBtYXRhdmZhbGwsIHZhciAxNDplIGRhZyIsIm5leHRQaWNrdXAiOiIyMDI2LTEwLTE2IiwiaXNBY3RpdmUiOnRydWUsImJpblR5cGUiOnsiY29kZSI6IlRLMzcwIiwiY29udGFpbmVyX3R5cGUiOiIyLWZhY2tza1x1MDBlNHJsIiwic2l6ZSI6IjM3MC4wMCIsInVuaXQiOiJsIn0sImZlZSI6eyJjYWxjdWxhdGVkX2Nvc3QiOiIwIiwiY29kZSI6IktcdTAwYzRBMzcwUEFNQTIiLCJkZXNpZ25hdGlvbiI6IktcdTAwZTRybCBBLCAzNzAgbCB0dlx1MDBlNWZhY2ssIHBhcHBlcnNmXHUwMGY2cnBhY2tuaW5nYXIgb2NoIG1hdGF2ZmFsbCwgdmFyIDE0OmUgZGFnIiwiaWQiOiIwIiwiaXNfY29zdF9jYWxjdWxhdGVkIjoiZmFsc2UiLCJwYXJ0X3Byb2R1Y3QiOiJIVVNIIiwicGFydF95ZWFyX2Rlc2NyaXB0aW9uIjpbXSwicGFydF95ZWFyX2VuZHMiOiIwMDAxLTAxLTAxVDAwOjAwOjAwIiwicGFydF95ZWFyX3N0YXJ0cyI6IjAwMDEtMDEtMDFUMDA6MDA6MDAiLCJwcm9kdWN0IjoiUkVOSCIsImJpbl90eXBlIjp7ImJfY29kZSI6IlRLMzcwIiwiYl9jb250YWluZXJUeXBlIjoiMi1mYWNrc2tcdTAwZTRybCIsImJfc2l6ZSI6IjM3MC4wMCIsImJfdW5pdCI6ImwifSwiY2hhbmdlX2ZyZXF1ZW5jeV90ZXh0IjpbXSwiY2hhbmdlX3NpemVfb2ZfYmluX3RleHQiOltdLCJkZXNjcmlwdGlvbiI6IktcdTAwZTRybCBBLCAzNzAgbCB0dlx1MDBlNWZhY2ssIHBhcHBlcnNmXHUwMGY2cnBhY2tuaW5nYXIgb2NoIG1hdGF2ZmFsbCwgdmFyIDE0OmUgZGFnIiwid2FzdGVfcGlja3VwX2ZyZXF1ZW5jeSI6IlZhcmFubmFuIHZlY2thIiwid2FzdGVfcGlja3VwX2ZyZXF1ZW5jeV9jb2RlIjoidmFyIDE0OmUiLCJ3YXN0ZV9waWNrdXBzX3Blcl95ZWFyIjoiMjYiLCJ3YXN0ZV90eXBlIjoiUGFwcGVyXC9NYXRhdmYuIn19LHsiaWQiOiIyNDIxMjciLCJidWlsZGluZ0lkIjoiNzAwODUwNCIsImRlc2NyaXB0aW9uIjoiS1x1MDBlNHJsIEIsIDM3MCBsIHR2XHUwMGU1ZmFjaywgcmVzdGF2ZmFsbCBvY2ggcGxhc3RmXHUwMGY2cnBhY2tuaW5nYXIsIHZhciA0OmUgdmVja2EiLCJuZXh0UGlja3VwIjoiMjAyNi0xMS0wNiIsImlzQWN0aXZlIjp0cnVlLCJiaW5UeXBlIjp7ImNvZGUiOiJUSzM3MCIsImNvbnRhaW5lcl90eXBlIjoiMi1mYWNrc2tcdTAwZTRybCIsInNpemUiOiIzNzAuMDAiLCJ1bml0IjoibCJ9LCJmZWUiOnsiY2FsY3VsYXRlZF9jb3N0IjoiMCIsImNvZGUiOiJLXHUwMGM0QjM3MFJFUEw0IiwiZGVzaWduYXRpb24iOiJLXHUwMGU0cmwgQiwgMzcwIGwgdHZcdTAwZTVmYWNrLCByZXN0YXZmYWxsIG9jaCBwbGFzdGZcdTAwZjZycGFja25pbmdhciwgdmFyIDQ6ZSB2ZWNrYSIsImlkIjoiMCIsImlzX2Nvc3RfY2FsY3VsYXRlZCI6ImZhbHNlIiwicGFydF9wcm9kdWN0IjoiSFVTSCIsInBhcnRfeWVhcl9kZXNjcmlwdGlvbiI6W10sInBhcnRfeWVhcl9lbmRzIjoiMDAwMS0wMS0wMVQwMDowMDowMCIsInBhcnRfeWVhcl9zdGFydHMiOiIwMDAxLTAxLTAxVDAwOjAwOjAwIiwicHJvZHVjdCI6IlJFTkgiLCJiaW5fdHlwZSI6eyJiX2NvZGUiOiJUSzM3MCIsImJfY29udGFpbmVyVHlwZSI6IjItZmFja3NrXHUwMGU0cmwiLCJiX3NpemUiOiIzNzAuMDAiLCJiX3VuaXQiOiJsIn0sImNoYW5nZV9mcmVxdWVuY3lfdGV4dCI6W10sImNoYW5nZV9zaXplX29mX2Jpbl90ZXh0IjpbXSwiZGVzY3JpcHRpb24iOiJLXHUwMGU0cmwgQiwgMzcwIGwgdHZcdTAwZTVmYWNrLCByZXN0YXZmYWxsIG9jaCBwbGFzdGZcdTAwZjZycGFja25pbmdhciwgdmFyIDQ6ZSB2ZWNrYSIsIndhc3RlX3BpY2t1cF9mcmVxdWVuY3kiOiJWYXIgNDplIHZlY2thIiwid2FzdGVfcGlja3VwX2ZyZXF1ZW5jeV9jb2RlIjoidmFyIDQ6ZSIsIndhc3RlX3BpY2t1cHNfcGVyX3llYXIiOiIxMyIsIndhc3RlX3R5cGUiOiJSZXN0YXZmLlwvUGxhc3QifX1dfQ=="
+    }
+  ]
+}
