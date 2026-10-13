@@ -19,10 +19,10 @@ when the count reaches zero.
 | 4 | Migrate onto an existing platform component | 2 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
 | 5 | Shared backend, build one component for the cluster | 1 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 1 left (of 14) | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
-| 7 | Singleton, small (<150 lines, <=2 requests) | 25 left (of 58) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
-| 8 | Singleton, medium | 112 | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
+| 7 | Singleton, small (<150 lines, <=2 requests) | 24 left (of 58) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
+| 8 | Singleton, medium | 78 | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
 | 9 | Singleton, large (>=350 lines or >=5 requests) | 24 (+1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
-| | **Total** | **181** (281 before class 4; the clusters, thirteen PDF sources and thirty-seven small singletons are migrated, see the notes in class 5, 6 and 7) | |
+| | **Total** | **151** (281 before class 4; the clusters, thirteen PDF sources and sixty-seven singletons are migrated, see the notes in class 5, 6 and 7) | |
 
 ## 1. Special / not a provider
 
@@ -97,6 +97,10 @@ Done in the third block (10, UK councils): `oldham_gov_uk`, `bromsgrove_gov_uk`,
 
 Done in the fourth block (10 of 12, UK councils): `ardsandnorthdown_gov_uk`, `pembrokeshire_gov_uk`, `charnwood_gov_uk`, `knowsley_gov_uk` (class 8), `fenland_gov_uk`, `dorset_gov_uk`, `cardiff_gov_uk` (the council moved to a new endpoint with an anti-forgery token), `e_lindsey_gov_uk` (class 8), `castlepoint_gov_uk` (class 8), `chesterfield_gov_uk` (class 8; the server omits its intermediate certificate, so the source bundles that intermediate on top of certifi's roots with `SalesforceAuraApex.ca_bundle()` and keeps verification on, the approach `data_montpellier3m_fr` already uses; the intermediate expires 2027-07-16) (new shared pieces: `service/SalesforceAuraApex.py`, `service/MendixBinForm.py`, `date_parsers.relative_words` / `without_ordinals`, `FanOutRetriever(include_prepared=)`, regex form names in `GossFormRetriever`, `WebAspxCollections` accepts the JSON reply and `Gls`).
 
+Done in the fifth block (20 singletons from NL, IT, PL, CZ, SE, LU, DE; mostly class 8): `afvalstoffendienst_nl`, `ximmio_nl`, `irado_nl`, `omrin_nl`, `burgerportaal_nl`, `cem_ambiente_it`, `amsa_it`, `gmina_zgierz_pl`, `czystyregion_pl`, `gmina_sroda_slaska_pl`, `smiecioplan_pl`, `popuvky_cz`, `affarsverken_se`, `roslagsvatten_se`, `tsceskybrod_cz`, `samiljo_se`, `valorlux_lu`, `potsdam_de`, `heidelberg_de`, `luxembourg_lu` (new shared pieces: `service/ComD.py`, `service/GminaZgierz.py`, `service/TsCeskyBrod.py`, `service/ValorluxLu.py`, `service/PotsdamAbfallkalender.py`, `service/HeidelbergDatenplattform.py`, `service/DataPublicLu.py`, `parsers.JsonLookupJoin`, `JsVarParser(json_parse=)`, `LookupChainRetriever(json=)`, ISO-week parser ignores a month name, `from_epoch` accepts any `tzinfo`, and a dozen cassette scrubbers). Ten French and German sources (`sictom_lons_le_saunier_fr`, `grandbesancon_fr`, `data_grandlyon_com`, `memotri_agglo_pau_fr`, `clissonsevremaine_fr`, `beg_logistics_de`, `kaw_mainz_bingen_de`, `amberg_de`, `stadtwerke_singen_de`, `awb_ammerland_de`) were migrated in #7813.
+
+Blocked in the fifth block (not migrated): `silea_it` (the provider's `get_calendar` API returns nothing for every municipality and month; retry later), `api_golemio_cz` (needs a Golemio API key), `komunala_kranj_si` (the GIS host refuses the German exit; may need a Slovenian IP).
+
 Found broken upstream, not migrated (3): `hygea_be` (the JSON calendar is gone after a site relaunch and the server sends an incomplete certificate chain), `grosswangen_ch` (the page no longer carries dates, only a yearly PDF and prose rules since the collection changed hands), `araccolta_it` (serves a maintenance page for every URL; the legacy source also has a bug: its waste-type generator is exhausted after the first weekday of a card). They stay legacy until a decision (fix, rewrite or remove). The second block found three more providers gone: `odenserenovation_dk` (API removed, 404), `ecoapp_ecoservice_lt` (API host no longer resolves) and `tkeliai_lt` (the calendar feature was removed from the site). Also not migrated: `dover_gov_uk` (host `collections.dover.gov.uk` no longer resolves) and `wolverhampton_gov_uk` (the page no longer carries any bin content); `blackpool_gov_uk` and `swansea_gov_uk` were unreachable from the UK exit (TLS closed / no response) and are deferred. `merton_gov_uk` (the old portal returns 404) and `newcastle_gov_uk` (the lookup was retired) are dead; both councils are already covered by shared ICS entries ("London Borough of Merton (New)", and ReCollect area `NewcastleUponTyneUK` in `recollect.yaml`), so they are removal candidates for the next major release. `hastings_gov_uk` is deferred: its server omits the intermediate certificate (the pipeline verifies TLS strictly; the legacy source disables verification), a decision on shipping the intermediate certificate is open. `vestfor_dk` is deferred: its self-service host is unreachable from the German exit and needs a Danish IP.
 
 - **html** (7): `apps_ci_minneapolis_mn_us`, `araccolta_it`, `dover_gov_uk`, `geelongaustralia_com_au`, `mundaring_wa_gov_au`, `swansea_gov_uk`, `wolverhampton_gov_uk`
@@ -108,18 +112,16 @@ Found broken upstream, not migrated (3): `hygea_be` (the JSON calendar is gone a
 
 ## 8. Standalone, medium
 
-- **json** (35): `affarsverken_se`, `afvalstoffendienst_nl`, `aksd_hu`, `amsa_it`, `apricaspa_it`, `awb_ammerland_de`, `bristol_gov_uk`, `burgerportaal_nl`, `casey_vic_gov_au`, `ccc_govt_nz`, `cem_ambiente_it`, `cockburn_wa_gov_au`, `czystyregion_pl`, `data_grandlyon_com`, `enfield_gov_uk`, `fcc_group_eu`, `grafikai_svara_lt`, `hastings_gov_uk`, `heidelberg_de`, `joondalup_wa_gov_au`, `kaw_mainz_bingen_de`, `komunala_kranj_si`, `lacity_gov`, `nwrrr_com_au`, `omrin_nl`, `roslagsvatten_se`, `sictom_lons_le_saunier_fr`, `silea_it`, `sivom_com`, `sunshinecoast_qld_gov_au`, `thehills_nsw_gov_au`, `valorlux_lu`, `vattenmiljoresurs_se`, `waikato_district_council_govt_nz`, `ximmio_nl`
-- **html** (29): `adur_worthing_gov_uk`, `antrimandnewtownabbey_gov_uk`, `aucklandcouncil_govt_nz`, `belfast_city_gov_uk`, `chichester_gov_uk`, `clissonsevremaine_fr`, `coeur_yvelines_fr`, `dardanup_wa_gov_au`, `east_renfrewshire_gov_uk`, `environmentfirst_co_uk`, `fairfieldcity_nsw_gov_au`, `gardenbags_co_nz`, `gmina_sroda_slaska_pl`, `ipswich_gov_uk`, `irado_nl`, `islington_gov_uk`, `midsussex_gov_uk`, `newforest_gov_uk`, `newham_gov_uk`, `northumberland_gov_uk`, `samiljo_se`, `stadtwerke_singen_de`, `stamford_ct_us`, `swale_gov_uk`, `teignbridge_gov_uk`, `terrestouloises_com`, `ville_quebec_qc_ca`, `warrnambool_vic_gov_au`, `wigan_gov_uk`
-- **json/html** (17): `gateshead_gov_uk`, `gleneira_vic_gov_au`, `gmina_zgierz_pl`, `goldenplains_vic_gov_au`, `gosport_gov_uk`, `great_yarmouth_gov_uk`, `greyhound_ie`, `hastingsdc_govt_nz`, `iris_salten_no`, `lewisham_gov_uk`, `memotri_agglo_pau_fr`, `powys_gov_uk`, `rfd_no`, `royalgreenwich_gov_uk`, `south_ayrshire_gov_uk`, `stockton_gov_uk`, `vogeldisposal_com`
-- **ics/json** (10): `airdrie_ca`, `api_golemio_cz`, `ekonovus_lt`, `greatershepparton_com_au`, `maitland_nsw_gov_au`, `npdc_govt_nz`, `potsdam_de`, `republicservices_com`, `sanantonio_gov`, `smiecioplan_pl`
-- **?** (4): `eth_erd_hu`, `popuvky_cz`, `southampton_gov_uk`, `tsceskybrod_cz`
-- **ics/json/html** (3): `barrie_ca`, `beg_logistics_de`, `rir_no`
-- **json/xml** (2): `ciudad_de_la_costa_uy`, `grandbesancon_fr`
+- **json** (20): `aksd_hu`, `apricaspa_it`, `bristol_gov_uk`, `casey_vic_gov_au`, `ccc_govt_nz`, `cockburn_wa_gov_au`, `enfield_gov_uk`, `fcc_group_eu`, `grafikai_svara_lt`, `hastings_gov_uk`, `joondalup_wa_gov_au`, `komunala_kranj_si`, `lacity_gov`, `nwrrr_com_au`, `silea_it`, `sivom_com`, `sunshinecoast_qld_gov_au`, `thehills_nsw_gov_au`, `vattenmiljoresurs_se`, `waikato_district_council_govt_nz`
+- **html** (24): `adur_worthing_gov_uk`, `antrimandnewtownabbey_gov_uk`, `aucklandcouncil_govt_nz`, `belfast_city_gov_uk`, `chichester_gov_uk`, `coeur_yvelines_fr`, `dardanup_wa_gov_au`, `east_renfrewshire_gov_uk`, `environmentfirst_co_uk`, `fairfieldcity_nsw_gov_au`, `gardenbags_co_nz`, `ipswich_gov_uk`, `islington_gov_uk`, `midsussex_gov_uk`, `newforest_gov_uk`, `newham_gov_uk`, `northumberland_gov_uk`, `stamford_ct_us`, `swale_gov_uk`, `teignbridge_gov_uk`, `terrestouloises_com`, `ville_quebec_qc_ca`, `warrnambool_vic_gov_au`, `wigan_gov_uk`
+- **json/html** (15): `gateshead_gov_uk`, `gleneira_vic_gov_au`, `goldenplains_vic_gov_au`, `gosport_gov_uk`, `great_yarmouth_gov_uk`, `greyhound_ie`, `hastingsdc_govt_nz`, `iris_salten_no`, `lewisham_gov_uk`, `powys_gov_uk`, `rfd_no`, `royalgreenwich_gov_uk`, `south_ayrshire_gov_uk`, `stockton_gov_uk`, `vogeldisposal_com`
+- **ics/json** (8): `airdrie_ca`, `api_golemio_cz`, `ekonovus_lt`, `greatershepparton_com_au`, `maitland_nsw_gov_au`, `npdc_govt_nz`, `republicservices_com`, `sanantonio_gov`
+- **?** (2): `eth_erd_hu`, `southampton_gov_uk`
+- **ics/json/html** (2): `barrie_ca`, `rir_no`
+- **json/xml** (1): `ciudad_de_la_costa_uy`
 - **csv** (2): `data_montpellier3m_fr`, `scenicrim_qld_gov_au`
 - **ics/html** (2): `portenf_sa_gov_au`, `preston_gov_uk`
-- **ics/json/xml** (1): `amberg_de`
 - **xml** (1): `laznebohdanec_cz`
-- **ics/csv** (1): `luxembourg_lu`
 - **ics** (1): `ritl_ca`
 
 ## 9. Standalone, large
