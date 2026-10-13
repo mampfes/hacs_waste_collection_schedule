@@ -8,7 +8,7 @@ from datetime import date, timedelta
 from typing import Any
 from urllib.parse import urljoin
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 from dateutil.rrule import weekday as RRuleWeekday
 
@@ -78,8 +78,11 @@ def _get_search_form(source: BaseSource, session: Any) -> tuple[str, str]:
             "Unable to retrieve CSRF token from the website. The site may be temporarily unavailable.",
         )
     form = csrf_input.find_parent("form")
-    action = (form.get("action") or "").strip() if form else ""
-    return (urljoin(BASE_URL + "/", action or SEARCH_PATH), csrf_input["value"])
+    action = str(form.get("action") or "").strip() if form else ""
+    return (
+        urljoin(BASE_URL + "/", action or SEARCH_PATH),
+        str(csrf_input.get("value") or ""),
+    )
 
 
 def _parse_schedule(
@@ -142,9 +145,7 @@ def _parse(source: BaseSource, r) -> list[dict[str, Any]]:
                 text = child.strip()
                 if text:
                     schedule_parts.append(text)
-            elif child.name == "br":
-                break
-            elif child.name == "span":
+            elif isinstance(child, Tag) and child.name in ("br", "span"):
                 break
         schedule_text = " ".join(schedule_parts)
         if not schedule_text:

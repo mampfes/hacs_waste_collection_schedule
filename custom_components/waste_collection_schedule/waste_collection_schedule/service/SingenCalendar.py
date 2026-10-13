@@ -100,7 +100,7 @@ def _resolve_abfuhr_id(source: BaseSource, session: Any, base_url: str) -> int:
     soup = BeautifulSoup(r.text, "html.parser")
     for a in soup.select("div.districtdirectory a"):
         if a.get_text(strip=True).casefold() == source.params["street"].casefold():
-            abfuhr_id = _extract_abfuhr_id(a["href"])
+            abfuhr_id = _extract_abfuhr_id(str(a.get("href") or ""))
             if abfuhr_id is not None:
                 return abfuhr_id
     letter = source.params["street"][0].casefold()
@@ -112,7 +112,7 @@ def _resolve_abfuhr_id(source: BaseSource, session: Any, base_url: str) -> int:
     if street_list:
         for a in street_list.find_all("a"):
             text = a.get_text(strip=True)
-            abfuhr_id = _extract_abfuhr_id(a["href"])
+            abfuhr_id = _extract_abfuhr_id(str(a.get("href") or ""))
             if abfuhr_id is None:
                 continue
             match = re.match("^(.*?)\\s*\\((Nr\\..*)\\)\\s*$", text)
@@ -177,6 +177,8 @@ def _parse(source: BaseSource, raw) -> list[dict[str, Any]]:
         if title != "Christbaumabfuhr":
             continue
         parent = h4.parent
+        if parent is None:
+            continue
         text = parent.get_text(" ", strip=True).replace(title, "", 1).strip()
         for match in re.findall("\\d{2}\\.\\d{2}\\.\\d{4}", text):
             day, month, year = (int(part) for part in match.split("."))
