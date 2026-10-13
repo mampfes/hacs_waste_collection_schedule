@@ -343,3 +343,67 @@ def first_of(*parsers: DateParser) -> DateParserFirstOf:
 def in_timezone(zone: str) -> DateParserInZone:
     """Return a DateParser giving the date an ISO timestamp falls on in ``zone``."""
     return DateParserInZone(zone)
+
+
+class DateParserRelativeWords(DateParser):
+    """Resolve "Today" / "Tomorrow" itself and hand every other date on.
+
+    For a "your next collections" list that prints the nearest days as words
+    instead of dates ("Tomorrow", then "Fri 16th Oct"). The word is matched
+    case-insensitively against ``words`` (a name to day-offset mapping) and
+    resolved relative to today; anything else goes to ``fallback``. Prefer the
+    ``relative_words(fallback)`` factory.
+    """
+
+    def __init__(
+        self,
+        fallback: DateParser,
+        words: "dict[str, int] | None" = None,
+    ):
+        self.fallback = fallback
+        self.words = {
+            word.casefold(): offset
+            for word, offset in (words or {"today": 0, "tomorrow": 1}).items()
+        }
+
+    def __call__(self, *args: str) -> datetime.date:
+        offset = self.words.get(str(args[-1]).strip().casefold())
+        if offset is None:
+            return self.fallback(*args)
+        return datetime.date.today() + datetime.timedelta(days=offset)
+
+
+class DateParserWithoutOrdinals(DateParser):
+    """Drop the English ordinal suffix before parsing ("Fri 16th Oct").
+
+    ``strptime`` has no directive for "16th"; this removes the ``st``/``nd``/
+    ``rd``/``th`` that follows a day number and hands the rest to ``fallback``.
+    Prefer the ``without_ordinals(fallback)`` factory.
+    """
+
+    _ORDINAL = re.compile(r"(?<=\d)(?:st|nd|rd|th)\b", re.IGNORECASE)
+
+    def __init__(self, fallback: DateParser):
+        self.fallback = fallback
+
+    def __call__(self, *args: str) -> datetime.date:
+        cleaned = self._ORDINAL.sub("", str(args[-1]))
+        return self.fallback(*args[:-1], cleaned)
+
+
+def relative_words(
+    fallback: DateParser, words: "dict[str, int] | None" = None
+) -> DateParserRelativeWords:
+    """Return a DateParser resolving "Today"/"Tomorrow", else using ``fallback``.
+
+    See :class:`DateParserRelativeWords`.
+    """
+    return DateParserRelativeWords(fallback, words)
+
+
+def without_ordinals(fallback: DateParser) -> DateParserWithoutOrdinals:
+    """Return a DateParser stripping "st"/"nd"/"rd"/"th" before ``fallback``.
+
+    See :class:`DateParserWithoutOrdinals`.
+    """
+    return DateParserWithoutOrdinals(fallback)
