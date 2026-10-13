@@ -1,6 +1,8 @@
 # Métropole de Lyon
 
-Support for schedules provided by [data.grandlyon.com](https://data.grandlyon.com), serving 59 communes in the Lyon metropolitan area.
+Support for schedules provided by [Métropole de Lyon](https://data.grandlyon.com).
+
+Source script for data.grandlyon.com waste collection schedules
 
 ## Configuration via configuration.yaml
 
@@ -9,21 +11,24 @@ waste_collection_schedule:
   sources:
     - name: data_grandlyon_com
       args:
-        address: "1 place Roger Salengro, Oullins"
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
-**address** *(string) (required)*
+**address**  
+*(string) (required)*
 
-Your full street address including the city name.
-
-### Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: data_grandlyon_com
       args:
-        address: "208 rue Garibaldi, Lyon"
+        address: 1 place Roger Salengro, Oullins
 ```
+
+## How to get the source arguments
+
+Enter your street address including the city name (e.g. '1 place Roger Salengro, Oullins').

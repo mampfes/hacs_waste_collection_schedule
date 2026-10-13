@@ -7984,7 +7984,8 @@
           "commune": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_clissonsevremaine_fr": {
@@ -7994,7 +7995,9 @@
           "calendar_title": "Kalender Titel",
           "commune": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_terrestouloises_com": {
         "title": "Quelle konfigurieren",
@@ -8280,7 +8283,9 @@
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_grandbesancon_fr": {
@@ -8292,7 +8297,10 @@
           "insee_code": "Insee Code",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_mamirolle_info": {
         "title": "Quelle konfigurieren",
@@ -8368,7 +8376,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_memotri_agglo_pau_fr": {
@@ -8378,7 +8387,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_data_grandlyon_com": {
         "title": "Quelle konfigurieren",
@@ -8388,7 +8399,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_data_grandlyon_com": {
@@ -8398,7 +8410,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_nice_cotedazur_fr": {
         "title": "Quelle konfigurieren",
@@ -8478,7 +8492,8 @@
           "commune": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_sictom_lons_le_saunier_fr": {
@@ -8488,7 +8503,9 @@
           "calendar_title": "Kalender Titel",
           "commune": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_sictomvds_com": {
         "title": "Quelle konfigurieren",
@@ -11039,12 +11056,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "street": "Straße",
-          "zone": "Abfuhrgebiet"
+          "zone": "Zone"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "street": "Straßenname wie im Strassenverzeichnis der Stadt (z. B. Adalbert-Stifter-Str.). Entweder Straße oder Abfuhrgebiet muss angegeben werden.",
-          "zone": "Abfuhrgebiet (z. B. A1, C4). Entweder Straße oder Abfuhrgebiet muss angegeben werden."
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_amberg_de": {
@@ -11053,11 +11069,10 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "street": "Straße",
-          "zone": "Abfuhrgebiet"
+          "zone": "Zone"
         },
         "data_description": {
-          "street": "Straßenname wie im Strassenverzeichnis der Stadt (z. B. Adalbert-Stifter-Str.). Entweder Straße oder Abfuhrgebiet muss angegeben werden.",
-          "zone": "Abfuhrgebiet (z. B. A1, C4). Entweder Straße oder Abfuhrgebiet muss angegeben werden."
+          "street": "Ihr Straßenname."
         }
       },
       "args_ics_ambnet_biz": {
@@ -11297,15 +11312,15 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
-          "four_weekly_rest": "4-wöchentlicher Restabfallrhythmus",
+          "city": "Stadt",
+          "four_weekly_rest": "Four Weekly Rest",
           "street": "Straße",
-          "street_section": "Straßenabschnitt"
+          "street_section": "Street Section"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "four_weekly_rest": "Aktivieren, wenn ein 4-wöchentlicher Abfuhrrythmus für die Restabfalltonne beantragt wurde.",
-          "street_section": "Nur erforderlich, wenn die Straße in mehrere Abschnitte aufgeteilt ist (z.B. 'nördl.d. A 28')."
+          "city": "Ihre Stadt oder Gemeinde.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_awb_ammerland_de": {
@@ -11313,14 +11328,14 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "Ort",
-          "four_weekly_rest": "4-wöchentlicher Restabfallrhythmus",
+          "city": "Stadt",
+          "four_weekly_rest": "Four Weekly Rest",
           "street": "Straße",
-          "street_section": "Straßenabschnitt"
+          "street_section": "Street Section"
         },
         "data_description": {
-          "four_weekly_rest": "Aktivieren, wenn ein 4-wöchentlicher Abfuhrrythmus für die Restabfalltonne beantragt wurde.",
-          "street_section": "Nur erforderlich, wenn die Straße in mehrere Abschnitte aufgeteilt ist (z.B. 'nördl.d. A 28')."
+          "city": "Ihre Stadt oder Gemeinde.",
+          "street": "Ihr Straßenname."
         }
       },
       "args_awb_bad_kreuznach_de": {
@@ -12199,10 +12214,12 @@
           "calendar_title": "Kalender Titel",
           "hnr": "Hausnummer",
           "street": "Straße",
-          "two_weeks": "14-tägliche Abfuhr"
+          "two_weeks": "Two Weeks"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "hnr": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_beg_logistics_de": {
@@ -12212,9 +12229,12 @@
           "calendar_title": "Kalender Titel",
           "hnr": "Hausnummer",
           "street": "Straße",
-          "two_weeks": "14-tägliche Abfuhr"
+          "two_weeks": "Two Weeks"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_muellabfuhr_de": {
         "title": "Quelle konfigurieren",
@@ -13997,11 +14017,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "bezirk": "Bezirk",
-          "ort": "Ort"
+          "bezirk": "Ortsteil",
+          "ort": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "bezirk": "Ihr Ortsteil oder Stadtteil.",
+          "ort": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_kaw_mainz_bingen_de": {
@@ -14009,10 +14031,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "bezirk": "Bezirk",
-          "ort": "Ort"
+          "bezirk": "Ortsteil",
+          "ort": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Ihr Ortsteil oder Stadtteil.",
+          "ort": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_ics_kecl_de": {
         "title": "Quelle konfigurieren",
@@ -16992,13 +17017,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "Hausnummer",
-          "street": "Straße oder Ortsteil"
+          "house_number": "House Number",
+          "street": "Straße"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "house_number": "Hausnummer. Nur erforderlich, wenn die Straße in mehrere Adressbereiche mit unterschiedlichen Abfuhrterminen aufgeteilt ist (z. B. 'Alemannenstraße').",
-          "street": "Straßenname wie im Straßenverzeichnis des Abfallkalenders der Stadtwerke Singen, oder einer der Stadtteile (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_stadtwerke_singen_de": {
@@ -17006,12 +17030,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "Hausnummer",
-          "street": "Straße oder Ortsteil"
+          "house_number": "House Number",
+          "street": "Straße"
         },
         "data_description": {
-          "house_number": "Hausnummer. Nur erforderlich, wenn die Straße in mehrere Adressbereiche mit unterschiedlichen Abfuhrterminen aufgeteilt ist (z. B. 'Alemannenstraße').",
-          "street": "Straßenname wie im Straßenverzeichnis des Abfallkalenders der Stadtwerke Singen, oder einer der Stadtteile (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+          "street": "Ihr Straßenname."
         }
       },
       "args_staedteservice_de": {

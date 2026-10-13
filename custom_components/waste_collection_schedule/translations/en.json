@@ -8074,7 +8074,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "commune": "Your municipality, exactly as listed in the drop-down menu on the collection calendar page, e.g. 'Maisdon-sur-Sèvre - zone 1'."
+          "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_clissonsevremaine_fr": {
@@ -8085,7 +8085,7 @@
           "commune": "Municipality"
         },
         "data_description": {
-          "commune": "Your municipality, exactly as listed in the drop-down menu on the collection calendar page, e.g. 'Maisdon-sur-Sèvre - zone 1'."
+          "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_terrestouloises_com": {
@@ -8376,9 +8376,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number": "House number (optional, helps filter results)",
-          "insee_code": "5-digit INSEE code of your commune (e.g. 25014 for Amagney, 25056 for Besançon)",
-          "street": "Street name as shown in the Grand Besançon system"
+          "house_number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "reconfigure_grandbesancon_fr": {
@@ -8391,9 +8390,8 @@
           "street": "Street"
         },
         "data_description": {
-          "house_number": "House number (optional, helps filter results)",
-          "insee_code": "5-digit INSEE code of your commune (e.g. 25014 for Amagney, 25056 for Besançon)",
-          "street": "Street name as shown in the Grand Besançon system"
+          "house_number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "args_mamirolle_info": {
@@ -8485,7 +8483,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Full address including street number, e.g. '39 avenue larribau 64000 Pau'"
+          "address": "Your full address."
         }
       },
       "reconfigure_memotri_agglo_pau_fr": {
@@ -8496,7 +8494,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Full address including street number, e.g. '39 avenue larribau 64000 Pau'"
+          "address": "Your full address."
         }
       },
       "args_data_grandlyon_com": {
@@ -8508,7 +8506,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your street address with city"
+          "address": "Your full address."
         }
       },
       "reconfigure_data_grandlyon_com": {
@@ -8519,7 +8517,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Your street address with city"
+          "address": "Your full address."
         }
       },
       "args_nice_cotedazur_fr": {
@@ -8597,11 +8595,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "Commune"
+          "commune": "Municipality"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "commune": "The slug of your commune (e.g. 'courbouzon'). Search on {url_sictom_lons_le_saunier_fr_quand_passe_le_camion_benne_html} to find your commune name, then convert to lowercase with hyphens."
+          "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_sictom_lons_le_saunier_fr": {
@@ -8609,10 +8607,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "commune": "Commune"
+          "commune": "Municipality"
         },
         "data_description": {
-          "commune": "The slug of your commune (e.g. 'courbouzon'). Search on {url_sictom_lons_le_saunier_fr_quand_passe_le_camion_benne_html} to find your commune name, then convert to lowercase with hyphens."
+          "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_sictomvds_com": {
@@ -11169,12 +11167,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "street": "Street",
-          "zone": "Zone"
+          "zone": "Collection zone"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street": "Street name as it appears in the city's street directory (e.g. Adalbert-Stifter-Str.). Either street or zone must be provided.",
-          "zone": "Zone code (e.g. A1, C4). Either street or zone must be provided."
+          "street": "Your street name."
         }
       },
       "reconfigure_amberg_de": {
@@ -11183,11 +11180,10 @@
         "data": {
           "calendar_title": "Calendar Title",
           "street": "Street",
-          "zone": "Zone"
+          "zone": "Collection zone"
         },
         "data_description": {
-          "street": "Street name as it appears in the city's street directory (e.g. Adalbert-Stifter-Str.). Either street or zone must be provided.",
-          "zone": "Zone code (e.g. A1, C4). Either street or zone must be provided."
+          "street": "Your street name."
         }
       },
       "args_ics_ambnet_biz": {
@@ -11434,8 +11430,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "four_weekly_rest": "Enable if a 4-weekly collection interval for residual waste has been requested.",
-          "street_section": "Only required if the street is divided into sections (e.g. 'nördl.d. A 28')."
+          "city": "Your city or town.",
+          "street": "Your street name."
         }
       },
       "reconfigure_awb_ammerland_de": {
@@ -11449,8 +11445,8 @@
           "street_section": "Street section"
         },
         "data_description": {
-          "four_weekly_rest": "Enable if a 4-weekly collection interval for residual waste has been requested.",
-          "street_section": "Only required if the street is divided into sections (e.g. 'nördl.d. A 28')."
+          "city": "Your city or town.",
+          "street": "Your street name."
         }
       },
       "args_awb_bad_kreuznach_de": {
@@ -12329,10 +12325,12 @@
           "calendar_title": "Calendar Title",
           "hnr": "House Number",
           "street": "Street",
-          "two_weeks": "Two Weeks"
+          "two_weeks": "Fortnightly collection"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "hnr": "Your house number.",
+          "street": "Your street name."
         }
       },
       "reconfigure_beg_logistics_de": {
@@ -12342,9 +12340,12 @@
           "calendar_title": "Calendar Title",
           "hnr": "House Number",
           "street": "Street",
-          "two_weeks": "Two Weeks"
+          "two_weeks": "Fortnightly collection"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Your house number.",
+          "street": "Your street name."
+        }
       },
       "args_muellabfuhr_de": {
         "title": "Configure Source",
@@ -14128,10 +14129,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bezirk": "District",
-          "ort": "City"
+          "ort": "Municipality"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "bezirk": "Your district or part of the municipality.",
+          "ort": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_kaw_mainz_bingen_de": {
@@ -14140,9 +14143,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bezirk": "District",
-          "ort": "City"
+          "ort": "Municipality"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Your district or part of the municipality.",
+          "ort": "The name of your municipality, as shown on the provider's website."
+        }
       },
       "args_ics_kecl_de": {
         "title": "Configure Source",
@@ -17123,12 +17129,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House number",
-          "street": "Street or district"
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number": "House number. Only required if the street is split into several address ranges with different collection days (e.g. 'Alemannenstraße').",
-          "street": "Street name as listed in the Stadtwerke Singen waste calendar street directory, or one of the outlying districts (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+          "street": "Your street name."
         }
       },
       "reconfigure_stadtwerke_singen_de": {
@@ -17137,11 +17142,10 @@
         "data": {
           "calendar_title": "Calendar Title",
           "house_number": "House number",
-          "street": "Street or district"
+          "street": "Street"
         },
         "data_description": {
-          "house_number": "House number. Only required if the street is split into several address ranges with different collection days (e.g. 'Alemannenstraße').",
-          "street": "Street name as listed in the Stadtwerke Singen waste calendar street directory, or one of the outlying districts (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen)."
+          "street": "Your street name."
         }
       },
       "args_staedteservice_de": {

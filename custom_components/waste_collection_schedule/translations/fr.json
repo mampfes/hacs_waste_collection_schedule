@@ -7985,7 +7985,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "commune": "Votre commune, telle qu'elle apparaît dans la liste déroulante de la page du calendrier des collectes, par exemple 'Maisdon-sur-Sèvre - zone 1'."
+          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "reconfigure_clissonsevremaine_fr": {
@@ -7996,7 +7996,7 @@
           "commune": "Commune"
         },
         "data_description": {
-          "commune": "Votre commune, telle qu'elle apparaît dans la liste déroulante de la page du calendrier des collectes, par exemple 'Maisdon-sur-Sèvre - zone 1'."
+          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "args_terrestouloises_com": {
@@ -8282,14 +8282,13 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "house_number": "Numéro",
-          "insee_code": "Code INSEE",
+          "insee_code": "Insee Code",
           "street": "Rue"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "house_number": "Numéro de rue (optionnel, aide à filtrer les résultats)",
-          "insee_code": "Code INSEE à 5 chiffres de votre commune (ex : 25014 pour Amagney, 25056 pour Besançon)",
-          "street": "Nom de la rue tel qu'affiché dans le système Grand Besançon"
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_grandbesancon_fr": {
@@ -8298,13 +8297,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "house_number": "Numéro",
-          "insee_code": "Code INSEE",
+          "insee_code": "Insee Code",
           "street": "Rue"
         },
         "data_description": {
-          "house_number": "Numéro de rue (optionnel, aide à filtrer les résultats)",
-          "insee_code": "Code INSEE à 5 chiffres de votre commune (ex : 25014 pour Amagney, 25056 pour Besançon)",
-          "street": "Nom de la rue tel qu'affiché dans le système Grand Besançon"
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
         }
       },
       "args_mamirolle_info": {
@@ -8396,7 +8394,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "address": "Adresse complète avec numéro de rue, ex : '39 avenue larribau 64000 Pau'"
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_memotri_agglo_pau_fr": {
@@ -8407,7 +8405,7 @@
           "address": "Adresse"
         },
         "data_description": {
-          "address": "Adresse complète avec numéro de rue, ex : '39 avenue larribau 64000 Pau'"
+          "address": "Votre adresse complète."
         }
       },
       "args_data_grandlyon_com": {
@@ -8419,7 +8417,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "address": "Votre adresse postale avec la commune"
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_data_grandlyon_com": {
@@ -8430,7 +8428,7 @@
           "address": "Adresse"
         },
         "data_description": {
-          "address": "Votre adresse postale avec la commune"
+          "address": "Votre adresse complète."
         }
       },
       "args_nice_cotedazur_fr": {
@@ -8512,7 +8510,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "commune": "Le slug de votre commune (ex: 'courbouzon'). Cherchez votre commune sur {url_sictom_lons_le_saunier_fr_quand_passe_le_camion_benne_html}"
+          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "reconfigure_sictom_lons_le_saunier_fr": {
@@ -8523,7 +8521,7 @@
           "commune": "Commune"
         },
         "data_description": {
-          "commune": "Le slug de votre commune (ex: 'courbouzon'). Cherchez votre commune sur {url_sictom_lons_le_saunier_fr_quand_passe_le_camion_benne_html}"
+          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "args_sictomvds_com": {
@@ -11083,7 +11081,8 @@
           "zone": "Zone"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_amberg_de": {
@@ -11094,7 +11093,9 @@
           "street": "Rue",
           "zone": "Zone"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Le nom de votre rue."
+        }
       },
       "args_ics_ambnet_biz": {
         "title": "Configurer la Source",
@@ -11339,7 +11340,9 @@
           "street_section": "Street Section"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_awb_ammerland_de": {
@@ -11352,7 +11355,10 @@
           "street": "Rue",
           "street_section": "Street Section"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Votre ville ou village.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_awb_bad_kreuznach_de": {
         "title": "Configurer la Source",
@@ -12228,12 +12234,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "hnr": "Numéro civique",
+          "hnr": "Numéro",
           "street": "Rue",
           "two_weeks": "Two Weeks"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "hnr": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_beg_logistics_de": {
@@ -12241,11 +12249,14 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "hnr": "Numéro civique",
+          "hnr": "Numéro",
           "street": "Rue",
           "two_weeks": "Two Weeks"
         },
-        "data_description": {}
+        "data_description": {
+          "hnr": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_muellabfuhr_de": {
         "title": "Configurer la Source",
@@ -14025,11 +14036,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "bezirk": "District",
-          "ort": "Ville"
+          "bezirk": "Quartier",
+          "ort": "Commune"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "bezirk": "Votre quartier ou partie de la commune.",
+          "ort": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "reconfigure_kaw_mainz_bingen_de": {
@@ -14037,10 +14050,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "bezirk": "District",
-          "ort": "Ville"
+          "bezirk": "Quartier",
+          "ort": "Commune"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Votre quartier ou partie de la commune.",
+          "ort": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
       },
       "args_ics_kecl_de": {
         "title": "Configurer la Source",
@@ -17007,11 +17023,12 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "House Number",
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_stadtwerke_singen_de": {
@@ -17019,10 +17036,12 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "House Number",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Le nom de votre rue."
+        }
       },
       "args_staedteservice_de": {
         "title": "Configurer la Source",

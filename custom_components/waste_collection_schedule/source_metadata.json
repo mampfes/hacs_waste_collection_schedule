@@ -2099,10 +2099,11 @@
   },
   "sictom_lons_le_saunier_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sictom_lons_le_saunier_fr.md",
-    "howto": {},
-    "urls": {
-      "url_sictom_lons_le_saunier_fr_quand_passe_le_camion_benne_html": "https://sictom-lons-le-saunier.fr/quand-passe-le-camion-benne.html."
-    }
+    "howto": {
+      "en": "The slug of your commune (e.g. 'courbouzon'). Search on https://sictom-lons-le-saunier.fr/quand-passe-le-camion-benne.html to find your commune name, then convert to lowercase with hyphens.",
+      "fr": "Le slug de votre commune (ex: 'courbouzon'). Cherchez votre commune sur https://sictom-lons-le-saunier.fr/quand-passe-le-camion-benne.html."
+    },
+    "urls": {}
   },
   "sictomvds_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sictomvds_com.md",
@@ -2622,7 +2623,10 @@
   },
   "awb_ammerland_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_ammerland_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Nur erforderlich, wenn die Straße in mehrere Abschnitte aufgeteilt ist (z.B. 'nördl.d. A 28'). Aktivieren, wenn ein 4-wöchentlicher Abfuhrrythmus für die Restabfalltonne beantragt wurde.",
+      "en": "Only required if the street is divided into sections (e.g. 'nördl.d. A 28'). Enable if a 4-weekly collection interval for residual waste has been requested."
+    },
     "urls": {}
   },
   "awb_bad_kreuznach_de": {
@@ -3741,7 +3745,10 @@
   },
   "stadtwerke_singen_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadtwerke_singen_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Straßenname wie im Straßenverzeichnis des Abfallkalenders der Stadtwerke Singen, oder einer der Stadtteile (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen). Hausnummer. Nur erforderlich, wenn die Straße in mehrere Adressbereiche mit unterschiedlichen Abfuhrterminen aufgeteilt ist (z. B. 'Alemannenstraße').",
+      "en": "Street name as listed in the Stadtwerke Singen waste calendar street directory, or one of the outlying districts (Beuren, Bohlingen, Friedingen, Hausen, Schlatt, Überlingen). House number. Only required if the street is split into several address ranges with different collection days (e.g. 'Alemannenstraße')."
+    },
     "urls": {}
   },
   "staedteservice_de": {
