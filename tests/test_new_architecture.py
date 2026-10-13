@@ -2960,6 +2960,19 @@ class TestToolkitParsers:
         # Accepts a numeric string too (JSON APIs vary).
         assert date_parsers.from_epoch()(str(epoch_s)) == expected
 
+    def test_date_parser_in_timezone(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers
+
+        parse = date_parsers.in_timezone("Europe/Copenhagen")
+        # 22:00Z is already the next day in summer time (+02:00)...
+        assert parse("2026-10-14T22:00:00Z") == datetime.date(2026, 10, 15)
+        # ...and 23:00Z in winter time (+01:00).
+        assert parse("2026-10-28T23:00:00Z") == datetime.date(2026, 10, 29)
+        # No offset: already local.
+        assert parse("2026-10-15T00:30:00") == datetime.date(2026, 10, 15)
+
     @freeze_time("2026-09-26")
     def test_date_parser_in_current_year(self):
         import datetime
