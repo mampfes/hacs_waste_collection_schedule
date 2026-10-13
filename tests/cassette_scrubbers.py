@@ -65,7 +65,23 @@ def _chesterfield_gov_uk(
             _set_json(interaction, {"auraConfig": {"context": context}})
 
 
+def _afvalstoffendienst_nl(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep only the waste streams the calendars refer to (each carries an SVG)."""
+    used = {
+        entry["afvalstroom_id"]
+        for interaction in interactions
+        if "/kalender/" in interaction["url"]
+        for entry in _json(interaction)
+    }
+    for interaction in interactions:
+        if interaction["url"].endswith("/afvalstromen"):
+            _set_json(interaction, [s for s in _json(interaction) if s["id"] in used])
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "afvalstoffendienst_nl": _afvalstoffendienst_nl,
     "sica_lu": _sica_lu,
     "chesterfield_gov_uk": _chesterfield_gov_uk,
 }
