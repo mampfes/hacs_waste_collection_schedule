@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://www.cornwall.gov.uk/umbraco/Surface/Waste/MyCollectionDays ad09ff820e",
+      "method": "GET",
+      "url": "https://www.cornwall.gov.uk/umbraco/Surface/Waste/MyCollectionDays",
+      "final_url": "https://www.cornwall.gov.uk/umbraco/Surface/Waste/MyCollectionDays?subscribe=False&uprn=100040080721",
+      "body": "{\"params\":[[\"subscribe\",\"False\"],[\"uprn\",\"100040080721\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "date": "Tue, 13 Oct 2026 13:42:32 GMT",
+        "transfer-encoding": "chunked",
+        "strict-transport-security": "max-age=63072000; includeSubDomains",
+        "x-content-type-options": "nosniff",
+        "content-security-policy": "frame-ancestors 'self' https://localhost:44369 https://www.cornwall.gov.uk https://test2.cornwall.gov.uk https://app-rnd-euw-ccwebsite.azurewebsites.net https://wa-npd-euw-ccwebsite-master.npd-publishing.cc.cornwallonline.net https://wa-npd-euw-ccwebsite-frontend.npd-publishing.cc.cornwallonline.net/ https://wa-prd-euw-ccwebsite-master.publishing.cc.cornwallonline.net https://wa-prd-euw-ccwebsite-frontend.publishing.cc.cornwallonline.net https://train-contact-centre.crm4.dynamics.com https://test-contact-centre.crm4.dynamics.com https://contact-centre.crm4.dynamics.com https://portal-gb.one.network https://api.reciteme.com https://testforms.cornwall.gov.uk https://forms.cornwall.gov.uk https://testlogin.cornwall.gov.uk https://login.cornwall.gov.uk;"
+      },
+      "content_b64": "Cgo8ZGl2IGlkPSJteS13YXN0ZS1jb2xsZWN0aW9uIj4KICAgICAgICA8aDMgY2xhc3M9ImZvbnQtd2VpZ2h0LWJvbGRlciI+WW91ciBuZXh0IGNvbGxlY3Rpb25zIHdpbGwgYmU6PC9oMz4KICAgICAgICA8ZGl2IGNsYXNzPSJyb3cgdGV4dC1jZW50ZXIiPgogICAgICAgICAgICAgICAgPGRpdiBjbGFzcz0iY29sLTEyIGNvbC1tZC0zIj4KICAgICAgICAgICAgICAgICAgICA8ZGl2IGlkPSJmb29kLW5vbSIgY2xhc3M9ImNvbGxlY3Rpb24gdGV4dC1jZW50ZXIgc2VydmljZSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c3Bhbj5Gb29kPC9zcGFuPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNwYW4+RlJJPC9zcGFuPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNwYW4+MTYgT2N0PC9zcGFuPgogICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJjb2wtMTIgY29sLW1kLTMiPgogICAgICAgICAgICAgICAgICAgIDxkaXYgaWQ9InJlY3ljbGluZy1ub20iIGNsYXNzPSJjb2xsZWN0aW9uIHRleHQtY2VudGVyIHNlcnZpY2UiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNwYW4+UmVjeWNsaW5nPC9zcGFuPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNwYW4+RlJJPC9zcGFuPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNwYW4+MTYgT2N0PC9zcGFuPgogICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJjb2wtMTIgY29sLW1kLTMiPgogICAgICAgICAgICAgICAgICAgIDxkaXYgaWQ9InJ1YmJpc2gtbm9tIiBjbGFzcz0iY29sbGVjdGlvbiB0ZXh0LWNlbnRlciBzZXJ2aWNlIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxzcGFuPlJ1YmJpc2g8L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c3Bhbj5GUkk8L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c3Bhbj4yMyBPY3Q8L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9ImNvbC0xMiBjb2wtbWQtMyI+CiAgICAgICAgICAgICAgICAgICAgPGRpdiBpZD0iZ2FyZGVuaGFzc3Vic2NyaXB0aW9uLW5vbSIgY2xhc3M9ImNvbGxlY3Rpb24gdGV4dC1jZW50ZXIgc2VydmljZSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c3Bhbj5HYXJkZW48L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c3Bhbj5GUkk8L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c3Bhbj4yMyBPY3Q8L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2IGlkPSJidXR0b25zIiBjbGFzcz0idGV4dC1yaWdodCI+CiAgICAgICAgICAgIDxhIGhyZWY9Ii9tZWRpYS9rcm5qZ2lqbC9mcmlmb3J0MW5ldy5wZGYiIGNsYXNzPSJidG4gYnRuLXByaW1hcnkgYnRuLW1hIiB0YXJnZXQ9Il9ibGFuayI+CiAgICAgICAgICAgICAgICA8c3BhbiBjbGFzcz0iZC1tZC1ub25lIj48aSBjbGFzcz0iZmEgZmEtY2FsZW5kYXIiPjwvaT5SZWN5Y2xpbmcgQ2FsZW5kYXI8L3NwYW4+CiAgICAgICAgICAgICAgICA8c3BhbiBjbGFzcz0iZC1ub25lIGQtbWQtYmxvY2siPjxpIGNsYXNzPSJmYSBmYS1jYWxlbmRhciI+PC9pPiBEb3dubG9hZCBhIHJlY3ljbGluZyBjYWxlbmRhcjwvc3Bhbj4KICAgICAgICAgICAgPC9hPgogICAgICAgICAgICAgICAgPGEgaHJlZj0iL21lZGlhL2R4d25naGhtL2ZyaWZvcnQyZ3cucGRmIiBjbGFzcz0iYnRuIGJ0bi1wcmltYXJ5IGJ0bi1tYSIgdGFyZ2V0PSJfYmxhbmsiPgogICAgICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzPSJkLW1kLW5vbmUiPjxpIGNsYXNzPSJmYSBmYS1jYWxlbmRhciI+PC9pPkdhcmRlbiBDYWxlbmRhcjwvc3Bhbj4KICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzcz0iZC1ub25lIGQtbWQtYmxvY2siPjxpIGNsYXNzPSJmYSBmYS1jYWxlbmRhciI+PC9pPiBEb3dubG9hZCBhIGdhcmRlbiBjYWxlbmRhcjwvc3Bhbj4KICAgICAgICAgICAgICAgIDwvYT4KICAgICAgICA8L2Rpdj4KCjwvZGl2Pgo="
+    }
+  ]
+}
