@@ -55,6 +55,38 @@ def _sica_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None
             )
 
 
+def _luxembourg_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep the rows of the configured commune, locality and street, from today on."""
+    import csv
+    import datetime
+
+    wanted = [
+        str(args.get(key) or "").strip() for key in ("commune", "localite", "rue")
+    ]
+    for interaction in interactions:
+        if "data.public.lu" not in interaction["url"]:
+            continue
+        text = base64.b64decode(interaction["content_b64"]).decode("utf-8-sig")
+        kept = []
+        for number, line in enumerate(text.splitlines()):
+            if number == 0:
+                kept.append(line)
+                continue
+            date, _, commune, locality, street = next(csv.reader([line], delimiter=";"))
+            day = datetime.datetime.strptime(date, "%d/%m/%Y").date().isoformat()
+            if (
+                commune == wanted[0]
+                and day >= today
+                and locality in ("", wanted[1])
+                and street in ("", "Toutes les rues", wanted[2])
+            ):
+                kept.append(line)
+        raw = "\n".join(kept) + "\n"
+        interaction["content_b64"] = base64.b64encode(raw.encode("utf-8-sig")).decode(
+            "ascii"
+        )
+
+
 def _chesterfield_gov_uk(
     interactions: list[dict], args: dict[str, Any], today: str
 ) -> None:
@@ -67,6 +99,7 @@ def _chesterfield_gov_uk(
 
 SCRUBBERS: dict[str, Scrubber] = {
     "sica_lu": _sica_lu,
+    "luxembourg_lu": _luxembourg_lu,
     "chesterfield_gov_uk": _chesterfield_gov_uk,
 }
 
