@@ -171,7 +171,17 @@ def _smiecioplan_pl(interactions: list[dict], args: dict[str, Any], today: str) 
         )
 
 
+def _valorlux_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep only the configured commune of the all-communes calendar (~80 KB)."""
+    for interaction in interactions:
+        if interaction["url"].endswith("/api/calendar/all"):
+            cities = _json(interaction)["cities"]
+            commune = args["commune"]
+            _set_json(interaction, {"cities": {commune: cities[commune]}})
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "valorlux_lu": _valorlux_lu,
     "smiecioplan_pl": _smiecioplan_pl,
     "afvalstoffendienst_nl": _afvalstoffendienst_nl,
     "cem_ambiente_it": _cem_ambiente_it,

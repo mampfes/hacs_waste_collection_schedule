@@ -1,94 +1,51 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequiredWithSuggestions,
-)
-
-TITLE = "Valorlux"
-DESCRIPTION = "Source for Valorlux waste collection."
-URL = "https://www.valorlux.lu"
-TEST_CASES = {
-    "Mersch": {"commune": "Mersch"},
-    "Luxembourg City (Tour 1)": {"commune": "Luxembourg", "zone": "Tour 1"},
-    "Parc Hosingen": {"commune": "Parc Hosingen"},
-    "Unknown Commune": {"commune": "Unknown", "zone": None},
-}
-
-API_URL = "https://www.valorlux.lu/api/calendar/all"
-ICON_MAP = {
-    "PMC": Icons.RECYCLING,
-}
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
-    "Accept": "application/json, text/plain, */*",
-    "Accept-Language": "en-US,en;q=0.5",
-    "Referer": "https://www.valorlux.lu/",
-    "Origin": "https://www.valorlux.lu",
-}
+from waste_collection_schedule import date_parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.service import ValorluxLu
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self, commune: str | None = None, zone: str | None = None):
-        self._commune = commune
-        self._zone = zone
+@final
+class Source(BaseSource):
+    TITLE = "Valorlux"
+    DESCRIPTION = "Source for Valorlux waste collection."
+    URL = "https://www.valorlux.lu"
+    COUNTRY = "lu"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        scraper = requests.Session(impersonate="chrome124")
-        scraper.headers.update(HEADERS)
-        r = scraper.get(API_URL)
-        r.raise_for_status()
-        data = r.json()
+    WASTE_TYPES: ClassVar[list] = [wt.RECYCLABLES]
 
-        # The API returns two dictionaries of locations, 'cities' and 'otherAddresses'
-        # Merge them into a single dictionary for processing
-        communes = data.get("cities", {})
-        other_communes = data.get("otherAddresses", {})
-        communes.update(other_communes)
+    TEST_CASES: ClassVar[dict] = {
+        "Mersch": {"commune": "Mersch"},
+        "Luxembourg City (Tour 1)": {"commune": "Luxembourg", "zone": "Tour 1"},
+        "Parc Hosingen": {"commune": "Parc Hosingen"},
+        "Dudelange (Tournée Lundi)": {
+            "commune": "Dudelange",
+            "zone": "Tournée Lundi",
+        },
+    }
 
-        # Step 1: If no commune is provided, raise an exception with a list of all communes
-        if self._commune is None:
-            commune_names = sorted(communes.keys())
-            raise SourceArgumentRequiredWithSuggestions("commune", None, commune_names)
+    PARAMS = (
+        text_field("commune", label="Commune"),
+        text_field("zone", label="Zone / tour", optional=True),
+    )
 
-        # Step 2: If commune is provided, check if it's valid
-        if self._commune not in communes:
-            commune_names = sorted(communes.keys())
-            raise SourceArgumentNotFoundWithSuggestions(
-                "commune", self._commune, commune_names
-            )
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your commune as listed on the Valorlux calendar page, e.g. "
+            "'Mersch'. Communes with several collection tours (e.g. 'Luxembourg' "
+            "with 'Tour 1') also need the zone; a missing or wrong value lists "
+            "the valid ones."
+        ),
+    }
 
-        # Step 3: Check for zones/tours for the selected commune
-        commune_data = communes[self._commune]
-        zones = list(commune_data.keys())
+    retrieve = ValorluxLu.retriever
+    parse = ValorluxLu.ValorluxParser()
 
-        # If there are multiple zones and none is selected, raise an exception with the list of zones
-        if len(zones) > 1 and self._zone is None:
-            raise SourceArgumentRequiredWithSuggestions("zone", None, zones)
-
-        # If a zone is selected, check if it's valid
-        if self._zone and self._zone not in zones:
-            raise SourceArgumentNotFoundWithSuggestions("zone", self._zone, zones)
-
-        # Step 4: Fetch the actual collection dates
-        if self._zone:
-            dates = commune_data[self._zone]
-        else:
-            # If there's only one zone, or no zone is needed, take the first one
-            dates = next(iter(commune_data.values()))
-
-        collections = []
-        for date_str in dates:
-            # Use %y for 2-digit year
-            date = datetime.strptime(date_str, "%d/%m/%y").date()
-            collections.append(
-                Collection(
-                    date=date,
-                    t="Valorlux Bag (PMC)",
-                    icon=ICON_MAP.get("PMC"),
-                )
-            )
-
-        return collections
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d/%m/%y"),
+        type_value_map={ValorluxLu.LABEL: wt.RECYCLABLES},
+    )
