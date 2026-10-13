@@ -13,6 +13,7 @@ Ergonomic module aliases are provided::
 """
 
 import datetime
+import zoneinfo
 from typing import Protocol
 
 from dateutil import parser as dateutil_parser
@@ -194,6 +195,27 @@ class DateParserNearestYear(DateParser):
         return min(candidates, key=lambda candidate: abs(candidate - today))
 
 
+class DateParserInZone(DateParser):
+    """Read an ISO 8601 timestamp as the calendar date it falls on in a zone.
+
+    For an API that stamps a collection with an instant (``2026-10-14T22:00:00Z``)
+    where the day it means is the one on the clock in the provider's own
+    time zone (15 October in Copenhagen). ``DateParserAuto`` would keep the UTC
+    date, which is a day off for every instant in the zone's first hours. A
+    timestamp with no offset is taken to be in the zone already. Prefer the
+    ``in_timezone(zone)`` factory. The last positional argument is the string.
+    """
+
+    def __init__(self, zone: str):
+        self.zone = zoneinfo.ZoneInfo(zone)
+
+    def __call__(self, *args: str) -> datetime.date:
+        stamp = dateutil_parser.isoparse(str(args[-1]).strip())
+        if stamp.tzinfo is None:
+            return stamp.date()
+        return stamp.astimezone(self.zone).date()
+
+
 # Ergonomic module-level aliases.
 auto = DateParserAuto()
 
@@ -241,3 +263,8 @@ def nearest_year(fmt: str) -> DateParserNearestYear:
     that may include the one just past and may cross the new year.
     """
     return DateParserNearestYear(fmt)
+
+
+def in_timezone(zone: str) -> DateParserInZone:
+    """Return a DateParser giving the date an ISO timestamp falls on in ``zone``."""
+    return DateParserInZone(zone)
