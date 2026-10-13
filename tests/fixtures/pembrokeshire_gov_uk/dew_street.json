@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://www.pembrokeshire.gov.uk/template/waste/api.asp b6ee60926c",
+      "method": "POST",
+      "url": "https://www.pembrokeshire.gov.uk/template/waste/api.asp",
+      "final_url": "https://www.pembrokeshire.gov.uk/template/waste/api.asp?action=dates&public=true&uprn=100100283349&language=eng",
+      "body": "{\"body\":\"\",\"params\":[[\"action\",\"dates\"],[\"language\",\"eng\"],[\"public\",\"true\"],[\"uprn\",\"100100283349\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json",
+        "set-cookie": "ASPSESSIONIDAQQSCBCC=IFMEPHLCINHINBLIHLFOJIGO; path=/, PCCDMZ=!k+4ibm1LLwFONLc8P6xTWX0zML/3GqvL1+EhiAurJWHv77AVmTHB9ynELxwsbUE0s6JacoFJxxWDrw==; path=/; Httponly; Secure",
+        "x-serveron": ".22",
+        "access-control-allow-origin": "*",
+        "x-robots-tag": "all",
+        "x-frame-options": "SAMEORIGIN",
+        "date": "Tue, 13 Oct 2026 15:33:19 GMT",
+        "content-length": "1172"
+      },
+      "content_b64": "eyJlcnJvciI6ImZhbHNlIiwiYmlucyI6W3sidHlwZSI6IkZPT0RDQUQiLCJuZXh0ZGF0ZSI6IjE1LzEwLzIwMjYiLCJjb2xsZWN0aW9uX2RheSI6IlRodXJzZGF5IiwiZGlzcGxheSI6IkdyZWVuIEZvb2QgV2FzdGUgQ2FkZHkiLCJpbWFnZV91cmwiOiJodHRwczovL2Nkbi5wZW1icm9rZXNoaXJlLmdvdi51ay9pbWFnZXMvMjAxOS1Gb29kLUJpbi5zdmciLCJpc3dlZWtseSI6InRydWUifSx7InR5cGUiOiJCTFVFQk9YIiwibmV4dGRhdGUiOiIxNS8xMC8yMDI2IiwiY29sbGVjdGlvbl9kYXkiOiJUaHVyc2RheSIsImRpc3BsYXkiOiJCbHVlIEJveCIsImltYWdlX3VybCI6Imh0dHBzOi8vY2RuLnBlbWJyb2tlc2hpcmUuZ292LnVrL2ltYWdlcy8yMDE5LVBhcGVyLUJveC5zdmciLCJpc3dlZWtseSI6InRydWUifSx7InR5cGUiOiJHUkVFTkJPWCIsIm5leHRkYXRlIjoiMTUvMTAvMjAyNiIsImNvbGxlY3Rpb25fZGF5IjoiVGh1cnNkYXkiLCJkaXNwbGF5IjoiR3JlZW4gQm94IiwiaW1hZ2VfdXJsIjoiaHR0cHM6Ly9jZG4ucGVtYnJva2VzaGlyZS5nb3YudWsvaW1hZ2VzLzIwMTktR2xhc3MtQm94LnN2ZyIsImlzd2Vla2x5IjoidHJ1ZSJ9LHsidHlwZSI6IkJMVUVCQUciLCJuZXh0ZGF0ZSI6IjE1LzEwLzIwMjYiLCJjb2xsZWN0aW9uX2RheSI6IlRodXJzZGF5IiwiZGlzcGxheSI6IkJsdWUgQmFnIiwiaW1hZ2VfdXJsIjoiaHR0cHM6Ly9jZG4ucGVtYnJva2VzaGlyZS5nb3YudWsvaW1hZ2VzLzIwMTktQmx1ZS1CYWcuc3ZnIiwiaXN3ZWVrbHkiOiJ0cnVlIn0seyJ0eXBlIjoiUkVEQkFHIiwibmV4dGRhdGUiOiIxNS8xMC8yMDI2IiwiY29sbGVjdGlvbl9kYXkiOiJUaHVyc2RheSIsImRpc3BsYXkiOiJSZWQgQmFnIiwiaW1hZ2VfdXJsIjoiaHR0cHM6Ly9jZG4ucGVtYnJva2VzaGlyZS5nb3YudWsvaW1hZ2VzLzIwMTktUmVkLUJhZy5zdmciLCJpc3dlZWtseSI6InRydWUifSx7InR5cGUiOiJHUkVZQkFHIiwibmV4dGRhdGUiOiIyOS8xMC8yMDI2IiwiY29sbGVjdGlvbl9kYXkiOiJUaHVyc2RheSIsImRpc3BsYXkiOiIzIHggQmxhY2svR3JleSBCYWdzIiwiaW1hZ2VfdXJsIjoiaHR0cHM6Ly9jZG4ucGVtYnJva2VzaGlyZS5nb3YudWsvaW1hZ2VzLzIwMjMtRGFyay1HcmV5LUJhZy5zdmciLCJpc3dlZWtseSI6ImZhbHNlIn1dLCJ1cHJuIjoiMTAwMTAwMjgzMzQ5In0="
+    }
+  ]
+}
