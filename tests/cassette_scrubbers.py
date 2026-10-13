@@ -65,7 +65,17 @@ def _chesterfield_gov_uk(
             _set_json(interaction, {"auraConfig": {"context": context}})
 
 
+def _valorlux_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep only the configured commune of the all-communes calendar (~80 KB)."""
+    for interaction in interactions:
+        if interaction["url"].endswith("/api/calendar/all"):
+            cities = _json(interaction)["cities"]
+            commune = args["commune"]
+            _set_json(interaction, {"cities": {commune: cities[commune]}})
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "valorlux_lu": _valorlux_lu,
     "sica_lu": _sica_lu,
     "chesterfield_gov_uk": _chesterfield_gov_uk,
 }

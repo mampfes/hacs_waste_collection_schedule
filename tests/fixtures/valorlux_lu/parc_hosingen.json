@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://www.valorlux.lu/api/calendar/all ",
+      "method": "GET",
+      "url": "https://www.valorlux.lu/api/calendar/all",
+      "final_url": "https://www.valorlux.lu/api/calendar/all",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 18:56:18 GMT",
+        "content-type": "application/json",
+        "server": "cloudflare",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "x-powered-by": "PHP/8.3.35",
+        "cache-control": "no-cache, private",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, POST, OPTIONS",
+        "access-control-allow-headers": "Content-Type, X-Requested-With",
+        "set-cookie": "XSRF-TOKEN=eyJpdiI6Imx4dEE3c2wwYW1qcW9EOGF1MGpGbUE9PSIsInZhbHVlIjoicVNycVVDeGRUaWFOWU5VM1NseVdJUGlwNmtlVkdlTTF3cWZBVWlHUEphUE9GKzdIbkhqQ3ZMN2JrcjNwVHVTVzh6OHFud2hUV1pKYTAvRTVUOGRMQmxFL0VwVzNHQjZsUGVMVlV6cW1oa1l2aXVOV3M1Tkw2QXd6eFd0SlUwTVMiLCJtYWMiOiIzNDkyZWJkNGIwY2ExMjAzYmE4NGY1ZjJlNzgxMGI0MTM0NzBlNmNlNTg1ODc3YTM1YzYzYzgwZWRmM2IyMmYyIiwidGFnIjoiIn0%3D; expires=Tue, 13 Oct 2026 20:56:18 GMT; Max-Age=7200; path=/; secure; samesite=lax, valorlux_app_session=eyJpdiI6IjF5U1JJRXBndmF2eTdCc004ZWpMUWc9PSIsInZhbHVlIjoiU3NvU1FmTUllTExHOHh2bDN1enBnczBPeHJnVUZXd1NBQWtxbmwwSjhyWldwTU9Wck5QaDh4YkpHbE5OWTZoNStxRXJzdXRVTWFqOEQ1RWZLYm5TbzZyY3UxY2xhS3hLQ0czdkw0RFZzTkdhTXFIS3lyalFPalNoSEIyK25sU2YiLCJtYWMiOiJmOGY2NWQyZWE3NmU0YTBkOWUwMGRiZDI3OTFjMDRhMGVhZGQ5MTRiNzNjMTNmNzE0ZDM4MWNjYzhmN2JhMGI2IiwidGFnIjoiIn0%3D; expires=Tue, 13 Oct 2026 20:56:18 GMT; Max-Age=7200; path=/; secure; httponly; samesite=lax",
+        "content-encoding": "br",
+        "via": "1.1 fly.io",
+        "fly-request-id": "01M4V9YRZSF0D4AZCQC2KPVDFG-fra",
+        "cf-cache-status": "DYNAMIC",
+        "vary": "accept-encoding",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=cB0TzjsLSI%2FDyYAhh%2BtMf7i7PyBAoCk5JGbCuf6scFQokFKX3gZyoNyl%2BhGLrbJo1zZNTtiVvYqn3BTdJOJ7NsyjnH5IqEMxgw6lxSVyD4vW2esiOcKsc9Plo23jCdcQsg%3D%3D\"}]}",
+        "cf-ray": "a4a0903fdacaf641-DUS"
+      },
+      "content_b64": "eyJjaXRpZXMiOnsiUGFyYyBIb3NpbmdlbiI6eyIiOlsiMS8xMi8yNSIsIjE1LzEyLzI1IiwiMjkvMTIvMjUiLCIxMi8wMS8yNiIsIjI2LzAxLzI2IiwiOS8wMi8yNiIsIjIzLzAyLzI2IiwiOS8wMy8yNiIsIjIzLzAzLzI2IiwiNC8wNC8yNiIsIjIwLzA0LzI2IiwiNC8wNS8yNiIsIjE4LzA1LzI2IiwiMS8wNi8yNiIsIjE1LzA2LzI2IiwiMjkvMDYvMjYiLCIxMy8wNy8yNiIsIjI3LzA3LzI2IiwiMTAvMDgvMjYiLCIyNC8wOC8yNiIsIjcvMDkvMjYiLCIyMS8wOS8yNiIsIjUvMTAvMjYiLCIxOS8xMC8yNiIsIjIvMTEvMjYiLCIxNi8xMS8yNiIsIjMwLzExLzI2IiwiMTQvMTIvMjYiLCIyOC8xMi8yNiJdfX19"
+    }
+  ]
+}
