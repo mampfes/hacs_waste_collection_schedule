@@ -151,7 +151,28 @@ def _gmina_sroda_slaska_pl(
         )
 
 
+def _smiecioplan_pl(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Drop the ICS export's reminder alarms and events before the recording day."""
+    day = today.replace("-", "")
+    for interaction in interactions:
+        if not interaction["url"].endswith("/export/ics"):
+            continue
+        text = base64.b64decode(interaction["content_b64"]).decode("utf-8")
+        text = re.sub(r"BEGIN:VALARM.*?END:VALARM\r?\n", "", text, flags=re.S)
+        text = re.sub(
+            r"BEGIN:VEVENT(?:(?!END:VEVENT).)*?DTSTART;VALUE=DATE:(\d{8})"
+            r"(?:(?!END:VEVENT).)*?END:VEVENT\r?\n",
+            lambda m: m.group(0) if m.group(1) >= day else "",
+            text,
+            flags=re.S,
+        )
+        interaction["content_b64"] = base64.b64encode(text.encode("utf-8")).decode(
+            "ascii"
+        )
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "smiecioplan_pl": _smiecioplan_pl,
     "afvalstoffendienst_nl": _afvalstoffendienst_nl,
     "cem_ambiente_it": _cem_ambiente_it,
     "czystyregion_pl": _czystyregion_pl,
