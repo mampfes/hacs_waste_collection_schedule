@@ -1215,3 +1215,128 @@ def test_an_existing_overview_sensor_is_not_duplicated() -> None:
 def test_building_defaults_twice_never_duplicates_a_sensor() -> None:
     first = build_default_sensors([KIND_LEGACY], ["Paper", "Glass"])
     assert build_default_sensors([KIND_LEGACY], ["Paper", "Glass"], first) == []
+
+
+# --- #3249: editable per-type colors in both customization flows -------------
+
+
+def _color_customize_flow(options: bool, existing: dict | None = None):
+    """Park a real flow on one customization, without a running HA instance."""
+    existing = existing or {}
+    if options:
+        flow = object.__new__(WasteCollectionOptionsFlow)
+        flow._entry = cast(
+            Any, types.SimpleNamespace(options={CONF_CUSTOMIZE: {"Bio": existing}})
+        )
+        flow._customize_select = ["Bio"]
+        flow._customize_select_idx = 0
+        flow._sensor_select = []
+        flow._sensor_select_idx = 0
+    else:
+        flow = object.__new__(WasteCollectionConfigFlow)
+        flow._customize_types = ["Bio"]
+        flow._customize_index = 0
+        flow._show_sensor_config = False
+        flow._fetched_types = ["Bio"]
+        flow._auto_sensor_types = ["Bio"]
+    flow._options = {CONF_CUSTOMIZE: {}}
+
+    def show_form(**kwargs):
+        return kwargs
+
+    async def finish():
+        return {"saved": flow._options}
+
+    def create_entry(**kwargs):
+        return {"saved": kwargs["data"]}
+
+    flow.async_show_form = show_form  # type: ignore[method-assign]
+    flow.async_create_entry = create_entry  # type: ignore[method-assign]
+    if not options:
+        flow.finish = finish  # type: ignore[method-assign]
+    return flow
+
+
+def test_customize_color_defaults_and_selector():
+    from custom_components.waste_collection_schedule.config_flow import (
+        get_customize_schema,
+    )
+
+    schema = vol.Schema(get_customize_schema())
+    assert schema({})["color_mode"] == "automatic"
+    schema = vol.Schema(get_customize_schema({"color": "#795548", "alias": "Biotonne"}))
+    assert schema({})["color_mode"] == "custom"
+    assert schema({})["color"] == "#795548"
+    assert schema({})["alias"] == "Biotonne"
+
+
+def test_customize_color_set_change_and_reset_in_both_flows():
+    for options in (False, True):
+        for mode, color, expected in (
+            ("custom", " #abcdef ", "#ABCDEF"),
+            ("custom", "#2196f3", "#2196F3"),
+            ("automatic", "invalid but ignored", None),
+        ):
+            flow = _color_customize_flow(
+                options, {"color": "#795548", "alias": "Biotonne"}
+            )
+            form = asyncio.run(flow.async_step_customize())
+            submitted = form["data_schema"](
+                {
+                    "color_mode": mode,
+                    "color": color,
+                    "alias": "Biotonne",
+                    "icon": "mdi:leaf",
+                    "picture": "/local/bin.png",
+                    "show": False,
+                }
+            )
+            result = asyncio.run(flow.async_step_customize(submitted))
+            saved = result["saved"][CONF_CUSTOMIZE]["Bio"]
+            assert saved.get("color") == expected
+            assert ("color" in saved) == (expected is not None)
+            assert "color_mode" not in saved
+            assert saved["alias"] == "Biotonne"
+            assert saved["icon"] == "mdi:leaf"
+            assert saved["picture"] == "/local/bin.png"
+            assert saved["show"] is False
+
+
+def test_customize_color_invalid_input_keeps_both_flows_on_form():
+    for options in (False, True):
+        for color in (None, "", "brown", "#123", "#12345678"):
+            flow = _color_customize_flow(options)
+            submitted = {"color_mode": "custom"}
+            if color is not None:
+                submitted["color"] = color
+            result = asyncio.run(flow.async_step_customize(submitted))
+            assert result["errors"] == {"color": "invalid_color"}
+            assert result["step_id"] == "customize"
+            assert flow._options[CONF_CUSTOMIZE] == {}
+            # A correction is saved on the same waste type.
+            result = asyncio.run(
+                flow.async_step_customize({"color_mode": "custom", "color": "#795548"})
+            )
+            assert result["saved"][CONF_CUSTOMIZE]["Bio"]["color"] == "#795548"
+
+
+def test_customize_existing_color_survives_unchanged_options_submission():
+    flow = _color_customize_flow(
+        True, {"color": "#795548", "alias": "Biotonne", "icon": "mdi:leaf"}
+    )
+    form = asyncio.run(flow.async_step_customize())
+    result = asyncio.run(flow.async_step_customize(form["data_schema"]({})))
+    saved = result["saved"][CONF_CUSTOMIZE]["Bio"]
+    assert saved["color"] == "#795548"
+    assert saved["alias"] == "Biotonne"
+    assert saved["icon"] == "mdi:leaf"
+
+
+def test_delete_customize_does_not_validate_unused_color():
+    flow = _color_customize_flow(True, {"color": "#795548"})
+    result = asyncio.run(
+        flow.async_step_customize(
+            {"delete": True, "color_mode": "custom", "color": "invalid"}
+        )
+    )
+    assert result["saved"][CONF_CUSTOMIZE] == {}

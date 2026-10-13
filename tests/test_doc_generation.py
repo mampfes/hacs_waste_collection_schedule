@@ -271,3 +271,33 @@ def test_ics_regions_key_wins_when_both_are_present():
     }
     titles = [r.title for r in ics._regions_from_definition(definition)]
     assert titles == ["Example", "New"], "the `regions:` key must win over the old one"
+
+
+@pytest.mark.parametrize("language", ["en", "de", "it", "fr", "nl", "sl", "da", "fi"])
+def test_color_ui_translations_merge_into_both_flows(language):
+    import update_docu_links as generator
+
+    translations = {
+        "config": {"step": {"customize": {"data": {"alias": "Existing label"}}}},
+        "options": {"step": {"customize": {"data": {"delete": "Existing delete"}}}},
+        "selector": {"existing": {"options": {"keep": "Keep"}}},
+    }
+    generator.apply_ui_translation_overrides(translations, language)
+    for flow in ("config", "options"):
+        step = translations[flow]["step"]["customize"]
+        assert step["data"]["color"]
+        assert step["data"]["color_mode"]
+        assert "#795548" in step["data_description"]["color"]
+        assert "#795548" in translations[flow]["error"]["invalid_color"]
+    assert (
+        translations["config"]["step"]["customize"]["data"]["alias"] == "Existing label"
+    )
+    assert (
+        translations["options"]["step"]["customize"]["data"]["delete"]
+        == "Existing delete"
+    )
+    assert translations["selector"]["existing"]["options"]["keep"] == "Keep"
+    assert set(translations["selector"]["color_mode"]["options"]) == {
+        "automatic",
+        "custom",
+    }

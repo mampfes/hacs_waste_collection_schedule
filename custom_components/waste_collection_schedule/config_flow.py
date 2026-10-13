@@ -41,6 +41,7 @@ from voluptuous.schema_builder import UNDEFINED
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.collection import Collection
+from waste_collection_schedule.colors import validate_color
 from waste_collection_schedule.config_params import ConfigParam
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
@@ -58,6 +59,7 @@ from .const import (
     CONF_ADD_DAYS_TO,
     CONF_ALIAS,
     CONF_COLLECTION_TYPES,
+    CONF_COLOR,
     CONF_COUNT,
     CONF_COUNTRY_NAME,
     CONF_CUSTOMIZE,
@@ -390,6 +392,18 @@ def get_customize_schema(defaults: dict[str, Any] | None = None):
         ): IconSelector(),
         vol.Optional(CONF_PICTURE, default=defaults.get(CONF_PICTURE, UNDEFINED)): str,
         vol.Optional(
+            "color_mode", default="custom" if defaults.get(CONF_COLOR) else "automatic"
+        ): SelectSelector(
+            SelectSelectorConfig(
+                options=["automatic", "custom"],
+                translation_key="color_mode",
+                mode=SelectSelectorMode.DROPDOWN,
+            )
+        ),
+        vol.Optional(
+            CONF_COLOR, default=defaults.get(CONF_COLOR, UNDEFINED)
+        ): TextSelector(),
+        vol.Optional(
             CONF_USE_DEDICATED_CALENDAR,
             default=defaults.get(CONF_USE_DEDICATED_CALENDAR, UNDEFINED),
         ): cv.boolean,
@@ -399,6 +413,17 @@ def get_customize_schema(defaults: dict[str, Any] | None = None):
         ): str,
     }
     return schema
+
+
+def prepare_customize_input(user_input: dict[str, Any]) -> dict[str, Any]:
+    """Normalize the UI-only color mode into the existing override format."""
+    customize = user_input.copy()
+    mode = customize.pop("color_mode", "automatic")
+    if mode == "custom":
+        customize[CONF_COLOR] = validate_color(customize.get(CONF_COLOR))
+    else:
+        customize.pop(CONF_COLOR, None)
+    return customize
 
 
 def get_sensor_schema(fetched_types, add_delete=False, defaults: dict | None = None):
@@ -1570,13 +1595,17 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         errors = {}
 
         if user_input is not None:
+            try:
+                customize = prepare_customize_input(user_input)
+            except ValueError:
+                errors[CONF_COLOR] = "invalid_color"
             if user_input.get(CONF_DEDICATED_CALENDAR_TITLE, "") and not user_input.get(
                 CONF_USE_DEDICATED_CALENDAR, False
             ):
                 errors[CONF_DEDICATED_CALENDAR_TITLE] = (
                     "dedicated_calendar_title_without_use_dedicated_calendar"
                 )
-            else:
+            if not errors:
                 if CONF_ALIAS in user_input:
                     original = types[self._customize_index]
                     alias = user_input[CONF_ALIAS]
@@ -1588,7 +1617,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     if original in self._auto_sensor_types:
                         self._auto_sensor_types.remove(original)
                         self._auto_sensor_types.append(alias)
-                self._options[CONF_CUSTOMIZE][types[self._customize_index]] = user_input
+                self._options[CONF_CUSTOMIZE][types[self._customize_index]] = customize
                 self._customize_index += 1
                 return await self.async_step_customize()
 
@@ -1993,16 +2022,22 @@ class WasteCollectionOptionsFlow(OptionsFlow):
         schema = self.add_suggested_values_to_schema(
             vol.Schema(dict_schema), user_input
         )
+        errors: dict[str, str] = {}
         if user_input is not None:
-            if not user_input.get(
-                "delete", False
-            ):  # only re-add the (modified) customization if not deleted
-                user_input.pop("delete", None)
+            if user_input.get("delete", False):
+                self._customize_select_idx += 1
+                return await self.async_step_customize()
+            try:
+                customize = prepare_customize_input(user_input)
+            except ValueError:
+                errors[CONF_COLOR] = "invalid_color"
+            else:
+                customize.pop("delete", None)
                 self._options[CONF_CUSTOMIZE][
                     self._customize_select[self._customize_select_idx]
-                ] = user_input
-            self._customize_select_idx += 1
-            return await self.async_step_customize()
+                ] = customize
+                self._customize_select_idx += 1
+                return await self.async_step_customize()
 
         return self.async_show_form(
             step_id="customize",
@@ -2012,6 +2047,7 @@ class WasteCollectionOptionsFlow(OptionsFlow):
                 "total": str(len(self._customize_select)),
                 "type": self._customize_select[self._customize_select_idx],
             },
+            errors=errors,
         )
 
     async def async_step_sensor(self, user_input: dict[str, Any] | None = None):

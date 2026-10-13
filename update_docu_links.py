@@ -845,6 +845,23 @@ def get_custom_translations(
     return param_translations, param_descriptions, source_howto, source_doc_url
 
 
+def apply_ui_translation_overrides(translations: dict, language: str) -> None:
+    """Merge maintained UI additions without editing generated translations."""
+    overrides_file = (
+        Path(__file__).resolve().parent / "translation_templates" / "ui_overrides.json"
+    )
+    overrides = json.loads(overrides_file.read_text(encoding="utf-8"))
+
+    def merge(target: dict, additions: dict) -> None:
+        for key, value in additions.items():
+            if isinstance(value, dict):
+                merge(target.setdefault(key, {}), value)
+            else:
+                target[key] = value
+
+    merge(translations, overrides.get(language, {}))
+
+
 def update_json(
     countries: dict[str, list[SourceInfo]], generics: list[SourceInfo] | None = None
 ):
@@ -878,6 +895,8 @@ def update_json(
             encoding="utf-8",
         ) as f:
             translations = json.load(f)
+
+        apply_ui_translation_overrides(translations, lang)
 
         translation_for_all = {}
         description_for_all_args = {}

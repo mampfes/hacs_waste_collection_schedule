@@ -16,3 +16,8 @@ translation files as input.
 Finnish (`fi`) includes the common UI and Kiertokapula parameters. Other provider
 labels can be translated incrementally via `PARAM_TRANSLATIONS` and
 `PARAM_DESCRIPTIONS` (or the equivalent pipeline parameter metadata).
+
+`ui_overrides.json` contains small common UI additions, keyed by language. The
+generator recursively merges these into both existing translations and templates
+before adding provider steps. Use it to update shared fields without copying a
+whole language template or editing generated translation files.

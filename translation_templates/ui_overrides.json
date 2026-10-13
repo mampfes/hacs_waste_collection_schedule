@@ -1,0 +1,354 @@
+{
+  "en": {
+    "config": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Color mode",
+            "color": "Custom color"
+          },
+          "data_description": {
+            "color_mode": "Automatic uses the provider color, or the standard waste-type color.",
+            "color": "RGB hex value such as #795548. Only used with Custom color."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Enter an RGB hex color such as #795548."
+      }
+    },
+    "options": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Color mode",
+            "color": "Custom color"
+          },
+          "data_description": {
+            "color_mode": "Automatic uses the provider color, or the standard waste-type color.",
+            "color": "RGB hex value such as #795548. Only used with Custom color."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Enter an RGB hex color such as #795548."
+      }
+    },
+    "selector": {
+      "color_mode": {
+        "options": {
+          "automatic": "Automatic",
+          "custom": "Custom color"
+        }
+      }
+    }
+  },
+  "de": {
+    "config": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Farbmodus",
+            "color": "Eigene Farbe"
+          },
+          "data_description": {
+            "color_mode": "Automatisch verwendet die Anbieterfarbe oder die Standardfarbe der Müllart.",
+            "color": "RGB-Hexwert, zum Beispiel #795548. Wird nur bei Eigene Farbe verwendet."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Bitte gib eine Farbe im Format #RRGGBB ein, zum Beispiel #795548."
+      }
+    },
+    "options": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Farbmodus",
+            "color": "Eigene Farbe"
+          },
+          "data_description": {
+            "color_mode": "Automatisch verwendet die Anbieterfarbe oder die Standardfarbe der Müllart.",
+            "color": "RGB-Hexwert, zum Beispiel #795548. Wird nur bei Eigene Farbe verwendet."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Bitte gib eine Farbe im Format #RRGGBB ein, zum Beispiel #795548."
+      }
+    },
+    "selector": {
+      "color_mode": {
+        "options": {
+          "automatic": "Automatisch",
+          "custom": "Eigene Farbe"
+        }
+      }
+    }
+  },
+  "it": {
+    "config": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Modalità colore",
+            "color": "Colore personalizzato"
+          },
+          "data_description": {
+            "color_mode": "Automatico usa il colore del fornitore o il colore standard del tipo di rifiuto.",
+            "color": "Valore esadecimale RGB, ad esempio #795548. Usato solo con Colore personalizzato."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Inserisci un colore esadecimale RGB, ad esempio #795548."
+      }
+    },
+    "options": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Modalità colore",
+            "color": "Colore personalizzato"
+          },
+          "data_description": {
+            "color_mode": "Automatico usa il colore del fornitore o il colore standard del tipo di rifiuto.",
+            "color": "Valore esadecimale RGB, ad esempio #795548. Usato solo con Colore personalizzato."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Inserisci un colore esadecimale RGB, ad esempio #795548."
+      }
+    },
+    "selector": {
+      "color_mode": {
+        "options": {
+          "automatic": "Automatico",
+          "custom": "Colore personalizzato"
+        }
+      }
+    }
+  },
+  "fr": {
+    "config": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Mode de couleur",
+            "color": "Couleur personnalisée"
+          },
+          "data_description": {
+            "color_mode": "Automatique utilise la couleur du fournisseur ou la couleur standard du type de déchet.",
+            "color": "Valeur hexadécimale RGB, par exemple #795548. Utilisée uniquement avec Couleur personnalisée."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Saisissez une couleur hexadécimale RGB, par exemple #795548."
+      }
+    },
+    "options": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Mode de couleur",
+            "color": "Couleur personnalisée"
+          },
+          "data_description": {
+            "color_mode": "Automatique utilise la couleur du fournisseur ou la couleur standard du type de déchet.",
+            "color": "Valeur hexadécimale RGB, par exemple #795548. Utilisée uniquement avec Couleur personnalisée."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Saisissez une couleur hexadécimale RGB, par exemple #795548."
+      }
+    },
+    "selector": {
+      "color_mode": {
+        "options": {
+          "automatic": "Automatique",
+          "custom": "Couleur personnalisée"
+        }
+      }
+    }
+  },
+  "nl": {
+    "config": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Kleurmodus",
+            "color": "Eigen kleur"
+          },
+          "data_description": {
+            "color_mode": "Automatisch gebruikt de kleur van de aanbieder of de standaardkleur van het afvaltype.",
+            "color": "RGB-hexwaarde, bijvoorbeeld #795548. Alleen gebruikt bij Eigen kleur."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Voer een RGB-hexkleur in, bijvoorbeeld #795548."
+      }
+    },
+    "options": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Kleurmodus",
+            "color": "Eigen kleur"
+          },
+          "data_description": {
+            "color_mode": "Automatisch gebruikt de kleur van de aanbieder of de standaardkleur van het afvaltype.",
+            "color": "RGB-hexwaarde, bijvoorbeeld #795548. Alleen gebruikt bij Eigen kleur."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Voer een RGB-hexkleur in, bijvoorbeeld #795548."
+      }
+    },
+    "selector": {
+      "color_mode": {
+        "options": {
+          "automatic": "Automatisch",
+          "custom": "Eigen kleur"
+        }
+      }
+    }
+  },
+  "sl": {
+    "config": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Način barve",
+            "color": "Lastna barva"
+          },
+          "data_description": {
+            "color_mode": "Samodejno uporabi barvo ponudnika ali privzeto barvo vrste odpadkov.",
+            "color": "Šestnajstiška vrednost RGB, na primer #795548. Uporabi se samo pri Lastna barva."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Vnesite šestnajstiško barvo RGB, na primer #795548."
+      }
+    },
+    "options": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Način barve",
+            "color": "Lastna barva"
+          },
+          "data_description": {
+            "color_mode": "Samodejno uporabi barvo ponudnika ali privzeto barvo vrste odpadkov.",
+            "color": "Šestnajstiška vrednost RGB, na primer #795548. Uporabi se samo pri Lastna barva."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Vnesite šestnajstiško barvo RGB, na primer #795548."
+      }
+    },
+    "selector": {
+      "color_mode": {
+        "options": {
+          "automatic": "Samodejno",
+          "custom": "Lastna barva"
+        }
+      }
+    }
+  },
+  "da": {
+    "config": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Farvetilstand",
+            "color": "Egen farve"
+          },
+          "data_description": {
+            "color_mode": "Automatisk bruger udbyderens farve eller affaldstypens standardfarve.",
+            "color": "RGB-hexværdi, for eksempel #795548. Bruges kun med Egen farve."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Indtast en RGB-hexfarve, for eksempel #795548."
+      }
+    },
+    "options": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Farvetilstand",
+            "color": "Egen farve"
+          },
+          "data_description": {
+            "color_mode": "Automatisk bruger udbyderens farve eller affaldstypens standardfarve.",
+            "color": "RGB-hexværdi, for eksempel #795548. Bruges kun med Egen farve."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Indtast en RGB-hexfarve, for eksempel #795548."
+      }
+    },
+    "selector": {
+      "color_mode": {
+        "options": {
+          "automatic": "Automatisk",
+          "custom": "Egen farve"
+        }
+      }
+    }
+  },
+  "fi": {
+    "config": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Väritila",
+            "color": "Oma väri"
+          },
+          "data_description": {
+            "color_mode": "Automaattinen käyttää palveluntarjoajan väriä tai jätelajin oletusväriä.",
+            "color": "RGB-heksadesimaaliarvo, esimerkiksi #795548. Käytetään vain Oma väri -tilassa."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Anna RGB-heksadesimaaliväri, esimerkiksi #795548."
+      }
+    },
+    "options": {
+      "step": {
+        "customize": {
+          "data": {
+            "color_mode": "Väritila",
+            "color": "Oma väri"
+          },
+          "data_description": {
+            "color_mode": "Automaattinen käyttää palveluntarjoajan väriä tai jätelajin oletusväriä.",
+            "color": "RGB-heksadesimaaliarvo, esimerkiksi #795548. Käytetään vain Oma väri -tilassa."
+          }
+        }
+      },
+      "error": {
+        "invalid_color": "Anna RGB-heksadesimaaliväri, esimerkiksi #795548."
+      }
+    },
+    "selector": {
+      "color_mode": {
+        "options": {
+          "automatic": "Automaattinen",
+          "custom": "Oma väri"
+        }
+      }
+    }
+  }
+}

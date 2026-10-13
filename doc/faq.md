@@ -333,7 +333,20 @@ state:
 <summary>How do I color a Lovelace card with the color of the waste type?</summary>
 <p>
 
-Every sensor has a `color` attribute (a hex code such as `#9E5E23`) while a collection is upcoming. It is the color of the waste type, or the color the source provides for it, or the one you set with `color` in the `customize` section (YAML only). If several types are collected on the same day, it is the color of the first one.
+Every sensor has a `color` attribute (a hex code such as `#9E5E23`) while a collection is upcoming. It is the color of the waste type, or the color the source provides for it, or the one you set with `color` in the `customize` section (YAML or the integration UI). If several types are collected on the same day, it is the color of the first one.
+
+To set a color in the UI, select the waste type in the integration's customization settings (during setup or via **Configure**), choose **Custom color**, and enter an RGB hex value such as `#795548`. When editing an existing customization, its saved color is shown. Choose **Automatic** to remove the override and use the provider color, falling back to the standard waste-type color. The hex field is ignored in Automatic mode. Other customization fields are unaffected by the color mode.
+
+The integration exposes the color as a sensor attribute; dashboard components decide how to display it. Native Home Assistant [Entity badges](https://www.home-assistant.io/dashboards/badges/#entity-badge) support a fixed `color` configured separately in the dashboard, but do not automatically read the sensor's `color` attribute:
+
+```yaml
+type: entity
+entity: sensor.waste_collection_schedule_paper
+color: "#2196F3"
+```
+
+For a color that follows the next collection, use a component that can read the attribute, as shown below.
+
 
 The Tile card itself cannot read an attribute for its `color` option. With [card-mod](https://github.com/thomasloven/lovelace-card-mod) you can set the tile color from the attribute:
 
