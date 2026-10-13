@@ -1,6 +1,8 @@
 # AHK Heidekreis
 
-Support for schedules provided by [ahk-heidekreis.de](https://www.ahk-heidekreis.de/).
+Support for schedules provided by [AHK Heidekreis](https://www.ahk-heidekreis.de).
+
+Source for AHK Heidekreis, Germany (ahk-heidekreis.de)
 
 ## Configuration via configuration.yaml
 
@@ -18,16 +20,16 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **city**  
-_(string) (required)_
+*(string) (required)*
 
 **postcode**  
-_(string) (required)_
+*(string) (required)*
 
 **street**  
-_(string) (required)_
+*(string) (required)*
 
 **house_number**  
-_(string) (required)_
+*(string) (required)*
 
 ## Example
 
@@ -37,17 +39,7 @@ waste_collection_schedule:
     - name: ahk_heidekreis_de
       args:
         city: Munster
-        postcode: 29633
+        postcode: '29633'
         street: Wagnerstr.
-        house_number: "10-18"
-    - name: ahk_heidekreis_de
-      args:
-        city: Fallingbostel/Bad Fallingbostel
-        postcode: "29683"
-        street: Konrad-Zuse-Str.
-        house_number: "4"
+        house_number: 10-18
 ```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://www.ahk-heidekreis.de/fuer-privatkunden/abfuhrzeiten.html](https://www.ahk-heidekreis.de/fuer-privatkunden/abfuhrzeiten.html), click on "Entsorgungskalender", use the address lookup and write them exactly like on the web page.

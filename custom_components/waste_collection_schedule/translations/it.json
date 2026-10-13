@@ -220,7 +220,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_armadale_wa_gov_au": {
@@ -230,7 +231,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_act_gov_au": {
         "title": "Configurazione Sorgente",
@@ -1860,7 +1863,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_goldenplains_vic_gov_au": {
@@ -1870,7 +1874,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_greaterdandenong_vic_gov_au": {
         "title": "Configurazione Sorgente",
@@ -3049,10 +3055,11 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "parcel_number": "Parcel Number",
-          "suburb": "Sobborgo"
+          "suburb": "Quartiere"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "suburb": "Il vostro quartiere o parte del comune."
         }
       },
       "reconfigure_mundaring_wa_gov_au": {
@@ -3061,9 +3068,11 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "parcel_number": "Parcel Number",
-          "suburb": "Sobborgo"
+          "suburb": "Quartiere"
         },
-        "data_description": {}
+        "data_description": {
+          "suburb": "Il vostro quartiere o parte del comune."
+        }
       },
       "args_murray_wa_gov_au": {
         "title": "Configurazione Sorgente",
@@ -3338,12 +3347,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "houseNo": "Civico",
-          "street": "Strada",
-          "suburb": "Sobborgo"
+          "houseNo": "Numero civico",
+          "street": "Via",
+          "suburb": "Quartiere"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "houseNo": "Il vostro numero civico.",
+          "street": "Il nome della vostra via.",
+          "suburb": "Il vostro quartiere o parte del comune."
         }
       },
       "reconfigure_thehills_nsw_gov_au": {
@@ -3351,11 +3363,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "houseNo": "Civico",
-          "street": "Strada",
-          "suburb": "Sobborgo"
+          "houseNo": "Numero civico",
+          "street": "Via",
+          "suburb": "Quartiere"
         },
-        "data_description": {}
+        "data_description": {
+          "houseNo": "Il vostro numero civico.",
+          "street": "Il nome della vostra via.",
+          "suburb": "Il vostro quartiere o parte del comune."
+        }
       },
       "args_bassendean_wa_gov_au": {
         "title": "Configurazione Sorgente",
@@ -8346,11 +8362,14 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo",
-          "city_name": "City Name",
-          "postal_code": "Codice Postale CAP"
+          "city_name": "Città",
+          "postal_code": "CAP"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo.",
+          "city_name": "La vostra città o paese.",
+          "postal_code": "Il vostro codice postale (CAP)."
         }
       },
       "reconfigure_montri_fr": {
@@ -8359,10 +8378,14 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo",
-          "city_name": "City Name",
-          "postal_code": "Codice Postale CAP"
+          "city_name": "Città",
+          "postal_code": "CAP"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo.",
+          "city_name": "La vostra città o paese.",
+          "postal_code": "Il vostro codice postale (CAP)."
+        }
       },
       "args_memotri_agglo_pau_fr": {
         "title": "Configurazione Sorgente",
@@ -10674,12 +10697,16 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "house_number": "Civico",
-          "postcode": "Codice Postale CAP",
-          "street": "Strada"
+          "house_number": "Numero civico",
+          "postcode": "CAP",
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "La vostra città o paese.",
+          "house_number": "Il vostro numero civico.",
+          "postcode": "Il vostro codice postale (CAP).",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_ahk_heidekreis_de": {
@@ -10688,11 +10715,16 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "house_number": "Civico",
-          "postcode": "Codice Postale CAP",
-          "street": "Strada"
+          "house_number": "Numero civico",
+          "postcode": "CAP",
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "La vostra città o paese.",
+          "house_number": "Il vostro numero civico.",
+          "postcode": "Il vostro codice postale (CAP).",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_heimat_info_de": {
         "title": "Configurazione Sorgente",
@@ -18821,12 +18853,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Comune",
-          "house_number": "N° Civico",
-          "street": "Via/Piazza/Corso"
+          "city": "Città",
+          "house_number": "Numero civico",
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "La vostra città o paese.",
+          "house_number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_irenambiente_it": {
@@ -18834,11 +18869,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "city": "Comune",
-          "house_number": "N° Civico",
-          "street": "Via/Piazza/Corso"
+          "city": "Città",
+          "house_number": "Numero civico",
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "La vostra città o paese.",
+          "house_number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_isontinambiente_it": {
         "title": "Configurazione Sorgente",
@@ -18921,7 +18960,7 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "user_municipality": "Nome del tuo comune, scritto come nell'app S.E.S.A."
+          "user_municipality": "Il nome del vostro comune, come indicato sul sito del fornitore."
         }
       },
       "reconfigure_sesaeste_it": {
@@ -18932,7 +18971,7 @@
           "user_municipality": "Comune"
         },
         "data_description": {
-          "user_municipality": "Nome del tuo comune, scritto come nell'app S.E.S.A."
+          "user_municipality": "Il nome del vostro comune, come indicato sul sito del fornitore."
         }
       },
       "args_seab_biella_it": {
@@ -20233,7 +20272,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_hastingsdc_govt_nz": {
@@ -20243,7 +20283,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_horowhenua_govt_nz": {
         "title": "Configurazione Sorgente",
@@ -20509,7 +20551,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_waikato_district_council_govt_nz": {
@@ -20519,7 +20562,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_waipa_nz": {
         "title": "Configurazione Sorgente",
@@ -22243,13 +22288,12 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "registrationNumber": "Numero di registrazione",
-          "street": "Strada"
+          "registrationNumber": "Registration Number",
+          "street": "Via"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "registrationNumber": "Numero di registrazione OLO (usare questo O nome della strada)",
-          "street": "Nome della strada e numero civico (usare questo O numero di registrazione)"
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_olo_sk": {
@@ -22257,12 +22301,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "registrationNumber": "Numero di registrazione",
-          "street": "Strada"
+          "registrationNumber": "Registration Number",
+          "street": "Via"
         },
         "data_description": {
-          "registrationNumber": "Numero di registrazione OLO (usare questo O nome della strada)",
-          "street": "Nome della strada e numero civico (usare questo O numero di registrazione)"
+          "street": "Il nome della vostra via."
         }
       },
       "args_ics_publicus_si": {
@@ -22496,10 +22539,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "region": "Regione"
+          "region": "Quartiere"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "region": "Il vostro quartiere o parte del comune."
         }
       },
       "reconfigure_cistomesto_si": {
@@ -22507,9 +22551,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "region": "Regione"
+          "region": "Quartiere"
         },
-        "data_description": {}
+        "data_description": {
+          "region": "Il vostro quartiere o parte del comune."
+        }
       },
       "args_durban_gov_za": {
         "title": "Configurazione Sorgente",
@@ -25639,7 +25685,7 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_bristol_gov_uk": {
@@ -25650,7 +25696,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "args_south_norfolk_and_broadland_gov_uk": {
@@ -27165,14 +27211,16 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "name": "Nome",
-          "number": "Numero",
-          "post_code": "Codice Postale CAP",
+          "name": "Name",
+          "number": "Numero civico",
+          "post_code": "CAP",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "number": "Il vostro numero civico.",
+          "post_code": "Il vostro codice postale (CAP).",
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_environmentfirst_co_uk": {
@@ -27180,13 +27228,15 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "name": "Nome",
-          "number": "Numero",
-          "post_code": "Codice Postale CAP",
+          "name": "Name",
+          "number": "Numero civico",
+          "post_code": "CAP",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "number": "Il vostro numero civico.",
+          "post_code": "Il vostro codice postale (CAP).",
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "args_eastleigh_gov_uk": {
@@ -32453,12 +32503,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "postcode": "Codice Postale CAP",
+          "postcode": "CAP",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "postcode": "Il vostro codice postale (CAP).",
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_wigan_gov_uk": {
@@ -32466,11 +32517,12 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "postcode": "Codice Postale CAP",
+          "postcode": "CAP",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "postcode": "Il vostro codice postale (CAP).",
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "args_wiltshire_gov_uk": {
@@ -33544,10 +33596,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street": "Strada"
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_palmcoast_fl_gov": {
@@ -33555,9 +33608,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "street": "Strada"
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Il nome della vostra via."
+        }
       },
       "args_phoenix_gov": {
         "title": "Configurazione Sorgente",

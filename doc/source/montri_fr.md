@@ -1,12 +1,14 @@
 # Montri
 
-Support for schedules provided by [Montri](https://montri.fr), a French waste collection schedule platform used by several intercommunal waste-management syndicates, such as SICOVAD around Épinal (Vosges).
+Support for schedules provided by [Montri](https://montri.fr).
+
+Source for Montri, a French waste collection schedule platform used by several intercommunal waste-management syndicates (e.g. SICOVAD around Épinal).
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: montri_fr
       args:
         postal_code: POSTAL_CODE
@@ -16,33 +18,23 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**postal_code**
-*(String) (required)*
+**postal_code**  
+*(string) (required)*
 
-The postal code of your municipality, e.g. `88000`.
+**city_name**  
+*(string) (required)*
 
-**city_name**
-*(String) (required)*
-
-The exact name of your municipality as shown on [https://montri.fr](https://montri.fr), e.g. `Dinozé`.
-
-**address**
-*(String) (required)*
-
-The street address to search for (house number and street name), e.g. `6 Place Georges Boizot`.
+**address**  
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: montri_fr
       args:
-        postal_code: "88000"
-        city_name: Dinozé
+        postal_code: '88000'
+        city_name: "Dinoz\xE9"
         address: 6 Place Georges Boizot
 ```
-
-## How to get the source arguments
-
-Visit [https://montri.fr](https://montri.fr), enter your postal code and select your municipality from the dropdown. Then go to "Calendrier de collecte" and search for your address to confirm the exact spelling of your municipality and street address to use here.

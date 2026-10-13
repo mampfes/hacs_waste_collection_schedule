@@ -1,29 +1,25 @@
 # Notre-Dame-du-Bon-Conseil (Village)
 
-Support for schedules provided by [Village de Notre-Dame-du-Bon-Conseil](https://villagebonconseil.ca).
+Support for schedules provided by [Notre-Dame-du-Bon-Conseil (Village)](https://villagebonconseil.ca).
 
-## Configuration via GUI
+Source for villagebonconseil.ca waste collection calendar
 
-1. Add "Waste Collection Schedule" integration
-2. Select "Notre-Dame-du-Bon-Conseil (Village)" as the source
-3. No configuration required - same schedule for all residents
-
-## Configuration via YAML
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: villagebonconseil_ca
-      args:
 ```
 
-No arguments required - the calendar is the same for all residents.
+### Configuration Variables
 
-## Waste Types
+No configuration arguments are required.
 
-- **Ordures ménagères** (Household waste) - `mdi:trash-can`
-- **Matières organiques** (Organic waste) - `mdi:leaf`
-- **Matières recyclables** (Recyclables) - `mdi:recycle`
-- **Conteneur en métal – Déchets** (Metal container waste) - `mdi:factory`
-- **Conteneur en métal – Recyclage** (Metal container recycling) - `mdi:recycle`
-- **Encombrants** (Bulky items) - `mdi:sofa`
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: villagebonconseil_ca
+```
