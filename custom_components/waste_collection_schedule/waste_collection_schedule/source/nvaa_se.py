@@ -1,130 +1,81 @@
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Norrtalje Vatten & Avfall"
-DESCRIPTION = "Source for Norrtalje Vatten & Avfall waste collection services, Sweden."
-URL = "https://sjalvservice.nvaa.se/"
-
-API_URL = f"{URL}api/v1/integration/"
-
-NEXT_COLLECTION_URL = f"{API_URL}getNextGarbageCollection"
-FIND_ADDRESS_URL = f"{API_URL}findAddress"
+API_URL = "https://sjalvservice.nvaa.se/api/v1/integration"
 
 
-TEST_CASES = {
-    "Gustav Adolfs väg 24, Norrtälje": {
-        "street_address": "Gustav Adolfs väg 24, Norrtälje"
-    },
-    "Rödhakestigen 1, Väddö": {"street_address": "Rödhakestigen 1, Väddö"},
-}
+def _building_id(response, *_keys, street_address: str = "", **_params) -> str:
+    """The id of the address the search matched (an exact match wins)."""
+    results = response.json().get("results") or []
+    wanted = street_address.strip().casefold()
+    for result in results:
+        if str(result.get("address", "")).strip().casefold() == wanted and result.get(
+            "id"
+        ):
+            return result["id"]
+    for result in results:
+        if result.get("id"):
+            return result["id"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street_address", street_address, [r.get("address") for r in results]
+    )
 
 
-ICON_MAP = {
-    "Restavfall": Icons.GENERAL_WASTE,
-    "Matavfall": Icons.BIO_KITCHEN,
-    "Slam": Icons.HAZARDOUS,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Norrtälje Vatten & Avfall"
+    DESCRIPTION = (
+        "Source for Norrtälje Vatten & Avfall waste collection services, Sweden."
+    )
+    URL = "https://sjalvservice.nvaa.se/"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
 
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter the address as the self-service site writes it, street and number followed by the locality, e.g. `Hamndalsvägen 2, Norrtälje`.",
+    }
 
-def parse_date(next_pickup_date):
-    """Parse the date string into a datetime object.
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.FOOD_WASTE, wt.OTHER]
 
-    There are three possible date formats: specific days in Swedish, week and weeks.
-    Dates can also sometimes be missing. Seems common with "Fettavskiljare".
-    Specific date: Tisdag 4 juni 2024
-    week: v10 2025
-    weeks: v27 - v28 2025
-    """
-    result = re.search(r"v(\d*) - v(\d*) (\d*)", next_pickup_date)
-    if result:
-        # Parse week range format
-        [start_week, _, year] = result.groups()
-        date_obj = datetime.strptime(
-            f"{int(year)}-W{int(start_week) - 1}-1", "%Y-W%W-%w"
-        ).date()
-    elif next_pickup_date.startswith("v"):
-        # Parse week format
-        week_number = int(next_pickup_date[1:].split()[0])
-        year = int(next_pickup_date.split()[1])
-        date_obj = datetime.strptime(f"{year}-W{week_number - 1}-1", "%Y-W%W-%w").date()
-    elif next_pickup_date == "-":
-        return None
-    else:
-        # Parse specific date format
-        swedish_months = {
-            "januari": 1,
-            "februari": 2,
-            "mars": 3,
-            "april": 4,
-            "maj": 5,
-            "juni": 6,
-            "juli": 7,
-            "augusti": 8,
-            "september": 9,
-            "oktober": 10,
-            "november": 11,
-            "december": 12,
-        }
-        _day, day_number, month, year = next_pickup_date.split()
-        month = swedish_months[month]
-        date_obj = datetime.strptime(f"{year}-{month}-{day_number}", "%Y-%m-%d").date()
+    TEST_CASES: ClassVar[dict] = {
+        "Hamndalsvägen 2, Norrtälje": {"street_address": "Hamndalsvägen 2, Norrtälje"},
+        "Rödhakestigen 1, Väddö": {"street_address": "Rödhakestigen 1, Väddö"},
+    }
 
-    return date_obj
+    PARAMS = (street_address("street_address"),)
 
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                f"{API_URL}/findAddress",
+                method="POST",
+                data=lambda street_address, **_: {"address": street_address},
+                pick=_building_id,
+            ),
+        ),
+        url=f"{API_URL}/getNextGarbageCollection",
+        method="POST",
+        data=lambda building_id, **_: {"buildingId": building_id},
+    )
 
-class Source:
-    def __init__(self, street_address):
-        self.street_address = street_address
-
-    def fetch_building_id(self, session):
-        search_payload = {"address": self.street_address}
-        response = session.post(
-            FIND_ADDRESS_URL,
-            data=search_payload,
-        )
-        search_data = response.json()["results"]
-
-        if len(search_data) == 0:
-            raise ValueError(f"Search for address failed for {self.street_address}.")
-
-        building_id = search_data[0].get("id")
-        if not building_id:
-            raise ValueError(f"Failed to get address ID for {self.street_address}.")
-
-        return building_id
-
-    @staticmethod
-    def fetch_schedule_for_building_id(session, building_id):
-        data = {"buildingId": building_id}
-
-        response = session.post(NEXT_COLLECTION_URL, json=data)
-        schedule_data = response.json()
-
-        return schedule_data
-
-    @staticmethod
-    def format_schedule_data(schedule_data):
-        entries = []
-        for service in schedule_data:
-            waste_type = service["product"]
-            next_pickup_date = service["next_collection"]
-            date_obj = parse_date(next_pickup_date)
-            if date_obj:
-                entries.append(
-                    Collection(
-                        date=date_obj, t=waste_type, icon=ICON_MAP.get(waste_type)
-                    )
-                )
-        return entries
-
-    def fetch(self):
-        with requests.Session() as s:
-            building_id = self.fetch_building_id(s)
-            schedule_data = self.fetch_schedule_for_building_id(s, building_id)
-
-        entries = self.format_schedule_data(schedule_data)
-
-        return entries
+    transform = JsonTransformer(
+        date_key="next_collection",
+        type_key="product",
+        parse_date=date_parsers.first_of(
+            date_parsers.named_month(), date_parsers.iso_week()
+        ),
+        skip_unparseable_dates=True,
+        type_value_map={
+            "Restavfall": wt.GENERAL_WASTE,
+            "Matavfall": wt.FOOD_WASTE,
+            # Septic/sludge emptying has no canonical type.
+            "Slam": wt.OTHER,
+        },
+        carry_raw_label=True,
+    )

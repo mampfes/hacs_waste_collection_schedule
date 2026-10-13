@@ -1,98 +1,69 @@
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Reno Djurs"
-DESCRIPTION = "Reno Djurs collections for Djursland"
-URL = "https://renodjurs.dk"
-TEST_CASES = {
-    "TestCase1": {
-        "id": "46000",
-    },
-    "TestCase2": {
-        "id": "45000",
-    },
-    "TestCase3": {
-        "id": 44000,
-    },
-    "12320": {
-        "id": 12320,
-    },
-}
-
-ICON_MAP = {
-    "REST-MAD": Icons.GENERAL_WASTE,
-    "PAP-PAPIR": Icons.PAPER,
-    "PLAST-GLAS-METAL": Icons.PLASTIC_PACKAGING,
-}
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
+from waste_collection_schedule.transformers import HtmlTransformer
 
 
-class Source:
-    def __init__(self, id: str | int):
-        self._id = str(id)
-        self._api_url = f"https://minside.renodjurs.dk/Ordninger.aspx?id={self._id}"
+def _cell(row, index: int) -> str | None:
+    cells = row.find_all("td")
+    return cells[index].get_text(strip=True) if len(cells) > 4 else None
 
-    def fetch(self):
-        session = requests.Session()
 
-        entries = []
+def _scheme(row) -> str | None:
+    """The scheme column, reduced to the fraction it collects."""
+    name = (_cell(row, 1) or "").lower()
+    if "rest" in name and "mad" in name:
+        return "rest-mad"
+    if "plast" in name and "glas" in name:
+        return "plast-glas"
+    if "papir" in name:
+        return "papir"
+    return None
 
-        r = session.get(self._api_url)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        container = soup.find("table", {"class": "table"})
-        rows = container.find_all("tr")
 
-        for row in rows:
-            cells = row.find_all("td")
-            if len(cells) <= 4:
-                continue
+@final
+class Source(BaseSource):
+    TITLE = "Reno Djurs"
+    DESCRIPTION = "Reno Djurs collections for Djursland"
+    URL = "https://renodjurs.dk"
+    COUNTRY = "dk"
+    RAISE_ON_EMPTY = True
 
-            raw_type = cells[1].get_text()
-            fraktion = "unknown"
-            icon = None
-            current_pickup = None
-            next_pickup = None
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+    ]
 
-            if "rest" in raw_type and "mad" in raw_type:
-                fraktion = "Rest- og Madaffald"
-                icon = ICON_MAP.get("REST-MAD")
-            elif "plast" in raw_type and "glas" in raw_type:
-                fraktion = "Plast-, Glas- og Metalaffald"
-                icon = ICON_MAP.get("PLAST-GLAS-METAL")
-            elif "papir" in raw_type:
-                fraktion = "Pap- og Papiraffald"
-                icon = ICON_MAP.get("PAP-PAPIR")
+    TEST_CASES: ClassVar[dict] = {
+        "TestCase1": {"id": "46000"},
+        "TestCase2": {"id": "45000"},
+        "TestCase3": {"id": 44000},
+        "12320": {"id": 12320},
+    }
 
-            if not (cells[3].get_text() is None or cells[3].get_text() == ""):
-                current_pickup = datetime.strptime(
-                    cells[3].get_text(), "%d-%m-%Y"
-                ).date()
-                if current_pickup == datetime.now().date():
-                    entries.append(
-                        Collection(
-                            date=current_pickup,
-                            t=fraktion,
-                            icon=icon,
-                        )
-                    )
+    PARAMS = (text_field("id", "Address ID"),)
 
-            if cells[4].get_text() is None or cells[4].get_text() == "":
-                continue
+    HOWTO: ClassVar[dict] = {
+        "en": "Open https://minside.renodjurs.dk, search your address and copy the number after `id=` in the address bar of the 'Ordninger' page.",
+    }
 
-            try:
-                next_pickup = datetime.strptime(cells[4].get_text(), "%d-%m-%Y").date()
-            except ValueError:
-                continue
-
-            entries.append(
-                Collection(
-                    date=next_pickup,
-                    t=fraktion,
-                    icon=icon,
-                )
-            )
-
-        return entries
+    retrieve = retrievers.Request(
+        "https://minside.renodjurs.dk/Ordninger.aspx",
+        params=lambda id, **_: {"id": str(id)},
+    )
+    parse = parsers.HtmlParser("table.table tr", require=["table.table"])
+    transform = HtmlTransformer(
+        date_getter=lambda row: _cell(row, 4),
+        type_getter=_scheme,
+        type_value_map={
+            "rest-mad": [wt.GENERAL_WASTE, wt.FOOD_WASTE],
+            "plast-glas": wt.RECYCLABLES,
+            "papir": wt.PAPER,
+        },
+        skip_unparseable_dates=True,
+    )

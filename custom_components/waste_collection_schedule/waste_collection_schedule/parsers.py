@@ -1196,6 +1196,91 @@ class HtmlMonthRows(Parser["list[tuple[datetime.date, str]]"]):
         return rows
 
 
+class HtmlColumnDates(Parser["list[tuple[datetime.date, str]]"]):
+    """A table with a collection round per column and one date per cell.
+
+    Each header cell names a round and the cells beneath it are that round's
+    dates, one per row, so the columns have different lengths and shorter ones
+    are padded with empty cells::
+
+        | zmieszane  | papier     | BIO        |
+        | 2026-10-15 | 2026-10-15 | 2026-10-16 |
+        | 2026-10-19 | 2026-10-19 | 2026-10-23 |
+
+    Every cell holding a date becomes one ``(date, round name)`` row, the round
+    named by the column's header. A cell that is empty or not a date is skipped::
+
+        parse = parsers.HtmlColumnDates(from_json_key="wiadomoscRWD")
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    Args:
+        parse_date: callable turning a cell's text into a date, raising
+            ``ValueError`` for text that is not one (default ISO ``YYYY-MM-DD``).
+        require: header texts (matched exactly) that the wanted table must all
+            carry. Unset takes the first table on the page.
+        from_json_key: read the HTML from this key (or path of keys) of a JSON
+            response instead of ``response.text``, as :class:`HtmlParser` does.
+    """
+
+    def __init__(
+        self,
+        *,
+        parse_date: Callable[[str], datetime.date] = datetime.date.fromisoformat,
+        require: "Iterable[str] | None" = None,
+        from_json_key: "str | tuple[str | int, ...] | None" = None,
+    ):
+        self.parse_date = parse_date
+        self.require = frozenset(require) if require is not None else None
+        self.from_json_key = from_json_key
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[datetime.date, str]]":
+        if self.from_json_key is not None:
+            data: Any = (
+                response if isinstance(response, (dict, list)) else response.json()
+            )
+            keys = (
+                (self.from_json_key,)
+                if isinstance(self.from_json_key, str)
+                else self.from_json_key
+            )
+            for key in keys:
+                if isinstance(key, int) and not data:
+                    return []
+                data = data[key]
+            markup = str(data)
+        else:
+            markup = response.text
+        soup = BeautifulSoup(markup, "html.parser")
+
+        table = None
+        for candidate in soup.find_all("table"):
+            headers = {th.get_text(strip=True) for th in candidate.find_all("th")}
+            if self.require is None or self.require <= headers:
+                table = candidate
+                break
+        if table is None:
+            return []
+
+        head = table.find("tr")
+        if not isinstance(head, Tag):
+            return []
+        rounds = [c.get_text(strip=True) for c in head.find_all(["th", "td"])]
+
+        rows: list[tuple[datetime.date, str]] = []
+        for row in table.find_all("tr")[1:]:
+            for name, cell in zip(rounds, row.find_all(["td", "th"]), strict=False):
+                text = cell.get_text(strip=True)
+                if not text:
+                    continue
+                try:
+                    rows.append((self.parse_date(text), name))
+                except ValueError:
+                    continue
+        return rows
+
+
 class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
     """A table with a month per column and a collection round per row.
 
@@ -1223,6 +1308,11 @@ class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
         require: header texts (lowercased, matched exactly) that the wanted
             table must all carry. Unset takes the first table on the page.
         year: fallback year (default the current year at fetch time).
+        month_attr: name of an attribute on the header cells that carries the
+            month and year as ``"M.YYYY"`` (``"data-value"``), for a table
+            whose header text is no month name ("Dzień odbioru" repeated).
+            Each column then has its own year, so a schedule that crosses a
+            year boundary resolves correctly.
     """
 
     def __init__(
@@ -1230,9 +1320,11 @@ class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
         *,
         require: "Iterable[str] | None" = None,
         year: "int | None" = None,
+        month_attr: "str | None" = None,
     ):
         self.require = frozenset(require) if require is not None else None
         self.year = year
+        self.month_attr = month_attr
 
     def _table(self, soup: BeautifulSoup) -> "Tag | None":
         for candidate in soup.find_all("table"):
@@ -1291,12 +1383,22 @@ class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
 
         # Column position -> month number, from the first row (colspan aware).
         months: dict[int, int] = {}
+        years: dict[int, int] = {}
         position = 0
         for cell in header_row.find_all(["th", "td"]):
             month = self._month(cell.get_text(strip=True))
+            column_year = None
+            if self.month_attr is not None:
+                found = re.fullmatch(
+                    r"\s*(\d{1,2})\.(\d{4})\s*", str(cell.get(self.month_attr, ""))
+                )
+                if found:
+                    month, column_year = int(found.group(1)), int(found.group(2))
             if month is not None:
                 for offset in range(self._span(cell)):
                     months[position + offset] = month
+                    if column_year is not None:
+                        years[position + offset] = column_year
             position += self._span(cell)
 
         year = self.year or datetime.date.today().year
@@ -1312,6 +1414,7 @@ class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
                 covered = [
                     months[p] for p in range(position, position + span) if p in months
                 ]
+                cell_year = years.get(position, year)
                 position += span
                 if not covered:
                     continue
@@ -1321,7 +1424,7 @@ class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
                     for day in days:
                         try:
                             rows.append(
-                                (datetime.date(year, covered[0], int(day)), name)
+                                (datetime.date(cell_year, covered[0], int(day)), name)
                             )
                         except ValueError:
                             continue
@@ -1374,6 +1477,14 @@ class HtmlMonthHeadedRows(Parser["list[tuple[datetime.date, str]]"]):
             -1, the last).
         label_separator: split the label at this text, one row each.
         table: CSS selector for the table (default the first ``table``).
+        all_tables: read every table the selector matches rather than the
+            first, for a page with one table per month. Each table's heading
+            sets the month for its own rows.
+        day_pattern: regex whose first match in the day cell (group 1, or the
+            whole match) is the day number, for a cell that reads
+            "Thursday 15 October" rather than "15".
+        current_year: a heading naming only the month ("October") falls in the
+            current year (a year-less heading is skipped otherwise).
     """
 
     def __init__(
@@ -1383,11 +1494,17 @@ class HtmlMonthHeadedRows(Parser["list[tuple[datetime.date, str]]"]):
         label_column: int = -1,
         label_separator: "str | None" = None,
         table: str = "table",
+        all_tables: bool = False,
+        day_pattern: "str | None" = None,
+        current_year: bool = False,
     ):
         self.day_column = day_column
         self.label_column = label_column
         self.label_separator = label_separator
         self.table = table
+        self.all_tables = all_tables
+        self.day_pattern = re.compile(day_pattern) if day_pattern else None
+        self.current_year = current_year
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -1395,40 +1512,54 @@ class HtmlMonthHeadedRows(Parser["list[tuple[datetime.date, str]]"]):
         from waste_collection_schedule import recurrence
 
         soup = BeautifulSoup(response.text, "html.parser")
-        table = soup.select_one(self.table)
-        if table is None:
-            return []
+        tables = soup.select(self.table)
+        if not self.all_tables:
+            tables = tables[:1]
 
-        month: tuple[int, int] | None = None
         rows: list[tuple[datetime.date, str]] = []
-        for row in table.find_all("tr"):
-            values = [c.get_text(" ", strip=True) for c in row.find_all(["th", "td"])]
-            if len(values) == 1:
-                parts = values[0].split()
-                number = recurrence.month(parts[0]) if parts else None
-                if number is not None and len(parts) > 1 and parts[1].isdigit():
-                    month = (int(parts[1]), number)
-                continue
-            if month is None or len(values) < 2:
-                continue
-            try:
-                day = values[self.day_column]
-                label = values[self.label_column]
-            except IndexError:
-                continue
-            if not day.isdigit():
-                continue
-            labels = (
-                label.split(self.label_separator) if self.label_separator else [label]
-            )
-            for name in labels:
-                name = name.strip()
-                if not name:
+        for table in tables:
+            month: tuple[int, int] | None = None
+            for row in table.find_all("tr"):
+                values = [
+                    c.get_text(" ", strip=True) for c in row.find_all(["th", "td"])
+                ]
+                if len(values) == 1:
+                    parts = values[0].split()
+                    number = recurrence.month(parts[0]) if parts else None
+                    if number is None:
+                        continue
+                    if len(parts) > 1 and parts[1].isdigit():
+                        month = (int(parts[1]), number)
+                    elif self.current_year and len(parts) == 1:
+                        month = (datetime.date.today().year, number)
+                    continue
+                if month is None or len(values) < 2:
                     continue
                 try:
-                    rows.append((datetime.date(month[0], month[1], int(day)), name))
-                except ValueError:
+                    day = values[self.day_column]
+                    label = values[self.label_column]
+                except IndexError:
                     continue
+                if self.day_pattern is not None:
+                    found = self.day_pattern.search(day)
+                    if found is None:
+                        continue
+                    day = found.group(1) if found.groups() else found.group(0)
+                if not day.isdigit():
+                    continue
+                labels = (
+                    label.split(self.label_separator)
+                    if self.label_separator
+                    else [label]
+                )
+                for name in labels:
+                    name = name.strip()
+                    if not name:
+                        continue
+                    try:
+                        rows.append((datetime.date(month[0], month[1], int(day)), name))
+                    except ValueError:
+                        continue
         return rows
 
 

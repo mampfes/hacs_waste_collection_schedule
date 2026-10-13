@@ -1,88 +1,60 @@
-import datetime
-import html
-import json
-import re
-from urllib.parse import parse_qsl, urlencode, urlparse
-from urllib.request import Request, urlopen
+from typing import ClassVar, final
 
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Wrocław"
-DESCRIPTION = "Source for ekosystem.wroc.pl for Wrocław, Poland"
-URL = "https://ekosystem.wroc.pl"
-TEST_CASES = {
-    "Legnicka 160": {"location_id": 650358},
-    "Marcepanowa 7": {"location_id": 680085},
-}
-
-ICON_MAP = {
-    "zmieszane": Icons.GENERAL_WASTE,
-    "tworzywa": Icons.RECYCLING,
-    "BIO": Icons.ORGANIC,
-    "papier": Icons.PAPER,
-    "szkło": Icons.GLASS,
-}
-
-API_URL = "https://ekosystem.wroc.pl/wp-admin/admin-ajax.php"
-
-MESSAGE_FIELD_NAME = "wiadomosc"
-PARAMS_NUMBER_PARAM_NAME = "params"
-WASTE_TYPE_PARAM_FORMAT = "co_{}"
-DATE_PARAM_FORMAT = "kiedy_{}"
+from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import location_id
+from waste_collection_schedule.retrievers import Request
+from waste_collection_schedule.transformers import ICSTransformer
 
 
-class Source:
-    def __init__(self, location_id):
-        self._location_id = location_id
-        self._calendar_url_pattern = re.compile(
-            '<a href="(https://ekosystem\\.wroc\\.pl/download/\\?action=pdf[^"]*)"'
-        )
+@final
+class Source(BaseSource):
+    TITLE = "Wrocław"
+    DESCRIPTION = "Source for ekosystem.wroc.pl for Wrocław, Poland"
+    URL = "https://ekosystem.wroc.pl"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self):
-        payload = urlencode(
-            {
-                "action": "waste_disposal_form_get_schedule",
-                "id_numeru": self._location_id,
-            }
-        ).encode()
-        request = Request(
-            API_URL,
-            data=payload,
-            headers={"Content-Type": "application/x-www-form-urlencoded"},
-            method="POST",
-        )
-        with urlopen(request, timeout=30) as response:
-            data = json.loads(response.read().decode("utf-8"))
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Visit the Ekosystem schedule search "
+            "(https://ekosystem.wroc.pl/gospodarowanie-odpadami/harmonogram-wywozu-odpadow/), "
+            "search for your address and get the schedule. The URL contains your "
+            "location id as the parameter `lokalizacja`."
+        ),
+    }
 
-        calendar_data = self.extract_calendar_data(data)
-        entries = []
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-        if PARAMS_NUMBER_PARAM_NAME not in calendar_data:
-            raise Exception("Error: parameter number not present in the url!")
+    TEST_CASES: ClassVar[dict] = {
+        "Legnicka 160": {"location_id": 650358},
+        "Marcepanowa 7": {"location_id": 680085},
+    }
 
-        for i in range(1, int(calendar_data[PARAMS_NUMBER_PARAM_NAME]) + 1):
-            date_str = calendar_data[DATE_PARAM_FORMAT.format(i)]
-            type_str = calendar_data[WASTE_TYPE_PARAM_FORMAT.format(i)]
-            entries.append(
-                Collection(
-                    date=datetime.date.fromisoformat(date_str),
-                    t=type_str.capitalize(),
-                    icon=ICON_MAP.get(type_str),
-                )
-            )
+    PARAMS: ClassVar[list] = [location_id()]
 
-        return entries
-
-    def extract_calendar_data(self, data: dict) -> dict:
-        if MESSAGE_FIELD_NAME not in data:
-            raise Exception("Error: the message field not found")
-        message = data[MESSAGE_FIELD_NAME]
-        match = self._calendar_url_pattern.search(message)
-        if not match:
-            raise Exception(
-                f"Error: a message {message} does not contain a valid calendar url!"
-            )
-        calendar_url = html.unescape(match.group(1))
-        parsed_url = urlparse(calendar_url)
-        params_list = parse_qsl(parsed_url.query)
-        return dict(params_list)
+    retrieve = Request(
+        "https://ekosystem.wroc.pl/wp-admin/admin-ajax.php",
+        method="POST",
+        data=lambda location_id, **_: {
+            "action": "waste_disposal_form_get_schedule",
+            "id_numeru": location_id,
+        },
+    )
+    parse = parsers.HtmlColumnDates(from_json_key="wiadomoscRWD")
+    transform = ICSTransformer(
+        type_value_map={
+            "zmieszane": wt.GENERAL_WASTE,
+            "tworzywa": wt.RECYCLABLES,
+            "BIO": wt.ORGANIC,
+            "papier": wt.PAPER,
+            "szkło": wt.GLASS,
+        },
+    )

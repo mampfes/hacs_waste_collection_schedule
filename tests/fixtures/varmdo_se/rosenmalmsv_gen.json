@@ -1,0 +1,49 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://edp-futureweb.varmdo.se/FutureWeb/SimpleWastePickup/SearchAdress 53e73752d7",
+      "method": "POST",
+      "url": "https://edp-futureweb.varmdo.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "final_url": "https://edp-futureweb.varmdo.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Rosenmalmsv\u00e4gen\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Tue, 13 Oct 2026 09:35:21 GMT",
+        "content-length": "423"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJST1NFTk1BTE1TVsOER0VOIDEsIElOR0FSw5YgKDExMzcyMykiLCJST1NFTk1BTE1TVsOER0VOIDIsIElOR0FSw5YgKDExMDI2MCkiLCJST1NFTk1BTE1TVsOER0VOIDMsIElOR0FSw5YgKDExMzczOSkiLCJST1NFTk1BTE1TVsOER0VOIDQsIElOR0FSw5YgKDExMDI1OSkiLCJST1NFTk1BTE1TVsOER0VOIDUsIElOR0FSw5YgKDExMzczOCkiLCJST1NFTk1BTE1TVsOER0VOIDYsIElOR0FSw5YgKDExMDI1NykiLCJST1NFTk1BTE1TVsOER0VOIDcsIElOR0FSw5YgKDExMDM0MikiLCJST1NFTk1BTE1TVsOER0VOIDgsIElOR0FSw5YgKDExMDI1NSkiLCJST1NFTk1BTE1TVsOER0VOIDksIElOR0FSw5YgKDExMDM0MykiLCJST1NFTk1BTE1TVsOER0VOIDEwLCBJTkdBUsOWICgxMTAyNTQpIl19"
+    },
+    {
+      "key": "GET https://edp-futureweb.varmdo.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule 7f4671991d",
+      "method": "GET",
+      "url": "https://edp-futureweb.varmdo.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://edp-futureweb.varmdo.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=ROSENMALMSV%C3%84GEN+1%2C+INGAR%C3%96+%28113723%29",
+      "body": "{\"params\":[[\"address\",\"ROSENMALMSV\u00c4GEN 1, INGAR\u00d6 (113723)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Tue, 13 Oct 2026 09:35:21 GMT",
+        "content-length": "2367"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMTAtMTUiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVUeXBlIjoiTWF0L3Jlc3QiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeSI6IlRvcnNkYWcgasOkbW4gdmVja2EgIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiVG9yc2RhZyBqw6RtbiB2ZWNrYSAiLCJCaW5UeXBlIjp7IkNvZGUiOiJURjI0MCIsIlNpemUiOjI0MC4wMCwiVW5pdCI6IkwiLCJDb250YWluZXJUeXBlIjoiSzIgbWF0L3Jlc3QifSwiTnVtYmVyT2ZCaW5zIjoxLjAwLCJGZWUiOnsiRGVzY3JpcHRpb24iOiIyNDAgTCBLMiBtYXQvcmVzdCBmw7ZyIE1hdC9yZXN0IG1lZCB0w7ZtbmluZyBWYXIgMTQ6ZSBkYWciLCJCaW5UeXBlIjp7IkNvZGUiOiJURjI0MCIsIlNpemUiOjI0MC4wMCwiVW5pdCI6IkwiLCJDb250YWluZXJUeXBlIjoiSzIgbWF0L3Jlc3QifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MjYsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiVmFyIDE0OmUgZGFnIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiSDIwIiwiV2FzdGVUeXBlIjoiTWF0L3Jlc3QiLCJDaGFuZ2VTaXplT2ZCaW5UZXh0IjpudWxsLCJDaGFuZ2VGcmVxdWVuY3lUZXh0IjpudWxsLCJDb2RlIjoiSzJfMjQwTVIyNiIsIlByb2R1Y3QiOiJSRU5IIiwiUGFydFByb2R1Y3QiOiJIVVNIIiwiRGVzaWduYXRpb24iOiIyNDBMIEvDpHJsIHTDtm1uaW5nc3JlZ2lzdHJlcmluZyBtYXQtIG9jaCByZXN0YXZmYWxsIiwiQ2FsY3VsYXRlZENvc3QiOjAsIklzQ29zdENhbGN1bGF0ZWQiOmZhbHNlLCJQYXJ0WWVhclN0YXJ0cyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckVuZHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJEZXNjcmlwdGlvbiI6IiIsIklEIjowfSwiTnVtYmVyT2ZCaW5zQW50bCI6MCwiSXNBY3RpdmUiOnRydWUsIklEIjoyNDEwNTIsIkRlc2NyaXB0aW9uIjoiMSBzdCAyNDAgTCBrMiBtYXQvcmVzdCBmw7ZyIG1hdC9yZXN0IG1lZCB0w7ZtbmluZyB0b3JzZGFnIGrDpG1uIHZlY2thICIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNzkxMjM3NjAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjExMzcyMyJ9LHsiQmluRGlyZWN0aW9uIjpudWxsLCJOZXh0V2FzdGVQaWNrdXAiOiIyMDI2LTEwLTIxIiwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MjYsIldhc3RlVHlwZSI6IlBhcHBlci9wbGFzdCIsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiT25zZGFnIHVkZGEgdmVja2EgIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiT25zZGFnIHVkZGEgdmVja2EgIiwiQmluVHlwZSI6eyJDb2RlIjoiVEYzNzAiLCJTaXplIjozNzAuMDAsIlVuaXQiOiJMIiwiQ29udGFpbmVyVHlwZSI6IksxIHBhcHAvcGxhc3QifSwiTnVtYmVyT2ZCaW5zIjoxLjAwLCJGZWUiOnsiRGVzY3JpcHRpb24iOiIzNzAgTCBLMSBwYXBwL3BsYXN0IGbDtnIgUGFwcGVyL3BsYXN0IG1lZCB0w7ZtbmluZyBWYXIgMTQ6ZSBkYWciLCJCaW5UeXBlIjp7IkNvZGUiOiJURjM3MCIsIlNpemUiOjM3MC4wMCwiVW5pdCI6IkwiLCJDb250YWluZXJUeXBlIjoiSzEgcGFwcC9wbGFzdCJ9LCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJWYXIgMTQ6ZSBkYWciLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJIMjAiLCJXYXN0ZVR5cGUiOiJQYXBwZXIvcGxhc3QiLCJDaGFuZ2VTaXplT2ZCaW5UZXh0IjpudWxsLCJDaGFuZ2VGcmVxdWVuY3lUZXh0IjpudWxsLCJDb2RlIjoiSzFfMzcwUFAyNiIsIlByb2R1Y3QiOiJSRU5IIiwiUGFydFByb2R1Y3QiOiJGTkkiLCJEZXNpZ25hdGlvbiI6IjM3MEwgS8OkcmwgYWJvbm5lbWFuZ3N0w7ZtbmluZyBwYXBwZXIgb2NoIHBsYXN0IDI2IGfDpW5nZXIvw6VyIiwiQ2FsY3VsYXRlZENvc3QiOjAsIklzQ29zdENhbGN1bGF0ZWQiOmZhbHNlLCJQYXJ0WWVhclN0YXJ0cyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckVuZHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJEZXNjcmlwdGlvbiI6IiIsIklEIjowfSwiTnVtYmVyT2ZCaW5zQW50bCI6MCwiSXNBY3RpdmUiOnRydWUsIklEIjoyNDEwNTEsIkRlc2NyaXB0aW9uIjoiMSBzdCAzNzAgTCBrMSBwYXBwL3BsYXN0IGbDtnIgcGFwcGVyL3BsYXN0IG1lZCB0w7ZtbmluZyBvbnNkYWcgdWRkYSB2ZWNrYSAiLCJTdGFydERhdGUiOiJcL0RhdGUoMTc5MTIzNzYwMDAwMClcLyIsIlN0b3BEYXRlIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIkJ1aWxkaW5nSUQiOiIxMTM3MjMifV19"
+    }
+  ]
+}

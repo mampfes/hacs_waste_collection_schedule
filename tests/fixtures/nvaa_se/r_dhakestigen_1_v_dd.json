@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://sjalvservice.nvaa.se/api/v1/integration/findAddress 3acb24cb17",
+      "method": "POST",
+      "url": "https://sjalvservice.nvaa.se/api/v1/integration/findAddress",
+      "final_url": "https://sjalvservice.nvaa.se/api/v1/integration/findAddress",
+      "body": "{\"body\":[[\"address\",\"R\u00f6dhakestigen 1, V\u00e4dd\u00f6\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "no-cache, private",
+        "date": "Tue, 13 Oct 2026 09:35:42 GMT",
+        "content-language": "en-US",
+        "access-control-expose-headers": "Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, x-session-refreshed",
+        "x-ratelimit-limit": "20",
+        "x-ratelimit-remaining": "10",
+        "vary": "Origin",
+        "set-cookie": "nvaa_dina_sidor_new_session=eyJpdiI6Ikk0V3hUSzluNUVOdmpMMUppOS9FSEE9PSIsInZhbHVlIjoiVFVzeU43S1RaS0RCbDVOTXllVlNhQzZNQ0VKdjZKM251S05NQjhYb0JhRkx3ZHYwUExJNzhqbmRwakxBYnVmVmQyZ2xHbDZzM2hXRnlLMkxNcDFmN2pKL3ZhNERNZFYzQlN3Ky9ucklIV09uckt0VWhETDZpNGZOSGxkOUdCWS8iLCJtYWMiOiI3YjU4YTE5MDk0MmI5YTYyMWRkZjA3M2JmZjMzMjlhZTc4OTY3MzA1NjE5MzdhN2UwOTIzYmExM2Y4OGQxMjczIiwidGFnIjoiIn0%3D; expires=Tue, 13 Oct 2026 11:35:42 GMT; Max-Age=7200; path=/; secure; httponly; samesite=none",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJyZXN1bHRzIjpbeyJhZGRyZXNzIjoiUlx1MDBmNmRoYWtlc3RpZ2VuIDEsIFZcdTAwZTRkZFx1MDBmNiIsImlkIjoiZXlKcGRpSTZJbXhZYVVSTlkwVm1TREJ1YmxOM1lVWmhLMHhPY2tFOVBTSXNJblpoYkhWbElqb2laRXhHY2t4bGJscE5SekkxVDJGeE1rSkNZVWhKVFZONlUxUTVhVmQzVlZnMlRVRlJNR1Z0UTNoWFp6MGlMQ0p0WVdNaU9pSTFNbUpoTWpkbVl6TXlabVk0TWpFM01XWmpZbVE0T1RSak5UTmhOakl5TURNeVl6VTVPR05oTm1Rd05EVXhZemhpTVdVeVpHWmpPREkyWkRNeVkyWTFJaXdpZEdGbklqb2lJbjA9In1dfQ=="
+    },
+    {
+      "key": "POST https://sjalvservice.nvaa.se/api/v1/integration/getNextGarbageCollection 994803b703",
+      "method": "POST",
+      "url": "https://sjalvservice.nvaa.se/api/v1/integration/getNextGarbageCollection",
+      "final_url": "https://sjalvservice.nvaa.se/api/v1/integration/getNextGarbageCollection",
+      "body": "{\"body\":[[\"buildingId\",\"eyJpdiI6ImxYaURNY0VmSDBublN3YUZhK0xOckE9PSIsInZhbHVlIjoiZExGckxlblpNRzI1T2FxMkJCYUhJTVN6U1Q5aVd3VVg2TUFRMGVtQ3hXZz0iLCJtYWMiOiI1MmJhMjdmYzMyZmY4MjE3MWZjYmQ4OTRjNTNhNjIyMDMyYzU5OGNhNmQwNDUxYzhiMWUyZGZjODI2ZDMyY2Y1IiwidGFnIjoiIn0=\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "no-cache, private",
+        "date": "Tue, 13 Oct 2026 09:35:42 GMT",
+        "content-language": "en-US",
+        "access-control-expose-headers": "Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, x-session-refreshed",
+        "x-ratelimit-limit": "20",
+        "x-ratelimit-remaining": "9",
+        "vary": "Origin",
+        "set-cookie": "nvaa_dina_sidor_new_session=eyJpdiI6InFaVVRQUDdGVHlaSllRcklYQmVQaHc9PSIsInZhbHVlIjoiNEczeEhWUWVKWm9QK2pGbGJjTWVHZnZFbVBQUVJJYVQyWWR4QmhkRkxWV1RhaCttekFUeWdLNjdpQmdrbjRMUVc0RTR2YjZ5ajFHU09MbkI4MW5ydUNTL2ZleWEzU2tUVDVsaDNwcUJFaHVKcnBObTcwbm9mN0RxZWxtNmNXVmkiLCJtYWMiOiI2NTUwNjczMjU0MDgwM2E1NGEyNjgzZGYzNWM5NTcxYzdkMmIyYjljZGM3YThjZWJiYmMyZTljMzJiMjRiMzhlIiwidGFnIjoiIn0%3D; expires=Tue, 13 Oct 2026 11:35:42 GMT; Max-Age=7200; path=/; secure; httponly; samesite=none",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "W3siZGVzY3JpcHRpb24iOiJSZXN0YXZmYWxsLCAxOTAtbGl0ZXJza1x1MDBlNHJsIDEzIGdnclwvc29tbWFyIiwicHJvZHVjdCI6IlJlc3RhdmZhbGwiLCJuZXh0X2NvbGxlY3Rpb24iOiJPbnNkYWcgMjggYXByaWwgMjAyNyJ9LHsiZGVzY3JpcHRpb24iOiJNYXRhdmZhbGwsIDE0MC1saXRlcnNrXHUwMGU0cmwgMTMgZ2dyXC9zb21tYXIiLCJwcm9kdWN0IjoiTWF0YXZmYWxsIiwibmV4dF9jb2xsZWN0aW9uIjoiT25zZGFnIDI4IGFwcmlsIDIwMjcifSx7ImRlc2NyaXB0aW9uIjoiQkRULCAwLTIsNDltXHUwMGIzIiwicHJvZHVjdCI6IlNsYW0iLCJuZXh0X2NvbGxlY3Rpb24iOiJ2MjcgLSB2MjggMjAyNyJ9LHsiZGVzY3JpcHRpb24iOiJTbHV0ZW4gdGFuaywgNCw1LTEwbVx1MDBiMyIsInByb2R1Y3QiOiJTbGFtIiwibmV4dF9jb2xsZWN0aW9uIjoidjI3IC0gdjI4IDIwMjcifV0="
+    }
+  ]
+}
