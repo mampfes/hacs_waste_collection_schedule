@@ -4251,6 +4251,7 @@ If you already have enough information for your municipality/region, you are ver
 - [KOMUS](/doc/source/sims_pl.md) / sisms.pl
 - [Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
 - [Krzyżanowice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Legnica](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Majkowice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Miasto i Gmina Morawica](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto i Gmina Łasin](/doc/source/sims_pl.md) / sisms.pl

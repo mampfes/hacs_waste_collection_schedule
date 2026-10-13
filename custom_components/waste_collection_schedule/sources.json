@@ -30763,6 +30763,14 @@
       "id": "bochnia_gmina_pl"
     },
     {
+      "title": "Legnica",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "legnica"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
       "title": "Majkowice",
       "module": "bochnia_gmina_pl",
       "default_params": {
