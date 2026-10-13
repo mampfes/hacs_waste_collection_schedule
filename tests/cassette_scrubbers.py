@@ -240,7 +240,114 @@ def _potsdam_de(interactions: list[dict], args: dict[str, Any], today: str) -> N
         _set_json(interaction, payload)
 
 
+def _eth_erd_hu(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep the configured street's assignments from the city-wide JS feed."""
+    pattern = re.compile(r"telep === '([^']+)'(.+?)(?=telep === '|\Z)", re.S)
+    for interaction in interactions:
+        if "telepvegleges" not in interaction["url"]:
+            continue
+        text = base64.b64decode(interaction["content_b64"]).decode("utf-8")
+        matches = list(pattern.finditer(text))
+        if any(m.group(1) == args["street"] for m in matches):
+            text = pattern.sub(
+                lambda m: m.group(0) if m.group(1) == args["street"] else "", text
+            )
+            interaction["content_b64"] = base64.b64encode(text.encode()).decode()
+
+
+def _aksd_hu(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep only the requested street's published recurrence rules."""
+    from waste_collection_schedule.service.AksdCalendar import _normalize
+
+    wanted = _normalize(args["street"])
+    pattern = re.compile(r"const wasteCalendarStreets = (\[.*?\]);\s*\n", re.S)
+    for interaction in interactions:
+        text = base64.b64decode(interaction["content_b64"]).decode("utf-8")
+        match = pattern.search(text)
+        if not match:
+            continue
+        streets = json.loads(match.group(1))
+        kept = [
+            street
+            for street in streets
+            if wanted == _normalize(street["label"])
+            or wanted in [_normalize(value) for value in street.get("searchValues", [])]
+        ]
+        if kept:
+            text = (
+                text[: match.start(1)]
+                + json.dumps(kept, ensure_ascii=False)
+                + text[match.end(1) :]
+            )
+            interaction["content_b64"] = base64.b64encode(text.encode()).decode()
+
+
+def _vattenmiljoresurs_se(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep the address rows used by the Sitevision widget's calendar."""
+    from waste_collection_schedule.service.SitevisionGarbageCalendar import (
+        _address_matches,
+    )
+
+    for interaction in interactions:
+        if "/allAddresses" not in interaction["url"]:
+            continue
+        payload = _json(interaction)
+        payload["allAddresses"] = [
+            entry
+            for entry in payload.get("allAddresses", [])
+            if _address_matches(args["street_address"], entry.get("hamtstalle", ""))
+        ]
+        _set_json(interaction, payload)
+
+
+def _data_montpellier3m_fr(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep only matching property rows from the metropolitan CSV reference."""
+    import csv
+    import io
+
+    from waste_collection_schedule.service.MontpellierCollectionReference import (
+        _normalize_street,
+    )
+
+    wanted = _normalize_street(args["street_name"])
+    for interaction in interactions:
+        if "MMM_MMM_ReferentielCollecte.csv" not in interaction["url"]:
+            continue
+        text = base64.b64decode(interaction["content_b64"]).decode("utf-8-sig")
+        reader = csv.DictReader(io.StringIO(text))
+        rows = [
+            row
+            for row in reader
+            if _normalize_street((row.get("nom_voie") or "").strip()) == wanted
+            and (
+                not args.get("commune")
+                or row.get("commune", "").strip().upper()
+                == args["commune"].strip().upper()
+            )
+            and (
+                args.get("house_number") is None
+                or (row.get("numero") or "").strip()
+                == str(args["house_number"]).strip()
+            )
+        ]
+        output = io.StringIO()
+        writer = csv.DictWriter(output, fieldnames=reader.fieldnames or [])
+        writer.writeheader()
+        writer.writerows(rows)
+        interaction["content_b64"] = base64.b64encode(
+            output.getvalue().encode("utf-8-sig")
+        ).decode()
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "eth_erd_hu": _eth_erd_hu,
+    "aksd_hu": _aksd_hu,
+    "vattenmiljoresurs_se": _vattenmiljoresurs_se,
+    "data_montpellier3m_fr": _data_montpellier3m_fr,
     "potsdam_de": _potsdam_de,
     "valorlux_lu": _valorlux_lu,
     "smiecioplan_pl": _smiecioplan_pl,

@@ -119,9 +119,16 @@ def test_offline_replay(module_name, case_slug, path):
 
     # The provider's one-second request throttle has no purpose when HTTP is
     # served from a cassette. Keep it active for live requests.
+    throttle_modules = {
+        "app_abfallplus_de": "AppAbfallplusDe",
+        "ahe_de": "AppAbfallplusDe",
+        "rir_no": "RirCalendar",
+    }
     throttle = (
-        patch("waste_collection_schedule.service.AppAbfallplusDe.time.sleep")
-        if module_name in {"app_abfallplus_de", "ahe_de"}
+        patch(
+            f"waste_collection_schedule.service.{throttle_modules[module_name]}.time.sleep"
+        )
+        if module_name in throttle_modules
         else nullcontext()
     )
     with cassette.replaying(path), throttle:
