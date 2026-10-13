@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.retrievers import Lookup, Request
 
 AUTOCOMPLETE_URL = "https://www.goldenplains.vic.gov.au/views-autocomplete-filters/addresses/page_3/ezi_address/0"
 SCHEDULE_URL = "https://www.goldenplains.vic.gov.au/address-search"
@@ -21,30 +21,8 @@ CARD_TYPES = {
 
 
 class _CalendarClient:
-    _session: Any
-
     def __init__(self, address: str):
         self._address = re.sub("\\s+", " ", address).strip()
-
-    def retrieve(self) -> Any:
-        session = self._session
-        r = session.get(AUTOCOMPLETE_URL, params={"q": self._address}, timeout=30)
-        r.raise_for_status()
-        suggestions = r.json()
-        if not suggestions:
-            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
-        canonical = None
-        for item in suggestions:
-            if item["value"].upper() == self._address.upper():
-                canonical = item["value"]
-                break
-        if canonical is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address", self._address, [item["value"] for item in suggestions]
-            )
-        r = session.get(SCHEDULE_URL, params={"address": canonical}, timeout=30)
-        r.raise_for_status()
-        return r
 
     def parse(self, r):
         soup = BeautifulSoup(r.text, "html.parser")
@@ -69,13 +47,6 @@ class _CalendarClient:
         return entries
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
 class CalendarParser(Parser[list[dict[str, Any]]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
@@ -83,5 +54,28 @@ class CalendarParser(Parser[list[dict[str, Any]]]):
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)
-        client._session = source.session
         return client.parse(response)
+
+
+def _canonical_address(response, *, address, **_) -> str:
+    wanted = re.sub(r"\s+", " ", address).strip()
+    suggestions = response.json()
+    for item in suggestions:
+        if item["value"].upper() == wanted.upper():
+            return item["value"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "address", wanted, [item["value"] for item in suggestions]
+    )
+
+
+calendar_retriever = Request(
+    SCHEDULE_URL,
+    params=lambda canonical, **_: {"address": canonical},
+    before=(
+        Lookup(
+            AUTOCOMPLETE_URL,
+            params=lambda address, **_: {"q": re.sub(r"\s+", " ", address).strip()},
+            pick=_canonical_address,
+        ),
+    ),
+)

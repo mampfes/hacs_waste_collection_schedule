@@ -1,11 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.field_terms import DISTRICT
+from waste_collection_schedule.preprocessors import RowFilter
 from waste_collection_schedule.service.CistoMestoCalendar import (
-    CalendarParser,
     CalendarRetriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
@@ -25,10 +26,14 @@ class Source(BaseSource):
     PARAMS = (text_field("region", term=DISTRICT),)
 
     retrieve = CalendarRetriever()
-    parse = CalendarParser()
+    parse = parsers.JsonParser("data")
+    preprocess = RowFilter(
+        lambda row, _: bool(row.get("date") and row.get("service", {}).get("title"))
+    )
     transform = JsonTransformer(
         date_key="date",
-        type_key="type",
+        type_key=lambda row: row["service"]["title"],
+        parse_date=date_parsers.for_format("%d.%m.%Y"),
         type_value_map={
             "Nevarni odpadki": wt.HAZARDOUS,
             "Kosovni odpadki": wt.BULKY_WASTE,

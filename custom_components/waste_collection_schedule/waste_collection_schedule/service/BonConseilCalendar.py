@@ -7,7 +7,7 @@ from typing import Any
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.retrievers import Request
 
 WASTE_TYPE_MAP = {
     "Collecte des ordures ménagères (bac noir)": "Ordures ménagères",
@@ -24,15 +24,8 @@ PAGE_URL = "https://villagebonconseil.ca/services-aux-citoyens/environnement/col
 
 
 class _CalendarClient:
-    _session: Any
-
     def __init__(self):
         pass
-
-    def retrieve(self) -> Any:
-        r = self._session.get(PAGE_URL, timeout=30)
-        r.raise_for_status()
-        return r
 
     def parse(self, r):
         match = re.search("var eventscalendar\\s*=\\s*(\\[[\\s\\S]*?\\]);", r.text)
@@ -60,13 +53,6 @@ class _CalendarClient:
         return entries
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
 class CalendarParser(Parser[list[dict[str, Any]]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
@@ -74,5 +60,7 @@ class CalendarParser(Parser[list[dict[str, Any]]]):
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)
-        client._session = source.session
         return client.parse(response)
+
+
+calendar_retriever = Request(PAGE_URL, timeout=30)

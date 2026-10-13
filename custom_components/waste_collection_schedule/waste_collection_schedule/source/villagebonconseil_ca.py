@@ -4,7 +4,7 @@ from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.service.BonConseilCalendar import (
     CalendarParser,
-    CalendarRetriever,
+    calendar_retriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -18,7 +18,7 @@ class Source(BaseSource):
     TEST_CASES: ClassVar[dict] = {"Village": {}}
     PARAMS = ()
 
-    retrieve = CalendarRetriever()
+    retrieve = calendar_retriever
     parse = CalendarParser()
     transform = JsonTransformer(
         date_key="date",

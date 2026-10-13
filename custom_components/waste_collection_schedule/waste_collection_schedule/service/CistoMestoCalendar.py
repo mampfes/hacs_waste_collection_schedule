@@ -1,6 +1,5 @@
 """CistoMestoCalendar retrieval and parsing through the shared, verified HTTP session."""
 
-import datetime
 import time
 import uuid
 from typing import Any
@@ -12,7 +11,6 @@ from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
 )
-from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
 
 CONFIG_FLOW_TYPES = {
@@ -170,33 +168,9 @@ class _CalendarClient:
             data = res.json()
         return res
 
-    def parse(self, res):
-        data = res.json()
-        schedule_data = data.get("data", [])
-        entries = []
-        for item in schedule_data:
-            raw_date = item.get("date")
-            service_info = item.get("service", {})
-            service_title = service_info.get("title")
-            if raw_date and service_title:
-                date_obj = datetime.datetime.strptime(raw_date, "%d.%m.%Y").date()
-                entries.append({"date": date_obj, "type": service_title})
-        return entries
-
 
 class CalendarRetriever(RetrieverFunc):
     def __call__(self, source: BaseSource) -> Any:
         client = _CalendarClient(**source.params)
         client._session = source.session
         return client.retrieve()
-
-
-class CalendarParser(Parser[list[dict[str, Any]]]):
-    def __call__(
-        self, response: Any, source: BaseSource | None = None
-    ) -> list[dict[str, Any]]:
-        if source is None:
-            raise ValueError("Calendar parser requires a source")
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.parse(response)

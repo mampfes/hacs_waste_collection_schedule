@@ -3,101 +3,68 @@
 import datetime
 from typing import Any
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.preprocessors import Schedule
+from waste_collection_schedule.retrievers import Request
 
-WEEKDAYS = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4,
-    "Saturday": 5,
-    "Sunday": 6,
-}
 API_URL = "https://api.my.armadale.wa.gov.au/bins"
 
 
-def easter(year):
-    y = year
-    g = y % 19
-    e = 0
-    c = y // 100
-    h = (c - c // 4 - (8 * c + 13) // 25 + 19 * g + 15) % 30
-    i = h - h // 28 * (1 - h // 28 * (29 // (h + 1)) * ((21 - g) // 11))
-    j = (y + y // 4 + i + 2 - c + c // 4) % 7
-    p = i - j + e
-    d = 1 + (p + 27 + (p + 6) // 40) % 31
-    m = 3 + (p + 26) // 30
-    return datetime.date(int(y), int(m), int(d))
-
-
 class _CalendarClient:
-    _session: Any
-
     def __init__(self, address: str):
         self._address: str = address
-
-    def retrieve(self):
-        r = self._session.get(API_URL, params={"address": self._address})
-        r.raise_for_status()
-        return r
 
     def parse(self, r):
         data = r.json()
         if not data:
             raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
         result = data[0]
-        bin_day = result["bin_day"]
-        if bin_day not in WEEKDAYS:
-            raise ValueError(f"Unknown bin day: {bin_day}")
-        bin_day = WEEKDAYS[bin_day]
-        recycling: bool = result["recycle_area"].lower().startswith("this week")
-        current_day = datetime.datetime.now().date()
-        diff_to_next = (bin_day - current_day.weekday()) % 7
-        if current_day.weekday() + diff_to_next >= 7:
+        day_name = result["bin_day"]
+        bin_day = recurrence.weekday(day_name)
+        if bin_day is None:
+            raise ValueError(f"Unknown bin day: {day_name}")
+        today = datetime.date.today()
+        first = recurrence.next_weekday(bin_day, on_or_after=today)
+        recycling = result["recycle_area"].lower().startswith("this week")
+        if today.weekday() + (first - today).days >= 7:
             recycling = not recycling
-        current_day = current_day + datetime.timedelta(days=diff_to_next)
-        entries = []
-        for _i in range(52):
-            date = current_day
-            start_of_week = date - datetime.timedelta(days=date.weekday())
-            christmas = datetime.date(current_day.year, 12, 25)
-            new_years_day = datetime.date(
-                current_day.year + (1 if current_day.month == 12 else 0), 1, 1
-            )
-            good_friday = easter(current_day.year) - datetime.timedelta(days=2)
-            if (
-                start_of_week <= christmas <= date
-                or start_of_week <= new_years_day <= date
-            ):
-                if 0 <= christmas.weekday() < 5:
-                    date += datetime.timedelta(days=1)
-            if date == good_friday:
-                date += datetime.timedelta(days=1)
-            entries.append({"date": date, "type": "rubbish"})
-            if recycling:
-                entries.append({"date": date, "type": "recycling"})
-            current_day += datetime.timedelta(days=7)
-            recycling = not recycling
-        return entries
+        recycling_start = first if recycling else first + recurrence.WEEKLY
+        return [
+            Schedule("rubbish", first, count=52),
+            Schedule(
+                "recycling", recycling_start, step=recurrence.FORTNIGHTLY, count=26
+            ),
+        ]
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
-class CalendarParser(Parser[list[dict[str, Any]]]):
+class CalendarParser(Parser[list[Schedule]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
-    ) -> list[dict[str, Any]]:
+    ) -> list[Schedule]:
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)
-        client._session = source.session
         return client.parse(response)
+
+
+calendar_retriever = Request(API_URL, params=lambda address, **_: {"address": address})
+
+
+def holiday_date(collection_date: datetime.date, _key: str, _source) -> datetime.date:
+    """Apply Armadale's existing Christmas/New Year and Good Friday shifts."""
+    start_of_week = collection_date - datetime.timedelta(days=collection_date.weekday())
+    christmas = datetime.date(collection_date.year, 12, 25)
+    new_year = datetime.date(collection_date.year + (collection_date.month == 12), 1, 1)
+    shifted = collection_date
+    if (
+        start_of_week <= christmas <= collection_date
+        or start_of_week <= new_year <= collection_date
+    ):
+        if christmas.weekday() < 5:
+            shifted += datetime.timedelta(days=1)
+    if shifted == recurrence.good_friday(collection_date.year):
+        shifted += datetime.timedelta(days=1)
+    return shifted

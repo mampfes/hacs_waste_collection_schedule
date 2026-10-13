@@ -1,13 +1,14 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import postcode, uprn
 from waste_collection_schedule.service.WiganNeighbourhoodCalendar import (
-    CalendarParser,
     CalendarRetriever,
+    collection_date,
 )
-from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.transformers import RowTransformer
 
 
 @final
@@ -27,10 +28,14 @@ class Source(BaseSource):
     )
 
     retrieve = CalendarRetriever()
-    parse = CalendarParser()
-    transform = JsonTransformer(
-        date_key="date",
-        type_key="type",
+    parse = parsers.HtmlLabelledDates(
+        "div.BinsRecycling",
+        label="h2",
+        date="div.dateWrapper-next",
+        date_pattern=r"day(.*)",
+    )
+    transform = RowTransformer(
+        parse_date=collection_date,
         type_value_map={
             "BLACK BIN": wt.GENERAL_WASTE,
             "BROWN BIN": wt.ORGANIC,

@@ -1,11 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, house_number, street
+from waste_collection_schedule.preprocessors import ExplodeList
 from waste_collection_schedule.service.TheHillsCalendar import (
-    CalendarParser,
-    CalendarRetriever,
+    calendar_retriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -34,10 +35,12 @@ class Source(BaseSource):
         house_number("houseNo"),
     )
 
-    retrieve = CalendarRetriever()
-    parse = CalendarParser()
+    retrieve = calendar_retriever
+    parse = parsers.JsonParser()
+    preprocess = ExplodeList("CollectionDays", into="date")
     transform = JsonTransformer(
         date_key="date",
-        type_key="type",
+        type_key="Name",
+        parse_date=date_parsers.for_format("%Y-%m-%dT%H:%M:%S"),
         type_value_map={"Rubbish": wt.GENERAL_WASTE, "Recycling": wt.RECYCLABLES},
     )

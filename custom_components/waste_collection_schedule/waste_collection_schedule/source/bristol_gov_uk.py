@@ -1,11 +1,12 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import Compose, ExplodeList
 from waste_collection_schedule.service.BristolAlloyCalendar import (
-    CalendarParser,
-    CalendarRetriever,
+    calendar_retriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -23,11 +24,24 @@ class Source(BaseSource):
     COUNTRY = "uk"
     PARAMS = (uprn(),)
 
-    retrieve = CalendarRetriever()
-    parse = CalendarParser()
+    retrieve = calendar_retriever
+    parse = parsers.JsonParser("data")
+    preprocess = Compose(
+        ExplodeList("collection", into="collection"),
+        ExplodeList(
+            lambda record, _: [
+                record["collection"][key]
+                for key in ("nextCollectionDate", "lastCollectionDate")
+            ],
+            into="date",
+        ),
+    )
     transform = JsonTransformer(
         date_key="date",
-        type_key="type",
+        type_key="containerName",
+        parse_date=lambda *values: date_parsers.for_format("%Y-%m-%d")(
+            values[-1].split("T")[0]
+        ),
         type_value_map={
             "90L BLUE SACK": wt.RECYCLABLES,
             "90L Blue Bag": wt.RECYCLABLES,

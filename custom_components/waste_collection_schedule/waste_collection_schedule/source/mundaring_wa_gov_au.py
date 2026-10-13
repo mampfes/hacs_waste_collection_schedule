@@ -5,7 +5,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, text_field
 from waste_collection_schedule.service.MundaringBinCalendar import (
     CalendarParser,
-    CalendarRetriever,
+    calendar_retriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -29,7 +29,7 @@ class Source(BaseSource):
         district("suburb"),
     )
 
-    retrieve = CalendarRetriever()
+    retrieve = calendar_retriever
     parse = CalendarParser()
     transform = JsonTransformer(
         date_key="date",

@@ -7,9 +7,11 @@ from typing import Any
 from bs4 import BeautifulSoup
 from curl_cffi import requests
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgAmbiguousWithSuggestions
 from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.preprocessors import Schedule
 from waste_collection_schedule.retrievers import RetrieverFunc
 
 _LOGGER = logging.getLogger(__name__)
@@ -79,7 +81,7 @@ class _CalendarClient:
     def parse(self, response):
         html_content = response.json()["html"]
         soup = BeautifulSoup(html_content, "html.parser")
-        entries = []
+        schedules = []
         tables = soup.find_all("table")
         for table in tables:
             th = table.find("th")
@@ -97,30 +99,17 @@ class _CalendarClient:
                     days = collection_info.split(". ")[0].split("/")
                     for day in days:
                         target_weekday = datetime.datetime.strptime(day, "%A").weekday()
-                        today = datetime.date.today()
-                        today_weekday = today.weekday()
-                        days_until_next_occurrence = (
-                            target_weekday - today_weekday + 7
-                        ) % 7
-                        next_occurrence = today + datetime.timedelta(
-                            days=days_until_next_occurrence
+                        first = recurrence.next_weekday(
+                            target_weekday
+                        ) - datetime.timedelta(weeks=7)
+                        schedules.append(
+                            Schedule(collection_type.capitalize(), first, count=15)
                         )
-                        for i in range(-7, 8):
-                            occurrence_date = next_occurrence + datetime.timedelta(
-                                weeks=i
-                            )
-                            collection_date = occurrence_date
-                            entries.append(
-                                {
-                                    "date": collection_date,
-                                    "type": collection_type.capitalize(),
-                                }
-                            )
-        if not entries:
+        if not schedules:
             raise ValueError(
                 f"No collection entries found for address: {self._address}"
             )
-        return entries
+        return schedules
 
 
 class CalendarRetriever(RetrieverFunc):
@@ -130,10 +119,10 @@ class CalendarRetriever(RetrieverFunc):
         return client.retrieve()
 
 
-class CalendarParser(Parser[list[dict[str, Any]]]):
+class CalendarParser(Parser[list[Schedule]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
-    ) -> list[dict[str, Any]]:
+    ) -> list[Schedule]:
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)

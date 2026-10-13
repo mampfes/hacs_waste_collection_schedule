@@ -3,12 +3,7 @@
 # Adapted from UKBinCollectionData by robbrad:
 # https://github.com/robbrad/UKBinCollectionData
 
-from datetime import datetime
-from typing import Any
-
-from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.retrievers import Lookup, Request
 
 HEADERS = {
     "Accept": "*/*",
@@ -26,63 +21,24 @@ HEADERS = {
 }
 
 
-class _CalendarClient:
-    _session: Any
-
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
-
-    def retrieve(self):
-        s = self._session
-        payload = {"servicetypeid": "7dce896c-b3ba-ea11-a812-000d3a7f1cdc"}
-        response = s.get(
+calendar_retriever = Request(
+    "https://bcprdapidyna002.azure-api.net/bcprdfundyna001-alloy/NextCollectionDates",
+    method="POST",
+    headers=HEADERS,
+    json=lambda _page, _property, uprn, **_: {"uprn": str(uprn).zfill(12)},
+    before=(
+        Lookup(
             "https://bristolcouncil.powerappsportals.com/completedynamicformunauth/",
             headers=HEADERS,
-            params=payload,
-        )
-        payload = {"Uprn": "UPRN" + self._uprn}
-        response = s.post(
+            params={"servicetypeid": "7dce896c-b3ba-ea11-a812-000d3a7f1cdc"},
+            pick=lambda response, **_: None,
+        ),
+        Lookup(
             "https://bcprdapidyna002.azure-api.net/bcprdfundyna001-llpg/DetailedLLPG",
+            method="POST",
             headers=HEADERS,
-            json=payload,
-        )
-        payload = {"uprn": self._uprn}
-        response = s.post(
-            "https://bcprdapidyna002.azure-api.net/bcprdfundyna001-alloy/NextCollectionDates",
-            headers=HEADERS,
-            json=payload,
-        )
-        return response
-
-    def parse(self, response):
-        data = response.json()["data"]
-        entries = []
-        for item in data:
-            for collection in item["collection"]:
-                for collection_date_key in ["nextCollectionDate", "lastCollectionDate"]:
-                    date_string = collection[collection_date_key].split("T")[0]
-                    entries.append(
-                        {
-                            "date": datetime.strptime(date_string, "%Y-%m-%d").date(),
-                            "type": item["containerName"],
-                        }
-                    )
-        return entries
-
-
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
-class CalendarParser(Parser[list[dict[str, Any]]]):
-    def __call__(
-        self, response: Any, source: BaseSource | None = None
-    ) -> list[dict[str, Any]]:
-        if source is None:
-            raise ValueError("Calendar parser requires a source")
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.parse(response)
+            json=lambda _page, uprn, **_: {"Uprn": "UPRN" + str(uprn).zfill(12)},
+            pick=lambda response, _page, **_: None,
+        ),
+    ),
+)

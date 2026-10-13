@@ -13,7 +13,6 @@ from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
 )
-from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
 
 API_URL = "https://app.sesaeste.it"
@@ -121,15 +120,6 @@ def _fetch_municipality_id(html: str, municipality_name: str) -> str:
     return candidates[0][0]
 
 
-def _parse_json_to_schedule(json_data) -> list[dict]:
-    entries = []
-    for item in json_data:
-        d = datetime.datetime.strptime(item["Giorno"], "%Y-%m-%d").date()
-        for waste_type in re.findall('class="rifiuto (.+?)"', item["Stile"]):
-            entries.append({"date": d, "type": waste_type.capitalize()})
-    return entries
-
-
 class _CalendarClient:
     _session: Any
 
@@ -139,9 +129,6 @@ class _CalendarClient:
     def retrieve(self):
         return _fetch_json_payload(self.user_municipality, self._session)
 
-    def parse(self, response):
-        return _parse_json_to_schedule(response.json())
-
 
 class CalendarRetriever(RetrieverFunc):
     def __call__(self, source: BaseSource) -> Any:
@@ -150,12 +137,6 @@ class CalendarRetriever(RetrieverFunc):
         return client.retrieve()
 
 
-class CalendarParser(Parser[list[dict[str, Any]]]):
-    def __call__(
-        self, response: Any, source: BaseSource | None = None
-    ) -> list[dict[str, Any]]:
-        if source is None:
-            raise ValueError("Calendar parser requires a source")
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.parse(response)
+def waste_labels(record, _source) -> list[str]:
+    """The provider encodes its fraction names in CSS classes."""
+    return re.findall(r'class="rifiuto (.+?)"', record["Stile"])

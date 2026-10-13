@@ -5,7 +5,7 @@ from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.service.GoldenPlainsCalendar import (
     CalendarParser,
-    CalendarRetriever,
+    calendar_retriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -21,7 +21,7 @@ class Source(BaseSource):
     }
     PARAMS = (street_address(),)
 
-    retrieve = CalendarRetriever()
+    retrieve = calendar_retriever
     parse = CalendarParser()
     transform = JsonTransformer(
         date_key="date",

@@ -49,10 +49,17 @@ class _CalendarClient:
             responseContent = r.text
             soup = BeautifulSoup(responseContent, "html.parser")
             table = soup.find("table")
+            if table is None:
+                raise ValueError("Could not find address results table")
             for row in table.find_all("tr")[1:]:
                 if self._name in row.text:
                     for item in row("a", href=True):
-                        self._uprn = str.split(item.get("href"), "=")[1]
+                        href = item.get("href")
+                        if not isinstance(href, str) or "=" not in href:
+                            raise ValueError(
+                                "Address result contains no property identifier"
+                            )
+                        self._uprn = href.split("=", 1)[1]
             r = s.get(f"https://environmentfirst.co.uk/house.php?uprn={self._uprn}")
             responseContent = r.text
         else:
@@ -65,7 +72,7 @@ class _CalendarClient:
     def parse(self, responseContent):
         entries = []
         soup = BeautifulSoup(responseContent, "html.parser")
-        x = soup.findAll("p")
+        x = soup.find_all("p")
         for i in x[1:-1]:
             if " day " in i.text:
                 for round_type in TYPE_LABELS:

@@ -1,11 +1,13 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import municipality
+from waste_collection_schedule.preprocessors import ExplodeList
 from waste_collection_schedule.service.SesaCalendar import (
-    CalendarParser,
     CalendarRetriever,
+    waste_labels,
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -29,10 +31,13 @@ class Source(BaseSource):
     PARAMS = (municipality("user_municipality"),)
 
     retrieve = CalendarRetriever()
-    parse = CalendarParser()
+    parse = parsers.JsonParser()
+    preprocess = ExplodeList(waste_labels, into="waste_type")
     transform = JsonTransformer(
-        date_key="date",
-        type_key="type",
+        date_key="Giorno",
+        type_key="waste_type",
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        clean=str.capitalize,
         type_value_map={
             "PLASTICA LATTINE": [wt.PLASTIC, wt.METAL],
             "UMIDO": wt.ORGANIC,

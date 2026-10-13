@@ -1,7 +1,7 @@
 """WaikatoCollectionCalendar retrieval and parsing through the shared, verified HTTP session."""
 
 import re
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Any
 
 from waste_collection_schedule.base_source import BaseSource
@@ -10,7 +10,8 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.preprocessors import Schedule
+from waste_collection_schedule.retrievers import Request
 
 API_URL = "https://www.waikatodistrict.govt.nz/widgetApi/RubbishAndRecyclingCollections/search"
 COLLECTION_TYPE = "Rubbish and Recycling"
@@ -37,16 +38,8 @@ def _normalize(address: str) -> str:
 
 
 class _CalendarClient:
-    _session: Any
-
     def __init__(self, address: str):
         self._address: str = address.strip()
-
-    def retrieve(self) -> Any:
-        query = _normalize(self._address)
-        r = self._session.get(API_URL, params={"address": query}, timeout=30)
-        r.raise_for_status()
-        return r
 
     def parse(self, r):
         query = _normalize(self._address)
@@ -74,8 +67,7 @@ class _CalendarClient:
         collections = target.get("collections")
         if collections is None:
             collections = [target]
-        entries = []
-        seen = set()
+        schedules = []
         for collection in collections:
             collection_day = (collection.get("collectionDay") or "").strip().lower()
             area = collection.get("collectionArea")
@@ -88,33 +80,28 @@ class _CalendarClient:
             ):
                 continue
             next_date = datetime.fromisoformat(next_date_str).date()
-            for i in range(WEEKS_AHEAD):
-                collection_date = next_date + timedelta(weeks=i)
-                if collection_date not in seen:
-                    seen.add(collection_date)
-                    entries.append({"date": collection_date, "type": COLLECTION_TYPE})
-        if not entries:
+            schedules.append(Schedule(COLLECTION_TYPE, next_date, count=WEEKS_AHEAD))
+        if not schedules:
             raise SourceArgumentNotFound(
                 "address",
                 self._address,
                 "no fixed weekly collection service is published for this address",
             )
-        return entries
+        return schedules
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
-class CalendarParser(Parser[list[dict[str, Any]]]):
+class CalendarParser(Parser[list[Schedule]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
-    ) -> list[dict[str, Any]]:
+    ) -> list[Schedule]:
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)
-        client._session = source.session
         return client.parse(response)
+
+
+calendar_retriever = Request(
+    API_URL,
+    params=lambda address, **_: {"address": _normalize(address.strip())},
+    timeout=30,
+)
