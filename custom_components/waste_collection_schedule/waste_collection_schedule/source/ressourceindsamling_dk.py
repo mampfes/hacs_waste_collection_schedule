@@ -36,9 +36,12 @@ def _search_url(streetName: str, number: str, **_) -> str:
 
 def _services_url(customer_id: int, **_) -> str:
     # the API refuses a window longer than 31 days, so the end is 31 elapsed
-    # days on (not 31 calendar days, which is 31 days and an hour across DST)
+    # days on (not 31 calendar days, which is 31 days and an hour across DST);
+    # it starts at today's local midnight so the request is the same all day
     zone = zoneinfo.ZoneInfo(ZONE)
-    start = datetime.datetime.now(zone)
+    start = datetime.datetime.now(zone).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
     end = (start.astimezone(datetime.UTC) + datetime.timedelta(days=31)).astimezone(
         zone
     )
