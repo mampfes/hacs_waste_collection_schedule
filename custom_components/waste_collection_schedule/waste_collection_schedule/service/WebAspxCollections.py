@@ -12,13 +12,16 @@ holds an HTML calendar as escaped text::
 The calendar is one ``table.newCalendarTable`` per month, a Monday-first grid.
 A day with a collection carries an SVG whose ``<title>`` names the round, *in
 place of the day number*, so a day's date is read from its position in the grid
-rather than from the number in the cell. The titles abbreviate the round
+rather than from the number in the cell. Ards and North Down serves the same
+calendar as JSON (``{"calendarHTML": "..."}``) from a REST endpoint instead of
+the SOAP envelope; :class:`CalendarParser` reads both. The titles abbreviate the round
 ("Ref date based on Round Name", "Grn date based on Round Name") and a cell may
 list several, one per line. The legend the service prints uses each council's
 own bin names, which the cells never repeat, so it is not read.
 """
 
 import calendar
+import json
 from typing import TYPE_CHECKING, Any
 
 from bs4 import BeautifulSoup
@@ -40,6 +43,7 @@ TYPE_VALUE_MAP = {
     "Grn": wt.GARDEN_WASTE,
     "Gar": wt.GARDEN_WASTE,
     "Foo": wt.FOOD_WASTE,
+    "Gls": wt.GLASS,
 }
 
 _ENVELOPE = f"""<?xml version="1.0" encoding="utf-8" ?>
@@ -78,9 +82,13 @@ class CalendarParser(Parser["list[dict[str, str]]"]):
         name = response_shape.source_name(source)
         # The calendar is escaped HTML inside the envelope's result element; the
         # HTML parser decodes the entities and lowercases the tag names.
-        envelope = BeautifulSoup(response.text, "html.parser")
-        result = envelope.find("getroundcalendarforuprnresult")
-        page = BeautifulSoup(result.get_text() if result else "", "html.parser")
+        if response.text.lstrip().startswith("{"):
+            html = json.loads(response.text).get("calendarHTML", "")
+        else:
+            envelope = BeautifulSoup(response.text, "html.parser")
+            result = envelope.find("getroundcalendarforuprnresult")
+            html = result.get_text() if result else ""
+        page = BeautifulSoup(html, "html.parser")
         months = page.select("div#NewCalendar table")
         response_shape.expect(
             bool(months),

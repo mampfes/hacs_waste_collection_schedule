@@ -1,199 +1,85 @@
-import base64
-import datetime
-import json
 import re
+from typing import ClassVar, final
 
-from curl_cffi import requests
-from waste_collection_schedule import (  # type: ignore[attr-defined]
-    Collection,
-    Icons,
-    response_shape,
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.EastLindseyCalendar import (
+    GardenCalendarParser,
+    LookupParser,
+    garden_calendar_urls,
 )
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.service.EastLindseyCalendar import GardenCalendarParser
-
-TITLE = "East Lindsey District Council"
-DESCRIPTION = "Source for East Lindsey District Council waste collection."
-URL = "https://www.e-lindsey.gov.uk"
-TEST_CASES = {
-    "13 Firbeck Avenue, Skegness": {"uprn": "100030786099"},
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Find your UPRN using a tool like findmyaddress.co.uk or finders.io."
-}
-
-PARAM_DESCRIPTIONS = {"en": {"uprn": "Unique Property Reference Number (UPRN)"}}
-PARAM_TRANSLATIONS = {"en": {"uprn": "UPRN"}}
-
-ICON_MAP = {
-    "Refuse": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden Waste": Icons.GARDEN,
-    "Purple Bin": Icons.RECYCLING,
-}
-
-_PAGE_URL = "https://www.e-lindsey.gov.uk/mywastecollections"
-
-_ORDINAL_RE = re.compile(r"(\d+)(st|nd|rd|th)")
+from waste_collection_schedule.service.GossForm import (
+    GossFormRetriever,
+    GossStep,
+    encode_variables,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
 
-def _parse_date(s: str) -> datetime.date | None:
-    """Parse e.g. 'Wednesday 29th April 2026' → date."""
-    if not s:
-        return None
-    s = _ORDINAL_RE.sub(r"\1", s)
-    parts = s.split()
-    if len(parts) == 4:
-        try:
-            return datetime.datetime.strptime(
-                f"{parts[1]} {parts[2]} {parts[3]}", "%d %B %Y"
-            ).date()
-        except ValueError:
-            pass
-    return None
+@final
+class Source(BaseSource):
+    TITLE = "East Lindsey District Council"
+    DESCRIPTION = "Source for East Lindsey District Council waste collection."
+    URL = "https://www.e-lindsey.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GARDEN_WASTE,
+    ]
 
-class Source:
-    def __init__(self, uprn: str):
-        self._uprn = str(uprn)
+    TEST_CASES: ClassVar[dict] = {
+        "13 Firbeck Avenue, Skegness": {"uprn": "100030786099"},
+    }
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session(impersonate="chrome124")
+    PARAMS = (uprn(),)
 
-        # Step 1: GET the page to extract form prefix and session tokens
-        r = session.get(_PAGE_URL, timeout=30)
-        r.raise_for_status()
-        html = r.text
+    HOWTO: ClassVar[dict] = {
+        "en": "Find your UPRN using a tool like findmyaddress.co.uk or finders.io."
+    }
 
-        # Extract form prefix (e.g. WASTECOLLECTIONDAYS202627)
-        prefix_match = re.search(r'name="([A-Z0-9]+)_PAGESESSIONID"', html)
-        if not prefix_match:
-            raise SourceArgumentNotFound(
-                "uprn", self._uprn, "Could not find form prefix on page"
-            )
-        prefix = prefix_match.group(1)
-
-        # Extract form action URL (contains pageSessionId, fsid, fsn as query params)
-        action_match = re.search(
-            r'<form[^>]+action="(https://[^"]+/processsubmission[^"]*)"', html
-        )
-        if not action_match:
-            raise SourceArgumentNotFound(
-                "uprn", self._uprn, "Could not find form action URL on page"
-            )
-        submit_url = action_match.group(1).replace("&amp;", "&")
-
-        # Extract hidden session tokens
-        pagesid_match = re.search(
-            rf'name="{prefix}_PAGESESSIONID"\s+value="([^"]+)"', html
-        )
-        sessionid_match = re.search(
-            rf'name="{prefix}_SESSIONID"\s+value="([^"]+)"', html
-        )
-        nonce_match = re.search(rf'name="{prefix}_NONCE"\s+value="([^"]+)"', html)
-
-        if not pagesid_match or not sessionid_match or not nonce_match:
-            raise SourceArgumentNotFound(
-                "uprn", self._uprn, "Could not extract form session tokens"
-            )
-
-        # Step 2: POST to processsubmission with UPRN in base64-encoded VARIABLES
-        # ADDRESSSOURCE must be NLPGEL (National Land and Property Gazetteer for East Lindsey)
-        variables = base64.b64encode(
-            json.dumps(
-                {
-                    "ADDRESSSOURCE": {
-                        "value": "NLPGEL",
-                        "scope": "SERVERCLIENTWITHUPDATE",
+    # The form's name carries the financial year (WASTECOLLECTIONDAYS202627), so
+    # it is matched rather than spelled; NLPGEL is East Lindsey's address gazetteer.
+    # The reply names the next refuse, recycling and purple-bin dates and the
+    # garden-waste calendar PDF, which is read for its dated collections.
+    retrieve = retrievers.FanOutRetriever(
+        prepare=GossFormRetriever(
+            "https://www.e-lindsey.gov.uk/mywastecollections",
+            form=re.compile(r"WASTECOLLECTIONDAYS\d+"),
+            steps=(
+                GossStep(
+                    "LOOKUP_FIELD2",
+                    fields=lambda response, uprn, **_: {
+                        "VARIABLES": encode_variables(
+                            {"ADDRESSSOURCE": "NLPGEL", "ADDRESSUPRN": str(uprn)}
+                        ),
+                        "LOOKUP_CHOSENADDRESS": str(uprn),
                     },
-                    "ADDRESSUPRN": {
-                        "value": self._uprn,
-                        "scope": "SERVERCLIENTWITHUPDATE",
-                    },
-                    "TESTDATELAYOUT_DISPLAYED": {
-                        "value": False,
-                        "scope": "SERVERCLIENT",
-                    },
-                }
-            ).encode()
-        ).decode()
-
-        form_data = {
-            f"{prefix}_PAGESESSIONID": pagesid_match.group(1),
-            f"{prefix}_SESSIONID": sessionid_match.group(1),
-            f"{prefix}_NONCE": nonce_match.group(1),
-            f"{prefix}_VARIABLES": variables,
-            f"{prefix}_PAGENAME": "LOOKUP",
-            f"{prefix}_PAGEINSTANCE": "0",
-            f"{prefix}_LOOKUP_CHOSENADDRESS": self._uprn,
-            f"{prefix}_FORMACTION_NEXT": f"{prefix}_LOOKUP_FIELD2",
-        }
-
-        r = session.post(submit_url, data=form_data, timeout=30)
-        r.raise_for_status()
-
-        # Step 3: Parse FormData from the results page
-        data_match = re.search(
-            rf"{prefix}FormData\s*=\s*\"([^\"]+)\"",
-            r.text,
+                    argument="uprn",
+                ),
+            ),
+        ),
+        targets=garden_calendar_urls,
+        fetch=retrievers.Request(lambda url, *_, **__: url),
+        include_prepared=True,
+    )
+    parse = parsers.EachResponse(
+        parsers.ByBodyPrefix(
+            {"%PDF-": GardenCalendarParser(label="Garden Waste")},
+            default=LookupParser(),
         )
-        if not data_match:
-            raise SourceArgumentNotFound(
-                "uprn",
-                self._uprn,
-                "No collection data found — check that the UPRN is valid",
-            )
-
-        payload = json.loads(base64.b64decode(data_match.group(1)).decode("utf-8"))
-
-        result_list = payload.get("RESULTS_1", {}).get("FIELD12", {}).get("result", [])
-        if not result_list:
-            raise SourceArgumentNotFound(
-                "uprn",
-                self._uprn,
-                "No collection results found — check that the UPRN is valid",
-            )
-
-        result = result_list[0]
-
-        collections = []
-        for field, waste_type in [
-            ("wastenextref", "Refuse"),
-            ("wastenextrec", "Recycling"),
-            ("wastenextpur", "Purple Bin"),
-        ]:
-            raw = result.get(field, "")
-            date = _parse_date(raw)
-            if date:
-                collections.append(
-                    Collection(
-                        date=date,
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
-                    )
-                )
-
-        # greenfirst is the start of the season, not an upcoming collection.
-        # The public PDF is the council's dated schedule, including winter
-        # gaps and any shifted collections.
-        pdf_id = result.get("greenpdfid")
-        if pdf_id not in (None, "", "null"):
-            day = str(result.get("greenday", "")).strip()
-            week = str(result.get("greenweek", "")).strip()
-            response_shape.expect(
-                str(pdf_id).isdigit()
-                and day in ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
-                and week in ("A", "B"),
-                source_name="e_lindsey_gov_uk",
-                detail="garden calendar lookup has invalid id/day/week fields",
-            )
-            pdf_url = f"{URL}/media/{pdf_id}/file/PDF/{day}{week}.pdf"
-            calendar_response = session.get(pdf_url, timeout=30)
-            calendar_response.raise_for_status()
-            for date in GardenCalendarParser()(calendar_response):
-                collections.append(
-                    Collection(date=date, t="Garden Waste", icon=Icons.GARDEN)
-                )
-
-        return collections
+    )
+    transform = RowTransformer(
+        parse_date=date_parsers.DateParserAuto(),
+        type_value_map={
+            "Refuse": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Purple Bin": wt.PAPER,
+            "Garden Waste": wt.GARDEN_WASTE,
+        },
+    )

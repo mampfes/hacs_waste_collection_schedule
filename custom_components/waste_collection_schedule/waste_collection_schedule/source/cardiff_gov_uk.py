@@ -1,108 +1,90 @@
-import datetime
-import json
-import xml.etree.ElementTree as ET
+import re
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Cardiff Council"
-DESCRIPTION = "Source script for cardiff.gov.uk"
-URL = "https://cardiff.gov.uk"
-TEST_CASES = {
-    "Glass": {"uprn": "100100124569"},
-    "NoGlass": {"uprn": "100100127440"},
-}
-
-ICON_MAP = {
-    "General": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden": Icons.GARDEN,
-    "Food": Icons.BIO_KITCHEN,
-    "Glass": Icons.GLASS,
-}
-
-PAYLOAD_GET_JWT = (
-    "<?xml version='1.0' encoding='utf-8'?>"
-    "<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'"
-    " xmlns:xsd='http://www.w3.org/2001/XMLSchema'"
-    " xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>"
-    "<soap:Body>"
-    "<GetJWT xmlns='http://tempuri.org/' />"
-    "</soap:Body>"
-    "</soap:Envelope>"
-)
-
-URL_COLLECTIONS = "https://api.cardiff.gov.uk/WasteManagement/api/WasteCollection"
-URL_GET_JWT = (
-    "https://authwebservice.cardiff.gov.uk/AuthenticationWebService.asmx?op=GetJWT"
-)
+# The "When are my bins collected?" form on cardiff.gov.uk is an iframe of this
+# webforms proxy. The page embeds an anti-forgery token that its API requires
+# as a header, next to a fixed bearer value.
+_APP = "https://app-cprd-webformsproxy-prd.azurewebsites.net"
+_TOKEN = re.compile(r"verificationToken\s*=\s*'([^']+)'")
 
 
-def get_headers() -> dict[str, str]:
-    """Return common headers that every request to the Cardiff API requires."""
-    return {
-        "Origin": "https://www.cardiff.gov.uk",
-        "Referer": "https://www.cardiff.gov.uk/",
-        "User-Agent": "Mozilla/5.0",
+def _verification_token(response, *_keys, **_) -> str:
+    match = _TOKEN.search(response.text)
+    if not match:
+        raise SourceArgumentNotFound("uprn", "verification token not found")
+    return match.group(1)
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Cardiff Council"
+    DESCRIPTION = "Source for Cardiff Council."
+    URL = "https://www.cardiff.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+        wt.GLASS,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Glass": {"uprn": "100100124569"},
+        "NoGlass": {"uprn": "100100127440"},
     }
 
+    PARAMS = (uprn(),)
 
-def get_token() -> str:
-    """Get an access token."""
-    headers = get_headers()
-    headers.update(
-        {
-            "Content-Type": 'text/xml; charset="UTF-8"',
-        }
-    )
-    r = requests.post(URL_GET_JWT, headers=headers, data=PAYLOAD_GET_JWT)
-    r.raise_for_status()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "An easy way to discover your Unique Property Reference Number (UPRN) "
+            "is by going to [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) "
+            "and entering your address details."
+        ),
+    }
 
-    tree = ET.fromstring(r.text)  # nosec B314
-
-    jwt_result_element = tree.find(
-        ".//GetJWTResult", namespaces={"": "http://tempuri.org/"}
-    )
-
-    if jwt_result_element is None or jwt_result_element.text is None:
-        raise Exception("could not find Token")
-    jwt_result = jwt_result_element.text
-
-    token = json.loads(jwt_result)["access_token"]
-    return token
-
-
-class Source:
-    def __init__(self, uprn=None):
-        self._uprn = uprn
-
-    def fetch(self):
-        payload_waste_collections = {
+    retrieve = retrievers.Request(
+        f"{_APP}/api/WasteManagement/api/WasteCollection",
+        method="POST",
+        json=lambda *_, uprn, **__: {
             "systemReference": "web",
             "language": "eng",
-            "uprn": self._uprn,
-        }
+            "uprn": str(uprn),
+            "includecancelled": True,
+        },
+        headers=lambda token, **_: {
+            "Authorization": "Bearer cardiff",
+            "VerificationToken": token,
+        },
+        before=(retrievers.Lookup(f"{_APP}/WASTE_wc", pick=_verification_token),),
+    )
 
-        entries = []
-
-        jwt = get_token()
-        client = requests.Session()
-        headers = get_headers()
-        headers.update({"Authorization": f"Bearer {jwt}"})
-
-        r = client.post(
-            URL_COLLECTIONS, headers=headers, json=payload_waste_collections
-        )
-        r.raise_for_status()
-        collections = r.json()
-
-        for week in collections["collectionWeeks"]:
-            for bin in week["bins"]:
-                entries.append(
-                    Collection(
-                        date=datetime.datetime.fromisoformat(week["date"]).date(),
-                        t=bin["type"],
-                        icon=ICON_MAP.get(bin["type"]),
-                    )
-                )
-        return entries
+    # An unknown UPRN is answered with an empty 204.
+    parse = parsers.ArgumentGuard(
+        parsers.JsonParser("collectionWeeks"),
+        argument="uprn",
+        contains="collectionWeeks",
+        hint="check the UPRN is a Cardiff property",
+    )
+    preprocess = preprocessors.ExplodeList("bins", into="bin")
+    transform = JsonTransformer(
+        date_key="date",
+        type_key=lambda record: record["bin"]["type"],
+        type_value_map={
+            "General": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden": wt.GARDEN_WASTE,
+            "Food": wt.FOOD_WASTE,
+            "Glass": wt.GLASS,
+        },
+    )

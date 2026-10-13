@@ -9,7 +9,6 @@ import base64
 import datetime
 import json
 import os
-import re
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -25,7 +24,6 @@ sys.path.append(
 )
 
 from waste_collection_schedule import (
-    Icons,
     lookups,
     parsers,
     preprocessors,
@@ -36,7 +34,10 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.parsers import PdfRow, PdfWord
 from waste_collection_schedule.response_shape import ResponseShapeError
-from waste_collection_schedule.service.EastLindseyCalendar import GardenCalendarParser
+from waste_collection_schedule.service.EastLindseyCalendar import (
+    GardenCalendarParser,
+    garden_calendar_urls,
+)
 from waste_collection_schedule.service.PdfTextCalendar import (
     GERMAN_WEEKDAY_ORDER,
     DayGridCalendarParser,
@@ -365,7 +366,7 @@ class TestPdfMonthBlocks:
 
 
 _EAST_LINDSEY_FIXTURE = (
-    Path(__file__).parent / "fixtures/e_lindsey_gov_uk/_firbeck_avenue.json"
+    Path(__file__).parent / "fixtures/e_lindsey_gov_uk/13_firbeck_avenue_skegness.json"
 )
 
 
@@ -396,56 +397,53 @@ def test_east_lindsey_reads_the_published_winter_dates_and_printed_years():
 
 def test_east_lindsey_replays_the_complete_lookup_and_calendar_download():
     import cassette
-    from waste_collection_schedule.source.e_lindsey_gov_uk import TEST_CASES, Source
+    from waste_collection_schedule.source.e_lindsey_gov_uk import Source
 
     with cassette.replaying(str(_EAST_LINDSEY_FIXTURE)):
-        entries = Source(**TEST_CASES["13 Firbeck Avenue, Skegness"]).fetch()
-    assert [(entry.date, entry.type) for entry in entries[:3]] == [
-        (D(2026, 10, 14), "Refuse"),
+        entries = Source(uprn="100030786099").fetch()
+    first = sorted(
+        (entry for entry in entries if entry.type != "Garden Waste"),
+        key=lambda entry: entry.date,
+    )
+    assert [(entry.date, entry.type) for entry in first] == [
+        (D(2026, 10, 14), "General Waste"),
+        (D(2026, 10, 21), "Paper & Cardboard"),
         (D(2026, 11, 4), "Recycling"),
-        (D(2026, 10, 21), "Purple Bin"),
     ]
     garden = [entry for entry in entries if entry.type == "Garden Waste"]
     assert len(garden) == 21
-    assert garden[-1].date == D(2027, 3, 16)
-    assert all(entry.icon == Icons.GARDEN.value for entry in garden)
+    assert max(entry.date for entry in garden) == D(2027, 3, 16)
 
 
-@pytest.mark.parametrize("pdf_id", [None, "", "null"])
-def test_east_lindsey_without_a_garden_subscription_does_not_fetch_a_pdf(
-    tmp_path, pdf_id
-):
-    import cassette
-    from waste_collection_schedule.source.e_lindsey_gov_uk import TEST_CASES, Source
+def test_east_lindsey_without_a_garden_subscription_does_not_fetch_a_pdf():
+    for pdf_id in (None, "", "null"):
+        payload = {"RESULTS_1": {"FIELD12": {"result": [{"greenpdfid": pdf_id}]}}}
+        encoded = base64.b64encode(json.dumps(payload).encode()).decode()
+        response = SimpleNamespace(text=f'var XFormData = "{encoded}";')
+        assert garden_calendar_urls(None, response) == []
 
-    recording = json.loads(_EAST_LINDSEY_FIXTURE.read_text(encoding="utf-8"))
-    reply = recording["interactions"][1]
-    html = base64.b64decode(reply["content_b64"]).decode("utf-8")
-    match = re.search(r'[A-Z0-9]+FormData\s*=\s*"([^"]+)"', html)
-    assert match is not None
-    payload = json.loads(base64.b64decode(match[1]))
-    payload["RESULTS_1"]["FIELD12"]["result"][0]["greenpdfid"] = pdf_id
-    encoded = base64.b64encode(json.dumps(payload).encode()).decode()
-    html = html.replace(match[1], encoded)
-    reply["content_b64"] = base64.b64encode(html.encode()).decode()
-    recording["interactions"] = recording["interactions"][:2]
-    path = tmp_path / "no_garden.json"
-    path.write_text(json.dumps(recording), encoding="utf-8")
-    with cassette.replaying(str(path)):
-        entries = Source(**TEST_CASES["13 Firbeck Avenue, Skegness"]).fetch()
-    assert [entry.type for entry in entries] == ["Refuse", "Recycling", "Purple Bin"]
+
+def test_fan_out_can_return_the_prepared_response_first():
+    prepared = SimpleNamespace(name="lookup")
+    retrieve = retrievers.FanOutRetriever(
+        prepare=lambda source: prepared,
+        targets=lambda source, context: ["a", "b"],
+        fetch=lambda source, target, context: target,
+        include_prepared=True,
+    )
+    assert retrieve(None) == [prepared, "a", "b"]
 
 
 def test_east_lindsey_calendar_http_error_is_not_hidden_by_a_season_anchor(tmp_path):
     import cassette
-    from waste_collection_schedule.source.e_lindsey_gov_uk import TEST_CASES, Source
+    from waste_collection_schedule.source.e_lindsey_gov_uk import Source
 
     recording = json.loads(_EAST_LINDSEY_FIXTURE.read_text(encoding="utf-8"))
     recording["interactions"][2]["status"] = 503
     path = tmp_path / "unavailable_calendar.json"
     path.write_text(json.dumps(recording), encoding="utf-8")
     with cassette.replaying(str(path)), pytest.raises(OSError, match="503"):
-        Source(**TEST_CASES["13 Firbeck Avenue, Skegness"]).fetch()
+        Source(uprn="100030786099").fetch()
 
 
 @pytest.mark.parametrize("change", ["headers", "legend", "highlight", "no_dates"])

@@ -87,6 +87,10 @@ class GossFormRetriever(RetrieverFunc):
     Args:
         form_url: the page that holds the form's first page.
         form: the form's name, the prefix of its fields (``RESIDENTCOLLECTIONDATES``).
+            A compiled pattern instead names a form whose prefix changes (East
+            Lindsey's carries the financial year, ``WASTECOLLECTIONDAYS202627``):
+            the first page's ``<prefix>_PAGENAME`` field that it fully matches
+            gives the name used from then on.
         steps: the submissions to make, in order.
         timeout: request timeout in seconds.
     """
@@ -95,7 +99,7 @@ class GossFormRetriever(RetrieverFunc):
         self,
         form_url: str,
         *,
-        form: str,
+        form: str | re.Pattern[str],
         steps: Sequence[GossStep],
         timeout: int = 30,
     ):
@@ -104,10 +108,21 @@ class GossFormRetriever(RetrieverFunc):
         self.steps = tuple(steps)
         self.timeout = timeout
 
-    def _page(self, response: Response) -> tuple[str, dict[str, str]] | None:
+    def _form_name(self, response: Response) -> str:
+        """The form's prefix on this page (``self.form`` unless it is a pattern)."""
+        if isinstance(self.form, str):
+            return self.form
+        for name in re.findall(r'name="([^"]+)_PAGENAME"', response.text):
+            if self.form.fullmatch(name):
+                return name
+        return ""
+
+    def _page(
+        self, response: Response, form_name: str
+    ) -> tuple[str, dict[str, str]] | None:
         """The page's form: its ``action`` and its hidden fields, or ``None``."""
         soup = BeautifulSoup(response.text, "html.parser")
-        marker = soup.find("input", {"name": f"{self.form}_PAGENAME"})
+        marker = soup.find("input", {"name": f"{form_name}_PAGENAME"})
         form = marker.find_parent("form") if marker is not None else None
         if form is None:
             return None
@@ -123,8 +138,9 @@ class GossFormRetriever(RetrieverFunc):
         response = source.session.get(self.form_url, timeout=self.timeout)
         response.raise_for_status()
         previous: GossStep | None = None
+        form_name = self._form_name(response)
         for step in self.steps:
-            page = self._page(response)
+            page = self._page(response, form_name)
             if page is None:
                 # The reply to the previous step is an error page: the lookup
                 # it asked for found nothing.
@@ -140,12 +156,38 @@ class GossFormRetriever(RetrieverFunc):
                 )
             action, data = page  # type: ignore[misc]
             for name, value in step.fields(response, **params).items():
-                data[f"{self.form}_{name}"] = value
-            data[f"{self.form}_FORMACTION_NEXT"] = f"{self.form}_{step.action}"
+                data[f"{form_name}_{name}"] = value
+            data[f"{form_name}_FORMACTION_NEXT"] = f"{form_name}_{step.action}"
             response = source.session.post(action, data=data, timeout=self.timeout)
             response.raise_for_status()
             previous = step
         return response
+
+
+def encode_variables(variables: Mapping[str, Any]) -> str:
+    """``{name: value}`` as the base64 JSON some forms post back as ``<FORM>_VARIABLES``.
+
+    Each value is stored in the form's ``SERVERCLIENTWITHUPDATE`` scope, which
+    is how a script seeds a variable (a chosen UPRN) the page would otherwise
+    set from its own address picker.
+    """
+    payload = {
+        name: {"value": value, "scope": "SERVERCLIENTWITHUPDATE"}
+        for name, value in variables.items()
+    }
+    return base64.b64encode(json.dumps(payload).encode()).decode()
+
+
+def form_data(response: Response) -> dict[str, Any]:
+    """The ``<FORM>FormData`` the results page carries, decoded.
+
+    Some forms hand the answer to the page as one base64-encoded JSON object
+    assigned to a script variable (``var <FORM>FormData = "..."``). The form's
+    name is not needed, so a prefix that changes yearly reads the same. An
+    empty dict when the page carries none.
+    """
+    match = re.search(r'[A-Z0-9_]+FormData\s*=\s*"([^"]+)"', response.text)
+    return json.loads(base64.b64decode(match.group(1))) if match else {}
 
 
 def serialized_variables(response: Response, form: str) -> dict[str, Any]:
