@@ -1,89 +1,85 @@
-import logging
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import boolean, uprn
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import RowTransformer
 
-_LOGGER = logging.getLogger(__name__)
+_DATE = date_parsers.for_format("%A, %d %B %Y")
 
-TITLE = "Solihull Council"
-DESCRIPTION = "Source for Solihull Council."
-URL = "https://www.solihull.gov.uk/"
-TEST_CASES = {
-    "100070994046": {"uprn": 100070994046},
-    "200003821723, Predict": {"uprn": 200003821723, "predict": True},
-    "New Garden Waste Subscription Service": {"uprn": 100071011936},
-}
-
-ICON_MAP = {
-    "garden waste": Icons.GARDEN,
-    "garden waste - subscribed": Icons.GARDEN,
-    "household waste": Icons.GENERAL_WASTE,
-    "mixed recycling": Icons.RECYCLING,
-}
-
-API_URL = "https://digital.solihull.gov.uk/BinCollectionCalendar/Calendar.aspx"
+# How many weeks ahead "predict" projects the next collection.
+_PREDICT_WEEKS = 10
 
 
-class Source:
-    def __init__(self, uprn: str | int, predict: bool = False):
-        self._uprn: str | int = uprn
-        self._predict = predict
+def _describe(card, source):
+    """One card per bin: its type, last and next date and its frequency note."""
+    title = card.select_one("div.card-title h5") or card.select_one("div.card-title h4")
+    if title is None:
+        return
+    key = title.get_text(strip=True)
+    frequency = card.select_one("div.card-title").find_next_sibling().get_text().lower()
+    step = (
+        recurrence.FORTNIGHTLY
+        if "fortnightly" in frequency or "every other week" in frequency
+        else recurrence.WEEKLY
+    )
+    predict = bool(source.params.get("predict"))
+    for line in card.select("div.mt-1"):
+        date_tag = line.find("strong")
+        if date_tag is None:
+            continue
+        try:
+            date = _DATE(date_tag.get_text(strip=True))
+        except ValueError:
+            continue
+        if predict and "next" in line.get_text():
+            yield Schedule(key, date, step, _PREDICT_WEEKS * 7 // step.days)
+        else:
+            yield Schedule(key, date)
 
-    def fetch(self) -> list[Collection]:
-        params = {"UPRN": self._uprn}
-        r = requests.get(API_URL, params=params)
-        r.raise_for_status()
 
-        soup = BeautifulSoup(r.text, "html.parser")
+@final
+class Source(BaseSource):
+    TITLE = "Solihull Council"
+    DESCRIPTION = "Source for Solihull Council."
+    URL = "https://www.solihull.gov.uk/"
+    COUNTRY = "uk"
 
-        entries = []
-        for card in soup.find_all("div", class_="card-title"):
-            bin_type_tag = card.find("h5") or card.find("h4")
-            # "Household Waste", "Mixed Recycling", "Garden Waste" & "Garden Waste - Subscribed"
-            bin_type = bin_type_tag.text
-            # "Household Waste", "Mixed Recycling" & "Garden Waste"
-            # bin_type = bin_type_tag.text.split(" - ")[0]
-            icon = ICON_MAP.get(bin_type.lower())
+    TEST_CASES: ClassVar[dict] = {
+        "100070994046": {"uprn": 100070994046},
+        "200003821723, Predict": {"uprn": 200003821723, "predict": True},
+        "New Garden Waste Subscription Service": {"uprn": 100071011936},
+    }
 
-            siblings = card.find_next_siblings("div", class_="mt-1")
-            for sibling in siblings:
-                date_tag = sibling.find("strong")
-                if not date_tag:
-                    continue
-                date_str = date_tag.text
-                # Wednesday, 19 June 2024
-                try:
-                    date = datetime.strptime(date_str, "%A, %d %B %Y").date()
-                except ValueError:
-                    _LOGGER.warning(f"Could not parse date {date_str}")
-                    continue
-                entries.append(Collection(date=date, t=bin_type, icon=icon))
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.FOOD_WASTE,
+    ]
 
-                if "next" in sibling.text and self._predict:
-                    try:
-                        # card sibling with no class
-                        freq_str = card.find_next_sibling()
-                        if not (
-                            "every other week" in freq_str.text.lower()
-                            or "every week" in freq_str.text.lower()
-                        ):
-                            _LOGGER.info(
-                                f"Skipping predict (unknown frequency) for {freq_str.text}"
-                            )
-                            continue
+    PARAMS = (
+        uprn(),
+        boolean("predict", "Predict future collections"),
+    )
 
-                        freq = 2 if "every other week" in freq_str.text.lower() else 1
-                        for i in range(1, 10 // freq):
-                            entries.append(
-                                Collection(
-                                    date=date + timedelta(weeks=i * freq),
-                                    t=bin_type,
-                                    icon=icon,
-                                )
-                            )
-                    except Exception as e:
-                        _LOGGER.warning(f"Error predicting next collection: {e}")
+    RAISE_ON_EMPTY = True
 
-        return entries
+    retrieve = HttpGetRetriever(
+        url="https://digital.solihull.gov.uk/BinCollectionCalendar/Calendar.aspx",
+        params=lambda uprn, **_: {"UPRN": uprn},
+    )
+    parse = parsers.HtmlParser("div.card-body div.col-xs-8")
+    preprocess = RecurrenceExpander(_describe)
+    transform = RowTransformer(
+        type_value_map={
+            "Household Waste": wt.GENERAL_WASTE,
+            "Mixed Recycling": wt.RECYCLABLES,
+            "Garden Waste": wt.GARDEN_WASTE,
+            "Garden Waste - Subscribed": wt.GARDEN_WASTE,
+            "Food Waste": wt.FOOD_WASTE,
+        },
+    )
