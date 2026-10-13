@@ -524,6 +524,26 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/zke_sb_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/zva_sek_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/zva_wmk_de.py",
-    "custom_components/waste_collection_schedule/waste_collection_schedule/source/zys_harmonogram_pl.py"
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/zys_harmonogram_pl.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/AmbergCalendar.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/AmmerlandApp.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/BegLogistics.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/Calendarize.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/GrandBesancon.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/GrandLyon.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/KawMainzBingen.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/MemotriPau.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/SictomLons.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/SingenCalendar.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/amberg_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/awb_ammerland_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/beg_logistics_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/clissonsevremaine_fr.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/data_grandlyon_com.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/grandbesancon_fr.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/kaw_mainz_bingen_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/memotri_agglo_pau_fr.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/sictom_lons_le_saunier_fr.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/stadtwerke_singen_de.py"
   ]
 }
