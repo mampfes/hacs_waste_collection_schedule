@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://www.valorlux.lu/api/calendar/all ",
+      "method": "GET",
+      "url": "https://www.valorlux.lu/api/calendar/all",
+      "final_url": "https://www.valorlux.lu/api/calendar/all",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 18:56:18 GMT",
+        "content-type": "application/json",
+        "server": "cloudflare",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "x-powered-by": "PHP/8.3.35",
+        "cache-control": "no-cache, private",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, POST, OPTIONS",
+        "access-control-allow-headers": "Content-Type, X-Requested-With",
+        "set-cookie": "XSRF-TOKEN=eyJpdiI6IlVHWjNTTE11YWRpL0lmQ2FybE93NEE9PSIsInZhbHVlIjoid1lNRnZwOFc4NmpFdENzQXBYeGNnbEV3S0liaGdqMVpSTVNibVQ0dGFNcmFMQnErWXNvZGs3OEpyWkpocWhoM252T1BYcmVzN3BSZzdMYWE4YktCN3pRK1lXelVJeVBmS0ZQdVdocEpaWjlJRHF4MVRucXN1ZEZJNU96YjJtaDciLCJtYWMiOiIwNzBjZjQ3YmQ1OTBjZTkzZDI5YzFjOWU2YmMyMTc0OGRhYzhkYjcxOTg3ZGI1NzhkOTY0OGFmNmZkM2ZkNGI4IiwidGFnIjoiIn0%3D; expires=Tue, 13 Oct 2026 20:56:18 GMT; Max-Age=7200; path=/; secure; samesite=lax, valorlux_app_session=eyJpdiI6IlFPeG8zQUtNZXJvWHQwQ0hVUHpOalE9PSIsInZhbHVlIjoiaEJYWHNwUTk4eU1nd2Rpc2RNMGNTSEF3N0twM1RZUVR4ZlE2TWhYK1pvbWNHZXVSZEt6NURMZkNBeEV5cmJwekFRUUJMOEFBQVVuUDFveU5XV2tTeExZMG1lSUsrZkxRTVhjbWQ1OFVjSjJVU29nelhWM3FsbkxsdnNCRlRXWUgiLCJtYWMiOiIyYTk1ZDQ2ZGNkOTc3MWM3ZDJjMzNhMTJmNGYxMjUwMTg1MDVmNWMzN2ZlZDQ4ZjEwY2EzM2I2MzQzZWVhMzkwIiwidGFnIjoiIn0%3D; expires=Tue, 13 Oct 2026 20:56:18 GMT; Max-Age=7200; path=/; secure; httponly; samesite=lax",
+        "content-encoding": "br",
+        "via": "1.1 fly.io",
+        "fly-request-id": "01M4V9YS7SVD2N4V3V8WCXPX09-fra",
+        "cf-cache-status": "DYNAMIC",
+        "vary": "accept-encoding",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=hoJTIfbaSXR9QrDRjAgrCm6biklH8ssl1snT4LxxfO%2BWp6Izl4Eosb%2FmMJxDzPDdqb0dv9e5JtZMHTvJzno2LNfTr5MM%2F%2BewCTUC%2FSmNcyd9V%2FNvSrrk54kO4d5r1f2gyw%3D%3D\"}]}",
+        "cf-ray": "a4a0904118d54e54-DUS"
+      },
+      "content_b64": "eyJjaXRpZXMiOnsiRHVkZWxhbmdlIjp7IlRvdXJuw6llIEx1bmRpIjpbIjgvMTIvMjUiLCIyMi8xMi8yNSIsIjUvMDEvMjYiLCIxOS8wMS8yNiIsIjIvMDIvMjYiLCIxNi8wMi8yNiIsIjIvMDMvMjYiLCIxNi8wMy8yNiIsIjMwLzAzLzI2IiwiMTMvMDQvMjYiLCIyNy8wNC8yNiIsIjExLzA1LzI2IiwiMjMvMDUvMjYiLCI4LzA2LzI2IiwiMjIvMDYvMjYiLCI2LzA3LzI2IiwiMjAvMDcvMjYiLCIzLzA4LzI2IiwiMTcvMDgvMjYiLCIzMS8wOC8yNiIsIjE0LzA5LzI2IiwiMjgvMDkvMjYiLCIxMi8xMC8yNiIsIjI2LzEwLzI2IiwiOS8xMS8yNiIsIjIzLzExLzI2IiwiNy8xMi8yNiIsIjIxLzEyLzI2Il0sIlRvdXJuw6llIE1hcmRpIjpbIjkvMTIvMjUiLCIyMy8xMi8yNSIsIjYvMDEvMjYiLCIyMC8wMS8yNiIsIjMvMDIvMjYiLCIxNy8wMi8yNiIsIjMvMDMvMjYiLCIxNy8wMy8yNiIsIjMxLzAzLzI2IiwiMTQvMDQvMjYiLCIyOC8wNC8yNiIsIjEyLzA1LzI2IiwiMjYvMDUvMjYiLCI5LzA2LzI2IiwiMjAvMDYvMjYiLCI3LzA3LzI2IiwiMjEvMDcvMjYiLCI0LzA4LzI2IiwiMTgvMDgvMjYiLCIxLzA5LzI2IiwiMTUvMDkvMjYiLCIyOS8wOS8yNiIsIjEzLzEwLzI2IiwiMjcvMTAvMjYiLCIxMC8xMS8yNiIsIjI0LzExLzI2IiwiOC8xMi8yNiIsIjIyLzEyLzI2Il0sIlRvdXJuw6llIE1lcmNyZWRpIjpbIjEwLzEyLzI1IiwiMjQvMTIvMjUiLCI3LzAxLzI2IiwiMjEvMDEvMjYiLCI0LzAyLzI2IiwiMTgvMDIvMjYiLCI0LzAzLzI2IiwiMTgvMDMvMjYiLCIxLzA0LzI2IiwiMTUvMDQvMjYiLCIyOS8wNC8yNiIsIjEzLzA1LzI2IiwiMjcvMDUvMjYiLCIxMC8wNi8yNiIsIjI0LzA2LzI2IiwiOC8wNy8yNiIsIjIyLzA3LzI2IiwiNS8wOC8yNiIsIjE5LzA4LzI2IiwiMi8wOS8yNiIsIjE2LzA5LzI2IiwiMzAvMDkvMjYiLCIxNC8xMC8yNiIsIjI4LzEwLzI2IiwiMTEvMTEvMjYiLCIyNS8xMS8yNiIsIjkvMTIvMjYiLCIyMy8xMi8yNiJdLCJUb3VybsOpZSBKZXVkaSI6WyIxMS8xMi8yNSIsIjIwLzEyLzI1IiwiOC8wMS8yNiIsIjIyLzAxLzI2IiwiNS8wMi8yNiIsIjE5LzAyLzI2IiwiNS8wMy8yNiIsIjE5LzAzLzI2IiwiMi8wNC8yNiIsIjE2LzA0LzI2IiwiMzAvMDQvMjYiLCIxNi8wNS8yNiIsIjI4LzA1LzI2IiwiMTEvMDYvMjYiLCIyNS8wNi8yNiIsIjkvMDcvMjYiLCIyMy8wNy8yNiIsIjYvMDgvMjYiLCIyMC8wOC8yNiIsIjMvMDkvMjYiLCIxNy8wOS8yNiIsIjEvMTAvMjYiLCIxNS8xMC8yNiIsIjI5LzEwLzI2IiwiMTIvMTEvMjYiLCIyNi8xMS8yNiIsIjEwLzEyLzI2IiwiMjQvMTIvMjYiXSwiVG91cm7DqWUgVmVuZHJlZGkiOlsiMTIvMTIvMjUiLCIyNy8xMi8yNSIsIjkvMDEvMjYiLCIyMy8wMS8yNiIsIjYvMDIvMjYiLCIyMC8wMi8yNiIsIjYvMDMvMjYiLCIyMC8wMy8yNiIsIjMvMDQvMjYiLCIxNy8wNC8yNiIsIjIvMDUvMjYiLCIxNS8wNS8yNiIsIjI5LzA1LzI2IiwiMTIvMDYvMjYiLCIyNi8wNi8yNiIsIjEwLzA3LzI2IiwiMjQvMDcvMjYiLCI3LzA4LzI2IiwiMjEvMDgvMjYiLCI0LzA5LzI2IiwiMTgvMDkvMjYiLCIyLzEwLzI2IiwiMTYvMTAvMjYiLCIzMC8xMC8yNiIsIjEzLzExLzI2IiwiMjcvMTEvMjYiLCIxMS8xMi8yNiIsIjI3LzEyLzI2Il19fX0="
+    }
+  ]
+}

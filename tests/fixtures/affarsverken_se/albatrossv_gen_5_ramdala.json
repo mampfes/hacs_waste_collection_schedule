@@ -1,0 +1,61 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://kundapi.affarsverken.se/api/v1/open-api/login b6ee60926c",
+      "method": "POST",
+      "url": "https://kundapi.affarsverken.se/api/v1/open-api/login",
+      "final_url": "https://kundapi.affarsverken.se/api/v1/open-api/login?BrandName=Affarsverken",
+      "body": "{\"body\":\"\",\"params\":[[\"BrandName\",\"Affarsverken\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "text/plain; charset=utf-8",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "server": "Kestrel",
+        "x-robots-tag": "none",
+        "api-supported-versions": "1.0",
+        "x-powered-by": "ASP.NET",
+        "date": "Tue, 13 Oct 2026 18:41:18 GMT"
+      },
+      "content_b64": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKQlptWmhjbk4yWlhKclpXNGlMQ0oxY200NllXWm1ZWEp6ZG1WeWEyVnVPbXR5YjI1aGEzSmhablE2YzJWamRYSnBkSGs2WTJ4aGFXMXpPbTl3Wlc0dFlYQnBJam9pZEhKMVpTSXNJblZ5YmpwaFptWmhjbk4yWlhKclpXNDZhM0p2Ym1GcmNtRm1kRHB6WldOMWNtbDBlVHBqYkdGcGJYTTZkR1Z1WVc1MElqb2lRV1ptWVhKemRtVnlhMlZ1SWl3aWJtSm1Jam94TnpreE9URTJPRGM0TENKbGVIQWlPakUzT1RFNU1qQTBOemdzSW1saGRDSTZNVGM1TVRreE5qZzNPQ3dpYVhOeklqb2lhSFIwY0hNNkx5OXJkVzVrYVc1c2IyZG5ibWx1Wnk1aFptWmhjbk4yWlhKclpXNHVjMlVpTENKaGRXUWlPaUoxY200NllXWm1ZWEp6ZG1WeWEyVnVPbk5qYjNCbE9tRndhWE02WTI5dWMzVnRaWElpZlEuVXBaczhOQnQxNW81MXl3a19TWlZSQzFmRFptc2R6MG5mQzlLRTVDa3RxVDJMX3puaHg4b0o3WndlNUZOaE9xeTY5SXlsRDRzOG15RXBUcXRnODhqSWhCUng1akhpX2ZVeVB2VE9VemFybTZLQUcwTVFTRV82ZnpJSEExOGZWeFVZUVZpVzJCWEVrcDJWOC1nUUZ4b2tZRnhKb3lYNGJPYlJ3T0Z5MUpBd1FiQUYwRE1iRjJwU3doUTRiNHFUYnk5OUVxcndlRnJ4c0puUUdSRjVid3NjMm1BLXhjcVhRMFNuempiVk1oSzFleVhzZklSaXp6dlJmT1E0WFIxbkNnMFdJbHRRRWJIdmJMVm45VlBVMlVHdW1XaTloSnBWdDJ5WE5VSUQ0Z0d4SGN0b05id0gyOVVuMWd6cHR5RlpFak9WQ0cyNTMzVFhFUGxzRGxObzE5WWFn"
+    },
+    {
+      "key": "GET https://kundapi.affarsverken.se/api/v1/open-api/waste/buildings/search dd5c7d2cf0",
+      "method": "GET",
+      "url": "https://kundapi.affarsverken.se/api/v1/open-api/waste/buildings/search",
+      "final_url": "https://kundapi.affarsverken.se/api/v1/open-api/waste/buildings/search?address=Albatrossv%C3%A4gen+5%2C+Ramdala",
+      "body": "{\"params\":[[\"address\",\"Albatrossv\u00e4gen 5, Ramdala\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "x-robots-tag": "none",
+        "api-supported-versions": "1.0",
+        "x-powered-by": "ASP.NET",
+        "date": "Tue, 13 Oct 2026 18:41:18 GMT"
+      },
+      "content_b64": "Ww0KICB7DQogICAgImFkZHJlc3MiOiAiQWxiYXRyb3NzdsOkZ2VuIDUsIFJhbWRhbGEiLA0KICAgICJidWlsZGluZ0lkIjogIjM0NTg5MDEiLA0KICAgICJzaG93QnVpbGRpbmdJZCI6IGZhbHNlLA0KICAgICJxdWVyeSI6ICJleUpCWkdSeVpYTnpJam9pUVd4aVlYUnliM056ZHNPa1oyVnVJRFVzSUZKaGJXUmhiR0VpTENKQ2RXbHNaR2x1WjBsa0lqb2lNelExT0Rrd01TSXNJbE5vYjNkQ2RXbHNaR2x1WjBsa0lqcG1ZV3h6WlN3aVVYVmxjbmtpT201MWJHeDkiDQogIH0NCl0="
+    },
+    {
+      "key": "GET https://kundapi.affarsverken.se/api/v1/open-api/waste/buildings/eyJBZGRyZXNzIjoiQWxiYXRyb3NzdsOkZ2VuIDUsIFJhbWRhbGEiLCJCdWlsZGluZ0lkIjoiMzQ1ODkwMSIsIlNob3dCdWlsZGluZ0lkIjpmYWxzZSwiUXVlcnkiOm51bGx9 ",
+      "method": "GET",
+      "url": "https://kundapi.affarsverken.se/api/v1/open-api/waste/buildings/eyJBZGRyZXNzIjoiQWxiYXRyb3NzdsOkZ2VuIDUsIFJhbWRhbGEiLCJCdWlsZGluZ0lkIjoiMzQ1ODkwMSIsIlNob3dCdWlsZGluZ0lkIjpmYWxzZSwiUXVlcnkiOm51bGx9",
+      "final_url": "https://kundapi.affarsverken.se/api/v1/open-api/waste/buildings/eyJBZGRyZXNzIjoiQWxiYXRyb3NzdsOkZ2VuIDUsIFJhbWRhbGEiLCJCdWlsZGluZ0lkIjoiMzQ1ODkwMSIsIlNob3dCdWlsZGluZ0lkIjpmYWxzZSwiUXVlcnkiOm51bGx9",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "x-robots-tag": "none",
+        "api-supported-versions": "1.0",
+        "x-powered-by": "ASP.NET",
+        "date": "Tue, 13 Oct 2026 18:41:18 GMT"
+      },
+      "content_b64": "ew0KICAic2VydmljZXMiOiBbDQogICAgew0KICAgICAgInRpdGxlIjogIk1hdGF2ZmFsbCIsDQogICAgICAiYmluU2l6ZSI6IDE0MC4wMCwNCiAgICAgICJiaW5TaXplVW5pdCI6ICJMIiwNCiAgICAgICJuZXh0UGlja3VwIjogIjIwMjYtMTAtMTMiLA0KICAgICAgInBpY2t1cEZyZXF1ZW5jeURlc2NyaXB0aW9uIjogIlRpc2RhZyBqw6RtbiB2ZWNrYSINCiAgICB9LA0KICAgIHsNCiAgICAgICJ0aXRsZSI6ICJSZXN0YXZmYWxsIiwNCiAgICAgICJiaW5TaXplIjogMTQwLjAwLA0KICAgICAgImJpblNpemVVbml0IjogIkwiLA0KICAgICAgIm5leHRQaWNrdXAiOiAiMjAyNi0xMC0xMyIsDQogICAgICAicGlja3VwRnJlcXVlbmN5RGVzY3JpcHRpb24iOiAiVGlzZGFnIGrDpG1uIHZlY2thIg0KICAgIH0sDQogICAgew0KICAgICAgInRpdGxlIjogIlRyw6RkZ8OlcmRzYXZmYWxsIiwNCiAgICAgICJiaW5TaXplIjogMzcwLjAwLA0KICAgICAgImJpblNpemVVbml0IjogIkwiLA0KICAgICAgIm5leHRQaWNrdXAiOiAiMjAyNi0xMC0yMCIsDQogICAgICAicGlja3VwRnJlcXVlbmN5RGVzY3JpcHRpb24iOiAiVGlzZGFnIHZhciBmasOkcmRlIHZlY2thIg0KICAgIH0sDQogICAgew0KICAgICAgInRpdGxlIjogIkRlcG9uaSIsDQogICAgICAiYmluU2l6ZSI6IDcwLjAwLA0KICAgICAgImJpblNpemVVbml0IjogIkwiLA0KICAgICAgIm5leHRQaWNrdXAiOiAiIiwNCiAgICAgICJwaWNrdXBGcmVxdWVuY3lEZXNjcmlwdGlvbiI6ICJCdWRuaW5nIg0KICAgIH0sDQogICAgew0KICAgICAgInRpdGxlIjogIkZ5cmZhY2sgMSIsDQogICAgICAiYmluU2l6ZSI6IDAuMDAsDQogICAgICAiYmluU2l6ZVVuaXQiOiBudWxsLA0KICAgICAgIm5leHRQaWNrdXAiOiAiIiwNCiAgICAgICJwaWNrdXBGcmVxdWVuY3lEZXNjcmlwdGlvbiI6ICJWYXIgZmrDpHJkZSB2ZWNrYSINCiAgICB9LA0KICAgIHsNCiAgICAgICJ0aXRsZSI6ICJGeXJmYWNrIDIiLA0KICAgICAgImJpblNpemUiOiAwLjAwLA0KICAgICAgImJpblNpemVVbml0IjogbnVsbCwNCiAgICAgICJuZXh0UGlja3VwIjogIiIsDQogICAgICAicGlja3VwRnJlcXVlbmN5RGVzY3JpcHRpb24iOiAiVmFyYW5uYW4gdmVja2EiDQogICAgfQ0KICBdLA0KICAiYWRkcmVzcyI6ICJBbGJhdHJvc3N2w6RnZW4gNSwgUmFtZGFsYSIsDQogICJidWlsZGluZ0lkIjogIjM0NTg5MDEiLA0KICAicGRmIjogIi9hcGkvdjEvb3Blbi1hcGkvd2FzdGUvYnVpbGRpbmdzL2V5SkJaR1J5WlhOeklqb2lRV3hpWVhSeWIzTnpkc09rWjJWdUlEVXNJRkpoYldSaGJHRWlMQ0pDZFdsc1pHbHVaMGxrSWpvaU16UTFPRGt3TVNJc0lsTm9iM2RDZFdsc1pHbHVaMGxrSWpwbVlXeHpaU3dpVVhWbGNua2lPbTUxYkd4OS9zY2hlbWEucGRmIiwNCiAgInNob3dCdWlsZGluZ0lkIjogZmFsc2UNCn0="
+    }
+  ]
+}

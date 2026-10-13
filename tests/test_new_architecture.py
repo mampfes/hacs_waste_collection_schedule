@@ -602,6 +602,12 @@ class TestCollectionGroup:
 class TestDateParsers:
     """date_parsers.auto and date_parsers.for_format."""
 
+    def test_iso_week_ignores_month_name(self):
+        from waste_collection_schedule.date_parsers import iso_week
+
+        assert iso_week()("v41 2027") == datetime.date(2027, 10, 11)
+        assert iso_week()("v41 Okt 2027") == datetime.date(2027, 10, 11)
+
     def test_auto_iso(self):
         from waste_collection_schedule.date_parsers import auto
 
@@ -1024,6 +1030,16 @@ class TestJsVarParser:
 
         with pytest.raises(ValueError):
             JsVarParser()
+
+    def test_json_parse_reads_a_json_string_property(self):
+        from waste_collection_schedule.parsers import JsVarParser
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        page = '<script>calendar({ events: JSON.parse(`[{"start": "2026-01-02"}]`) })</script>'
+        parser = JsVarParser("events", json_parse=True)
+        assert parser(self._mock_response(page)) == [{"start": "2026-01-02"}]
+        with pytest.raises(ResponseShapeError, match="'other' not found"):
+            JsVarParser("other", json_parse=True)(self._mock_response(page))
 
 
 class TestBartecPublicDashboard:
@@ -2959,6 +2975,11 @@ class TestToolkitParsers:
         assert date_parsers.from_epoch(unit="ms")(epoch_s * 1000) == expected
         # Accepts a numeric string too (JSON APIs vary).
         assert date_parsers.from_epoch()(str(epoch_s)) == expected
+        # A zone puts local midnight (22:00Z the day before) on its own day.
+        import zoneinfo
+
+        rome = date_parsers.from_epoch(unit="ms", tz=zoneinfo.ZoneInfo("Europe/Rome"))
+        assert rome(1791842400000) == datetime.date(2026, 10, 13)
 
     def test_date_parser_in_timezone(self):
         import datetime

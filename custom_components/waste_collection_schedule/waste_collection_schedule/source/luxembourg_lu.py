@@ -1,191 +1,95 @@
-import csv
-import logging
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-
-from ..collection import Collection
-from ..exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequiredWithSuggestions,
-)
-from ..icons import Icons
-
-TITLE = "Luxembourg"
-DESCRIPTION = "Source for Luxembourg waste collection using data.public.lu"
-URL = "https://data.public.lu"
-COUNTRY = "lu"
-
-_LOGGER = logging.getLogger(__name__)
-
-CSV_URL = "https://data.public.lu/fr/datasets/r/c3805ec5-7836-49a4-9983-effaf81910d0"
-
-_ALL_STREETS = "Toutes les rues"
-
-ICON_MAP = {
-    "Biodéchets": Icons.BIO_KITCHEN,
-    "Conteneur pour déchets ménagers": Icons.GENERAL_WASTE,
-    "Déchets de verdure": Icons.ORGANIC,
-    "Déchets d'équipements électriques et électroniques": Icons.ELECTRONICS,
-    "Déchets d’équipements électriques et électroniques": Icons.ELECTRONICS,
-    "Déchets encombrants": Icons.BULKY,
-    "Déchets encombrants en vrac": Icons.BULKY,
-    "Déchets ménagers en mélange": Icons.GENERAL_WASTE,
-    "Déchets recyclables": Icons.RECYCLING,
-    "Ferraille": Icons.METAL,
-    "Papier/Carton": Icons.PAPER,
-    "Papier/Carton (commerces)": Icons.PAPER,
-    "Papier/Carton – 40L": Icons.PAPER,
-    "PMC": Icons.PLASTIC_PACKAGING,
-    "SuperDrecksKëscht": Icons.HAZARDOUS,
-    "Valorlux": Icons.RECYCLING,
-    "Verre": Icons.GLASS,
-    "Verre (commerces)": Icons.GLASS,
-    "Verre – 40L": Icons.GLASS,
-    "Vieux bois": Icons.CHRISTMAS_TREE,
-    "Vieux vêtements": Icons.TEXTILE,
-}
-
-TEST_CASES = {
-    "Beaufort": {"commune": "Beaufort"},
-    "Reisdorf": {"commune": "Reisdorf"},
-    "Bech - specific street": {
-        "commune": "Bech",
-        "localite": "Bech",
-        "rue": "Am Biirk",
-    },
-    "Pétange - Rodange": {
-        "commune": "Pétange",
-        "localite": "Rodange",
-        "rue": "Rue Willy Huberty",
-    },
-}
+from waste_collection_schedule import date_parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, municipality, street
+from waste_collection_schedule.service import DataPublicLu
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-def _fetch_rows() -> list[dict]:
-    """Fetch and parse the CSV."""
-    response = requests.get(CSV_URL, timeout=30)
-    response.raise_for_status()
-    content = response.content.decode("utf-8-sig")
-    reader = csv.DictReader(content.splitlines(), delimiter=";", quotechar='"')
-    return list(reader)
+@final
+class Source(BaseSource):
+    TITLE = "Luxembourg"
+    DESCRIPTION = "Source for Luxembourg waste collection using data.public.lu"
+    URL = "https://data.public.lu"
+    COUNTRY = "lu"
+    RAISE_ON_EMPTY = True
 
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.GLASS,
+        wt.BULKY_WASTE,
+        wt.GARDEN_WASTE,
+        wt.ELECTRONICS,
+        wt.HAZARDOUS,
+        wt.METAL,
+        wt.TEXTILES,
+        wt.OTHER,
+    ]
 
-class Source:
-    def __init__(
-        self,
-        commune: str,
-        localite: str | None = None,
-        rue: str | None = None,
-    ):
-        self._commune = commune.strip()
-        self._localite = localite.strip() if localite else None
-        self._rue = rue.strip() if rue else None
+    TEST_CASES: ClassVar[dict] = {
+        "Beaufort": {"commune": "Beaufort"},
+        "Reisdorf": {"commune": "Reisdorf"},
+        "Bech - specific street": {
+            "commune": "Bech",
+            "localite": "Bech",
+            "rue": "Am Biirk",
+        },
+        "Pétange - Rodange": {
+            "commune": "Pétange",
+            "localite": "Rodange",
+            "rue": "Rue Willy Huberty",
+        },
+    }
 
-    def fetch(self) -> list[Collection]:
-        rows = _fetch_rows()
+    PARAMS = (
+        municipality("commune"),
+        district("localite", optional=True),
+        street("rue", optional=True),
+    )
 
-        # --- Validate commune ---
-        all_communes = sorted(
-            {r.get("Commune", "").strip() for r in rows if r.get("Commune", "").strip()}
-        )
-        if self._commune not in all_communes:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "commune", self._commune, all_communes
-            )
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your commune as listed in the open data set on data.public.lu "
+            "(the 'Commune' column, with accents). Communes that split their "
+            "schedule also need the locality ('Localité') and, for some "
+            "localities, the street ('Rue'). A missing or wrong value lists the "
+            "valid ones."
+        ),
+    }
 
-        commune_rows = [
-            r for r in rows if r.get("Commune", "").strip() == self._commune
-        ]
+    retrieve = retrievers.Request(DataPublicLu.CSV_URL, timeout=60)
+    parse = DataPublicLu.CalendarParser()
 
-        # --- Validate / resolve localite ---
-        all_localites = sorted(
-            {
-                r.get("Localité", "").strip()
-                for r in commune_rows
-                if r.get("Localité", "").strip()
-            }
-        )
-
-        if all_localites:
-            # This commune has per-locality rows
-            if self._localite is None:
-                raise SourceArgumentRequiredWithSuggestions(
-                    "localite",
-                    "required to narrow down the collection schedule",
-                    all_localites,
-                )
-            if self._localite not in all_localites:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "localite", self._localite, all_localites
-                )
-
-            # Include rows matching the locality AND rows with no locality (commune-wide)
-            localite_rows = [
-                r
-                for r in commune_rows
-                if r.get("Localité", "").strip() in (self._localite, "")
-            ]
-        else:
-            # Commune has no locality breakdown — use all commune rows
-            localite_rows = commune_rows
-
-        # --- Validate / resolve rue ---
-        all_rues = sorted(
-            {
-                r.get("Rue", "").strip()
-                for r in localite_rows
-                if r.get("Rue", "").strip() and r.get("Rue", "").strip() != _ALL_STREETS
-            }
-        )
-
-        if all_rues:
-            # Has per-street rows (beyond "Toutes les rues")
-            if self._rue is None:
-                raise SourceArgumentRequiredWithSuggestions(
-                    "rue",
-                    "required to narrow down the collection schedule",
-                    all_rues,
-                )
-            if self._rue not in all_rues:
-                raise SourceArgumentNotFoundWithSuggestions("rue", self._rue, all_rues)
-
-            active_rows = [
-                r
-                for r in localite_rows
-                if r.get("Rue", "").strip() in (self._rue, _ALL_STREETS)
-            ]
-        else:
-            active_rows = localite_rows
-
-        # --- Build collections (deduplicated by date+type) ---
-        entries = []
-        seen: set[tuple] = set()
-
-        for row in active_rows:
-            date_str = row.get("Date", "").strip()
-            waste_type = row.get("Type de collecte", "").strip()
-
-            if not date_str or not waste_type:
-                continue
-
-            try:
-                pickup_date = datetime.strptime(date_str, "%d/%m/%Y").date()
-            except ValueError:
-                _LOGGER.warning("Unrecognised date format: %s", date_str)
-                continue
-
-            key = (pickup_date, waste_type)
-            if key in seen:
-                continue
-            seen.add(key)
-
-            entries.append(
-                Collection(
-                    date=pickup_date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
-                )
-            )
-
-        return entries
+    transform = JsonTransformer(
+        date_key="Date",
+        type_key="Type de collecte",
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map={
+            "Biodéchets": wt.ORGANIC,
+            "Conteneur pour déchets ménagers": wt.GENERAL_WASTE,
+            "Déchets ménagers en mélange": wt.GENERAL_WASTE,
+            "Déchets de verdure": wt.GARDEN_WASTE,
+            "Arbres de Noël": wt.GARDEN_WASTE,
+            "Déchets d'équipements électriques et électroniques": wt.ELECTRONICS,
+            "Déchets d’équipements électriques et électroniques": wt.ELECTRONICS,
+            "Déchets encombrants": wt.BULKY_WASTE,
+            "Déchets encombrants en vrac": wt.BULKY_WASTE,
+            "Déchets recyclables": wt.RECYCLABLES,
+            "Valorlux": wt.RECYCLABLES,
+            "Ferraille": wt.METAL,
+            "Papier/Carton": wt.PAPER,
+            "Papier/Carton (commerces)": wt.PAPER,
+            "Papier/Carton – 40L": wt.PAPER,
+            "SuperDrecksKëscht": wt.HAZARDOUS,
+            "Verre": wt.GLASS,
+            "Verre (commerces)": wt.GLASS,
+            "Verre – 40L": wt.GLASS,
+            "Vieux bois": wt.OTHER,
+            "Vieux vêtements": wt.TEXTILES,
+        },
+    )

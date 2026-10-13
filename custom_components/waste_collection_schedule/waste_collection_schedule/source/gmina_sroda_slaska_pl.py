@@ -1,220 +1,86 @@
-import datetime
-from typing import Literal
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequired,
+from waste_collection_schedule import parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown, text_field
+from waste_collection_schedule.retrievers import FanOutRetriever
+from waste_collection_schedule.service.ComD import (
+    ComdCategoryLookup,
+    ComdCategoryParser,
 )
-
-TITLE = "Gmina Środa Śląska"
-DESCRIPTION = "Source for Gmina Środa Śląska, Poland"
-URL = "https://srodowisko.srodaslaska.pl/gospodarka-odpadami/harmonogram-odbioru-odpadow-komunalnych/"
-COUNTRY = "pl"
-
-BASE_URL = "https://www.com-d.pl"
-SCHEDULE_URL = f"{BASE_URL}/komunalne/harm/sroda-slaska"
-
-TEST_CASES = {
-    "Szczepanów": {"location": "szczepanow"},
-    "Środa Śląska I rejon": {"location": "sroda-slaska-i-rejon"},
-    "Ciechów": {"location": "ciechow"},
-    "Ciechów single-family": {"location": "ciechow", "property_type": "single_family"},
-    "Ciechów multifamily": {"location": "ciechow", "property_type": "multi_family"},
-}
-
-ICON_MAP = {
-    "1xmc-odpady-szklo": Icons.GLASS,
-    "inne-odpady-rozne": Icons.TEXTILE,
-    "inne-odpady-zbiorki": Icons.BULKY,
-    "inne-odpady-papier": Icons.PAPER,
-    "t-odpady-biodegradowalne": Icons.ORGANIC,
-    "t-odpady-zmieszane": Icons.GENERAL_WASTE,
-    "tp-odpady-metaletworzywa": Icons.RECYCLING,
-}
-
-TYPE_MAP = {
-    "1xmc-odpady-szklo": "Szkło",
-    "inne-odpady-rozne": "Tekstylia i odzież",
-    "inne-odpady-zbiorki": "Odpady wielkogabarytowe",
-    "inne-odpady-papier": "Papier",
-    "t-odpady-biodegradowalne": "Odpady biodegradowalne",
-    "t-odpady-zmieszane": "Zmieszane odpady komunalne",
-    "tp-odpady-metaletworzywa": "Metale i tworzywa sztuczne",
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit https://www.com-d.pl/komunalne/harm/sroda-slaska, select your locality or Środa Śląska district, and enter the final part of its URL.",
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "location": "Location",
-        "location_id": "Location ID (obsolete)",
-        "property_type": "Property type",
-    },
-    "de": {
-        "location": "Ort",
-        "location_id": "Orts-ID (veraltet)",
-        "property_type": "Gebäudetyp",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "location": "Locality or district URL slug from the COM-D schedule page",
-        "location_id": "No longer supported, use 'location' instead",
-        "property_type": "all (default), single_family or multi_family; select the dwelling type when the provider publishes separate schedules",
-    },
-    "de": {
-        "location": "URL-Kürzel des Ortes bzw. Stadtteils von der COM-D Abfuhrplan-Seite",
-        "location_id": "Wird nicht mehr unterstützt, bitte stattdessen 'location' verwenden",
-        "property_type": "all (Standard), single_family (Einfamilienhaus) oder multi_family (Mehrfamilienhaus)",
-    },
-}
-
-HOW_TO_GET_LOCATION = (
-    f"open {SCHEDULE_URL}, select your locality or Środa Śląska district and use the "
-    "last part of its URL"
-)
-LEGACY_ARGUMENT_REASON = (
-    "the waste collection provider changed, so the old 'location_id' groups no longer "
-    f"exist; {HOW_TO_GET_LOCATION}"
-)
+from waste_collection_schedule.transformers import ICSTransformer
 
 
-def _get_locations(session: requests.Session) -> list[str]:
-    """Return all locality/district slugs published by COM-D."""
-    response = session.get(SCHEDULE_URL, timeout=30)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, "html.parser")
-    return sorted(
-        {
-            link["href"].rsplit("/", 1)[-1]
-            for link in soup.find_all("a", href=True)
-            if "sroda-slaska/" in link["href"]
-        }
+@final
+class Source(BaseSource):
+    TITLE = "Gmina Środa Śląska"
+    DESCRIPTION = "Source for Gmina Środa Śląska, Poland"
+    URL = "https://srodowisko.srodaslaska.pl/gospodarka-odpadami/harmonogram-odbioru-odpadow-komunalnych/"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Visit https://www.com-d.pl/komunalne/harm/sroda-slaska, select your "
+            "locality or Środa Śląska district, and enter the final part of its URL "
+            "as `location`. `property_type` is `all` (default), `single_family` or "
+            "`multi_family`; select the dwelling type when the provider publishes "
+            "separate schedules."
+        ),
+    }
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.BULKY_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.TEXTILES,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Szczepanów": {"location": "szczepanow"},
+        "Środa Śląska I rejon": {"location": "sroda-slaska-i-rejon"},
+        "Ciechów": {"location": "ciechow"},
+        "Ciechów single-family": {
+            "location": "ciechow",
+            "property_type": "single_family",
+        },
+        "Ciechów multifamily": {"location": "ciechow", "property_type": "multi_family"},
+    }
+
+    PARAMS: ClassVar[list] = [
+        text_field("location", "Location"),
+        dropdown(
+            "property_type",
+            ["all", "single_family", "multi_family"],
+            "Property type",
+            default="all",
+        ),
+    ]
+
+    retrieve = FanOutRetriever(
+        prepare=ComdCategoryLookup("sroda-slaska"),
+        targets=lambda source, urls: urls,
     )
-
-
-PROPERTY_TYPES = {
-    "single_family": "zabudowa jednorodzinna",
-    "multi_family": "zabudowa wielorodzinna",
-}
-
-
-def _collection_days(soup: BeautifulSoup, property_type: str) -> list[Tag]:
-    """Associate dates with the preceding COM-D frequency/dwelling heading."""
-    if property_type == "all":
-        return list(soup.select("td.highlighted[data-date]"))
-
-    days: list[tuple[str | None, Tag]] = []
-    current_type = None
-    available_types: set[str] = set()
-    # A category page repeats frequency headers and calendars for each schedule.
-    # Read them in document order, resetting at EVERY frequency header, including
-    # unqualified schedules shared by all property types.
-    for element in soup.select("p, td.highlighted[data-date]"):
-        if element.name == "p":
-            text = " ".join(element.get_text(" ", strip=True).split()).casefold()
-            if not text.startswith("częstotliwość"):
-                continue
-            current_type = next(
-                (key for key, label in PROPERTY_TYPES.items() if label in text), None
-            )
-            if current_type is None and "zabudowa" in text:
-                raise ValueError(f"Unrecognized COM-D property type heading: {text}")
-            if current_type is not None:
-                available_types.add(current_type)
-        else:
-            days.append((current_type, element))
-
-    if available_types and property_type not in available_types:
-        raise SourceArgumentNotFoundWithSuggestions(
-            "property_type", property_type, sorted(available_types)
+    parse = parsers.EachResponse(
+        ComdCategoryParser(
+            {
+                "single_family": "zabudowa jednorodzinna",
+                "multi_family": "zabudowa wielorodzinna",
+            }
         )
-    return [day for kind, day in days if kind is None or kind == property_type]
-
-
-class Source:
-    def __init__(
-        self,
-        location: str | None = None,
-        location_id: str | int | None = None,
-        property_type: Literal["all", "single_family", "multi_family"] = "all",
-    ):
-        # location_id was used by the previous provider. Its values grouped several
-        # localities together and cannot be mapped to a COM-D location automatically,
-        # so existing configurations get a helpful message instead of a TypeError.
-        if not location:
-            raise SourceArgumentRequired(
-                "location",
-                LEGACY_ARGUMENT_REASON
-                if location_id is not None
-                else HOW_TO_GET_LOCATION,
-            )
-        if property_type not in {"all", *PROPERTY_TYPES}:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "property_type", property_type, ["all", *PROPERTY_TYPES]
-            )
-        self._location: str = location
-        self._property_type = property_type
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-
-        response = session.get(f"{SCHEDULE_URL}/{self._location}", timeout=30)
-        if response.status_code == 404:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "location", self._location, _get_locations(session)
-            )
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, "html.parser")
-
-        schedule_table = next(
-            (
-                table
-                for table in soup.find_all("table")
-                if table.find("th", string="Frakcja")
-            ),
-            None,
-        )
-        if schedule_table is None:
-            raise ValueError(
-                "Could not find a collection schedule for the location "
-                f"'{self._location}' at {SCHEDULE_URL}/{self._location}. "
-                "The website layout may have changed."
-            )
-
-        category_urls = {
-            link["href"] for link in schedule_table.select('a[href*="/sroda-slaska/"]')
-        }
-
-        entries: list[Collection] = []
-        seen = set()
-
-        for category_url in sorted(category_urls):
-            category = category_url.rsplit("/", 1)[-1]
-            category_response = session.get(f"{BASE_URL}{category_url}", timeout=30)
-            category_response.raise_for_status()
-            category_soup = BeautifulSoup(category_response.text, "html.parser")
-
-            for collection_day in _collection_days(category_soup, self._property_type):
-                collection_date = datetime.datetime.strptime(
-                    collection_day["data-date"], "%Y-%m-%d"
-                ).date()
-                entry = (collection_date, category)
-                if entry in seen:
-                    continue
-                seen.add(entry)
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=TYPE_MAP.get(category, category.capitalize()),
-                        icon=ICON_MAP.get(category),
-                    )
-                )
-
-        return entries
+    )
+    transform = ICSTransformer(
+        type_value_map={
+            "szkło": wt.GLASS,
+            "inne": wt.TEXTILES,
+            "zbiórki": wt.BULKY_WASTE,
+            "papier": wt.PAPER,
+            "odpady zmieszane": wt.GENERAL_WASTE,
+            "odpady biodegradowalne": wt.ORGANIC,
+            "metale i tworzywa sztuczne": wt.RECYCLABLES,
+        },
+    )

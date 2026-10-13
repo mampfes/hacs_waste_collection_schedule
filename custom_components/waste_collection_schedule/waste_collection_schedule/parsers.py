@@ -577,6 +577,62 @@ class JsonParser(Parser[Any]):
         return data
 
 
+class JsonLookupJoin(Parser["list[dict[str, Any]]"]):
+    """Join JSON records to a reference list the same retrieve fetched first.
+
+    For an API that returns its calendar as bare ids (``{"afvalstroom_id": 4,
+    "ophaaldatum": "2026-01-14"}``) and the names of those ids from a second
+    endpoint. ``retrieve`` returns the reference response first and the record
+    responses after it (see :class:`~waste_collection_schedule.retrievers.FanOutRetriever`)::
+
+        parse = parsers.JsonLookupJoin(
+            key="afvalstroom_id", reference_key="id", value_key="title", into="title"
+        )
+
+    Each record comes back as a copy with ``into`` set to the referenced
+    ``value_key``. A record whose id the reference does not list gets
+    ``default`` (or is dropped when that is ``None``).
+
+    Args:
+        key: the record field holding the reference id.
+        reference_key: the reference field holding the id (default ``"id"``).
+        value_key: the reference field to copy onto the record.
+        into: the field to set on the record.
+        default: ``into`` for an unlisted id; ``None`` drops such records.
+    """
+
+    def __init__(
+        self,
+        *,
+        key: str,
+        value_key: str,
+        into: str,
+        reference_key: str = "id",
+        default: str | None = None,
+    ):
+        self.key = key
+        self.value_key = value_key
+        self.into = into
+        self.reference_key = reference_key
+        self.default = default
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[dict[str, Any]]":
+        responses = list(cast(Any, response))
+        reference = {
+            item[self.reference_key]: item[self.value_key]
+            for item in _json(responses[0])
+        }
+        records: list[dict[str, Any]] = []
+        for item in responses[1:]:
+            for record in _json(item):
+                value = reference.get(record[self.key], self.default)
+                if value is not None:
+                    records.append({**record, self.into: value})
+        return records
+
+
 def eval_json(response: Response) -> Any:
     """The JSON a response wraps in a JavaScript ``eval(...)`` call.
 
@@ -629,12 +685,17 @@ class JsVarParser(Parser[Any]):
     One name returns its value; several return a ``{name: value}`` dict. A
     variable that is missing or not a JSON literal means the page changed: the
     response is logged and ``ResponseShapeError`` is raised.
+
+    ``json_parse=True`` reads the other common shipping form, a JSON *string*
+    handed to ``JSON.parse`` (``events: JSON.parse(`[{"start": ...}]`)``, as a
+    property of a config object or an assignment), by the same name rules.
     """
 
-    def __init__(self, *names: str):
+    def __init__(self, *names: str, json_parse: bool = False):
         if not names:
             raise ValueError("JsVarParser needs at least one variable name")
         self.names = names
+        self.json_parse = json_parse
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
         import json
@@ -644,6 +705,24 @@ class JsVarParser(Parser[Any]):
         source_name = response_shape.source_name(source)
         values: dict[str, Any] = {}
         for name in self.names:
+            if self.json_parse:
+                literal = re.search(
+                    rf"\b{re.escape(name)}\s*[:=]\s*JSON\.parse\(\s*([`'\"])(.*?)(?<!\\)\1",
+                    text,
+                    re.DOTALL,
+                )
+                try:
+                    if literal is None:
+                        raise ValueError
+                    values[name] = json.loads(literal.group(2))
+                except ValueError:
+                    response_shape.expect(
+                        False,
+                        source_name=source_name,
+                        detail=f"JSON.parse literal {name!r} not found or not JSON",
+                        raw=text[:500],
+                    )
+                continue
             match = re.search(rf"\b(?:var|let|const)\s+{re.escape(name)}\s*=\s*", text)
             if match is None:
                 response_shape.expect(
