@@ -59,6 +59,8 @@ class _CalendarClient:
             html_addresses = postcode_search_request.content
             addresses = bs4.BeautifulSoup(html_addresses, "html.parser")
             addresses_select = addresses.find("select", {"id": "brlu-selected-address"})
+            if addresses_select is None:
+                raise ValueError("Could not find address selection form")
             found_address = None
             for address in addresses_select.find_all("option"):
                 if self._address.upper() in address.get_text().upper():

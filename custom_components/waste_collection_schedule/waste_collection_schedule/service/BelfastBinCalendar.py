@@ -5,7 +5,7 @@ import re
 from datetime import datetime
 from typing import Any
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.parsers import Parser
@@ -33,6 +33,16 @@ class _CalendarClient:
         self._postcode = postcode.strip().upper()
         self._uprn = uprn
 
+    @staticmethod
+    def _get_form_value(soup: BeautifulSoup, name: str) -> str:
+        field = soup.find("input", {"name": name})
+        if not isinstance(field, Tag):
+            raise ValueError(f"Could not find form field: {name}")
+        value = field.get("value")
+        if not isinstance(value, str):
+            raise ValueError(f"Could not find value for form field: {name}")
+        return value
+
     def retrieve(self):
         """Fetch waste collection schedule."""
         session = self._session
@@ -40,11 +50,9 @@ class _CalendarClient:
         response = session.get(API_URL, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
-        viewstate = soup.find("input", {"name": "__VIEWSTATE"})["value"]
-        viewstate_generator = soup.find("input", {"name": "__VIEWSTATEGENERATOR"})[
-            "value"
-        ]
-        event_validation = soup.find("input", {"name": "__EVENTVALIDATION"})["value"]
+        viewstate = self._get_form_value(soup, "__VIEWSTATE")
+        viewstate_generator = self._get_form_value(soup, "__VIEWSTATEGENERATOR")
+        event_validation = self._get_form_value(soup, "__EVENTVALIDATION")
         _LOGGER.debug(f"Submitting postcode: {self._postcode}")
         postcode_data = {
             "__EVENTTARGET": "",
@@ -65,11 +73,9 @@ class _CalendarClient:
         error_msg = soup.find("span", {"id": "lblPostcodeError"})
         if error_msg and error_msg.get("style") != "display:none":
             raise ValueError(f"Error from website: {error_msg.get_text(strip=True)}")
-        viewstate = soup.find("input", {"name": "__VIEWSTATE"})["value"]
-        viewstate_generator = soup.find("input", {"name": "__VIEWSTATEGENERATOR"})[
-            "value"
-        ]
-        event_validation = soup.find("input", {"name": "__EVENTVALIDATION"})["value"]
+        viewstate = self._get_form_value(soup, "__VIEWSTATE")
+        viewstate_generator = self._get_form_value(soup, "__VIEWSTATEGENERATOR")
+        event_validation = self._get_form_value(soup, "__EVENTVALIDATION")
         address_select = soup.find("select", {"id": "lstAddresses"})
         if not address_select:
             raise ValueError(f"No addresses found for postcode: {self._postcode}")

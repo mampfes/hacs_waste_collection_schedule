@@ -74,12 +74,13 @@ class _CalendarClient:
         week_column_index = [h.text for h in headers].index(week_name)
         if week_column_index < 0:
             raise ValueError("Cannot find black top bin collection weeks")
-        first_week_dates_range_str: str = (
-            black_top_bin_schedule_table.find("tbody")
-            .find("tr")
-            .find_all("td")[week_column_index]
-            .text
-        )
+        table_body = black_top_bin_schedule_table.find("tbody")
+        if table_body is None:
+            raise ValueError("Could not find black top bin collection table body")
+        first_row = table_body.find("tr")
+        if first_row is None:
+            raise ValueError("Could not find black top bin collection table row")
+        first_week_dates_range_str = first_row.find_all("td")[week_column_index].text
         first_week_date = parser.parse(
             first_week_dates_range_str.split(" to ")[0]
         ).date()
@@ -107,7 +108,10 @@ class _CalendarClient:
         ):
             return {}
         result = {}
-        for row in bank_holiday_bin_collection_table.find("tbody").find_all("tr"):
+        table_body = bank_holiday_bin_collection_table.find("tbody")
+        if table_body is None:
+            raise ValueError("Could not find bank holiday collection table body")
+        for row in table_body.find_all("tr"):
             row_dates = row.find_all("td")
             if len(row_dates) < 2:
                 continue
