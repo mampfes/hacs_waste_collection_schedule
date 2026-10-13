@@ -44,4 +44,5 @@ class Source(BaseSource):
             "Gelbe Tonne": wt.RECYCLABLES,
             "Christbaumabfuhr": wt.GARDEN_WASTE,
         },
+        carry_raw_label=True,
     )
