@@ -629,12 +629,17 @@ class JsVarParser(Parser[Any]):
     One name returns its value; several return a ``{name: value}`` dict. A
     variable that is missing or not a JSON literal means the page changed: the
     response is logged and ``ResponseShapeError`` is raised.
+
+    ``json_parse=True`` reads the other common shipping form, a JSON *string*
+    handed to ``JSON.parse`` (``events: JSON.parse(`[{"start": ...}]`)``, as a
+    property of a config object or an assignment), by the same name rules.
     """
 
-    def __init__(self, *names: str):
+    def __init__(self, *names: str, json_parse: bool = False):
         if not names:
             raise ValueError("JsVarParser needs at least one variable name")
         self.names = names
+        self.json_parse = json_parse
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
         import json
@@ -644,6 +649,24 @@ class JsVarParser(Parser[Any]):
         source_name = response_shape.source_name(source)
         values: dict[str, Any] = {}
         for name in self.names:
+            if self.json_parse:
+                literal = re.search(
+                    rf"\b{re.escape(name)}\s*[:=]\s*JSON\.parse\(\s*([`'\"])(.*?)(?<!\\)\1",
+                    text,
+                    re.DOTALL,
+                )
+                try:
+                    if literal is None:
+                        raise ValueError
+                    values[name] = json.loads(literal.group(2))
+                except ValueError:
+                    response_shape.expect(
+                        False,
+                        source_name=source_name,
+                        detail=f"JSON.parse literal {name!r} not found or not JSON",
+                        raw=text[:500],
+                    )
+                continue
             match = re.search(rf"\b(?:var|let|const)\s+{re.escape(name)}\s*=\s*", text)
             if match is None:
                 response_shape.expect(

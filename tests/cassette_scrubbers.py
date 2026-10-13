@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import base64
 import json
+import re
 from collections.abc import Callable
 from typing import Any
 
@@ -65,7 +66,37 @@ def _chesterfield_gov_uk(
             _set_json(interaction, {"auraConfig": {"context": context}})
 
 
+def _czystyregion_pl(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Cut each page of the cascade (~250 KB of site chrome apiece) to what is read.
+
+    The form page keeps its CSRF token, the commune dropdown and the ``regiony``
+    list, the result page its schedule table, the schedule page its ``events``.
+    """
+    patterns = (
+        r'name="_token" value="[^"]*"',
+        r'id="gminy"[^>]*>.*?</select>',
+        r"var regiony = \[.*?\];",
+        r'<table id="harmonogramy".*?</table>',
+        r"events:\s*JSON\.parse\(`.*?`\)",
+    )
+    for interaction in interactions:
+        text = base64.b64decode(interaction["content_b64"]).decode("utf-8")
+        kept = [
+            match.group(0)
+            for pattern in patterns
+            for match in [re.search(pattern, text, re.S)]
+            if match
+        ]
+        raw = "<html><body>" + "\n".join(kept) + "</body></html>"
+        interaction["content_b64"] = base64.b64encode(raw.encode("utf-8")).decode(
+            "ascii"
+        )
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "czystyregion_pl": _czystyregion_pl,
     "sica_lu": _sica_lu,
     "chesterfield_gov_uk": _chesterfield_gov_uk,
 }
