@@ -8576,6 +8576,178 @@ def test_the_source_cassette_backlog_is_not_stale() -> None:
     )
 
 
+class TestGlobalCalendarMigrations:
+    def test_iren_published_iso_dates_are_not_dropped(self):
+        """The live Roccavione feed publishes three dates separated by semicolons."""
+        from freezegun import freeze_time
+        from waste_collection_schedule.service.IrenAmbienteCalendar import (
+            CalendarParser,
+        )
+        from waste_collection_schedule.source.irenambiente_it import Source
+
+        response = MagicMock()
+        response.json.return_value = [
+            {
+                "Materiale": "Alluminio",
+                "ICalRRule": "RDATE:2026-10-30;2026-11-27;2026-12-11",
+                "IdFrequenza": "",
+                "FlagFreq": "",
+                "FestivitaCalendario": [],
+                "NonVisibile": False,
+            }
+        ]
+        source = Source(city="Roccavione", street="FRAZIONE BRIGNOLA", house_number=1)
+        with freeze_time("2026-10-13"):
+            records = CalendarParser()(response, source)
+        assert [record["date"] for record in records] == [
+            datetime.date(2026, 10, 30),
+            datetime.date(2026, 11, 27),
+            datetime.date(2026, 12, 11),
+        ]
+
+    def test_waikato_missing_published_date_is_an_error(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+        from waste_collection_schedule.service.WaikatoCollectionCalendar import (
+            CalendarParser,
+        )
+        from waste_collection_schedule.source.waikato_district_council_govt_nz import (
+            Source,
+        )
+
+        response = MagicMock()
+        response.json.return_value = [
+            {
+                "address": "11 Gordon Paul Place TUAKAU",
+                "collections": [
+                    {"collectionDay": "Tuesday", "collectionArea": "WstStdTua"}
+                ],
+            }
+        ]
+        source = Source(address="11 Gordon Paul Place TUAKAU")
+        with pytest.raises(SourceArgumentNotFound):
+            CalendarParser()(response, source)
+
+
+class TestSharedGlobalCalendarComponents:
+    """Keep provider boundaries while delegating transport and date projection."""
+
+    @pytest.mark.parametrize(
+        "page,message",
+        [
+            ("<html></html>", "address results table"),
+            (
+                '<table><tr></tr><tr><td>Garden Cottage<a href="invalid">Home</a></td></tr></table>',
+                "property identifier",
+            ),
+        ],
+    )
+    def test_environmentfirst_rejects_missing_address_form_data(self, page, message):
+        from waste_collection_schedule.service.EnvironmentFirstCalendar import (
+            _CalendarClient,
+        )
+
+        client = _CalendarClient(post_code="BN73LG", name="Garden Cottage")
+        client._session = MagicMock()
+        client._session.post.return_value.text = page
+        with pytest.raises(ValueError, match=message):
+            client.retrieve()
+        client._session.get.assert_not_called()
+
+    def test_wigan_shared_parser_reads_compact_ordinal_dates(self):
+        from waste_collection_schedule.source.wigan_gov_uk import Source
+
+        response = SimpleNamespace(
+            text="""
+            <div class="BinsRecycling"><h2>BLACK BIN</h2>
+                <div class="dateWrapper-next">Tuesday13thOct2026</div>
+            </div>
+        """
+        )
+        rows = Source.parse(response)
+        assert len(rows) == 1
+        assert Source.transform(rows[0]).date == datetime.date(2026, 10, 13)
+
+    @pytest.mark.parametrize("page", ["<html></html>", '<input name="__VIEWSTATE">'])
+    def test_wigan_missing_postback_state_prevents_submission(self, page):
+        from waste_collection_schedule.service.WiganNeighbourhoodCalendar import (
+            _CalendarClient,
+        )
+
+        client = _CalendarClient(postcode="WN5 9BH", uprn="100011821616")
+        client._session = MagicMock()
+        client._session.get.return_value.text = page
+        with pytest.raises(ValueError, match="form field"):
+            client.retrieve()
+        client._session.post.assert_not_called()
+
+    def test_palm_coast_multiple_weekdays_include_today(self):
+        from waste_collection_schedule.source.palmcoast_fl_gov import Source
+
+        with freeze_time("2026-10-13"):
+            rows = list(
+                Source.preprocess(
+                    [{"solidWasteDays": "Tuesday/Friday", "recycleDays": "Friday"}]
+                )
+            )
+        assert len(rows) == 78
+        assert (datetime.date(2026, 10, 13), "Garbage") in rows
+        assert (datetime.date(2026, 10, 16), "Garbage") in rows
+        assert (datetime.date(2026, 10, 16), "Recycling") in rows
+
+    def test_waikato_uses_the_published_anchor_and_deduplicates_dates(self):
+        from waste_collection_schedule.source.waikato_district_council_govt_nz import (
+            Source,
+        )
+
+        collection = {
+            "collectionDay": "Tuesday",
+            "collectionArea": "WstStdTua",
+            "nextDate": "2026-10-23",
+        }
+        response = MagicMock()
+        response.json.return_value = [
+            {
+                "address": "11 Gordon Paul Place TUAKAU",
+                "collections": [collection, dict(collection)],
+            }
+        ]
+        source = Source(address="11 Gordon Paul Place TUAKAU")
+        with freeze_time("2026-10-13"):
+            rows = list(source.preprocess(source.parse(response, source), source))
+        assert len(rows) == 26
+        assert rows[0] == (datetime.date(2026, 10, 23), "Rubbish and Recycling")
+        assert (datetime.date(2026, 10, 20), "Rubbish and Recycling") not in rows
+
+    def test_armadale_recycling_flips_when_the_next_collection_is_next_week(self):
+        from waste_collection_schedule.source.armadale_wa_gov_au import Source
+
+        response = MagicMock()
+        response.json.return_value = [
+            {"bin_day": "Monday", "recycle_area": "This week"}
+        ]
+        source = Source(address="Test address")
+        with freeze_time("2026-10-18"):
+            rows = list(source.preprocess(source.parse(response, source), source))
+        assert (datetime.date(2026, 10, 19), "rubbish") in rows
+        assert (datetime.date(2026, 10, 19), "recycling") not in rows
+        assert (datetime.date(2026, 10, 26), "recycling") in rows
+        assert len(rows) == 78
+
+    def test_armadale_good_friday_is_shifted_for_both_rounds(self):
+        from waste_collection_schedule.source.armadale_wa_gov_au import Source
+
+        response = MagicMock()
+        response.json.return_value = [
+            {"bin_day": "Friday", "recycle_area": "This week"}
+        ]
+        source = Source(address="Test address")
+        with freeze_time("2027-03-26"):
+            rows = list(source.preprocess(source.parse(response, source), source))
+        assert (datetime.date(2027, 3, 27), "rubbish") in rows
+        assert (datetime.date(2027, 3, 27), "recycling") in rows
+        assert (datetime.date(2027, 3, 26), "rubbish") not in rows
+
+
 class TestSharedCalendarRefactoring:
     """Provider adapters keep their boundaries when using shared pipeline steps."""
 

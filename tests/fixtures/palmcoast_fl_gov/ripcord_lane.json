@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://www.palmcoast.gov/SalesforceDynamicForm/Schedule bc03d513ff",
+      "method": "GET",
+      "url": "https://www.palmcoast.gov/SalesforceDynamicForm/Schedule",
+      "final_url": "https://www.palmcoast.gov/SalesforceDynamicForm/Schedule?address=Ripcord+Lane",
+      "body": "{\"params\":[[\"address\",\"Ripcord Lane\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 13 Oct 2026 21:08:17 GMT",
+        "access-control-allow-origin": "*",
+        "x-frame-options": "SAMEORIGIN",
+        "server": "envoy",
+        "access-control-allow-headers": "X-Requested-With, Content-Type",
+        "access-control-allow-methods": "GET, POST, OPTIONS",
+        "x-cache": "Miss from cloudfront",
+        "via": "1.1 bfe42c12b48dc69b913a738e5b345506.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "WAW51-P4",
+        "x-amz-cf-id": "QdHZO9yStXLcZ_T4Bc0zhuPpzVloIJ6Jng7gKIhwum0EqqueYYf6-Q==",
+        "x-envoy-upstream-service-time": "1329"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJkYXRhIjpbeyJzdHJlZXROYW1lIjoiUmlwY29yZCBMYW5lIiwic29saWRXYXN0ZURheXMiOiJUdWVzZGF5L0ZyaWRheSIsInlhcmRXYXN0ZURheXMiOiJXZWRuZXNkYXkiLCJyZWN5Y2xlRGF5cyI6IkZyaWRheSIsIm5vdGVzIjpudWxsfV19"
+    }
+  ]
+}

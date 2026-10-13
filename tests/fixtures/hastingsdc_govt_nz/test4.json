@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php f1cce3c096",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php",
+      "final_url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php?search=21+Drovers+Way&council=hdc&type=address",
+      "body": "{\"params\":[[\"council\",\"hdc\"],[\"search\",\"21 Drovers Way\"],[\"type\",\"address\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:23 GMT",
+        "server": "envoy",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "content-length": "199",
+        "content-type": "application/json",
+        "x-envoy-upstream-service-time": "1250"
+      },
+      "content_b64": "W3siaWQiOjEwNDYyOCwicmFfdW5pcXVlX2lkIjoxMDQ2MjgsInN1ZmlfaWQiOjEwNDYyOCwiUmF0ZXNfUmFfVW5pcXVlX2lkIjoxMDQ2MjgsInByb3BlcnR5X2xvY2F0aW9uIjoiMjEgRHJvdmVycyBXYXkgSEFTVElOR1MgNDEyMCIsInZhbHVhdGlvbl9pZCI6IjEwMjgxMjc0MzAiLCJDZXJ0aWZpY2F0ZV9vZl90aXRsZSI6IjgyNDg0NyIsImxlZ2FsX2Rlc2NyaXB0aW9uIjoiTE9UIDIxIERQIDUyMTQyNSIsInZhbHVlIjoiMjEgRHJvdmVycyBXYXkgSEFTVElOR1MgNDEyMCAoMTAyODEyNzQzMCkifV0="
+    },
+    {
+      "key": "GET https://data.napier.govt.nz/regional/hdc/widgets/collectiondays/do_collectiondays.php 276546fd41",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/hdc/widgets/collectiondays/do_collectiondays.php",
+      "final_url": "https://data.napier.govt.nz/regional/hdc/widgets/collectiondays/do_collectiondays.php?v=1028127430&s=104628&r=104628",
+      "body": "{\"params\":[[\"r\",\"104628\"],[\"s\",\"104628\"],[\"v\",\"1028127430\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:24 GMT",
+        "server": "envoy",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "content-length": "438",
+        "content-type": "application/json",
+        "x-envoy-upstream-service-time": "374"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJodG1sIjoiPGRpdiBjbGFzcz1cInByb3BlcnR5RGV0YWlsc0NvbnRhaW5lclwiIGRhdGEtdW5pcXVlX2lkPVwiXCIgZGF0YS1wcm9wZXJ0eV9sb2NhdGlvbj1cIjIxIERyb3ZlcnMgV2F5IEhBU1RJTkdTIDQxMjBcIj5cblx0PGgyPkNvbGxlY3Rpb24gZGF5czxcL2gyPlxuXHQ8cD5CZWxvdyBhcmUgdGhlIHJ1YmJpc2ggYW5kIHJlY3ljbGluZyBjb2xsZWN0aW9uIGRheXMgZm9yIDxzdHJvbmc+MjEgRHJvdmVycyBXYXkgSEFTVElOR1MgNDEyMDxcL3N0cm9uZz4uPFwvcD5cblx0PHRhYmxlIHdpZHRoPVwiMTAwJVwiPlxuXHRcdDx0aGVhZD5cblx0XHRcdDx0cj5cblx0XHRcdFx0PHRoIHdpZHRoPVwiMTAwJVwiPlJ1YmJpc2ggY29sbGVjdGlvbjxcL3RoPlxuXHRcdFx0PFwvdHI+XG5cdFx0PFwvdGhlYWQ+XG5cdFx0PHRib2R5PlxuXHRcdFx0PHRyPlxuXHRcdFx0XHQ8dGQ+VEhVUlNEQVkuIEV2ZXJ5IFdlZWsgLSBPdXQgYnkgNzowMGFtPFwvdGQ+XG5cdFx0XHQ8XC90cj5cblx0XHQ8XC90Ym9keT5cblx0PFwvdGFibGU+XG5cdDx0YWJsZSB3aWR0aD1cIjEwMCVcIj5cblx0XHQ8dGhlYWQ+XG5cdFx0XHQ8dHI+XG5cdFx0XHRcdDx0aCB3aWR0aD1cIjEwMCVcIj5SZWN5Y2xpbmcgY29sbGVjdGlvbjxcL3RoPlxuXHRcdFx0PFwvdHI+XG5cdFx0PFwvdGhlYWQ+XG5cdFx0PHRib2R5PlxuXHRcdFx0PHRyPlxuXHRcdFx0XHQ8dGQ+V0VETkVTREFZLiBFdmVyeSBXZWVrIC0gT3V0IGJ5IDc6MDBhbTxcL3RkPlxuXHRcdFx0PFwvdHI+XG5cdFx0PFwvdGJvZHk+XG5cdDxcL3RhYmxlPlxuXHQ8cD5Nb3JlIGluZm9ybWF0aW9uIGFib3V0IHRoaXMgcHJvcGVydHkgY2FuIGJlIGZvdW5kIG9uIHRoZSA8YSBocmVmPVwiXC9zZXJ2aWNlc1wvcHJvcGVydGllcy1hbmQtcmF0ZXNcL215LXByb3BlcnR5XC8/cmlkPTEwNDYyOFwiPk15IFByb3BlcnR5PFwvYT4gcGFnZS48XC9wPlxuPFwvZGl2PiIsImpzIjoiIn0="
+    }
+  ]
+}

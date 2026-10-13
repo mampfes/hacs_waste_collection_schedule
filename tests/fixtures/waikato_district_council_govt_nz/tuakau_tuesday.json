@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://www.waikatodistrict.govt.nz/widgetApi/RubbishAndRecyclingCollections/search ba2e2be54d",
+      "method": "GET",
+      "url": "https://www.waikatodistrict.govt.nz/widgetApi/RubbishAndRecyclingCollections/search",
+      "final_url": "https://www.waikatodistrict.govt.nz/widgetApi/RubbishAndRecyclingCollections/search?address=11+gordon+paul+place+tuakau",
+      "body": "{\"params\":[[\"address\",\"11 gordon paul place tuakau\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Tue, 13 Oct 2026 21:08:23 GMT",
+        "server": "envoy",
+        "cache-control": "no-cache",
+        "content-encoding": "gzip",
+        "expires": "-1",
+        "pragma": "no-cache",
+        "set-cookie": "ARRAffinity=d3c409885058955edff24aa1cc9314f6bd7c0110410981eec2ac06decd9b4eee;Path=/;HttpOnly;Secure;Domain=www.waikatodistrict.govt.nz, ARRAffinitySameSite=d3c409885058955edff24aa1cc9314f6bd7c0110410981eec2ac06decd9b4eee;Path=/;HttpOnly;SameSite=None;Secure;Domain=www.waikatodistrict.govt.nz",
+        "vary": "Accept-Encoding",
+        "content-length": "239",
+        "strict-transport-security": "max-age=2592000",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "content-security-policy": "default-src 'self';script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.waikatodc.govt.nz https://connect.facebook.net https://staticcdn.co.nz https://cdnjs.cloudflare.com https://az416426.vo.msecnd.net https://cdn.monsido.com https://*.mapbox.com https://www.googletagmanager.com https://www.google-analytics.com https://code.highcharts.com https://edge.fullstory.com https://rs.fullstory.com https://siteimproveanalytics.com https://portal.faqbot.nz https://storage.faqbot.nz https://*.nr-data.net https://*.newrelic.com https://*.mypurecloud.com.au https://*.apse2.pure.cloud https://www.youtube.com https://www.google.com https://waikatodistrict.eplanning.nz https://www.gstatic.com https://www.google.com/recaptcha https://www.gstatic.com/recaptcha https://*.clarity.ms https://c.bing.com https://kit.fontawesome.com https://*.qualtrics.com https://*.insight.sitefinity.com https://api.addressfinder.io;object-src 'self' https://*.mypurecloud.com.au https://*.apse2.pure.cloud https://api.emtel.co.nz;style-src 'self' 'unsafe-inline' https://*.waikatodc.govt.nz https://fonts.googleapis.com https://*.mapbox.com https://maxcdn.bootstrapcdn.com https://portal.faqbot.nz https://storage.faqbot.nz https://cdnjs.cloudflare.com https://api.addressfinder.io;img-src 'self' data: blob: https://*.waikatodistrict.govt.nz https://*.waikatodc.govt.nz https://wdcsitefinity.blob.core.windows.net https://tracking.monsido.com https://www.facebook.com https://www.googletagmanager.com https://www.google-analytics.com https://*.siteimproveanalytics.io https://storage.faqbot.nz https://rs.fullstory.com https://*.mypurecloud.com.au https://*.apse2.pure.cloud https://www.google.co.nz https://i.ytimg.com https://*.clarity.ms https://c.bing.com https://*.qualtrics.com;media-src 'self' data: blob: https://*.mypurecloud.com.au https://*.apse2.pure.cloud;frame-src 'self' https://my.matterport.com https://www.youtube.com https://www.google.com https://www.facebook.com https://web.facebook.com https://player.vimeo.com https://*.digitalcityplatform.online https://*.mypurecloud.com.au https://*.apse2.pure.cloud https://staticcdn.co.nz https://www.google.com/recaptcha https://recaptcha.google.com/recaptcha https://waikato.civicclerk.com.au https://waidcgovtnz-my.sharepoint.com https://www.youtube-nocookie.com https://td.doubleclick.net https://api.emtel.co.nz https://waikato.resolve.red https://*.qualtrics.com;font-src 'self' data: https://fonts.gstatic.com https://maxcdn.bootstrapcdn.com https://*.fontawesome.com;connect-src 'self' https://*.waikatodc.govt.nz https://*.services.visualstudio.com https://*.mapbox.com https://stats.g.doubleclick.net https://socialplugin.facebook.net https://www.facebook.com https://web.facebook.com https://www.google-analytics.com https://edge.fullstory.com https://rs.fullstory.com https://portal.faqbot.nz https://directline.botframework.com wss://directline.botframework.com https://*.mypurecloud.com.au https://*.nr-data.net https://shyrka-prod-apse2.s3.ap-southeast-2.amazonaws.com https://*.newrelic.com https://*.apse2.pure.cloud wss://*.mypurecloud.com.au wss://*.apse2.pure.cloud https://api.addressfinder.io https://analytics.google.com https://ecs.office.com https://login.microsoftonline.com https://*.clarity.ms https://c.bing.com https://www.google.com https://*.fontawesome.com https://*.qualtrics.com https://az416426.vo.msecnd.net https://*.insight.sitefinity.com;base-uri 'self';child-src 'self' blob: https://*.mypurecloud.com.au https://*.apse2.pure.cloud;form-action 'self' https://login.microsoftonline.com https://govt.us10.list-manage.com https://www.facebook.com https://*.qualtrics.com https://wdc-publicwebsite-auseast.azurewebsites.net https://wdc-publicwebsite-aussoutheast.azurewebsites.net https://wdc-publicwebsite-auseast-02.azurewebsites.net https://wdc-publicwebsite-aussoutheast-02.azurewebsites.net https://www.waikatodistrict.govt.nz https://oldwaisite.waikatodistrict.govt.nz;frame-ancestors 'self';report-uri /WebResource.axd?cspReport=true",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "permissions-policy": "accelerometer=(self), ambient-light-sensor=(self), autoplay=(self), battery=(self), camera=(self), cross-origin-isolated=(self), display-capture=(self), document-domain=(self), encrypted-media=(self), execution-while-not-rendered=(self), execution-while-out-of-viewport=(self), fullscreen=(self \"https://player.vimeo.com\" \"https://www.youtube.com\" \"https://www.youtube-nocookie.com\"), geolocation=(self), gyroscope=(self), keyboard-map=(self), magnetometer=(self), microphone=(self), midi=(self), navigation-override=(self), payment=(self), picture-in-picture=(self \"https://player.vimeo.com\" \"https://www.youtube.com\" \"https://www.youtube-nocookie.com\"), publickey-credentials-get=(self), screen-wake-lock=(self), sync-xhr=(self), usb=(self), web-share=(self), xr-spatial-tracking=(self)",
+        "x-envoy-upstream-service-time": "402"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjExIEdvcmRvbiBQYXVsIFBsYWNlIFRVQUtBVSIsImNvbGxlY3Rpb25zIjpbeyJjb2xsZWN0aW9uRGF5IjoiVHVlc2RheSIsImNvbGxlY3Rpb25BcmVhIjoiV3N0U3RkVHVhIiwibmV4dERhdGUiOiIyMDI2LTEwLTIwVDAwOjAwOjAwIn1dfSx7ImFkZHJlc3MiOiIxMSBHb3Jkb24gUGF1bCBQbGFjZSBUVUFLQVUiLCJjb2xsZWN0aW9ucyI6W3siY29sbGVjdGlvbkRheSI6IlR1ZXNkYXkiLCJjb2xsZWN0aW9uQXJlYSI6IldzdFN0ZFR1YSIsIm5leHREYXRlIjoiMjAyNi0xMC0yMFQwMDowMDowMCJ9XX1d"
+    }
+  ]
+}
