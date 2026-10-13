@@ -1,88 +1,74 @@
-import ast
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Pembrokeshire County Council"  # Title will show up in README.md and info.md
-DESCRIPTION = "Source script for pembrokeshire.gov.uk"  # Describe your source
-URL = "https://www.pembrokeshire.gov.uk/"  # Insert url to service homepage. URL will show up in README.md and info.md
-TEST_CASES = {  # Insert arguments for test cases to be used by test_sources.py script
-    "Dew Street": {"uprn": "100100283349"},
-    "Heol Cleddau": {"uprn": "100100281816"},
+_TYPE_MAP = {
+    "FOODCAD": wt.FOOD_WASTE,
+    "BLUEBOX": wt.PAPER,
+    "GREENBOX": wt.GLASS,
+    "BLUEBAG": wt.RECYCLABLES,
+    "REDBAG": wt.PLASTIC,
+    "GREYBAG": wt.GENERAL_WASTE,
 }
 
-API_URL = "https://www.pembrokeshire.gov.uk/template/waste/api.asp"
 
-TYPE_MAP = {  # Dict of waste formatted bin types
-    "FOODCAD": "GREEN CADDY",
-    "BLUEBOX": "BLUE BOX",
-    "GREENBOX": "GREEN BOX",
-    "BLUEBAG": "BLUE BAG",
-    "REDBAG": "RED BAG",
-    "GREYBAG": "BLACK/GREY BAGS",
-}
-ICON_MAP = {
-    "FOODCAD": Icons.BIO_KITCHEN,
-    "BLUEBOX": Icons.EVENT,
-    "GREENBOX": Icons.GLASS,
-    "BLUEBAG": Icons.RECYCLING,
-    "REDBAG": Icons.RECYCLING,
-    "GREYBAG": Icons.GENERAL_WASTE,
-}
+@final
+class Source(BaseSource):
+    TITLE = "Pembrokeshire County Council"
+    DESCRIPTION = "Source for pembrokeshire.gov.uk"
+    URL = "https://www.pembrokeshire.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-# ### Arguments affecting the configuration GUI ####
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.PAPER,
+        wt.GLASS,
+        wt.RECYCLABLES,
+        wt.PLASTIC,
+        wt.GENERAL_WASTE,
+    ]
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "To get your UPRN go to https://www.findmyaddress.co.uk and search for your address.",
-}
+    TEST_CASES: ClassVar[dict] = {
+        "Dew Street": {"uprn": "100100283349"},
+        "Heol Cleddau": {"uprn": "100100281816"},
+    }
 
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
-    },
-}
+    PARAMS = (uprn(),)
 
-# ### End of arguments affecting the configuration GUI ####
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "To get your UPRN go to [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) "
+            "and search for your address."
+        ),
+    }
 
-
-class Source:
-    def __init__(
-        self, uprn: str
-    ):  # argX correspond to the args dict in the source configuration
-        self._uprn = uprn
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-
-        form_data = {
+    retrieve = retrievers.Request(
+        "https://www.pembrokeshire.gov.uk/template/waste/api.asp",
+        method="POST",
+        data="",
+        params=lambda uprn, **_: {
             "action": "dates",
             "public": "true",
-            "uprn": self._uprn,
+            "uprn": str(uprn),
             "language": "eng",
-        }
+        },
+    )
 
-        collection_response = session.post(API_URL, params=form_data)
+    parse = parsers.ArgumentGuard(
+        parsers.JsonParser("bins"),
+        argument="uprn",
+        contains='"error":"false"',
+        hint="check your UPRN at https://www.findmyaddress.co.uk/",
+    )
 
-        if ast.literal_eval(collection_response.text)["error"] == "true":
-            raise SourceArgumentNotFound("uprn", self._uprn)
-
-        entries = []  # List that holds collection schedule
-
-        bin_dates = ast.literal_eval(collection_response.text)["bins"]
-        for bin in bin_dates:
-            date_string = bin["nextdate"]
-            date_format = "%d/%m/%Y"
-            date = datetime.strptime(date_string, date_format).date()
-            bin_type = bin["type"]
-
-            entries.append(
-                Collection(
-                    date=date,  # Collection date
-                    t=TYPE_MAP.get(bin_type),  # Collection type
-                    icon=ICON_MAP.get(bin_type),  # Collection icon
-                )
-            )
-
-        return entries
+    transform = JsonTransformer(
+        date_key="nextdate",
+        type_key="type",
+        type_value_map=_TYPE_MAP,
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+    )
