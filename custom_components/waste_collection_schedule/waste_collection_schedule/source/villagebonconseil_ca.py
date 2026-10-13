@@ -1,86 +1,34 @@
-import datetime
-import html
-import re
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-
-TITLE = "Notre-Dame-du-Bon-Conseil (Village)"
-DESCRIPTION = "Source for villagebonconseil.ca waste collection calendar"
-URL = "https://villagebonconseil.ca"
-COUNTRY = "ca"
-TEST_CASES = {"Village": {}}
-
-ICON_MAP = {
-    "Ordures ménagères": Icons.GENERAL_WASTE,
-    "Matières organiques": Icons.ORGANIC,
-    "Matières recyclables": Icons.RECYCLING,
-    "Conteneur en métal – Déchets": Icons.COMMERCIAL,
-    "Conteneur en métal – Recyclage": Icons.RECYCLING,
-    "Encombrants": Icons.BULKY,
-}
-
-WASTE_TYPE_MAP = {
-    "Collecte des ordures ménagères (bac noir)": "Ordures ménagères",
-    "Collecte des matières organiques (bac brun)": "Matières organiques",
-    "Collecte des matières recyclables (bac vert)": "Matières recyclables",
-    "Collecte des matières recyclables (bac vert et bleu)": "Matières recyclables",
-    "Collecte conteneur en métal – Déchets": "Conteneur en métal – Déchets",
-    "Collecte conteneur en métal / Déchets": "Conteneur en métal – Déchets",
-    "Collecte conteneur en métal – Recyclage": "Conteneur en métal – Recyclage",
-    "Collecte conteneur en métal / Recyclage": "Conteneur en métal – Recyclage",
-    "Collecte des encombrants": "Encombrants",
-}
-
-PAGE_URL = (
-    "https://villagebonconseil.ca/services-aux-citoyens/environnement/"
-    "collecte-des-matieres-residuelles/"
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.service.BonConseilCalendar import (
+    CalendarParser,
+    CalendarRetriever,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self):
-        pass
+@final
+class Source(BaseSource):
+    TITLE = "Notre-Dame-du-Bon-Conseil (Village)"
+    DESCRIPTION = "Source for villagebonconseil.ca waste collection calendar"
+    URL = "https://villagebonconseil.ca"
+    COUNTRY = "ca"
+    TEST_CASES: ClassVar[dict] = {"Village": {}}
+    PARAMS = ()
 
-    def fetch(self) -> list[Collection]:
-        r = requests.get(PAGE_URL, timeout=30)
-        r.raise_for_status()
-
-        match = re.search(r"var eventscalendar\s*=\s*(\[[\s\S]*?\]);", r.text)
-        if not match:
-            raise ValueError("Could not find calendar data on the page")
-
-        raw_data = match.group(1)
-
-        entries = []
-        pattern = r"\{[^{}]*'Date':\s*new\s*Date\((\d+),\s*(\d+),\s*(\d+)\)[^{}]*'Title':\s*'([^']*)'[^{}]*\}"
-
-        for m in re.finditer(pattern, raw_data):
-            year = int(m.group(1))
-            month = int(m.group(2)) + 1
-            day = int(m.group(3))
-            title_html = m.group(4)
-
-            collection_date = datetime.date(year, month, day)
-
-            title_match = re.search(r'title="([^"]*)"', title_html)
-            if not title_match:
-                continue
-            raw_type = title_match.group(1)
-            raw_type = html.unescape(raw_type)
-            raw_type = raw_type.strip()
-
-            waste_type = WASTE_TYPE_MAP.get(raw_type, raw_type)
-
-            entries.append(
-                Collection(
-                    date=collection_date,
-                    t=waste_type,
-                    icon=ICON_MAP.get(waste_type),
-                )
-            )
-
-        if not entries:
-            raise ValueError("No collection entries found")
-
-        return entries
+    retrieve = CalendarRetriever()
+    parse = CalendarParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map={
+            "Ordures ménagères": wt.GENERAL_WASTE,
+            "Matières organiques": wt.ORGANIC,
+            "Matières recyclables": wt.RECYCLABLES,
+            "Conteneur en métal – Déchets": wt.GENERAL_WASTE,
+            "Conteneur en métal – Recyclage": wt.RECYCLABLES,
+            "Encombrants": wt.BULKY_WASTE,
+        },
+    )

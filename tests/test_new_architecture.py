@@ -8574,3 +8574,55 @@ def test_the_source_cassette_backlog_is_not_stale() -> None:
         f"{recorded} now ship a cassette. Delete them from "
         "SOURCES_AWAITING_CASSETTE so the backlog reflects real debt."
     )
+
+
+class TestGlobalCalendarMigrations:
+    def test_iren_published_iso_dates_are_not_dropped(self):
+        """The live Roccavione feed publishes three dates separated by semicolons."""
+        from freezegun import freeze_time
+        from waste_collection_schedule.service.IrenAmbienteCalendar import (
+            CalendarParser,
+        )
+        from waste_collection_schedule.source.irenambiente_it import Source
+
+        response = MagicMock()
+        response.json.return_value = [
+            {
+                "Materiale": "Alluminio",
+                "ICalRRule": "RDATE:2026-10-30;2026-11-27;2026-12-11",
+                "IdFrequenza": "",
+                "FlagFreq": "",
+                "FestivitaCalendario": [],
+                "NonVisibile": False,
+            }
+        ]
+        source = Source(city="Roccavione", street="FRAZIONE BRIGNOLA", house_number=1)
+        with freeze_time("2026-10-13"):
+            records = CalendarParser()(response, source)
+        assert [record["date"] for record in records] == [
+            datetime.date(2026, 10, 30),
+            datetime.date(2026, 11, 27),
+            datetime.date(2026, 12, 11),
+        ]
+
+    def test_waikato_missing_published_date_is_an_error(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+        from waste_collection_schedule.service.WaikatoCollectionCalendar import (
+            CalendarParser,
+        )
+        from waste_collection_schedule.source.waikato_district_council_govt_nz import (
+            Source,
+        )
+
+        response = MagicMock()
+        response.json.return_value = [
+            {
+                "address": "11 Gordon Paul Place TUAKAU",
+                "collections": [
+                    {"collectionDay": "Tuesday", "collectionArea": "WstStdTua"}
+                ],
+            }
+        ]
+        source = Source(address="11 Gordon Paul Place TUAKAU")
+        with pytest.raises(SourceArgumentNotFound):
+            CalendarParser()(response, source)

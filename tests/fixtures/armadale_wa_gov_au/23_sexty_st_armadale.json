@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://api.my.armadale.wa.gov.au/bins 011d79ef41",
+      "method": "GET",
+      "url": "https://api.my.armadale.wa.gov.au/bins",
+      "final_url": "https://api.my.armadale.wa.gov.au/bins?address=23+Sexty+St%2C+ARMADALE",
+      "body": "{\"params\":[[\"address\",\"23 Sexty St, ARMADALE\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:12 GMT",
+        "content-type": "application/json",
+        "content-length": "120",
+        "x-amzn-requestid": "b8582d67-065b-4889-8af1-0b59d679ba7d",
+        "x-amz-apigw-id": "FM2VSG7oywMEs_Q=",
+        "x-amzn-trace-id": "Root=1-6ace9dba-3ce206a55e30ea3d25e16993;Parent=2bde681a46f09032;Sampled=0;Lineage=1:9a9707dc:0",
+        "x-envoy-upstream-service-time": "2699",
+        "server": "envoy"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjIzIFNleHR5IFN0cmVldCwgQVJNQURBTEUiLCJiaW5fZGF5IjoiV2VkbmVzZGF5IiwicmVjeWNsZV9hcmVhIjoiTmV4dCBXZWVrIChBcmVhIDEpIiwidmVyZ2VzaWRlX3pvbmUiOiI5In1d"
+    }
+  ]
+}

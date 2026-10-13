@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php e56206f4c0",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php",
+      "final_url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php?search=704+Park+Road+South&council=hdc&type=address",
+      "body": "{\"params\":[[\"council\",\"hdc\"],[\"search\",\"704 Park Road South\"],[\"type\",\"address\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:21 GMT",
+        "server": "envoy",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "content-length": "202",
+        "content-type": "application/json",
+        "x-envoy-upstream-service-time": "557"
+      },
+      "content_b64": "W3siaWQiOjEwMTkzNCwicmFfdW5pcXVlX2lkIjoxMDE5MzQsInN1ZmlfaWQiOjEwMTkzNCwiUmF0ZXNfUmFfVW5pcXVlX2lkIjoxMDE5MzQsInByb3BlcnR5X2xvY2F0aW9uIjoiNzA0IFBhcmsgUm9hZCBTb3V0aCBIQVNUSU5HUyA0MTIyIiwidmFsdWF0aW9uX2lkIjoiMTA0MTAzMzQwMCIsIkNlcnRpZmljYXRlX29mX3RpdGxlIjoiNTIwNjg2IiwibGVnYWxfZGVzY3JpcHRpb24iOiJMT1QgMSBEUCA0MzEyMTUiLCJ2YWx1ZSI6IjcwNCBQYXJrIFJvYWQgU291dGggSEFTVElOR1MgNDEyMiAoMTA0MTAzMzQwMCkifV0="
+    },
+    {
+      "key": "GET https://data.napier.govt.nz/regional/hdc/widgets/collectiondays/do_collectiondays.php d93106e593",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/hdc/widgets/collectiondays/do_collectiondays.php",
+      "final_url": "https://data.napier.govt.nz/regional/hdc/widgets/collectiondays/do_collectiondays.php?v=1041033400&s=101934&r=101934",
+      "body": "{\"params\":[[\"r\",\"101934\"],[\"s\",\"101934\"],[\"v\",\"1041033400\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:22 GMT",
+        "server": "envoy",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "content-length": "441",
+        "content-type": "application/json",
+        "x-envoy-upstream-service-time": "377"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJodG1sIjoiPGRpdiBjbGFzcz1cInByb3BlcnR5RGV0YWlsc0NvbnRhaW5lclwiIGRhdGEtdW5pcXVlX2lkPVwiXCIgZGF0YS1wcm9wZXJ0eV9sb2NhdGlvbj1cIjcwNCBQYXJrIFJvYWQgU291dGggSEFTVElOR1MgNDEyMlwiPlxuXHQ8aDI+Q29sbGVjdGlvbiBkYXlzPFwvaDI+XG5cdDxwPkJlbG93IGFyZSB0aGUgcnViYmlzaCBhbmQgcmVjeWNsaW5nIGNvbGxlY3Rpb24gZGF5cyBmb3IgPHN0cm9uZz43MDQgUGFyayBSb2FkIFNvdXRoIEhBU1RJTkdTIDQxMjI8XC9zdHJvbmc+LjxcL3A+XG5cdDx0YWJsZSB3aWR0aD1cIjEwMCVcIj5cblx0XHQ8dGhlYWQ+XG5cdFx0XHQ8dHI+XG5cdFx0XHRcdDx0aCB3aWR0aD1cIjEwMCVcIj5SdWJiaXNoIGNvbGxlY3Rpb248XC90aD5cblx0XHRcdDxcL3RyPlxuXHRcdDxcL3RoZWFkPlxuXHRcdDx0Ym9keT5cblx0XHRcdDx0cj5cblx0XHRcdFx0PHRkPkZSSURBWS4gRXZlcnkgV2VlayAtIE91dCBieSA3OjAwYW08XC90ZD5cblx0XHRcdDxcL3RyPlxuXHRcdDxcL3Rib2R5PlxuXHQ8XC90YWJsZT5cblx0PHRhYmxlIHdpZHRoPVwiMTAwJVwiPlxuXHRcdDx0aGVhZD5cblx0XHRcdDx0cj5cblx0XHRcdFx0PHRoIHdpZHRoPVwiMTAwJVwiPlJlY3ljbGluZyBjb2xsZWN0aW9uPFwvdGg+XG5cdFx0XHQ8XC90cj5cblx0XHQ8XC90aGVhZD5cblx0XHQ8dGJvZHk+XG5cdFx0XHQ8dHI+XG5cdFx0XHRcdDx0ZD5USFVSU0RBWS4gRXZlcnkgV2VlayAtIE91dCBieSA3OjAwYW08XC90ZD5cblx0XHRcdDxcL3RyPlxuXHRcdDxcL3Rib2R5PlxuXHQ8XC90YWJsZT5cblx0PHA+TW9yZSBpbmZvcm1hdGlvbiBhYm91dCB0aGlzIHByb3BlcnR5IGNhbiBiZSBmb3VuZCBvbiB0aGUgPGEgaHJlZj1cIlwvc2VydmljZXNcL3Byb3BlcnRpZXMtYW5kLXJhdGVzXC9teS1wcm9wZXJ0eVwvP3JpZD0xMDE5MzRcIj5NeSBQcm9wZXJ0eTxcL2E+IHBhZ2UuPFwvcD5cbjxcL2Rpdj4iLCJqcyI6IiJ9"
+    }
+  ]
+}

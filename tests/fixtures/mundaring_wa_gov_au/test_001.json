@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://my.mundaring.wa.gov.au/BinLocationInfo/Info? af434ae470",
+      "method": "GET",
+      "url": "https://my.mundaring.wa.gov.au/BinLocationInfo/Info?",
+      "final_url": "https://my.mundaring.wa.gov.au/BinLocationInfo/Info?parcelNumber=103239&suburb=HELENA+VALLEY",
+      "body": "{\"params\":[[\"parcelNumber\",\"103239\"],[\"suburb\",\"HELENA VALLEY\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:16 GMT",
+        "server": "envoy",
+        "cache-control": "private",
+        "content-type": "text/html; charset=utf-8",
+        "x-aspnet-version": "4.0.30319",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "x-permitted-cross-domain-policies": "none",
+        "content-security-policy": "frame-ancestors *;",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-envoy-upstream-service-time": "3176"
+      },
+      "content_b64": "DQoNCg0KICAgIDxoZWFkZXIgY2xhc3M9Im10LTMiPg0KICAgICAgICA8aDMgY2xhc3M9InRleHQtYm9sZCI+WW91ciBXYXN0ZSBDb2xsZWN0aW9uIERheXM8L2gzPg0KICAgICAgICA8aHIgY2xhc3M9ImhyLXByaW1hcnkgbXQtMCIgLz4NCiAgICA8L2hlYWRlcj4gIA0KICAgIDxzZWN0aW9uPg0KICAgICAgICA8ZGl2IGNsYXNzPSJmb3JtLWdyb3VwIG1iLTMiPg0KICAgICAgICAgICAgPGxhYmVsIGNsYXNzPSJjb250cm9sLWxhYmVsIHRleHQtZGFyayB0ZXh0LWJvbGQiPkNvbGxlY3Rpb24gQXJlYSA6PC9sYWJlbD4NCiAgICAgICAgICAgIEFyZWEgMg0KICAgICAgICA8L2Rpdj4NCiAgICAgICAgPGRpdiBjbGFzcz0iZm9ybS1ncm91cCBtYi0zIj4NCiAgICAgICAgICAgIDxsYWJlbCBjbGFzcz0iY29udHJvbC1sYWJlbCB0ZXh0LWRhcmsgdGV4dC1ib2xkIj5GT0dPIEJpbiAoPGIgY2xhc3M9InRleHQtc3VjY2VzcyIgc3R5bGU9ImNvbG9yOiMzMkNEMzIhaW1wb3J0YW50Ij5MaW1lIEdyZWVuIExpZDwvYj4pOjwvbGFiZWw+DQogICAgICAgICAgICBUaHVyc2RheQ0KICAgICAgICA8L2Rpdj4NCiAgICAgICAgPGRpdiBjbGFzcz0iZm9ybS1ncm91cCBtYi0zIj4NCiAgICAgICAgICAgIDxsYWJlbCBjbGFzcz0iY29udHJvbC1sYWJlbCB0ZXh0LWRhcmsgdGV4dC1ib2xkIj5OZXh0IFJlY3ljbGUgQmluIERhdGUgKDxiIGNsYXNzPSJ0ZXh0LXdhcm5pbmciPlllbGxvdyBMaWQ8L2I+KTo8L2xhYmVsPg0KICAgICAgICAgICAgMTUvMTAvMjAyNg0KICAgICAgICA8L2Rpdj4NCiAgICAgICAgPGRpdiBjbGFzcz0iZm9ybS1ncm91cCBtYi0zIj4NCiAgICAgICAgICAgIDxsYWJlbCBjbGFzcz0iY29udHJvbC1sYWJlbCB0ZXh0LWRhcmsgdGV4dC1ib2xkIj5OZXh0IEdlbmVyYWwgV2FzdGUgRGF0ZSAoPGIgY2xhc3M9InRleHQtZGFuZ2VyIj5SZWQgTGlkPC9iPi88YiBjbGFzcz0idGV4dC1zdWNjZXNzIiBzdHlsZT0iY29sb3I6IzEwNjcxMCFpbXBvcnRhbnQiPkRhcmsgR3JlZW4gTGlkPC9iPik6PC9sYWJlbD4NCiAgICAgICAgICAgIDIyLzEwLzIwMjYNCiAgICAgICAgPC9kaXY+DQogICAgICAgIDxkaXYgY2xhc3M9ImZvcm0tZ3JvdXAgbWItMyI+DQogICAgICAgICAgICA8bGFiZWwgY2xhc3M9ImNvbnRyb2wtbGFiZWwgdGV4dC1kYXJrIHRleHQtYm9sZCI+QnVsayBWZXJnZSBDb2xsZWN0aW9uIERhdGVzIChHcmVlbiBXYXN0ZSBPbmx5KTo8L2xhYmVsPg0KICAgICAgICAgICAgMjMgQXVndXN0IDIwMjYNCiAgICAgICAgPC9kaXY+DQogICAgICAgIDxkaXYgY2xhc3M9ImZvcm0tZ3JvdXAgbWItMyI+DQogICAgICAgICAgICA8bGFiZWwgY2xhc3M9ImNvbnRyb2wtbGFiZWwgdGV4dC1kYXJrIHRleHQtYm9sZCI+QnVsayBWZXJnZSBDb2xsZWN0aW9uIERhdGVzIChIYXJkIFdhc3RlIE9ubHkpOjwvbGFiZWw+DQogICAgICAgICAgICAwMiBOb3ZlbWJlciAyMDI2DQogICAgICAgIDwvZGl2Pg0KICAgIDwvc2VjdGlvbj4NCg=="
+    }
+  ]
+}

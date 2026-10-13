@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php 4f2de9d487",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php",
+      "final_url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php?search=200+Heretaunga+Street+East&council=hdc&type=address",
+      "body": "{\"params\":[[\"council\",\"hdc\"],[\"search\",\"200 Heretaunga Street East\"],[\"type\",\"address\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:25 GMT",
+        "server": "envoy",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "content-length": "280",
+        "content-type": "application/json",
+        "x-envoy-upstream-service-time": "519"
+      },
+      "content_b64": "W3siaWQiOjEzMjAwLCJyYV91bmlxdWVfaWQiOjEzMjAwLCJzdWZpX2lkIjoxMzIwMCwiUmF0ZXNfUmFfVW5pcXVlX2lkIjoxMzIwMCwicHJvcGVydHlfbG9jYXRpb24iOiIxMjAwIEhlcmV0YXVuZ2EgU3RyZWV0IEVhc3QgSEFTVElOR1MgNDEyMiIsInZhbHVhdGlvbl9pZCI6IjEwMjYwNDk0MDAiLCJDZXJ0aWZpY2F0ZV9vZl90aXRsZSI6IjEzNlwvMjk3IiwibGVnYWxfZGVzY3JpcHRpb24iOiJMT1QgICAgMSBEUCAgIDc4MjQiLCJ2YWx1ZSI6IjEyMDAgSGVyZXRhdW5nYSBTdHJlZXQgRWFzdCBIQVNUSU5HUyA0MTIyICgxMDI2MDQ5NDAwKSJ9LHsiaWQiOjIxMzU2LCJyYV91bmlxdWVfaWQiOjIxMzU2LCJzdWZpX2lkIjoyMTM1NiwiUmF0ZXNfUmFfVW5pcXVlX2lkIjoyMTM1NiwicHJvcGVydHlfbG9jYXRpb24iOiIyMDAgSGVyZXRhdW5nYSBTdHJlZXQgRWFzdCBIQVNUSU5HUyA0MTIyIiwidmFsdWF0aW9uX2lkIjoiMTAzODA0NTMwMCIsIkNlcnRpZmljYXRlX29mX3RpdGxlIjoiRTFcLzExNTAiLCJsZWdhbF9kZXNjcmlwdGlvbiI6IkxPVCAxIFBUIExPVCAgMiBEUCAzNTA0IExPVCAyIERQIDQ0NTkiLCJ2YWx1ZSI6IjIwMCBIZXJldGF1bmdhIFN0cmVldCBFYXN0IEhBU1RJTkdTIDQxMjIgKDEwMzgwNDUzMDApIn1d"
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgAmbiguousWithSuggestions",
+    "message": "Multiple values found for the argument 'address' with the value '200 Heretaunga Street East', please specify one of: ['1200 Heretaunga Street East HASTINGS 4122 (1026049400)', '200 Heretaunga Street East HASTINGS 4122 (1038045300)']"
+  }
+}

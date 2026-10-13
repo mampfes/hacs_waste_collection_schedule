@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php 02e76c0a27",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php",
+      "final_url": "https://data.napier.govt.nz/regional/shared/widgets/propertysearch/do_search.php?search=805+Fitzroy+Avenue&council=hdc&type=address",
+      "body": "{\"params\":[[\"council\",\"hdc\"],[\"search\",\"805 Fitzroy Avenue\"],[\"type\",\"address\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:19 GMT",
+        "server": "envoy",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "content-length": "205",
+        "content-type": "application/json",
+        "x-envoy-upstream-service-time": "1297"
+      },
+      "content_b64": "W3siaWQiOjE0NTYwLCJyYV91bmlxdWVfaWQiOjE0NTYwLCJzdWZpX2lkIjoxNDU2MCwiUmF0ZXNfUmFfVW5pcXVlX2lkIjoxNDU2MCwicHJvcGVydHlfbG9jYXRpb24iOiI4MDUgRml0enJveSBBdmVudWUgSEFTVElOR1MgNDEyMiIsInZhbHVhdGlvbl9pZCI6IjEwMjkwMjc4MDAiLCJDZXJ0aWZpY2F0ZV9vZl90aXRsZSI6IkUzXC85ODkiLCJsZWdhbF9kZXNjcmlwdGlvbiI6IkxPVCAgICAxIERQICAgMzA1MCIsInZhbHVlIjoiODA1IEZpdHpyb3kgQXZlbnVlIEhBU1RJTkdTIDQxMjIgKDEwMjkwMjc4MDApIn1d"
+    },
+    {
+      "key": "GET https://data.napier.govt.nz/regional/hdc/widgets/collectiondays/do_collectiondays.php a526a2a40a",
+      "method": "GET",
+      "url": "https://data.napier.govt.nz/regional/hdc/widgets/collectiondays/do_collectiondays.php",
+      "final_url": "https://data.napier.govt.nz/regional/hdc/widgets/collectiondays/do_collectiondays.php?v=1029027800&s=14560&r=14560",
+      "body": "{\"params\":[[\"r\",\"14560\"],[\"s\",\"14560\"],[\"v\",\"1029027800\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:20 GMT",
+        "server": "envoy",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "x-powered-by": "Powered by Local Government",
+        "x-robots-tag": "noindex, nofollow",
+        "content-length": "442",
+        "content-type": "application/json",
+        "x-envoy-upstream-service-time": "438"
+      },
+      "content_b64": "eyJzdWNjZXNzIjp0cnVlLCJodG1sIjoiPGRpdiBjbGFzcz1cInByb3BlcnR5RGV0YWlsc0NvbnRhaW5lclwiIGRhdGEtdW5pcXVlX2lkPVwiXCIgZGF0YS1wcm9wZXJ0eV9sb2NhdGlvbj1cIjgwNSBGaXR6cm95IEF2ZW51ZSBIQVNUSU5HUyA0MTIyXCI+XG5cdDxoMj5Db2xsZWN0aW9uIGRheXM8XC9oMj5cblx0PHA+QmVsb3cgYXJlIHRoZSBydWJiaXNoIGFuZCByZWN5Y2xpbmcgY29sbGVjdGlvbiBkYXlzIGZvciA8c3Ryb25nPjgwNSBGaXR6cm95IEF2ZW51ZSBIQVNUSU5HUyA0MTIyPFwvc3Ryb25nPi48XC9wPlxuXHQ8dGFibGUgd2lkdGg9XCIxMDAlXCI+XG5cdFx0PHRoZWFkPlxuXHRcdFx0PHRyPlxuXHRcdFx0XHQ8dGggd2lkdGg9XCIxMDAlXCI+UnViYmlzaCBjb2xsZWN0aW9uPFwvdGg+XG5cdFx0XHQ8XC90cj5cblx0XHQ8XC90aGVhZD5cblx0XHQ8dGJvZHk+XG5cdFx0XHQ8dHI+XG5cdFx0XHRcdDx0ZD5USFVSU0RBWS4gRXZlcnkgV2VlayAtIE91dCBieSA3OjAwYW08XC90ZD5cblx0XHRcdDxcL3RyPlxuXHRcdDxcL3Rib2R5PlxuXHQ8XC90YWJsZT5cblx0PHRhYmxlIHdpZHRoPVwiMTAwJVwiPlxuXHRcdDx0aGVhZD5cblx0XHRcdDx0cj5cblx0XHRcdFx0PHRoIHdpZHRoPVwiMTAwJVwiPlJlY3ljbGluZyBjb2xsZWN0aW9uPFwvdGg+XG5cdFx0XHQ8XC90cj5cblx0XHQ8XC90aGVhZD5cblx0XHQ8dGJvZHk+XG5cdFx0XHQ8dHI+XG5cdFx0XHRcdDx0ZD5XRURORVNEQVkuIEV2ZXJ5IFdlZWsgLSBPdXQgYnkgNzowMGFtPFwvdGQ+XG5cdFx0XHQ8XC90cj5cblx0XHQ8XC90Ym9keT5cblx0PFwvdGFibGU+XG5cdDxwPk1vcmUgaW5mb3JtYXRpb24gYWJvdXQgdGhpcyBwcm9wZXJ0eSBjYW4gYmUgZm91bmQgb24gdGhlIDxhIGhyZWY9XCJcL3NlcnZpY2VzXC9wcm9wZXJ0aWVzLWFuZC1yYXRlc1wvbXktcHJvcGVydHlcLz9yaWQ9MTQ1NjBcIj5NeSBQcm9wZXJ0eTxcL2E+IHBhZ2UuPFwvcD5cbjxcL2Rpdj4iLCJqcyI6IiJ9"
+    }
+  ]
+}
