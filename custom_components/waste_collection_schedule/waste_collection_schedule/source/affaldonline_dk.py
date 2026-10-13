@@ -11,9 +11,8 @@ Every fraction id resolves to a canonical WasteType via FRACTION_MAP (PAPER cove
 both paper and cardboard; its English name is "Paper & Cardboard"). When a bin's
 fractions all resolve to the *same* canonical type, that type is used directly.
 When a bin combines fractions that resolve to *different* canonical types (e.g.
-"Restaffald og Madaffald" mixes GENERAL_WASTE and FOOD_WASTE), collapsing it onto
-either one would misrepresent what is actually being collected, so a composite
-label of the localised type names is kept via waste_types.preserved() instead.
+"Restaffald og Madaffald" mixes GENERAL_WASTE and FOOD_WASTE), each distinct
+canonical type is emitted on the collection date so all contents are represented.
 
 If the user so desires, the param "split_bins" can be set. This splits each
 collection into separate collections, one per fraction - every one of those
@@ -85,9 +84,7 @@ CLIENT_ID_LOOKUP = {
     "viborg": "4EBB900C-088E-475F-83ED-B087F4AD07BA",
 }
 
-# The distinct canonical types FRACTION_MAP resolves to. classify() may also
-# emit a dynamic wt.preserved() label for a combined bin, but that is exempt
-# from declaration (see tests/test_declared_waste_types.py).
+# The distinct canonical types FRACTION_MAP resolves to, including combined bins.
 _DECLARED_WASTE_TYPES = sorted(
     {w.id: w for w in FRACTION_MAP.values()}.values(),
     key=lambda w: w.id,
@@ -280,10 +277,6 @@ class Source(BaseSource):
             # using it directly loses nothing.
             return Collection(date=date, waste_type=resolved_waste_types[0])
 
-        # The bin combines fractions that resolve to more than one canonical
-        # type (or includes one we don't recognise). Collapsing it onto any
-        # single type would misrepresent what's actually being collected, so
-        # create a composite label of the contents instead.
-        labels = [wt.display_name(w) for w in resolved_waste_types]
-        combined_label = f"{', '.join(labels[:-1])} & {labels[-1]}"
-        return Collection(date=date, waste_type=wt.preserved(combined_label))
+        # Keep every distinct stream in a combined bin rather than inventing
+        # a composite label outside the canonical vocabulary.
+        return [Collection(date=date, waste_type=w) for w in resolved_waste_types]

@@ -23,6 +23,18 @@ ICON_MAP = {
     "biodegradowalne": Icons.BIO_KITCHEN,
 }
 
+# Polish is not a shared vocabulary language; map the observed streams locally.
+TYPE_VALUE_MAP = {
+    "zmieszane": wt.GENERAL_WASTE,
+    "metale i tworzywa sztuczne": wt.RECYCLABLES,
+    "papier i tektura": wt.PAPER,
+    "szkło": wt.GLASS,
+    "biodegradowalne": wt.ORGANIC,
+    "popiół": wt.GENERAL_WASTE,
+    "tekstylia": wt.TEXTILES,
+    "elektrośmieci": wt.ELECTRONICS,
+}
+
 # Beside the five streams above, municipalities announce extra pickups under
 # free-text names that vary between them (and contain the occasional typo), so
 # these are matched on a keyword instead of being listed exhaustively. Grouped
@@ -92,12 +104,9 @@ def _icon_for(waste_type: str) -> Icons:
 def _waste_type(name: str) -> wt.WasteType:
     """The provider's own label, kept verbatim, carrying this source's icon.
 
-    ``wt.preserved()`` is the same idea but hands every stream OTHER's icon.
-    The Polish stream names are what carry the distinction here, and there is
-    nothing to resolve them against - waste_types.SUPPORTED_LANGUAGES has no
-    "pl" - so mapping them onto canonical types would replace the label a user
-    reads today ("zmieszane") with an English one. Keeping the ``preserved:``
-    id prefix says exactly that: a verbatim label, not a canonical type.
+    Used only for labels outside TYPE_VALUE_MAP. ``wt.preserved()`` is the same
+    idea but hands every stream OTHER's icon; this fallback retains the source's
+    icon hints for free-text rounds it does not yet know how to map.
     """
     label = " ".join(str(name).strip().split())
 
@@ -159,11 +168,15 @@ class Source(BaseSource):
     # argument at fault.
     RAISE_ON_EMPTY = True
 
-    # The five streams every municipality on this platform collects. The extra
-    # rounds (bulky, electronics, textiles, ...) are free text that varies from
-    # one municipality to the next, so they cannot be enumerated here; they are
-    # preserved verbatim at runtime by the same factory.
-    WASTE_TYPES: ClassVar[list] = [_waste_type(name) for name in ICON_MAP]
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GLASS,
+        wt.ORGANIC,
+        wt.TEXTILES,
+        wt.ELECTRONICS,
+    ]
 
     # The four levels are asked one per view in the config flow, each populated
     # from get_choices() below, so the wizard only ever offers addresses the API
@@ -199,9 +212,11 @@ class Source(BaseSource):
         if record.get("dzienTygodnia") == NO_SCHEDULE_MARKER:
             return None
 
+        label = " ".join(str(record["nazwaTypuSmieci"]).strip().split())
+        waste_type = TYPE_VALUE_MAP.get(label)
         return Collection(
             date=datetime.datetime.strptime(record["dataOdbioru"], "%Y-%m-%d").date(),
-            waste_type=_waste_type(record["nazwaTypuSmieci"]),
+            waste_type=waste_type if waste_type is not None else _waste_type(label),
         )
 
     def _raise_empty(self) -> None:

@@ -50,6 +50,7 @@ def _strip_frequency_suffix(label: str) -> str:
 
 
 TYPE_VALUE_MAP = {
+    "płatność": None,  # Payment reminder, not a waste collection.
     "zmieszane": wt.GENERAL_WASTE,
     "odpady zmieszane": wt.GENERAL_WASTE,
     "odpady komunalne zmieszane": wt.GENERAL_WASTE,

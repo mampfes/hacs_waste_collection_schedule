@@ -135,7 +135,11 @@ class Source(BaseSource):
     transform = JsonTransformer(
         date_key="date",
         type_key="category",
-        type_value_map={"Schad- und Problemstoffannahme": wt.HAZARDOUS},
+        type_value_map={
+            "Schad- und Problemstoffannahme": wt.HAZARDOUS,
+            "Gewerbetour 14-täglich -": wt.GENERAL_WASTE,
+            "Gewerbetour wöchentlich -": wt.GENERAL_WASTE,
+        },
     )
 
     @staticmethod
