@@ -1,120 +1,77 @@
-import re
-from datetime import date, datetime
+from typing import ClassVar, final
 
-import bs4
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentException
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Pireva"
-DESCRIPTION = "Source for Pireva that serves Piteå kommun, Sweden."
-URL = "https://www.pireva.se"
-TEST_CASES = {
-    "Räddningstjänsten Mf": {"street_address": "Kolugnsvägen 1 Räddningstjänsten Mf"},
-    "Piteå Sjukhus": {"street_address": "Oskar Forssells Väg 1 B Piteå Sjukhus"},
-}
-COUNTRY = "se"
+_SEARCH_URL = "https://www.pireva.se/api/search/collection-address"
+_SCHEDULE_URL = "https://www.pireva.se/tomningsschema/{slug}/"
 
-SEARCH_URL = "https://www.pireva.se/api/search/collection-address"
-DATA_URL_FORMAT = "https://www.pireva.se/tomningsschema/{SLUG}/"
-ICON_MAP = {
-    "Restavfall": Icons.GENERAL_WASTE,
-    "Matavfall": Icons.BIO_KITCHEN,
-}
-MONTH_MAP = {
-    "Januari": 1,
-    "Februari": 2,
-    "Mars": 3,
-    "April": 4,
-    "Maj": 5,
-    "Juni": 6,
-    "Juli": 7,
-    "Augusti": 8,
-    "September": 9,
-    "Oktober": 10,
-    "November": 11,
-    "December": 12,
+_TYPE_MAP = {
+    "restavfall": wt.GENERAL_WASTE,
+    "matavfall": wt.FOOD_WASTE,
 }
 
 
-class Source:
-    def __init__(self, street_address: str):
-        self._street_address = street_address
+def _pick_slug(response, *, street_address: str, **_) -> str:
+    matches = response.json().get("matches", [])
+    for item in matches:
+        if item.get("address") == street_address:
+            return item["address_slug"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street_address", street_address, [m["address"] for m in matches]
+    )
 
-    def fetch(self) -> list[Collection]:
-        slug = self.find_slug()
-        if not slug:
-            raise SourceArgumentException(
-                "street_address",
-                f"No returned building address for: {self._street_address}",
-            )
 
-        pickup_tables = self.find_pickup_months(slug)
+@final
+class Source(BaseSource):
+    TITLE = "Pireva"
+    DESCRIPTION = "Source for Pireva that serves Piteå kommun, Sweden."
+    URL = "https://www.pireva.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+    ]
 
-        return self.parse_entries(pickup_tables)
+    TEST_CASES: ClassVar[dict] = {
+        "Räddningstjänsten Mf": {
+            "street_address": "Kolugnsvägen 1 Räddningstjänsten Mf"
+        },
+        "Oskarsvägen 20": {"street_address": "Oskarsvägen 20"},
+    }
 
-    def find_slug(self) -> str:
-        """Query Pireva search API for street address slug.
+    PARAMS = (street_address(field="street_address"),)
 
-        Returns:
-            str: Slug for address
-        """
-        response = requests.get(SEARCH_URL, params={"q": self._street_address})
-        matched_addresses = response.json().get("matches")
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your address exactly as it is written in the address search "
+            "on https://www.pireva.se/tomningsschema/ (street, number and, for "
+            "some properties, a name, e.g. 'Kolugnsvägen 1 Räddningstjänsten Mf')."
+        ),
+    }
 
-        return next(
-            (
-                item["address_slug"]
-                for item in matched_addresses
-                if item.get("address") == self._street_address
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                _SEARCH_URL,
+                params=lambda street_address, **_: {"q": street_address},
+                pick=_pick_slug,
             ),
-            "",
-        )
-
-    @staticmethod
-    def find_pickup_months(slug: str) -> bs4.ResultSet[bs4.Tag]:
-        """Query Pireva data URL and find all HTML tables with pickup dates."""
-        response_data_url = requests.get(DATA_URL_FORMAT.format(SLUG=slug))
-        soup = bs4.BeautifulSoup(response_data_url.text, "html.parser")
-
-        return soup.find_all("table")
-
-    @staticmethod
-    def parse_entries(pickup_tables: bs4.ResultSet[bs4.Tag]) -> list[Collection]:
-        """Traverse and parse HTML data.
-
-        Args:
-            pickup_tables (bs4.ResultSet[Tag]): response from the website
-
-        Returns:
-            List[Collection]: list of Collection found
-        """
-        entries = []
-        for table in pickup_tables:
-            heading = table.select_one("thead th").text.strip()
-            if heading in MONTH_MAP:
-                year = datetime.now().year
-                month = MONTH_MAP.get(heading)
-            else:
-                month_string, year = heading.split(" ")
-                month = MONTH_MAP.get(month_string)
-
-            if not month:
-                continue
-
-            pickups = table.select("tbody tr")
-            for pickup in pickups:
-                cells = pickup.select("td")
-                waste_type = cells[0].text
-                day = re.sub(r"\D", "", cells[1].text)
-                next_pickup_date = date(int(year), month, int(day))
-
-                entries.append(
-                    Collection(
-                        date=next_pickup_date,
-                        t=waste_type,
-                        icon=ICON_MAP.get(waste_type),
-                    )
-                )
-
-        return entries
+        ),
+        url=lambda slug, **_: _SCHEDULE_URL.format(slug=slug),
+    )
+    # One table per month, headed "Oktober" (this year) or "Januari 2027"; each
+    # row is the waste type and "Torsdag 15 oktober".
+    parse = parsers.HtmlMonthHeadedRows(
+        all_tables=True,
+        day_column=1,
+        label_column=0,
+        day_pattern=r"(\d{1,2})",
+        current_year=True,
+    )
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
