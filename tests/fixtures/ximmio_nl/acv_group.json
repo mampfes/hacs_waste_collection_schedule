@@ -1,0 +1,47 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://wasteapi.ximmio.com/api/FetchAdress 61c4b00ccc",
+      "method": "POST",
+      "url": "https://wasteapi.ximmio.com/api/FetchAdress",
+      "final_url": "https://wasteapi.ximmio.com/api/FetchAdress",
+      "body": "{\"body\":[[\"companyCode\",\"f8e2844a-095e-48f9-9f98-71fceb51d2c3\"],[\"houseNumber\",\"1\"],[\"postCode\",\"6721MH\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Tue, 13 Oct 2026 18:16:35 GMT",
+        "content-length": "1008"
+      },
+      "content_b64": "eyJ1c2VyTWVzc2FnZSI6eyJ0eXBlIjpudWxsLCJtZXNzYWdlQ29kZSI6MCwiZGVzY3JpcHRpb24iOm51bGx9LCJFeHRyYU9wdGlvbiI6eyIkdHlwZSI6IlN5c3RlbS5EeW5hbWljLkV4cGFuZG9PYmplY3QsIFN5c3RlbS5Db3JlIn0sImRhdGFMaXN0IjpbeyJJRCI6MCwiVW5pcXVlSWQiOiIxODAyNzMiLCJTdHJlZXQiOiJCb3NiZWVrd2VnIiwiSG91c2VOdW1iZXIiOiIxIiwiSG91c2VMZXR0ZXIiOiIiLCJIb3VzZU51bWJlckluZGljYXRpb24iOm51bGwsIkhvdXNlTnVtYmVyQWRkaXRpb24iOiIiLCJaaXBDb2RlIjoiNjcyMU1IIiwiQ2l0eSI6IkJFTk5FS09NIiwiQ29tbXVuaXR5IjoiRURFIiwiQ29tbXVuaXR5SUQiOjAsIkFkZHJlc3NUeXBlIjoiIiwiRmxvb3IiOm51bGwsIkFkZHJlc3NVbmlxdWVJZCI6MCwiQWRkcmVzc1VuaXF1ZSI6bnVsbCwiQ29tbWVyY2lhbE51bWJlciI6bnVsbCwiTG9jYXRpb25OYW1lIjpudWxsLCJMYXRpdHVkZSI6bnVsbCwiTG9uZ2l0dWRlIjpudWxsLCJSZWxhdGl2ZU5hbWUiOm51bGwsIkFkZHJlc3NQcm9wIjpudWxsLCJQb3N0Q29kZSI6bnVsbCwiUGxhYXRzbmFhbSI6bnVsbCwidXNlRXhhY3RBZGRyZXNzIjpmYWxzZSwiT25seUFjdGl2ZUFkZHJlc3NlcyI6ZmFsc2UsIkJ1aWxkaW5nQ2F0ZWdvcnkiOm51bGwsIkFkZHJlc3NEZXRhaWwiOm51bGwsIlJlZ2lzdHJhdGlvbk1ldGhvZHNKc29uIjpudWxsLCJGZWF0dXJlRmxhZ0pzb24iOm51bGwsIkV4dGVybmFsSUQiOm51bGwsIkJBR0lEIjpudWxsLCJDYW5SZXF1ZXN0QnVsa0xpdHRlciI6dHJ1ZSwiQnVsa0xpdHRlckJsb2NrUmVhc29uIjpudWxsLCJSZXNpZGVudFJlcXVlc3RBY2Nlc3MiOm51bGx9XSwiaW50RGF0YUxpc3QiOm51bGwsImRhdGEiOm51bGwsInN0YXR1cyI6dHJ1ZSwibWVzc2FnZUNvZGUiOjEwNywicGRmUmVzcG9uc2UiOm51bGwsInRva2VuIjpudWxsLCJJRCI6bnVsbCwiaW52YWxpZFBhcmFtZXRlcnMiOm51bGwsInRvdGFsIjowLCJtZXNzYWdlVG9TdHJpbmciOm51bGx9"
+    },
+    {
+      "key": "POST https://wasteapi.ximmio.com/api/GetCalendar cdd8cfb2c2",
+      "method": "POST",
+      "url": "https://wasteapi.ximmio.com/api/GetCalendar",
+      "final_url": "https://wasteapi.ximmio.com/api/GetCalendar",
+      "body": "{\"body\":[[\"community\",\"EDE\"],[\"companyCode\",\"f8e2844a-095e-48f9-9f98-71fceb51d2c3\"],[\"endDate\",\"2027-10-13\"],[\"startDate\",\"2026-10-13\"],[\"uniqueAddressID\",\"180273\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Tue, 13 Oct 2026 18:16:35 GMT",
+        "content-length": "1080"
+      },
+      "content_b64": "eyJ1c2VyTWVzc2FnZSI6eyJ0eXBlIjpudWxsLCJtZXNzYWdlQ29kZSI6MCwiZGVzY3JpcHRpb24iOm51bGx9LCJFeHRyYU9wdGlvbiI6eyIkdHlwZSI6IlN5c3RlbS5EeW5hbWljLkV4cGFuZG9PYmplY3QsIFN5c3RlbS5Db3JlIn0sImRhdGFMaXN0IjpbeyJwaWNrdXBEYXRlcyI6WyIyMDI2LTEwLTE0VDAwOjAwOjAwIiwiMjAyNi0xMC0yOFQwMDowMDowMCIsIjIwMjYtMTEtMTFUMDA6MDA6MDAiLCIyMDI2LTExLTI1VDAwOjAwOjAwIiwiMjAyNi0xMi0wOVQwMDowMDowMCIsIjIwMjYtMTItMjNUMDA6MDA6MDAiXSwicGlja3VwVHlwZSI6MSwiX3BpY2t1cFR5cGUiOjEsIl9waWNrdXBUeXBlVGV4dCI6IkdSRUVOIiwiZGVzY3JpcHRpb24iOiItIn0seyJwaWNrdXBEYXRlcyI6WyIyMDI2LTEwLTE1VDAwOjAwOjAwIiwiMjAyNi0xMS0wNVQwMDowMDowMCIsIjIwMjYtMTEtMjZUMDA6MDA6MDAiLCIyMDI2LTEyLTE3VDAwOjAwOjAwIl0sInBpY2t1cFR5cGUiOjIsIl9waWNrdXBUeXBlIjoyLCJfcGlja3VwVHlwZVRleHQiOiJQQVBFUiIsImRlc2NyaXB0aW9uIjoiLSJ9LHsicGlja3VwRGF0ZXMiOlsiMjAyNi0xMC0yMlQwMDowMDowMCIsIjIwMjYtMTEtMTJUMDA6MDA6MDAiLCIyMDI2LTEyLTAzVDAwOjAwOjAwIiwiMjAyNi0xMi0yNFQwMDowMDowMCJdLCJwaWNrdXBUeXBlIjoxMCwiX3BpY2t1cFR5cGUiOjEwLCJfcGlja3VwVHlwZVRleHQiOiJQQUNLQUdFUyIsImRlc2NyaXB0aW9uIjoiLSJ9LHsicGlja3VwRGF0ZXMiOlsiMjAyNi0xMC0yOVQwMDowMDowMCIsIjIwMjYtMTEtMTlUMDA6MDA6MDAiLCIyMDI2LTEyLTEwVDAwOjAwOjAwIiwiMjAyNi0xMi0zMVQwMDowMDowMCJdLCJwaWNrdXBUeXBlIjowLCJfcGlja3VwVHlwZSI6MCwiX3BpY2t1cFR5cGVUZXh0IjoiR1JFWSIsImRlc2NyaXB0aW9uIjoiLSJ9XSwiaW50RGF0YUxpc3QiOm51bGwsImRhdGEiOm51bGwsInN0YXR1cyI6dHJ1ZSwibWVzc2FnZUNvZGUiOjEwNywicGRmUmVzcG9uc2UiOm51bGwsInRva2VuIjpudWxsLCJJRCI6bnVsbCwiaW52YWxpZFBhcmFtZXRlcnMiOm51bGwsInRvdGFsIjowLCJtZXNzYWdlVG9TdHJpbmciOm51bGx9"
+    }
+  ]
+}
