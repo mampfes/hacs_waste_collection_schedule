@@ -1025,6 +1025,16 @@ class TestJsVarParser:
         with pytest.raises(ValueError):
             JsVarParser()
 
+    def test_json_parse_reads_a_json_string_property(self):
+        from waste_collection_schedule.parsers import JsVarParser
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        page = '<script>calendar({ events: JSON.parse(`[{"start": "2026-01-02"}]`) })</script>'
+        parser = JsVarParser("events", json_parse=True)
+        assert parser(self._mock_response(page)) == [{"start": "2026-01-02"}]
+        with pytest.raises(ResponseShapeError, match="'other' not found"):
+            JsVarParser("other", json_parse=True)(self._mock_response(page))
+
 
 class TestBartecPublicDashboard:
     """The Bartec Municipal Public Dashboard components."""
