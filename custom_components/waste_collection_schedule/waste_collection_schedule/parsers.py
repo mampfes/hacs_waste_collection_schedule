@@ -1308,6 +1308,11 @@ class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
         require: header texts (lowercased, matched exactly) that the wanted
             table must all carry. Unset takes the first table on the page.
         year: fallback year (default the current year at fetch time).
+        month_attr: name of an attribute on the header cells that carries the
+            month and year as ``"M.YYYY"`` (``"data-value"``), for a table
+            whose header text is no month name ("Dzień odbioru" repeated).
+            Each column then has its own year, so a schedule that crosses a
+            year boundary resolves correctly.
     """
 
     def __init__(
@@ -1315,9 +1320,11 @@ class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
         *,
         require: "Iterable[str] | None" = None,
         year: "int | None" = None,
+        month_attr: "str | None" = None,
     ):
         self.require = frozenset(require) if require is not None else None
         self.year = year
+        self.month_attr = month_attr
 
     def _table(self, soup: BeautifulSoup) -> "Tag | None":
         for candidate in soup.find_all("table"):
@@ -1376,12 +1383,22 @@ class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
 
         # Column position -> month number, from the first row (colspan aware).
         months: dict[int, int] = {}
+        years: dict[int, int] = {}
         position = 0
         for cell in header_row.find_all(["th", "td"]):
             month = self._month(cell.get_text(strip=True))
+            column_year = None
+            if self.month_attr is not None:
+                found = re.fullmatch(
+                    r"\s*(\d{1,2})\.(\d{4})\s*", str(cell.get(self.month_attr, ""))
+                )
+                if found:
+                    month, column_year = int(found.group(1)), int(found.group(2))
             if month is not None:
                 for offset in range(self._span(cell)):
                     months[position + offset] = month
+                    if column_year is not None:
+                        years[position + offset] = column_year
             position += self._span(cell)
 
         year = self.year or datetime.date.today().year
@@ -1397,6 +1414,7 @@ class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
                 covered = [
                     months[p] for p in range(position, position + span) if p in months
                 ]
+                cell_year = years.get(position, year)
                 position += span
                 if not covered:
                     continue
@@ -1406,7 +1424,7 @@ class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
                     for day in days:
                         try:
                             rows.append(
-                                (datetime.date(year, covered[0], int(day)), name)
+                                (datetime.date(cell_year, covered[0], int(day)), name)
                             )
                         except ValueError:
                             continue

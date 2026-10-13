@@ -1,102 +1,71 @@
-import datetime
-import logging
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentExceptionMultiple
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "Poznań"
-DESCRIPTION = "Source for Poznań city garbage collection"
-URL = "https://www.poznan.pl/mim/odpady"
-TEST_CASES = {
-    "Street Name": {
-        "street_name": "ŚWIĘTY MARCIN",
-        "street_number": "1",
-    },
-}
-
-_LOGGER = logging.getLogger(__name__)
-
-
-API_URL = "https://www.poznan.pl/mim/odpady/harmonogramy.html"
-
-ICON_MAP = {
-    "Odpady zmieszane": Icons.GENERAL_WASTE,
-    "Papier": Icons.PAPER,
-    "Metale i tworzywa sztuczne": Icons.METAL,
-    "Szkło": Icons.GLASS,
-    "Bioodpady": Icons.RECYCLING,
-    "Odpady wystawkowe": Icons.BULKY,
-    "Drzewka świąteczne": Icons.CHRISTMAS_TREE,
+_TYPE_MAP = {
+    "Odpady zmieszane": wt.GENERAL_WASTE,
+    "Papier": wt.PAPER,
+    "Metale i tworzywa sztuczne": wt.RECYCLABLES,
+    "Szkło": wt.GLASS,
+    "Bioodpady": wt.ORGANIC,
+    "Odpady wystawkowe": wt.BULKY_WASTE,
+    "Drzewka świąteczne": wt.GARDEN_WASTE,
 }
 
 
-class Source:
-    def __init__(self, street_name: str, street_number: str | int):
-        self._street_name = street_name.upper()
-        self._street_number = str(street_number).upper()
+def _upper(value) -> str:
+    return str(value).strip().upper()
 
-    def fetch(self) -> list[Collection]:
-        data = {
+
+@final
+class Source(BaseSource):
+    TITLE = "Poznań"
+    DESCRIPTION = "Source for Poznań city garbage collection"
+    URL = "https://www.poznan.pl/mim/odpady"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Street Name": {"street_name": "ŚWIĘTY MARCIN", "street_number": "2"},
+    }
+
+    PARAMS = (
+        street("street_name"),
+        house_number("street_number"),
+    )
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.ORGANIC,
+        wt.BULKY_WASTE,
+        wt.GARDEN_WASTE,
+    ]
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the street name and building number exactly as offered on "
+            "https://www.poznan.pl/mim/odpady/harmonogramy.html."
+        ),
+    }
+
+    retrieve = retrievers.Request(
+        "https://www.poznan.pl/mim/odpady/harmonogramy.html",
+        method="POST",
+        data=lambda street_name, street_number, **_: {
             "action": "search",
             "co": "waste_schedule",
-            "ws_street": self._street_name,
-            "ws_number": self._street_number,
-        }
-
-        r = requests.post(f"{API_URL}", data)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        # Find all dates with available scheduling
-        date_selector_wrapper = soup.find("div", id="month_selector_0_wrapper")
-        if not isinstance(date_selector_wrapper, Tag):
-            raise Exception("Could not parse page with waste scheduling")
-
-        date_rows = date_selector_wrapper.find_all("div", {"class": "select_element"})
-        formatted_dates = [date["value"] for date in date_rows if isinstance(date, Tag)]
-
-        table = soup.find("table", id="schedule_0")
-        if not isinstance(table, Tag):
-            raise SourceArgumentExceptionMultiple(
-                ["street_name", "street_number"], "Invalid address"
-            )
-
-        entries = []
-        for formatted_date in formatted_dates:
-            date = datetime.datetime.strptime(formatted_date, "%m.%Y").date()
-            year = date.year
-            month = date.month
-
-            # find all non empty tr's
-            trs = [
-                tr
-                for tr in table.find_all("tr")
-                if isinstance(tr, Tag) and tr.find_all()
-            ]
-
-            for row in trs[1:]:  # Skipping first row since it is a header
-                all_cells = row.find_all("td")
-                collection_name = all_cells[0].text.strip()
-                # iterate over all rows with dates without collection name
-                for cell in all_cells[1:]:
-                    if (
-                        not isinstance(cell, Tag)
-                        or not cell["data-value"] == formatted_date
-                        or not cell.text.strip()
-                    ):
-                        continue
-
-                    for day in cell.text.split(","):
-                        day = day.strip()
-                        entries.append(
-                            Collection(
-                                datetime.date(year, month, int(day)),
-                                collection_name,
-                                ICON_MAP.get(collection_name, "mdi:recycle"),
-                            )
-                        )
-
-        return entries
+            "ws_street": _upper(street_name),
+            "ws_number": _upper(street_number),
+        },
+    )
+    parse = parsers.HtmlMonthColumns(
+        require=("rodzaj odpadów",), month_attr="data-value"
+    )
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)
