@@ -1,0 +1,278 @@
+{
+  "title": "Waste Collection Schedule",
+  "config": {
+    "abort": {
+      "already_configured": "Tämä lähde on jo määritetty."
+    },
+    "step": {
+      "user": {
+        "title": "Valitse maa",
+        "data": {
+          "country": "Maa"
+        },
+        "data_description": {
+          "country": "Valitse maasi tai *Generic*, jos haluat määrittää *ICS*-lähteen."
+        }
+      },
+      "source": {
+        "title": "Valitse lähde",
+        "description": "Valitse palveluntarjoajasi luettelosta.",
+        "data": {
+          "name": "Lähde"
+        }
+      },
+      "flow_type": {
+        "title": "Valitse määrityksen yksityiskohdat",
+        "description": "Valitse, kuinka yksityiskohtaisesti haluat määrittää integraation. Jätä tyhjäksi, jos haluat vain peruskalenterin.",
+        "data": {
+          "show_customize_config": "Näytä jätelajien mukautusasetukset",
+          "show_sensor_config": "Näytä anturiasetukset",
+          "default_sensors": "Oletusanturit"
+        },
+        "data_description": {
+          "show_customize_config": "Valitse tämä, jos haluat mukauttaa jätelajeja.",
+          "show_sensor_config": "Valitse tämä, jos haluat määrittää antureita.",
+          "default_sensors": "Valitse luotavat oletusanturit. Niitä voi käyttää yhdessä omien antureiden kanssa."
+        }
+      },
+      "customize_select": {
+        "title": "Jätelajien mukautus: valitse (valinnainen)",
+        "description": "Valitse jätelajit, joita haluat mukauttaa seuraavassa vaiheessa.",
+        "data": {
+          "type": "Jätelaji (valinnainen)"
+        },
+        "data_description": {
+          "type": "Seuraavassa vaiheessa voit muuttaa nimeä ja kuvaketta, ottaa käyttöön oman kalenterin tai piilottaa jätelajin."
+        }
+      },
+      "customize": {
+        "title": "Jätelajin mukautus ({index}/{total}): {type}",
+        "description": "Mukauta jätelajia {type}. Voit jättää kentät tyhjiksi käyttääksesi oletusarvoja.",
+        "data": {
+          "alias": "Vaihtoehtoinen nimi",
+          "show": "Näytä",
+          "icon": "Kuvake",
+          "picture": "Kuva",
+          "use_dedicated_calendar": "Käytä omaa kalenteria",
+          "dedicated_calendar_title": "Oman kalenterin nimi"
+        },
+        "data_description": {
+          "alias": "Jätelajin uusi nimi (vain jos haluat muuttaa sitä).",
+          "show": "Poista valinta piilottaaksesi jätelajin.",
+          "icon": "Jätelajin kuvake (vain jos haluat muuttaa sitä).",
+          "picture": "Jätelajin kuvan polku.",
+          "use_dedicated_calendar": "Valitse, jos tällä jätelajilla tulee olla oma kalenterientiteetti.",
+          "dedicated_calendar_title": "Oman kalenterientiteetin nimi."
+        }
+      },
+      "args": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "cascade_confirm": {
+        "title": "Määritä lähde",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "app_id": "Sovelluksen tunnus",
+          "f_abfallarten": "Jätelajit",
+          "hpid": "Kotisivun tunnus",
+          "key": "API-avain",
+          "municipality": "Kunta",
+          "ort": "Alue",
+          "realmid": "Realm-tunnus",
+          "split_bins": "Jaa astiat jätelajeihin",
+          "wasteTypes": "Jätelajit"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "f_abfallarten": "Valinnainen suodatin: sisällytettävät jätelajit."
+        }
+      },
+      "sensor": {
+        "title": "Luo anturi \"{sensor_number}\"",
+        "description": "Määritä yksi anturi kerrallaan.",
+        "data": {
+          "name": "Anturin nimi",
+          "details_format": "Tietojen esitysmuoto",
+          "count": "Lukumäärä",
+          "leadtime": "Ennakkoaika",
+          "value_template": "Arvomalli",
+          "date_template": "Päivämäärämalli",
+          "add_days_to": "Lisää daysTo-attribuutti",
+          "event_index": "Keräyskerran indeksi",
+          "types": "Jätelajit",
+          "skip": "Älä luo anturia",
+          "additional": "Lisää muita antureita"
+        },
+        "data_description": {
+          "details_format": "Määrittää Home Assistantin lisätietoikkunan esitysmuodon. 'upcoming': tulevat keräykset, 'appointment_types': jätelajit ja niiden seuraavat keräyspäivät, 'generic': kaikki attribuutit Pythonin perustietotyyppeinä, 'hidden': piilottaa tulevien keräysten attribuutit.",
+          "count": "Rajoittaa Home Assistantin lisätietoikkunan näyttämään määritetyn määrän seuraavia keräyksiä.",
+          "leadtime": "Rajoittaa Home Assistantin lisätietoikkunan näyttämään vain ennakkoajan sisällä tapahtuvat keräykset.",
+          "value_template": "Muotoilee entiteetin tilatiedot Home Assistantin mallien avulla. Voit käyttää arvoja 'value.date', 'value.daysTo' ja 'value.types'.",
+          "date_template": "Muotoilee lisätietoikkunan päivämäärät Home Assistantin mallien avulla, esimerkiksi 'value.date.strftime(\"%d.%m.%Y\")'.",
+          "add_days_to": "Lisää lähde-entiteetille daysTo-attribuutin, joka kertoo päivien määrän seuraavaan keräykseen.",
+          "event_index": "Valitsee anturin näyttämän keräyskerran indeksin. Seuraavan keräyksen event_index on 0. Voit luoda omat anturit seuraavalle, toiselle ja kolmannelle keräykselle.",
+          "types": "Suodattaa jätelajit. Anturi näyttää vain näitä jätelajeja vastaavat keräykset. Käytä vaihtoehtoista nimeä, jos määritit sellaisen lähteen asetuksissa.",
+          "skip": "Jos valittu, anturia ei luoda ja yllä olevat asetukset ohitetaan.",
+          "additional": "Jos valittu, voit lisätä toisen anturin tämän tallentamisen jälkeen."
+        }
+      },
+      "reconfigure": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi"
+        }
+      }
+    },
+    "error": {
+      "invalid_weekday": "Virheellinen viikonpäivä. Anna kelvollinen viikonpäivä (MO, TU, WE, TH, FR, SA, SU).",
+      "invalid_count": "Virheellinen lukumäärä. Anna kelvollinen numero.",
+      "invalid_weekdays": "Virheellinen viikonpäivän muoto. Anna yksi arvo (MO, TU, WE, TH, FR, SA, SU) tai sanakirja, esimerkiksi MO: 1.",
+      "invalid_source": "Et valinnut lähdettä. Valitse kelvollinen lähde.",
+      "fetch_error": "Lähde palautti virheellisen vastauksen: \"{fetch_error_message}\". Tarkista parametrit ja yritä uudelleen.",
+      "invalid_arg": "Virheellinen parametri: \"{invalid_arg_message}\"",
+      "fetch_empty": "Lähde palautti tyhjän vastauksen. Tarkista parametrit ja yritä uudelleen.",
+      "invalid_template": "Malli on virheellinen. Tarkista syntaksi ja yritä uudelleen.",
+      "skip_additional": "Et voi ohittaa nykyistä anturia ja lisätä muita antureita samanaikaisesti.",
+      "name_exists": "Anturin nimi on jo käytössä. Valitse toinen nimi.",
+      "preset_selected": "Et voi valita esiasetusta ja antaa omia arvoja samanaikaisesti.",
+      "sensor_name_empty": "Anturin nimi ei voi olla tyhjä. Anna nimi.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Et voi antaa oman kalenterin nimeä ottamatta omaa kalenteria käyttöön."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Päivitä Waste Collection Schedule -asetukset.",
+        "data": {
+          "sensor_select": "Muokattavat anturit",
+          "default_sensors": "Lisää oletusanturit",
+          "customize_select": "Muokattavat mukautukset",
+          "calendar_title": "Kalenterin nimi",
+          "separator": "Erotin",
+          "fetch_time": "Hakuaika",
+          "random_fetch_time_offset": "Hakuajan satunnainen siirto",
+          "day_switch_time": "Päivän vaihtumisaika",
+          "fetch_interval_days": "Päiviä hakujen välillä",
+          "day_offset": "Päivämäärän siirto",
+          "ignore_duplicates": "Ohita saman päivän päällekkäiset keräykset",
+          "show_original_label": "Näytä palveluntarjoajan alkuperäinen nimi"
+        },
+        "data_description": {
+          "sensor_select": "Valitse muokattava anturi tai valitse 'Lisää uusi anturi' luodaksesi uuden.",
+          "default_sensors": "Lisää valitut oletusanturit, jotka vielä puuttuvat. Nykyisiä antureita ei muuteta.",
+          "customize_select": "Valitse muokattava mukautus tai valitse uusi mukautus luodaksesi uuden.",
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "separator": "Yhdistää merkinnät, jos lähde palauttaa useita arvoja samalle päivälle.",
+          "fetch_time": "Kellonaika muodossa HH:MM, jolloin Home Assistant hakee palveluntarjoajalta uusimman keräysaikataulun.",
+          "random_fetch_time_offset": "Siirtää hakuaikaa satunnaisesti enintään x minuuttia. Tämä jakaa Home Assistantin haut pidemmälle ajalle ja vähentää palveluntarjoajan kuormitushuippuja.",
+          "day_switch_time": "Kellonaika muodossa HH:MM, jolloin Home Assistant siirtyy nykyisestä merkinnästä seuraavaan.",
+          "fetch_interval_days": "Määrittää, kuinka usein Home Assistant hakee keräykset tästä kalenterilähteestä. Oletusarvo on 1 päivä. Arvolla 2 keräykset haetaan joka toinen päivä.",
+          "day_offset": "Keräyspäivään lisättävä päivien määrä (voi olla negatiivinen). Jos kenttä on tyhjä, käytetään oletusarvoa 0.",
+          "ignore_duplicates": "Kun käytössä, saman jätelajin päällekkäiset keräykset samalta päivältä poistetaan. Kustakin jätelajista säilytetään vain yksi merkintä päivää kohden.",
+          "show_original_label": "Kun käytössä (oletus), jotkin lähteet säilyttävät palveluntarjoajan alkuperäisen nimen keräyksen kuvauksessa myös jätelajin vakioinnin jälkeen. Poista käytöstä piilottaaksesi alkuperäisen nimen."
+        }
+      },
+      "customize": {
+        "title": "Muokkaa tai luo jätelajin mukautus ({index}/{total}): {type}",
+        "description": "Muokkaa tai luo mukautus jätelajille \"{type}\". Voit jättää kentät tyhjiksi käyttääksesi oletusarvoja.",
+        "data": {
+          "delete": "Poista",
+          "alias": "Vaihtoehtoinen nimi",
+          "show": "Näytä",
+          "icon": "Kuvake",
+          "picture": "Kuva",
+          "use_dedicated_calendar": "Käytä omaa kalenteria",
+          "dedicated_calendar_title": "Oman kalenterin nimi"
+        },
+        "data_description": {
+          "delete": "Poista tämä mukautus.",
+          "alias": "Jätelajin uusi nimi (vain jos haluat muuttaa sitä).",
+          "show": "Poista valinta piilottaaksesi jätelajin.",
+          "icon": "Jätelajin kuvake (vain jos haluat muuttaa sitä).",
+          "picture": "Jätelajin kuvan polku.",
+          "use_dedicated_calendar": "Valitse, jos tällä jätelajilla tulee olla oma kalenterientiteetti.",
+          "dedicated_calendar_title": "Oman kalenterientiteetin nimi."
+        }
+      },
+      "sensor": {
+        "title": "Muokkaa tai luo anturi \"{sensor_number}\"",
+        "description": "Määritä yksi anturi kerrallaan.",
+        "data": {
+          "delete": "Poista",
+          "name": "Anturin nimi",
+          "details_format": "Tietojen esitysmuoto",
+          "count": "Lukumäärä",
+          "leadtime": "Ennakkoaika",
+          "value_template": "Arvomalli",
+          "date_template": "Päivämäärämalli",
+          "add_days_to": "Lisää daysTo-attribuutti",
+          "event_index": "Keräyskerran indeksi",
+          "types": "Jätelajit",
+          "skip": "Älä luo anturia",
+          "additional": "Lisää muita antureita"
+        },
+        "data_description": {
+          "delete": "Poista tämä mukautus.",
+          "details_format": "Määrittää Home Assistantin lisätietoikkunan esitysmuodon. 'upcoming': tulevat keräykset, 'appointment_types': jätelajit ja niiden seuraavat keräyspäivät, 'generic': kaikki attribuutit Pythonin perustietotyyppeinä, 'hidden': piilottaa tulevien keräysten attribuutit.",
+          "count": "Rajoittaa Home Assistantin lisätietoikkunan näyttämään määritetyn määrän seuraavia keräyksiä.",
+          "leadtime": "Rajoittaa Home Assistantin lisätietoikkunan näyttämään vain ennakkoajan sisällä tapahtuvat keräykset.",
+          "value_template": "Muotoilee entiteetin tilatiedot Home Assistantin mallien avulla. Voit käyttää arvoja 'value.date', 'value.daysTo' ja 'value.types'.",
+          "date_template": "Muotoilee lisätietoikkunan päivämäärät Home Assistantin mallien avulla, esimerkiksi 'value.date.strftime(\"%d.%m.%Y\")'.",
+          "add_days_to": "Lisää lähde-entiteetille daysTo-attribuutin, joka kertoo päivien määrän seuraavaan keräykseen.",
+          "event_index": "Valitsee anturin näyttämän keräyskerran indeksin. Seuraavan keräyksen event_index on 0. Voit luoda omat anturit seuraavalle, toiselle ja kolmannelle keräykselle.",
+          "types": "Suodattaa jätelajit. Anturi näyttää vain näitä jätelajeja vastaavat keräykset. Käytä vaihtoehtoista nimeä, jos määritit sellaisen lähteen asetuksissa.",
+          "skip": "Jos valittu, anturia ei luoda ja yllä olevat asetukset ohitetaan.",
+          "additional": "Jos valittu, voit lisätä toisen anturin tämän tallentamisen jälkeen."
+        }
+      }
+    },
+    "error": {
+      "time_format": "Ajat on annettava muodossa HH:MM.",
+      "invalid_template": "Malli on virheellinen. Tarkista syntaksi ja yritä uudelleen.",
+      "name_exists": "Anturin nimi on jo käytössä. Valitse toinen nimi.",
+      "preset_selected": "Et voi valita esiasetusta ja antaa omia arvoja samanaikaisesti.",
+      "sensor_name_empty": "Anturin nimi ei voi olla tyhjä. Anna nimi.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Et voi antaa oman kalenterin nimeä ottamatta omaa kalenteria käyttöön."
+    },
+    "abort": {}
+  },
+  "selector": {
+    "details_format": {
+      "options": {
+        "upcoming": "Tulevat keräykset",
+        "appointment_types": "Keräystyypit",
+        "generic": "Yleinen",
+        "hidden": "Piilotettu"
+      }
+    },
+    "default_sensors": {
+      "options": {
+        "legacy": "Yksi anturi kutakin jätelajia varten",
+        "new": "Yhteenvetoanturit (seuraava keräys, päiviä keräykseen, viimeisin päivitys)"
+      }
+    },
+    "custom_flow_types": {
+      "options": {
+        "yearly": "Vuosittain",
+        "monthly": "Kuukausittain",
+        "weekly": "Viikoittain",
+        "daily": "Päivittäin"
+      }
+    },
+    "sensor_select": {
+      "options": {
+        "sensor_select_add_new": "Lisää uusi anturi"
+      }
+    }
+  },
+  "issues": {}
+}
