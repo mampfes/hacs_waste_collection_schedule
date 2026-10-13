@@ -71,7 +71,7 @@ class DateParserFromEpoch(DateParser):
     def __init__(
         self,
         unit: str = "s",
-        tz: datetime.timezone = datetime.UTC,
+        tz: datetime.tzinfo = datetime.UTC,
     ):
         if unit not in ("s", "ms"):
             raise ValueError("unit must be 's' (seconds) or 'ms' (milliseconds)")
@@ -287,7 +287,7 @@ def for_format(fmt: str) -> DateParserForFormat:
 
 def from_epoch(
     unit: str = "s",
-    tz: datetime.timezone = datetime.UTC,
+    tz: datetime.tzinfo = datetime.UTC,
 ) -> DateParserFromEpoch:
     """Return a DateParser for Unix timestamps (``unit`` is ``"s"`` or ``"ms"``)."""
     return DateParserFromEpoch(unit=unit, tz=tz)

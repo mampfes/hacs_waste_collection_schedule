@@ -2959,6 +2959,11 @@ class TestToolkitParsers:
         assert date_parsers.from_epoch(unit="ms")(epoch_s * 1000) == expected
         # Accepts a numeric string too (JSON APIs vary).
         assert date_parsers.from_epoch()(str(epoch_s)) == expected
+        # A zone puts local midnight (22:00Z the day before) on its own day.
+        import zoneinfo
+
+        rome = date_parsers.from_epoch(unit="ms", tz=zoneinfo.ZoneInfo("Europe/Rome"))
+        assert rome(1791842400000) == datetime.date(2026, 10, 13)
 
     def test_date_parser_in_timezone(self):
         import datetime
