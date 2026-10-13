@@ -1196,6 +1196,91 @@ class HtmlMonthRows(Parser["list[tuple[datetime.date, str]]"]):
         return rows
 
 
+class HtmlColumnDates(Parser["list[tuple[datetime.date, str]]"]):
+    """A table with a collection round per column and one date per cell.
+
+    Each header cell names a round and the cells beneath it are that round's
+    dates, one per row, so the columns have different lengths and shorter ones
+    are padded with empty cells::
+
+        | zmieszane  | papier     | BIO        |
+        | 2026-10-15 | 2026-10-15 | 2026-10-16 |
+        | 2026-10-19 | 2026-10-19 | 2026-10-23 |
+
+    Every cell holding a date becomes one ``(date, round name)`` row, the round
+    named by the column's header. A cell that is empty or not a date is skipped::
+
+        parse = parsers.HtmlColumnDates(from_json_key="wiadomoscRWD")
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    Args:
+        parse_date: callable turning a cell's text into a date, raising
+            ``ValueError`` for text that is not one (default ISO ``YYYY-MM-DD``).
+        require: header texts (matched exactly) that the wanted table must all
+            carry. Unset takes the first table on the page.
+        from_json_key: read the HTML from this key (or path of keys) of a JSON
+            response instead of ``response.text``, as :class:`HtmlParser` does.
+    """
+
+    def __init__(
+        self,
+        *,
+        parse_date: Callable[[str], datetime.date] = datetime.date.fromisoformat,
+        require: "Iterable[str] | None" = None,
+        from_json_key: "str | tuple[str | int, ...] | None" = None,
+    ):
+        self.parse_date = parse_date
+        self.require = frozenset(require) if require is not None else None
+        self.from_json_key = from_json_key
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[datetime.date, str]]":
+        if self.from_json_key is not None:
+            data: Any = (
+                response if isinstance(response, (dict, list)) else response.json()
+            )
+            keys = (
+                (self.from_json_key,)
+                if isinstance(self.from_json_key, str)
+                else self.from_json_key
+            )
+            for key in keys:
+                if isinstance(key, int) and not data:
+                    return []
+                data = data[key]
+            markup = str(data)
+        else:
+            markup = response.text
+        soup = BeautifulSoup(markup, "html.parser")
+
+        table = None
+        for candidate in soup.find_all("table"):
+            headers = {th.get_text(strip=True) for th in candidate.find_all("th")}
+            if self.require is None or self.require <= headers:
+                table = candidate
+                break
+        if table is None:
+            return []
+
+        head = table.find("tr")
+        if not isinstance(head, Tag):
+            return []
+        rounds = [c.get_text(strip=True) for c in head.find_all(["th", "td"])]
+
+        rows: list[tuple[datetime.date, str]] = []
+        for row in table.find_all("tr")[1:]:
+            for name, cell in zip(rounds, row.find_all(["td", "th"]), strict=False):
+                text = cell.get_text(strip=True)
+                if not text:
+                    continue
+                try:
+                    rows.append((self.parse_date(text), name))
+                except ValueError:
+                    continue
+        return rows
+
+
 class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
     """A table with a month per column and a collection round per row.
 
