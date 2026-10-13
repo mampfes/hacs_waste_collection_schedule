@@ -180,7 +180,36 @@ def _valorlux_lu(interactions: list[dict], args: dict[str, Any], today: str) -> 
             _set_json(interaction, {"cities": {commune: cities[commune]}})
 
 
+def _potsdam_de(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep only the configured street of the 17 MB all-streets page data."""
+
+    def norm(value: Any) -> str:
+        return str(value or "").lower().strip()
+
+    for interaction in interactions:
+        if not interaction["url"].endswith("page-data.json"):
+            continue
+        payload = _json(interaction)
+        dbapi = payload["result"]["data"]["dbapi"]
+        region = dbapi["allRegionen"][0]["regionen"][0]
+        region["ortsteile"] = [
+            {
+                **district,
+                "strassen": [
+                    street
+                    for street in district["strassen"]
+                    if norm(street["name"]) == norm(args["strasse"])
+                ],
+            }
+            for district in region["ortsteile"]
+            if norm(district["name"]) == norm(args["ortsteil"])
+        ]
+        dbapi["allFeiertage"] = []
+        _set_json(interaction, payload)
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "potsdam_de": _potsdam_de,
     "valorlux_lu": _valorlux_lu,
     "smiecioplan_pl": _smiecioplan_pl,
     "afvalstoffendienst_nl": _afvalstoffendienst_nl,
