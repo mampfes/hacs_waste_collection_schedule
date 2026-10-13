@@ -95,9 +95,6 @@ class Source(BaseSource):
         wt.RECYCLABLES,
         wt.GARDEN_WASTE,
         wt.HAZARDOUS,
-        _REST_CLEANING,
-        _RECYCLING_CENTRE,
-        _BIO_CLEANING,
     ]
 
     retrieve = retrievers.FanOutRetriever(
@@ -110,11 +107,11 @@ class Source(BaseSource):
         date_key="dateOfCollection",
         type_key=_type_label,
         type_value_map={
-            GARBAGE_TYPE_MAP["0"]: _REST_CLEANING,
-            GARBAGE_TYPE_MAP["1"]: _RECYCLING_CENTRE,
+            GARBAGE_TYPE_MAP["0"]: wt.GENERAL_WASTE,
+            GARBAGE_TYPE_MAP["1"]: None,
             GARBAGE_TYPE_MAP["2"]: wt.HAZARDOUS,
             GARBAGE_TYPE_MAP["3"]: wt.GARDEN_WASTE,
-            GARBAGE_TYPE_MAP["4"]: _BIO_CLEANING,
+            GARBAGE_TYPE_MAP["4"]: wt.ORGANIC,
             GARBAGE_TYPE_MAP["5"]: wt.RECYCLABLES,
             GARBAGE_TYPE_MAP["6"]: wt.GENERAL_WASTE,
             GARBAGE_TYPE_MAP["7"]: wt.ORGANIC,

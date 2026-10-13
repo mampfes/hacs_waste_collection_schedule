@@ -92,6 +92,7 @@ GENERAL_WASTE = WasteType(
             "trash",
             "garbage",
             "domestic waste",
+            "diapers",
         ],
         "de": [
             "restabfall",
@@ -298,6 +299,7 @@ GARDEN_WASTE = WasteType(
             "garden",
             "yard waste",
             "yard trimmings",
+            "grass clippings",
             "christmas trees",
             "leaves",
         ],
@@ -449,6 +451,7 @@ TEXTILES = WasteType(
             "textile collection",
             "clothing",
             "clothes",
+            "clothes collection",
             "used clothing",
         ],
         # Altkleider is strictly a subset of Wertstoffe (RECYCLABLES), and some

@@ -369,9 +369,11 @@ class Source(BaseSource):
     WASTE_TYPES: ClassVar[list] = [
         wt.GENERAL_WASTE,
         wt.GLASS,
+        wt.GARDEN_WASTE,
         wt.ORGANIC,
         wt.PAPER,
         wt.RECYCLABLES,
+        wt.TEXTILES,
     ]
 
     TEST_CASES = TEST_CASES
