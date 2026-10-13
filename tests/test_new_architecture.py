@@ -602,6 +602,12 @@ class TestCollectionGroup:
 class TestDateParsers:
     """date_parsers.auto and date_parsers.for_format."""
 
+    def test_iso_week_ignores_month_name(self):
+        from waste_collection_schedule.date_parsers import iso_week
+
+        assert iso_week()("v41 2027") == datetime.date(2027, 10, 11)
+        assert iso_week()("v41 Okt 2027") == datetime.date(2027, 10, 11)
+
     def test_auto_iso(self):
         from waste_collection_schedule.date_parsers import auto
 

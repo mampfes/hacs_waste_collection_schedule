@@ -223,11 +223,13 @@ class DateParserIsoWeek(DateParser):
 
     A week range ("v27 - v28 2025") resolves to the start of its first week.
     Weeks are ISO 8601 weeks, which is how week numbers are printed. Prefer
-    the ``iso_week()`` factory.
+    the ``iso_week()`` factory. A month name between week and year ("v41 Okt
+    2027") is ignored: the week number decides.
     """
 
     _PATTERN = re.compile(
-        r"^[^\W\d_]{1,4}\.?\s*(\d{1,2})(?:\s*-\s*[^\W\d_]{0,4}\.?\s*\d{1,2})?\s+(\d{4})$"
+        r"^[^\W\d_]{1,4}\.?\s*(\d{1,2})(?:\s*-\s*[^\W\d_]{0,4}\.?\s*\d{1,2})?"
+        r"(?:\s+[^\W\d_]{3,}\.?)?\s+(\d{4})$"
     )
 
     def __call__(self, *args: str) -> datetime.date:

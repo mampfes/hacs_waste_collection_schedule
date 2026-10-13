@@ -311,6 +311,8 @@ class LookupChainRetriever(_BaseRetriever):
         method: ``"GET"`` (default) or ``"POST"`` for the schedule request.
         data: optional ``callable(*keys, **source.params) -> data`` form body,
             for ``method="POST"``.
+        json: optional ``callable(*keys, **source.params) -> object`` JSON
+            body, for ``method="POST"``.
         headers: optional headers for the schedule request.
         encoding: response encoding forced on the schedule response before its
             ``.text`` is read. ``None`` (default) leaves the transport's
@@ -334,6 +336,7 @@ class LookupChainRetriever(_BaseRetriever):
         encoding: str | None = None,
         raise_for_status: bool = False,
         timeout: int = 30,
+        json: Callable[..., Any] | None = None,
     ):
         if not steps:
             raise ValueError("LookupChainRetriever requires at least one step")
@@ -341,8 +344,9 @@ class LookupChainRetriever(_BaseRetriever):
             raise ValueError(
                 f"unknown LookupChainRetriever method {method!r}: expected GET or POST"
             )
-        if data is not None and method.upper() != "POST":
-            raise ValueError("LookupChainRetriever data requires method='POST'")
+        if (data is not None or json is not None) and method.upper() != "POST":
+            raise ValueError("LookupChainRetriever data/json requires method='POST'")
+        self.json = json
         self.steps = steps
         self.url = url
         self.params = params
@@ -370,6 +374,9 @@ class LookupChainRetriever(_BaseRetriever):
                 params=params,
                 data=(
                     self.data(*keys, **source.params) if self.data is not None else None
+                ),
+                json=(
+                    self.json(*keys, **source.params) if self.json is not None else None
                 ),
                 headers=headers,
                 timeout=self.timeout,
