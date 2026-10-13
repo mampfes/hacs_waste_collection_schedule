@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import base64
 import json
+import re
 from collections.abc import Callable
 from typing import Any
 
@@ -65,7 +66,28 @@ def _chesterfield_gov_uk(
             _set_json(interaction, {"auraConfig": {"context": context}})
 
 
+_PLAIN_DAY = re.compile(
+    r'\s*<td data-date="[^"]*" class="(?![^"]*highlighted)[^"]*">\d+</td>'
+)
+
+
+def _gmina_sroda_slaska_pl(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Drop the calendar cells that are not collection days, and page chrome."""
+    for interaction in interactions:
+        html = base64.b64decode(interaction["content_b64"]).decode("utf-8")
+        html = _PLAIN_DAY.sub("", html)
+        html = re.sub(r"[^\n]*data:image/[^\n]*\n", "", html)
+        html = re.sub(r'<ul class="nav-bar vertical">.*?</ul>', "", html, flags=re.S)
+        html = re.sub(r"<script.*?</script>", "", html, flags=re.S)
+        interaction["content_b64"] = base64.b64encode(html.encode("utf-8")).decode(
+            "ascii"
+        )
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "gmina_sroda_slaska_pl": _gmina_sroda_slaska_pl,
     "sica_lu": _sica_lu,
     "chesterfield_gov_uk": _chesterfield_gov_uk,
 }
