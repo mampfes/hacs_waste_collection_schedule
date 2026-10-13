@@ -1,86 +1,64 @@
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.AspNetPostbackPager import AspNetPostbackPager
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Glasgow City Council"
-DESCRIPTION = "Source for www.glasgow.gov.uk services for Glasgow City Council, UK."
-URL = "https://www.glasgow.gov.uk/"
-TEST_CASES = {
-    "test 1 - house": {"uprn": "906700099060"},
-    "test 2 - flat": {"uprn": "906700335412"},
-}
-
-API_URL = "https://onlineservices.glasgow.gov.uk/forms/refuseandrecyclingcalendar/CollectionsCalendar.aspx?UPRN="
-ICON_MAP = {
-    "purple bins": Icons.GLASS,
-    "brown bins": Icons.BIO_KITCHEN,
-    "green bins": Icons.GENERAL_WASTE,
-    "blue bins": Icons.RECYCLING,
-    "grey bins": Icons.BIO_KITCHEN,
-}
+# Demonstrates: AspNetPostbackPager (WebForms "next month" postback) +
+# EachResponse(HtmlParser) + HtmlTransformer reading the date off the parent cell.
 
 
-class Source:
-    def __init__(self, uprn: str):
-        self._uprn = uprn
+@final
+class Source(BaseSource):
+    TITLE = "Glasgow City Council"
+    DESCRIPTION = "Source for www.glasgow.gov.uk services for Glasgow City Council, UK."
+    URL = "https://www.glasgow.gov.uk/"
+    COUNTRY = "uk"
 
-    def _parseBins(self, text):
-        soup = BeautifulSoup(text, features="html.parser")
-        entries = []
+    RAISE_ON_EMPTY = True
 
-        days = soup.find_all("td", {"class": "CalendarDayStyle"})
-        for day in days:
-            bins = day.find_all("img")
+    TEST_CASES: ClassVar[dict] = {
+        "test 1 - house": {"uprn": "906700099060"},
+        "test 2 - flat": {"uprn": "906700335412"},
+    }
 
-            if len(bins) < 1:
-                continue
+    PARAMS = (uprn(),)
 
-            date = datetime.strptime(
-                day["title"].replace("today is ", ""), "%A, %d %B %Y"
-            ).date()
+    # The current month plus the next two, so 56-day cycles are covered.
+    retrieve = AspNetPostbackPager(
+        url=lambda uprn: (
+            "https://onlineservices.glasgow.gov.uk/forms/refuseandrecyclingcalendar/"
+            f"CollectionsCalendar.aspx?UPRN={uprn}"
+        ),
+        link_title="Go to the next month",
+        pages=2,
+    )
+    parse = parsers.EachResponse(parsers.HtmlParser("td.CalendarDayStyle img"))
 
-            for bin in bins:
-                binname = bin["title"].split()
-                binname = f"{binname[0]} {binname[1]}"
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=binname,
-                        icon=ICON_MAP.get(binname),
-                    )
-                )
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GLASS,
+        wt.FOOD_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-        return entries
-
-    def fetch(self):
-        entries = []
-
-        session = requests.Session()
-
-        # get current month
-        r = session.get(f"{API_URL}{self._uprn}")
-        entries = entries + self._parseBins(r.text)
-
-        # Get the next two months so that 56-day collection cycles are covered.
-        for _ in range(2):
-            soup = BeautifulSoup(r.text, features="html.parser")
-            nextlink = soup.find("a", title="Go to the next month")
-            if not nextlink:
-                break
-
-            match = re.search(r"__doPostBack\('(.*?)','(.*?)'", nextlink["href"])
-            data = {
-                "__EVENTTARGET": match.group(1),
-                "__EVENTARGUMENT": match.group(2),
-                "__EVENTVALIDATION": soup.find("input", id="__EVENTVALIDATION")[
-                    "value"
-                ],
-                "__VIEWSTATE": soup.find("input", id="__VIEWSTATE")["value"],
-            }
-            r = session.post(f"{API_URL}{self._uprn}", data=data)
-            entries = entries + self._parseBins(r.text)
-
-        return entries
+    # The marker's title reads "purple bins are emptied every 56 days"; its
+    # parent day cell carries the date ("today is " prefixed for today).
+    transform = HtmlTransformer(
+        date_getter=lambda el: str(el.find_parent("td")["title"]).replace(
+            "today is ", ""
+        ),
+        type_getter=lambda el: " ".join(str(el["title"]).split()[:2]),
+        parse_date=date_parsers.for_format("%A, %d %B %Y"),
+        type_value_map={
+            "purple bins": wt.GLASS,
+            "brown bins": wt.FOOD_WASTE,
+            "grey bins": wt.FOOD_WASTE,
+            "food waste": wt.FOOD_WASTE,
+            "green bins": wt.GENERAL_WASTE,
+            "blue bins": wt.RECYCLABLES,
+        },
+    )
