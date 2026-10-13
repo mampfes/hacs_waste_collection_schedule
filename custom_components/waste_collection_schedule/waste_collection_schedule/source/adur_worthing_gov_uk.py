@@ -1,152 +1,45 @@
-import re
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-import bs4
-import requests
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentExceptionMultiple,
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address, text_field
+from waste_collection_schedule.field_terms import POSTCODE, UPRN
+from waste_collection_schedule.service.AdurWorthingCalendar import (
+    CalendarParser,
+    CalendarRetriever,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Adur & Worthing Councils"
-DESCRIPTION = "Source for adur-worthing.gov.uk services for Adur & Worthing, UK."
-URL = "https://adur-worthing.gov.uk"
-TEST_CASES = {
-    "Test_001": {"postcode": "BN15 9UX", "address": "1 Western Road North"},
-    "Test_002": {"postcode": "BN43 5WE", "address": "6 Hebe Road"},
-    "Test_003": {"uprn": "100062209109"},
-}
-NEXT_RE = re.compile(r"Next\s+collection(?:\s+dates?)?\s*:", re.IGNORECASE)
-DATE_RE = re.compile(
-    r"\b(\d{1,2})(?:st|nd|rd|th)?\s+"
-    r"(January|February|March|April|May|June|July|August|September|October|November|December)\b",
-    re.IGNORECASE,
-)
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
-}
-ICON_MAP = {
-    "Recycling": Icons.RECYCLING,
-    "Refuse": Icons.GENERAL_WASTE,
-    "Garden": Icons.GARDEN,
-    "Food waste": Icons.BIO_KITCHEN,
-}
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
-}
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+
+@final
+class Source(BaseSource):
+    TITLE = "Adur & Worthing Councils"
+    DESCRIPTION = "Source for adur-worthing.gov.uk services for Adur & Worthing, UK."
+    URL = "https://adur-worthing.gov.uk"
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"postcode": "BN15 9UX", "address": "1 Western Road North"},
+        "Test_002": {"postcode": "BN43 5WE", "address": "6 Hebe Road"},
+        "Test_003": {"uprn": "100062209109"},
     }
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details",
+    HOWTO: ClassVar[dict] = {
+        "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details"
     }
-}
+    COUNTRY = "uk"
+    PARAMS = (
+        text_field("postcode", term=POSTCODE, optional=True),
+        street_address(optional=True),
+        text_field("uprn", term=UPRN, optional=True),
+    )
 
-
-class Source:
-    def __init__(self, postcode=None, address=None, uprn=None):
-        if uprn is not None:
-            self._uprn = uprn
-            self._postcode = None
-            self._address = None
-        else:
-            self._postcode = postcode
-            self._address = address
-            self._uprn = None
-
-    def fetch(self):
-        s = requests.Session()
-
-        if self._uprn is not None:
-            r = s.get(
-                f"https://www.adur-worthing.gov.uk/bin-day/?brlu-selected-address={self._uprn}",
-                headers=HEADERS,
-            )
-            html_collections = r.content
-        else:
-            if self._postcode is None or self._address is None:
-                raise SourceArgumentExceptionMultiple(
-                    ["postcode", "address"],
-                    "either postcode or address needs to be provided but neither was",
-                )
-
-            postcode_search_request = s.get(
-                f"https://www.adur-worthing.gov.uk/bin-day/?brlu-address-postcode={self._postcode}&return-url=/bin-day/&action=search",
-                headers=HEADERS,
-            )
-            html_addresses = postcode_search_request.content
-            addresses = bs4.BeautifulSoup(html_addresses, "html.parser")
-            addresses_select = addresses.find("select", {"id": "brlu-selected-address"})
-
-            found_address = None
-            for address in addresses_select.find_all("option"):
-                if self._address.upper() in address.get_text().upper():
-                    found_address = address
-
-            if found_address is None:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "address",
-                    self._address,
-                    [a.get_text() for a in addresses_select.find_all("option")],
-                )
-
-            collections_request = s.get(
-                f"https://www.adur-worthing.gov.uk/bin-day/?brlu-selected-address={found_address['value']}&return-url=/bin-day/",
-                headers=HEADERS,
-            )
-            html_collections = collections_request.content
-
-        bin_collections = bs4.BeautifulSoup(html_collections, "html.parser")
-        containers = bin_collections.find_all(
-            "div", {"class": "bin-collection-listing-row row"}
-        )
-
-        entries = []
-        today = datetime.now().date()
-
-        for container in containers:
-            waste_heading = container.find("h2")
-            if waste_heading is None:
-                continue
-            waste_type = waste_heading.text
-            waste_type = " ".join(waste_type.split())
-            # waste descriptions changed, so make consistent with old configs
-            if waste_type == "General rubbish":
-                waste_type = "Refuse"
-            if waste_type.startswith("Garden waste"):
-                waste_type = "Garden"
-
-            # "Next collection:" (single date, old layout) or
-            # "Next collection dates:" (several dates, current layout).
-            # Only the paragraph holding the label is read, so the
-            # "Most recent collection" block is never parsed.
-            dates = set()
-            for text in container.find_all("p"):
-                content = text.get_text(" ")
-                if not NEXT_RE.search(content):
-                    continue
-                for day, month in DATE_RE.findall(content):
-                    try:
-                        d = parser.parse(f"{day} {month} {today.year}").date()
-                    except (ValueError, OverflowError):
-                        continue
-                    # year-end: a date well in the past belongs to next year
-                    if d < today - timedelta(days=60):
-                        d = d.replace(year=d.year + 1)
-                    if d >= today:
-                        dates.add(d)
-
-            for d in sorted(dates):
-                entries.append(
-                    Collection(t=waste_type, date=d, icon=ICON_MAP.get(waste_type))
-                )
-
-        if not entries:
-            raise ValueError("No upcoming collection dates found")
-
-        return entries
+    retrieve = CalendarRetriever()
+    parse = CalendarParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map={
+            "Recycling": wt.RECYCLABLES,
+            "Refuse": wt.GENERAL_WASTE,
+            "Garden": wt.GARDEN_WASTE,
+            "Food waste": wt.FOOD_WASTE,
+        },
+    )

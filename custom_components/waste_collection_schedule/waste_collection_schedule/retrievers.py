@@ -1200,23 +1200,39 @@ def yearly_links(
 type AthosStep = "dict[str, Any]"
 
 
-def _scrape_hidden_inputs(html: str) -> dict[str, str]:
-    """Return ``{name: value}`` for every ``<input type=hidden>`` in ``html``.
+def form_inputs(
+    page: str | BeautifulSoup,
+    *,
+    hidden_only: bool = False,
+    required: Sequence[str] = (),
+) -> dict[str, str]:
+    """Read named form inputs for a subsequent request in the same session.
 
-    Shared by every Athos "WasteManagementServlet" deployment to seed the
-    wizard's form state from the initial GET. Matches ``type`` case-
-    insensitively: most deployments emit lowercase ``hidden``, at least one
-    (bmv_at) emits uppercase ``HIDDEN``.
+    WebForms postbacks and servlet wizards both carry server-generated state
+    in their page's inputs. ``hidden_only`` matches input types without regard
+    to case. ``required`` rejects missing fields or values, while an explicitly
+    empty value remains valid (for example an initial event argument).
     """
-    soup = BeautifulSoup(html, "html.parser")
+    soup = BeautifulSoup(page, "html.parser") if isinstance(page, str) else page
     fields: dict[str, str] = {}
     for tag in soup.find_all("input"):
-        if str(tag.get("type", "")).lower() != "hidden":
+        if hidden_only and str(tag.get("type", "")).lower() != "hidden":
             continue
         name = tag.get("name")
         if name:
-            fields[str(name)] = str(tag.get("value", ""))
+            value = tag.get("value", "")
+            if name in required and not isinstance(tag.get("value"), str):
+                raise ValueError(f"Could not find value for form field: {name}")
+            fields[str(name)] = str(value)
+    for name in required:
+        if name not in fields:
+            raise ValueError(f"Could not find form field: {name}")
     return fields
+
+
+def _scrape_hidden_inputs(html: str) -> dict[str, str]:
+    """Read Athos wizard state, including uppercase ``HIDDEN`` inputs."""
+    return form_inputs(html, hidden_only=True)
 
 
 def _scrape_input_values(html: str, name: str) -> list[str]:
