@@ -19,10 +19,10 @@ when the count reaches zero.
 | 4 | Migrate onto an existing platform component | 2 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
 | 5 | Shared backend, build one component for the cluster | 1 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 1 left (of 14) | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
-| 7 | Singleton, small (<150 lines, <=2 requests) | 41 left (of 58) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
+| 7 | Singleton, small (<150 lines, <=2 requests) | 31 left (of 58) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
 | 8 | Singleton, medium | 112 | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
 | 9 | Singleton, large (>=350 lines or >=5 requests) | 24 (+1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
-| | **Total** | **201** (281 before class 4; the clusters, thirteen PDF sources and seventeen small singletons are migrated, see the notes in class 5, 6 and 7) | |
+| | **Total** | **191** (281 before class 4; the clusters, thirteen PDF sources and twenty-seven small singletons are migrated, see the notes in class 5, 6 and 7) | |
 
 ## 1. Special / not a provider
 
@@ -93,10 +93,12 @@ Done in the first block (7): `ittre_be`, `mijnafvalwijzer_nl`, `sidec_lu`, `egn_
 
 Done in the second block (10): `sivom_rivedroite_fr`, `warszawa19115_pl`, `ekosystem_wroc_pl`, `renodjurs_dk`, `varmdo_se` (rebuilt on `EdpFutureWeb`, the old page was gone), `poznan_pl`, `nvaa_se`, `ressourceindsamling_dk` (fixes a DST-window 400), `pireva_se`, `lumire_se` (new shared pieces: `parsers.HtmlColumnDates`, `date_parsers.named_month` / `iso_week` / `first_of` / `in_timezone`, additive options on `HtmlMonthColumns` (`month_attr`) and `HtmlMonthHeadedRows` (`all_tables`, `day_pattern`, `current_year`)).
 
-Found broken upstream, not migrated (3): `hygea_be` (the JSON calendar is gone after a site relaunch and the server sends an incomplete certificate chain), `grosswangen_ch` (the page no longer carries dates, only a yearly PDF and prose rules since the collection changed hands), `araccolta_it` (serves a maintenance page for every URL; the legacy source also has a bug: its waste-type generator is exhausted after the first weekday of a card). They stay legacy until a decision (fix, rewrite or remove). The second block found three more providers gone: `odenserenovation_dk` (API removed, 404), `ecoapp_ecoservice_lt` (API host no longer resolves) and `tkeliai_lt` (the calendar feature was removed from the site). `vestfor_dk` is deferred: its self-service host is unreachable from the German exit and needs a Danish IP.
+Done in the third block (10, UK councils): `oldham_gov_uk`, `bromsgrove_gov_uk`, `solihull_gov_uk`, `eaststaffsbc_gov_uk`, `cornwall_gov_uk`, `walsall_gov_uk`, `glasgow_gov_uk`, `torbay_council_gov_uk`, `folkestone_hythe_gov_uk`, `canterbury_gov_uk` (new shared pieces: `service/AspNetPostbackPager.py`, additive options `ArgumentGuard(matches=)` and `FirmstepAddressFormRetriever(value_prefix=, address_lookup_url=None)`).
 
-- **html** (16): `apps_ci_minneapolis_mn_us`, `araccolta_it`, `bromsgrove_gov_uk`, `cornwall_gov_uk`, `dover_gov_uk`, `eaststaffsbc_gov_uk`, `folkestone_hythe_gov_uk`, `geelongaustralia_com_au`, `glasgow_gov_uk`, `mundaring_wa_gov_au`, `oldham_gov_uk`, `solihull_gov_uk`, `swansea_gov_uk`, `torbay_council_gov_uk`, `walsall_gov_uk`, `wolverhampton_gov_uk`
-- **json** (13): `armadale_wa_gov_au`, `blackpool_gov_uk`, `canterbury_gov_uk`, `dorset_gov_uk`, `fenland_gov_uk`, `hygea_be`, `odenserenovation_dk`, `palmcoast_fl_gov`, `panda_ie`, `poriruacity_govt_nz`, `tkeliai_lt`, `vestfor_dk`, `wastenet_org_nz`
+Found broken upstream, not migrated (3): `hygea_be` (the JSON calendar is gone after a site relaunch and the server sends an incomplete certificate chain), `grosswangen_ch` (the page no longer carries dates, only a yearly PDF and prose rules since the collection changed hands), `araccolta_it` (serves a maintenance page for every URL; the legacy source also has a bug: its waste-type generator is exhausted after the first weekday of a card). They stay legacy until a decision (fix, rewrite or remove). The second block found three more providers gone: `odenserenovation_dk` (API removed, 404), `ecoapp_ecoservice_lt` (API host no longer resolves) and `tkeliai_lt` (the calendar feature was removed from the site). Also not migrated: `dover_gov_uk` (host `collections.dover.gov.uk` no longer resolves) and `wolverhampton_gov_uk` (the page no longer carries any bin content); `blackpool_gov_uk` and `swansea_gov_uk` were unreachable from the UK exit (TLS closed / no response) and are deferred. `vestfor_dk` is deferred: its self-service host is unreachable from the German exit and needs a Danish IP.
+
+- **html** (7): `apps_ci_minneapolis_mn_us`, `araccolta_it`, `dover_gov_uk`, `geelongaustralia_com_au`, `mundaring_wa_gov_au`, `swansea_gov_uk`, `wolverhampton_gov_uk`
+- **json** (12): `armadale_wa_gov_au`, `blackpool_gov_uk`, `dorset_gov_uk`, `fenland_gov_uk`, `hygea_be`, `odenserenovation_dk`, `palmcoast_fl_gov`, `panda_ie`, `poriruacity_govt_nz`, `tkeliai_lt`, `vestfor_dk`, `wastenet_org_nz`
 - **json/html** (2): `ardsandnorthdown_gov_uk`, `charnwood_gov_uk`
 - **?** (3): `pembrokeshire_gov_uk`, `victoriapark_wa_gov_au`, `villagebonconseil_ca`
 - **ics/json** (1): `ecoapp_ecoservice_lt`

@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://bincollections.bromsgrove.gov.uk/BinCollections/Details/ 326f7e9747",
+      "method": "POST",
+      "url": "https://bincollections.bromsgrove.gov.uk/BinCollections/Details/",
+      "final_url": "https://bincollections.bromsgrove.gov.uk/BinCollections/Details/",
+      "body": "{\"body\":[[\"UPRN\",\"100120571971\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "text/html; charset=utf-8",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "server": "Hello",
+        "x-aspnetmvc-version": "Hello",
+        "x-aspnet-version": "Hello",
+        "feature-policy": "geolocation 'self';  sync-xhr 'self' https://www.bromsgrove.gov.uk https://www.redditchbc.gov.uk",
+        "referrer-policy": "strict-origin",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "content-security-policy": "default-src 'self'; object-src 'self' *.bromsgrove.gov.uk *.redditchbc.gov.uk *.bromsgroveandredditch.gov.uk bincollections.bromsgrove.gov.uk bincollections.redditchbc.gov.uk; frame-src 'self'; frame-ancestors 'self' https://www.bromsgrove.gov.uk https://www.bromsgroveandredditch.gov.uk https://www.redditchbc.gov.uk; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content; base-uri 'self';require-trusted-types-for 'script'; style-src-elem 'self'; img-src 'self';",
+        "strict-transport-security": "max-age=31536000; includeSubdomains; redirectHttpToHttps=true;",
+        "x-powered-by": "Unicorns",
+        "date": "Tue, 13 Oct 2026 13:42:52 GMT",
+        "content-length": "1095"
+      },
+      "content_b64": "PCFET0NUWVBFIGh0bWw+DQo8aHRtbD4NCjxoZWFkPg0KICAgIDxtZXRhIGNoYXJzZXQ9InV0Zi04IiAvPg0KICAgIDxtZXRhIG5hbWU9InZpZXdwb3J0IiBjb250ZW50PSJ3aWR0aD1kZXZpY2Utd2lkdGgsIGluaXRpYWwtc2NhbGU9MS4wIj4NCiAgICA8bWV0YSBodHRwLWVxdWl2PSJYLVVBLUNvbXBhdGlibGUiIGNvbnRlbnQ9IklFPWVkZ2UiIC8+DQogICAgPHRpdGxlPlZpZXcgQ29sbGVjdGlvbnM8L3RpdGxlPg0KICAgIDxsaW5rIGhyZWY9Ii9Db250ZW50L2Nzcz92PVh4Uk9QUF9EZ3NVUmFPTUNKYWtOWHpKdWVtd1VoRm9tUVlaZUZPX2VWOUkxIiByZWw9InN0eWxlc2hlZXQiLz4NCg0KICAgIDxzY3JpcHQgc3JjPSIvYnVuZGxlcy9tb2Rlcm5penI/dj1pbkNWdUVGZTZKNFEwN0EwQWNSc2JKaWNfVUU1TXdwUk1OR2NPdGs5NFRFMSI+PC9zY3JpcHQ+DQoNCjwvaGVhZD4NCjxib2R5Pg0KICAgIDxkaXY+DQogIA0KICAgICAgICANCg0KDQo8ZGl2Pg0KICAgIDxoMz5CaW4gY29sbGVjdGlvbiBkYXRlcyBmb3IgQjYwIDNERTwvaDM+DQo8L2Rpdj4NCg0KDQoNCiAgICA8ZGl2IGNsYXNzPSJjb2xsZWN0aW9uLWNvbnRhaW5lciI+DQogICAgICAgIDxkaXYgY2xhc3M9ImhlYWRpbmctY29udGFpbmVyIj4NCiAgICAgICAgICAgIDxkaXYgY2xhc3M9ImxlZnQiPg0KICAgICAgICAgICAgICAgIDxpbWcgY2xhc3M9ImltYWdlLWNvbnRhaW5lciIgc3JjPSIvQ29udGVudC9JbWFnZXMvR3JlZW4ucG5nIiBhbHQ9R3JlZW4gLz4NCiAgICAgICAgICAgIDwvZGl2Pg0KICAgICAgICAgICAgPGRpdiBjbGFzcz0iaGVhZGluZyI+DQogICAgICAgICAgICAgICAgR3JlZW4gQmluDQogICAgICAgICAgICA8L2Rpdj4NCiAgICAgICAgPC9kaXY+DQogICAgICAgIDxkaXYgY2xhc3M9ImNvbGxlY3Rpb24tZGV0YWlscy1jb250YWluZXIiPg0KICAgICAgICAgICAgPHAgY2xhc3M9ImNhcHRpb24iPk5leHQgY29sbGVjdGlvbiBGcmlkYXksIDE2IE9jdG9iZXIgMjAyNjwvcD4NCiAgICAgICAgICAgIDxwIGNsYXNzPSJjb2xsZWN0aW9uLWRldGFpbHMiPllvdXIgbmV4dCBjb2xsZWN0aW9ucyBvbjo8L3A+DQogICAgICAgICAgICA8dWw+DQogICAgICAgICAgICAgICAgPGxpPkZyaWRheSwgMzAgT2N0b2JlciAyMDI2PC9saT4NCiAgICAgICAgICAgIDwvdWw+DQogICAgICAgIDwvZGl2Pg0KICAgIDwvZGl2Pg0KICAgIDxkaXYgY2xhc3M9ImNvbGxlY3Rpb24tY29udGFpbmVyIj4NCiAgICAgICAgPGRpdiBjbGFzcz0iaGVhZGluZy1jb250YWluZXIiPg0KICAgICAgICAgICAgPGRpdiBjbGFzcz0ibGVmdCI+DQogICAgICAgICAgICAgICAgPGltZyBjbGFzcz0iaW1hZ2UtY29udGFpbmVyIiBzcmM9Ii9Db250ZW50L0ltYWdlcy9HcmV5LnBuZyIgYWx0PUdyZXkgLz4NCiAgICAgICAgICAgIDwvZGl2Pg0KICAgICAgICAgICAgPGRpdiBjbGFzcz0iaGVhZGluZyI+DQogICAgICAgICAgICAgICAgR3JleSBCaW4NCiAgICAgICAgICAgIDwvZGl2Pg0KICAgICAgICA8L2Rpdj4NCiAgICAgICAgPGRpdiBjbGFzcz0iY29sbGVjdGlvbi1kZXRhaWxzLWNvbnRhaW5lciI+DQogICAgICAgICAgICA8cCBjbGFzcz0iY2FwdGlvbiI+TmV4dCBjb2xsZWN0aW9uIEZyaWRheSwgMjMgT2N0b2JlciAyMDI2PC9wPg0KICAgICAgICAgICAgPHAgY2xhc3M9ImNvbGxlY3Rpb24tZGV0YWlscyI+WW91ciBuZXh0IGNvbGxlY3Rpb25zIG9uOjwvcD4NCiAgICAgICAgICAgIDx1bD4NCiAgICAgICAgICAgICAgICA8bGk+RnJpZGF5LCAwNiBOb3ZlbWJlciAyMDI2PC9saT4NCiAgICAgICAgICAgIDwvdWw+DQogICAgICAgIDwvZGl2Pg0KICAgIDwvZGl2Pg0KDQo8YSBocmVmPSJodHRwOi8vZS1zZXJ2aWNlcy53b3JjZXN0ZXJzaGlyZS5nb3YudWsvTXlMb2NhbEFyZWEvTXlMb2NhbEFyZWFSZXN1bHRzLmFzcHg/dXBybj0xMDAxMjA1NzE5NzEiIHRpdGxlPSJNb3JlIGluZm9ybWF0aW9uIG9uIHlvdXIgcG9zdGNvZGUgYXJlYSIgdGFyZ2V0PSJfYmxhbmsiPk1vcmUgaW5mb3JtYXRpb24gb24geW91ciBwb3N0Y29kZSBhcmVhPC9hPg0KPGJyIC8+DQo8YnIgLz4NCjxhIGhyZWY9Ii8iPkNoZWNrIEJpbiBEYXRlcyBGb3IgRGlmZmVyZW50IFBvc3RDb2RlPC9hPg0KDQogICAgPC9kaXY+DQoNCiAgICA8c2NyaXB0IHNyYz0iL2J1bmRsZXMvanF1ZXJ5P3Y9TWFyZG50XzB4b1NKZUlvVGZhT1dQd2FuUVhlRXBmdFJSNTdxU09CVnBDZzEiPjwvc2NyaXB0Pg0KDQogICAgPHNjcmlwdCBzcmM9Ii9idW5kbGVzL2pxdWVyeXZhbD92PVV4ak5iMVNocnFuOVMxRHFDT1Y0VDR3VktYdVRaS2dkRlNxNEVWOXR5dk0xIj48L3NjcmlwdD4NCg0KDQogICAgDQogICAgDQo8L2JvZHk+DQo8L2h0bWw+DQo="
+    }
+  ]
+}

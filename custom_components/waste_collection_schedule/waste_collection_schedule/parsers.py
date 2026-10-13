@@ -448,6 +448,9 @@ class ArgumentGuard(Parser[Any]):
         parser: the inner parser, applied once the response passes the check.
         argument: the config param blamed for the mismatch.
         contains: text that every valid response carries.
+        matches: alternative to ``contains`` for a check a fixed string cannot
+            express, e.g. a postcode compared ignoring case and spacing:
+            ``callable(response, source) -> bool``, True for a valid response.
         suggestions: optional ``callable(source) -> Iterable[str]`` returning the
             valid values, usually read off the provider's own index page. It runs
             only on the failure path, so a healthy fetch pays nothing for it. If
@@ -461,18 +464,26 @@ class ArgumentGuard(Parser[Any]):
         parser: Parser,
         *,
         argument: str,
-        contains: str,
+        contains: "str | None" = None,
+        matches: "Callable[[Response, BaseSource | None], bool] | None" = None,
         suggestions: "Callable[[BaseSource | None], Iterable[str]] | None" = None,
         hint: str = "",
     ):
+        if (contains is None) == (matches is None):
+            raise ValueError("ArgumentGuard needs exactly one of contains/matches")
         self.parser = parser
         self.argument = argument
         self.contains = contains
+        self.matches = matches
         self.suggestions = suggestions
         self.hint = hint
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
-        if self.contains not in response.text:
+        if self.matches is not None:
+            valid = self.matches(response, source)
+        else:
+            valid = self.contains in response.text  # type: ignore[operator]
+        if not valid:
             self._reject(source)
         return self.parser(response, source)
 
