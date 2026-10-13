@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://ekosystem.wroc.pl/wp-admin/admin-ajax.php b07d746671",
+      "method": "POST",
+      "url": "https://ekosystem.wroc.pl/wp-admin/admin-ajax.php",
+      "final_url": "https://ekosystem.wroc.pl/wp-admin/admin-ajax.php",
+      "body": "{\"body\":[[\"action\",\"waste_disposal_form_get_schedule\"],[\"id_numeru\",\"680085\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 08:38:38 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "cache-control": "no-cache, must-revalidate, max-age=0, no-store, private",
+        "content-security-policy": "frame-ancestors 'self';",
+        "expires": "Wed, 11 Jan 1984 05:00:00 GMT",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "IdeaWebServer/6.4.2",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-robots-tag": "noindex",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJudWxsIjowLCJ3aWFkb21vc2MiOiJcblx0XHQ8YSBocmVmPVwiaHR0cHM6XC9cL2Vrb3N5c3RlbS53cm9jLnBsXC9kb3dubG9hZFwvP2FjdGlvbj1wZGYmIzAzODtraWVkeV8xPTIwMjYtMTAtMTMmIzAzODtjb18xPUJJTyYjMDM4O2tpZWR5XzI9MjAyNi0xMC0xMyYjMDM4O2NvXzI9em1pZXN6YW5lJiMwMzg7a2llZHlfMz0yMDI2LTEwLTIwJiMwMzg7Y29fMz1CSU8mIzAzODtraWVkeV80PTIwMjYtMTAtMjAmIzAzODtjb180PXptaWVzemFuZSYjMDM4O2tpZWR5XzU9MjAyNi0xMC0yMiYjMDM4O2NvXzU9dHdvcnp5d2EmIzAzODtraWVkeV82PTIwMjYtMTAtMjMmIzAzODtjb182PXBhcGllciYjMDM4O2tpZWR5Xzc9MjAyNi0xMC0yNyYjMDM4O2NvXzc9QklPJiMwMzg7a2llZHlfOD0yMDI2LTEwLTI3JiMwMzg7Y29fOD16bWllc3phbmUmIzAzODtwYXJhbXM9OFwiIGlkPVwicHJpbnRQREZcIiBjbGFzcz1cInBkZlwiIHRhcmdldD1cIl9ibGFua1wiIHJlbD1cIm5vb3BlbmVyXCI+XG5cdFx0XHRQb2JpZXJ6IGhhcm1vbm9ncmFtXG5cdFx0PFwvYT4iLCJ3aWFkb21vc2NSV0QiOiI8dGFibGUgYm9yZGVyPScwJz48dGhlYWQ+PHRyPjx0aCBzY29wZT1cImNvbFwiPkJJTzxcL3RoPjx0aCBzY29wZT1cImNvbFwiPnptaWVzemFuZTxcL3RoPjx0aCBzY29wZT1cImNvbFwiPnR3b3J6eXdhPFwvdGg+PHRoIHNjb3BlPVwiY29sXCI+cGFwaWVyPFwvdGg+PFwvdHI+PFwvdGhlYWQ+PHRib2R5Pjx0cj48dGQ+MjAyNi0xMC0xMzxcL3RkPjx0ZD4yMDI2LTEwLTEzPFwvdGQ+PHRkPjIwMjYtMTAtMjI8XC90ZD48dGQ+MjAyNi0xMC0yMzxcL3RkPjxcL3RyPjx0cj48dGQ+MjAyNi0xMC0yMDxcL3RkPjx0ZD4yMDI2LTEwLTIwPFwvdGQ+PHRkPjxcL3RkPjx0ZD48XC90ZD48XC90cj48dHI+PHRkPjIwMjYtMTAtMjc8XC90ZD48dGQ+MjAyNi0xMC0yNzxcL3RkPjx0ZD48XC90ZD48dGQ+PFwvdGQ+PFwvdHI+PFwvdGJvZHk+PFwvdGFibGU+IiwibGluayI6Ijx0YWJsZSBib3JkZXI9JzAnPjx0Ym9keT48dHIgY2xhc3M9XCJoZWFkXCI+PHRoIHNjb3BlPVwiY29sXCI+QklPPFwvdGg+PFwvdHI+PHRyIGNsYXNzPVwiZGF0YVwiPjx0ZD4yMDI2LTEwLTEzPFwvdGQ+PFwvdHI+PHRyIGNsYXNzPVwiZGF0YVwiPjx0ZD4yMDI2LTEwLTIwPFwvdGQ+PFwvdHI+PHRyIGNsYXNzPVwiZGF0YVwiPjx0ZD4yMDI2LTEwLTI3PFwvdGQ+PFwvdHI+PHRyIGNsYXNzPVwiaGVhZFwiPjx0aCBzY29wZT1cImNvbFwiPnptaWVzemFuZTxcL3RoPjxcL3RyPjx0ciBjbGFzcz1cImRhdGFcIj48dGQ+MjAyNi0xMC0xMzxcL3RkPjxcL3RyPjx0ciBjbGFzcz1cImRhdGFcIj48dGQ+MjAyNi0xMC0yMDxcL3RkPjxcL3RyPjx0ciBjbGFzcz1cImRhdGFcIj48dGQ+MjAyNi0xMC0yNzxcL3RkPjxcL3RyPjx0ciBjbGFzcz1cImhlYWRcIj48dGggc2NvcGU9XCJjb2xcIj50d29yenl3YTxcL3RoPjxcL3RyPjx0ciBjbGFzcz1cImRhdGFcIj48dGQ+MjAyNi0xMC0yMjxcL3RkPjxcL3RyPjx0ciBjbGFzcz1cImhlYWRcIj48dGggc2NvcGU9XCJjb2xcIj5wYXBpZXI8XC90aD48XC90cj48dHIgY2xhc3M9XCJkYXRhXCI+PHRkPjIwMjYtMTAtMjM8XC90ZD48XC90cj48XC90Ym9keT48XC90YWJsZT4ifQ=="
+    }
+  ]
+}
