@@ -1,13 +1,19 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import house_number, municipality, street
-from waste_collection_schedule.service.MontpellierCollectionReference import (
-    CalendarParser,
-    CalendarRetriever,
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    Deduplicate,
+    RecurrenceExpander,
 )
-from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.service.MontpellierCollectionReference import (
+    CollectionSchedules,
+    calendar_retriever,
+)
+from waste_collection_schedule.transformers import RowTransformer
 
 
 @final
@@ -42,11 +48,14 @@ class Source(BaseSource):
         municipality("commune", optional=True),
     )
 
-    retrieve = CalendarRetriever()
-    parse = CalendarParser()
-    transform = JsonTransformer(
-        date_key="date",
-        type_key="type",
+    retrieve = calendar_retriever
+    parse = parsers.CsvParser()
+    preprocess = Compose(
+        CollectionSchedules(),
+        RecurrenceExpander(lambda schedule, _: (schedule,)),
+        Deduplicate(),
+    )
+    transform = RowTransformer(
         type_value_map={
             "Ordures ménagères": wt.GENERAL_WASTE,
             "Tri sélectif": wt.RECYCLABLES,

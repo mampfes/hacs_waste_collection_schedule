@@ -2,7 +2,7 @@
 
 import json
 import time
-from datetime import date, datetime
+from datetime import date
 from typing import Any
 
 from bs4 import BeautifulSoup
@@ -10,7 +10,6 @@ from curl_cffi import requests
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
 
 ADDRESS_SUGGESTION_URL = (
@@ -90,37 +89,9 @@ class _CalendarClient:
                 year += 1
         return responses
 
-    def parse(self, responses):
-        entries = []
-        for response in responses:
-            soup = BeautifulSoup(response.text, "html.parser")
-            for wrapper in soup.select(".collectionCalendar__date-wrapper"):
-                date_el = wrapper.select_one(".collectionCalendar__date-text")
-                if date_el is None:
-                    continue
-                collection_date = datetime.strptime(
-                    date_el.get_text(strip=True), "%d.%m.%y"
-                ).date()
-                for fraction_el in wrapper.select(".collectionCalendar__fraction-text"):
-                    fraction = fraction_el.get_text(strip=True).lstrip(", ").strip()
-                    if fraction:
-                        entries.append({"date": collection_date, "type": fraction})
-        return entries
-
 
 class CalendarRetriever(RetrieverFunc):
     def __call__(self, source: BaseSource) -> Any:
         client = _CalendarClient(**source.params)
         client._session = source.session
         return client.retrieve()
-
-
-class CalendarParser(Parser[list[dict[str, Any]]]):
-    def __call__(
-        self, response: Any, source: BaseSource | None = None
-    ) -> list[dict[str, Any]]:
-        if source is None:
-            raise ValueError("Calendar parser requires a source")
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.parse(response)

@@ -3,11 +3,17 @@ from typing import ClassVar, final
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    RecurrenceExpander,
+    RowFilter,
+)
 from waste_collection_schedule.service.AksdCalendar import (
     CalendarParser,
     CalendarRetriever,
+    in_season,
 )
-from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.transformers import RowTransformer
 
 
 @final
@@ -31,9 +37,11 @@ class Source(BaseSource):
 
     retrieve = CalendarRetriever()
     parse = CalendarParser()
-    transform = JsonTransformer(
-        date_key="date",
-        type_key="type",
+    preprocess = Compose(
+        RecurrenceExpander(lambda schedule, _: (schedule,)),
+        RowFilter(in_season),
+    )
+    transform = RowTransformer(
         type_value_map={
             "General waste": wt.GENERAL_WASTE,
             "Recycling": wt.RECYCLABLES,

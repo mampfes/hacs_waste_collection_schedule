@@ -1,15 +1,14 @@
 """BelfastBinCalendar retrieval and parsing, using the pipeline HTTP session."""
 
 import logging
-import re
-from datetime import datetime
 from typing import Any
 
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup
 
+from waste_collection_schedule import date_parsers
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.parsers import HtmlLabelledDates
+from waste_collection_schedule.retrievers import RetrieverFunc, form_inputs
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,16 +32,6 @@ class _CalendarClient:
         self._postcode = postcode.strip().upper()
         self._uprn = uprn
 
-    @staticmethod
-    def _get_form_value(soup: BeautifulSoup, name: str) -> str:
-        field = soup.find("input", {"name": name})
-        if not isinstance(field, Tag):
-            raise ValueError(f"Could not find form field: {name}")
-        value = field.get("value")
-        if not isinstance(value, str):
-            raise ValueError(f"Could not find value for form field: {name}")
-        return value
-
     def retrieve(self):
         """Fetch waste collection schedule."""
         session = self._session
@@ -50,18 +39,18 @@ class _CalendarClient:
         response = session.get(API_URL, timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
-        viewstate = self._get_form_value(soup, "__VIEWSTATE")
-        viewstate_generator = self._get_form_value(soup, "__VIEWSTATEGENERATOR")
-        event_validation = self._get_form_value(soup, "__EVENTVALIDATION")
+        state = form_inputs(
+            soup, required=("__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION")
+        )
         _LOGGER.debug(f"Submitting postcode: {self._postcode}")
         postcode_data = {
             "__EVENTTARGET": "",
             "__EVENTARGUMENT": "",
-            "__VIEWSTATE": viewstate,
-            "__VIEWSTATEGENERATOR": viewstate_generator,
+            "__VIEWSTATE": state["__VIEWSTATE"],
+            "__VIEWSTATEGENERATOR": state["__VIEWSTATEGENERATOR"],
             "__SCROLLPOSITIONX": "0",
             "__SCROLLPOSITIONY": "0",
-            "__EVENTVALIDATION": event_validation,
+            "__EVENTVALIDATION": state["__EVENTVALIDATION"],
             "ctl00$MainContent$searchBy_radio": "P",
             "ctl00$MainContent$Street_textbox": "",
             "ctl00$MainContent$Postcode_textbox": self._postcode,
@@ -73,9 +62,9 @@ class _CalendarClient:
         error_msg = soup.find("span", {"id": "lblPostcodeError"})
         if error_msg and error_msg.get("style") != "display:none":
             raise ValueError(f"Error from website: {error_msg.get_text(strip=True)}")
-        viewstate = self._get_form_value(soup, "__VIEWSTATE")
-        viewstate_generator = self._get_form_value(soup, "__VIEWSTATEGENERATOR")
-        event_validation = self._get_form_value(soup, "__EVENTVALIDATION")
+        state = form_inputs(
+            soup, required=("__VIEWSTATE", "__VIEWSTATEGENERATOR", "__EVENTVALIDATION")
+        )
         address_select = soup.find("select", {"id": "lstAddresses"})
         if not address_select:
             raise ValueError(f"No addresses found for postcode: {self._postcode}")
@@ -100,11 +89,11 @@ class _CalendarClient:
         address_data = {
             "__EVENTTARGET": "",
             "__EVENTARGUMENT": "",
-            "__VIEWSTATE": viewstate,
-            "__VIEWSTATEGENERATOR": viewstate_generator,
+            "__VIEWSTATE": state["__VIEWSTATE"],
+            "__VIEWSTATEGENERATOR": state["__VIEWSTATEGENERATOR"],
             "__SCROLLPOSITIONX": "0",
             "__SCROLLPOSITIONY": "0",
-            "__EVENTVALIDATION": event_validation,
+            "__EVENTVALIDATION": state["__EVENTVALIDATION"],
             "ctl00$MainContent$searchBy_radio": "P",
             "ctl00$MainContent$Street_textbox": "",
             "ctl00$MainContent$Postcode_textbox": self._postcode,
@@ -115,35 +104,6 @@ class _CalendarClient:
         response.raise_for_status()
         return response
 
-    def parse(self, response):
-        return self._parse_schedule(response.text)
-
-    def _parse_schedule(self, html: str):
-        """Parse the bin collection schedule from HTML."""
-        soup = BeautifulSoup(html, "html.parser")
-        table = soup.find("table", {"id": "ItemsGrid"})
-        if not table:
-            raise ValueError("Could not find bin collection schedule table")
-        entries = []
-        rows = table.find_all("tr")[1:]
-        for row in rows:
-            cols = row.find_all("td")
-            if len(cols) != 4:
-                continue
-            bin_type = cols[0].get_text(strip=True)
-            next_collection = cols[3].get_text(strip=True)
-            try:
-                next_collection = re.sub("\\s+", " ", next_collection)
-                date = datetime.strptime(next_collection, "%a %b %d %Y").date()
-                entries.append({"date": date, "type": bin_type})
-                _LOGGER.debug(f"Added collection: {bin_type} on {date}")
-            except ValueError as e:
-                _LOGGER.warning(f"Could not parse date '{next_collection}': {e}")
-                continue
-        if not entries:
-            raise ValueError("No bin collection entries found")
-        return entries
-
 
 class CalendarRetriever(RetrieverFunc):
     def __call__(self, source: BaseSource) -> Any:
@@ -152,12 +112,24 @@ class CalendarRetriever(RetrieverFunc):
         return client.retrieve()
 
 
-class CalendarParser(Parser[list[dict[str, Any]]]):
-    def __call__(
-        self, response: Any, source: BaseSource | None = None
-    ) -> list[dict[str, Any]]:
-        if source is None:
-            raise ValueError("Calendar parser requires a source")
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.parse(response)
+class CalendarParser(HtmlLabelledDates):
+    """Configure the shared row parser for Belfast's four-column results."""
+
+    def __init__(self):
+        super().__init__(
+            "#ItemsGrid tr:has(> td:nth-of-type(4)):not(:has(> td:nth-of-type(5)))",
+            label="td:nth-of-type(1)",
+            date="td:nth-of-type(4)",
+            parse_date=date_parsers.for_format("%a %b %d %Y"),
+        )
+
+    def __call__(self, response: Any, source: BaseSource | None = None):
+        if (
+            BeautifulSoup(response.text, "html.parser").find("table", id="ItemsGrid")
+            is None
+        ):
+            raise ValueError("Could not find bin collection schedule table")
+        entries = super().__call__(response, source)
+        if not entries:
+            raise ValueError("No bin collection entries found")
+        return entries

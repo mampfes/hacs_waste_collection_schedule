@@ -8574,3 +8574,132 @@ def test_the_source_cassette_backlog_is_not_stale() -> None:
         f"{recorded} now ship a cassette. Delete them from "
         "SOURCES_AWAITING_CASSETTE so the backlog reflects real debt."
     )
+
+
+class TestSharedCalendarRefactoring:
+    """Provider adapters keep their boundaries when using shared pipeline steps."""
+
+    def test_rir_ignores_fraction_labels_that_only_contain_separators(self):
+        from waste_collection_schedule.source.rir_no import Source
+
+        response = SimpleNamespace(
+            status_code=200,
+            text="""
+                <div class="collectionCalendar__date-wrapper">
+                    <span class="collectionCalendar__date-text">14.10.26</span>
+                    <span class="collectionCalendar__fraction-text">, </span>
+                    <span class="collectionCalendar__fraction-text">, Restavfall</span>
+                </div>
+            """,
+        )
+        rows = Source.parse(response)
+        entries = [collection for row in rows if (collection := Source.transform(row))]
+        assert len(entries) == 1
+        assert entries[0].date == datetime.date(2026, 10, 14)
+
+    def test_form_state_handles_uppercase_hidden_inputs_and_empty_values(self):
+        from waste_collection_schedule.retrievers import form_inputs
+
+        page = """
+            <input type="HIDDEN" name="__VIEWSTATE" value="current-state">
+            <input type="hidden" name="__EVENTARGUMENT" value="">
+            <input name="postcode" value="BT9 6DG">
+            <input type="hidden" value="unnamed">
+        """
+        assert form_inputs(page, hidden_only=True) == {
+            "__VIEWSTATE": "current-state",
+            "__EVENTARGUMENT": "",
+        }
+        assert form_inputs(page, required=("__EVENTARGUMENT",))["postcode"] == "BT9 6DG"
+
+    @pytest.mark.parametrize(
+        "page,message",
+        [
+            ("<html></html>", "Could not find form field"),
+            ('<input name="__VIEWSTATE">', "Could not find value for form field"),
+        ],
+    )
+    def test_missing_form_state_fails_before_a_postback(self, page, message):
+        from waste_collection_schedule.retrievers import form_inputs
+
+        with pytest.raises(ValueError, match=message):
+            form_inputs(page, required=("__VIEWSTATE",))
+
+    def test_sivom_odd_weeks_keep_both_iso_week_53_and_week_1(self):
+        from waste_collection_schedule.service.SivomCalendar import _parse_schedule
+        from waste_collection_schedule.source.sivom_com import Source
+
+        schedules = _parse_schedule(
+            "lundi des semaines impaires",
+            datetime.date(2020, 12, 28),
+            "Bac vert (Résiduels)",
+            days_ahead=14,
+        )
+        assert list(Source.preprocess(schedules)) == [
+            (datetime.date(2020, 12, 28), "Bac vert (Résiduels)"),
+            (datetime.date(2021, 1, 4), "Bac vert (Résiduels)"),
+        ]
+
+    def test_sivom_garden_season_includes_march_15_and_excludes_december_15(self):
+        from waste_collection_schedule.preprocessors import Schedule
+        from waste_collection_schedule.source.sivom_com import Source
+
+        garden = "Bac marron (Végétaux)"
+        dates = [
+            datetime.date(2024, 3, 14),
+            datetime.date(2024, 3, 15),
+            datetime.date(2024, 12, 14),
+            datetime.date(2024, 12, 15),
+        ]
+        schedules = [Schedule(garden, day) for day in dates]
+        schedules.append(Schedule("Bac vert (Résiduels)", dates[0]))
+        assert list(Source.preprocess(schedules)) == [
+            (dates[1], garden),
+            (dates[2], garden),
+            (dates[0], "Bac vert (Résiduels)"),
+        ]
+
+    def test_aksd_odd_weeks_do_not_drift_at_the_new_year(self):
+        from waste_collection_schedule.source.aksd_hu import Source
+
+        response = SimpleNamespace(
+            text="const wasteCalendarStreets = "
+            + json.dumps(
+                [
+                    {
+                        "label": "Test street",
+                        "options": {
+                            "black": ["Minden páratlan héten csütörtök"],
+                            "brown": ["Csütörtök"],
+                        },
+                    },
+                ]
+            )
+            + ";\n"
+        )
+        source = Source(street="Test street")
+        with freeze_time("2020-12-31"):
+            rows = list(source.preprocess(source.parse(response, source), source))
+        assert (datetime.date(2020, 12, 31), "General waste") in rows
+        assert (datetime.date(2021, 1, 7), "General waste") in rows
+        assert (datetime.date(2021, 1, 14), "General waste") not in rows
+        assert (datetime.date(2020, 12, 31), "Garden waste (bin)") in rows
+        assert (datetime.date(2021, 1, 7), "Garden waste (bin)") not in rows
+        assert (datetime.date(2021, 3, 4), "Garden waste (bin)") in rows
+
+    def test_montpellier_starts_after_today_and_deduplicates_overlapping_rows(self):
+        from waste_collection_schedule.source.data_montpellier3m_fr import Source
+
+        source = Source(street_name="Rue Test", house_number=3, commune="MONTPELLIER")
+        row = {
+            "nom_voie": "R TEST",
+            "numero": "3",
+            "commune": "MONTPELLIER",
+            "om_jour": "W",
+            "om_typ_col": "PAP",
+        }
+        with freeze_time("2026-10-14"):
+            rows = list(source.preprocess([row, dict(row)], source))
+        assert len(rows) == 8
+        assert rows[0] == (datetime.date(2026, 10, 21), "Ordures ménagères")
+        assert rows[-1] == (datetime.date(2026, 12, 9), "Ordures ménagères")

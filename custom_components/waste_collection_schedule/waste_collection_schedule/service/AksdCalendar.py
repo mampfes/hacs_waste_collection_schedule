@@ -6,12 +6,14 @@ import unicodedata
 from datetime import date, timedelta
 from typing import Any
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.preprocessors import Schedule
 from waste_collection_schedule.retrievers import RetrieverFunc
 
 NAME_MAP = {
@@ -26,15 +28,6 @@ SEASON_MONTHS = range(3, 13)
 ZIP_CODE = "4024"
 CALENDAR_URL = "https://www.aksd.hu/hulladeknaptar"
 ZIP_URL = "https://www.aksd.hu/ajax/save_customer_zip"
-WEEKDAYS = {
-    "hetfo": 0,
-    "kedd": 1,
-    "szerda": 2,
-    "csutortok": 3,
-    "pentek": 4,
-    "szombat": 5,
-    "vasarnap": 6,
-}
 DAYS_AHEAD = 366
 
 
@@ -48,7 +41,11 @@ def _parse_rule(text: str) -> tuple[bool, set[int]]:
     "Csütörtök" or "Minden páratlan héten kedd vagy péntek"."""
     norm = _normalize(text)
     odd_only = "paratlan" in norm
-    days = {WEEKDAYS[w] for w in re.findall("[a-z]+", norm) if w in WEEKDAYS}
+    days = {
+        day
+        for word in re.findall("[a-z]+", norm)
+        if (day := recurrence.weekday(word)) is not None
+    }
     return (odd_only, days)
 
 
@@ -106,24 +103,28 @@ class _CalendarClient:
                 )
             raise SourceArgumentNotFound("street", self._street)
         today = date.today()
-        entries: list[dict] = []
+        schedules = []
         for bin_type, rules in street["options"].items():
             for rule in rules:
                 odd_only, weekdays = _parse_rule(rule)
-                if not weekdays:
-                    continue
-                for offset in range(DAYS_AHEAD):
-                    day = today + timedelta(days=offset)
-                    if day.weekday() not in weekdays:
-                        continue
-                    if odd_only and day.isocalendar()[1] % 2 == 0:
-                        continue
-                    if bin_type in SEASONAL_TYPES and day.month not in SEASON_MONTHS:
-                        continue
-                    entries.append(
-                        {"date": day, "type": NAME_MAP.get(bin_type, bin_type)}
+                for weekday in sorted(weekdays):
+                    schedules.append(
+                        Schedule(
+                            key=NAME_MAP.get(bin_type) or str(bin_type),
+                            start=recurrence.next_weekday(weekday, on_or_after=today),
+                            until=today + timedelta(days=DAYS_AHEAD - 1),
+                            iso_week_parity="odd" if odd_only else None,
+                        )
                     )
-        return entries
+        return schedules
+
+
+def in_season(row, _source) -> bool:
+    collection_date, label = row
+    return (
+        label not in {NAME_MAP[t] for t in SEASONAL_TYPES}
+        or collection_date.month in SEASON_MONTHS
+    )
 
 
 class CalendarRetriever(RetrieverFunc):
@@ -133,10 +134,10 @@ class CalendarRetriever(RetrieverFunc):
         return client.retrieve()
 
 
-class CalendarParser(Parser[list[dict[str, Any]]]):
+class CalendarParser(Parser[list[Schedule]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
-    ) -> list[dict[str, Any]]:
+    ) -> list[Schedule]:
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)

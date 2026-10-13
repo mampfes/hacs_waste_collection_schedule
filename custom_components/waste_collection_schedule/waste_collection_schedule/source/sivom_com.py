@@ -3,11 +3,17 @@ from typing import ClassVar, final
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import municipality, street
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    RecurrenceExpander,
+    RowFilter,
+)
 from waste_collection_schedule.service.SivomCalendar import (
     CalendarParser,
-    CalendarRetriever,
+    calendar_retriever,
+    in_season,
 )
-from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.transformers import RowTransformer
 
 
 @final
@@ -30,11 +36,13 @@ class Source(BaseSource):
         street(),
     )
 
-    retrieve = CalendarRetriever()
+    retrieve = calendar_retriever
     parse = CalendarParser()
-    transform = JsonTransformer(
-        date_key="date",
-        type_key="type",
+    preprocess = Compose(
+        RecurrenceExpander(lambda schedule, _: (schedule,)),
+        RowFilter(in_season),
+    )
+    transform = RowTransformer(
         type_value_map={
             "Bac vert (Résiduels)": wt.GENERAL_WASTE,
             "Bac jaune (Emballages)": wt.RECYCLABLES,

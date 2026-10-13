@@ -11,7 +11,7 @@ from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.retrievers import Request
 
 DATA_URL = "https://www.terrestouloises.com/terres-touloises-au-quotidien/gestion-des-dechets/collectes-des-ordures-menageres-et-recyclables/"
 COMMUNES = [
@@ -102,18 +102,11 @@ EXCEPTION_PATTERN = re.compile(
 
 
 class _CalendarClient:
-    _session: Any
-
     def __init__(self, commune: str):
         canonical = COMMUNES_NORMALIZED.get(_normalize_commune(commune))
         if canonical is None:
             raise SourceArgumentNotFoundWithSuggestions("commune", commune, COMMUNES)
         self.commune = canonical
-
-    def retrieve(self) -> Any:
-        response = self._session.get(DATA_URL, timeout=30)
-        response.raise_for_status()
-        return response
 
     def parse(self, response):
         soup = BeautifulSoup(response.text, "html.parser")
@@ -228,13 +221,6 @@ class _CalendarClient:
         ]
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
 class CalendarParser(Parser[list[dict[str, Any]]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
@@ -242,5 +228,11 @@ class CalendarParser(Parser[list[dict[str, Any]]]):
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)
-        client._session = source.session
         return client.parse(response)
+
+
+def _request_params(commune: str, **_) -> None:
+    _CalendarClient(commune)
+
+
+calendar_retriever = Request(DATA_URL, params=_request_params, timeout=30)

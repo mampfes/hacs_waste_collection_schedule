@@ -7,7 +7,7 @@ from waste_collection_schedule.regions import Region
 from waste_collection_schedule.service.TerresTouloisesCalendar import (
     COMMUNES,
     CalendarParser,
-    CalendarRetriever,
+    calendar_retriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -34,7 +34,7 @@ class Source(BaseSource):
     )
     PARAMS = (municipality("commune"),)
 
-    retrieve = CalendarRetriever()
+    retrieve = calendar_retriever
     parse = CalendarParser()
     transform = JsonTransformer(
         date_key="date",

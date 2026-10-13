@@ -11,7 +11,7 @@ from dateutil.rrule import FR, MO, MONTHLY, SA, SU, TH, TU, WE, WEEKLY, rrule
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.retrievers import Request
 
 DATA_URL = (
     "https://www.coeur-yvelines.fr/environnement/calendriers-de-collecte-des-dechets/"
@@ -89,8 +89,6 @@ MOIS_MAP = {
 
 
 class _CalendarClient:
-    _session: Any
-
     def __init__(self, commune: str):
         normalized = _normalize(commune)
         canonical = COMMUNES_NORMALIZED.get(normalized)
@@ -100,14 +98,6 @@ class _CalendarClient:
             )
         self.commune = canonical
         self._commune_id = COMMUNES[canonical]
-
-    def get_parsed_source(self) -> BeautifulSoup:
-        response = self._session.get(DATA_URL, params={"commune": self._commune_id})
-        response.raise_for_status()
-        return response
-
-    def retrieve(self):
-        return self.get_parsed_source()
 
     def parse(self, response):
         soup = BeautifulSoup(response.text, "html.parser")
@@ -219,13 +209,6 @@ class _CalendarClient:
         ]
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
 class CalendarParser(Parser[list[dict[str, Any]]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
@@ -233,5 +216,11 @@ class CalendarParser(Parser[list[dict[str, Any]]]):
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)
-        client._session = source.session
         return client.parse(response)
+
+
+def _request_params(commune: str, **_) -> dict:
+    return {"commune": _CalendarClient(commune)._commune_id}
+
+
+calendar_retriever = Request(DATA_URL, params=_request_params)

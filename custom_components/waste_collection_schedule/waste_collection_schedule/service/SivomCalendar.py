@@ -6,13 +6,15 @@ import re
 import unicodedata
 from typing import Any
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.preprocessors import Schedule
+from waste_collection_schedule.retrievers import Request
 
 _LOGGER = logging.getLogger(__name__)
 API_URL = "https://api.sivom.com/optimus/signalements/api_villes.php"
@@ -34,109 +36,54 @@ COMMUNES = [
     "YERRES",
 ]
 
-DAY_MAP = {
-    "lundi": 0,
-    "mardi": 1,
-    "mercredi": 2,
-    "jeudi": 3,
-    "vendredi": 4,
-    "samedi": 5,
-    "dimanche": 6,
-}
-DAY_MAP_PLURAL = {
-    "lundis": 0,
-    "mardis": 1,
-    "mercredis": 2,
-    "jeudis": 3,
-    "vendredis": 4,
-    "samedis": 5,
-    "dimanches": 6,
-}
-
 
 def _strip_accents(s: str) -> str:
     return unicodedata.normalize("NFD", s).encode("ascii", "ignore").decode("ascii")
 
 
-def _get_iso_week_parity(d: datetime.date) -> str:
-    return "odd" if d.isocalendar()[1] % 2 == 1 else "even"
-
-
 def _parse_schedule(
-    text: str | None, start: datetime.date, days_ahead: int = 365
-) -> list[datetime.date]:
+    text: str | None, start: datetime.date, key: str, days_ahead: int = 365
+) -> list[Schedule]:
+    """Read provider rules; the shared expander handles dates and ISO parity."""
     if not text:
         return []
-    cleaned = re.sub("\\s*\\(.*?\\)", "", text).strip()
-    cleaned_lower = cleaned.lower()
-    dates: list[datetime.date] = []
-    end = start + datetime.timedelta(days=days_ahead)
-    m = re.match("(\\w+)\\s+des\\s+semaines\\s+(impaires|paires)", cleaned_lower)
-    if m:
-        day_name, parity = m.groups()
-        weekday = DAY_MAP.get(day_name)
-        if weekday is not None:
-            target_parity = "odd" if parity == "impaires" else "even"
-            d = start
-            while d <= end:
-                if d.weekday() == weekday and _get_iso_week_parity(d) == target_parity:
-                    dates.append(d)
-                d += datetime.timedelta(days=1)
-            return dates
-    m = re.match("tous\\s+les\\s+(\\w+)", cleaned_lower)
-    if m:
-        day_name_plural = m.group(1)
-        weekday = DAY_MAP_PLURAL.get(day_name_plural)
-        if weekday is not None:
-            d = start
-            while d <= end:
-                if d.weekday() == weekday:
-                    dates.append(d)
-                d += datetime.timedelta(days=1)
-            return dates
-    m = re.match("(\\w+)\\s*[-–]\\s*(\\w+)", cleaned_lower)
-    if m:
-        day1, day2 = m.groups()
-        weekdays = []
-        if day1 in DAY_MAP:
-            weekdays.append(DAY_MAP[day1])
-        if day2 in DAY_MAP:
-            weekdays.append(DAY_MAP[day2])
-        if weekdays:
-            d = start
-            while d <= end:
-                if d.weekday() in weekdays:
-                    dates.append(d)
-                d += datetime.timedelta(days=1)
-            return dates
-    weekday = DAY_MAP.get(cleaned_lower)
-    if weekday is not None:
-        d = start
-        while d <= end:
-            if d.weekday() == weekday:
-                dates.append(d)
-            d += datetime.timedelta(days=1)
-        return dates
-    return []
+    cleaned = re.sub(r"\s*\(.*?\)", "", text).strip().lower()
+    parity = None
+    match = re.match(r"(\w+)\s+des\s+semaines\s+(impaires|paires)", cleaned)
+    if match:
+        day_name, week_parity = match.groups()
+        names = [day_name]
+        parity = "odd" if week_parity == "impaires" else "even"
+    elif match := re.match(r"tous\s+les\s+(\w+)", cleaned):
+        names = [match.group(1).removesuffix("s")]
+    elif match := re.match(r"(\w+)\s*[-–]\s*(\w+)", cleaned):
+        names = list(match.groups())
+    else:
+        names = [cleaned]
+    return [
+        Schedule(
+            key=key,
+            start=recurrence.next_weekday(day, on_or_after=start),
+            until=start + datetime.timedelta(days=days_ahead),
+            iso_week_parity=parity,
+        )
+        for name in names
+        if (day := recurrence.weekday(name)) is not None
+    ]
+
+
+def in_season(row, _source) -> bool:
+    collection_date, label = row
+    return label != "Bac marron (Végétaux)" or (3, 15) <= (
+        collection_date.month,
+        collection_date.day,
+    ) < (12, 15)
 
 
 class _CalendarClient:
-    _session: Any
-
     def __init__(self, commune: str, street: str):
         self._commune = _strip_accents(commune.upper().strip())
         self._street = street.strip()
-
-    def retrieve(self) -> Any:
-        if self._commune not in COMMUNES:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "commune", self._commune, COMMUNES
-            )
-        _LOGGER.debug("Fetching collection data for %s", self._commune)
-        params = {"action": "collectes_ville", "ville": self._commune}
-        response = self._session.get(API_URL, params=params, timeout=30)
-        response.raise_for_status()
-        return response
 
     def parse(self, response):
         data = response.json()
@@ -168,41 +115,31 @@ class _CalendarClient:
                 "street", self._street, suggestions
             )
         today = datetime.date.today()
-        entries: list[dict] = []
-        _LOGGER.debug(
-            "Found street '%s': bac_vert=%s, bac_jaune=%s, bac_marron=%s",
-            match.get("rue"),
-            match.get("bac_vert"),
-            match.get("bac_jaune"),
-            match.get("bac_marron"),
-        )
-        for d in _parse_schedule(match.get("bac_vert"), today):
-            entries.append({"date": d, "type": "Bac vert (Résiduels)"})
-        for d in _parse_schedule(match.get("bac_jaune"), today):
-            entries.append({"date": d, "type": "Bac jaune (Emballages)"})
-        for d in _parse_schedule(match.get("bac_marron"), today):
-            if (
-                not (d.month == 12 and d.day >= 15)
-                and d.month not in (1, 2)
-                and (not (d.month == 3 and d.day < 15))
-            ):
-                entries.append({"date": d, "type": "Bac marron (Végétaux)"})
-        return entries
+        schedules = []
+        for field, label in (
+            ("bac_vert", "Bac vert (Résiduels)"),
+            ("bac_jaune", "Bac jaune (Emballages)"),
+            ("bac_marron", "Bac marron (Végétaux)"),
+        ):
+            schedules.extend(_parse_schedule(match.get(field), today, label))
+        return schedules
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
-class CalendarParser(Parser[list[dict[str, Any]]]):
+class CalendarParser(Parser[list[Schedule]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
-    ) -> list[dict[str, Any]]:
+    ) -> list[Schedule]:
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)
-        client._session = source.session
         return client.parse(response)
+
+
+def _request_params(commune: str, **_) -> dict:
+    canonical = _strip_accents(commune.upper().strip())
+    if canonical not in COMMUNES:
+        raise SourceArgumentNotFoundWithSuggestions("commune", canonical, COMMUNES)
+    return {"action": "collectes_ville", "ville": canonical}
+
+
+calendar_retriever = Request(API_URL, params=_request_params, timeout=30)

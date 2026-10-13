@@ -1,14 +1,13 @@
 """MontpellierCollectionReference retrieval and parsing, using the pipeline HTTP session."""
 
-import csv
-import io
 from datetime import date, timedelta
 from typing import Any
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.preprocessors import Preprocessor, Schedule
+from waste_collection_schedule.retrievers import Request
 
 DAY_CODE_MAP = {"L": 0, "M": 1, "W": 2, "J": 3, "V": 4, "S": 5, "D": 6}
 STREET_TYPE_MAP = {
@@ -45,25 +44,22 @@ def _normalize_street(name: str) -> str:
     return " ".join(parts)
 
 
-def _dates_from_day_code(day_code: str, weeks: int = 8) -> list[date]:
-    today = date.today()
-    result = []
-    for code in day_code:
-        if code not in DAY_CODE_MAP:
-            continue
-        target_wd = DAY_CODE_MAP[code]
-        curr_wd = today.weekday()
-        diff = (target_wd - curr_wd) % 7
-        if diff == 0:
-            diff = 7
-        for week in range(weeks):
-            result.append(today + timedelta(days=diff + week * 7))
-    return result
+def _schedules_from_day_code(day_code: str, key: str, weeks: int = 8) -> list[Schedule]:
+    # The provider's projection starts strictly after today, including when
+    # today is itself a collection day.
+    tomorrow = date.today() + timedelta(days=1)
+    return [
+        Schedule(
+            key=key,
+            start=recurrence.next_weekday(DAY_CODE_MAP[code], on_or_after=tomorrow),
+            count=weeks,
+        )
+        for code in day_code
+        if code in DAY_CODE_MAP
+    ]
 
 
 class _CalendarClient:
-    _session: Any
-
     def __init__(
         self,
         street_name: str,
@@ -76,17 +72,10 @@ class _CalendarClient:
         )
         self._commune = commune.strip().upper() if commune else None
 
-    def retrieve(self) -> Any:
-        response = self._session.get(CSV_URL, timeout=120, verify=True)
-        response.raise_for_status()
-        return response
-
-    def parse(self, response):
-        content = response.content.decode("utf-8-sig")
-        reader = csv.DictReader(io.StringIO(content))
+    def parse(self, rows):
         normalized_input = _normalize_street(self._street_name)
         matching_rows = []
-        for row in reader:
+        for row in rows:
             voie = (row.get("nom_voie") or "").strip()
             if not voie:
                 continue
@@ -109,8 +98,7 @@ class _CalendarClient:
                 + (f" in {self._commune}" if self._commune else "")
                 + (f" at number {self._house_number}" if self._house_number else ""),
             )
-        entries: list[dict] = []
-        seen: set[tuple[str, date]] = set()
+        schedules = []
         for row in matching_rows:
             for jour_field, typ_field, label in WASTE_TYPES:
                 jour = (row.get(jour_field) or "").strip()
@@ -119,32 +107,23 @@ class _CalendarClient:
                     continue
                 if typ_col not in ("PAP", "PAV", "DEP"):
                     continue
-                for d in _dates_from_day_code(jour):
-                    key = (label, d)
-                    if key not in seen:
-                        seen.add(key)
-                        entries.append({"date": d, "type": label})
-        if not entries:
+                schedules.extend(_schedules_from_day_code(jour, label))
+        if not schedules:
             raise SourceArgumentNotFound(
                 "street_name",
                 f"Address found but no collection schedule available for '{self._street_name}'",
             )
-        return entries
+        return schedules
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
-class CalendarParser(Parser[list[dict[str, Any]]]):
+class CollectionSchedules(Preprocessor[Any, Schedule]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
-    ) -> list[dict[str, Any]]:
+    ) -> list[Schedule]:
         if source is None:
-            raise ValueError("Calendar parser requires a source")
+            raise ValueError("Collection schedules require a source")
         client = _CalendarClient(**source.params)
-        client._session = source.session
         return client.parse(response)
+
+
+calendar_retriever = Request(CSV_URL, timeout=120)

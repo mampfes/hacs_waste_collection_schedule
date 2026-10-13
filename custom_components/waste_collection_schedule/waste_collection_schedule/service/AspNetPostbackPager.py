@@ -22,7 +22,7 @@ from typing import TYPE_CHECKING, Any
 
 from bs4 import BeautifulSoup, Tag
 
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.retrievers import RetrieverFunc, form_inputs
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
@@ -78,11 +78,7 @@ class AspNetPostbackPager(RetrieverFunc):
         match = _POSTBACK.search(str(link.get("href", "")))
         if match is None:
             return None
-        form = {
-            str(tag["name"]): str(tag.get("value", ""))
-            for tag in soup.find_all("input", type="hidden")
-            if tag.get("name")
-        }
+        form = form_inputs(soup, hidden_only=True)
         form["__EVENTTARGET"] = match.group(1)
         form["__EVENTARGUMENT"] = match.group(2)
         return form

@@ -7,7 +7,7 @@ from typing import Any
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.retrievers import Request
 
 _API_URL = "https://wabi-west-europe-d-primary-api.analysis.windows.net/public/reports/querydata?synchronous=true"
 _RESOURCE_KEY = "d86dc3d4-e915-4460-b12e-c925d3ae6c75"
@@ -248,21 +248,8 @@ def _parse_dsr_response(data: dict) -> list[tuple[str, str]]:
 
 
 class _CalendarClient:
-    _session: Any
-
     def __init__(self, address: str):
         self._address = address
-
-    def retrieve(self) -> Any:
-        headers = {
-            "Content-Type": "application/json;charset=UTF-8",
-            "X-PowerBI-ResourceKey": _RESOURCE_KEY,
-        }
-        response = self._session.post(
-            _API_URL, headers=headers, json=_build_query(self._address)
-        )
-        response.raise_for_status()
-        return response
 
     def parse(self, response):
         data = response.json()
@@ -284,13 +271,6 @@ class _CalendarClient:
         return entries
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
 class CalendarParser(Parser[list[dict[str, Any]]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
@@ -298,5 +278,15 @@ class CalendarParser(Parser[list[dict[str, Any]]]):
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)
-        client._session = source.session
         return client.parse(response)
+
+
+calendar_retriever = Request(
+    _API_URL,
+    method="POST",
+    headers={
+        "Content-Type": "application/json;charset=UTF-8",
+        "X-PowerBI-ResourceKey": _RESOURCE_KEY,
+    },
+    json=lambda address, **_: _build_query(address),
+)

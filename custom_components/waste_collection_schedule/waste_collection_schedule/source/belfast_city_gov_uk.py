@@ -8,7 +8,7 @@ from waste_collection_schedule.service.BelfastBinCalendar import (
     CalendarParser,
     CalendarRetriever,
 )
-from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.transformers import RowTransformer
 
 
 @final
@@ -28,9 +28,7 @@ class Source(BaseSource):
 
     retrieve = CalendarRetriever()
     parse = CalendarParser()
-    transform = JsonTransformer(
-        date_key="date",
-        type_key="type",
+    transform = RowTransformer(
         type_value_map={
             "Recycling bin": wt.RECYCLABLES,
             "Compost bin": wt.ORGANIC,
