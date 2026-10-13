@@ -5903,7 +5903,9 @@
   },
   "bromsgrove_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bromsgrove_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and enter it with the postcode of the same address. The council is `bromsgrove` (default) or `redditch`."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -5963,7 +5965,9 @@
   },
   "canterbury_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/canterbury_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and your house number, or your house name if it has no number."
+    },
     "urls": {}
   },
   "cardiff_gov_uk": {
@@ -6103,7 +6107,9 @@
   },
   "cornwall_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cornwall_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Provide your UPRN, or provide both your postcode and house name or number. Find your UPRN at https://www.findmyaddress.co.uk/"
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6329,7 +6335,9 @@
   },
   "eaststaffsbc_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eaststaffsbc_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Search for your address on the [East Staffordshire collection dates page](https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates). The number at the end of the resulting address (`.../collection-dates/<uid>`) is your `uid`."
+    },
     "urls": {}
   },
   "eastsuffolk_gov_uk": {
@@ -6447,7 +6455,9 @@
   },
   "folkestone_hythe_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/folkestone_hythe_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/)."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7207,9 +7217,11 @@
   "oldham_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oldham_gov_uk.md",
     "howto": {
-      "en": "an easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details."
+      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) and entering your address details."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "oxford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/oxford_gov_uk.md",
@@ -7750,7 +7762,9 @@
   },
   "torbay_council_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/torbay_council_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Your Unique Property Reference Number (UPRN). Find yours at https://www.findmyaddress.co.uk/."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }

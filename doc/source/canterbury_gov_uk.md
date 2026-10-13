@@ -1,43 +1,39 @@
 # Canterbury City Council
 
-Support for schedules provided by [Canterbury City Council](https://www.canterbury.gov.uk/bins-and-waste/find-your-bin-collection-dates/), serving Canterbury (UK) and parts of Kent.
+Support for schedules provided by [Canterbury City Council](https://canterbury.gov.uk).
+
+Source for canterbury.gov.uk services for canterbury
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: canterbury_gov_uk
       args:
         post_code: POST_CODE
         number: NUMBER
-
 ```
 
 ### Configuration Variables
 
-**POST_CODE**  
+**post_code**  
 *(string) (required)*
 
-**NUMBER**  
+**number**  
 *(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: canterbury_gov_uk
       args:
-        post_code: "ct68ru"
-        number: "63"
+        post_code: ct68ru
+        number: '63'
 ```
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: canterbury_gov_uk
-      args:
-        post_code: "ct68ru"
-        number: "KOWLOON"
-```
+## How to get the source arguments
+
+Enter your postcode and your house number, or your house name if it has no number.

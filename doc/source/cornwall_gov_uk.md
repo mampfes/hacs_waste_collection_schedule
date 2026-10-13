@@ -1,45 +1,68 @@
 # Cornwall Council
 
-Support for schedules provided by [Cornwall Council](https://www.cornwall.gov.uk/), serving Truro, Bodmin, St Austell and much more
+Support for schedules provided by [Cornwall Council](https://cornwall.gov.uk).
 
-If collection data is available for the address provided, it will return food, rubbish and recycling waste collection dates.
+Source for cornwall.gov.uk services for Cornwall Council
 
 ## Configuration via configuration.yaml
 
+### Using uprn
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
+    - name: cornwall_gov_uk
+      args:
+        uprn: UPRN
+```
+
+### Using postcode and housenumberorname
+
+```yaml
+waste_collection_schedule:
+  sources:
     - name: cornwall_gov_uk
       args:
         postcode: POSTCODE
-        uprn:     UPRN
+        housenumberorname: HOUSENUMBERORNAME
 ```
 
 ### Configuration Variables
 
-**postcode**
-*(string) (optional)*
+**uprn**  
+*(string) (alternative)*
 
-**housenumberorname**
-*(string) (optional)*
+**postcode**  
+*(string) (alternative)*
 
-**uprn**
-*(string) (optional)*
+**housenumberorname**  
+*(string) (alternative)*
 
-Either the postcode and housenumberorname or the UPRN should be supplied in the arguments
+Provide one of: `uprn` or `postcode` + `housenumberorname`.
 
-## Examples
+## Example
+
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
+    - name: cornwall_gov_uk
+      args:
+        uprn: '100040118005'
+```
+
+### Using postcode and housenumberorname
+
+```yaml
+waste_collection_schedule:
+  sources:
     - name: cornwall_gov_uk
       args:
         postcode: TR261SP
-        housenumberorname: 7
-        uprn: 100040118005
+        housenumberorname: '7'
 ```
 
-## How to find your UPRN
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and providng your address details.
+Provide your UPRN, or provide both your postcode and house name or number. Find your UPRN at https://www.findmyaddress.co.uk/

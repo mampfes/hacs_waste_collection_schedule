@@ -4781,7 +4781,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Fermanagh and Omagh District Council](/doc/source/fermanaghomagh_gov_uk.md) / fermanaghomagh.com
 - [Fife Council](/doc/source/fife_gov_uk.md) / fife.gov.uk
 - [Flintshire](/doc/source/flintshire_gov_uk.md) / flintshire.gov.uk
-- [Folkestone and Hythe District Councol](/doc/source/folkestone_hythe_gov_uk.md) / folkestone-hythe.gov.uk
+- [Folkestone and Hythe District Council](/doc/source/folkestone_hythe_gov_uk.md) / folkestone-hythe.gov.uk
 - [Forest of Dean District Council](/doc/source/forest_of_dean_gov_uk.md) / fdean.gov.uk
 - [Fylde Council](/doc/source/fylde_gov_uk.md) / waste.fylde.gov.uk
 - [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
@@ -4907,7 +4907,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Reading Council](/doc/source/reading_gov_uk.md) / reading.gov.uk
 - [Redbridge Council](/doc/source/redbridge_gov_uk.md) / redbridge.gov.uk
 - [Redcar & Cleveland, UK](/doc/ics/recollect.md) / redcar-cleveland.gov.uk
-- [Redditch Borough Council](/doc/source/bromsgrove_gov_uk.md) / redditchbc.gov.uk
 - [Reigate & Banstead Borough Council](/doc/source/reigatebanstead_gov_uk.md) / reigate-banstead.gov.uk
 - [Renfrewshire Council](/doc/source/renfrewshire_gov_uk.md) / renfrewshire.gov.uk
 - [Rhondda Cynon Taf County Borough Council](/doc/source/rctcbc_gov_uk.md) / rctcbc.gov.uk
