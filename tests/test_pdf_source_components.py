@@ -5,9 +5,13 @@
 ``codes`` / ``weekday_order`` options of ``DayGridCalendarParser``.
 """
 
+import base64
 import datetime
+import json
 import os
+import re
 import sys
+from pathlib import Path
 from types import SimpleNamespace
 from typing import ClassVar
 
@@ -21,6 +25,7 @@ sys.path.append(
 )
 
 from waste_collection_schedule import (
+    Icons,
     lookups,
     parsers,
     preprocessors,
@@ -31,6 +36,7 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.parsers import PdfRow, PdfWord
 from waste_collection_schedule.response_shape import ResponseShapeError
+from waste_collection_schedule.service.EastLindseyCalendar import GardenCalendarParser
 from waste_collection_schedule.service.PdfTextCalendar import (
     GERMAN_WEEKDAY_ORDER,
     DayGridCalendarParser,
@@ -356,3 +362,112 @@ class TestPdfMonthBlocks:
         page = self.month(0, 30, "x", 2026, 12)[1:]
         with pytest.raises(ResponseShapeError):
             list(preprocessors.PdfMonthBlocks(labels=self.LABELS)(self.build(page)))
+
+
+_EAST_LINDSEY_FIXTURE = (
+    Path(__file__).parent / "fixtures/e_lindsey_gov_uk/_firbeck_avenue.json"
+)
+
+
+def _east_lindsey_pdf():
+    recording = json.loads(_EAST_LINDSEY_FIXTURE.read_text(encoding="utf-8"))
+    return SimpleNamespace(
+        content=base64.b64decode(recording["interactions"][2]["content_b64"])
+    )
+
+
+def test_east_lindsey_reads_the_published_winter_dates_and_printed_years():
+    # Use the real public Tuesday A PDF, even when the system year changes.
+    with freeze_time("2028-01-01"):
+        dates = GardenCalendarParser()(_east_lindsey_pdf())
+    assert len(dates) == 21
+    assert dates[0] == D(2026, 3, 31)
+    assert min(day for day in dates if day > D(2026, 10, 13)) == D(2026, 10, 27)
+    assert [day for day in dates if day >= D(2026, 11, 1)] == [
+        D(2026, 11, 10),
+        D(2026, 12, 8),
+        D(2027, 1, 19),
+        D(2027, 2, 16),
+        D(2027, 3, 16),
+    ]
+    assert D(2026, 11, 24) not in dates  # no projected fortnightly winter date
+    assert D(2027, 1, 5) not in dates  # extended Christmas gap in the PDF
+
+
+def test_east_lindsey_replays_the_complete_lookup_and_calendar_download():
+    import cassette
+    from waste_collection_schedule.source.e_lindsey_gov_uk import TEST_CASES, Source
+
+    with cassette.replaying(str(_EAST_LINDSEY_FIXTURE)):
+        entries = Source(**TEST_CASES["13 Firbeck Avenue, Skegness"]).fetch()
+    assert [(entry.date, entry.type) for entry in entries[:3]] == [
+        (D(2026, 10, 14), "Refuse"),
+        (D(2026, 11, 4), "Recycling"),
+        (D(2026, 10, 21), "Purple Bin"),
+    ]
+    garden = [entry for entry in entries if entry.type == "Garden Waste"]
+    assert len(garden) == 21
+    assert garden[-1].date == D(2027, 3, 16)
+    assert all(entry.icon == Icons.GARDEN.value for entry in garden)
+
+
+@pytest.mark.parametrize("pdf_id", [None, "", "null"])
+def test_east_lindsey_without_a_garden_subscription_does_not_fetch_a_pdf(
+    tmp_path, pdf_id
+):
+    import cassette
+    from waste_collection_schedule.source.e_lindsey_gov_uk import TEST_CASES, Source
+
+    recording = json.loads(_EAST_LINDSEY_FIXTURE.read_text(encoding="utf-8"))
+    reply = recording["interactions"][1]
+    html = base64.b64decode(reply["content_b64"]).decode("utf-8")
+    match = re.search(r'[A-Z0-9]+FormData\s*=\s*"([^"]+)"', html)
+    assert match is not None
+    payload = json.loads(base64.b64decode(match[1]))
+    payload["RESULTS_1"]["FIELD12"]["result"][0]["greenpdfid"] = pdf_id
+    encoded = base64.b64encode(json.dumps(payload).encode()).decode()
+    html = html.replace(match[1], encoded)
+    reply["content_b64"] = base64.b64encode(html.encode()).decode()
+    recording["interactions"] = recording["interactions"][:2]
+    path = tmp_path / "no_garden.json"
+    path.write_text(json.dumps(recording), encoding="utf-8")
+    with cassette.replaying(str(path)):
+        entries = Source(**TEST_CASES["13 Firbeck Avenue, Skegness"]).fetch()
+    assert [entry.type for entry in entries] == ["Refuse", "Recycling", "Purple Bin"]
+
+
+def test_east_lindsey_calendar_http_error_is_not_hidden_by_a_season_anchor(tmp_path):
+    import cassette
+    from waste_collection_schedule.source.e_lindsey_gov_uk import TEST_CASES, Source
+
+    recording = json.loads(_EAST_LINDSEY_FIXTURE.read_text(encoding="utf-8"))
+    recording["interactions"][2]["status"] = 503
+    path = tmp_path / "unavailable_calendar.json"
+    path.write_text(json.dumps(recording), encoding="utf-8")
+    with cassette.replaying(str(path)), pytest.raises(OSError, match="503"):
+        Source(**TEST_CASES["13 Firbeck Avenue, Skegness"]).fetch()
+
+
+@pytest.mark.parametrize("change", ["headers", "legend", "highlight", "no_dates"])
+def test_east_lindsey_changed_calendar_layout_fails_loudly(monkeypatch, change):
+    layout = parsers.PdfWordLayoutParser(include_form_text=True)(_east_lindsey_pdf())[0]
+    if change == "headers":
+        layout.lines[:] = [line for line in layout.lines if "2026" not in line.text]
+    elif change == "legend":
+        layout.lines[:] = [line for line in layout.lines if line.text != "Green Waste"]
+    else:
+        matches = [v for v in layout.vectors if v.fill_color == (0.573, 0.816, 0.314)]
+        if change == "highlight":
+            marker = next(v for v in matches if v.x1 - v.x0 > 10)
+            layout.words[:] = [
+                w
+                for w in layout.words
+                if not (marker.x0 <= w.x <= marker.x1 and marker.y0 <= w.y <= marker.y1)
+            ]
+        else:
+            layout.vectors[:] = [
+                v for v in layout.vectors if v not in matches or v.x1 - v.x0 < 10
+            ]
+    monkeypatch.setattr(parsers.PdfWordLayoutParser, "__call__", lambda *args: [layout])
+    with pytest.raises(ResponseShapeError):
+        GardenCalendarParser()(_east_lindsey_pdf())
