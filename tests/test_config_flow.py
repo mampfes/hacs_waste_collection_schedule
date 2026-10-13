@@ -73,6 +73,21 @@ def _marker_and_validator(schema: vol.Schema, field_name: str):
     raise KeyError(field_name)
 
 
+def test_legnica_provider_prefills_an_app_accepted_by_the_gui():
+    from waste_collection_schedule.source.ecoharmonogram_pl import Source
+
+    provider = next(region for region in Source.REGIONS() if region.title == "Legnica")
+    schema = _build_schema_from_params(
+        Source.PARAMS,
+        pre_filled=provider.params,
+        args_input=None,
+        include_title=False,
+    )
+    _, selector = _marker_and_validator(schema, "app")
+    assert selector("legnica") == "legnica"
+    assert provider.params["app"] == "legnica"
+
+
 def test_integer_selector_coerces_submitted_value() -> None:
     schema = _build_schema_from_params(
         [integer("count")],
