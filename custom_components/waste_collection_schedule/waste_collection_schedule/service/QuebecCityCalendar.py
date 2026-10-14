@@ -36,6 +36,16 @@ MONTH_NAMES = {
 }
 
 
+def _form_value(soup: BeautifulSoup, field_id: str) -> str:
+    field = soup.find("input", {"id": field_id})
+    if field is None:
+        raise ValueError(f"Missing address form field: {field_id}")
+    value = field.get("value")
+    if not isinstance(value, str):
+        raise ValueError(f"Invalid address form field: {field_id}")
+    return value
+
+
 class _CalendarClient:
     _session: Any
 
@@ -51,9 +61,9 @@ class _CalendarClient:
                 f"Failed to access {PROVIDER_URL}, status code: {response.status_code}"
             )
         soup = BeautifulSoup(response.text, "html.parser")
-        viewstate = soup.find("input", {"id": "__VIEWSTATE"})["value"]
-        eventvalidation = soup.find("input", {"id": "__EVENTVALIDATION"})["value"]
-        viewstategenerator = soup.find("input", {"id": "__VIEWSTATEGENERATOR"})["value"]
+        viewstate = _form_value(soup, "__VIEWSTATE")
+        eventvalidation = _form_value(soup, "__EVENTVALIDATION")
+        viewstategenerator = _form_value(soup, "__VIEWSTATEGENERATOR")
         form_data = {
             "__VIEWSTATE": viewstate,
             "__VIEWSTATEGENERATOR": viewstategenerator,
@@ -104,15 +114,13 @@ class _CalendarClient:
                     option_values[option_value] = address_text
                 if self._unique_id and self._unique_id in option_values:
                     form_data = {
-                        "__VIEWSTATE": result_soup.find("input", {"id": "__VIEWSTATE"})[
-                            "value"
-                        ],
-                        "__VIEWSTATEGENERATOR": result_soup.find(
-                            "input", {"id": "__VIEWSTATEGENERATOR"}
-                        )["value"],
-                        "__EVENTVALIDATION": result_soup.find(
-                            "input", {"id": "__EVENTVALIDATION"}
-                        )["value"],
+                        "__VIEWSTATE": _form_value(result_soup, "__VIEWSTATE"),
+                        "__VIEWSTATEGENERATOR": _form_value(
+                            result_soup, "__VIEWSTATEGENERATOR"
+                        ),
+                        "__EVENTVALIDATION": _form_value(
+                            result_soup, "__EVENTVALIDATION"
+                        ),
                         "ctl00$ctl00$contenu$texte_page$ucInfoCollecteRechercheAdresse$RechercheAdresse$ddChoix": self._unique_id,
                         "ctl00$ctl00$contenu$texte_page$ucInfoCollecteRechercheAdresse$RechercheAdresse$btnChoix": "Poursuivre",
                     }

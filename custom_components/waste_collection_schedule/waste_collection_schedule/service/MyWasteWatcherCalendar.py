@@ -75,13 +75,18 @@ class _CalendarClient:
         data: dict[str, str] = {}
         for inp in soup.find_all("input"):
             name = inp.get("name") or inp.get("id")
-            if not name:
+            if not isinstance(name, str) or not name:
                 continue
             itype = inp.get("type", "text")
             if itype == "hidden":
-                data[name] = inp.get("value", "")
+                value = inp.get("value") or ""
+                if not isinstance(value, str):
+                    raise ValueError("Invalid hidden form value")
+                data[name] = value
             elif itype == "text":
-                val = inp.get("value", "")
+                val = inp.get("value") or ""
+                if not isinstance(val, str):
+                    raise ValueError("Invalid text form value")
                 if val or "State" in name or "_VI" in name or ("DDD" in name):
                     data[name] = val
         return data
@@ -182,7 +187,8 @@ class _CalendarClient:
         if not table:
             return entries
         for row in table.find_all("tr"):
-            cls = " ".join(row.get("class", []))
+            classes = row.get("class") or ""
+            cls = " ".join(classes) if isinstance(classes, list) else classes
             if "dxgvDataRow" not in cls:
                 continue
             cells = [td.get_text(strip=True) for td in row.find_all("td")]
@@ -248,7 +254,11 @@ class _CalendarClient:
         btn = soup.find("input", {"id": _FORM_ID + "btnTermineHolen_I"})
         data = self._build_base_form(soup)
         if btn is not None:
-            data[btn["name"]] = btn.get("value") or "Termine abrufen"
+            button_name = btn.get("name")
+            button_value = btn.get("value") or "Termine abrufen"
+            if not isinstance(button_name, str) or not isinstance(button_value, str):
+                raise ValueError("Invalid calendar submit control")
+            data[button_name] = button_value
         r = session.post(self._page_url, data=data)
         soup = self._parse_response(r)
         responses = [r]

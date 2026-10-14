@@ -164,7 +164,10 @@ def extract_month_row(tr: Tag) -> MonthRow:
     for td in tds:
         text = td.get_text(" ", strip=True)
         days = extract_day_numbers(text)
-        colspan = int(td.get("colspan", 1) or 1)
+        raw_colspan = td.get("colspan") or "1"
+        if not isinstance(raw_colspan, str):
+            raise ValueError("Invalid collection table colspan")
+        colspan = int(raw_colspan)
         value = days if text else []
         for _ in range(colspan):
             cols.append(value)

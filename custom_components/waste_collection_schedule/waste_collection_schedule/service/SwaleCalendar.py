@@ -71,10 +71,14 @@ class _CalendarClient:
 
     @staticmethod
     def _hidden_data(soup: BeautifulSoup) -> dict[str, str]:
-        return {
-            field["name"]: field.get("value", "")
-            for field in soup.select('input[type="hidden"][name]')
-        }
+        data = {}
+        for field in soup.select('input[type="hidden"][name]'):
+            name = field.get("name")
+            value = field.get("value") or ""
+            if not isinstance(name, str) or not isinstance(value, str):
+                raise ValueError("Swale lookup has an invalid hidden form field.")
+            data[name] = value
+        return data
 
     @staticmethod
     def _raise_for_unexpected_page(soup: BeautifulSoup, stage: str) -> None:

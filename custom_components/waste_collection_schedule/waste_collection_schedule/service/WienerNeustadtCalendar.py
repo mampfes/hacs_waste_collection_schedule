@@ -104,7 +104,10 @@ class _CalendarClient:
         for select in soup.find_all("select", {"name": "str_id"}):
             for option in select.find_all("option"):
                 option_text = option.get_text().strip()
-                option_value = option.get("value", "").strip()
+                value = option.get("value") or ""
+                if not isinstance(value, str):
+                    raise ValueError("Invalid street identifier")
+                option_value = value.strip()
                 if not option_value or option_value == "0":
                     continue
                 option_normalized = (
@@ -128,7 +131,10 @@ class _CalendarClient:
             )
         tn_ez_zone_input = soup.find("input", {"name": "tn_ez_zone", "type": "hidden"})
         if tn_ez_zone_input:
-            tn_ez_zone = tn_ez_zone_input.get("value")
+            value = tn_ez_zone_input.get("value")
+            if value is not None and not isinstance(value, str):
+                raise ValueError("Invalid collection zone")
+            tn_ez_zone = value
         try:
             reload_response = self._session.post(
                 initial_url, data={"str_id": str_id}, timeout=30
@@ -143,12 +149,18 @@ class _CalendarClient:
             "input", {"name": "tn_ez_zone", "type": "hidden"}
         )
         if tn_ez_zone_input:
-            tn_ez_zone = tn_ez_zone_input.get("value")
+            value = tn_ez_zone_input.get("value")
+            if value is not None and not isinstance(value, str):
+                raise ValueError("Invalid collection zone")
+            tn_ez_zone = value
         str_name_input = reload_soup.find(
             "input", {"name": "str_name", "type": "hidden"}
         )
         if str_name_input:
-            str_name_full = str_name_input.get("value")
+            value = str_name_input.get("value")
+            if value is not None and not isinstance(value, str):
+                raise ValueError("Invalid collection street name")
+            str_name_full = value
         return (str_id, str_name_full, tn_ez_zone)
 
     def _fetch_schedule(

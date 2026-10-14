@@ -7,6 +7,7 @@ import re
 from typing import Any
 
 from bs4 import BeautifulSoup, Tag
+from bs4.element import NavigableString
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.parsers import Parser
@@ -75,10 +76,10 @@ class _CalendarClient:
         if not isinstance(form_div, Tag):
             raise ValueError("Could not find address form")
         form = form_div.find_parent("form")
-        if not isinstance(form_div, Tag):
+        if not isinstance(form, Tag):
             raise ValueError("Could not find address form")
         action = form.get("action")
-        if not action:
+        if not isinstance(action, str) or not action:
             raise ValueError("Could not find form action")
         if action.startswith("/"):
             action = BASE_URL + action
@@ -88,7 +89,7 @@ class _CalendarClient:
         for input in inputs:
             name = input.get("name")
             value = input.get("value")
-            if name:
+            if isinstance(name, str) and name:
                 if name.endswith("Value"):
                     value = self._uprn
                 payload += PAYLOAD_SECTION_TEMPLATE.format(
@@ -122,8 +123,11 @@ class _CalendarClient:
         frequency: str | None = None
         week_day: str | None = None
         date: datetime.date | None = None
-        for sibling in heading.parent.contents:
-            if sibling.name == "strong":
+        container = heading.parent
+        if container is None:
+            raise ValueError("Could not find collection container")
+        for sibling in container.contents:
+            if isinstance(sibling, Tag) and sibling.name == "strong":
                 if waste_type is not None:
                     try:
                         entries.extend(
@@ -140,9 +144,9 @@ class _CalendarClient:
                     week_day = None
                     date = None
                 waste_type = sibling.text.strip()
-            if sibling.name == "span":
+            if isinstance(sibling, Tag) and sibling.name == "span":
                 frequency = sibling.text
-            if sibling.name is None:
+            if isinstance(sibling, NavigableString):
                 for day in DAYS:
                     if day.lower() in sibling.text.lower():
                         week_day = day
