@@ -2926,6 +2926,24 @@ class TestToolkitParsers:
         assert len(elements) == 1
         assert elements[0].h3.string == "Rubbish"
 
+    @pytest.mark.parametrize(
+        "payload, key",
+        [
+            ({"html": "<article>Unexpected calendar</article>"}, "html"),
+            ([{"html": "<article>Unexpected calendar</article>"}], (0, "html")),
+        ],
+    )
+    def test_html_parser_checks_required_shape_in_json_markup(
+        self, payload, key, caplog
+    ):
+        from waste_collection_schedule import parsers
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        parser = parsers.HtmlParser("article", from_json_key=key, require=("h3",))
+        with pytest.raises(ResponseShapeError, match="required element 'h3' not found"):
+            parser(payload)
+        assert "<article>Unexpected calendar</article>" in caplog.text
+
     def test_html_labelled_dates_all_labels_from_json_key(self):
         import datetime
 

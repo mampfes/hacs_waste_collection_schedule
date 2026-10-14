@@ -986,7 +986,7 @@ class HtmlParser(Parser[list[Tag]]):
                     bool(soup.select(sel)),
                     source_name=name,
                     detail=f"required element {sel!r} not found",
-                    raw=response.text,
+                    raw=markup,
                 )
         return soup.select(self.selector)[self.skip :]
 
@@ -1129,8 +1129,10 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
             return found.get_text(separator, strip=True) if found is not None else None
         caption = element.find(string=self.date_after)
         holder = caption.parent if caption is not None else None
-        sibling = holder.find_next_sibling() if isinstance(holder, Tag) else None
-        if not isinstance(sibling, Tag):
+        if holder is None or not isinstance(holder, Tag):
+            return None
+        sibling = holder.find_next_sibling()
+        if sibling is None or not isinstance(sibling, Tag):
             return None
         return sibling.get_text(separator, strip=True)
 
