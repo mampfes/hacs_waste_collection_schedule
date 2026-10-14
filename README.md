@@ -4005,6 +4005,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
 - [Helmond](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
 - [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
+- [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
 - [Irado](/doc/source/irado_nl.md) / irado.nl
 - [Land van Cuijk](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
 - [Maashorst](/doc/source/deafvalapp_nl.md) / deafvalapp.nl

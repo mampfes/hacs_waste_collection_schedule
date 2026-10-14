@@ -6408,7 +6408,9 @@
     "howto": {
       "en": "Search for your address on the Enfield Council collection-day page. If address lookup is ambiguous, use your UPRN from [Find My Address](https://www.findmyaddress.co.uk/)."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "eppingforestdc_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eppingforestdc_gov_uk.md",
@@ -7702,7 +7704,9 @@
     "howto": {
       "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "swansea_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swansea_gov_uk.md",
@@ -8390,9 +8394,7 @@
   },
   "wm_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wm_com.md",
-    "howto": {
-      "en": "Enter your WM service address. No account is needed — this uses the same guest lookup as wm.com/us/en/mywm/my-services/view-pickup-eta."
-    },
+    "howto": {},
     "urls": {}
   },
   "ciudad_de_la_costa_uy": {

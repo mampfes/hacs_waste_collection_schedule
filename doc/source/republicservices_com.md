@@ -1,6 +1,8 @@
 # Republic Services
 
-Support for schedules provided by [Republic Services](https://republicservices.com), serving the municipality all over the United States of America.
+Support for schedules provided by [Republic Services](https://www.republicservices.com).
+
+Source for Republic Services Collection.
 
 ## Configuration via configuration.yaml
 
@@ -19,54 +21,15 @@ waste_collection_schedule:
 *(string) (required)*
 
 **method**  
-*(int) (optional)*
+*(string) (optional)*
 
-_method: 1_
-
-Waste type categories are returned as per the Republic Services entries. This is the default behaviour if no arg is provided. 
-
-method: 2
-
-Recycling waste type categories described as Yard Waste, Bulk Waste are returned as a "Yard Waste", "Bulk Waste" waste type rather than source "Recycling", "Solid Waste" waste type.
-
-## Example (method: 1)
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: republicservices_com
       args:
-        street_address: "8957 Park Meadows Dr, Elk Grove, CA 95624"
+        street_address: 101 E Main St, Georgetown, KY 40324
         method: 1
 ```
-```bash
-2023-10-24 : Recycle [mdi:leaf]
-2023-10-31 : Recycle [mdi:recycle]
-2023-11-14 : Recycle [mdi:recycle]
-2023-11-28 : Recycle [mdi:recycle]
-2023-12-12 : Recycle [mdi:recycle]
-2023-12-26 : Recycle [mdi:recycle]
-2023-10-24 : Solid Waste [mdi:trash-can]
-```
-
-## Example (method: 2)
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: republicservices_com
-      args:
-        street_address: "8957 Park Meadows Dr, Elk Grove, CA 95624"
-        method: 2
-```
-```bash
-2023-10-24 : Yard Waste [mdi:leaf]
-2023-10-31 : Recycle [mdi:recycle]
-2023-11-14 : Recycle [mdi:recycle]
-2023-11-28 : Recycle [mdi:recycle]
-2023-12-12 : Recycle [mdi:recycle]
-2023-12-26 : Recycle [mdi:recycle]
-2023-10-24 : Solid Waste [mdi:trash-can]
-```
-## How to check the street address
-
-The street address can be tested [here](https://republicservices.com).

@@ -29244,6 +29244,12 @@
     {
       "title": "HVC Groep",
       "module": "hvcgroep_nl",
+      "default_params": {},
+      "id": "hvcgroep_nl"
+    },
+    {
+      "title": "HVC Groep",
+      "module": "hvcgroep_nl",
       "default_params": {
         "service": "hvcgroep"
       },
