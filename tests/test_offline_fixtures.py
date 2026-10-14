@@ -110,14 +110,15 @@ def _resolve_error_case(module_name: str, case_slug: str):
 def offline_throttle(module_name):
     """Skip provider request delays for every kind of cassette replay."""
     throttle_targets = {
-        "app_abfallplus_de": "AppAbfallplusDe.time.sleep",
-        "ahe_de": "AppAbfallplusDe.time.sleep",
-        "rir_no": "RirCalendar.time.sleep",
-        "swale_gov_uk": "SwaleCalendar.sleep",
+        "app_abfallplus_de": "service.AppAbfallplusDe.time.sleep",
+        "ahe_de": "service.AppAbfallplusDe.time.sleep",
+        "rir_no": "service.RirCalendar.time.sleep",
+        "swale_gov_uk": "service.SwaleCalendar.sleep",
+        "bexley_gov_uk": "retrievers.time.sleep",
     }
     target = throttle_targets.get(module_name)
     throttle = (
-        patch(f"waste_collection_schedule.service.{target}")
+        patch(f"waste_collection_schedule.{target}")
         if target is not None
         else nullcontext()
     )
