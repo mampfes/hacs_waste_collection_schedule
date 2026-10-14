@@ -36,6 +36,7 @@ from fixtures_support import (
     discover_fixtures,
     slug,
 )
+from offline_replay import assert_fallback_budget
 from test_declared_waste_types import assert_returned_waste_types_declared
 from waste_collection_schedule import exceptions as exceptions_module
 from waste_collection_schedule.collection import Collection
@@ -106,32 +107,38 @@ def _resolve_error_case(module_name: str, case_slug: str):
     return None, None
 
 
+@pytest.fixture
+def offline_throttle(module_name):
+    """Skip provider request delays for every kind of cassette replay."""
+    throttle_targets = {
+        "app_abfallplus_de": "service.AppAbfallplusDe.time.sleep",
+        "ahe_de": "service.AppAbfallplusDe.time.sleep",
+        "rir_no": "service.RirCalendar.time.sleep",
+        "swale_gov_uk": "service.SwaleCalendar.sleep",
+        "bexley_gov_uk": "retrievers.time.sleep",
+    }
+    target = throttle_targets.get(module_name)
+    throttle = (
+        patch(f"waste_collection_schedule.{target}")
+        if target is not None
+        else nullcontext()
+    )
+    with throttle:
+        yield
+
+
 @pytest.mark.parametrize(
     "module_name,case_slug,path",
     _FIXTURES,
     ids=[f"{m}::{c}" for m, c, _ in _FIXTURES],
 )
-def test_offline_replay(module_name, case_slug, path):
+def test_offline_replay(module_name, case_slug, path, offline_throttle):
     cls, args = _resolve_case(module_name, case_slug)
     assert cls is not None, (
         f"cassette {module_name}/{case_slug} has no matching TEST_CASE"
     )
 
-    # The provider's one-second request throttle has no purpose when HTTP is
-    # served from a cassette. Keep it active for live requests.
-    throttle_modules = {
-        "app_abfallplus_de": "AppAbfallplusDe",
-        "ahe_de": "AppAbfallplusDe",
-        "rir_no": "RirCalendar",
-    }
-    throttle = (
-        patch(
-            f"waste_collection_schedule.service.{throttle_modules[module_name]}.time.sleep"
-        )
-        if module_name in throttle_modules
-        else nullcontext()
-    )
-    with cassette.replaying(path), throttle:
+    with cassette.replaying(path):
         results = cls(**args).fetch()
 
     assert results, f"{module_name}::{case_slug}: replay produced no collections"
@@ -148,7 +155,7 @@ def test_offline_replay(module_name, case_slug, path):
     _ERROR_FIXTURES,
     ids=[f"{m}::{c}" for m, c, _ in _ERROR_FIXTURES],
 )
-def test_offline_replay_expected_error(module_name, case_slug, path):
+def test_offline_replay_expected_error(module_name, case_slug, path, offline_throttle):
     """Replay an ERROR_TEST_CASES cassette and check the same exception recurs.
 
     Counterpart to ``test_offline_replay`` for the failure path: a recorded
@@ -180,7 +187,7 @@ def test_offline_replay_expected_error(module_name, case_slug, path):
     _CHOICE_FIXTURES,
     ids=[m for m, _ in _CHOICE_FIXTURES],
 )
-def test_offline_choices(module_name, path):
+def test_offline_choices(module_name, path, offline_throttle):
     """Replay a dependent_select source's get_parent_choices/get_choices.
 
     Exercises the dependent_select config-flow contract offline: the recorded
@@ -291,24 +298,7 @@ def test_the_replay_fallback_budget_is_not_exceeded():
             "over a full pass"
         )
 
-    per_cassette = {p: cassette.REPLAY_FALLBACKS.get(p, 0) for p in paths}
-    total = sum(per_cassette.values())
-    served = sum(cassette.REPLAY_MATCHES.get(p, 0) for p in paths)
-    using = {p: n for p, n in per_cassette.items() if n}
-    worst = sorted(((n, p) for p, n in using.items()), reverse=True)[:10]
-    detail = "\n".join(f"    {n:>4}  {os.path.relpath(p)}" for n, p in worst)
-    summary = (
-        f"{total} of {served} replayed requests matched on the loose "
-        f"method+url fallback, across {len(using)} of {len(paths)} cassettes."
+    summary = assert_fallback_budget(
+        paths, cassette.REPLAY_FALLBACKS, cassette.REPLAY_MATCHES, FALLBACK_BUDGET
     )
     print(f"\ncassette fallback debt: {summary}")
-
-    assert total <= FALLBACK_BUDGET, (
-        f"{summary}\nThat is above the ceiling of {FALLBACK_BUDGET}. A fallback "
-        f"match is a request the cassette does not pin: its body is not "
-        f"compared, so a refactor can change what is sent and still replay "
-        f"green. Do not raise the ceiling. Re-record the cassette "
-        f"(`python tests/record_fixtures.py <module>`) so it carries request "
-        f"bodies, or fix whatever stopped the exact key matching.\n"
-        f"  worst offenders:\n{detail}"
-    )

@@ -2468,8 +2468,10 @@ class PdfTableParser(Parser["list[PdfRow]"]):
 
         # (page, y1, x0, x1, text) for every text run on every page.
         runs: list[tuple[int, float, float, float, str]] = []
+        # We sort text runs by coordinates below. Skip pdfminer's expensive
+        # reading-order grouping, which does not affect line text or geometry.
         for page_no, layout in enumerate(
-            extract_pages(BytesIO(response.content), laparams=LAParams())
+            extract_pages(BytesIO(response.content), laparams=LAParams(boxes_flow=None))
         ):
             for element in layout:
                 if not isinstance(element, LTTextContainer):
