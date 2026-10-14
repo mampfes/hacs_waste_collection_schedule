@@ -343,6 +343,17 @@ def _data_montpellier3m_fr(
         ).decode()
 
 
+def _nwrrr_com_au(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Drop zone geometry from the unfiltered all-councils feed; retain every property."""
+    for interaction in interactions:
+        if interaction["url"].endswith("/assets/all_councils.geojson"):
+            payload = _json(interaction)
+            for feature in payload.get("features", []):
+                feature.pop("geometry", None)
+                feature.pop("bbox", None)
+            _set_json(interaction, payload)
+
+
 SCRUBBERS: dict[str, Scrubber] = {
     "eth_erd_hu": _eth_erd_hu,
     "aksd_hu": _aksd_hu,
@@ -356,6 +367,7 @@ SCRUBBERS: dict[str, Scrubber] = {
     "czystyregion_pl": _czystyregion_pl,
     "gmina_sroda_slaska_pl": _gmina_sroda_slaska_pl,
     "sica_lu": _sica_lu,
+    "nwrrr_com_au": _nwrrr_com_au,
     "luxembourg_lu": _luxembourg_lu,
     "chesterfield_gov_uk": _chesterfield_gov_uk,
 }

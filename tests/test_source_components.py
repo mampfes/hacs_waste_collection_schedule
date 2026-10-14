@@ -169,8 +169,10 @@ def test_no_extra_ics_mds() -> None:
 
 
 def test_enfield_address_match_uses_whole_house_number() -> None:
-    module = _get_module("enfield_gov_uk")
-    normalized_input = module.Source._normalize_address("51 Example Road AB1 2CD")
+    module = import_module("waste_collection_schedule.service.EnfieldCalendar")
+    normalized_input = module._CalendarClient._normalize_address(
+        "51 Example Road AB1 2CD"
+    )
 
     correct_candidate = {
         "ADDRESS": "51, EXAMPLE ROAD, EXAMPLE, AB1 2CD",
@@ -185,8 +187,10 @@ def test_enfield_address_match_uses_whole_house_number() -> None:
         "POSTCODE_LOCATOR": "AB1 2CD",
     }
 
-    assert module.Source._matches_address(normalized_input, correct_candidate)
-    assert not module.Source._matches_address(normalized_input, embedded_candidate)
+    assert module._CalendarClient._matches_address(normalized_input, correct_candidate)
+    assert not module._CalendarClient._matches_address(
+        normalized_input, embedded_candidate
+    )
 
 
 def _param_translation_check(
@@ -1315,7 +1319,7 @@ def test_opencities_projection_is_off_unless_its_switch_param_is_set() -> None:
 
 
 def test_wm_com_parses_service_date_delay() -> None:
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     result = module._parse_holiday_message(
         "Due to the Thanksgiving holiday, your service on 11/24/2026 will be on "
@@ -1339,7 +1343,7 @@ def test_wm_com_parses_service_date_delay() -> None:
 def test_wm_com_keeps_no_year_holiday_on_today() -> None:
     from datetime import date as _date
 
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     result = module._parse_holiday_message(
         "Labor Day is on Monday, September 7th. Weekday collections will "
@@ -1358,7 +1362,7 @@ def test_wm_com_keeps_no_year_holiday_on_today() -> None:
 def test_wm_com_keeps_recent_no_year_holiday_in_current_year() -> None:
     from datetime import date as _date
 
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     result = module._parse_holiday_message(
         "Labor Day is on Monday, September 7th. Weekday collections will "
@@ -1377,7 +1381,7 @@ def test_wm_com_keeps_recent_no_year_holiday_in_current_year() -> None:
 def test_wm_com_rolls_stale_no_year_holiday_into_next_year() -> None:
     from datetime import date as _date
 
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     # Once the delayed collection week has fully passed, a year-less notice
     # refers to next year's occurrence rather than the one just gone.
@@ -1396,7 +1400,7 @@ def test_wm_com_rolls_stale_no_year_holiday_into_next_year() -> None:
 
 
 def test_wm_com_parses_weekday_collection_delays() -> None:
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     labor_day = module._parse_holiday_message(
         "Residential: Labor Day is on Monday, September 7th, 2026, and we will be "
@@ -1422,7 +1426,7 @@ def test_wm_com_parses_weekday_collection_delays() -> None:
 
 
 def test_wm_com_anchors_weekend_holiday_to_observed_weekday() -> None:
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     # 2026-11-01 is a Sunday, observed on Monday the 2nd: the whole of that
     # week's weekday collections shift.
@@ -1449,7 +1453,7 @@ def test_wm_com_anchors_weekend_holiday_to_observed_weekday() -> None:
 
 
 def test_wm_com_parses_delay_length_after_the_word_delay() -> None:
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     numeric_after = module._parse_holiday_message(
         "Due to the holiday, your service on 11/24/2026 will be on a delay of 2 days.",
