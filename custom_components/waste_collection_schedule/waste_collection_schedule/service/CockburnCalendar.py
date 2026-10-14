@@ -1,9 +1,10 @@
 """CockburnCalendar: provider retrieval and parsing using the shared verified HTTP session."""
 
 import re
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from typing import Any, TypedDict
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
@@ -56,14 +57,6 @@ class _CalendarClient:
         if property_no:
             self.property_no = str(property_no)
             self.search_method = "property_no"
-
-    def collect_dates(self, start_date, weeks):
-        dates = []
-        dates.append(start_date)
-        for _ in range(1, 4 // weeks):
-            start_date = start_date + timedelta(days=weeks * 7)
-            dates.append(start_date)
-        return dates
 
     def _search(self, query: str, search_method: str) -> list[dict]:
         search_value = re.sub("\\s+", "+", query.strip())
@@ -128,10 +121,10 @@ class _CalendarClient:
     def parse(self, data):
         entries: list[dict] = []
         if data:
-            date_rubbish = datetime.today()
-            while date_rubbish.strftime("%A") != data["BinDay"]:
-                date_rubbish += timedelta(days=1)
-            bin_dates = [date_rubbish.date()]
+            weekday = recurrence.weekday(data["BinDay"])
+            if weekday is None:
+                raise ValueError("Unknown published bin day")
+            bin_dates = [recurrence.next_weekday(weekday)]
             grn_bin_datetime = self.extract_date(data["GardenWaste"])
             grn_bin_dates = [grn_bin_datetime.date()] if grn_bin_datetime else []
             jnk_dates = [

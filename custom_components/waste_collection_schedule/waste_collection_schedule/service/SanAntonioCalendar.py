@@ -1,46 +1,29 @@
-"""SanAntonioCalendar: provider retrieval and parsing using the shared verified HTTP session."""
+"""San Antonio calendar URLs, parsing and provider holiday shifts."""
 
 from datetime import date, datetime, timedelta
 from typing import Any
 from urllib.parse import quote
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
 
 API_URL = "https://gis.sanantonio.gov/swmd/mycollectionday/Request.aspx?addr={addr}"
-DAY_OF_WEEK = {
-    "MONDAY": 0,
-    "TUESDAY": 1,
-    "WEDNESDAY": 2,
-    "THURSDAY": 3,
-    "FRIDAY": 4,
-    "SATURDAY": 5,
-    "SUNDAY": 6,
-}
 
 
-def _get_thanksgiving(year: int) -> date:
-    nov_first = date(year, 11, 1)
-    days_until_thursday = (3 - nov_first.weekday()) % 7
-    first_thursday = nov_first + timedelta(days=days_until_thursday)
-    return first_thursday + timedelta(weeks=3)
-
-
-def _get_mlk_day(year: int) -> date:
-    jan_first = date(year, 1, 1)
-    days_until_monday = (0 - jan_first.weekday()) % 7
-    first_monday = jan_first + timedelta(days=days_until_monday)
-    return first_monday + timedelta(weeks=2)
+def calendar_url(address: str) -> str:
+    if address is None or not address.strip():
+        raise SourceArgumentRequired("address", "Address is required")
+    return API_URL.format(addr=quote(address))
 
 
 def _get_shifting_holidays(year: int) -> list[date]:
     return [
-        _get_thanksgiving(year),
+        recurrence.monthly_nth_weekday(3, 4, on_or_after=date(year, 11, 1)),
         date(year, 12, 25),
         date(year, 1, 1),
-        _get_mlk_day(year),
+        recurrence.monthly_nth_weekday(0, 3, on_or_after=date(year, 1, 1)),
     ]
 
 
@@ -65,16 +48,12 @@ def _adjust_for_holidays(collection_date: date) -> date:
 
 
 def _get_next_day_of_week(day_name: str, *, weeks: int = 4) -> list[date]:
-    day_name = day_name.upper().strip()
-    if day_name not in DAY_OF_WEEK:
+    weekday = recurrence.weekday(day_name)
+    if weekday is None:
         return []
-    target_weekday = DAY_OF_WEEK[day_name]
-    today = date.today()
-    days_ahead = target_weekday - today.weekday()
-    if days_ahead < 0:
-        days_ahead += 7
-    first_date = today + timedelta(days=days_ahead)
-    dates = [first_date + timedelta(weeks=i) for i in range(weeks)]
+    dates = recurrence.recurring(
+        recurrence.next_weekday(weekday), recurrence.WEEKLY, weeks
+    )
     return [_adjust_for_holidays(d) for d in dates]
 
 
@@ -86,17 +65,10 @@ def _parse_week_of_date(date_str: str) -> date | None:
 
 
 class _CalendarClient:
-    _session: Any
-
     def __init__(self, address: str):
         if address is None or address.strip() == "":
             raise SourceArgumentRequired("address", "Address is required")
         self._address: str = address
-
-    def retrieve(self) -> Any:
-        r = self._session.get(API_URL.format(addr=quote(self._address)), timeout=30)
-        r.raise_for_status()
-        return r
 
     def parse(self, r):
         data = r.json()
@@ -127,13 +99,6 @@ class _CalendarClient:
         return entries
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
 class CalendarParser(Parser[list[dict[str, Any]]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
@@ -141,5 +106,5 @@ class CalendarParser(Parser[list[dict[str, Any]]]):
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)
-        client._session = source.session
+        response.raise_for_status()
         return client.parse(response)

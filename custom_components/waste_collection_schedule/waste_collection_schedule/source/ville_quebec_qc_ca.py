@@ -3,11 +3,11 @@ from typing import ClassVar, final
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address, text_field
+from waste_collection_schedule.parsers import HtmlCalendarGrid
 from waste_collection_schedule.service.QuebecCityCalendar import (
-    CalendarParser,
     CalendarRetriever,
 )
-from waste_collection_schedule.transformers import JsonTransformer
+from waste_collection_schedule.transformers import RowTransformer
 
 
 @final
@@ -37,11 +37,17 @@ class Source(BaseSource):
     )
 
     retrieve = CalendarRetriever()
-    parse = CalendarParser()
-    transform = JsonTransformer(
-        date_key="date",
-        type_key="type",
+    parse = HtmlCalendarGrid(
+        table="table.calendrier",
+        header="caption",
+        marker="p.img img",
+        attribute=("title", "alt"),
+    )
+    transform = RowTransformer(
         type_value_map={
+            "Ordures et résidus alimentaires": [wt.GENERAL_WASTE, wt.FOOD_WASTE],
+            "Recyclage": wt.RECYCLABLES,
+            "Feuilles": wt.GARDEN_WASTE,
             "Garbage": wt.GENERAL_WASTE,
             "Garbage and Food Waste": [wt.GENERAL_WASTE, wt.FOOD_WASTE],
             "Recycling": wt.RECYCLABLES,

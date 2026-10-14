@@ -8893,3 +8893,29 @@ class TestSharedCalendarRefactoring:
         assert len(rows) == 8
         assert rows[0] == (datetime.date(2026, 10, 21), "Ordures ménagères")
         assert rows[-1] == (datetime.date(2026, 12, 9), "Ordures ménagères")
+
+
+@pytest.mark.parametrize(
+    "markup, marker, attribute, expected_label",
+    [
+        ('<img alt="Recyclage">', "img", ("title", "alt"), "Recyclage"),
+        ('<img title="" alt="Recyclage">', "img", ("title", "alt"), None),
+        ('<span class="RECYCLING"></span>', "span", "class", "RECYCLING"),
+    ],
+)
+def test_html_calendar_grid_marker_attributes(
+    markup, marker, attribute, expected_label
+):
+    from waste_collection_schedule.parsers import HtmlCalendarGrid
+
+    response = MagicMock()
+    response.text = (
+        "<table><caption>Octobre 2026</caption><tr><td>2"
+        + markup
+        + "</td></tr></table>"
+    )
+    parser = HtmlCalendarGrid(
+        table="table", header="caption", marker=marker, attribute=attribute
+    )
+    expected = [(datetime.date(2026, 10, 2), expected_label)] if expected_label else []
+    assert parser(response) == expected

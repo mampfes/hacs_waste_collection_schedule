@@ -3,9 +3,10 @@ from typing import ClassVar, final
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.service.SanAntonioCalendar import (
     CalendarParser,
-    CalendarRetriever,
+    calendar_url,
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -26,7 +27,7 @@ class Source(BaseSource):
     }
     PARAMS = (street_address(),)
 
-    retrieve = CalendarRetriever()
+    retrieve = HttpGetRetriever(calendar_url)
     parse = CalendarParser()
     transform = JsonTransformer(
         date_key="date",

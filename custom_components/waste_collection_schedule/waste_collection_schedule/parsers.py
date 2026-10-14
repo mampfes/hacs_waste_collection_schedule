@@ -1692,7 +1692,8 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         marker: CSS selector, within a day cell, for the collection markers
             (default ``"span"``).
         attribute: the marker attribute identifying the round (default
-            ``"class"``). Where it holds several values, the first is used.
+            ``"class"``). A tuple tries the next attribute only when the previous one is absent.
+            Where an attribute holds several values, the first is used.
     """
 
     def __init__(
@@ -1701,7 +1702,7 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         table: str,
         header: str,
         marker: str = "span",
-        attribute: str = "class",
+        attribute: str | tuple[str, ...] = "class",
     ):
         self.table = table
         self.header = header
@@ -1721,10 +1722,17 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         return None
 
     def _marker_name(self, element: Tag) -> "str | None":
-        value = element.get(self.attribute)
-        if isinstance(value, list):
-            return str(value[0]) if value else None
-        return str(value) if value else None
+        attributes = (
+            (self.attribute,) if isinstance(self.attribute, str) else self.attribute
+        )
+        for attribute in attributes:
+            if attribute not in element.attrs:
+                continue
+            value = element.get(attribute)
+            if isinstance(value, list):
+                return str(value[0]) if value else None
+            return str(value) if value else None
+        return None
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None

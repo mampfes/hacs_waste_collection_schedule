@@ -1,13 +1,13 @@
-"""NorthWestTasmaniaCalendar: provider retrieval and parsing using the shared verified HTTP session."""
+"""Parse published NWRRR calendar properties using shared recurrence helpers."""
 
 import logging
 from datetime import date, timedelta
 from typing import Any
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
 
 _LOGGER = logging.getLogger(__name__)
 GEOJSON_URL = "https://nwrrr.eskspatial.com.au/assets/all_councils.geojson"
@@ -26,9 +26,9 @@ def _next_collection(from_date: date, anchor: date, frequency: str) -> date | No
     - **monthly**: same ordinal weekday of the month (e.g. 2nd Friday).
     """
     if frequency == "weekly":
-        return _next_weekday(from_date, anchor.weekday())
+        return recurrence.next_weekday(anchor.weekday(), on_or_after=from_date)
     if frequency == "bi-weekly":
-        candidate = _next_weekday(from_date, anchor.weekday())
+        candidate = recurrence.next_weekday(anchor.weekday(), on_or_after=from_date)
         diff = (candidate - anchor).days
         if diff % 14 == 0:
             return candidate
@@ -41,39 +41,28 @@ def _next_collection(from_date: date, anchor: date, frequency: str) -> date | No
     return None
 
 
-def _next_weekday(from_date: date, weekday: int) -> date:
-    """Return the first date >= *from_date* that falls on *weekday* (0=Mon)."""
-    days_ahead = (weekday - from_date.weekday()) % 7
-    return from_date + timedelta(days=days_ahead)
-
-
 def _nth_weekday_of_month(from_date: date, weekday: int, nth: int) -> date:
     """Return the (nth+1)-th occurrence of *weekday* in the current month,
     or the same occurrence in the following month if that date has passed."""
     first = from_date.replace(day=1)
-    days_to_first = (weekday - first.weekday()) % 7
-    candidate = first + timedelta(days=days_to_first + 7 * nth)
+    candidate = recurrence.next_weekday(weekday, on_or_after=first) + timedelta(
+        weeks=nth
+    )
     if candidate >= from_date:
         return candidate
     if first.month == 12:
         next_first = first.replace(year=first.year + 1, month=1)
     else:
         next_first = first.replace(month=first.month + 1)
-    days_to_first = (weekday - next_first.weekday()) % 7
-    return next_first + timedelta(days=days_to_first + 7 * nth)
+    return recurrence.next_weekday(weekday, on_or_after=next_first) + timedelta(
+        weeks=nth
+    )
 
 
 class _CalendarClient:
-    _session: Any
-
     def __init__(self, municipality: str, region: str):
         self._municipality = municipality.strip()
         self._region = region.strip()
-
-    def retrieve(self) -> Any:
-        r = self._session.get(GEOJSON_URL, timeout=30)
-        r.raise_for_status()
-        return r
 
     def parse(self, r):
         features = r.json().get("features", [])
@@ -140,13 +129,6 @@ class _CalendarClient:
         return entries
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        client = _CalendarClient(**source.params)
-        client._session = source.session
-        return client.retrieve()
-
-
 class CalendarParser(Parser[list[dict[str, Any]]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
@@ -154,5 +136,5 @@ class CalendarParser(Parser[list[dict[str, Any]]]):
         if source is None:
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)
-        client._session = source.session
+        response.raise_for_status()
         return client.parse(response)

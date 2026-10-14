@@ -5,6 +5,7 @@ import logging
 import re
 from typing import Any
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
@@ -127,11 +128,9 @@ class _CalendarClient:
             return None
         if not frequency_weeks or frequency_weeks < 1:
             return start_date
-        today = datetime.date.today()
-        next_date = start_date
-        while next_date < today:
-            next_date += datetime.timedelta(weeks=frequency_weeks)
-        return next_date
+        return recurrence.recurring_from_anchor(
+            start_date, datetime.timedelta(weeks=frequency_weeks), 1
+        )[0]
 
     @staticmethod
     def _parse_weekday(value: str | None) -> int | None:
@@ -198,14 +197,12 @@ class _CalendarClient:
     ) -> list[datetime.date]:
         if not frequency_weeks or frequency_weeks < 1:
             return [first_date]
-        dates = [first_date]
-        next_date = first_date
-        while True:
-            next_date = next_date + datetime.timedelta(weeks=frequency_weeks)
-            if (next_date - first_date).days > DEFAULT_WEEKS_AHEAD * 7:
-                break
-            dates.append(next_date)
-        return dates
+        return recurrence.recurring_within(
+            first_date,
+            datetime.timedelta(weeks=frequency_weeks),
+            not_before=first_date,
+            until=first_date + datetime.timedelta(weeks=DEFAULT_WEEKS_AHEAD),
+        )
 
     def _get_map_config(self) -> dict[str, Any]:
         response = self._session.get(

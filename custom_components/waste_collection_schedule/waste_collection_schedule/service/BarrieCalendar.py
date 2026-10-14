@@ -12,7 +12,7 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.retrievers import RetrieverFunc, form_inputs
 
 FORM_URL = "https://sites.barrie.ca/barrieforms/Collection.aspx"
 EVENTS_URL = "https://sites.barrie.ca/barrieforms/Scripts/collection_events.json"
@@ -67,13 +67,11 @@ class _CalendarClient:
         r = session.get(FORM_URL, timeout=30)
         r.raise_for_status()
         soup = BeautifulSoup(r.text, "html.parser")
-        viewstate = soup.find("input", {"name": "__VIEWSTATE"})
-        viewstate_gen = soup.find("input", {"name": "__VIEWSTATEGENERATOR"})
-        event_validation = soup.find("input", {"name": "__EVENTVALIDATION"})
+        state = form_inputs(soup, hidden_only=True)
         form_data = {
-            "__VIEWSTATE": viewstate["value"] if viewstate else "",
-            "__VIEWSTATEGENERATOR": viewstate_gen["value"] if viewstate_gen else "",
-            "__EVENTVALIDATION": event_validation["value"] if event_validation else "",
+            "__VIEWSTATE": state.get("__VIEWSTATE", ""),
+            "__VIEWSTATEGENERATOR": state.get("__VIEWSTATEGENERATOR", ""),
+            "__EVENTVALIDATION": state.get("__EVENTVALIDATION", ""),
             "ctl00$MainContent$txtStreetNo": self._street_number,
             "ctl00$MainContent$txtStreet": self._street_name,
             "ctl00$MainContent$btnSubmit": "Submit",

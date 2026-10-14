@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.retrievers import RetrieverFunc, form_inputs
 
 _LOGGER = logging.getLogger(__name__)
 API_URL = (
@@ -70,17 +70,6 @@ class _CalendarClient:
         return (control["name"], control["value"])
 
     @staticmethod
-    def _hidden_data(soup: BeautifulSoup) -> dict[str, str]:
-        data = {}
-        for field in soup.select('input[type="hidden"][name]'):
-            name = field.get("name")
-            value = field.get("value") or ""
-            if not isinstance(name, str) or not isinstance(value, str):
-                raise ValueError("Swale lookup has an invalid hidden form field.")
-            data[name] = value
-        return data
-
-    @staticmethod
     def _raise_for_unexpected_page(soup: BeautifulSoup, stage: str) -> None:
         title = soup.title.get_text(" ", strip=True).lower() if soup.title else ""
         content = soup.get_text(" ", strip=True).lower()
@@ -116,7 +105,7 @@ class _CalendarClient:
         form = self._lookup_form(soup)
         if not form:
             raise ValueError("Swale lookup page did not contain an input form.")
-        payload = self._hidden_data(soup)
+        payload = form_inputs(soup, hidden_only=True)
         payload[self._field_name(form, "postcode", "input")] = self._postcode
         submit_name, submit_value = self._submit_control(form)
         payload[submit_name] = submit_value
@@ -130,7 +119,7 @@ class _CalendarClient:
             raise ValueError(
                 "Swale postcode submission did not return an address form."
             )
-        payload = self._hidden_data(soup)
+        payload = form_inputs(soup, hidden_only=True)
         payload[self._field_name(form, "address", "select")] = self._uprn
         submit_name, submit_value = self._submit_control(form)
         payload[submit_name] = submit_value

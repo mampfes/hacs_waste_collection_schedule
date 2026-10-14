@@ -9,6 +9,7 @@ from typing import Any
 from bs4 import BeautifulSoup, Tag
 from bs4.element import NavigableString
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
@@ -186,9 +187,9 @@ class _CalendarClient:
                 (DAYS.index(week_day.upper()) + 1 - d.isoweekday()) % 7
             )
         if frequency == "FORTNIGHTLY":
-            collection_dates = [date + datetime.timedelta(i * 14) for i in range(5)]
+            collection_dates = recurrence.recurring(date, recurrence.FORTNIGHTLY, 5)
         else:
-            collection_dates = [date + datetime.timedelta(i * 7) for i in range(10)]
+            collection_dates = recurrence.recurring(date, recurrence.WEEKLY, 10)
         for collection_date in collection_dates:
             entries.append({"date": collection_date, "type": waste_type})
         return entries

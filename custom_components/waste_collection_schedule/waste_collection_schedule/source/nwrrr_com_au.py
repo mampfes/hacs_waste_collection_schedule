@@ -3,9 +3,10 @@ from typing import ClassVar, final
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import district, municipality
+from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.service.NorthWestTasmaniaCalendar import (
+    GEOJSON_URL,
     CalendarParser,
-    CalendarRetriever,
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
@@ -39,7 +40,7 @@ class Source(BaseSource):
         district("region"),
     )
 
-    retrieve = CalendarRetriever()
+    retrieve = HttpGetRetriever(GEOJSON_URL)
     parse = CalendarParser()
     transform = JsonTransformer(
         date_key="date",

@@ -3,6 +3,7 @@
 from datetime import date, datetime, timedelta
 from typing import Any
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.parsers import Parser
@@ -89,8 +90,9 @@ class _CalendarClient:
                             item["nextServiceDays"][0], "%Y-%m-%d"
                         ).date()
                         interval = timedelta(weeks=period_length)
-                        current = seed
-                        while current <= end_date:
+                        for current in recurrence.recurring_within(
+                            seed, interval, not_before=seed, until=end_date
+                        ):
                             schedule.append(
                                 {
                                     "date": current,
@@ -99,7 +101,6 @@ class _CalendarClient:
                                     "service": service,
                                 }
                             )
-                            current += interval
                     else:
                         for day in item["nextServiceDays"]:
                             dt = datetime.strptime(day, "%Y-%m-%d").date()
