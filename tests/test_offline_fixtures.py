@@ -106,32 +106,37 @@ def _resolve_error_case(module_name: str, case_slug: str):
     return None, None
 
 
+@pytest.fixture
+def offline_throttle(module_name):
+    """Skip provider request delays for every kind of cassette replay."""
+    throttle_targets = {
+        "app_abfallplus_de": "AppAbfallplusDe.time.sleep",
+        "ahe_de": "AppAbfallplusDe.time.sleep",
+        "rir_no": "RirCalendar.time.sleep",
+        "swale_gov_uk": "SwaleCalendar.sleep",
+    }
+    target = throttle_targets.get(module_name)
+    throttle = (
+        patch(f"waste_collection_schedule.service.{target}")
+        if target is not None
+        else nullcontext()
+    )
+    with throttle:
+        yield
+
+
 @pytest.mark.parametrize(
     "module_name,case_slug,path",
     _FIXTURES,
     ids=[f"{m}::{c}" for m, c, _ in _FIXTURES],
 )
-def test_offline_replay(module_name, case_slug, path):
+def test_offline_replay(module_name, case_slug, path, offline_throttle):
     cls, args = _resolve_case(module_name, case_slug)
     assert cls is not None, (
         f"cassette {module_name}/{case_slug} has no matching TEST_CASE"
     )
 
-    # The provider's one-second request throttle has no purpose when HTTP is
-    # served from a cassette. Keep it active for live requests.
-    throttle_modules = {
-        "app_abfallplus_de": "AppAbfallplusDe",
-        "ahe_de": "AppAbfallplusDe",
-        "rir_no": "RirCalendar",
-    }
-    throttle = (
-        patch(
-            f"waste_collection_schedule.service.{throttle_modules[module_name]}.time.sleep"
-        )
-        if module_name in throttle_modules
-        else nullcontext()
-    )
-    with cassette.replaying(path), throttle:
+    with cassette.replaying(path):
         results = cls(**args).fetch()
 
     assert results, f"{module_name}::{case_slug}: replay produced no collections"
@@ -148,7 +153,7 @@ def test_offline_replay(module_name, case_slug, path):
     _ERROR_FIXTURES,
     ids=[f"{m}::{c}" for m, c, _ in _ERROR_FIXTURES],
 )
-def test_offline_replay_expected_error(module_name, case_slug, path):
+def test_offline_replay_expected_error(module_name, case_slug, path, offline_throttle):
     """Replay an ERROR_TEST_CASES cassette and check the same exception recurs.
 
     Counterpart to ``test_offline_replay`` for the failure path: a recorded
@@ -180,7 +185,7 @@ def test_offline_replay_expected_error(module_name, case_slug, path):
     _CHOICE_FIXTURES,
     ids=[m for m, _ in _CHOICE_FIXTURES],
 )
-def test_offline_choices(module_name, path):
+def test_offline_choices(module_name, path, offline_throttle):
     """Replay a dependent_select source's get_parent_choices/get_choices.
 
     Exercises the dependent_select config-flow contract offline: the recorded
