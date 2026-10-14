@@ -36,6 +36,7 @@ from fixtures_support import (
     discover_fixtures,
     slug,
 )
+from offline_replay import assert_fallback_budget
 from test_declared_waste_types import assert_returned_waste_types_declared
 from waste_collection_schedule import exceptions as exceptions_module
 from waste_collection_schedule.collection import Collection
@@ -297,24 +298,7 @@ def test_the_replay_fallback_budget_is_not_exceeded():
             "over a full pass"
         )
 
-    per_cassette = {p: cassette.REPLAY_FALLBACKS.get(p, 0) for p in paths}
-    total = sum(per_cassette.values())
-    served = sum(cassette.REPLAY_MATCHES.get(p, 0) for p in paths)
-    using = {p: n for p, n in per_cassette.items() if n}
-    worst = sorted(((n, p) for p, n in using.items()), reverse=True)[:10]
-    detail = "\n".join(f"    {n:>4}  {os.path.relpath(p)}" for n, p in worst)
-    summary = (
-        f"{total} of {served} replayed requests matched on the loose "
-        f"method+url fallback, across {len(using)} of {len(paths)} cassettes."
+    summary = assert_fallback_budget(
+        paths, cassette.REPLAY_FALLBACKS, cassette.REPLAY_MATCHES, FALLBACK_BUDGET
     )
     print(f"\ncassette fallback debt: {summary}")
-
-    assert total <= FALLBACK_BUDGET, (
-        f"{summary}\nThat is above the ceiling of {FALLBACK_BUDGET}. A fallback "
-        f"match is a request the cassette does not pin: its body is not "
-        f"compared, so a refactor can change what is sent and still replay "
-        f"green. Do not raise the ceiling. Re-record the cassette "
-        f"(`python tests/record_fixtures.py <module>`) so it carries request "
-        f"bodies, or fix whatever stopped the exact key matching.\n"
-        f"  worst offenders:\n{detail}"
-    )

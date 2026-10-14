@@ -68,13 +68,15 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest freezegun -r requirements.txt "${{ matrix.homeassistant_spec }}" "${{ matrix.josepy_spec }}"
-      - name: Test with pytest
+          pip install pytest pytest-xdist freezegun -r requirements.txt "${{ matrix.homeassistant_spec }}" "${{ matrix.josepy_spec }}"
+      - name: Test components with pytest
         run: |
           python -c "from custom_components.waste_collection_schedule import config_flow"
           # Exclude `live` tests (they fetch real provider endpoints); the
           # gating run stays deterministic and offline.
-          pytest -m "not live" --durations=20
+          pytest -m "not live" --ignore=tests/test_offline_fixtures.py --durations=20
+      - name: Replay offline cassettes on two workers
+        run: pytest tests/test_offline_fixtures.py -n 2 --dist load --durations=20
       - name: Report BaseSource pipeline coverage
         run: |
           # Informational migration metric (RFC #6561); never fails the build.
