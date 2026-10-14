@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-10-14",
+  "interactions": [
+    {
+      "key": "GET https://inzamelkalender.hvcgroep.nl/adressen/1911LB:14 ",
+      "method": "GET",
+      "url": "https://inzamelkalender.hvcgroep.nl/adressen/1911LB:14",
+      "final_url": "https://inzamelkalender.hvcgroep.nl/adressen/1911LB:14",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Wed, 14 Oct 2026 16:47:57 GMT",
+        "server": "envoy",
+        "cache-control": "no-cache, private",
+        "access-control-allow-origin": "*",
+        "set-cookie": "XSRF-TOKEN=eyJpdiI6IkxoWGVOaElreGF1Qnk5V1VGc3pvUFE9PSIsInZhbHVlIjoiWFRzamlDNkRQSnFDYStKQkVaclJyY1VTaU1zMUc0UWFnS0RxelJNRkp6WkVUMFZyZTZPVE40bWlqbUMwdm5nZnF4Um5FbTdMZnZxNlhUeXZlb3FvS0xWa2lvYkc1bkZERjlMWEgwMlpwdU5FNU1jam41NjZ2aGl0eVBZV0pqMjgiLCJtYWMiOiI5NDBlOTg5Zjk0OGMwNjE2OWQ0OTUwNDgwNjJmOTI3ZmYzMjkxNzI0NmU1NjNlMzE5ZTYxMWI0Mzg5MWE4YzlhIiwidGFnIjoiIn0%3D; expires=Wed, 14 Oct 2026 18:47:57 GMT; Max-Age=7200; path=/; secure, zwaste_session=eyJpdiI6IkgxUW5ZSUp2T1N3eWpGc2dZbXErU2c9PSIsInZhbHVlIjoiSFJqN25DWW5laVN3ZGlkWURPcDNSRVJJamZiaXVGKy9POEFRYUEya1lpMkNDNjR6bTJMREx6bFI3R2VQa2pOZUNac3FyNmpHMkQ2NVllWk9JUmYza08vdmt3OWpOc1ZtVzF1NHlNOTNhcC9DVzh3WU5nOWh5MTJzdGh3Q0VPWlUiLCJtYWMiOiIzZDNhMjFlNmNhYmIyNDg5M2I3Njc2ODRjNTc5YzNlYWI2NzhmY2M4MjIyNDZmZTQwZGRmMjgyZjYzM2U2YzM1IiwidGFnIjoiIn0%3D; expires=Wed, 14 Oct 2026 18:47:57 GMT; Max-Age=7200; path=/; httponly",
+        "content-type": "application/json",
+        "x-envoy-upstream-service-time": "285"
+      },
+      "content_b64": "W10="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'postal_code' with the value '1911LB', please check the spelling and try again."
+  }
+}

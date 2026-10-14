@@ -2926,6 +2926,24 @@ class TestToolkitParsers:
         assert len(elements) == 1
         assert elements[0].h3.string == "Rubbish"
 
+    @pytest.mark.parametrize(
+        "payload, key",
+        [
+            ({"html": "<article>Unexpected calendar</article>"}, "html"),
+            ([{"html": "<article>Unexpected calendar</article>"}], (0, "html")),
+        ],
+    )
+    def test_html_parser_checks_required_shape_in_json_markup(
+        self, payload, key, caplog
+    ):
+        from waste_collection_schedule import parsers
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        parser = parsers.HtmlParser("article", from_json_key=key, require=("h3",))
+        with pytest.raises(ResponseShapeError, match="required element 'h3' not found"):
+            parser(payload)
+        assert "<article>Unexpected calendar</article>" in caplog.text
+
     def test_html_labelled_dates_all_labels_from_json_key(self):
         import datetime
 
@@ -8875,3 +8893,29 @@ class TestSharedCalendarRefactoring:
         assert len(rows) == 8
         assert rows[0] == (datetime.date(2026, 10, 21), "Ordures ménagères")
         assert rows[-1] == (datetime.date(2026, 12, 9), "Ordures ménagères")
+
+
+@pytest.mark.parametrize(
+    "markup, marker, attribute, expected_label",
+    [
+        ('<img alt="Recyclage">', "img", ("title", "alt"), "Recyclage"),
+        ('<img title="" alt="Recyclage">', "img", ("title", "alt"), None),
+        ('<span class="RECYCLING"></span>', "span", "class", "RECYCLING"),
+    ],
+)
+def test_html_calendar_grid_marker_attributes(
+    markup, marker, attribute, expected_label
+):
+    from waste_collection_schedule.parsers import HtmlCalendarGrid
+
+    response = MagicMock()
+    response.text = (
+        "<table><caption>Octobre 2026</caption><tr><td>2"
+        + markup
+        + "</td></tr></table>"
+    )
+    parser = HtmlCalendarGrid(
+        table="table", header="caption", marker=marker, attribute=attribute
+    )
+    expected = [(datetime.date(2026, 10, 2), expected_label)] if expected_label else []
+    assert parser(response) == expected

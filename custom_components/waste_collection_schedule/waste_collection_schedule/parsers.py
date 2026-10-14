@@ -986,7 +986,7 @@ class HtmlParser(Parser[list[Tag]]):
                     bool(soup.select(sel)),
                     source_name=name,
                     detail=f"required element {sel!r} not found",
-                    raw=response.text,
+                    raw=markup,
                 )
         return soup.select(self.selector)[self.skip :]
 
@@ -1129,8 +1129,10 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
             return found.get_text(separator, strip=True) if found is not None else None
         caption = element.find(string=self.date_after)
         holder = caption.parent if caption is not None else None
-        sibling = holder.find_next_sibling() if isinstance(holder, Tag) else None
-        if not isinstance(sibling, Tag):
+        if holder is None or not isinstance(holder, Tag):
+            return None
+        sibling = holder.find_next_sibling()
+        if sibling is None or not isinstance(sibling, Tag):
             return None
         return sibling.get_text(separator, strip=True)
 
@@ -1690,7 +1692,8 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         marker: CSS selector, within a day cell, for the collection markers
             (default ``"span"``).
         attribute: the marker attribute identifying the round (default
-            ``"class"``). Where it holds several values, the first is used.
+            ``"class"``). A tuple tries the next attribute only when the previous one is absent.
+            Where an attribute holds several values, the first is used.
     """
 
     def __init__(
@@ -1699,7 +1702,7 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         table: str,
         header: str,
         marker: str = "span",
-        attribute: str = "class",
+        attribute: str | tuple[str, ...] = "class",
     ):
         self.table = table
         self.header = header
@@ -1719,10 +1722,17 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         return None
 
     def _marker_name(self, element: Tag) -> "str | None":
-        value = element.get(self.attribute)
-        if isinstance(value, list):
-            return str(value[0]) if value else None
-        return str(value) if value else None
+        attributes = (
+            (self.attribute,) if isinstance(self.attribute, str) else self.attribute
+        )
+        for attribute in attributes:
+            if attribute not in element.attrs:
+                continue
+            value = element.get(attribute)
+            if isinstance(value, list):
+                return str(value[0]) if value else None
+            return str(value) if value else None
+        return None
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
