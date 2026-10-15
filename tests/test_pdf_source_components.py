@@ -9,10 +9,12 @@ import base64
 import datetime
 import json
 import os
+import re
 import sys
+from io import BytesIO
 from pathlib import Path
 from types import SimpleNamespace
-from typing import ClassVar
+from typing import Any, ClassVar
 
 import pytest
 from freezegun import freeze_time
@@ -469,3 +471,302 @@ def test_east_lindsey_changed_calendar_layout_fails_loudly(monkeypatch, change):
     monkeypatch.setattr(parsers.PdfWordLayoutParser, "__call__", lambda *args: [layout])
     with pytest.raises(ResponseShapeError):
         GardenCalendarParser()(_east_lindsey_pdf())
+
+
+def _dunanett_recording(case: str = "pusztaszabolcs") -> dict[str, Any]:
+    path = Path(__file__).parent / f"fixtures/dunanett_hu/{case}.json"
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _dunanett_pdf() -> SimpleNamespace:
+    recorded = _dunanett_recording()["interactions"][1]
+    return SimpleNamespace(
+        content=base64.b64decode(recorded["content_b64"]), url=recorded["final_url"]
+    )
+
+
+@pytest.mark.parametrize(
+    "case,town,weekday,garden",
+    [
+        (
+            "pusztaszabolcs",
+            "Pusztaszabolcs",
+            3,
+            [
+                [9, 23],
+                [],
+                [6, 20],
+                [3, 17],
+                [1, 15, 29],
+                [12, 26],
+                [10, 24],
+                [7, 21],
+                [4, 18],
+                [2, 16, 30],
+                [13, 27],
+                [],
+            ],
+        ),
+        (
+            "r_calm_s",
+            "Rácalmás",
+            1,
+            [[8, 23], [], [], [30], [28], [25], [23], [20], [17], [15], [12], []],
+        ),
+    ],
+)
+def test_dunanett_complete_annual_dates_and_tree_descriptions(
+    case: str, town: str, weekday: int, garden: list[list[int]]
+) -> None:
+    import cassette
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    path = Path(__file__).parent / f"fixtures/dunanett_hu/{case}.json"
+    with cassette.replaying(str(path)):
+        entries = Source(municipality=town).fetch()
+    # Transcribed from the official annual PDFs, not inferred from a cadence.
+    recycling = [
+        [16, 30],
+        [13, 27],
+        [13, 27],
+        [10, 24],
+        [8, 22],
+        [5, 19],
+        [3, 17, 31],
+        [14, 28],
+        [11, 25],
+        [9, 23],
+        [6, 20],
+        [4, 18],
+    ]
+    expected = {
+        (D(2026, month, day), label)
+        for label, months in (("Recycling", recycling), ("Garden Waste", garden))
+        for month, days in enumerate(months, 1)
+        for day in days
+    }
+    expected |= {
+        (day, "General Waste")
+        for offset in range(365)
+        if (day := D(2026, 1, 1) + datetime.timedelta(days=offset)).weekday() == weekday
+    }
+    assert len(entries) == len(expected)
+    assert {(entry.date, entry.type) for entry in entries} == expected
+    trees = [e for e in entries if e.type == "Garden Waste" and e.date.month == 1]
+    assert len(trees) == 2
+    assert all(e.description and "Christmas trees only" in e.description for e in trees)
+    assert all(e.description is None for e in entries if e not in trees)
+
+
+@pytest.mark.parametrize(
+    "change", ["town", "year", "row", "cell", "invalid_date", "weekly", "months"]
+)
+def test_hu_calendar_strict_rejects_wrong_or_incomplete_documents(
+    monkeypatch: pytest.MonkeyPatch, change: str
+) -> None:
+    from pypdf import PdfReader
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    response = _dunanett_pdf()
+    page = PdfReader(BytesIO(response.content)).pages[0]
+    layout = page.extract_text(extraction_mode="layout")
+    plain = page.extract_text()
+    if change == "town":
+        layout = layout.replace("Pusztaszabolcs", "Other town")
+    elif change == "year":
+        response.url = response.url.replace("2026.pdf", "2027.pdf")
+    elif change in ("row", "cell", "invalid_date"):
+        row = next(line for line in layout.splitlines() if "16,30" in line)
+        replacement = {
+            "row": "",
+            "cell": row.replace("16,30", ""),
+            "invalid_date": row.replace("13,27", "31,32", 1),
+        }[change]
+        layout = layout.replace(row, replacement)
+    elif change == "weekly":
+        layout = layout.replace("Csütörtök", "unknown")
+        plain = plain.replace("Csütörtök", "unknown")
+    else:
+        layout = layout.replace("Február", "unknown")
+    monkeypatch.setattr(
+        "pypdf.PdfReader",
+        lambda _: SimpleNamespace(
+            pages=[
+                SimpleNamespace(
+                    extract_text=lambda **kwargs: layout if kwargs else plain
+                )
+            ]
+        ),
+    )
+    with pytest.raises(ResponseShapeError):
+        Source.parse([response], Source(municipality="Pusztaszabolcs"))
+
+
+def test_hu_calendar_tree_restriction_is_detected_and_opt_in(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from pypdf import PdfReader
+    from waste_collection_schedule.service import HuWasteCalendar as hu
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    response = _dunanett_pdf()
+    types = {"szelektív": "szelektív", "zöldhulladék": "zöldhulladék"}
+    default = hu.CalendarParser(types=types)(response)
+    assert (D(2026, 1, 9), "zöldhulladék") in default
+    assert not any(label == hu.CHRISTMAS_TREES for _, label in default)
+    page = PdfReader(BytesIO(response.content)).pages[0]
+    # Remove the actual upstream restriction from both extraction modes.
+    layout = re.sub(r"A januári[^\n]+", "", page.extract_text(extraction_mode="layout"))
+    plain = re.sub(r"A januári.*?szállítjuk el\.", "", page.extract_text(), flags=re.S)
+    monkeypatch.setattr(
+        "pypdf.PdfReader",
+        lambda _: SimpleNamespace(
+            pages=[
+                SimpleNamespace(
+                    extract_text=lambda **kwargs: layout if kwargs else plain
+                )
+            ]
+        ),
+    )
+    rows = Source.parse([response], Source(municipality="Pusztaszabolcs"))
+    assert (D(2026, 1, 9), "zöldhulladék") in rows
+    assert not any(label == hu.CHRISTMAS_TREES for _, label in rows)
+
+
+@freeze_time("2026-10-15")
+def test_dunanett_discovery_uses_latest_correction_and_all_published_future_years() -> (
+    None
+):
+    from waste_collection_schedule.source.dunanett_hu import _calendar_urls
+
+    record = json.loads(
+        base64.b64decode(_dunanett_recording()["interactions"][0]["content_b64"])
+    )[0]
+    corrected = {
+        **record,
+        "date": "2026-02-01T12:00:00",
+        "source_url": record["source_url"].replace("2026.pdf", "2026-javitott.pdf"),
+        "title": {"rendered": record["title"]["rendered"] + "-javitott"},
+    }
+    future = json.loads(json.dumps(record).replace("2026", "2027"))
+    stale = json.loads(json.dumps(record).replace("2026", "2025"))
+    other = json.loads(json.dumps(record).replace("Pusztaszabolcs", "OtherTown"))
+    response = SimpleNamespace(
+        json=lambda: [future, record, stale, corrected, other],
+        headers={"X-WP-TotalPages": "1"},
+    )
+    assert _calendar_urls(response, municipality="Pusztaszabolcs") == [
+        corrected["source_url"],
+        future["source_url"],
+    ]
+
+
+@freeze_time("2027-01-01")
+def test_dunanett_discovery_never_reuses_an_expired_calendar() -> None:
+    from waste_collection_schedule.source.dunanett_hu import _calendar_urls
+
+    records = json.loads(
+        base64.b64decode(_dunanett_recording()["interactions"][0]["content_b64"])
+    )
+    response = SimpleNamespace(json=lambda: records, headers={"X-WP-TotalPages": "1"})
+    with pytest.raises(ResponseShapeError, match="no current annual calendar"):
+        _calendar_urls(response, municipality="Pusztaszabolcs")
+
+
+@pytest.mark.parametrize(
+    "change", ["pagination", "headers", "shape", "year", "host", "date"]
+)
+@freeze_time("2026-10-15")
+def test_dunanett_discovery_rejects_malformed_or_truncated_media(change: str) -> None:
+    from waste_collection_schedule.source.dunanett_hu import _calendar_urls
+
+    records = json.loads(
+        base64.b64decode(_dunanett_recording()["interactions"][0]["content_b64"])
+    )
+    headers = {"X-WP-TotalPages": "1"}
+    if change == "pagination":
+        headers["X-WP-TotalPages"] = "2"
+    elif change == "headers":
+        headers = {}
+    elif change == "shape":
+        del records[0]["title"]
+    elif change == "year":
+        records[0]["title"]["rendered"] = records[0]["title"]["rendered"].replace(
+            "2026", "2027"
+        )
+    elif change == "host":
+        records[0]["source_url"] = records[0]["source_url"].replace(
+            "pusztaszabolcs.hu", "other.hu"
+        )
+    else:
+        records[0]["date"] = "not a timestamp"
+    response = SimpleNamespace(json=lambda: records, headers=headers)
+    with pytest.raises(ResponseShapeError):
+        _calendar_urls(response, municipality="Pusztaszabolcs")
+
+
+def test_dunanett_unsupported_municipality_has_argument_suggestions() -> None:
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    with pytest.raises(SourceArgumentNotFoundWithSuggestions) as error:
+        Source(municipality="Mezőfalva").fetch()
+    assert error.value.argument == "municipality"
+    assert error.value.suggestions == ["Pusztaszabolcs", "Rácalmás"]
+
+
+@pytest.mark.parametrize("interaction", [0, 1], ids=["media_lookup", "calendar_pdf"])
+def test_dunanett_http_failures_propagate(tmp_path: Path, interaction: int) -> None:
+    import cassette
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    recording = _dunanett_recording()
+    recording["interactions"][interaction]["status"] = 503
+    path = tmp_path / "unavailable.json"
+    path.write_text(json.dumps(recording), encoding="utf-8")
+    with cassette.replaying(str(path)), pytest.raises(OSError, match="503"):
+        Source(municipality="Pusztaszabolcs").fetch()
+
+
+@pytest.mark.parametrize("change", ["empty_row", "duplicate_row", "next_year"])
+def test_hu_calendar_empty_rows_duplicates_and_year_boundaries(
+    monkeypatch: pytest.MonkeyPatch, change: str
+) -> None:
+    from pypdf import PdfReader
+    from waste_collection_schedule.service import HuWasteCalendar as hu
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    response = _dunanett_pdf()
+    page = PdfReader(BytesIO(response.content)).pages[0]
+    layout = page.extract_text(extraction_mode="layout")
+    plain = page.extract_text()
+    row = next(
+        line
+        for line in layout.splitlines()
+        if "zöldhulladék" in line and "9,23" in line
+    )
+    if change == "empty_row":
+        # A complete all-dash row is different from a missing or unreadable row.
+        empty_row = re.sub(r"\d[\d,]*", lambda m: "-".ljust(len(m[0])), row)
+        layout = layout.replace(row, empty_row)
+    elif change == "duplicate_row":
+        layout = layout.replace(row, f"{row}\n{row}")
+    else:
+        layout, plain = layout.replace("2026", "2027"), plain.replace("2026", "2027")
+        response.url = response.url.replace("2026", "2027")
+    monkeypatch.setattr(
+        "pypdf.PdfReader",
+        lambda _: SimpleNamespace(
+            pages=[SimpleNamespace(extract_text=lambda **kw: layout if kw else plain)]
+        ),
+    )
+    rows = Source.parse([response], Source(municipality="Pusztaszabolcs"))
+    assert len(rows) == len(set(rows))
+    if change == "empty_row":
+        assert {label for _, label in rows} == {hu.GENERAL, "szelektív"}
+    elif change == "duplicate_row":
+        assert len(rows) == 100
+    else:
+        assert {when.year for when, _ in rows} == {2027}
+        weekly = [when for when, label in rows if label == hu.GENERAL]
+        assert weekly[0] == D(2027, 1, 7)
+        assert weekly[-1] == D(2027, 12, 30)

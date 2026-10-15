@@ -1,7 +1,7 @@
 """Pipeline component for the Hungarian "hulladéknaptár" PDF calendars.
 
-Depónia Nonprofit Kft. (deponia.hu) and Siókom Nonprofit Kft. (siokom.hu) are
-sister companies that publish the same annual calendar, exported from a
+Depónia (deponia.hu), Siókom (siokom.hu) and Dunanett (dunanett.hu)
+publish the same annual calendar, exported from a
 PowerPoint template: one table with a column per month and a row per separately
 collected waste type (``szelektív``, ``zöldhulladék``, ...) listing the days of
 the month ("3.,17.,31." or "1,8,15,22, 29"), and a sentence below it that
@@ -26,12 +26,13 @@ import unicodedata
 from datetime import date, timedelta
 from io import BytesIO
 from typing import TYPE_CHECKING, Any
+from urllib.parse import unquote, urlsplit
 
 from waste_collection_schedule import response_shape
 from waste_collection_schedule.parsers import Parser
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Mapping
+    from collections.abc import Callable, Iterable, Mapping
 
     from waste_collection_schedule.base_source import BaseSource
 
@@ -40,6 +41,11 @@ _LOGGER = logging.getLogger(__name__)
 #: Labels for the two rounds that are not rows of the month table.
 GENERAL = "vegyes"
 BULKY = "lomtalanítás"
+CHRISTMAS_TREES = "fenyőfa"
+CHRISTMAS_TREE_DESCRIPTION = (
+    "Christmas trees only: remove all decorations and other waste. "
+    "Other garden waste is not collected on this date."
+)
 
 MONTHS = {
     "január": 1,
@@ -67,6 +73,9 @@ WEEKDAYS = {
 }
 
 _YEAR_RE = re.compile(r"(20\d{2})\.\s*évi\s+hulladéknaptár", re.IGNORECASE)
+_JANUARY_TREES_RE = re.compile(
+    r"a januari zoldhulladekgyujtes soran kizarolag[^.]*fenyofakat szallitjuk el",
+)
 #: Day-list notations of a month cell: "14,28" / "1,8,15,22, 29" (Siókom).
 PLAIN_CELLS = r"-|\d{1,2}(?:[.,]\s*\d{1,2}){1,6}\.?|\d{1,2}\.?"
 #: and "3.,17.,31." / "14. 28" (Depónia).
@@ -135,6 +144,8 @@ def table_row_dates(
     skip: re.Pattern[str],
     cells: re.Pattern[str] = re.compile(PLAIN_CELLS),
     max_length: int | None = None,
+    strict: bool = False,
+    source_name: str = "source",
 ) -> list[tuple[date, str]]:
     """The dated cells of one table row, labelled with the row's waste type.
 
@@ -148,7 +159,22 @@ def table_row_dates(
     match = re.search(pattern, line, re.IGNORECASE)
     if not match:
         return []
-    after = line[match.end() :]
+    label_end = match.end()
+    after = line[label_end:]
+    if strict:
+        matches = list(cells.finditer(after))
+        months = [
+            min(columns, key=lambda col: abs(col[0] - label_end - cell.start()))[1]
+            for cell in matches
+        ]
+        response_shape.expect(
+            len(matches) == 12
+            and sorted(months) == list(range(1, 13))
+            and not cells.sub("", after).strip(),
+            source_name=source_name,
+            detail="expected twelve complete month cells for each waste row",
+            raw=line,
+        )
     if not re.search(r"\d|-", after):
         return []
     label = types[match.group(1).lower()]
@@ -157,12 +183,19 @@ def table_row_dates(
         token = cell.group()
         if token in ("-", "–", "—") or not _DAY_RE.search(token):
             continue
-        position = match.end() + cell.start()
+        position = label_end + cell.start()
         month = min(columns, key=lambda col: abs(col[0] - position))[1]
         for day in (int(item) for item in _DAY_RE.findall(token)):
             try:
                 entries.append((date(year, month, day), label))
             except ValueError:
+                if strict:
+                    response_shape.expect(
+                        False,
+                        source_name=source_name,
+                        detail=f"invalid calendar date {year}-{month}-{day}",
+                        raw=line,
+                    )
                 _LOGGER.debug("Ignoring invalid date %s-%s-%s", year, month, day)
     return entries
 
@@ -290,7 +323,7 @@ def bulky_dates(text: str) -> list[date]:
 
 
 class CalendarParser(Parser["list[tuple[date, str]]"]):
-    """Decode a Depónia / Siókom hulladéknaptár PDF into ``(date, label)``.
+    """Decode a Hungarian hulladéknaptár PDF into ``(date, label)``.
 
     Args:
         types: the table row labels to read (lowercase, as printed) and the
@@ -303,6 +336,14 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
             :data:`BULKY`.
         holiday_moves: apply the announced holiday moves of the weekly
             general-waste round.
+        strict: require every configured row, twelve complete month cells per
+            row, valid dates and a weekly general-waste rule.
+        expected_municipality: exact municipality in the annual heading; a
+            literal or a callable receiving the source parameters.
+        year_from_url: require the PDF filename's year to match its heading.
+        january_trees: relabel January garden dates as :data:`CHRISTMAS_TREES`
+            only when the PDF explicitly restricts them to undecorated trees.
+            Map that label to garden waste and carry its restriction metadata.
     """
 
     def __init__(
@@ -314,13 +355,21 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
         max_row_length: int | None = None,
         bulky: bool = False,
         holiday_moves: bool = False,
-    ):
+        strict: bool = False,
+        expected_municipality: str | Callable[..., str] | None = None,
+        year_from_url: bool = False,
+        january_trees: bool = False,
+    ) -> None:
         self.types = {key.lower(): value for key, value in types.items()}
         self.skip = re.compile(skip, re.IGNORECASE)
         self.cells = re.compile(cells)
         self.max_row_length = max_row_length
         self.bulky = bulky
         self.holiday_moves = holiday_moves
+        self.strict = strict
+        self.expected_municipality = expected_municipality
+        self.year_from_url = year_from_url
+        self.january_trees = january_trees
 
     def __call__(
         self, response: Any, source: BaseSource | None = None
@@ -343,6 +392,33 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
             raw=combined[:500],
         )
         year = int(year_match.group(1))  # type: ignore[union-attr]
+        if self.year_from_url:
+            years = re.findall(
+                r"20\d{2}", unquote(urlsplit(response.url).path).rsplit("/", 1)[-1]
+            )
+            response_shape.expect(
+                years == [str(year)],
+                source_name=name,
+                detail="PDF filename year does not match the annual heading",
+                raw=response.url,
+            )
+        if self.expected_municipality is not None:
+            wanted = (
+                self.expected_municipality(**(source.params if source else {}))
+                if callable(self.expected_municipality)
+                else self.expected_municipality
+            )
+            heading = re.search(
+                _YEAR_RE.pattern + r"\s*[-–—]\s*([^\n]+)",
+                "\n".join(layouts),
+                re.IGNORECASE,
+            )
+            response_shape.expect(
+                heading is not None and fold(heading.group(2)) == fold(wanted),
+                source_name=name,
+                detail="annual heading does not match the expected municipality",
+                raw=combined[:500],
+            )
 
         columns = None
         table_page = 0
@@ -362,7 +438,17 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
         )
 
         dated: list[tuple[date, str]] = []
+        seen_types: set[str] = set()
+        in_table = not self.strict
         for line in layouts[table_page].splitlines():
+            if self.strict:
+                if month_columns(line):
+                    in_table = True
+                    continue
+                if _COMMUNAL_RE.search(line):
+                    break
+                if not in_table:
+                    continue
             dated.extend(
                 table_row_dates(
                     line,
@@ -372,12 +458,36 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
                     skip=self.skip,
                     cells=self.cells,
                     max_length=self.max_row_length,
+                    strict=self.strict,
+                    source_name=name,
                 )
             )
+            if self.strict and not self.skip.search(line):
+                seen_types.update(
+                    label
+                    for label in self.types
+                    if re.search(rf"\b{re.escape(label)}\b", line, re.IGNORECASE)
+                )
 
         weekly = general_waste_dates(plains[table_page], year) or general_waste_dates(
             layouts[table_page], year
         )
+        if self.strict:
+            response_shape.expect(
+                bool(weekly) and set(self.types) <= seen_types,
+                source_name=name,
+                detail="missing required waste row or general-waste rule",
+                raw=layouts[table_page],
+            )
+        if self.january_trees and _JANUARY_TREES_RE.search(fold(combined)):
+            garden = self.types.get("zöldhulladék")
+            dated = [
+                (
+                    when,
+                    CHRISTMAS_TREES if when.month == 1 and label == garden else label,
+                )
+                for when, label in dated
+            ]
         if weekly and self.holiday_moves:
             weekly = apply_postponements(weekly, postponements(combined, year))
         dated.extend((when, GENERAL) for when in weekly)
@@ -390,4 +500,4 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
             detail="no collection dates found in the PDF",
             raw=combined[:500],
         )
-        return sorted(dated)
+        return sorted(set(dated)) if self.strict else sorted(dated)
