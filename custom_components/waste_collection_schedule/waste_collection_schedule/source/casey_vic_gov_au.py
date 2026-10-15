@@ -84,6 +84,10 @@ PARAM_TRANSLATIONS = {
 _COLLECTION_DATE_KEY_RE = re.compile(r"^(?:Next|Prev(?:ious)?)(?P<name>.+)Date$")
 
 
+def _normalise_address(address: str) -> str:
+    return " ".join(str(address).split()).casefold()
+
+
 class Source:
     def __init__(self, street_address: str):
         self._street_address = street_address
@@ -138,15 +142,28 @@ class Source:
                 f"The provided address returned no results. Check your address on {SEARCH_PAGE_URL}",
             )
 
-        if len(search_results["result"]) > 1:
-            address_suggestions = [x["full_address"] for x in search_results["result"]]
+        results = search_results["result"]
+        # The search matches substrings, so "8 Example Road ..." also returns
+        # 58, 78, 88 and 148. Without this, picking the right suggestion loops.
+        wanted = _normalise_address(self._street_address)
+        exact = [
+            x
+            for x in results
+            if _normalise_address(x.get("full_address", "")) == wanted
+        ]
+        if len(exact) == 1:
+            result = exact[0]
+        elif len(results) == 1:
+            result = results[0]
+        else:
+            address_suggestions = [x["full_address"] for x in results]
             raise SourceArgAmbiguousWithSuggestions(
                 _STREET_ADDRESS_ARG_NAME, self._street_address, address_suggestions
             )
 
         entries = []
 
-        for key, value in search_results["result"][0].items():
+        for key, value in result.items():
             # properties come through like "NextGarbageDate" and
             # "PreviousGardenDate"; the bin name is the middle
             match = _COLLECTION_DATE_KEY_RE.match(key)
