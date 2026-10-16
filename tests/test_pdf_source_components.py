@@ -11,10 +11,12 @@ import json
 import os
 import re
 import sys
+from html import escape
 from io import BytesIO
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any, ClassVar
+from zipfile import ZipFile
 
 import pytest
 from freezegun import freeze_time
@@ -481,7 +483,11 @@ def _dunanett_recording(case: str = "pusztaszabolcs") -> dict[str, Any]:
 def _dunanett_pdf() -> SimpleNamespace:
     recorded = _dunanett_recording()["interactions"][1]
     return SimpleNamespace(
-        content=base64.b64decode(recorded["content_b64"]), url=recorded["final_url"]
+        content=base64.b64decode(recorded["content_b64"]),
+        url=recorded["final_url"],
+        text=base64.b64decode(recorded["content_b64"]).decode(
+            "utf-8", errors="replace"
+        ),
     )
 
 
@@ -599,7 +605,7 @@ def test_hu_calendar_strict_rejects_wrong_or_incomplete_documents(
         ),
     )
     with pytest.raises(ResponseShapeError):
-        Source.parse([response], Source(municipality="Pusztaszabolcs"))
+        Source.parse.parser([response], Source(municipality="Pusztaszabolcs"))
 
 
 def test_hu_calendar_tree_restriction_is_detected_and_opt_in(
@@ -628,7 +634,7 @@ def test_hu_calendar_tree_restriction_is_detected_and_opt_in(
             ]
         ),
     )
-    rows = Source.parse([response], Source(municipality="Pusztaszabolcs"))
+    rows = Source.parse.parser([response], Source(municipality="Pusztaszabolcs"))
     assert (D(2026, 1, 9), "zöldhulladék") in rows
     assert not any(label == hu.CHRISTMAS_TREES for _, label in rows)
 
@@ -711,7 +717,13 @@ def test_dunanett_unsupported_municipality_has_argument_suggestions() -> None:
     with pytest.raises(SourceArgumentNotFoundWithSuggestions) as error:
         Source(municipality="Mezőfalva").fetch()
     assert error.value.argument == "municipality"
-    assert error.value.suggestions == ["Pusztaszabolcs", "Rácalmás"]
+    assert error.value.suggestions == [
+        "Pusztaszabolcs",
+        "Rácalmás",
+        "Perkáta",
+        "Nagyvenyim",
+        "Dunaföldvár",
+    ]
 
 
 @pytest.mark.parametrize("interaction", [0, 1], ids=["media_lookup", "calendar_pdf"])
@@ -759,7 +771,7 @@ def test_hu_calendar_empty_rows_duplicates_and_year_boundaries(
             pages=[SimpleNamespace(extract_text=lambda **kw: layout if kw else plain)]
         ),
     )
-    rows = Source.parse([response], Source(municipality="Pusztaszabolcs"))
+    rows = Source.parse.parser([response], Source(municipality="Pusztaszabolcs"))
     assert len(rows) == len(set(rows))
     if change == "empty_row":
         assert {label for _, label in rows} == {hu.GENERAL, "szelektív"}
@@ -770,3 +782,354 @@ def test_hu_calendar_empty_rows_duplicates_and_year_boundaries(
         weekly = [when for when, label in rows if label == hu.GENERAL]
         assert weekly[0] == D(2027, 1, 7)
         assert weekly[-1] == D(2027, 12, 30)
+
+
+_DUNANETT_NEW_TOWNS = [
+    ("perk_ta", "Perkáta", 3),
+    ("nagyvenyim", "Nagyvenyim", 0),
+    ("dunaf_ldv_r", "Dunaföldvár", None),
+]
+
+
+@pytest.mark.parametrize("case,town,weekday", _DUNANETT_NEW_TOWNS)
+@freeze_time("2026-10-16")
+def test_dunanett_new_towns_complete_published_dates(
+    case: str, town: str, weekday: int | None
+) -> None:
+    import cassette
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    # Independently transcribed from the official PDF, article and DOCX.
+    recycling, garden = {
+        "Perkáta": (
+            [
+                [9, 23],
+                [6, 20],
+                [6, 20],
+                [3, 17],
+                [1, 15, 29],
+                [12, 26],
+                [10, 24],
+                [7, 21],
+                [4, 18],
+                [2, 16, 30],
+                [13, 27],
+                [11, 25],
+            ],
+            [[12, 29], [], [], [6], [4], [1], [27], [24], [21], [19], [16], []],
+        ),
+        "Nagyvenyim": (
+            [
+                [14, 28],
+                [11, 25],
+                [11, 25],
+                [8, 22],
+                [6, 20],
+                [3, 17],
+                [1, 15, 29],
+                [12, 26],
+                [9, 23],
+                [7, 21],
+                [4, 18],
+                [2, 16, 30],
+            ],
+            [[9, 22], [], [], [16], [14], [11], [9], [6], [3], [1], [26], []],
+        ),
+        "Dunaföldvár": (
+            [
+                [15, 29],
+                [12, 26],
+                [12, 26],
+                [9, 23],
+                [7, 21],
+                [4, 18],
+                [2, 16, 30],
+                [13, 27],
+                [10, 24],
+                [8, 22],
+                [5, 19],
+                [3, 17, 31],
+            ],
+            [
+                [10, 24],
+                [],
+                [12, 26],
+                [9, 23],
+                [7, 21],
+                [4, 18],
+                [2, 16, 30],
+                [13, 27],
+                [10, 24],
+                [8, 22],
+                [5, 19],
+                [],
+            ],
+        ),
+    }[town]
+    expected = {
+        (D(2026, month, day), label)
+        for label, months in (("Recycling", recycling), ("Garden Waste", garden))
+        for month, days in enumerate(months, 1)
+        for day in days
+    }
+    if weekday is not None:
+        expected |= {
+            (day, "General Waste")
+            for offset in range(365)
+            if (day := D(2026, 1, 1) + datetime.timedelta(days=offset)).weekday()
+            == weekday
+        }
+    path = Path(__file__).parent / f"fixtures/dunanett_hu/{case}.json"
+    with cassette.replaying(str(path)):
+        entries = Source(municipality=town).fetch()
+    assert len(entries) == len(expected)
+    assert {(entry.date, entry.type) for entry in entries} == expected
+    for entry in entries:
+        tree = entry.type == "Garden Waste" and entry.date.month == 1
+        assert bool(entry.description) == tree
+        if tree:
+            assert "Christmas trees only" in entry.description
+
+
+def _dunanett_response(case: str, interaction: int = -1) -> SimpleNamespace:
+    recorded = _dunanett_recording(case)["interactions"][interaction]
+    content = base64.b64decode(recorded["content_b64"])
+    return SimpleNamespace(
+        content=content,
+        text=content.decode("utf-8", errors="replace"),
+        url=recorded["final_url"],
+        status_code=recorded["status"],
+    )
+
+
+@pytest.mark.parametrize("case,town,weekday", _DUNANETT_NEW_TOWNS)
+@freeze_time("2027-01-01")
+def test_dunanett_new_indices_reject_expired_calendars(
+    case: str, town: str, weekday: int | None
+) -> None:
+    from waste_collection_schedule.source.dunanett_hu import _annual_targets
+
+    with pytest.raises(ResponseShapeError, match="no current annual calendar"):
+        _annual_targets(_dunanett_response(case, 0), municipality=town)
+
+
+def _annual_index(town: str, years: list[int]) -> SimpleNamespace:
+    """Small real-shaped indices, with distinct links even within one year."""
+    if town == "Perkáta":
+        links = "".join(
+            f'<a href="https://cdn.example/{i}.pdf">2431_Perkáta_Hulladéknaptár{year}.pdf</a>'
+            for i, year in enumerate(years)
+        )
+        text = f'<custom-page-description description="{escape(links, quote=True)}"></custom-page-description>'
+    elif town == "Nagyvenyim":
+        text = (
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+            + "".join(
+                f"<url><loc>https://nagyvenyim.hu/{year}/01/{i + 1:02}/tajekoztato-a-hulladekszallitas-{year}-evi-rendjerol/</loc></url>"
+                for i, year in enumerate(years)
+            )
+            + "</urlset>"
+        )
+    else:
+        text = (
+            '<div class="list">'
+            + "".join(
+                f'<div class="item"><a href="/{i}/" title="Szelektív és zöld hulladékgyűjtés {year}. évben"></a><div class="name">Szelektív és zöld hulladékgyűjtés {year}. évben</div></div>'
+                for i, year in enumerate(years)
+            )
+            + "</div>"
+        )
+    return SimpleNamespace(
+        text=text,
+        content=text.encode(),
+        url=f"https://{'dunafoldvar.hu' if town == 'Dunaföldvár' else 'example.org'}/",
+    )
+
+
+@pytest.mark.parametrize("case,town,weekday", _DUNANETT_NEW_TOWNS)
+@freeze_time("2026-10-16")
+def test_dunanett_indices_keep_future_years_and_reject_competing_links(
+    case: str, town: str, weekday: int | None
+) -> None:
+    from waste_collection_schedule.source.dunanett_hu import _annual_targets
+
+    targets = _annual_targets(
+        _annual_index(town, [2027, 2025, 2026]), municipality=town
+    )
+    assert [year for _, year in targets] == [2026, 2027]
+    with pytest.raises(ResponseShapeError, match="ambiguous"):
+        _annual_targets(_annual_index(town, [2026, 2026]), municipality=town)
+
+
+@pytest.mark.parametrize("case,town,weekday", _DUNANETT_NEW_TOWNS)
+@freeze_time("2026-10-16")
+def test_dunanett_download_year_must_match_published_link(
+    case: str, town: str, weekday: int | None
+) -> None:
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    # The current document cannot stand in for the next year's publication,
+    # even when its URL is a UUID or a yearless file overwritten in place.
+    index = _annual_index(town, [2026, 2027])
+    with pytest.raises(ResponseShapeError, match="heading year disagrees"):
+        Source.parse(
+            [index, _dunanett_response(case), _dunanett_response(case)],
+            Source(municipality=town),
+        )
+
+
+@pytest.mark.parametrize(
+    "change",
+    ["heading", "city", "label", "month", "cell", "date", "row", "weekly", "areas"],
+)
+def test_hu_html_calendar_rejects_incomplete_or_changed_rules(change: str) -> None:
+    from bs4 import BeautifulSoup
+    from waste_collection_schedule.service import HuWasteCalendar as hu
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    response = _dunanett_response("nagyvenyim")
+    soup = BeautifulSoup(response.text, "html.parser")
+    if change == "heading":
+        soup.h1.string = "Other title"
+    elif change == "city":
+        response.text = response.text.replace("Nagyvenyim", "OtherTown")
+    elif change == "label":
+        for p in soup.select(".entry-content p"):
+            if (
+                "Biológiailag lebomló hulladék elszállításának időpontjai"
+                in p.get_text()
+            ):
+                p.decompose()
+    elif change in ("month", "cell", "date", "row"):
+        rows = soup.select(".entry-content table tr")
+        if change == "month":
+            rows[0].td.string = "XIII."
+        elif change == "cell":
+            rows[1].td.decompose()
+        elif change == "date":
+            rows[1].td.string = "32/33"
+        else:
+            rows[1].decompose()
+    else:
+        paragraph = soup.select_one(".entry-content p")
+        paragraph.string = paragraph.get_text(" ", strip=True).replace(
+            "HÉTFŐI" if change == "areas" else "helyett",
+            "KEDDI" if change == "areas" else "and",
+        )
+    if change != "city":
+        response.text = str(soup)
+    with pytest.raises(ResponseShapeError):
+        hu.MonthTableCalendarParser()(response, Source(municipality="Nagyvenyim"))
+
+
+def _changed_docx(response: SimpleNamespace, old: str, new: str) -> SimpleNamespace:
+    output = BytesIO()
+    with (
+        ZipFile(BytesIO(response.content)) as original,
+        ZipFile(output, "w") as changed,
+    ):
+        for entry in original.infolist():
+            content = original.read(entry.filename)
+            if entry.filename == "word/document.xml":
+                assert old in content.decode()
+                content = content.decode().replace(old, new).encode()
+            changed.writestr(entry, content)
+    response.content = output.getvalue()
+    return response
+
+
+@pytest.mark.parametrize(
+    "change", ["zip", "xml", "city", "heading", "label", "month", "date", "rows"]
+)
+def test_hu_docx_calendar_rejects_malformed_documents(change: str) -> None:
+    from waste_collection_schedule.service import HuWasteCalendar as hu
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    response = _dunanett_response("dunaf_ldv_r")
+    if change == "zip":
+        response.content = b"PK not a DOCX"
+    else:
+        old, new = {
+            "xml": ("</w:document>", ""),
+            "city": ("unaföldvár", "OtherTown"),
+            "heading": ("2026", "unknown"),
+            "label": ("Szelektív", "Other"),
+            "month": ("Február", "OtherMonth"),
+            "date": ("15.", "32."),
+            "rows": ("w:tr", "w:row"),
+        }[change]
+        response = _changed_docx(response, old, new)
+    with pytest.raises(ResponseShapeError):
+        hu.MonthTableCalendarParser(docx=True)(
+            response, Source(municipality="Dunaföldvár")
+        )
+
+
+@pytest.mark.parametrize(
+    "case,town,docx",
+    [("nagyvenyim", "Nagyvenyim", False), ("dunaf_ldv_r", "Dunaföldvár", True)],
+)
+def test_hu_month_tables_only_label_trees_when_published(
+    case: str, town: str, docx: bool
+) -> None:
+    from waste_collection_schedule.service import HuWasteCalendar as hu
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    response = _dunanett_response(case)
+    if docx:
+        response = _changed_docx(response, "fenyőfákat", "más hulladékot")
+    else:
+        response.text = response.text.replace(
+            "Januárban csak karácsonyfát szállítanak el!", ""
+        )
+    records = hu.MonthTableCalendarParser(docx=docx)(
+        response, Source(municipality=town)
+    )
+    assert not any(label == hu.CHRISTMAS_TREES for _, label in records)
+    assert (
+        len(
+            [
+                when
+                for when, label in records
+                if when.month == 1 and label == "zöldhulladék"
+            ]
+        )
+        == 2
+    )
+
+
+@pytest.mark.parametrize("change", ["heading", "links"])
+def test_dunanett_docx_article_must_match_index_and_have_one_download(
+    change: str,
+) -> None:
+    from waste_collection_schedule.source.dunanett_hu import _document_url
+
+    response = _dunanett_response("dunaf_ldv_r", 1)
+    if change == "heading":
+        response.text = response.text.replace("2026", "2025")
+    else:
+        response.text += '<a href="/other.docx">Naptár</a>'
+    with pytest.raises(ResponseShapeError):
+        _document_url(response, (response.url, 2026))
+
+
+@pytest.mark.parametrize(
+    "case,town,interaction",
+    [
+        (case, town, interaction)
+        for case, town, _ in _DUNANETT_NEW_TOWNS
+        for interaction in range(3 if town == "Dunaföldvár" else 2)
+    ],
+)
+def test_dunanett_new_towns_http_errors_propagate(
+    tmp_path: Path, case: str, town: str, interaction: int
+) -> None:
+    import cassette
+    from waste_collection_schedule.source.dunanett_hu import Source
+
+    recording = _dunanett_recording(case)
+    recording["interactions"][interaction]["status"] = 503
+    path = tmp_path / "unavailable.json"
+    path.write_text(json.dumps(recording), encoding="utf-8")
+    with cassette.replaying(str(path)), pytest.raises(OSError, match="503"):
+        Source(municipality=town).fetch()

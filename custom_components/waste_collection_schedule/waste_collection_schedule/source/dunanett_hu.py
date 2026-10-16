@@ -4,8 +4,9 @@ import re
 from dataclasses import replace
 from datetime import date, datetime
 from html import unescape
+from types import SimpleNamespace
 from typing import Any, ClassVar, TypedDict, final
-from urllib.parse import unquote, urlsplit
+from urllib.parse import unquote, urljoin, urlsplit
 
 from waste_collection_schedule import parsers, response_shape, retrievers
 from waste_collection_schedule import waste_types as wt
@@ -20,7 +21,11 @@ from waste_collection_schedule.transformers import ICSTransformer
 _SITES = {
     "Pusztaszabolcs": "https://pusztaszabolcs.hu",
     "Rácalmás": "https://racalmas.hu",
+    "Perkáta": "https://perkata.munipolis.hu/p/hulladekszallitas",
+    "Nagyvenyim": "https://nagyvenyim.hu/wp-sitemap-posts-post-1.xml",
+    "Dunaföldvár": "https://dunafoldvar.hu/hir-kategoria/hulladekokkal-kapcsolatos-informaciok/",
 }
+_MEDIA_TOWNS = {"Pusztaszabolcs", "Rácalmás"}
 
 
 class _Title(TypedDict):
@@ -96,11 +101,121 @@ def _calendar_urls(response: Any, *, municipality: str, **_: Any) -> list[str]:
     return [calendars[year][1] for year in sorted(calendars)]
 
 
+def _annual_targets(
+    response: Any, *, municipality: str, **_: Any
+) -> list[tuple[str, int]]:
+    """Published current/future calendars; competing links require human review."""
+    if municipality in _MEDIA_TOWNS:
+        return [
+            (
+                url,
+                int(
+                    re.findall(
+                        r"20\d{2}", unquote(urlsplit(url).path).rsplit("/", 1)[-1]
+                    )[0]
+                ),
+            )
+            for url in _calendar_urls(response, municipality=municipality)
+        ]
+    candidates: list[tuple[str, str]] = []
+    if municipality == "Perkáta":
+        for element in parsers.HtmlParser("custom-page-description[description]")(
+            response
+        ):
+            fragment: Any = SimpleNamespace(text=element.get("description", ""))
+            candidates.extend(
+                (str(a["href"]), a.get_text(" ", strip=True))
+                for a in parsers.HtmlParser("a[href]")(fragment)
+            )
+        pattern = r"(?:\d+_)?perkata_hulladeknaptar(20\d{2})(?:[_ -].*)?\.pdf"
+    elif municipality == "Nagyvenyim":
+        root = parsers.XmlParser()(response)[0]
+        candidates = [
+            (node.text or "", (node.text or "").rsplit("/", 2)[-2])
+            for node in root.findall("{*}url/{*}loc")
+        ]
+        pattern = r"tajekoztato-a-hulladekszallitas-(20\d{2})-evi-rendjerol"
+    else:
+        for card in parsers.HtmlParser(".list .item")(response):
+            anchor, title = card.select_one("a[href]"), card.select_one(".name")
+            if anchor is not None and title is not None:
+                response_shape.expect(
+                    hu.fold(str(anchor.get("title", "")))
+                    == hu.fold(title.get_text(" ", strip=True)),
+                    source_name="dunanett_hu",
+                    detail="article card title and name disagree",
+                    raw=str(card),
+                )
+                candidates.append(
+                    (str(anchor["href"]), title.get_text(" ", strip=True))
+                )
+        pattern = r"szelektiv es zold hulladekgyujtes (20\d{2})\. evben"
+    calendars: dict[int, str] = {}
+    for href, label in candidates:
+        match = re.fullmatch(pattern, hu.fold(label))
+        if not match:
+            continue
+        year = int(match[1])
+        if year < date.today().year:
+            continue
+        url = urljoin(response.url, href)
+        response_shape.expect(
+            urlsplit(url).scheme == "https"
+            and (
+                municipality == "Perkáta"
+                or urlsplit(url).netloc == urlsplit(_site(municipality)).netloc
+            ),
+            source_name="dunanett_hu",
+            detail="invalid annual calendar link",
+            raw=url,
+        )
+        response_shape.expect(
+            year not in calendars or calendars[year] == url,
+            source_name="dunanett_hu",
+            detail=f"ambiguous annual calendars for {municipality} ({year})",
+            raw=candidates,
+        )
+        calendars[year] = url
+    response_shape.expect(
+        date.today().year in calendars,
+        source_name="dunanett_hu",
+        detail=f"no current annual calendar for {municipality} ({date.today().year})",
+        raw=candidates,
+    )
+    return [(calendars[year], year) for year in sorted(calendars)]
+
+
+def _document_url(response: Any, target: tuple[str, int], *_: Any, **__: Any) -> str:
+    """Resolve the yearless DOCX from its dated municipal article."""
+    headings = parsers.HtmlParser("h1")(response)
+    response_shape.expect(
+        len(headings) == 1
+        and hu.fold(headings[0].get_text(" ", strip=True))
+        == f"szelektiv es zold hulladekgyujtes {target[1]}. evben",
+        source_name="dunanett_hu",
+        detail="annual article heading disagrees with its index",
+        raw=response.text[:500],
+    )
+    urls = {
+        urljoin(response.url, str(a["href"]))
+        for a in parsers.HtmlParser("a[href]")(response)
+        if hu.fold(a.get_text(" ", strip=True)) == "naptar"
+        and urlsplit(str(a["href"])).path.endswith(".docx")
+    }
+    response_shape.expect(
+        len(urls) == 1,
+        source_name="dunanett_hu",
+        detail="expected one annual DOCX calendar link",
+        raw=sorted(urls),
+    )
+    return next(iter(urls))
+
+
 @final
 class Source(BaseSource):
     TITLE = "Dunanett Nonprofit Kft."
     DESCRIPTION = (
-        "Source for Dunanett waste calendars in Pusztaszabolcs and Rácalmás, Hungary."
+        "Source for Dunanett waste calendars in five Hungarian municipalities."
     )
     URL = "https://www.dunanett.hu"
     COUNTRY = "hu"
@@ -110,62 +225,101 @@ class Source(BaseSource):
     TEST_CASES: ClassVar[dict] = {
         "Pusztaszabolcs": {"municipality": "Pusztaszabolcs"},
         "Rácalmás": {"municipality": "Rácalmás"},
+        "Perkáta": {"municipality": "Perkáta"},
+        "Nagyvenyim": {"municipality": "Nagyvenyim"},
+        "Dunaföldvár": {"municipality": "Dunaföldvár"},
     }
     PARAMS = (replace(municipality(), widget="select", options=list(_SITES)),)
     REGIONS: ClassVar[list] = [
-        region(town, url=site, municipality=town) for town, site in _SITES.items()
+        region(town, url=urljoin(site, "/"), municipality=town)
+        for town, site in _SITES.items()
     ]
     HOWTO: ClassVar[dict[str, str]] = {
         "en": (
-            "Select Pusztaszabolcs or Rácalmás. Annual calendars are published at "
-            "https://pusztaszabolcs.hu/2026/01/2026-evi-hulladeknaptar and "
-            "https://racalmas.hu/category/hirek/; the provider is https://www.dunanett.hu. "
-            "The source discovers municipal PDF uploads automatically, uses the latest "
-            "published version for each current/future year, and fails if the current "
+            "Select one municipality: Pusztaszabolcs, Rácalmás, Perkáta, Nagyvenyim "
+            "or Dunaföldvár. Official publication indices are "
+            "https://pusztaszabolcs.hu/, https://racalmas.hu/category/hirek/, "
+            "https://perkata.munipolis.hu/p/hulladekszallitas, "
+            "https://nagyvenyim.hu/ and "
+            "https://dunafoldvar.hu/hir-kategoria/hulladekokkal-kapcsolatos-informaciok/. "
+            "The provider is https://www.dunanett.hu. The source discovers annual "
+            "PDF, HTML or DOCX calendars for current/future years automatically, "
+            "uses the latest timestamped PDF upload or the uniquely published link, "
+            "and fails on ambiguous links or if the current "
             "year is unavailable rather than reusing an expired calendar.\n\n"
-            "General waste, recycling and garden waste are included. Where the PDF "
+            "General waste, recycling and garden waste are included, except in "
+            "Dunaföldvár: its document publishes only recycling and garden dates, "
+            "so no general-waste schedule is returned there. Where the calendar "
             "restricts January collections to Christmas trees, those events use the "
             "Garden Waste category with a tree-only description: remove decorations "
             "and other waste; ordinary garden waste is not accepted. Bulky waste is "
-            "by appointment and has no calendar dates.\n\n"
+            "by appointment and has no calendar dates. Permanent glass drop-off "
+            "points are not dated collections.\n\n"
             "These are the annual planned dates. Ad-hoc weather cancellations or "
             "street-specific replacement notices are not included; check municipal "
             "news and https://www.dunanett.hu/nonprofit/hireink/. Other Dunanett "
-            "municipalities are not yet supported because their current calendars "
-            "are image-only or use different document formats."
+            "municipalities are not supported: current machine-readable annual "
+            "calendars could not be verified, or the available calendars are image-only."
         ),
     }
 
     retrieve = retrievers.FanOutRetriever(
-        prepare=retrievers.Lookup(
-            lambda municipality, **_: f"{_site(municipality)}/wp-json/wp/v2/media",
-            params={
-                "search": "hulladeknaptar",
-                "per_page": 100,
-                "_fields": "date,source_url,title",
+        prepare=retrievers.Request(
+            lambda municipality, **_: (
+                f"{_site(municipality)}/wp-json/wp/v2/media"
+                if municipality in _MEDIA_TOWNS
+                else _site(municipality)
+            ),
+            params=lambda municipality, **_: (
+                {
+                    "search": "hulladeknaptar",
+                    "per_page": 100,
+                    "_fields": "date,source_url,title",
+                }
+                if municipality in _MEDIA_TOWNS
+                else None
+            ),
+            headers=lambda municipality, **_: {
+                "Referer": urljoin(_site(municipality), "/")
             },
-            headers=lambda municipality, **_: {"Referer": f"{_site(municipality)}/"},
-            pick=_calendar_urls,
             timeout=60,
         ),
-        targets=lambda source, urls: urls,
+        targets=lambda source, response: _annual_targets(response, **source.params),
         fetch=retrievers.Request(
-            lambda url, urls, **_: url,
-            headers=lambda url, urls, municipality, **_: {
-                "Referer": f"{_site(municipality)}/"
+            lambda target, response, document, **_: document or target[0],
+            before=(
+                retrievers.Lookup(
+                    lambda target, response, **_: target[0],
+                    when=lambda *_, municipality, **__: municipality == "Dunaföldvár",
+                    pick=_document_url,
+                    timeout=60,
+                ),
+            ),
+            headers=lambda *_, municipality, **__: {
+                "Referer": urljoin(_site(municipality), "/")
             },
             timeout=60,
         ),
+        include_prepared=True,
     )
-    parse = parsers.EachResponse(
-        hu.CalendarParser(
-            types={"szelektív": "szelektív", "zöldhulladék": "zöldhulladék"},
-            strict=True,
-            expected_municipality=lambda municipality, **_: municipality,
-            year_from_url=True,
-            january_trees=True,
-            holiday_moves=True,
-        )
+    parse = hu.PublishedCalendarsParser(
+        discover=_annual_targets,
+        parser=parsers.ByBodyPrefix(
+            {
+                "%PDF-": hu.CalendarParser(
+                    types={"szelektív": "szelektív", "zöldhulladék": "zöldhulladék"},
+                    strict=True,
+                    expected_municipality=lambda municipality, **_: municipality,
+                    year_from_url=lambda municipality, **_: (
+                        municipality in _MEDIA_TOWNS
+                    ),
+                    january_trees=True,
+                    holiday_moves=True,
+                ),
+                "PK": hu.MonthTableCalendarParser(docx=True),
+            },
+            default=hu.MonthTableCalendarParser(),
+        ),
     )
     transform = ICSTransformer(
         type_value_map={

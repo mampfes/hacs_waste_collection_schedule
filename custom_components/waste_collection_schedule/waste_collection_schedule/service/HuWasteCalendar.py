@@ -1,4 +1,4 @@
-"""Pipeline component for the Hungarian "hulladéknaptár" PDF calendars.
+"""Pipeline components for Hungarian annual waste calendars.
 
 Depónia (deponia.hu), Siókom (siokom.hu) and Dunanett (dunanett.hu)
 publish the same annual calendar, exported from a
@@ -16,6 +16,10 @@ labels are the Hungarian words printed in the PDF (plus :data:`GENERAL` and
 ``ICSTransformer`` maps onto waste types. The month of a day cell is the month
 header nearest to it in the layout text. A PDF without a year, without the
 month header or without any date fails loudly instead of returning nothing.
+
+``MonthTableCalendarParser`` reads the corresponding HTML/DOCX month-and-day
+tables. ``PublishedCalendarsParser`` checks downloaded calendars against their
+publication index, including files without a year in their download URL.
 """
 
 from __future__ import annotations
@@ -27,8 +31,10 @@ from datetime import date, timedelta
 from io import BytesIO
 from typing import TYPE_CHECKING, Any
 from urllib.parse import unquote, urlsplit
+from xml.etree import ElementTree
+from zipfile import BadZipFile, ZipFile
 
-from waste_collection_schedule import response_shape
+from waste_collection_schedule import parsers, response_shape
 from waste_collection_schedule.parsers import Parser
 
 if TYPE_CHECKING:
@@ -340,7 +346,8 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
             row, valid dates and a weekly general-waste rule.
         expected_municipality: exact municipality in the annual heading; a
             literal or a callable receiving the source parameters.
-        year_from_url: require the PDF filename's year to match its heading.
+        year_from_url: require the PDF filename's year to match its heading;
+            a boolean or a callable receiving the source parameters.
         january_trees: relabel January garden dates as :data:`CHRISTMAS_TREES`
             only when the PDF explicitly restricts them to undecorated trees.
             Map that label to garden waste and carry its restriction metadata.
@@ -357,7 +364,7 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
         holiday_moves: bool = False,
         strict: bool = False,
         expected_municipality: str | Callable[..., str] | None = None,
-        year_from_url: bool = False,
+        year_from_url: bool | Callable[..., bool] = False,
         january_trees: bool = False,
     ) -> None:
         self.types = {key.lower(): value for key, value in types.items()}
@@ -392,7 +399,12 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
             raw=combined[:500],
         )
         year = int(year_match.group(1))  # type: ignore[union-attr]
-        if self.year_from_url:
+        year_from_url = (
+            self.year_from_url(**(source.params if source else {}))
+            if callable(self.year_from_url)
+            else self.year_from_url
+        )
+        if year_from_url:
             years = re.findall(
                 r"20\d{2}", unquote(urlsplit(response.url).path).rsplit("/", 1)[-1]
             )
@@ -501,3 +513,304 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
             raw=combined[:500],
         )
         return sorted(set(dated)) if self.strict else sorted(dated)
+
+
+class PublishedCalendarsParser(Parser["list[tuple[date, str]]"]):
+    """Validate downloaded calendars against the years in their publication index.
+
+    Pair with ``FanOutRetriever(include_prepared=True)`` whose prepare returns
+    the index response. ``discover(response, **params)`` is the same pure pick
+    used by its targets, returning ordered ``(url, year)`` pairs. Keeping the
+    real index alongside the downloads also handles yearless/UUID filenames.
+    """
+
+    def __init__(
+        self, *, discover: Callable[..., list[tuple[str, int]]], parser: Parser
+    ) -> None:
+        self.discover = discover
+        self.parser = parsers.EachResponse(parser)
+
+    def __call__(
+        self, response: Any, source: BaseSource | None = None
+    ) -> list[tuple[date, str]]:
+        index, *documents = response
+        targets = self.discover(index, **(source.params if source else {}))
+        name = response_shape.source_name(source)
+        response_shape.expect(
+            len(documents) == len(targets),
+            source_name=name,
+            detail="publication index and downloaded calendar count disagree",
+            raw=targets,
+        )
+        records: list[tuple[date, str]] = []
+        for document, (url, year) in zip(documents, targets, strict=True):
+            dated = self.parser([document], source)
+            response_shape.expect(
+                bool(dated) and {when.year for when, _ in dated} == {year},
+                source_name=name,
+                detail="calendar heading year disagrees with its publication index",
+                raw=(url, year),
+            )
+            records.extend(dated)
+        return records
+
+
+_ROMAN_MONTHS = (
+    "I",
+    "II",
+    "III",
+    "IV",
+    "V",
+    "VI",
+    "VII",
+    "VIII",
+    "IX",
+    "X",
+    "XI",
+    "XII",
+)
+_MONTH_NUMBERS = {fold(name): number for name, number in MONTHS.items()}
+_MONTH_NUMBERS.update(
+    {name.lower(): number for number, name in enumerate(_ROMAN_MONTHS, 1)}
+)
+
+
+def _month_table_dates(
+    rows: list[list[str]], year: int, label: str, *, trees: bool, name: str
+) -> list[tuple[date, str]]:
+    """Read alternating month/day rows, preserving explicitly omitted months."""
+    response_shape.expect(
+        len(rows) in (2, 4),
+        source_name=name,
+        detail="expected paired month and day rows",
+        raw=rows,
+    )
+    dated: list[tuple[date, str]] = []
+    seen: list[int] = []
+    for headers, cells in zip(rows[::2], rows[1::2], strict=True):
+        months = [_MONTH_NUMBERS.get(fold(cell).rstrip(".")) for cell in headers]
+        response_shape.expect(
+            bool(months) and len(months) == len(cells) and all(months),
+            source_name=name,
+            detail="invalid month headings or unequal day cells",
+            raw=rows,
+        )
+        for month, cell in zip(months, cells, strict=True):
+            assert month is not None
+            seen.append(month)
+            token = cell.strip()
+            response_shape.expect(
+                re.fullmatch(r"-|\d{1,2}(?:(?:\.?\s+|\s*[/,]\s*)\d{1,2})*\.?", token)
+                is not None,
+                source_name=name,
+                detail="invalid month day list",
+                raw=cell,
+            )
+            days = [int(day) for day in re.findall(r"\d+", token)]
+            response_shape.expect(
+                days == sorted(set(days)),
+                source_name=name,
+                detail="duplicate or unordered days in month cell",
+                raw=cell,
+            )
+            for day in days:
+                try:
+                    when = date(year, month, day)
+                except ValueError:
+                    raise response_shape.ResponseShapeError(
+                        name, "invalid calendar date"
+                    ) from None
+                dated.append((when, CHRISTMAS_TREES if trees and month == 1 else label))
+    response_shape.expect(
+        seen == sorted(set(seen))
+        and (label != "szelektív" or seen == list(range(1, 13))),
+        source_name=name,
+        detail="missing, duplicate or unordered month columns",
+        raw=rows,
+    )
+    return dated
+
+
+def _docx_blocks(content: bytes, name: str) -> list[str | list[list[str]]]:
+    """Extract body paragraphs and table cells from a real DOCX ZIP, in order."""
+    ns = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
+
+    def text(element: ElementTree.Element) -> str:
+        return (
+            " ".join(
+                "".join(node.text or "" for node in paragraph.findall(".//w:t", ns))
+                for paragraph in element.iterfind(".//w:p", ns)
+            )
+            if element.tag.endswith("}tc")
+            else "".join(node.text or "" for node in element.findall(".//w:t", ns))
+        )
+
+    try:
+        with ZipFile(BytesIO(content)) as archive:
+            # ElementTree does not resolve external entities.
+            root = ElementTree.fromstring(archive.read("word/document.xml"))  # nosec B314
+    except (BadZipFile, KeyError, ElementTree.ParseError) as error:
+        raise response_shape.ResponseShapeError(
+            name, "invalid DOCX calendar"
+        ) from error
+    body = root.find("w:body", ns)
+    response_shape.expect(
+        body is not None,
+        source_name=name,
+        detail="missing DOCX body",
+        raw=content[:100],
+    )
+    assert body is not None
+    return [
+        [
+            [text(cell) for cell in row.findall("w:tc", ns)]
+            for row in element.findall("w:tr", ns)
+        ]
+        if element.tag.endswith("}tbl")
+        else text(element)
+        for element in body
+        if element.tag.endswith(("}tbl", "}p"))
+    ]
+
+
+def _article_general_dates(text: str, year: int, name: str) -> list[date]:
+    """Require both named areas to share the explicitly stated target weekday.
+
+    The weekday *before* ``helyett`` is the superseded round, never a target.
+    An altered or area-dependent rule needs investigation rather than guessing.
+    """
+    weekday = "|".join(fold(day) for day in WEEKDAYS)
+    rule = re.fullmatch(
+        rf"melykut telepulesreszen valtozik a kommunalis hulladekszallitas rendje\s*:\s*"
+        rf"a korabbi (?:{weekday})i nap helyett (?P<changed>{weekday})i napokon "
+        rf"tortenik a hulladekszallitas\. a kozponti telepulesreszen valtozatlanul "
+        rf"(?P<central>{weekday})i napon kerul elszallitasra a kommunalis hulladek\.",
+        fold(text),
+    )
+    response_shape.expect(
+        rule is not None and rule["changed"] == rule["central"],
+        source_name=name,
+        detail="unrecognised or area-dependent annual general-waste rule",
+        raw=text,
+    )
+    assert rule is not None
+    return dates_in_range(
+        date(year, 1, 1), date(year, 12, 31), weekdays_in(rule["changed"])
+    )
+
+
+class MonthTableCalendarParser(Parser["list[tuple[date, str]]"]):
+    """Hungarian annual HTML/DOCX calendars with month headings above day lists.
+
+    HTML uses the annual article heading and its two labelled tables; DOCX uses
+    the printed heading and body/table order. A garden table may omit months;
+    those omissions are not recurrence rules. January tree restrictions are
+    detected from the publication, and no absent residual rule is invented.
+    """
+
+    def __init__(self, *, docx: bool = False) -> None:
+        self.docx = docx
+
+    def __call__(
+        self, response: Any, source: BaseSource | None = None
+    ) -> list[tuple[date, str]]:
+        name = response_shape.source_name(source)
+        wanted = fold(source.params["municipality"]) if source else ""
+        weekly: list[date] = []
+        if self.docx:
+            blocks = _docx_blocks(response.content, name)
+            heading = " ".join(block for block in blocks if isinstance(block, str))
+            match = re.search(
+                r"hulladekgyujtes\s+(20\d{2})\s*\.\s*evben", fold(heading)
+            )
+        else:
+            headings = parsers.HtmlParser("h1")(response)
+            contents = parsers.HtmlParser(".entry-content")(response)
+            response_shape.expect(
+                len(headings) == len(contents) == 1,
+                source_name=name,
+                detail="expected one annual article and heading",
+                raw=response.text[:500],
+            )
+            heading = headings[0].get_text(" ", strip=True)
+            match = re.fullmatch(
+                r"tajekoztato a hulladekszallitas (20\d{2})\.? evi rendjerol",
+                fold(heading),
+            )
+            blocks = [
+                [
+                    [
+                        cell.get_text(" ", strip=True)
+                        for cell in row.find_all(["td", "th"], recursive=False)
+                    ]
+                    for row in element.select("tr")
+                ]
+                if element.name == "table"
+                else element.get_text(" ", strip=True)
+                for element in contents[0].find_all(["p", "table"], recursive=False)
+            ]
+            heading += " " + contents[0].get_text(" ", strip=True)
+        response_shape.expect(
+            match is not None
+            and bool(wanted)
+            and re.search(rf"\b{re.escape(wanted)}(?:en)?\b", fold(heading))
+            is not None,
+            source_name=name,
+            detail="missing annual heading or wrong municipality",
+            raw=heading[:500],
+        )
+        assert match is not None
+        year = int(match[1])
+        dated: list[tuple[date, str]] = []
+        seen: list[str] = []
+        label = ""
+        restriction = ""
+        for block in blocks:
+            if isinstance(block, str):
+                text = fold(block)
+                if re.fullmatch(
+                    r"(?:a )?szelektiv hulladek(?:szallitas idopontjai| gyujtes)\s*:",
+                    text,
+                ):
+                    label, restriction = "szelektív", ""
+                elif re.fullmatch(
+                    r"(?:biologiailag lebomlo hulladek elszallitasanak idopontjai|zoldhulladek gyujtes)\s*:",
+                    text,
+                ):
+                    label, restriction = "zöldhulladék", ""
+                else:
+                    restriction += " " + text
+                if not self.docx and "kommunalis hulladekszallitas rendje" in text:
+                    response_shape.expect(
+                        not weekly,
+                        source_name=name,
+                        detail="duplicate general-waste rule",
+                        raw=block,
+                    )
+                    weekly = _article_general_dates(block, year, name)
+                continue
+            response_shape.expect(
+                bool(label) and label not in seen,
+                source_name=name,
+                detail="missing or duplicate table label",
+                raw=block,
+            )
+            seen.append(label)
+            trees = bool(
+                re.search(
+                    r"januarban csak karacsonyfat szallitanak el|a januari zoldhulladek\s*gyujtes soran kizarolag[^.]*fenyofakat szallitjak el",
+                    restriction,
+                )
+            )
+            dated.extend(_month_table_dates(block, year, label, trees=trees, name=name))
+            label = ""
+        response_shape.expect(
+            seen == ["szelektív", "zöldhulladék"]
+            and bool(dated)
+            and (self.docx or bool(weekly)),
+            source_name=name,
+            detail="missing annual collection table or general-waste rule",
+            raw=heading[:500],
+        )
+        dated.extend((when, GENERAL) for when in weekly)
+        return sorted(set(dated))
