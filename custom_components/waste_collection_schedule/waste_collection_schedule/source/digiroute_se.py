@@ -1,32 +1,64 @@
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 import requests
-from dateutil.rrule import WEEKLY, rrule
 
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
-    SourceArgAmbiguousWithSuggestions,
-    SourceArgumentException,
     SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
 )
 
 TITLE = "Digiroute"
-DESCRIPTION = "Digiroute waste collection schedule"
+DESCRIPTION = "Source for Digiroute waste collection schedules."
 URL = "https://digiroute.se"
 COUNTRY = "se"
 
-TEST_CASES = {
-    "Värmdö": {
-        "street_address": "Rosenmalmsvägen 8",
-        "municipality": "varmdo",
+EXTRA_INFO = [
+    {
+        "title": "Värmdö kommun",
+        "url": "https://www.varmdo.se",
+        "default_params": {
+            "service_provider": "Värmdö",
+        },
     }
+]
+
+TEST_CASES = {
+    "Rosenmalmsvägen 8": {
+        "service_provider": "Värmdö",
+        "street_address": "Rosenmalmsvägen 8",
+    },
+    "Rosenmalmsvägen 22": {
+        "service_provider": "Värmdö",
+        "street_address": "Rosenmalmsvägen 22",
+    },
+    "Stenolles Backe 6": {
+        "service_provider": "Värmdö",
+        "street_address": "Stenolles Backe 6",
+    },
+    "Mastvägen 10": {
+        "service_provider": "Värmdö",
+        "street_address": "Mastvägen 10",
+    },
 }
 
 ICON_MAP = {
     "Tvåfack 1": Icons.RECYCLING,
     "Tvåfack 2": Icons.GENERAL_WASTE,
-    "Matavfall": Icons.ORGANIC,
-    "Hushåll": Icons.GENERAL_WASTE,
+}
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": (
+        "Enter municipality name and street address exactly "
+        "as used by the Digiroute service."
+    )
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "service_provider": "Municipality",
+        "street_address": "Street Address",
+    }
 }
 
 
@@ -34,32 +66,24 @@ class Source:
     def __init__(
         self,
         street_address: str,
-        municipality: str,
+        service_provider: str,
     ):
-        if not street_address:
-            raise SourceArgumentException(
-                "street_address",
-                "street_address is required",
-            )
-
-        if not municipality:
-            raise SourceArgumentException(
-                "municipality",
-                "municipality is required",
-            )
-
         self._street_address = street_address.strip()
-        self._municipality = municipality.lower().strip()
 
-        self._addresses_url = (
-            f"https://digiroute.se/api/{self._municipality}/addresses"
+        self._service_provider = (
+            service_provider.lower()
+            .replace("å", "a")
+            .replace("ä", "a")
+            .replace("ö", "o")
         )
 
-        self._session = requests.Session()
+        self._api_url = (
+            f"https://digiroute.se/api/{self._service_provider}"
+        )
 
     def _get_address(self):
-        response = self._session.get(
-            self._addresses_url,
+        response = requests.get(
+            f"{self._api_url}/addresses",
             params={
                 "q": self._street_address,
                 "limit": 20,
@@ -81,15 +105,8 @@ class Source:
         if len(exact_matches) == 1:
             return exact_matches[0]
 
-        if len(exact_matches) > 1:
-            raise SourceArgAmbiguousWithSuggestions(
-                "street_address",
-                self._street_address,
-                [item["label"] for item in exact_matches],
-            )
-
         if items:
-            raise SourceArgAmbiguousWithSuggestions(
+            raise SourceArgumentNotFoundWithSuggestions(
                 "street_address",
                 self._street_address,
                 [item["label"] for item in items],
@@ -101,39 +118,29 @@ class Source:
         )
 
     @staticmethod
-    def _find_first_date(weekday, parity):
-        current = date.today()
+    def _matches_schedule(
+        current_date: date,
+        weekday: int,
+        parity: str,
+    ) -> bool:
+        if current_date.isoweekday() != weekday:
+            return False
 
-        while True:
-            current += timedelta(days=1)
+        week = current_date.isocalendar().week
 
-            #
-            # Digiroute:
-            # 0=sunday
-            # 1=monday
-            # ...
-            # 6=saturday
-            #
-            digiroute_weekday = (current.weekday() + 1) % 7
+        if parity == "odd":
+            return week % 2 == 1
 
-            if digiroute_weekday != weekday:
-                continue
+        if parity == "even":
+            return week % 2 == 0
 
-            week = current.isocalendar().week
-
-            if parity == "odd" and week % 2 == 0:
-                continue
-
-            if parity == "even" and week % 2 == 1:
-                continue
-
-            return current
+        return False
 
     def fetch(self):
         address = self._get_address()
 
-        response = self._session.get(
-            f"{self._addresses_url}/{address['id']}/delivery",
+        response = requests.get(
+            f"{self._api_url}/addresses/{address['id']}/delivery",
             timeout=30,
         )
 
@@ -143,32 +150,33 @@ class Source:
 
         entries = []
 
+        today = date.today()
+        end_date = today + timedelta(weeks=8)
+
         for container in data["containers"]:
             if container.get("job") != "deliver":
                 continue
 
-            start_date = self._find_first_date(
-                container["collectionWeekday"],
-                container["collectionWeekParity"],
-            )
+            fraction = container["fraction"]
+            weekday = container["collectionWeekday"]
+            parity = container["collectionWeekParity"]
 
-            for pickup_date in rrule(
-                WEEKLY,
-                dtstart=datetime.combine(
-                    start_date,
-                    datetime.min.time(),
-                ),
-                interval=2,
-                count=26,
-            ):
-                fraction = container["fraction"]
+            current = today
 
-                entries.append(
-                    Collection(
-                        date=pickup_date.date(),
-                        t=fraction,
-                        icon=ICON_MAP.get(fraction),
+            while current <= end_date:
+                if self._matches_schedule(
+                    current,
+                    weekday,
+                    parity,
+                ):
+                    entries.append(
+                        Collection(
+                            current,
+                            fraction,
+                            icon=ICON_MAP.get(fraction),
+                        )
                     )
-                )
+
+                current += timedelta(days=1)
 
         return sorted(entries, key=lambda x: x.date)
