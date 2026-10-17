@@ -1,6 +1,6 @@
 # HVCGroep
 
-Support for schedules provided by [hvcgroep.nl](https://www.hvcgroep.nl/) and other Dutch municipalities.
+Support for schedules provided by [hvcgroep.nl](https://www.hvcgroep.nl/) and other Dutch municipalities and waste collectors using the same (Opzet) platform, e.g. [RWM](https://www.rwm.nl/) (Beek, Echt-Susteren, Sittard-Geleen, Stein).
 
 ## Configuration via configuration.yaml
 
@@ -47,6 +47,7 @@ Use one of the following codes as service code:
 - peelenmaas
 - prezero
 - purmerend
+- rwm
 - schouwen-duiveland
 - sliedrecht
 - spaarnelanden
@@ -78,6 +79,17 @@ waste_collection_schedule:
         postal_code: 2841ML
         house_number: 1090
         service: cyclusnv
+```
+
+```yaml
+# rwm (RWM: Beek, Echt-Susteren, Sittard-Geleen, Stein)
+waste_collection_schedule:
+  sources:
+    - name: hvcgroep_nl
+      args:
+        postal_code: 6101CV
+        house_number: 55
+        service: rwm
 ```
 
 ```yaml
