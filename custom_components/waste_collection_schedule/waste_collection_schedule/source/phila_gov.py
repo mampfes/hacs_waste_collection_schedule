@@ -60,22 +60,31 @@ class Source:
                 all_pickups.append({"date": dt.date(), "weekly_pickup_num": index + 1})
         return sorted(all_pickups, key=lambda x: x["date"])
 
-    def check_holidays(self, hols: list[date], dt: date, pickup_number: int) -> date:
+    def check_holidays(
+        self, hols: list[date], dt: date, pickup_number: int
+    ) -> date | None:
         """
         Shift a collection date forward for holidays in the same week.
 
         Rules per phila.gov:
         - Weekend holidays: already excluded from hols, no effect.
-        - One holiday in the week: all collections on or after that holiday
-          are shifted by 1 day.
-        - Two holidays in the same week: collections shift by 1 or 2 days
-          depending on how many holidays fall on or before the collection day.
-        - If the shifted date itself lands on a holiday, shift again.
+        - Any holiday in the week cancels the secondary (trash-only) pickup,
+          returned as None.
+        - Primary pickup, one holiday in the week: collections on or after
+          that holiday are shifted by 1 day.
+        - Primary pickup, two holidays in the same week: collections shift by
+          1 or 2 days depending on how many holidays fall on or before the
+          collection day.
+        - Primary pickup: if the shifted date itself lands on a holiday, shift
+          again.
         """
         # find all weekday holidays in the same Mon-Sun week as dt
         week_start = dt - timedelta(days=dt.weekday())  # Monday
         week_end = week_start + timedelta(days=6)  # Sunday
         week_hols = sorted(h for h in hols if week_start <= h <= week_end)
+
+        if pickup_number > 1 and week_hols:
+            return None
 
         # shift by 1 for each holiday that falls on or before the collection day
         shift = sum(1 for h in week_hols if h <= dt)
@@ -83,7 +92,7 @@ class Source:
 
         # if the adjusted date itself is a holiday, shift once more
         if adjusted in hols and adjusted != dt:
-            adjusted = self.check_holidays(hols, adjusted, pickup_number)
+            return self.check_holidays(hols, adjusted, pickup_number)
 
         return adjusted
 
@@ -116,15 +125,14 @@ class Source:
         waste_days = []
         recycle_days = []
 
-        for key in props:
-            val = props[key]
+        for key in ("rubbish_recycle_day", "secondary_rubbish_day"):
+            val = props.get(key)
             if not isinstance(val, str) or val.upper() not in DAYS:
                 continue
             day = DAYS[val.upper()]
-            if "rubbish" in key.lower():
-                # rubbish_recycle_day and secondary_rubbish_day both go into trash
-                waste_days.append(day)
-            if key.lower() == "rubbish_recycle_day":
+            # primary first: the index in waste_days is the pickup number
+            waste_days.append(day)
+            if key == "rubbish_recycle_day":
                 # the primary day is also the recycling day
                 recycle_days.append(day)
 
