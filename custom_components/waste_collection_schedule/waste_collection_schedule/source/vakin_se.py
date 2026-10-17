@@ -70,18 +70,12 @@ def _pick_address(response, _endpoint: _WidgetEndpoints, *, address: str, **_) -
     if len(items) == 1:
         return items[0]["value"]
 
-    # Try exact match against label or address field
-    wanted = address.strip().casefold()
+    # Try exact match against label or address field (stripping postal code if present)
+    wanted = _clean_address_query(address).casefold()
     for item in items:
         label = str(item.get("label", "")).strip().casefold()
         val_addr = str(item.get("value", {}).get("address", "")).strip().casefold()
         if wanted in (label, val_addr):
-            return item["value"]
-
-    # If the user included locality in "Street Number, Locality" format, compare parts
-    for item in items:
-        label = str(item.get("label", "")).strip().casefold()
-        if wanted == label:
             return item["value"]
 
     suggestions = [item.get("label", "") for item in items[:10] if item.get("label")]
@@ -123,7 +117,7 @@ class Source(BaseSource):
     TEST_CASES: ClassVar[dict] = {
         "Kajakvägen 3, Täfteå": {"address": "Kajakvägen 3, Täfteå"},
         "Kajakvägen 3": {"address": "Kajakvägen 3"},
-        "Storgatan 1, Umeå": {"address": "Storgatan 1, Umeå"},
+        "Storgatan 101, Umeå": {"address": "Storgatan 101, Umeå"},
     }
 
     ERROR_TEST_CASES: ClassVar[dict] = {
