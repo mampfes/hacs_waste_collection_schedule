@@ -2,11 +2,10 @@ import base64
 import urllib.parse
 from typing import ClassVar, final
 
-from waste_collection_schedule import parsers
+from waste_collection_schedule import parsers, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
-from waste_collection_schedule.retrievers import RetrieverFunc
 from waste_collection_schedule.transformers import ICSTransformer
 
 MAIN_REGIONS = {
@@ -239,13 +238,12 @@ def _cid_to_url(cid: str) -> str:
     return f"https://calendar.google.com/calendar/ical/{encoded_id}/public/basic.ics"
 
 
-class CalendarRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource):
-        urls = [_cid_to_url(MAIN_REGIONS[source.params["main_region"]])]
-        bio_cid = BIO_REGIONS.get(source.params["bio_region"], "")
-        if bio_cid:
-            urls.append(_cid_to_url(bio_cid))
-        return [source.session.get(url) for url in urls]
+def _get_urls(source: BaseSource, *_, **__) -> list[str]:
+    urls = [_cid_to_url(MAIN_REGIONS[source.params["main_region"]])]
+    bio_cid = BIO_REGIONS.get(source.params["bio_region"], "")
+    if bio_cid:
+        urls.append(_cid_to_url(bio_cid))
+    return urls
 
 
 @final
@@ -255,7 +253,7 @@ class Source(BaseSource):
     URL = "https://www.komunala-slb.si"
     COUNTRY = "si"
 
-    HOWTO = {
+    HOWTO: ClassVar[dict] = {
         "sl": (
             "Izberite svoje območje iz seznama urnikov, objavljenih na "
             "https://www.komunala-slb.si/google-koledar.html. "
@@ -300,12 +298,14 @@ class Source(BaseSource):
         },
     }
 
-    PARAMS = [
+    PARAMS = (
         dropdown("main_region", options=list(MAIN_REGIONS.keys())),
         dropdown("bio_region", options=list(BIO_REGIONS.keys())),
-    ]
+    )
 
-    retrieve = CalendarRetriever()
+    retrieve = retrievers.FanOutRetriever(
+        targets=_get_urls,
+    )
     parse = parsers.EachResponse(parsers.IcsParser())
 
     transform = ICSTransformer(
