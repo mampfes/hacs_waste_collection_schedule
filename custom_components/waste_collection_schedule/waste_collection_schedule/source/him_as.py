@@ -1,4 +1,5 @@
 import datetime
+from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
@@ -15,6 +16,8 @@ COUNTRY = "no"
 TEST_CASES = {
     "Leiv Eirikssons Gate 10": {"address": "Leiv Eirikssons Gate 10"},
     "ØVREGATA 170": {"address": "ØVREGATA 170"},
+    # Several properties share this address
+    "Haraldsgata 100": {"address": "Haraldsgata 100"},
 }
 
 CALENDAR_URL = "https://him.as/tommekalender/"
@@ -84,33 +87,52 @@ PARAM_TRANSLATIONS = {
 SOURCE_CODEOWNERS = ["@bbr111"]
 
 
+def _normalize(address: str) -> str:
+    return " ".join(address.split()).casefold()
+
+
 class Source:
     def __init__(self, address: str):
         self._address = address
 
-    def fetch(self) -> list[Collection]:
+    def _get(self, url: str, params: dict | None = None) -> BeautifulSoup:
         r = requests.get(
-            CALENDAR_URL,
-            params={"adressesok": self._address},
+            url,
+            params=params,
             headers=REQUEST_HEADERS,
             timeout=REQUEST_TIMEOUT,
         )
         r.raise_for_status()
+        return BeautifulSoup(r.text, "html.parser")
 
-        soup = BeautifulSoup(r.text, "html.parser")
+    def fetch(self) -> list[Collection]:
+        soup = self._get(CALENDAR_URL, params={"adressesok": self._address})
 
         calendar_tables = soup.select("table.tommekalender__calendartable")
         if not calendar_tables:
             # No single exact match: either zero hits or several addresses
             # matched the search term. Both cases render a result table with
             # one row per candidate address instead of a calendar.
-            suggestions = [
-                a.get_text(strip=True)
-                for a in soup.select("div.table-wrap table tbody tr td a[href]")
+            candidates = soup.select("div.table-wrap table tbody tr td a[href]")
+            # Several properties (e.g. sections of one building) can share the
+            # exact same address, so picking it from the suggestions would
+            # never narrow the search down. Follow the first exact match.
+            exact = [
+                a
+                for a in candidates
+                if _normalize(a.get_text()) == _normalize(self._address)
             ]
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address", self._address, suggestions
-            )
+            if exact:
+                soup = self._get(urljoin(CALENDAR_URL, str(exact[0]["href"])))
+                calendar_tables = soup.select("table.tommekalender__calendartable")
+
+            if not calendar_tables:
+                suggestions = list(
+                    dict.fromkeys(" ".join(a.get_text().split()) for a in candidates)
+                )
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "address", self._address, suggestions
+                )
 
         entries: list[Collection] = []
         for month_section in soup.select(
