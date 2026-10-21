@@ -8,9 +8,9 @@ DESCRIPTION = "Fetches waste collection schedules from Ljusdal Energi."
 URL = "https://ljusdalenergi.se"
 COUNTRY = "se"
 
-# Public test case using Ljusdal Municipality Hall (Kommunhus) for validation
+# Public test case using Ljusdal Municipality Hall (Kommunhus) for automated validation
 TEST_CASES = {
-    "Ljusdal Kommunhus": {"address": "Stortorget 1, Ljusdal"},
+    "Ljusdal Kommunhus": {"address": "Norra Järnvägsgatan 21, Ljusdal"},
 }
 
 # Maps waste fractions to standard Home Assistant icons
@@ -23,7 +23,7 @@ ICON_MAP = {
 }
 
 PARAM_DESCRIPTIONS = {
-    "en": {"address": "Your street address and city (e.g., 'Stortorget 1, Ljusdal')."},
+    "en": {"address": "Your street address and city (e.g., 'Norra Järnvägsgatan 21, Ljusdal')."},
 }
 
 
@@ -38,17 +38,22 @@ class Source:
         address_url = f"{URL}/api/waste/addresssearch"
         address_payload = {"searchString": self._address}
         
-        # Using json= instead of params= because the API expects a JSON body
         response = session.post(address_url, json=address_payload)
         response.raise_for_status()
         address_data = response.json()
         
-        if not address_data or len(address_data) == 0:
+        if not address_data:
             raise SourceArgumentNotFound("address", self._address)
             
-        # Extract ServiceId from the first matching search result
-        # The API returns a list of matching addresses
-        first_match = address_data[0]
+        # Handle if the API returns a list (as seen in the developer tools)
+        if isinstance(address_data, list):
+            if len(address_data) == 0:
+                raise SourceArgumentNotFound("address", self._address)
+            first_match = address_data[0]
+        else:
+            first_match = address_data
+            
+        # Extract ServiceId from the matching search result
         service_id = first_match.get("ServiceId")
         if not service_id:
             raise SourceArgumentNotFound("address", self._address)
@@ -71,7 +76,7 @@ class Source:
             if not date_str:
                 continue
                 
-            # Convert string to datetime.date object (strip time if present, e.g. "2026-10-25T00:00:00")
+            # Convert string to datetime.date object (strip time if present)
             date_clean = date_str.split("T")[0]
             pickup_date = datetime.datetime.strptime(date_clean, "%Y-%m-%d").date()
             
