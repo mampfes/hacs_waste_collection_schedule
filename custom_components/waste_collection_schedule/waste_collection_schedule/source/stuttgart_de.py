@@ -7,6 +7,9 @@ from waste_collection_schedule import Collection  # type: ignore[attr-defined]
 TITLE = "Abfall Stuttgart"
 DESCRIPTION = "Source for waste collections for the city of Stuttgart, Germany."
 URL = "https://service.stuttgart.de"
+
+SOURCE_CODEOWNERS = ["@n42net"]
+
 TEST_CASES = {"Im Steinengarten 7": {"street": "Im Steinengarten", "streetnr": 7}}
 
 
