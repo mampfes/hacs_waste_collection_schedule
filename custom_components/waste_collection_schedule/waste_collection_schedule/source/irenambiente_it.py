@@ -49,6 +49,11 @@ TEST_CASES = {
         "street": "Corso Quintino Sella",
         "house_number": "11 Scala A",
     },
+    "Salsomaggiore Terme PIAZZA BERZIERI 1": {
+        "city": "Salsomaggiore Terme",
+        "street": "PIAZZA BERZIERI",
+        "house_number": 1,
+    },
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
@@ -58,6 +63,10 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to g
 
 # DTSTART=20240301T000000Z
 DTSTART_REGEX = re.compile(r"DTSTART=\d*T\d*Z?;?")
+
+# "Settimana pari/dispari come previsto dalla numerazione del calendario annuale"
+DISPARI_REGEX = re.compile(r"\bdispari\b", re.IGNORECASE)
+PARI_REGEX = re.compile(r"\bpari\b", re.IGNORECASE)
 
 ICON_MAP = {
     "Carta": Icons.PAPER,
@@ -241,21 +250,26 @@ class Source:
         return r.json()
 
     @staticmethod
-    def _fortnightly_dtstart(flag_freq: str, year: int) -> datetime:
-        """Compute DTSTART for fortnightly (2S) schedules.
+    def _fortnightly_parity(item: CollectionItem) -> int:
+        """Return the ISO week parity (1 = odd, 0 = even) of a fortnightly (2S) schedule.
 
-        Iren aligns odd/even weeks to ISO week numbers.
-        FlagFreq 'N' → dispari (odd ISO weeks); FlagFreq 'P' → pari (even ISO weeks).
-        The first Monday of the year may fall in an even or odd ISO week depending
-        on the year, so we check and shift by one week if needed.
+        Iren aligns odd/even weeks to the ISO week numbers of the year and states
+        which one in the notes ("Settimana pari/dispari come previsto dalla
+        numerazione del calendario annuale"). FlagFreq is "N" for both pari and
+        dispari zones, so it is only used as a last resort.
         """
-        jan1 = datetime(year, 1, 1)
-        first_monday = jan1 + timedelta(days=(7 - jan1.weekday()) % 7)
-        first_monday_is_odd = first_monday.isocalendar()[1] % 2 == 1
-        want_odd = flag_freq == "N"
-        if first_monday_is_odd != want_odd:
-            first_monday += timedelta(weeks=1)
-        return first_monday
+        notes = f"{item.get('NotaGenerica') or ''} {item.get('NoteServizio') or ''}"
+        # check "dispari" first: it contains "pari"
+        if DISPARI_REGEX.search(notes):
+            return 1
+        if PARI_REGEX.search(notes):
+            return 0
+        if start := item.get("DataInizioValidita"):
+            try:
+                return datetime.fromisoformat(start).isocalendar()[1] % 2
+            except ValueError:
+                pass
+        return 0 if item.get("FlagFreq") == "P" else 1
 
     def _get_collections(self) -> list[Collection]:
         if not self._address_id:
@@ -290,17 +304,18 @@ class Source:
                 rulestr = DTSTART_REGEX.sub("", rulestr).strip(";")
 
             # Fix fortnightly schedules: the API returns FREQ=WEEKLY but
-            # IdFrequenza="2S" indicates every 2 weeks.  Inject INTERVAL=2
-            # and compute the correct DTSTART for odd/even week alignment.
+            # IdFrequenza="2S" indicates every other week, on odd or even ISO
+            # weeks. Keep the weekly rule and filter by the ISO week number of
+            # each date: a fixed INTERVAL=2 drifts after a 53-week year.
+            week_parity = None
             if (
                 item.get("IdFrequenza") == "2S"
                 and "INTERVAL" not in rulestr
                 and rulestr.startswith("RRULE:")
             ):
-                rulestr = rulestr.replace("FREQ=WEEKLY", "FREQ=WEEKLY;INTERVAL=2")
-                start_datetime = self._fortnightly_dtstart(
-                    item.get("FlagFreq", "N"), datetime.now().year
-                )
+                week_parity = self._fortnightly_parity(item)
+                if start_datetime is None:
+                    start_datetime = datetime.now() - timedelta(days=10)
 
             try:
                 if start_datetime:
@@ -319,6 +334,11 @@ class Source:
                 datetime.now() - timedelta(days=10),
                 datetime.now() + timedelta(days=365),
             ):
+                if (
+                    week_parity is not None
+                    and date_time.isocalendar()[1] % 2 != week_parity
+                ):
+                    continue
                 date_ = date_time.date()
                 days_moved = {date_}
                 end = False
