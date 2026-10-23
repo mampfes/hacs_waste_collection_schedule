@@ -82,6 +82,8 @@ ICON_MAP = {
     "Compost Yard Open Wednesday": Icons.EVENT,
     "3 Bags of Waste": Icons.GENERAL_WASTE,
     "Red Landfill": Icons.GENERAL_WASTE,
+    "Organics Collection": Icons.ORGANIC,
+    "Newmarket Electronics Recycling Event": Icons.ELECTRONICS,
 }
 
 EXTRA_INFO = [
@@ -373,6 +375,12 @@ EXTRA_INFO = [
         "country": "us",
         "default_params": {"project_id": "621", "district_id": "BLO"},
     },
+    {
+        "title": "Newmarket (ON)",
+        "url": "https://www.newmarket.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "530", "district_id": "NEW"},
+    },
 ]
 
 TEST_CASES = {
@@ -519,6 +527,11 @@ TEST_CASES = {
         "district_id": "PB",
         "project_id": "633",
         "zone_id": "zone-z21670-z21652-z21659-z21666",
+    },
+    "Newmarket, ON, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "NEW",
+        "project_id": "530",
+        "zone_id": "zone-z12563",
     },
 }
 
