@@ -81,6 +81,8 @@ ICON_MAP = {
     "Compost Yard Open Saturday": Icons.EVENT,
     "Compost Yard Open Wednesday": Icons.EVENT,
     "3 Bags of Waste": Icons.GENERAL_WASTE,
+    "Organics Collection": Icons.ORGANIC,
+    "Newmarket Electronics Recycling Event": Icons.ELECTRONICS,
 }
 
 EXTRA_INFO = [
@@ -356,6 +358,12 @@ EXTRA_INFO = [
         "country": "us",
         "default_params": {"project_id": "621", "district_id": "BLO"},
     },
+    {
+        "title": "Newmarket (ON)",
+        "url": "https://www.newmarket.ca/",
+        "country": "ca",
+        "default_params": {"project_id": "530", "district_id": "NEW"},
+    },
 ]
 
 TEST_CASES = {
@@ -487,6 +495,11 @@ TEST_CASES = {
         "street": "175 Bridge St",
         "city": "Carleton Place",
         "state": "Ontario",
+    },
+    "Newmarket, ON, Canada (with district_id, project_id & zone_id)": {
+        "district_id": "NEW",
+        "project_id": "530",
+        "zone_id": "zone-z12563",
     },
 }
 
