@@ -117,8 +117,24 @@ class Source:
             last_day = (date(year, month + 1, 1) - date(year, month, 1)).days
         date_from = f"{year}-{month:02d}"
         date_to = f"{year}-{month:02d}-{last_day:02d}"
+        month_names = [
+            "Januar",
+            "Februar",
+            "Mars",
+            "April",
+            "Mai",
+            "Juni",
+            "Juli",
+            "August",
+            "September",
+            "Oktober",
+            "November",
+            "Desember",
+        ]
+
         date_param = json.dumps(
-            {"title": date_from, "dateFrom": date_from, "date": date_to}
+            {"title": month_names[month - 1], "dateFrom": date_from, "date": date_to},
+            ensure_ascii=False,
         )
 
         wrappers = []
@@ -140,11 +156,74 @@ class Source:
 
         return wrappers
 
+    @staticmethod
+    def _parse_collections(wrappers) -> list[Collection]:
+        entries: list[Collection] = []
+
+        for wrapper in wrappers:
+            date_el = wrapper.select_one(".collectionCalendar__date-text")
+            if not date_el:
+                continue
+
+            try:
+                collection_date = datetime.strptime(
+                    date_el.get_text(strip=True), "%d.%m.%y"
+                ).date()
+            except ValueError:
+                # Skip malformed dates.
+                continue
+
+            for fraction_el in wrapper.select(".collectionCalendar__fraction-text"):
+                fraction = fraction_el.get_text(strip=True).lstrip(", ").strip()
+                if not fraction:
+                    continue
+
+                entries.append(
+                    Collection(
+                        date=collection_date,
+                        t=fraction,
+                        icon=ICON_MAP.get(fraction),
+                    )
+                )
+
+        return entries
+
     def fetch(self) -> list[Collection]:
+
         session = requests.Session()
         address_id = self._get_address_id(session)
 
         entries: list[Collection] = []
+        # Fetch upcoming collections directly from the RIR calendar page.
+        # This provides a fallback when the monthly endpoint returns
+        # an empty result for dates that are actually published.
+        # Retry the main calendar if it temporarily returns no collections.
+        for attempt in range(3):
+            try:
+                r = session.get(
+                    "https://www.rir.no/hentekalender",
+                    params={
+                        "location": self._address,
+                        "addressId": address_id,
+                    },
+                    timeout=30,
+                )
+                r.raise_for_status()
+
+                soup = BeautifulSoup(r.text, "html.parser")
+                wrappers = soup.select(".collectionCalendar__date-wrapper")
+                collections = self._parse_collections(wrappers)
+
+                if collections:
+                    entries.extend(collections)
+                    break
+
+            except requests.RequestException:
+                # Retry transient network errors.
+                pass
+
+            if attempt < 2:
+                time.sleep(1)
         today = date.today()
         year, month = today.year, today.month
         for i in range(MONTHS_AHEAD):
@@ -152,29 +231,21 @@ class Source:
                 time.sleep(REQUEST_DELAY)
 
             wrappers = self._get_month_wrappers(session, address_id, year, month)
-            for wrapper in wrappers:
-                date_el = wrapper.select_one(".collectionCalendar__date-text")
-                if not date_el:
-                    continue
-                collection_date = datetime.strptime(
-                    date_el.get_text(strip=True), "%d.%m.%y"
-                ).date()
-
-                for fraction_el in wrapper.select(".collectionCalendar__fraction-text"):
-                    fraction = fraction_el.get_text(strip=True).lstrip(", ").strip()
-                    if not fraction:
-                        continue
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t=fraction,
-                            icon=ICON_MAP.get(fraction),
-                        )
-                    )
+            entries.extend(self._parse_collections(wrappers))
 
             month += 1
             if month > 12:
                 month = 1
                 year += 1
 
-        return entries
+        # Remove duplicate collections from the combined sources.
+        unique_entries = []
+        seen = set()
+
+        for entry in entries:
+            key = (entry.date, entry.type)
+            if key not in seen:
+                seen.add(key)
+                unique_entries.append(entry)
+
+        return unique_entries
