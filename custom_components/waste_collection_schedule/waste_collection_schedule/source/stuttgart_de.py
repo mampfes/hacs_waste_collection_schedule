@@ -24,6 +24,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for waste collections for the city of Stuttgart, Germany."
     URL = "https://service.stuttgart.de"
     COUNTRY = "de"
+    SOURCE_CODEOWNERS: ClassVar[list] = ["@n42net"]
     # The transformer resolves open-ended German labels via the shared vocabulary;
     # these are the canonical types observed from the live provider.
     WASTE_TYPES: ClassVar[list] = [
