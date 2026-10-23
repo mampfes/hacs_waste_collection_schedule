@@ -976,7 +976,8 @@ class PdfLinkRetriever(_BaseRetriever):
     stable landing page under a URL that rotates -- usually per year, often on
     an opaque host or hashed path. Rather than hardcode a URL that breaks every
     January, this fetches the index page, scans its ``<a href>`` values for
-    ``pattern``, picks one, resolves it against the index URL, and GETs it. Both
+    ``pattern``, picks one, resolves it against the index URL (or the page's
+    ``<base href>``), and GETs it. Both
     requests use the shared curl_cffi session.
 
     Like :class:`TwoStepRetriever` this reads the first response's body (to find
@@ -1066,7 +1067,10 @@ class PdfLinkRetriever(_BaseRetriever):
                 "the page layout may have changed."
             )
 
-        pdf_url = urljoin(index_url, self._choose(matches).string)
+        # Relative links resolve against the page's <base href> when it has one.
+        base = soup.find("base", href=True)
+        page_url = urljoin(index_url, str(base["href"])) if base else index_url
+        pdf_url = urljoin(page_url, self._choose(matches).string)
         pdf = source.session.get(pdf_url, headers=headers, timeout=self.timeout)
         pdf.raise_for_status()
         return pdf
