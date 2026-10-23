@@ -2993,6 +2993,7 @@ If you already have enough information for your municipality/region, you are ver
 
 - [AKSD Debrecen](/doc/source/aksd_hu.md) / aksd.hu
 - [Depónia Nonprofit Kft.](/doc/source/deponia_hu.md) / deponia.hu
+- [DTKH Nonprofit Kft. (Kiskunfélegyháza)](/doc/source/dtkh_hu.md) / dtkh.hu
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
 - [Győri Hulladékgazdálkodási Nonprofit Kft.](/doc/source/gyhg_hu.md) / gyhg.hu
 - [MOHU Budapest](/doc/source/mohu_bp_hu.md) / mohubudapest.hu
@@ -4299,6 +4300,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Miasto Rejowiec Fabryczny](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto Rydułtowy](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto Wałbrzych](/doc/source/sims_pl.md) / sisms.pl
+- [Miasto Żywiec](/doc/source/zywiec_pl.md) / zywiec.pl/harmonogram-wywozu-smieci
 - [Mierzęcice](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Moszczenica](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [MPGK Katowice](/doc/source/mpgk_com_pl.md) / mpgk.com.pl

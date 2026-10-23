@@ -22301,6 +22301,12 @@
       "id": "deponia_hu"
     },
     {
+      "title": "DTKH Nonprofit Kft. (Kiskunf\u00e9legyh\u00e1za)",
+      "module": "dtkh_hu",
+      "default_params": {},
+      "id": "dtkh_hu"
+    },
+    {
       "title": "FKF Buda\u00f6rs",
       "module": "fkf_bo_hu",
       "default_params": {},
@@ -31318,6 +31324,12 @@
         "owner": "Miasto Wa\u0142brzych"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Miasto \u017bywiec",
+      "module": "zywiec_pl",
+      "default_params": {},
+      "id": "zywiec_pl"
     },
     {
       "title": "Mierz\u0119cice",

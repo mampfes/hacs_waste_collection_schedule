@@ -18232,6 +18232,31 @@
           "street": "Le nom de votre rue."
         }
       },
+      "args_dtkh_hu": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Rue",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street": "Le nom de votre rue."
+        }
+      },
+      "reconfigure_dtkh_hu": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Rue",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "street": "Le nom de votre rue."
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -22146,6 +22171,26 @@
           "street_name": "Le nom de votre rue.",
           "street_number": "Votre numéro de rue."
         }
+      },
+      "args_zywiec_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "region": "Région"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_zywiec_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "region": "Région"
+        },
+        "data_description": {}
       },
       "args_mpgk_com_pl": {
         "title": "Configurer la Source",

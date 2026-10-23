@@ -18201,6 +18201,31 @@
           "street": "Ime vaše ulice."
         }
       },
+      "args_dtkh_hu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Ulica",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Ime vaše ulice."
+        }
+      },
+      "reconfigure_dtkh_hu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Ulica",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "street": "Ime vaše ulice."
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -22102,6 +22127,26 @@
           "street_name": "Ime vaše ulice.",
           "street_number": "Vaša hišna številka."
         }
+      },
+      "args_zywiec_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "region": "Regija"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_zywiec_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "region": "Regija"
+        },
+        "data_description": {}
       },
       "args_mpgk_com_pl": {
         "title": "Configure Source",

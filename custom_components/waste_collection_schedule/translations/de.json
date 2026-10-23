@@ -18227,6 +18227,31 @@
           "street": "Ihr Straßenname."
         }
       },
+      "args_dtkh_hu": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Ihr Straßenname."
+        }
+      },
+      "reconfigure_dtkh_hu": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Straße",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "street": "Ihr Straßenname."
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -22141,6 +22166,26 @@
           "street_name": "Ihr Straßenname.",
           "street_number": "Ihre Hausnummer."
         }
+      },
+      "args_zywiec_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "region": "Region"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+        }
+      },
+      "reconfigure_zywiec_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "region": "Region"
+        },
+        "data_description": {}
       },
       "args_mpgk_com_pl": {
         "title": "Quelle konfigurieren",

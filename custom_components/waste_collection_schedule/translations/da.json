@@ -18203,6 +18203,31 @@
           "street": "Dit gadenavn"
         }
       },
+      "args_dtkh_hu": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Gade",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street": "Dit gadenavn"
+        }
+      },
+      "reconfigure_dtkh_hu": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Gade",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "street": "Dit gadenavn"
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -22104,6 +22129,26 @@
           "street_name": "Dit gadenavn",
           "street_number": "Dit husnummer"
         }
+      },
+      "args_zywiec_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "region": "Region"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_zywiec_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "region": "Region"
+        },
+        "data_description": {}
       },
       "args_mpgk_com_pl": {
         "title": "Konfigurer Kilde",

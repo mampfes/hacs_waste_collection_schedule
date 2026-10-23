@@ -3987,6 +3987,13 @@
     },
     "urls": {}
   },
+  "dtkh_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dtkh_hu.md",
+    "howto": {
+      "en": "Pick the weekday your general waste (vegyes hulladék) is collected; recyclables (szelektív) are collected every other week on the same day (Hétfő = Monday, Kedd = Tuesday, Szerda = Wednesday, Csütörtök = Thursday, Péntek = Friday). Green waste (zöldhulladék) is collected Wednesday to Friday by street: enter your street as printed in the street list (Zöld utcajegyzék) on the back of the yearly calendar at https://dtkh.hu/letoltheto-dokumentumok-kiskunfelegyhaza, e.g. \"Petőfi Sándor utca\". Where a street is split by house numbers, use the full entry, e.g. \"Nádasdy utca 1-5, 2-10\"; an ambiguous street lists the possible entries. Leave the street empty to skip green waste."
+    },
+    "urls": {}
+  },
   "fkf_bo_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md",
     "howto": {
@@ -4950,6 +4957,13 @@
   "sepan_remondis_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md",
     "howto": {},
+    "urls": {}
+  },
+  "zywiec_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/zywiec_pl.md",
+    "howto": {
+      "en": "Select your collection region (rejon). The schedule PDF linked on https://zywiec.pl/harmonogram-wywozu-smieci lists the streets of each region next to its dates. Streets marked with * changed region in the current schedule, so check your region whenever a new half-year schedule is published."
+    },
     "urls": {}
   },
   "mpgk_com_pl": {

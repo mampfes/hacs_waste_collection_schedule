@@ -18208,6 +18208,31 @@
           "street": "Kadun nimi."
         }
       },
+      "args_dtkh_hu": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "street": "Katu",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street": "Kadun nimi."
+        }
+      },
+      "reconfigure_dtkh_hu": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "street": "Katu",
+          "weekday": "Weekday"
+        },
+        "data_description": {
+          "street": "Kadun nimi."
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -22109,6 +22134,26 @@
           "street_name": "Kadun nimi.",
           "street_number": "Talon numero."
         }
+      },
+      "args_zywiec_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "region": "Region"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_zywiec_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "region": "Region"
+        },
+        "data_description": {}
       },
       "args_mpgk_com_pl": {
         "title": "Määritä lähde",

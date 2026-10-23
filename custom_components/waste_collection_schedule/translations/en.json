@@ -18284,6 +18284,31 @@
           "street": "Your street name."
         }
       },
+      "args_dtkh_hu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street",
+          "weekday": "Collection day"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Your street name."
+        }
+      },
+      "reconfigure_dtkh_hu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street",
+          "weekday": "Collection day"
+        },
+        "data_description": {
+          "street": "Your street name."
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -22221,6 +22246,26 @@
           "street_name": "Your street name.",
           "street_number": "Your house number."
         }
+      },
+      "args_zywiec_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "region": "Region"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_zywiec_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "region": "Region"
+        },
+        "data_description": {}
       },
       "args_mpgk_com_pl": {
         "title": "Configure Source",
