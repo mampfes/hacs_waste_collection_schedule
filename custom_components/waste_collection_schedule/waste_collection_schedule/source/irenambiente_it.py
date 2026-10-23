@@ -42,6 +42,11 @@ class Source(BaseSource):
             "street": "BORGO DELLA ROVACCHIA",
             "house_number": 12,
         },
+        "Salsomaggiore Terme PIAZZA BERZIERI 1": {
+            "city": "Salsomaggiore Terme",
+            "street": "PIAZZA BERZIERI",
+            "house_number": 1,
+        },
         "Torino Corso Quintino Sella 11 Scala A": {
             "city": "Torino",
             "street": "Corso Quintino Sella",
@@ -74,5 +79,6 @@ class Source(BaseSource):
             "Vetro": wt.GLASS,
             "Imballaggi in plastica e barattolame": [wt.PLASTIC, wt.METAL],
             "Alluminio": wt.METAL,
+            "Vegetale": wt.GARDEN_WASTE,
         },
     )
