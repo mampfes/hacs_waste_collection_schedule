@@ -184,9 +184,21 @@ class Source:
                 if self._suffix:
                     t = f"{t}{self._suffix}"
 
-                for d in _generate_next_picks(
-                    next_pick, frequency["pick_days"], frequency["id"]
-                ):
+                pick_days = frequency.get("pick_days")
+                frequency_id = frequency.get("id")
+                if pick_days and frequency_id:
+                    dates = _generate_next_picks(next_pick, pick_days, frequency_id)
+                else:
+                    # the API omits pick_days/id for some containers; without
+                    # them only the next pick date is known
+                    _LOGGER.info(
+                        "No pick days for container ID %s (%s), using next pick date only.",
+                        container["container_id"],
+                        trash_type["description"],
+                    )
+                    dates = [next_pick]
+
+                for d in dates:
                     entries.append(
                         Collection(
                             date=d,
