@@ -3002,6 +3002,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Reinigingsdienst Midden Nederland](/doc/source/burgerportaal_nl.md) / rmn.nl
 - [Reinis](/doc/source/hvcgroep_nl.md) / reinis.nl
 - [Rova](/doc/source/rova_nl.md) / rova.nl
+- [RWM](/doc/source/hvcgroep_nl.md) / rwm.nl
 - [Saver](/doc/source/saver_nl.md) / saver.nl
 - [Schiermonnikoog](/doc/source/omrin_nl.md) / omrin.nl
 - [Spaarnelanden](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
