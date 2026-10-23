@@ -20,9 +20,9 @@ TEST_CASES = {
 LOGGER = logging.getLogger(__name__)
 
 BASE_URL = "https://sevenoaks-dc-host01.oncreate.app"
-WEBPAGE_TOKEN = "978e3e1fd8936f98a424235001d93f261cc2458668d650a18f3a1155494d063d"
-SUBPAGE_ID = "PAG0000639GBDJR1"
-CELL_ID = "PCL0004972GBDJR1"
+WEBPAGE_TOKEN = "88266323c140b874b4e1f9b194d935d2d0dedf8a2d34d1e0ea44356deaf1bb04"
+SUBPAGE_ID = "PAG0001509GBDJR1"
+CELL_ID = "PCL0012033GBDJR1"
 LANDING_PATH = "/w/webpage/waste-collection-day"
 
 USER_AGENT = (
@@ -30,27 +30,26 @@ USER_AGENT = (
     "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 )
 
-# Section heading -> (waste type label, icon). Headings are matched
-# case-insensitively as substrings of the rendered fragment headings.
-SECTIONS = [
-    ("Fortnightly garden waste collection", "Garden waste", Icons.GARDEN),
-    (
-        "Weekly recycling and general waste collection",
-        "Recycling and general waste",
-        Icons.GENERAL_WASTE,
-    ),
-    ("Weekly food waste collection", "Food waste", Icons.BIO_KITCHEN),
-]
+# Card heading (h2) -> waste type label. Since the October 2026 service change
+# every round has its own card ("Recycling", "General waste", "Food",
+# "Garden waste"), each followed by "Your next collection date is" and a date.
+SECTIONS = {
+    "Recycling": "Recycling",
+    "General waste": "General waste",
+    "Food": "Food waste",
+    "Garden waste": "Garden waste",
+}
 
-# Matches dates rendered as plain text, e.g. "Thursday 04 June 2026".
+# Matches dates such as "Thursday, 29 October 2026" (comma optional).
 DATE_RE = re.compile(
-    r"(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)[a-z]+ (\d{1,2} [A-Z][a-z]+ \d{4})"
+    r"(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)[a-z]*,? (\d{1,2} [A-Z][a-z]+ \d{4})"
 )
 
 ICON_MAP = {
-    "Garden waste": Icons.GARDEN,
-    "Recycling and general waste": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
+    "General waste": Icons.GENERAL_WASTE,
     "Food waste": Icons.BIO_KITCHEN,
+    "Garden waste": Icons.GARDEN,
 }
 
 PARAM_TRANSLATIONS = {
@@ -129,22 +128,17 @@ class Source:
             )
 
         soup = BeautifulSoup(html, "html.parser")
-        text = soup.get_text(" ", strip=True)
 
         entries: list[Collection] = []
-        for heading, waste_type, icon in SECTIONS:
-            idx = text.lower().find(heading.lower())
-            if idx == -1:
+        waste_type = None
+        for tag in soup.select("h2, span.value-as-text"):
+            text = tag.get_text(" ", strip=True)
+            if tag.name == "h2":
+                waste_type = SECTIONS.get(text)
                 continue
-            segment = text[idx:]
-            # Limit the segment to this section by stopping at the next heading.
-            for other_heading, _, _ in SECTIONS:
-                if other_heading == heading:
-                    continue
-                other_idx = segment.lower().find(other_heading.lower())
-                if other_idx != -1:
-                    segment = segment[:other_idx]
-            match = DATE_RE.search(segment)
+            if waste_type is None:
+                continue
+            match = DATE_RE.search(text)
             if not match:
                 continue
             try:
@@ -154,7 +148,10 @@ class Source:
                     "Could not parse date %r for %r", match.group(1), waste_type
                 )
                 continue
-            entries.append(Collection(date=next_date, t=waste_type, icon=icon))
+            entries.append(
+                Collection(date=next_date, t=waste_type, icon=ICON_MAP[waste_type])
+            )
+            waste_type = None
 
         if not entries:
             raise SourceArgumentNotFound(
