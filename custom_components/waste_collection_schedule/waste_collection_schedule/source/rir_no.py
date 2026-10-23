@@ -118,18 +118,23 @@ class Source:
         date_from = f"{year}-{month:02d}"
         date_to = f"{year}-{month:02d}-{last_day:02d}"
         month_names = [
-            "Januar", "Februar", "Mars", "April",
-            "Mai", "Juni", "Juli", "August",
-            "September", "Oktober", "November", "Desember"
+            "Januar",
+            "Februar",
+            "Mars",
+            "April",
+            "Mai",
+            "Juni",
+            "Juli",
+            "August",
+            "September",
+            "Oktober",
+            "November",
+            "Desember",
         ]
 
         date_param = json.dumps(
-            {
-                "title": month_names[month - 1],
-                "dateFrom": date_from,
-                "date": date_to
-            },
-            ensure_ascii=False
+            {"title": month_names[month - 1], "dateFrom": date_from, "date": date_to},
+            ensure_ascii=False,
         )
 
         wrappers = []
@@ -156,9 +161,7 @@ class Source:
         entries: list[Collection] = []
 
         for wrapper in wrappers:
-            date_el = wrapper.select_one(
-                ".collectionCalendar__date-text"
-            )
+            date_el = wrapper.select_one(".collectionCalendar__date-text")
             if not date_el:
                 continue
 
@@ -170,14 +173,8 @@ class Source:
                 # Skip malformed dates.
                 continue
 
-            for fraction_el in wrapper.select(
-                ".collectionCalendar__fraction-text"
-            ):
-                fraction = (
-                    fraction_el.get_text(strip=True)
-                    .lstrip(", ")
-                    .strip()
-                )
+            for fraction_el in wrapper.select(".collectionCalendar__fraction-text"):
+                fraction = fraction_el.get_text(strip=True).lstrip(", ").strip()
                 if not fraction:
                     continue
 
@@ -214,9 +211,7 @@ class Source:
                 r.raise_for_status()
 
                 soup = BeautifulSoup(r.text, "html.parser")
-                wrappers = soup.select(
-                    ".collectionCalendar__date-wrapper"
-                )
+                wrappers = soup.select(".collectionCalendar__date-wrapper")
                 collections = self._parse_collections(wrappers)
 
                 if collections:
