@@ -1,0 +1,39 @@
+{
+  "recorded_at": "2026-10-19",
+  "interactions": [
+    {
+      "key": "GET https://calendar.google.com/calendar/ical/mnshj5t35n2pkdpdn6fj37q4i0%40group.calendar.google.com/public/basic.ics ",
+      "method": "GET",
+      "url": "https://calendar.google.com/calendar/ical/mnshj5t35n2pkdpdn6fj37q4i0%40group.calendar.google.com/public/basic.ics",
+      "final_url": "https://calendar.google.com/calendar/ical/mnshj5t35n2pkdpdn6fj37q4i0%40group.calendar.google.com/public/basic.ics",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "text/calendar; charset=utf-8",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "pragma": "no-cache",
+        "expires": "Mon, 01 Jan 1990 00:00:00 GMT",
+        "date": "Mon, 19 Oct 2026 08:41:15 GMT",
+        "p3p": "CP=\"This is not a P3P policy! See g.co/p3phelp for more info.\"",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "content-security-policy": "require-trusted-types-for 'script';report-uri /calendar/cspreport",
+        "cross-origin-opener-policy-report-only": "same-origin-allow-popups; report-to=\"calendar_coop_coep\"",
+        "cross-origin-embedder-policy-report-only": "require-corp; report-to=\"calendar_coop_coep\"",
+        "origin-trial": "AjyTYHf8xEAhAVTh+xijZ3UXTXlMphOHFXjhD3+Actoe+f2FNuWk3attcE3NSlrBekTItGxJqARYCSiIONcWXgYAAABveyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IkNyYXNoUmVwb3J0aW5nU3RvcmFnZUFQSSIsImV4cGlyeSI6MTc3NjcyOTYwMCwiaXNTdWJkb21haW4iOnRydWV9",
+        "report-to": "{\"group\":\"calendar_coop_coep\",\"max_age\":2592000,\"endpoints\":[{\"url\":\"https://csp.withgoogle.com/csp/report-to/calendar\"}]}",
+        "reporting-endpoints": "default=\"/calendar/web-reports?bl=calendar.web_20261014.01_p0&context=eJwVyXtU1HUCBXB5-L0jI8gACgsyMDAKMzDD_H4DMzxm2MNSQFvk8cHKI0ReiYLJeAJZbTILz2pbtLqprVqmq0uaLml4eh33VLabZmZiG3tgSRGEZHQMGZJ4OHv3j8-5594b8I5qc0u773b6YUu77xCFhrl8Mxa4fIuplN7vzfH_llL_m-O_lN6NeNT_IxqhCSqZVIpVdOjAXHGUzh6cKz6mOWvmicproeLA8nBxis41hYvPKeWgWhTSiVG16KAhctGep2PEfrq2LE78h7x9CeLG8zYxRI99ky3K6KQjV3TS8HOPiHvUZHhU2BrzRQ51vHZTdJLbMCQ8JLmHhIUGPxgWt6nn3I_iOnXl3xY95JRc4iVy17kEVo4Kn-JRsfz0qLj55agYpj_0jYpXabP_fQHdfTGPBk7dF0VhY0IOHxMuunrcI7qpwOURGcZx8WvKp0IqojKqprXkoE20lbbTvy6Oi69prXtcbKBN5KTt9Ef6M_2FDlM7ddBZ6pkcF9ep0fNAKDEh_tEyJc5TyKtTIoIud82ILvKTHor8FK8oJE-2V0xT0j-9YlaXV6xtnYVnyBjgAzNNz_hgZ6Yv2kjv7weZBs7Mhos-kQTOU9MZgc1UugWooJlQBXzDFLhQoMBlOjytQDs5C-agldasm4P1dGRyDtpp4ZYAaGjsXAAmqGY4APV0ia6SBkroKPBJJUJpx-tKtFHhl0oUUdclJbrpqQdKVNNi81wk02Ivk1Ipk7oKAtFNQfeDEEa5qnl4jH6JDYaX3I3B8NCzLwTj9xR4LBgZl7mlqLBLUuEN2rxMhRcot0qFAjpzWIUP6N-vhKCHGl8LQRN9tiQUF2lFeyhK6KmmMFSS-2QYPBQcMx_zaapnAXx6F-DN3HAcodk3whFIlX-PwNNk-CwCTqoajEAdJdZGwkD6fZGQqfznSFTTkZlI3KmOwigVNEShkKyGhbDTzZcXYphWuRaimvLCo_FJfDQ-JfW2aGj_L1QNiQbmq3HSqMZp2mVSYy9N0AztWq1GRb8aNVS2JgarSXElBoG01D8WxbQ2LhYbyEHNtPNuLNroxVANdpCfVgPQ7WQN7tFhkwZ_o5jTGiTQcWMc3qOo3DhoqHY4Duuo92E8-unWEi3-tEaLPdS8UQsn9b2txblrWnxO-z9dhEN0t2sRxqkUi1FB-x0JOERVpkTUUUJfIkzkHUyE_61EfG3W4Sq12XTYQ3ccOozS3CYdVLS3VYcDNPwKP3r9qA4HyfcrHRRU3q1DFa3w6FBCgZM6hJAnUo8pGnDo0btNj37a9Fc9nJRxQ49s2j2tx37aZknCSE4S7tFX65NwhRr3JKGJVkvJCM834CJ9Q9IGAyyU3mZANuXRE1RFddRIzfQ8tVJykhEynb1rhBYpWK9IgTUmBdn0QE7BNG1_PwW7f2PCPvq5xoQpynvJhMfJz22CgiStBAt9b5XQRxv2SmimfVclHKKa2xLq6fwDCRfohxkJA9RslOGkK2YZ39FPqTImyGaVkUs-WTIENRTIcFBGj4xsWtUvo5Z-GZHxkH6XbEYZlaebUUM2uxk51FpvxgmKfiMVcTQxlYpZ06koCkxDGbmD0uChoHlpCKNlDWkopd9eSMMSyu1JQwFdD7dgiN6SLThG7zksiD5mQTytvGRBOeX4WJFHLQFWOEmjtyKBnl1mxRZSL7dCS190WnGRoj60Ipa6YtPRTfGL0hEspWM-BWSlQ0XrVqWjkRS30tE-lo5IkYEYSliZAQOZt2YgkwYjMzFCd9IyMUYtZZnYSs-9nIlt1LU1C930xfEsXKLBE1kYoc7LWfiYRvxs-Il-DLThLrlVNoxRvNYGPeW9bcPjtOO4DW0kTtmgpLJvbVhNsd_ZsIjC-mz4FQXJdtyjCbMds1LtiMi0I5rq7OxFdsymsRY7Jil5STFkWllXjHLqbynGMHXuK8buuBLUO0qwkZrJSS_STmo4VgIHPXKiBB01pXiivhRL6cmjZVhBIUrFux3d34vgd7y9s-Oiqisbap-pqdxo3FRbVSGbZItkklKNJqmi0fQ_IxzTCg\"",
+        "document-policy": "include-js-call-stacks-in-crash-reports",
+        "content-encoding": "gzip",
+        "server": "ESF",
+        "x-xss-protection": "0",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "set-cookie": "NID=CoMCCAEStQEBOxGDSI3JKeUSEPJD3iIGJtDkEXEytVKvEFDDmidlOROOBKHX4jTLYnCNbxkUaEj7ek6xyTiDnSlsVevXHVxPse5IkPhUlMOXiD9tPGO4OYl8aesCwJ9SGaoiE-_EE7DhNIUYJWGHQy5zkI06TcpU5zh433w-YqnK_bUgFAUw6Riow038rmKwZAQuu01WngD_Bi2S3TAKUUDjQ5LnCZ_X__4qBsJWrzfjwIeeQYLi0qNe84ejKAEyRQHSrAfPpy70ZabrLYliKf3Nuev1QRclUkhOKIvPJTpw36dAFeY1juBHhLtR_0iokKsG83OXG-OIqInr4JSugmh5cf1MCA; expires=Tue, 20-Apr-2027 08:41:14 GMT; path=/; domain=.google.com; Secure; HttpOnly; SameSite=none",
+        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "x-l2-request-path": "l2-managed-14"
+      },
+      "content_b64": "QkVHSU46VkNBTEVOREFSDQpQUk9ESUQ6LS8vR29vZ2xlIEluYy8vR29vZ2xlIENhbGVuZGFyIDcwLjkwNTQvL0VODQpWRVJTSU9OOjIuMA0KQ0FMU0NBTEU6R1JFR09SSUFODQpNRVRIT0Q6UFVCTElTSA0KWC1XUi1DQUxOQU1FOjI0ICgyMDIyKQ0KWC1XUi1USU1FWk9ORTpFdXJvcGUvQmVsZ3JhZGUNCkJFR0lOOlZFVkVOVA0KRFRTVEFSVDtWQUxVRT1EQVRFOjIwMjYwNjIyDQpEVEVORDtWQUxVRT1EQVRFOjIwMjYwNjIzDQpEVFNUQU1QOjIwMjYxMDE5VDA4NDExNVoNClVJRDo3MTA1OWdwbzdyZWJra2sxbWQ4bzloMHU3bkBnb29nbGUuY29tDQpSRUNVUlJFTkNFLUlEO1ZBTFVFPURBVEU6MjAyNjA2MjUNCkNSRUFURUQ6MjAyMTEyMTBUMTI1NzAxWg0KTEFTVC1NT0RJRklFRDoyMDI2MDUxMVQyMjI0MTlaDQpTRVFVRU5DRTozDQpTVEFUVVM6Q09ORklSTUVEDQpTVU1NQVJZOlZTRSBGUkFLQ0lKRQ0KVFJBTlNQOlRSQU5TUEFSRU5UDQpFTkQ6VkVWRU5UDQpCRUdJTjpWRVZFTlQNCkRUU1RBUlQ7VkFMVUU9REFURToyMDIyMDEyMA0KRFRFTkQ7VkFMVUU9REFURToyMDIyMDEyMQ0KUlJVTEU6RlJFUT1XRUVLTFk7V0tTVD1NTztVTlRJTD0yMDIyMTIyMTtJTlRFUlZBTD00O0JZREFZPVRIDQpEVFNUQU1QOjIwMjYxMDE5VDA4NDExNVoNClVJRDo0bXQ1M2RqOWhrNTcwMzV0bGZudmp2ZzI3aEBnb29nbGUuY29tDQpDUkVBVEVEOjIwMjExMjEwVDEyNTcwMVoNCkxBU1QtTU9ESUZJRUQ6MjAyNjA1MTFUMjIyNDE5Wg0KU0VRVUVOQ0U6MA0KU1RBVFVTOkNPTkZJUk1FRA0KU1VNTUFSWTpWU0UgRlJBS0NJSkUNClRSQU5TUDpUUkFOU1BBUkVOVA0KRU5EOlZFVkVOVA0KQkVHSU46VkVWRU5UDQpEVFNUQVJUO1ZBTFVFPURBVEU6MjAyNjA0MDINCkRURU5EO1ZBTFVFPURBVEU6MjAyNjA0MDMNClJSVUxFOkZSRVE9V0VFS0xZO1dLU1Q9TU87SU5URVJWQUw9NDtCWURBWT1USA0KRFRTVEFNUDoyMDI2MTAxOVQwODQxMTVaDQpVSUQ6NzEwNTlncG83cmVia2trMW1kOG85aDB1N25AZ29vZ2xlLmNvbQ0KQ1JFQVRFRDoyMDIxMTIxMFQxMjU3MDFaDQpMQVNULU1PRElGSUVEOjIwMjYwNTExVDIyMjQxOVoNClNFUVVFTkNFOjINClNUQVRVUzpDT05GSVJNRUQNClNVTU1BUlk6VlNFIEZSQUtDSUpFDQpUUkFOU1A6VFJBTlNQQVJFTlQNCkVORDpWRVZFTlQNCkJFR0lOOlZFVkVOVA0KRFRTVEFSVDtWQUxVRT1EQVRFOjIwMjIxMjIyDQpEVEVORDtWQUxVRT1EQVRFOjIwMjIxMjIzDQpSUlVMRTpGUkVRPVdFRUtMWTtXS1NUPU1PO1VOVElMPTIwMjYwNDA4O0lOVEVSVkFMPTQ7QllEQVk9VEgNCkRUU1RBTVA6MjAyNjEwMTlUMDg0MTE1Wg0KVUlEOm1scXUzdGZmN201bnRzOXRycWVlZXViM3NtQGdvb2dsZS5jb20NCkNSRUFURUQ6MjAyMTEyMTBUMTI1NzAxWg0KTEFTVC1NT0RJRklFRDoyMDI2MDUxMVQyMjI0MTlaDQpTRVFVRU5DRToxDQpTVEFUVVM6Q09ORklSTUVEDQpTVU1NQVJZOlZTRSBGUkFLQ0lKRQ0KVFJBTlNQOlRSQU5TUEFSRU5UDQpFTkQ6VkVWRU5UDQpFTkQ6VkNBTEVOREFSDQo="
+    }
+  ]
+}
