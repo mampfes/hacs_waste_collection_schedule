@@ -1,6 +1,5 @@
 import logging
-import re
-from datetime import datetime
+from datetime import date, datetime
 
 import requests
 import urllib3
@@ -95,7 +94,7 @@ class Source:
         r = session.get(API_URL, verify=False)
         r.raise_for_status()
 
-        # extractt arguments
+        # extract arguments
         args = self.__set_args(
             BeautifulSoup(r.text, "html.parser"),
             event_taget="ctl00$MainContent$btnSearch",
@@ -157,68 +156,61 @@ class Source:
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
-        cal_header = soup.find("th", {"class": "header-month"}).find("span").text
+        calendar = soup.find("table", {"class": "collection-day-calendar"})
+        if calendar is None:
+            raise ValueError("Collection calendar not found")
+        header = calendar.find("th", {"class": "header-month"})
+        if header is None:
+            raise ValueError("Collection calendar header not found")
 
-        month_range = cal_header.split("-")
-        from_month = month_range[0].strip()
-
-        to_month, to_year, from_year = None, None, None
-        if len(month_range) > 1:
-            to_month = month_range[1].strip().split(" ")[0]
-            to_year = from_year = month_range[1].strip().split(" ")[1]
-
-        # if main month contains a year, set it (maybe happens in december???)
-        if len(from_month.split(" ")) > 1:
-            from_year = from_month.split(" ")[1]
-            from_month = from_month.split(" ")[0]
-
-        # Single-month calendar (no "other month" range)
-        if to_month is None:
-            if from_year is None:
-                from_year = str(datetime.now().year)
-            main_month = from_month
-            main_year = from_year
-            other_month = from_month
-            other_year = from_year
+        month_range = header.get_text(" ", strip=True).split("-")
+        start = month_range[0].split()
+        month = datetime.strptime(start[0], "%B").month
+        if len(start) > 1:
+            year = int(start[1])
+        elif len(month_range) > 1:
+            end_month, end_year = month_range[-1].split()
+            year = int(end_year)
+            if month > datetime.strptime(end_month, "%B").month:
+                year -= 1
         else:
-            today_div = soup.find("table", id="cal").find("td", class_="today")
-
-            # if other-month is to_month
-            if (
-                "other-month" in today_div.attrs["class"]
-                and datetime.now().strftime("%B") == to_month
-            ) or (
-                "main-month" in today_div.attrs["class"]
-                and datetime.now().strftime("%B") == from_month
-            ):
-                main_month, other_month = from_month, to_month
-                main_year, other_year = from_year, to_year
-            else:  # if other-month is from_month
-                main_month, other_month = to_month, from_month
-                main_year, other_year = to_year, from_year
+            # single-month header with no year -> current year
+            year = datetime.now().year
 
         entries = []
+        previous_day = None
 
-        calendar = soup.find("table", {"class": "collection-day-calendar"})
-        # Iterate over all days with pickups
-        for pickup in calendar.find_all(
-            "div", {"class": re.compile(r"pickup|next-pickup")}
-        ):
-            parent_td = pickup.parent
-            month = (
-                main_month if "main-month" in parent_td.attrs["class"] else other_month
-            )
-            year = main_year if "main-month" in parent_td.attrs["class"] else other_year
-            day = parent_td.find("div", {"class": "daynumber"}).text
+        # Use day order instead of "today" marker
+        for cell in calendar.find_all("td"):
+            day_number = cell.find("div", class_=["daynumber", "daynumber-empty"])
+            if day_number is None:
+                raise ValueError("Collection calendar day number not found")
+            day = int(day_number.get_text(strip=True))
+            if previous_day is not None and day < previous_day:
+                if month == 12:
+                    month = 1
+                    year += 1
+                else:
+                    month += 1
+            previous_day = day
+            collection_date = date(year, month, day)
+
+            pickup = cell.find("div", class_=["pickup", "next-pickup"])
+            if pickup is None:
+                continue
 
             # Iterate over all pickup container types for this day
             for container in pickup.find_all("div", {"class": "bin-container"}):
                 container_type = " ".join(container.find("div").attrs["class"])
                 container_icon = ICON_MAP.get(container_type)
 
-                date = datetime.strptime(f"{year}-{month}-{day}", "%Y-%B-%d").date()
                 entries.append(
-                    Collection(date=date, t=container_type, icon=container_icon)
+                    Collection(
+                        date=collection_date, t=container_type, icon=container_icon
+                    )
                 )
+
+        if previous_day is None:
+            raise ValueError("Collection calendar contains no days")
 
         return entries
