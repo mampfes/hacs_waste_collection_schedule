@@ -932,6 +932,7 @@ If you already have enough information for your municipality/region, you are ver
 - [MRC Marguerite-D'Youville](/doc/source/publidata_ca.md) / margueritedyouville.ca
 - [MRC Matawinie (QC)](/doc/source/gmrmatawinie_qc_ca.md) / gmrmatawinie.org
 - [Muskoka District (Huntsville, ON)](/doc/ics/recollect.md) / muskoka.on.ca
+- [Newmarket (ON)](/doc/source/recyclecoach_com.md) / newmarket.ca
 - [Niagara Region](/doc/ics/recollect.md) / niagararegion.ca
 - [Norfolk County (ON)](/doc/source/recyclecoach_com.md) / norfolkcounty.ca
 - [Notre-Dame-du-Bon-Conseil (Village)](/doc/source/villagebonconseil_ca.md) / villagebonconseil.ca

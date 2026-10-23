@@ -5572,6 +5572,15 @@
       "id": "ics_recollect"
     },
     {
+      "title": "Newmarket (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "NEW",
+        "project_id": "530"
+      },
+      "id": "recyclecoach_com"
+    },
+    {
       "title": "Niagara Region",
       "module": "ics",
       "default_params": {
