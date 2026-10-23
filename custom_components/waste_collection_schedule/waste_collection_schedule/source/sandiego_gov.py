@@ -48,9 +48,12 @@ class Source:
         columns = soup.find_all("div", {"class": "four columns"})
 
         entries = []
-        for item in columns[1:]:
-            waste_type = item.find("h3").text
+        for item in columns:
+            h3 = item.find("h3")
             waste_date = re.search(r"(\d+/\d+/\d+)", item.text)
+            if not h3 or not waste_date:
+                continue
+            waste_type = h3.text.strip()
             entries.append(
                 Collection(
                     date=datetime.strptime(waste_date.group(1), "%m/%d/%Y").date(),
