@@ -3554,6 +3554,14 @@
     },
     "urls": {}
   },
+  "stadt_ansbach_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stadt_ansbach_de.md",
+    "howto": {
+      "de": "Straße genau wie in der Auswahl auf https://www.ansbach.de/B%C3%BCrger/Umwelt-Natur/Abfall-Recycling/Abfuhrpl%C3%A4ne angeben (z. B. 'Feuchtwanger Straße'). Für die Stadtteile Bernhardswinden, Brodswinden, Claffheim, Elpersdorf, Höfstetten, Kaltengreuth, Meinhardswinden, Neuses, Obereichenbach und Schalkhausen den Stadtteilnamen angeben.",
+      "en": "Enter the street exactly as listed on https://www.ansbach.de/B%C3%BCrger/Umwelt-Natur/Abfall-Recycling/Abfuhrpl%C3%A4ne (e.g. 'Feuchtwanger Straße'). For the districts Bernhardswinden, Brodswinden, Claffheim, Elpersdorf, Höfstetten, Kaltengreuth, Meinhardswinden, Neuses, Obereichenbach and Schalkhausen enter the district name instead."
+    },
+    "urls": {}
+  },
   "ics_buende_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/buende_de.md",
     "howto": {
@@ -4152,6 +4160,11 @@
     "howto": {},
     "urls": {}
   },
+  "etraspa_bassano_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/etraspa_bassano_it.md",
+    "howto": {},
+    "urls": {}
+  },
   "gruppoveritas_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gruppoveritas_it.md",
     "howto": {
@@ -4270,9 +4283,23 @@
     "howto": {},
     "urls": {}
   },
+  "nemenkom_lt": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nemenkom_lt.md",
+    "howto": {
+      "en": "Open the household waste schedule (XLSX) on https://www.nemenkom.lt/buitiniu-ir-pakuociu-atlieku-surinkimo-grafikas/ and copy the village name from the `Kaimai` column (the part before any brackets). If the village is split by streets, also enter your street exactly as listed in the brackets, e.g. `Melisų g.`."
+    },
+    "urls": {}
+  },
   "tkeliai_lt": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tkeliai_lt.md",
     "howto": {},
+    "urls": {}
+  },
+  "sratc_lt": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sratc_lt.md",
+    "howto": {
+      "en": "Enter your street as printed in the yearly schedule for individual households (\"Visų rūšių atliekų surinkimas\") on https://www.sratc.lt/grafikai-siauliu-miestas/, e.g. \"Platelių g.\". Where a street is split by house numbers, use the full entry, e.g. \"Bielskio g. (nuo 44 iki 88 ir nuo 59 iki 101)\"; an ambiguous street lists the possible entries. Apartment blocks (daugiabučiai) are not supported."
+    },
     "urls": {}
   },
   "ics_bettembourg_lu": {
@@ -4789,10 +4816,24 @@
     },
     "urls": {}
   },
+  "ekolandpolska_com_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ekolandpolska_com_pl.md",
+    "howto": {
+      "en": "Enter your municipality ('Miasto Kraśnik', 'Gmina Kraśnik', 'Dzierzkowice', 'Gościeradów', 'Trzydnik Duży' or 'Wilkołaz') and your street or village as printed in the schedule PDF linked on https://www.ekolandpolska.com.pl/dla-mieszkancow/odbior-odpadow-gminy (e.g. 'Lubelska' or 'Lasy'). Accents and case are ignored. Only detached houses (zabudowa jednorodzinna) are supported."
+    },
+    "urls": {}
+  },
   "smiecioplan_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/smiecioplan_pl.md",
     "howto": {
       "en": "Go to [smiecioplan.pl](https://smiecioplan.pl) and search for your address. Use the city (szczecin, gdansk, gdynia or sopot), the street name in uppercase and the house number. Some addresses (e.g. in Gdynia) have separate schedules for single-family (`single`) and multi-family (`multi`) buildings; leave `building_type` empty if your address only has one schedule."
+    },
+    "urls": {}
+  },
+  "jaktorow_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jaktorow_pl.md",
+    "howto": {
+      "en": "Select your collection region (rejon). Most villages are split across regions by street: the schedule PDF linked on https://bip.jaktorow.pl/odpady-komunalne/harmonogram lists the villages and streets of each region at the top of its page (for example, all of Henryszew is in Rejon 6)."
     },
     "urls": {}
   },
@@ -4806,6 +4847,34 @@
   "gmina_miekinia_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_miekinia_pl.md",
     "howto": {},
+    "urls": {}
+  },
+  "nawojowa_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nawojowa_pl.md",
+    "howto": {
+      "en": "Select your village. Nawojowa is split into Nawojowa I and Nawojowa II by street; see the street lists in the schedule PDF linked on https://nawojowa.pl."
+    },
+    "urls": {}
+  },
+  "osielsko_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/osielsko_pl.md",
+    "howto": {
+      "en": "Enter your collection area number (rejon, 1-9) as listed on https://osielsko.pl/odpady-komunalne.html (e.g. '8' for Żołędowo, Strzelce Leśne and Bożenkowo). Tick 'multi_family' for a multi-family building (zabudowa wielorodzinna)."
+    },
+    "urls": {}
+  },
+  "paczkow_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/paczkow_pl.md",
+    "howto": {
+      "en": "Enter your street (in the town of Paczków) or your village, as printed in the quarterly schedule PDFs on https://paczkow.pl/2442/harmonogram-odbioru-odpadow-komunalnych-na-terenie-gminy-paczkow.html (e.g. 'Kopernika', 'Armii Krajowej' or 'Kamienica'). Accents and case are ignored. Tick 'multi_family' for a multi-family building (budynek wielorodzinny)."
+    },
+    "urls": {}
+  },
+  "gmina_radlow_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_radlow_pl.md",
+    "howto": {
+      "en": "Select your village in Gmina Radłów."
+    },
     "urls": {}
   },
   "gmina_trzebnica_pl": {
@@ -4891,6 +4960,13 @@
   "mpo_krakow_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mpo_krakow_pl.md",
     "howto": {},
+    "urls": {}
+  },
+  "mpo_torun_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mpo_torun_pl.md",
+    "howto": {
+      "en": "Open https://harmonogramy-mpo.mga.com.pl/, choose Toruń and use the street and house number exactly as the dropdowns list them (e.g. 'Ludwika Rydygiera', '10/14'); the surname alone ('Rydygiera') also works when it is unique. The site lists mixed and bio waste for every address, and metals and plastics, paper and glass only where they are collected from containers (mostly multi-family buildings). Bagged recyclables of single-family houses are only published in MPO's PDF leaflets and are not included."
+    },
     "urls": {}
   },
   "pgkkoszalin_pl": {
@@ -5484,6 +5560,14 @@
   "koeniz_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/koeniz_ch.md",
     "howto": {},
+    "urls": {}
+  },
+  "arlesheim_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/arlesheim_ch.md",
+    "howto": {
+      "de": "Wähle deinen Abfuhrkreis (Kreis West: Montag, Kreis Ost: Donnerstag) gemäss Plan im Abfallkalender-PDF.",
+      "en": "Pick your collection district (Kreis West: Monday, Kreis Ost: Thursday) from the map in the Abfallkalender PDF."
+    },
     "urls": {}
   },
   "feuerthalen_ch": {

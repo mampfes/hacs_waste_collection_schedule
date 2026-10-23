@@ -2718,6 +2718,7 @@ If you already have enough information for your municipality/region, you are ver
 - [St Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
 - [St. Ingbert](/doc/ics/mein_abfallkalender_online.md) / st-ingbert.de
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
+- [Stadt Ansbach](/doc/source/stadt_ansbach_de.md) / ansbach.de
 - [Stadt Arnsberg](/doc/source/c_trace_de.md) / arnsberg.de
 - [Stadt Bayreuth](/doc/source/c_trace_de.md) / bayreuth.de
 - [Stadt Bünde](/doc/ics/buende_de.md) / buende.de
@@ -3364,6 +3365,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Erve](/doc/source/siunet_it.md) / siunet.it
 - [Esino Lario](/doc/source/siunet_it.md) / siunet.it
 - [ETRA S.p.A.](/doc/source/etraspa_it.md) / etraspa.it
+- [ETRA S.p.A. - Bassano del Grappa](/doc/source/etraspa_bassano_it.md) / etraspa.it
 - [Faleria](/doc/source/junker_app.md) / junker.app
 - [Fara Novarese](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Fasano](/doc/source/siunet_it.md) / siunet.it
@@ -3983,7 +3985,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Ekonovus](/doc/source/ekonovus_lt.md) / ekonovus.lt
 - [Gargždų švara](/doc/source/gargzdusvara_eu.md) / gargzdusvara.eu
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
+- [Nemenčinės komunalininkas](/doc/source/nemenkom_lt.md) / nemenkom.lt
 - [Telšių keliai](/doc/source/tkeliai_lt.md) / tkeliai.lt
+- [Šiaulių regiono atliekų tvarkymo centras (Šiauliai city)](/doc/source/sratc_lt.md) / sratc.lt
 </details>
 
 <details>
@@ -4158,6 +4162,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Ecoharmonogram.pl (generic)](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [EcoSzczecin](/doc/source/ecoszczecin_pl.md) / ecoszczecin.pl
+- [Ekoland Polska (Kraśnik area)](/doc/source/ekolandpolska_com_pl.md) / ekolandpolska.com.pl
 - [Gawłów](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Gdańsk](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Gdańsk](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
@@ -4187,6 +4192,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina i Miasto Dzierzgoń](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina i Miasto Nowe Skalmierzyce](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Inowrocław](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Jaktorów](/doc/source/jaktorow_pl.md) / bip.jaktorow.pl/odpady-komunalne/harmonogram
 - [Gmina Jeżewo](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kamionka Wielka](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kluczbork](/doc/source/sims_pl.md) / sisms.pl
@@ -4207,13 +4213,16 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Mogilany](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Mokrsko](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Mysłakowice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Nawojowa](/doc/source/nawojowa_pl.md) / nawojowa.pl
 - [Gmina Nowa Ruda](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Nowa Słupia](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Nowy Staw](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Olsztynek](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Osiecznica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Osiek](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Osielsko](/doc/source/osielsko_pl.md) / osielsko.pl
 - [Gmina Ostrowiec Świętokrzyski](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Paczków](/doc/source/paczkow_pl.md) / paczkow.pl
 - [Gmina Pajęczno](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Pawłowice](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Polanica-Zdrój](/doc/source/sims_pl.md) / sisms.pl
@@ -4223,6 +4232,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Przykładowa](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Pyskowice](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Radoszyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Radłów](/doc/source/gmina_radlow_pl.md) / gminaradlow.pl
 - [Gmina Reda](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Rumia](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Skarszewy](/doc/source/sims_pl.md) / sisms.pl
@@ -4293,6 +4303,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Moszczenica](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [MPGK Katowice](/doc/source/mpgk_com_pl.md) / mpgk.com.pl
 - [MPO Kraków](/doc/source/mpo_krakow_pl.md) / harmonogram.mpo.krakow.pl
+- [MPO Toruń](/doc/source/mpo_torun_pl.md) / mpo.torun.pl
 - [Niemce](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Nieprześnia](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Nieszkowice Małe](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
@@ -4530,6 +4541,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
 - [Gaiserwald](/doc/source/a_region_ch.md) / a-region.ch
 - [Gasel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [Gemeinde Arlesheim](/doc/source/arlesheim_ch.md) / arlesheim.ch
 - [Gemeinde Feuerthalen](/doc/source/feuerthalen_ch.md) / feuerthalen.ch/umwelt/entsorgung/abfall.html/275
 - [Gemeinde Hochfelden](/doc/ics/hochfelden_ch.md) / hochfelden.ch
 - [Gemeinde Maur](/doc/source/maur_ch.md) / maur.ch/themen/bauen-umwelt/abfall-recycling/termine.html

@@ -20111,6 +20111,12 @@
       "id": "abfallnavi_de"
     },
     {
+      "title": "Stadt Ansbach",
+      "module": "stadt_ansbach_de",
+      "default_params": {},
+      "id": "stadt_ansbach_de"
+    },
+    {
       "title": "Stadt Arnsberg",
       "module": "c_trace_de",
       "default_params": {
@@ -24893,6 +24899,12 @@
       "id": "etraspa_it"
     },
     {
+      "title": "ETRA S.p.A. - Bassano del Grappa",
+      "module": "etraspa_bassano_it",
+      "default_params": {},
+      "id": "etraspa_bassano_it"
+    },
+    {
       "title": "Faleria",
       "module": "junker_app",
       "default_params": {},
@@ -29233,10 +29245,22 @@
       "id": "grafikai_svara_lt"
     },
     {
+      "title": "Nemen\u010din\u0117s komunalininkas",
+      "module": "nemenkom_lt",
+      "default_params": {},
+      "id": "nemenkom_lt"
+    },
+    {
       "title": "Tel\u0161i\u0173 keliai",
       "module": "tkeliai_lt",
       "default_params": {},
       "id": "tkeliai_lt"
+    },
+    {
+      "title": "\u0160iauli\u0173 regiono atliek\u0173 tvarkymo centras (\u0160iauliai city)",
+      "module": "sratc_lt",
+      "default_params": {},
+      "id": "sratc_lt"
     }
   ],
   "Luxembourg": [
@@ -30240,6 +30264,12 @@
       "id": "ecoszczecin_pl"
     },
     {
+      "title": "Ekoland Polska (Kra\u015bnik area)",
+      "module": "ekolandpolska_com_pl",
+      "default_params": {},
+      "id": "ekolandpolska_com_pl"
+    },
+    {
       "title": "Gaw\u0142\u00f3w",
       "module": "bochnia_gmina_pl",
       "default_params": {
@@ -30470,6 +30500,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Jaktor\u00f3w",
+      "module": "jaktorow_pl",
+      "default_params": {},
+      "id": "jaktorow_pl"
+    },
+    {
       "title": "Gmina Je\u017cewo",
       "module": "sims_pl",
       "default_params": {
@@ -30626,6 +30662,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Nawojowa",
+      "module": "nawojowa_pl",
+      "default_params": {},
+      "id": "nawojowa_pl"
+    },
+    {
       "title": "Gmina Nowa Ruda",
       "module": "sims_pl",
       "default_params": {
@@ -30674,12 +30716,24 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Osielsko",
+      "module": "osielsko_pl",
+      "default_params": {},
+      "id": "osielsko_pl"
+    },
+    {
       "title": "Gmina Ostrowiec \u015awi\u0119tokrzyski",
       "module": "sims_pl",
       "default_params": {
         "owner": "Gmina Ostrowiec \u015awi\u0119tokrzyski"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Paczk\u00f3w",
+      "module": "paczkow_pl",
+      "default_params": {},
+      "id": "paczkow_pl"
     },
     {
       "title": "Gmina Paj\u0119czno",
@@ -30752,6 +30806,12 @@
         "owner": "Gmina Radoszyce"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Rad\u0142\u00f3w",
+      "module": "gmina_radlow_pl",
+      "default_params": {},
+      "id": "gmina_radlow_pl"
     },
     {
       "title": "Gmina Reda",
@@ -31286,6 +31346,12 @@
       "module": "mpo_krakow_pl",
       "default_params": {},
       "id": "mpo_krakow_pl"
+    },
+    {
+      "title": "MPO Toru\u0144",
+      "module": "mpo_torun_pl",
+      "default_params": {},
+      "id": "mpo_torun_pl"
     },
     {
       "title": "Niemce",
@@ -32785,6 +32851,12 @@
         "municipality": "Gasel"
       },
       "id": "koeniz_ch"
+    },
+    {
+      "title": "Gemeinde Arlesheim",
+      "module": "arlesheim_ch",
+      "default_params": {},
+      "id": "arlesheim_ch"
     },
     {
       "title": "Gemeinde Feuerthalen",

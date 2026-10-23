@@ -21,7 +21,7 @@ waste_collection_schedule:
 *(string) (required)*
 
 **multi_family**  
-*(boolean) (optional, default: false)*
+*(string) (optional)*
 
 ## Example
 
@@ -30,18 +30,9 @@ waste_collection_schedule:
   sources:
     - name: osielsko_pl
       args:
-        rejon: "8"
-```
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: osielsko_pl
-      args:
-        rejon: "1"
-        multi_family: true
+        rejon: '8'
 ```
 
 ## How to get the source arguments
 
-Enter your collection area number (rejon, 1-9) as listed on https://osielsko.pl/odpady-komunalne.html (e.g. '8' for Żołędowo, Strzelce Leśne and Bożenkowo). Set `multi_family: true` for a multi-family building (zabudowa wielorodzinna).
+Enter your collection area number (rejon, 1-9) as listed on https://osielsko.pl/odpady-komunalne.html (e.g. '8' for Żołędowo, Strzelce Leśne and Bożenkowo). Tick 'multi_family' for a multi-family building (zabudowa wielorodzinna).
