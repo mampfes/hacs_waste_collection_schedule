@@ -38,6 +38,7 @@ class Source(BaseSource):
     TEST_CASES: ClassVar[dict] = {
         "Kildean Road 38": {"address": "38 Kildean Road"},
         "Merlo Buchanan Castle Estate": {"address": "Merlo"},
+        "Picked suggestion": {"address": "8 Main Street, Stirling, FK7 8BS"},
     }
 
     PARAMS = (street_address(),)

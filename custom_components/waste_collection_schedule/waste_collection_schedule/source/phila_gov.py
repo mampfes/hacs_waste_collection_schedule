@@ -5,12 +5,13 @@ address index and its published observed-holiday calendar) with
 :class:`~waste_collection_schedule.preprocessors.RecurrenceExpander`. AIS gives
 the weekdays a property's rounds are collected on and nothing else, so the year
 is projected weekly from them; the city's own holiday feed then slides whatever
-lands after a holiday, and two collections pushed onto one day collapse in the
+lands after a holiday (a secondary trash-only round is cancelled in a holiday
+week instead), and two collections pushed onto one day collapse in the
 :class:`~waste_collection_schedule.preprocessors.Deduplicate`.
 """
 
 from datetime import date
-from typing import Any, ClassVar, final
+from typing import ClassVar, final
 
 from waste_collection_schedule import recurrence, retrievers
 from waste_collection_schedule import waste_types as wt
@@ -32,42 +33,32 @@ from waste_collection_schedule.transformers import ICSTransformer
 
 DAYS = {"MON": 0, "TUE": 1, "WED": 2, "THU": 3, "FRI": 4, "SAT": 5, "SUN": 6}
 
-# AIS names a property's collection days in fields it does not otherwise mark
-# out, so they are found by their value being a weekday code: any "rubbish"
-# field is a general-waste round, and the recycling day is named exactly.
-_RECYCLE_FIELD = "rubbish_recycle_day"
-
-
-def _collection_days(properties: dict[str, Any]) -> "tuple[list[int], list[int]]":
-    waste_days: list[int] = []
-    recycle_days: list[int] = []
-    for key, value in properties.items():
-        if not isinstance(value, str) or value.upper() not in DAYS:
-            continue
-        day = DAYS[value.upper()]
-        if "rubbish" in key.lower():
-            waste_days.append(day)
-        if key.lower() == _RECYCLE_FIELD:
-            recycle_days.append(day)
-    return waste_days, recycle_days
+# AIS names a property's collection days in two fields. The primary day is
+# trash and recycling; the secondary day (where there is one) is trash only, and
+# it is cancelled rather than shifted in a week with a holiday.
+_ROUNDS = (
+    ("rubbish_recycle_day", ("general", "recycling")),
+    ("secondary_rubbish_day", ("secondary",)),
+)
+_SAME_STREAM = {"secondary": "general"}
 
 
 def _describe(properties, source) -> "list[Schedule]":
     """One weekly schedule per round, running to the end of the calendar year."""
-    waste_days, recycle_days = _collection_days(properties)
     year = date.today().year
     start, end = date(year, 1, 1), date(year, 12, 31)
 
-    return [
-        Schedule(
-            key=key,
-            start=recurrence.next_weekday(day, on_or_after=start),
-            step=recurrence.WEEKLY,
-            until=end,
+    schedules = []
+    for field, keys in _ROUNDS:
+        value = properties.get(field)
+        if not isinstance(value, str) or value.upper() not in DAYS:
+            continue
+        first = recurrence.next_weekday(DAYS[value.upper()], on_or_after=start)
+        schedules.extend(
+            Schedule(key=key, start=first, step=recurrence.WEEKLY, until=end)
+            for key in keys
         )
-        for key, days in (("general", waste_days), ("recycling", recycle_days))
-        for day in days
-    ]
+    return schedules
 
 
 @final
@@ -99,10 +90,15 @@ class Source(BaseSource):
     parse = AddressPropertiesParser()
     preprocess = Compose(
         RecurrenceExpander(_describe),
-        HolidayCascadeShift(),
-        Deduplicate(),
+        HolidayCascadeShift(cancel_in_holiday_weeks=("secondary",)),
+        # The secondary round is general waste too: one per day.
+        Deduplicate(key=lambda row: (row[0], _SAME_STREAM.get(row[1], row[1]))),
     )
 
     transform = ICSTransformer(
-        type_value_map={"general": wt.GENERAL_WASTE, "recycling": wt.RECYCLABLES}
+        type_value_map={
+            "general": wt.GENERAL_WASTE,
+            "secondary": wt.GENERAL_WASTE,
+            "recycling": wt.RECYCLABLES,
+        }
     )

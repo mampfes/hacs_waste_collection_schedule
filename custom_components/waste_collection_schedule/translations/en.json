@@ -31759,10 +31759,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "post_code": "Postcode",
-          "street_name": "Street Name"
+          "street_name": "Street name",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "post_code": "Full postcode of the property",
+          "street_name": "Any part of the address (e.g. street name), used to pick an address in the postcode",
+          "uprn": "Unique Property Reference Number (UPRN) of the property"
         }
       },
       "reconfigure_swansea_gov_uk": {
@@ -31771,9 +31775,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "post_code": "Postcode",
-          "street_name": "Street Name"
+          "street_name": "Street name",
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "post_code": "Full postcode of the property",
+          "street_name": "Any part of the address (e.g. street name), used to pick an address in the postcode",
+          "uprn": "Unique Property Reference Number (UPRN) of the property"
+        }
       },
       "args_swindon_gov_uk": {
         "title": "Configure Source",

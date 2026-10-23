@@ -38,7 +38,7 @@ from waste_collection_schedule import date_parsers
 from waste_collection_schedule.preprocessors import Preprocessor
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Mapping, Sequence
+    from collections.abc import Collection, Iterable, Mapping, Sequence
 
     from waste_collection_schedule.base_source import BaseSource
     from waste_collection_schedule.parsers import Response
@@ -77,6 +77,13 @@ def observed_holidays(
     return [_parse_iso(item["start_date"]) for item in response.json()["holidays"]]
 
 
+def _week_has_holiday(holidays: Iterable[datetime.date], day: datetime.date) -> bool:
+    """Whether a holiday falls in the Monday-to-Sunday week of ``day``."""
+    monday = day - datetime.timedelta(days=day.weekday())
+    sunday = monday + datetime.timedelta(days=6)
+    return any(monday <= holiday <= sunday for holiday in holidays)
+
+
 def shift_within_week(
     holidays: Sequence[datetime.date], collection_date: datetime.date
 ) -> datetime.date:
@@ -111,6 +118,9 @@ class HolidayCascadeShift(Preprocessor):
         weekdays_only: ignore a holiday falling at a weekend (default True).
             Nothing is collected then, so such a holiday moves nothing, and
             counting it would push the following week's collections a day late.
+        cancel_in_holiday_weeks: keys of rounds that are not shifted but
+            dropped in a week with a holiday, e.g. Philadelphia's secondary
+            (trash-only) pickup.
     """
 
     def __init__(
@@ -120,11 +130,13 @@ class HolidayCascadeShift(Preprocessor):
         headers: Mapping[str, str] = HEADERS,
         timeout: int = 30,
         weekdays_only: bool = True,
+        cancel_in_holiday_weeks: Collection[str] = (),
     ):
         self._url = url
         self._headers = headers
         self._timeout = timeout
         self._weekdays_only = weekdays_only
+        self._cancel_in_holiday_weeks = frozenset(cancel_in_holiday_weeks)
 
     def __call__(
         self, records: Any, source: BaseSource | None = None
@@ -135,4 +147,8 @@ class HolidayCascadeShift(Preprocessor):
         if self._weekdays_only:
             holidays = [h for h in holidays if h.weekday() < 5]
         for collection_date, key in records:
+            if key in self._cancel_in_holiday_weeks and _week_has_holiday(
+                holidays, collection_date
+            ):
+                continue
             yield shift_within_week(holidays, collection_date), key

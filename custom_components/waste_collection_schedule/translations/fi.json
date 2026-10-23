@@ -31525,7 +31525,8 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "post_code": "Post Code",
-          "street_name": "Street Name"
+          "street_name": "Street Name",
+          "uprn": "Uprn"
         },
         "data_description": {
           "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
@@ -31537,7 +31538,8 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "post_code": "Post Code",
-          "street_name": "Street Name"
+          "street_name": "Street Name",
+          "uprn": "Uprn"
         },
         "data_description": {}
       },

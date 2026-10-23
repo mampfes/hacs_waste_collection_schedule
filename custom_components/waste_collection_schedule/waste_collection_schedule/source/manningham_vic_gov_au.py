@@ -2,7 +2,13 @@ import datetime
 import re
 from typing import ClassVar, final
 
-from waste_collection_schedule import date_parsers, parsers, recurrence, retrievers
+from waste_collection_schedule import (
+    date_parsers,
+    lookups,
+    parsers,
+    recurrence,
+    retrievers,
+)
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
@@ -34,13 +40,25 @@ def _pick_property_id(response, *keys, street_address, **_) -> str:
     found = response.json()
     if not found.get("total"):
         raise SourceArgumentNotFound("street_address", street_address)
+    results = found["results"]
     if found["total"] > 1:
-        raise SourceArgAmbiguousWithSuggestions(
-            "street_address",
-            street_address,
-            [_strip_html(r["display1"]) for r in found["results"]],
-        )
-    return found["results"][0]["id"]
+        # "1/1 Harold Street" also returns 2/1, 3/1, 1/16 and more, so the
+        # input itself is among the suggestions; picking it must resolve.
+        with_locality = "," in street_address
+        wanted = lookups.normalize_text(street_address)
+        labels = [_strip_html(r["display1"]) for r in results]
+        exact = [
+            result
+            for result, label in zip(results, labels, strict=True)
+            if lookups.normalize_text(label if with_locality else label.split(",")[0])
+            == wanted
+        ]
+        if len(exact) != 1:
+            raise SourceArgAmbiguousWithSuggestions(
+                "street_address", street_address, labels
+            )
+        results = exact
+    return results[0]["id"]
 
 
 def _describe(feature, source):
@@ -93,6 +111,9 @@ class Source(BaseSource):
             "street_address": "9/114-116 James Street"
         },
         "488 Park Road Park Orchards": {"street_address": "488 Park Road"},
+        "Unit number contained in other addresses": {
+            "street_address": "1/1 Harold Street, BULLEEN 3105"
+        },
     }
 
     PARAMS = (street_address("street_address"),)
@@ -115,7 +136,9 @@ class Source(BaseSource):
                     "indexes": "index.ManCC_propertylayer",
                     "type": "EXACT",
                     "crs": "EPSG:28355",
-                    "query": street_address,
+                    # The index finds nothing for its own ", SUBURB POSTCODE"
+                    # tail, so a picked suggestion is searched by its street part.
+                    "query": street_address.split(",")[0].strip(),
                 },
                 headers=JSON_HEADERS,
                 pick=_pick_property_id,

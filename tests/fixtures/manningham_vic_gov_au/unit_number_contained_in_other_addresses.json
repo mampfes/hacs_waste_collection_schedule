@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-10-23",
+  "interactions": [
+    {
+      "key": "GET https://mapping.manningham.vic.gov.au/weave/services/v1/index/search 9c2255c69d",
+      "method": "GET",
+      "url": "https://mapping.manningham.vic.gov.au/weave/services/v1/index/search",
+      "final_url": "https://mapping.manningham.vic.gov.au/weave/services/v1/index/search?start=0&limit=10&indexes=index.ManCC_propertylayer&type=EXACT&crs=EPSG%3A28355&query=1%2F1+Harold+Street",
+      "body": "{\"params\":[[\"crs\",\"EPSG:28355\"],[\"indexes\",\"index.ManCC_propertylayer\"],[\"limit\",\"10\"],[\"query\",\"1/1 Harold Street\"],[\"start\",\"0\"],[\"type\",\"EXACT\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+        "set-cookie": "JSESSIONID=node016vehz4dvfh8n14iq239wsesrn13981.node0; Path=/weave; Secure; SameSite=None",
+        "x-powered-by": "Weave, ARR/3.0, ASP.NET, ASP.NET",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET,PUT,POST,DELETE,OPTIONS",
+        "access-control-allow-headers": "Content-Type",
+        "date": "Fri, 23 Oct 2026 20:27:35 GMT",
+        "content-length": "2558"
+      },
+      "content_b64": "eyJ0b3RhbCI6NywicmVzdWx0cyI6W3siZW52ZWxvcGUiOnsiY3JzIjoiRVBTRzoyODM1NSIsIm1pblgiOjMzMjY1OS4zNzMsIm1pblkiOjU4MTc4MDcuMzI3LCJtYXhYIjozMzI2ODAuMzU0LCJtYXhZIjo1ODE3ODI5LjMyOH0sImNlbnRyb2lkIjp7InkiOjU4MTc4MTguMzQzLCJ4IjozMzI2NzEuMTE1LCJjcnMiOiJFUFNHOjI4MzU1In0sImlkIjoiODE3NjE0IiwiaW5kZXgiOjEsImVudGl0eSI6Ik1hbkNDX3Byb3BfbGF5ZXIiLCJkaXNwbGF5MSI6IjxzcGFuIGNsYXNzPSdpbmRleC1obCc+MTwvc3Bhbj4vPHNwYW4gY2xhc3M9J2luZGV4LWhsJz4xPC9zcGFuPiA8c3BhbiBjbGFzcz0naW5kZXgtaGwnPkhhcm9sZDwvc3Bhbj4gPHNwYW4gY2xhc3M9J2luZGV4LWhsJz5TdHJlZXQ8L3NwYW4+LCBCVUxMRUVOIDMxMDUifSx7ImVudmVsb3BlIjp7ImNycyI6IkVQU0c6MjgzNTUiLCJtaW5YIjozMzI2NTEuMzg2LCJtaW5ZIjo1ODE3ODE4LjkwNSwibWF4WCI6MzMyNjY2LjYyNiwibWF4WSI6NTgxNzgzNi44NTN9LCJjZW50cm9pZCI6eyJ5Ijo1ODE3ODI4LjEwMywieCI6MzMyNjU4LjY4OCwiY3JzIjoiRVBTRzoyODM1NSJ9LCJpZCI6IjgxNzYyMyIsImluZGV4IjoyLCJlbnRpdHkiOiJNYW5DQ19wcm9wX2xheWVyIiwiZGlzcGxheTEiOiIyLzxzcGFuIGNsYXNzPSdpbmRleC1obCc+MTwvc3Bhbj4gPHNwYW4gY2xhc3M9J2luZGV4LWhsJz5IYXJvbGQ8L3NwYW4+IDxzcGFuIGNsYXNzPSdpbmRleC1obCc+U3RyZWV0PC9zcGFuPiwgQlVMTEVFTiAzMTA1In0seyJlbnZlbG9wZSI6eyJjcnMiOiJFUFNHOjI4MzU1IiwibWluWCI6MzMyNjM2Ljg2LCJtaW5ZIjo1ODE3ODIzLjQ4OCwibWF4WCI6MzMyNjU1LjI1LCJtYXhZIjo1ODE3ODQ3LjQxMX0sImNlbnRyb2lkIjp7InkiOjU4MTc4MzUuMDA1LCJ4IjozMzI2NDQuNTAyLCJjcnMiOiJFUFNHOjI4MzU1In0sImlkIjoiODE3NjMyIiwiaW5kZXgiOjMsImVudGl0eSI6Ik1hbkNDX3Byb3BfbGF5ZXIiLCJkaXNwbGF5MSI6IjMvPHNwYW4gY2xhc3M9J2luZGV4LWhsJz4xPC9zcGFuPiA8c3BhbiBjbGFzcz0naW5kZXgtaGwnPkhhcm9sZDwvc3Bhbj4gPHNwYW4gY2xhc3M9J2luZGV4LWhsJz5TdHJlZXQ8L3NwYW4+LCBCVUxMRUVOIDMxMDUifSx7ImVudmVsb3BlIjp7ImNycyI6IkVQU0c6MjgzNTUiLCJtaW5YIjozMzI2NjkuNSwibWluWSI6NTgxNzYxNS4wMDIsIm1heFgiOjMzMjY5My44MDcsIm1heFkiOjU4MTc2MzAuMjIxfSwiY2VudHJvaWQiOnsieSI6NTgxNzYyMi43MTUsIngiOjMzMjY4MS4yNTgsImNycyI6IkVQU0c6MjgzNTUifSwiaWQiOiI0NDkxNDEiLCJpbmRleCI6NCwiZW50aXR5IjoiTWFuQ0NfcHJvcF9sYXllciIsImRpc3BsYXkxIjoiPHNwYW4gY2xhc3M9J2luZGV4LWhsJz4xPC9zcGFuPi8xNiA8c3BhbiBjbGFzcz0naW5kZXgtaGwnPkhhcm9sZDwvc3Bhbj4gPHNwYW4gY2xhc3M9J2luZGV4LWhsJz5TdHJlZXQ8L3NwYW4+LCBCVUxMRUVOIDMxMDUifSx7ImVudmVsb3BlIjp7ImNycyI6IkVQU0c6MjgzNTUiLCJtaW5YIjozMzI1NjguNjU3LCJtaW5ZIjo1ODE3MTQ3LjU4MiwibWF4WCI6MzMyNTk1LjEzMSwibWF4WSI6NTgxNzE2NC4wMjd9LCJjZW50cm9pZCI6eyJ5Ijo1ODE3MTU1Ljk5OCwieCI6MzMyNTgyLjQwOCwiY3JzIjoiRVBTRzoyODM1NSJ9LCJpZCI6IjcwNDU5MiIsImluZGV4Ijo1LCJlbnRpdHkiOiJNYW5DQ19wcm9wX2xheWVyIiwiZGlzcGxheTEiOiI8c3BhbiBjbGFzcz0naW5kZXgtaGwnPjE8L3NwYW4+LzUzIDxzcGFuIGNsYXNzPSdpbmRleC1obCc+SGFyb2xkPC9zcGFuPiA8c3BhbiBjbGFzcz0naW5kZXgtaGwnPlN0cmVldDwvc3Bhbj4sIEJVTExFRU4gMzEwNSJ9LHsiZW52ZWxvcGUiOnsiY3JzIjoiRVBTRzoyODM1NSIsIm1pblgiOjMzMjU4Ni40NjMsIm1pblkiOjU4MTczMDEuMzY2LCJtYXhYIjozMzI2MTQuODU5LCJtYXhZIjo1ODE3MzE2LjgyfSwiY2VudHJvaWQiOnsieSI6NTgxNzMwOS4wMjgsIngiOjMzMjYwMC41NjIsImNycyI6IkVQU0c6MjgzNTUifSwiaWQiOiI3NjI2MDYiLCJpbmRleCI6NiwiZW50aXR5IjoiTWFuQ0NfcHJvcF9sYXllciIsImRpc3BsYXkxIjoiPHNwYW4gY2xhc3M9J2luZGV4LWhsJz4xPC9zcGFuPi8zNSA8c3BhbiBjbGFzcz0naW5kZXgtaGwnPkhhcm9sZDwvc3Bhbj4gPHNwYW4gY2xhc3M9J2luZGV4LWhsJz5TdHJlZXQ8L3NwYW4+LCBCVUxMRUVOIDMxMDUifSx7ImVudmVsb3BlIjp7ImNycyI6IkVQU0c6MjgzNTUiLCJtaW5YIjozMzI1NTMuMDYzLCJtaW5ZIjo1ODE3MDc3LjU4NSwibWF4WCI6MzMyNTg1LjYzNiwibWF4WSI6NTgxNzA5My4yOTR9LCJjZW50cm9pZCI6eyJ5Ijo1ODE3MDg1LjE1MiwieCI6MzMyNTcwLjIxNSwiY3JzIjoiRVBTRzoyODM1NSJ9LCJpZCI6Ijc4MDIzNyIsImluZGV4Ijo3LCJlbnRpdHkiOiJNYW5DQ19wcm9wX2xheWVyIiwiZGlzcGxheTEiOiI8c3BhbiBjbGFzcz0naW5kZXgtaGwnPjE8L3NwYW4+LzYxIDxzcGFuIGNsYXNzPSdpbmRleC1obCc+SGFyb2xkPC9zcGFuPiA8c3BhbiBjbGFzcz0naW5kZXgtaGwnPlN0cmVldDwvc3Bhbj4sIEJVTExFRU4gMzEwNSJ9XX0="
+    },
+    {
+      "key": "GET https://mapping.manningham.vic.gov.au/weave/services/v1/feature/getFeaturesByIds 7752b23bb4",
+      "method": "GET",
+      "url": "https://mapping.manningham.vic.gov.au/weave/services/v1/feature/getFeaturesByIds",
+      "final_url": "https://mapping.manningham.vic.gov.au/weave/services/v1/feature/getFeaturesByIds?outCrs=EPSG%3A28355&datadefinition=dd_ManCC_prop_layer_index&datadefinition=dd_ManCC_Property_WasteCollection&entityId=ManCC_prop_layer&ids=817614",
+      "body": "{\"params\":[[\"datadefinition\",\"dd_ManCC_Property_WasteCollection\"],[\"datadefinition\",\"dd_ManCC_prop_layer_index\"],[\"entityId\",\"ManCC_prop_layer\"],[\"ids\",\"817614\"],[\"outCrs\",\"EPSG:28355\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "x-powered-by": "Weave, ARR/3.0, ASP.NET, ASP.NET",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET,PUT,POST,DELETE,OPTIONS",
+        "access-control-allow-headers": "Content-Type",
+        "date": "Fri, 23 Oct 2026 20:27:36 GMT",
+        "content-length": "1418"
+      },
+      "content_b64": "eyJ0eXBlIjoiRmVhdHVyZUNvbGxlY3Rpb24iLCJmZWF0dXJlcyI6W3sidHlwZSI6IkZlYXR1cmUiLCJpZCI6IjgxNzYxNCIsImdlb21ldHJ5Ijp7InR5cGUiOiJQb2x5Z29uIiwiY29vcmRpbmF0ZXMiOltbWzMzMjY2Ni4zNDQzOTk5OTk4LDU4MTc4MTQuODU0XSxbMzMyNjY2LjAxOTgwMDAwMDgsNTgxNzgxNC4zNTZdLFszMzI2NzEuNTc5NDAwMDAwMTYsNTgxNzgxMC42NjEwMDAwMDFdLFszMzI2NzYuNDgxNTAwMDAwNyw1ODE3ODA3LjMyNzA5OTk5OV0sWzMzMjY3OC43Mzg4MDAwMDA0LDU4MTc4MDcuNjkxMDAwMDAxXSxbMzMyNjgwLjM1NDMwMDAwMDcsNTgxNzgyMC4yNDddLFszMzI2NjYuNjI2NDAwMDAxMzUsNTgxNzgyOS4zMjc3XSxbMzMyNjY0Ljc2NjYwMDAwMDcsNTgxNzgyNi41MjcxMDAwMDA1XSxbMzMyNjYzLjA4MTkwMDAwMDYsNTgxNzgyMy45NzA5OTk5OTldLFszMzI2NjIuOTU4MTAwMDAyMjYsNTgxNzgyNC4wNTA5MDAwMDFdLFszMzI2NjIuOTE0ODAwMDAwNCw1ODE3ODI0LjA4NF0sWzMzMjY1OS40NzYyMDAwMDEzLDU4MTc4MTguOTA1MV0sWzMzMjY1OS4zNzMzMDAwMDAxLDU4MTc4MTguNzU4Ml0sWzMzMjY2Mi43MzQ2MDAwMDE5NSw1ODE3ODE2LjUzNzEwMDAwMV0sWzMzMjY2My4wNTkyLDU4MTc4MTcuMDM2MTAwMDAxXSxbMzMyNjY2LjM0NDM5OTk5OTgsNTgxNzgxNC44NTRdXV19LCJwcm9wZXJ0aWVzIjp7ImRkX01hbkNDX3Byb3BfbGF5ZXJfaW5kZXgiOlt7IkFkZHJlc3MiOiIxLzEgSGFyb2xkIFN0cmVldCIsIlN1YnVyYiI6IkJVTExFRU4iLCJBZGRyZXNzRnVsbCI6IjEvMSBIYXJvbGQgU3RyZWV0IiwiX2lkIjo4MTc2MTQsIlBvc3Rjb2RlIjoiMzEwNSAgIiwiUHJvcGVydHlJRCI6ODE3NjE0fV0sImRkX01hbkNDX1Byb3BlcnR5X1dhc3RlQ29sbGVjdGlvbiI6W3siTWFuQ0NfR2FyZGVuX0Jpbl9JbWFnZSI6Imh0dHBzOi8vbWFwcGluZy5tYW5uaW5naGFtLnZpYy5nb3YuYXUvY3VzdG9tL21hbm5pbmdoYW0vYmluLWdhcmRlbi5wbmciLCJNYW5DQ19HYXJiYWdlX0Jpbl9JbWFnZSI6Imh0dHBzOi8vbWFwcGluZy5tYW5uaW5naGFtLnZpYy5nb3YuYXUvY3VzdG9tL21hbm5pbmdoYW0vYmluLWdhcmJhZ2UucG5nIiwiTWFuQ0NfUmVjeWNsZV9CaW5fSW1hZ2UiOiJodHRwczovL21hcHBpbmcubWFubmluZ2hhbS52aWMuZ292LmF1L2N1c3RvbS9tYW5uaW5naGFtL2Jpbi1yZWN5Y2xpbmcucG5nIiwiTWFuQ0NfV2FzdGVfRGF5X1dlZWsiOiJXZWRuZXNkYXkgMiIsIk1hbkNDX0dhcmRlbl9XYXN0ZV9EYXkiOiJXZWRuZXNkYXkiLCJNYW5DQ19SZWN5Y2xpbmdfRGF5IjoiMjggT2N0IDIwMjYiLCJfaWQiOiI4MTc2MTQiLCJNYW5DQ19Db2xsZWN0aW9uX0RheV9BcmVhIjoiV2VkbmVzZGF5IChBcmVhIDIpIiwiTWFuQ0NfQ29sbGVjdGlvbl9EYXkiOiIwNCBOb3YgMjAyNiJ9XX19XX0="
+    }
+  ]
+}

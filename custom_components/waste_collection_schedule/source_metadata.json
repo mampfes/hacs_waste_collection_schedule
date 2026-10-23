@@ -939,7 +939,7 @@
   "wyndham_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wyndham_vic_gov_au.md",
     "howto": {
-      "en": "Enter your address exactly as the council's [myWyndham](https://digital.wyndham.vic.gov.au/myWyndham/) search suggests it, e.g. '3-19 Parkvista Drive TRUGANINA 3029'."
+      "en": "Enter your address as the council's bin day lookup on https://www.wyndham.vic.gov.au shows it, e.g. '3-19 Parkvista Drive TRUGANINA 3029'. An unknown address lists similar ones."
     },
     "urls": {}
   },
@@ -4308,7 +4308,7 @@
   "sidec_lu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sidec_lu.md",
     "howto": {
-      "en": "Enter your commune as listed on the SIDEC calendar page, with its number, e.g. 'Mersch (2611)'. Leaving out the number lists the valid communes."
+      "en": "Enter your commune as listed on the SIDEC website, e.g. 'Mersch'. An unknown commune lists the valid ones."
     },
     "urls": {}
   },

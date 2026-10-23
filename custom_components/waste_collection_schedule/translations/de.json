@@ -31596,7 +31596,8 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "post_code": "PLZ",
-          "street_name": "Straßenname"
+          "street_name": "Straßenname",
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
@@ -31608,7 +31609,8 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "post_code": "PLZ",
-          "street_name": "Straßenname"
+          "street_name": "Straßenname",
+          "uprn": "UPRN"
         },
         "data_description": {}
       },

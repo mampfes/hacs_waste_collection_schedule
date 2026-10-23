@@ -31559,7 +31559,8 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "post_code": "Postnummer",
-          "street_name": "Street Name"
+          "street_name": "Street Name",
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
@@ -31571,7 +31572,8 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "post_code": "Postnummer",
-          "street_name": "Street Name"
+          "street_name": "Street Name",
+          "uprn": "UPRN"
         },
         "data_description": {}
       },
