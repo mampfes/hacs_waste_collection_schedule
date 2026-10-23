@@ -27,7 +27,7 @@ API_KEY = "479D40F4-B3E1-4038-9130-76453188C74C"
 # (see https://github.com/mampfes/hacs_waste_collection_schedule/issues/4084).
 # A number of municipalities that used to run on RenoWeb have also since moved
 # their backend entirely to a different vendor (mostly "Perfect Waste"), which
-# is not supported by this source.
+# is not supported by this source; use the perfectwaste_dk source for those.
 #
 # MUNICIPALITY_CODES only lists the municipalities that are (as of September
 # 2026) still served by RenoWeb's public "servicesgh" API, keyed by the

@@ -1,0 +1,47 @@
+{
+  "recorded_at": "2026-10-24",
+  "interactions": [
+    {
+      "key": "POST https://europe-west3-perfect-waste.cloudfunctions.net/searchExternalAddresses b2a0ef1717",
+      "method": "POST",
+      "url": "https://europe-west3-perfect-waste.cloudfunctions.net/searchExternalAddresses",
+      "final_url": "https://europe-west3-perfect-waste.cloudfunctions.net/searchExternalAddresses",
+      "body": "{\"body\":{\"data\":{\"municipality\":259,\"onlyManual\":false,\"page\":1,\"query\":\"Bakkevej 3, 4600 K\u00f8ge\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "vary": "Origin",
+        "content-type": "application/json; charset=utf-8",
+        "function-execution-id": "80renbhtxfp9",
+        "x-cloud-trace-context": "3b631e023446f94e949c6efd99fa7f31",
+        "content-encoding": "gzip",
+        "date": "Fri, 23 Oct 2026 23:42:08 GMT",
+        "server": "Google Frontend",
+        "content-length": "89",
+        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+      },
+      "content_b64": "eyJyZXN1bHQiOlt7ImFkZHJlc3NJRCI6IjM2MiIsImRpc3BsYXlOYW1lIjoiQmFra2V2ZWogMywgNDYwMCBLw7hnZSJ9XX0="
+    },
+    {
+      "key": "POST https://europe-west3-perfect-waste.cloudfunctions.net/getAddressCollections 03b9800e4d",
+      "method": "POST",
+      "url": "https://europe-west3-perfect-waste.cloudfunctions.net/getAddressCollections",
+      "final_url": "https://europe-west3-perfect-waste.cloudfunctions.net/getAddressCollections",
+      "body": "{\"body\":{\"data\":{\"addressID\":\"362\",\"municipality\":259}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "vary": "Origin",
+        "content-type": "application/json; charset=utf-8",
+        "function-execution-id": "uot8w9yv7j6x",
+        "x-cloud-trace-context": "ed68d996803d26e9949c6efd99fa72f6",
+        "content-encoding": "gzip",
+        "date": "Fri, 23 Oct 2026 23:42:09 GMT",
+        "server": "Google Frontend",
+        "content-length": "444",
+        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+      },
+      "content_b64": "eyJyZXN1bHQiOlt7ImRhdGUiOiIyMDI2LTExLTA0VDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbnMiOlt7ImZyYWN0aW9uSUQiOiI2IiwiZnJhY3Rpb25OYW1lIjoiU3RvcnNrcmFsZCIsImNvbnRhaW5lckNvdW50IjoxLCJpY29ucyI6WyI3M2VhNjVmOC0wNTNlLTQ0NzAtOTI2ZC1hMTdkNjJiN2U3MjQuanBlZyJdfV0sImRheXNUb05leHRQaWNrdXAiOjEyfSx7ImRhdGUiOiIyMDI2LTExLTA1VDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbnMiOlt7ImZyYWN0aW9uSUQiOiIyOSIsImZyYWN0aW9uTmFtZSI6IlJlc3QvTWFkIiwiY29udGFpbmVyQ291bnQiOjEsImljb25zIjpbIm1hZGFmZmFsZC5wbmciLCJyZXN0YWZmYWxkLnBuZyJdfV0sImRheXNUb05leHRQaWNrdXAiOjEzfSx7ImRhdGUiOiIyMDI2LTExLTA2VDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbnMiOlt7ImZyYWN0aW9uSUQiOiIzNiIsImZyYWN0aW9uTmFtZSI6IlBhcGlyICYgUGFwIC8gUGxhc3QgJiBNREsiLCJjb250YWluZXJDb3VudCI6MSwiaWNvbnMiOlsicGFwaXIucG5nIiwicGFwLnBuZyIsInBsYXN0LnBuZyIsIm1hZC1kcmlra2VrYXJ0b25lci5wbmciXX1dLCJkYXlzVG9OZXh0UGlja3VwIjoxNH0seyJkYXRlIjoiMjAyNi0xMS0wOVQwMDowMDowMC4wMDBaIiwiZnJhY3Rpb25zIjpbeyJmcmFjdGlvbklEIjoiMzUiLCJmcmFjdGlvbk5hbWUiOiJHbGFzL01ldGFsIiwiY29udGFpbmVyQ291bnQiOjEsImljb25zIjpbImdsYXMucG5nIiwibWV0YWwucG5nIl19XSwiZGF5c1RvTmV4dFBpY2t1cCI6MTd9LHsiZGF0ZSI6IjIwMjYtMTEtMTlUMDA6MDA6MDAuMDAwWiIsImZyYWN0aW9ucyI6W3siZnJhY3Rpb25JRCI6IjI5IiwiZnJhY3Rpb25OYW1lIjoiUmVzdC9NYWQiLCJjb250YWluZXJDb3VudCI6MSwiaWNvbnMiOlsibWFkYWZmYWxkLnBuZyIsInJlc3RhZmZhbGQucG5nIl19XSwiZGF5c1RvTmV4dFBpY2t1cCI6Mjd9LHsiZGF0ZSI6IjIwMjYtMTEtMjdUMDA6MDA6MDAuMDAwWiIsImZyYWN0aW9ucyI6W3siZnJhY3Rpb25JRCI6IjM2IiwiZnJhY3Rpb25OYW1lIjoiUGFwaXIgJiBQYXAgLyBQbGFzdCAmIE1ESyIsImNvbnRhaW5lckNvdW50IjoxLCJpY29ucyI6WyJwYXBpci5wbmciLCJwYXAucG5nIiwicGxhc3QucG5nIiwibWFkLWRyaWtrZWthcnRvbmVyLnBuZyJdfV0sImRheXNUb05leHRQaWNrdXAiOjM1fSx7ImRhdGUiOiIyMDI2LTEyLTAzVDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbnMiOlt7ImZyYWN0aW9uSUQiOiIyOSIsImZyYWN0aW9uTmFtZSI6IlJlc3QvTWFkIiwiY29udGFpbmVyQ291bnQiOjEsImljb25zIjpbIm1hZGFmZmFsZC5wbmciLCJyZXN0YWZmYWxkLnBuZyJdfV0sImRheXNUb05leHRQaWNrdXAiOjQxfSx7ImRhdGUiOiIyMDI2LTEyLTEwVDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbnMiOlt7ImZyYWN0aW9uSUQiOiIzMyIsImZyYWN0aW9uTmFtZSI6IlRla3N0aWxhZmZhbGQiLCJjb250YWluZXJDb3VudCI6MSwiaWNvbnMiOlsidGVrc3RpbGVyLnBuZyJdfSx7ImZyYWN0aW9uSUQiOiI5IiwiZnJhY3Rpb25OYW1lIjoiRmFybGlndCBhZmZhbGQiLCJjb250YWluZXJDb3VudCI6MSwiaWNvbnMiOlsiZmFybGlndC1hZmZhbGQucG5nIl19XSwiZGF5c1RvTmV4dFBpY2t1cCI6NDh9LHsiZGF0ZSI6IjIwMjYtMTItMTdUMDA6MDA6MDAuMDAwWiIsImZyYWN0aW9ucyI6W3siZnJhY3Rpb25JRCI6IjI5IiwiZnJhY3Rpb25OYW1lIjoiUmVzdC9NYWQiLCJjb250YWluZXJDb3VudCI6MSwiaWNvbnMiOlsibWFkYWZmYWxkLnBuZyIsInJlc3RhZmZhbGQucG5nIl19XSwiZGF5c1RvTmV4dFBpY2t1cCI6NTV9LHsiZGF0ZSI6IjIwMjYtMTItMThUMDA6MDA6MDAuMDAwWiIsImZyYWN0aW9ucyI6W3siZnJhY3Rpb25JRCI6IjM2IiwiZnJhY3Rpb25OYW1lIjoiUGFwaXIgJiBQYXAgLyBQbGFzdCAmIE1ESyIsImNvbnRhaW5lckNvdW50IjoxLCJpY29ucyI6WyJwYXBpci5wbmciLCJwYXAucG5nIiwicGxhc3QucG5nIiwibWFkLWRyaWtrZWthcnRvbmVyLnBuZyJdfV0sImRheXNUb05leHRQaWNrdXAiOjU2fSx7ImRhdGUiOiIyMDI2LTEyLTMxVDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbnMiOlt7ImZyYWN0aW9uSUQiOiIyOSIsImZyYWN0aW9uTmFtZSI6IlJlc3QvTWFkIiwiY29udGFpbmVyQ291bnQiOjEsImljb25zIjpbIm1hZGFmZmFsZC5wbmciLCJyZXN0YWZmYWxkLnBuZyJdfV0sImRheXNUb05leHRQaWNrdXAiOjY5fSx7ImRhdGUiOiIyMDI3LTAxLTA2VDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbnMiOlt7ImZyYWN0aW9uSUQiOiI2IiwiZnJhY3Rpb25OYW1lIjoiU3RvcnNrcmFsZCIsImNvbnRhaW5lckNvdW50IjoxLCJpY29ucyI6WyI3M2VhNjVmOC0wNTNlLTQ0NzAtOTI2ZC1hMTdkNjJiN2U3MjQuanBlZyJdfV0sImRheXNUb05leHRQaWNrdXAiOjc1fV19"
+    }
+  ]
+}
