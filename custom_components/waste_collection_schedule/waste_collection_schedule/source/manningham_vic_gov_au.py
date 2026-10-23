@@ -17,6 +17,9 @@ TEST_CASES = {
     "Lower Templestowe Pre-School": {"street_address": "96-106 Swanston Street"},
     "9/114-116 James Street Templestowe": {"street_address": "9/114-116 James Street"},
     "488 Park Road Park Orchards": {"street_address": "488 Park Road"},
+    "Unit number contained in other addresses": {
+        "street_address": "1/1 Harold Street, BULLEEN 3105"
+    },
 }
 
 ICON_MAP = {
@@ -49,6 +52,10 @@ def _strip_html(text: str) -> str:
     return re.sub(r"<[^>]+>", "", text)
 
 
+def _normalise_address(address: str) -> str:
+    return " ".join(str(address).split()).casefold()
+
+
 class Source:
     def __init__(self, street_address: str):
         self._street_address = street_address
@@ -65,7 +72,9 @@ class Source:
                 "indexes": "index.ManCC_propertylayer",
                 "type": "EXACT",
                 "crs": "EPSG:28355",
-                "query": self._street_address,
+                # The index finds nothing for its own ", SUBURB POSTCODE" tail,
+                # so a picked suggestion is searched by its street part.
+                "query": self._street_address.split(",")[0].strip(),
             },
             timeout=30,
         )
@@ -75,13 +84,26 @@ class Source:
         total = search_result.get("total", 0)
         if total == 0:
             raise SourceArgumentNotFound("street_address", self._street_address)
+        results = search_result["results"]
         if total > 1:
-            suggestions = [_strip_html(r["display1"]) for r in search_result["results"]]
-            raise SourceArgAmbiguousWithSuggestions(
-                "street_address", self._street_address, suggestions
-            )
+            # "1/1 Harold Street" also returns 2/1, 3/1, 1/16 and more, so the
+            # input itself is among the suggestions; picking it must resolve.
+            with_locality = "," in self._street_address
+            wanted = _normalise_address(self._street_address)
+            labels = [_strip_html(r["display1"]) for r in results]
+            exact = [
+                r
+                for r, label in zip(results, labels, strict=True)
+                if _normalise_address(label if with_locality else label.split(",")[0])
+                == wanted
+            ]
+            if len(exact) != 1:
+                raise SourceArgAmbiguousWithSuggestions(
+                    "street_address", self._street_address, labels
+                )
+            results = exact
 
-        property_id = search_result["results"][0]["id"]
+        property_id = results[0]["id"]
         _LOGGER.debug("Manningham property ID: %s", property_id)
 
         # Step 2: Fetch waste collection data for that property
