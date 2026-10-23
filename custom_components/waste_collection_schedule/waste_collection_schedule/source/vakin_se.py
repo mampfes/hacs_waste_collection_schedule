@@ -32,6 +32,8 @@ _PORTLET_ID_PATTERN = re.compile(
     r"portletId:\s*['\"]([^'\"]+)['\"]"
 )
 _PAGE_ID_PATTERN = re.compile(r"pageId:\s*['\"]([^'\"]+)['\"]")
+_HOUSE_LETTER = re.compile(r"(\d+)\s+([A-Za-zÅÄÖåäö])\b")
+_POSTCODE = re.compile(r",?\s*\b\d{3}\s?\d{2}\b$")
 
 
 class _WidgetEndpoints(NamedTuple):
@@ -55,8 +57,14 @@ def _pick_widget_endpoints(response, **_) -> _WidgetEndpoints:
 
 
 def _clean_address_query(address: str) -> str:
-    """Clean the input address for search by stripping 5-digit postal codes."""
-    return re.sub(r",?\s*\b\d{5}\b", "", address).strip()
+    """Clean the input address for search by collapsing house letters and stripping postal codes."""
+    stripped = _POSTCODE.sub("", address).strip()
+    return _HOUSE_LETTER.sub(r"\1\2", stripped)
+
+
+def _normalise(a: str) -> str:
+    """Normalise an address for comparison (collapsed house letter, no postal code, casefold)."""
+    return _clean_address_query(a).casefold()
 
 
 def _pick_address(response, _endpoint: _WidgetEndpoints, *, address: str, **_) -> dict:
@@ -70,11 +78,11 @@ def _pick_address(response, _endpoint: _WidgetEndpoints, *, address: str, **_) -
     if len(items) == 1:
         return items[0]["value"]
 
-    # Try exact match against label or address field (stripping postal code if present)
-    wanted = _clean_address_query(address).casefold()
+    # Try exact match against label or address field (normalised on both sides)
+    wanted = _normalise(address)
     for item in items:
-        label = str(item.get("label", "")).strip().casefold()
-        val_addr = str(item.get("value", {}).get("address", "")).strip().casefold()
+        label = _normalise(str(item.get("label", "")))
+        val_addr = _normalise(str(item.get("value", {}).get("address", "")))
         if wanted in (label, val_addr):
             return item["value"]
 
@@ -82,12 +90,16 @@ def _pick_address(response, _endpoint: _WidgetEndpoints, *, address: str, **_) -
     raise SourceArgAmbiguousWithSuggestions("address", address, suggestions)
 
 
-def _date_window():
+def _schedule_params(address_val: dict) -> dict[str, str]:
     """Request a rolling 365-day schedule window starting today."""
     today = datetime.date.today()
     start_date = today.isoformat()
     end_date = (today + datetime.timedelta(days=365)).isoformat()
-    return start_date, end_date
+    return {
+        "addressParams": json.dumps(address_val),
+        "startDate": start_date,
+        "endDate": end_date,
+    }
 
 
 @final
@@ -104,7 +116,7 @@ class Source(BaseSource):
         wt.FOOD_WASTE,
         wt.GENERAL_WASTE,
         wt.PAPER,
-        wt.RECYCLABLES,
+        wt.PLASTIC,
         wt.OTHER,
     ]
 
@@ -116,8 +128,9 @@ class Source(BaseSource):
 
     TEST_CASES: ClassVar[dict] = {
         "Kajakvägen 3, Täfteå": {"address": "Kajakvägen 3, Täfteå"},
-        "Kajakvägen 3": {"address": "Kajakvägen 3"},
+        "Storgatan 1 A, Umeå": {"address": "Storgatan 1 A, Umeå"},
         "Storgatan 101, Umeå": {"address": "Storgatan 101, Umeå"},
+        "Vindelvägen 1, Hällnäs": {"address": "Vindelvägen 1, Hällnäs"},
     }
 
     ERROR_TEST_CASES: ClassVar[dict] = {
@@ -130,7 +143,7 @@ class Source(BaseSource):
     HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street name and house number, followed by the town if "
-            "needed (e.g. `Kajakvägen 3, Täfteå` or `Storgatan 1, Umeå`), as "
+            "needed (e.g. `Kajakvägen 3, Täfteå` or `Storgatan 101, Umeå`), as "
             f"shown in the address search on the [Vakin waste page]({_PAGE_URL})."
         ),
     }
@@ -156,11 +169,7 @@ class Source(BaseSource):
             f"{_BASE_URL}/appresource/{endpoint.page_id}/"
             f"{endpoint.portlet_id}/getcontainerdata"
         ),
-        params=lambda endpoint, address_val, **_: {
-            "addressParams": json.dumps(address_val),
-            "startDate": _date_window()[0],
-            "endDate": _date_window()[1],
-        },
+        params=lambda endpoint, address_val, **_: _schedule_params(address_val),
         raise_for_status=True,
     )
 
@@ -175,7 +184,7 @@ class Source(BaseSource):
             "Matavfall": wt.FOOD_WASTE,
             "Restavfall": wt.GENERAL_WASTE,
             "Pappersförpackningar": wt.PAPER,
-            "Plastförpackningar": wt.RECYCLABLES,
+            "Plastförpackningar": wt.PLASTIC,
             "Fett": wt.OTHER,
         },
     )
