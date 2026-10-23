@@ -1,109 +1,240 @@
-import logging
-from datetime import datetime
+import base64
+import json
+import re
+from datetime import date
 
-import requests
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Swansea Council"
 DESCRIPTION = "Source script for swansea.gov.uk"
 URL = "https://swansea.gov.uk"
+COUNTRY = "uk"
 TEST_CASES = {
     "Cwmdonkin Drive": {"street_name": "cwmdonkin", "post_code": "SA20RA"},
-    "Park Street": {"street_name": "Park Street", "post_code": "sa1 3dj"},
-    "High Street": {"street_name": "High", "post_code": "SA1 1PE"},
-    "St. Helen's": {"street_name": "St. Helen's", "post_code": "sa14nd"},
+    "Cwmdonkin Drive (UPRN)": {"post_code": "SA2 0RA", "uprn": "100100351698"},
+    "Postcode only": {"post_code": "sa2 0ra"},
 }
 
-API_URL = "https://www1.swansea.gov.uk/recyclingsearch/"
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "post_code": "Full postcode of the property",
+        "street_name": "Any part of the address (e.g. street name), used to pick an address in the postcode",
+        "uprn": "Unique Property Reference Number (UPRN) of the property",
+    }
+}
+PARAM_TRANSLATIONS = {
+    "en": {
+        "post_code": "Postcode",
+        "street_name": "Street name",
+        "uprn": "UPRN",
+    }
+}
+
+FORM_URL = "https://www.swansea.gov.uk/recyclingsearch"
+POSTCODE_URL = "https://www.swansea.gov.uk/apiserver/postcode"
+FORM_NAME = "RECYCLINGSEARCHMYACCOUNT"
+
 ICON_MAP = {
-    "PINK": Icons.GENERAL_WASTE,
-    "GREEN": Icons.RECYCLING,
+    "Pink": Icons.GENERAL_WASTE,
+    "Green": Icons.RECYCLING,
 }
 
-COLOR_MAP = [  # HTML Colour, Bin Type, Icon Mapping
-    ("MediumVioletRed", "Pink", "PINK"),
-    ("ForestGreen", "Green", "GREEN"),
-]
-
-HEADERS = {
-    "user-agent": "Mozilla/5.0",
+CLASS_MAP = {
+    "calendar-pink": ["Pink"],
+    "calendar-green": ["Green"],
+    "calendar-both": ["Pink", "Green"],
 }
 
-_LOGGER = logging.getLogger(__name__)
+MONTHS = {
+    m: i + 1
+    for i, m in enumerate(
+        [
+            "january",
+            "february",
+            "march",
+            "april",
+            "may",
+            "june",
+            "july",
+            "august",
+            "september",
+            "october",
+            "november",
+            "december",
+        ]
+    )
+}
+
+
+def _normalise(s: str) -> str:
+    return re.sub(r"[^A-Z0-9]", "", s.upper())
+
+
+def _parse_caption(caption: str) -> tuple[int, int] | None:
+    """Parse 'October 2026' or 'i18n{sc.commercialwaste.month10} 2026'."""
+    year_match = re.search(r"(\d{4})\s*$", caption)
+    if not year_match:
+        return None
+    year = int(year_match.group(1))
+    month_match = re.search(r"month(\d{1,2})\}", caption)
+    if month_match:
+        return year, int(month_match.group(1))
+    word = caption[: year_match.start()].strip().lower()
+    if word in MONTHS:
+        return year, MONTHS[word]
+    return None
+
+
+def _address_desc(address: dict) -> str:
+    parts = [address.get(f"line{i}", "") for i in range(1, 6)]
+    parts += [address.get("town", ""), address.get("postcode", "")]
+    return ", ".join(p for p in parts if p)
 
 
 class Source:
-    def __init__(self, street_name=None, post_code=None):
+    def __init__(
+        self,
+        post_code: str,
+        street_name: str | None = None,
+        uprn: str | int | None = None,
+    ):
+        self._post_code = post_code
         self._street_name = street_name
-        self._postcode = post_code
+        self._uprn = str(uprn) if uprn else None
 
-    def get_asp_var(self, broth, id) -> str:
-        asp_var = broth.find("input", {"id": id}).get("value")
-        return asp_var
+    def _get_address(self, session) -> dict:
+        jsonrpc = {
+            "id": 1,
+            "method": "postcodeSearch",
+            "params": {"provider": "", "postcode": self._post_code},
+        }
+        r = session.get(
+            POSTCODE_URL,
+            params={"callback": "cb", "jsonrpc": json.dumps(jsonrpc)},
+            timeout=30,
+        )
+        r.raise_for_status()
+        # Response is JSONP: cb({...})
+        payload = json.loads(r.text[r.text.index("(") + 1 : r.text.rindex(")")])
+        addresses = [a for a in payload.get("result") or [] if "udprn" in a]
+        if not addresses:
+            raise SourceArgumentNotFound("post_code", self._post_code)
 
-    def fetch(self):
-        # Initiate a session to generate required ASP variables
-        session = requests.Session()
-        session.headers.update(HEADERS)
+        if self._uprn:
+            for address in addresses:
+                if address["udprn"].lstrip("0") == self._uprn.lstrip("0"):
+                    return address
+            raise SourceArgumentNotFoundWithSuggestions(
+                "uprn", self._uprn, [a["udprn"] for a in addresses]
+            )
 
-        response0 = session.get(API_URL)
-        response0.raise_for_status()
+        if self._street_name:
+            needle = _normalise(self._street_name)
+            for address in addresses:
+                if needle in _normalise(_address_desc(address)):
+                    return address
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_name",
+                self._street_name,
+                sorted({_address_desc(a) for a in addresses}),
+            )
 
-        soup = BeautifulSoup(response0.text, "html.parser")
+        # Collections are scheduled per street, so any address in the postcode will do
+        return addresses[0]
+
+    def fetch(self) -> list[Collection]:
+        session = requests.Session(impersonate="chrome")
+
+        address = self._get_address(session)
+
+        r = session.get(FORM_URL, timeout=30)
+        r.raise_for_status()
+        soup = BeautifulSoup(r.text, "html.parser")
+        form = soup.find("form", id=f"{FORM_NAME}_FORM")
+        if not form:
+            raise Exception("Could not find recycling search form")
+
+        def _val(name: str) -> str:
+            el = form.find("input", attrs={"name": f"{FORM_NAME}_{name}"})
+            return el.get("value", "") if el else ""
 
         data = {
-            "__VIEWSTATE": self.get_asp_var(soup, "__VIEWSTATE"),
-            "__VIEWSTATEGENERATOR": self.get_asp_var(soup, "__VIEWSTATEGENERATOR"),
-            "__VIEWSTATEENCRYPTED": "",
-            "__EVENTVALIDATION": self.get_asp_var(soup, "__EVENTVALIDATION"),
-            "txtRoadName": self._street_name,
-            "txtPostCode": self._postcode,
-            "btnSearch": "Search",
+            f"{FORM_NAME}_PAGESESSIONID": _val("PAGESESSIONID"),
+            f"{FORM_NAME}_SESSIONID": _val("SESSIONID"),
+            f"{FORM_NAME}_NONCE": _val("NONCE"),
+            f"{FORM_NAME}_VARIABLES": "e30=",
+            f"{FORM_NAME}_PAGENAME": "POSTCODEINPUT",
+            f"{FORM_NAME}_PAGEINSTANCE": "0",
+            f"{FORM_NAME}_ADDRESSLOOKUPPOSTCODE": address.get("postcode", ""),
+            f"{FORM_NAME}_ADDRESSLINE1": address.get("line1", ""),
+            f"{FORM_NAME}_ADDRESSLINE2": address.get("line2", ""),
+            f"{FORM_NAME}_ADDRESSLINE3": address.get("line3", ""),
+            f"{FORM_NAME}_TOWN": address.get("town", ""),
+            f"{FORM_NAME}_POSTCODE": address.get("postcode", ""),
+            f"{FORM_NAME}_UPRN": address["udprn"],
+            f"{FORM_NAME}_FORMACTION_NEXT": f"{FORM_NAME}_NEXTBUTTON",
         }
+        r = session.post(
+            form["action"],
+            data=data,
+            headers={"Origin": "https://www.swansea.gov.uk", "Referer": FORM_URL},
+            timeout=30,
+        )
+        r.raise_for_status()
 
-        # Get the collection calendar
-        response1 = requests.post(API_URL, data=data)
-        response1.raise_for_status()
+        return self._parse_calendar(self._get_bin_info_html(r.text))
 
-        soup = BeautifulSoup(response1.text, features="html.parser")
+    @staticmethod
+    def _get_bin_info_html(page: str) -> str:
+        # The results are held in the base64-encoded form data of the page
+        match = re.search(rf'{FORM_NAME}FormData\s*=\s*"([^"]+)"', page)
+        if match:
+            form_data = json.loads(base64.b64decode(match.group(1)).decode("utf-8"))
+            for page_data in form_data.values():
+                if isinstance(page_data, dict) and page_data.get("DISPLAYBININFO"):
+                    return page_data["DISPLAYBININFO"]
+        # Fall back to the rendered results block
+        soup = BeautifulSoup(page, "html.parser")
+        div = soup.find("div", id=f"{FORM_NAME}_DISPLAYBININFO")
+        if div:
+            return str(div)
+        raise Exception("No collection data found in response")
 
-        tables = soup.find_all("table", {"title": "Calendar"})
-
+    @staticmethod
+    def _parse_calendar(html: str) -> list[Collection]:
+        soup = BeautifulSoup(html, "html.parser")
         entries = []
-
-        if not tables:  # no tables in HTML means the address lookup failed
-            raise Exception("Address lookup failed")
-
-        for table in tables:
-            month_year_text = (
-                table.find("td", width="70%").find("b").text.strip()
-            )  # Extract month and year
-
-            if not month_year_text:
-                raise Exception("Cannot find month and year in Calendar")
-
-            for color, bin_type, icon in COLOR_MAP:
-                for td in table.find_all("td", bgcolor=color):
-                    if not td:
-                        raise Exception("Cannot find " + bin_type + " dates")
-
-                    try:
-                        date = datetime.strptime(
-                            f"{td.text.strip()} {month_year_text}", "%d %B %Y"
-                        ).date()
-                    except ValueError:
-                        _LOGGER.warning(
-                            f"Skipped day='{td.text.strip()}', month_day='{month_year_text}'. Unexpected format."
-                        )
-                        continue
-
+        for table in soup.select("table.bin-calendar"):
+            caption = table.find("caption")
+            year_month = (
+                _parse_caption(caption.get_text(strip=True)) if caption else None
+            )
+            if not year_month:
+                continue
+            year, month = year_month
+            for td in table.find_all("td"):
+                types = next(
+                    (CLASS_MAP[c] for c in td.get("class") or [] if c in CLASS_MAP),
+                    None,
+                )
+                day = td.get_text(strip=True)
+                if not types or not day.isdigit():
+                    continue
+                for t in types:
                     entries.append(
                         Collection(
-                            date=date,
-                            t=bin_type,
-                            icon=ICON_MAP.get(icon),
+                            date=date(year, month, int(day)),
+                            t=t,
+                            icon=ICON_MAP.get(t),
                         )
                     )
 
+        if not entries:
+            raise Exception("No collection dates found in calendar")
         return entries
