@@ -1,10 +1,10 @@
 import re
-from datetime import datetime
+from datetime import date, datetime
 
 import requests
-from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons
 from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
     SourceArgumentRequiredWithSuggestions,
 )
 
@@ -17,7 +17,8 @@ TEST_CASES = {
     "Invalid Commune": {"commune": "Invalid (12345)"},
 }
 
-API_URL = "https://www.sidec.lu/fr/Collectes/Calendrier"
+# Yearly collection data used by the calendar on the SIDEC homepage.
+API_URL = "https://sidec.lu/collectes/{year}.json"
 ICON_MAP = {
     "BULKY": Icons.BULKY,
     "GLASS": Icons.GLASS,
@@ -28,99 +29,64 @@ ICON_MAP = {
 
 WASTE_MAPPING = {
     "encombrants": "BULKY",
-    "verre": "ORGANIC",
-    "dechets organiques": "GLASS",
-    "papiers cartons": "PAPER",
-    "dechets menagers": "RESIDUAL",
+    "verre": "GLASS",
+    "bio": "ORGANIC",
+    "papier": "PAPER",
+    "menager": "RESIDUAL",
 }
 
 
 class Source:
     def __init__(self, commune: str | None = None):
         self._commune = commune
-        self._commune_id: str | None = None
-        if commune:
-            # Parse the ID from the formatted string, e.g., "Parc Hosingen (36777)"
-            match = re.search(r"\((\d+)\)", commune)
-            if match:
-                self._commune_id = match.group(1)
+        # Older configurations use "Name (id)" from the previous website;
+        # the commune name alone identifies the commune now.
+        self._commune_name = (
+            re.sub(r"\s*\(\d+\)\s*$", "", commune).strip() if commune else None
+        )
+
+    def _fetch_year(self, year: int) -> dict | None:
+        r = requests.get(API_URL.format(year=year))
+        if r.status_code == 404:
+            return None
+        r.raise_for_status()
+        return r.json()["communes"]
 
     def fetch(self):
-        if not self._commune or not self._commune_id:
-            # Step 1: No commune provided, fetch list from website and raise exception
-            r = requests.get(API_URL)
-            r.raise_for_status()
-            soup = BeautifulSoup(r.text, "html.parser")
-            select = soup.find("select", {"name": "myCommune"})
-            if not select:
-                raise Exception("Could not find commune dropdown on SIDEC website.")
-
-            suggestions = []
-            for option in select.find_all("option"):
-                if option.get("value"):
-                    name = option.text.strip()
-                    commune_id = option["value"]
-                    suggestions.append(f"{name} ({commune_id})")
-
-            raise SourceArgumentRequiredWithSuggestions(
-                "commune", None, sorted(suggestions)
-            )
-
-        # If commune was provided but ID could not be parsed, raise error
-        # This happens if user enters a free-text value not from the dropdown
-        if not self._commune_id:
-            raise Exception(
-                f'Invalid commune format: "{self._commune}". Please select an entry from the dropdown list.'
-            )
-
-        # --- Proceed with fetching data ---
         now = datetime.now()
-        year = now.year
+        communes = self._fetch_year(now.year)
+        if communes is None:
+            raise Exception(f"No SIDEC collection data published for {now.year}.")
 
-        collections = []
-        collections.extend(self._fetch_year(year))
+        if not self._commune_name:
+            raise SourceArgumentRequiredWithSuggestions(
+                "commune", None, sorted(communes)
+            )
+        if self._commune_name not in communes:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "commune", self._commune, sorted(communes)
+            )
 
+        collections = self._collections(communes[self._commune_name])
+
+        # next year's data is published towards the end of the year
         if now.month >= 10:
-            try:
-                collections.extend(self._fetch_year(year + 1))
-            except Exception:
-                pass
+            next_year = self._fetch_year(now.year + 1)
+            if next_year and self._commune_name in next_year:
+                collections.extend(self._collections(next_year[self._commune_name]))
 
         return collections
 
-    def _fetch_year(self, year):
-        params = {"annee": year, "myCommune": self._commune_id}
-        r = requests.get(API_URL, params=params)
-        r.raise_for_status()
-
-        soup = BeautifulSoup(r.text, "html.parser")
+    @staticmethod
+    def _collections(commune: dict) -> list[Collection]:
         collections = []
-
-        calendar_months = soup.select("#col-2 .calendar")
-        for month_index, month_div in enumerate(calendar_months):
-            month = month_index + 1
-            day_images = month_div.select(".calendar-day img")
-            for img in day_images:
-                src = img.get("src", "")
-                if "caption-" not in src:
-                    continue
-
-                try:
-                    item = src.split("caption-")[-1].split(".gif")[0]
-                    day_str = item.split("-")[-1]
-                    day = int(day_str)
-                    waste_type_str = "-".join(item.split("-")[:-1]).replace("_", " ")
-                    date = datetime(year, month, day).date()
-                    waste_type = WASTE_MAPPING.get(waste_type_str)
-                    if waste_type:
-                        collections.append(
-                            Collection(
-                                date=date,
-                                t=waste_type,
-                                icon=ICON_MAP.get(waste_type),
-                            )
-                        )
-                except (ValueError, IndexError):
-                    continue
-
+        for key, waste_type in WASTE_MAPPING.items():
+            for date_str in commune.get(key, []):
+                collections.append(
+                    Collection(
+                        date=date.fromisoformat(date_str),
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type),
+                    )
+                )
         return collections
