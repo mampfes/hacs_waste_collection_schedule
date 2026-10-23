@@ -1,6 +1,8 @@
 # Gmina Zgierz
 
-Support for schedules provided by [Gmina Zgierz](https://gminazgierz.pl/).
+Support for schedules provided by [Gmina Zgierz](https://gminazgierz.pl).
+
+Source for Gmina Zgierz garbage collection
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: gmina_zgierz_pl
       args:
-        location_name: "Dębniak"
+        location_name: LOCATION_NAME
 ```
 
 ### Configuration Variables
@@ -24,10 +26,9 @@ waste_collection_schedule:
   sources:
     - name: gmina_zgierz_pl
       args:
-        location_name: "Dębniak"
+        location_name: Grotniki
 ```
 
 ## How to get the source arguments
 
-You have to provide your location name.
-You can check all the available locations in Gmina Zgierz by accessing the [website](https://bip.gminazgierz.pl/a,58674,harmonogram-odbioru-odpadow-z-terenu-gminy-zgierz-na-2025-rok.html).
+Enter the name of your village (location_name) as listed in the yearly schedule on https://bip.gminazgierz.pl, for example `Grotniki`. The schedule groups the villages into the regions Rejon I to IV.

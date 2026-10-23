@@ -1,41 +1,8 @@
-# Angers Loire Métropole (ALM)
+# Angers Loire Métropole
 
-Support for schedules provided by [Open Data Angers)](https://data.angers.fr/pages/home/).
+Support for schedules provided by [Angers Loire Métropole](https://data.angers.fr/).
 
-The data is also used in the Tri+ application from Angers Loire Métropole[link](https://www.angersloiremetropole.fr/mon-quotidien/gestion-des-dechets/la-collecte-des-dechets/index.html#c24663).
-
-List of cities:
-  - LES PONTS DE CE
-  - SAINT BARTHELEMY D ANJOU
-  - SAINT CLEMENT DE LA PLACE
-  - SAINTE GEMMES SUR LOIRE
-  - SAINT LAMBERT LA POTHERIE
-  - SAINT LEGER DE LINIERES
-  - SAINT-LEGER-DES-BOIS
-  - SAINT MARTIN DU FOUILLOUX
-  - LOIRE AUTHION
-  - VERRIERES EN ANJOU
-  - SARRIGNE
-  - SAVENNIERES
-  - SOULAINES SUR AUBANCE
-  - SOULAIRE ET BOURG
-  - TRELAZE
-  - RIVES DU LOIR EN ANJOU
-  - ANGERS
-  - AVRILLE
-  - BEAUCOUZE
-  - BEHUARD
-  - BOUCHEMAINE
-  - BRIOLLAY
-  - CANTENAY EPINARD
-  - ECOUFLANT
-  - ECUILLE
-  - FENEU
-  - LONGUENEE EN ANJOU
-  - MONTREUIL JUIGNE
-  - MURS ERIGNE
-  - PELLOUAILLES LES VIGNES
-  - LE PLESSIS GRAMMOIRE
+Source script for data.angers.fr
 
 ## Configuration via configuration.yaml
 
@@ -44,16 +11,13 @@ waste_collection_schedule:
   sources:
     - name: data_angers_fr
       args:
-        city: CITY
-        typevoie: TYPE_VOIE
+        typevoie: TYPEVOIE
         address: ADDRESS
-        num_voie: int
+        city: CITY
+        num_voie: NUM_VOIE
 ```
 
 ### Configuration Variables
-
-**city**  
-*(string) (required)*
 
 **typevoie**  
 *(string) (required)*
@@ -61,18 +25,24 @@ waste_collection_schedule:
 **address**  
 *(string) (required)*
 
-**num_voie**
-*(int) (optional)*
+**city**  
+*(string) (required)*
 
-### Example
+**num_voie**  
+*(string) (optional)*
+
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: data_angers_fr
       args:
-        city: ANGERS
-        typevoie: RUE
-        address: Jean Jaures
-        num_voie: 7
+        address: cerisiers
+        city: TRELAZE
+        typevoie: allee
 ```
+
+## How to get the source arguments
+
+Select your city and street type, then enter (part of) the street name. The house number is optional but needed when the street is split between several collection sectors.

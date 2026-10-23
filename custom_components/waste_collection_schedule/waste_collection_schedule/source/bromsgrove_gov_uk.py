@@ -1,114 +1,91 @@
-from datetime import datetime
+import re
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-TITLE = "Bromsgrove & Redditch Councils"
-DESCRIPTION = "Source for the shared bin collection lookup used by Bromsgrove District Council and Redditch Borough Council, UK."
-URL = "https://bromsgrove.gov.uk"
-EXTRA_INFO = [
-    {
-        "title": "Redditch Borough Council",
-        "url": "https://www.redditchbc.gov.uk",
-        "default_params": {"council": "redditch"},
-    },
-]
-TEST_CASES = {
-    "Shakespeare House": {"uprn": "10094552413", "postcode": "B61 8DA"},
-    "The Lodge": {"uprn": 10000218025, "postcode": "B60 2AA"},
-    "Ceader Lodge": {"uprn": 100120576392, "postcode": "B60 2JS"},
-    "Finstall Road": {"uprn": 100120571971, "postcode": "B60 3DE"},
-}
-
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36",
-}
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import dropdown, postcode, uprn
+from waste_collection_schedule.transformers import RowTransformer
 
 # Bromsgrove District Council and Redditch Borough Council run a shared waste
 # service and both publish the same "BinCollections" web app, one instance per
 # council domain.
-COUNCIL_DOMAINS = {
+_DOMAINS = {
     "bromsgrove": "bincollections.bromsgrove.gov.uk",
     "redditch": "bincollections.redditchbc.gov.uk",
 }
 
-ICON_MAP = {
-    "Grey": Icons.GENERAL_WASTE,
-    "Green": Icons.RECYCLING,
-    "Brown": Icons.ORGANIC,
-}
+
+def _url(council: str = "bromsgrove", **_) -> str:
+    return f"https://{_DOMAINS[council]}/BinCollections/Details/"
 
 
-class Source:
-    def __init__(self, uprn: str, postcode: str, council: str = "bromsgrove"):
-        self._uprn = uprn
-        self._postcode = "".join(postcode.split()).upper()
-        if council not in COUNCIL_DOMAINS:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "council", council, COUNCIL_DOMAINS.keys()
-            )
-        self._domain = COUNCIL_DOMAINS[council]
+def _postcode_matches(response, source) -> bool:
+    """The page names the postcode of the UPRN: it must be the configured one."""
+    found = re.search(r"Bin collection dates for\s+([^<]+?)\s*</h3>", response.text)
+    if found is None or source is None:
+        return False
+    return (
+        "".join(found.group(1).split()).upper()
+        == "".join(str(source.params["postcode"]).split()).upper()
+    )
 
-    def fetch(self):
-        entries: list[Collection] = []
 
-        session = requests.Session()
-        session.headers.update(HEADERS)
+@final
+class Source(BaseSource):
+    TITLE = "Bromsgrove & Redditch Councils"
+    DESCRIPTION = "Source for the shared bin collection lookup used by Bromsgrove District Council and Redditch Borough Council, UK."
+    URL = "https://bromsgrove.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        form_data = {"UPRN": self._uprn}
+    WASTE_TYPES: ClassVar[list] = [wt.RECYCLABLES, wt.GENERAL_WASTE]
 
-        collection_response = session.post(
-            f"https://{self._domain}/BinCollections/Details/", data=form_data
-        )
+    TEST_CASES: ClassVar[dict] = {
+        "Shakespeare House": {"uprn": "10094552413", "postcode": "B61 8DA"},
+        "The Lodge": {"uprn": 10000218025, "postcode": "B60 2AA"},
+        "Ceader Lodge": {"uprn": 100120576392, "postcode": "B60 2JS"},
+        "Finstall Road": {"uprn": 100120571971, "postcode": "B60 3DE"},
+    }
 
-        # Parse HTML
-        soup = BeautifulSoup(collection_response.text, "html.parser")
+    PARAMS = (
+        uprn(),
+        postcode(),
+        dropdown("council", list(_DOMAINS), label="Council", default="bromsgrove"),
+    )
 
-        # Find postcode
-        postcode = "".join(soup.find("h3").text.split()[-2:]).upper()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Find your UPRN at [FindMyAddress.co.uk](https://www.findmyaddress.co.uk/) "
+            "and enter it with the postcode of the same address. The council is "
+            "`bromsgrove` (default) or `redditch`."
+        ),
+    }
 
-        # Find bins and their collection details
-        bins = soup.find_all(class_="collection-container")
+    retrieve = retrievers.Request(
+        _url, method="POST", data=lambda uprn, **_: {"UPRN": str(uprn)}
+    )
 
-        # Initialize lists to store extracted information
-        bin_info = []
+    # An unknown UPRN gets an error page, and a UPRN at another postcode is a
+    # mistyped pair either way.
+    parse = parsers.ArgumentGuard(
+        parsers.HtmlLabelledDates(
+            ".collection-container",
+            label=".heading",
+            date=".collection-details-container",
+            date_pattern=r"(\d{1,2} [A-Za-z]+ \d{4})",
+            all_dates=True,
+        ),
+        argument="uprn",
+        matches=_postcode_matches,
+        hint="check that the UPRN belongs to the postcode and council given",
+    )
 
-        # Extract information for each bin
-        for bin in bins:
-            bin_name = bin.find(class_="heading").text.strip()
-            bin_color = bin.find("img")["alt"]
-            collection_dates = []
-            collection_details = bin.find_all(class_="caption")
-            for detail in collection_details:
-                date_string = detail.text.split()[-3:]
-                collection_date = " ".join(date_string)
-                collection_dates.append(
-                    datetime.strptime(collection_date, "%d %B %Y").date()
-                )
-            bin_info.append(
-                {
-                    "Bin Name": bin_name,
-                    "Bin Color": bin_color,
-                    "Collection Dates": collection_dates,
-                }
-            )
-
-        # Check if the postcode matches the one provided, otherwise don't fill in the output
-        if postcode == self._postcode:
-            for info in bin_info:
-                entries.append(
-                    Collection(
-                        date=info["Collection Dates"][0],
-                        t=info["Bin Name"],
-                        icon=ICON_MAP.get(info["Bin Color"], "mdi:help"),
-                    )
-                )
-
-        if not entries:
-            raise ValueError(
-                "Could not get collections for the given combination of UPRN and Postcode."
-            )
-
-        return entries
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d %B %Y"),
+        type_value_map={
+            "Green Bin": wt.RECYCLABLES,
+            "Grey Bin": wt.GENERAL_WASTE,
+            "Brown Bin": wt.GARDEN_WASTE,
+        },
+    )

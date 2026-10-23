@@ -1,97 +1,61 @@
-# Credit where it's due:
-# This is predominantly a refactoring of the Bristol City Council script from the UKBinCollectionData repo
-# https://github.com/robbrad/UKBinCollectionData
+from typing import ClassVar, final
 
-from datetime import datetime
-
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "Bristol City Council"
-DESCRIPTION = "Source for bristol.gov.uk services for Bristol City Council, UK."
-URL = "https://bristol.gov.uk"
-
-TEST_CASES = {
-    "Test_001": {"uprn": "107652"},
-    "Test_002": {"uprn": "2987"},
-    "Test_003": {"uprn": 17929},
-}
-ICON_MAP = {
-    "90L BLUE SACK": Icons.RECYCLING,
-    "240L GARDEN WASTE BIN": Icons.GARDEN,
-    "180L GENERAL WASTE": Icons.GENERAL_WASTE,
-    "45L BLACK RECYCLING BOX": Icons.RECYCLING,
-    "23L FOOD WASTE BIN": Icons.BIO_KITCHEN,
-    "55L GREEN RECYCLING BOX": Icons.RECYCLING,
-    "140L FOOD WASTE BIN": Icons.BIO_KITCHEN,
-    "240L RECYCLING MIXED GLASS": Icons.GLASS,
-    "240L RECYCLING PAPER": Icons.PAPER,
-    "1100L GENERAL WASTE": Icons.GENERAL_WASTE,
-    "1100L RECYCLING CARD": Icons.PAPER,
-    "360L RECYCLING PLASTIC/CANS": Icons.PLASTIC_PACKAGING,
-}
-HEADERS = {
-    "Accept": "*/*",
-    "Accept-Language": "en-GB,en;q=0.9",
-    "Connection": "keep-alive",
-    "Ocp-Apim-Subscription-Key": "47ffd667d69c4a858f92fc38dc24b150",
-    "Ocp-Apim-Trace": "true",
-    "Origin": "https://bristolcouncil.powerappsportals.com",
-    "Referer": "https://bristolcouncil.powerappsportals.com/",
-    "Sec-Fetch-Dest": "empty",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "cross-site",
-    "Sec-GPC": "1",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36",
-}
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.preprocessors import Compose, ExplodeList
+from waste_collection_schedule.service.BristolAlloyCalendar import (
+    calendar_retriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = str(uprn).zfill(12)
+@final
+class Source(BaseSource):
+    TITLE = "Bristol City Council"
+    DESCRIPTION = "Source for bristol.gov.uk services for Bristol City Council, UK."
+    URL = "https://bristol.gov.uk"
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"uprn": "107652"},
+        "Test_002": {"uprn": "2987"},
+        "Test_003": {"uprn": 17929},
+    }
+    COUNTRY = "uk"
+    PARAMS = (uprn(),)
 
-    def fetch(self):
-        s = requests.Session()
-
-        # Initialise form
-        payload = {"servicetypeid": "7dce896c-b3ba-ea11-a812-000d3a7f1cdc"}
-        response = s.get(
-            "https://bristolcouncil.powerappsportals.com/completedynamicformunauth/",
-            headers=HEADERS,
-            params=payload,
-        )
-
-        # Set the search criteria
-        payload = {"Uprn": "UPRN" + self._uprn}
-        response = s.post(
-            "https://bcprdapidyna002.azure-api.net/bcprdfundyna001-llpg/DetailedLLPG",
-            headers=HEADERS,
-            json=payload,
-        )
-
-        # Retrieve the schedule
-        payload = {"uprn": self._uprn}
-        response = s.post(
-            "https://bcprdapidyna002.azure-api.net/bcprdfundyna001-alloy/NextCollectionDates",
-            headers=HEADERS,
-            json=payload,
-        )
-        data = response.json()["data"]
-
-        entries = []
-        for item in data:
-            for collection in item["collection"]:
-                for collection_date_key in ["nextCollectionDate", "lastCollectionDate"]:
-                    date_string = collection[collection_date_key].split("T")[0]
-                    entries.append(
-                        Collection(
-                            date=datetime.strptime(
-                                date_string,
-                                "%Y-%m-%d",
-                            ).date(),
-                            t=item["containerName"],
-                            icon=ICON_MAP.get(item["containerName"].upper()),
-                        )
-                    )
-
-        return entries
+    retrieve = calendar_retriever
+    parse = parsers.JsonParser("data")
+    preprocess = Compose(
+        ExplodeList("collection", into="collection"),
+        ExplodeList(
+            lambda record, _: [
+                record["collection"][key]
+                for key in ("nextCollectionDate", "lastCollectionDate")
+            ],
+            into="date",
+        ),
+    )
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="containerName",
+        parse_date=lambda *values: date_parsers.for_format("%Y-%m-%d")(
+            values[-1].split("T")[0]
+        ),
+        type_value_map={
+            "90L BLUE SACK": wt.RECYCLABLES,
+            "90L Blue Bag": wt.RECYCLABLES,
+            "90L Red Bag": wt.RECYCLABLES,
+            "240L GARDEN WASTE BIN": wt.GARDEN_WASTE,
+            "180L GENERAL WASTE": wt.GENERAL_WASTE,
+            "45L BLACK RECYCLING BOX": wt.RECYCLABLES,
+            "23L FOOD WASTE BIN": wt.FOOD_WASTE,
+            "55L GREEN RECYCLING BOX": wt.RECYCLABLES,
+            "140L FOOD WASTE BIN": wt.FOOD_WASTE,
+            "240L RECYCLING MIXED GLASS": wt.GLASS,
+            "240L RECYCLING PAPER": wt.PAPER,
+            "1100L GENERAL WASTE": wt.GENERAL_WASTE,
+            "1100L RECYCLING CARD": wt.PAPER,
+            "360L RECYCLING PLASTIC/CANS": [wt.PLASTIC, wt.METAL],
+        },
+    )

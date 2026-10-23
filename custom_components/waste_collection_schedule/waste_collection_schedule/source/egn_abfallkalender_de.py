@@ -1,112 +1,136 @@
-import datetime
-import logging
+import re
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-
-TITLE = "EGN Abfallkalender"
-DESCRIPTION = "Source for EGN Abfallkalender"
-URL = "https://www.egn-abfallkalender.de"
-TEST_CASES = {
-    "Grevenbroich": {
-        "city": "Grevenbroich",
-        "district": "Noithausen",
-        "street": "Von-Immelhausen-Straße",
-        "housenumber": 12,
-    },
-    "Dormagen": {
-        "city": "Dormagen",
-        "district": "Hackenbroich",
-        "street": "Aggerstraße",
-        "housenumber": 2,
-    },
-    "Grefrath": {
-        "city": "Grefrath",
-        "district": "Grefrath",
-        "street": "An Haus Bruch",
-        "housenumber": 18,
-    },
-    "Schwalmtal Amern Hauptstraße 1": {
-        "city": "Schwalmtal",
-        "district": "Amern",
-        "street": "Hauptstrasse",
-        "housenumber": 1,
-    },
-}
-
-_LOGGER = logging.getLogger(__name__)
+from waste_collection_schedule import retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    city,
+    district,
+    house_number,
+    street,
+)
+from waste_collection_schedule.parsers import ArgumentGuard, JsonParser
+from waste_collection_schedule.preprocessors import NestedDateGroups
+from waste_collection_schedule.transformers import RowTransformer
 
 API_URL = "https://www.egn-abfallkalender.de/kalender"
-ICON_MAP = {
-    "Grau": Icons.GENERAL_WASTE,
-    "Gelb": Icons.PLASTIC_PACKAGING,
-    "Blau": Icons.PAPER,
-    "Braun": Icons.ORGANIC,
-    "Bio": Icons.ORGANIC,
-}
+ADDRESS_URL = "https://www.egn-abfallkalender.de/alexa"
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "city": "Ort",
-        "district": "Ortsteil",
-        "street": "Straße",
-        "housenumber": "Hausnummer",
+
+def _csrf_token(response, *_, **__) -> str:
+    match = re.search(r'name="csrf-token"\s+content="([^"]+)"', response.text)
+    return match.group(1) if match else ""
+
+
+def _available_cities(response, **_) -> list[str]:
+    return response.json().get("available_cities", [])
+
+
+# The calendar page carries a CSRF token that the lookup POST must echo back.
+_TOKEN = retrievers.Lookup(API_URL, pick=_csrf_token)
+
+
+@final
+class Source(BaseSource):
+    TITLE = "EGN Abfallkalender"
+    DESCRIPTION = "Source for EGN Abfallkalender"
+    URL = "https://www.egn-abfallkalender.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+
+    # EGN labels each round by a short code ("HML" is the residual-waste bin,
+    # "HML2" a second residual-waste bin on its own rhythm), and the colours
+    # they get differ per municipality, so the codes are the stable key. Both
+    # residual codes fall on the same day in places; merge them into one entry
+    # by default, keeping the code as the description.
+    IGNORE_DUPLICATES_DEFAULT = True
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.ORGANIC,
+    ]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Dormagen": {
+            "city": "Dormagen",
+            "district": "Hackenbroich",
+            "street": "Aggerstraße",
+            "housenumber": 2,
+        },
+        "Grefrath": {
+            "city": "Grefrath",
+            "district": "Grefrath",
+            "street": "An Haus Bruch",
+            "housenumber": 18,
+        },
+        "Nettetal": {
+            "city": "Nettetal",
+            "district": "Kaldenkirchen",
+            "street": "Ahornweg",
+            "housenumber": 1,
+        },
+        "Tönisvorst": {
+            "city": "Tönisvorst",
+            "district": "St. Tönis",
+            "street": "Ackerstraße",
+            "housenumber": 1,
+        },
     }
-}
 
+    PARAMS = (
+        city(),
+        district(),
+        street(),
+        house_number("housenumber"),
+    )
 
-class Source:
-    def __init__(self, city, district, street, housenumber):
-        self._city = city
-        self._district = district
-        self._street = street
-        self._housenumber = housenumber
+    HOWTO: ClassVar[dict] = {
+        "de": (
+            "Wähle Ort, Ortsteil und Straße wie im EGN-Abfallkalender auf "
+            "egn-abfallkalender.de und gib die Hausnummer an."
+        ),
+    }
 
-    def fetch(self):
-        s = requests.session()
-        r = s.get(API_URL)
-
-        soup = BeautifulSoup(r.text, features="html.parser")
-        tag = soup.find("meta", {"name": "csrf-token"})
-        if tag is None:
-            return []
-
-        headers = {"x-csrf-token": tag["content"]}
-        post_data = {
-            "city": self._city,
-            "district": self._district,
-            "street": self._street,
-            "street_number": self._housenumber,
-        }
-        r = s.post(API_URL, data=post_data, headers=headers)
-
-        data = r.json()
-
-        if data.get("error"):
-            raise Exception(
-                "\n".join(
-                    [
-                        f"{type} - {errormsg}"
-                        for type, errormsg in data["errors"].items()
-                    ]
-                )
-            )
-
-        entries = []
-        for year, months in data["waste_discharge"].items():
-            for month, days in months.items():
-                for day, types in days.items():
-                    date = datetime.datetime(
-                        year=int(year), month=int(month), day=int(day)
-                    ).date()
-                    for type in types:
-                        color = (
-                            data["trash_type_colors"].get(str(type).lower(), type)
-                            or type
-                        ).capitalize()
-                        entries.append(
-                            Collection(date=date, t=color, icon=ICON_MAP.get(color))
-                        )
-
-        return entries
+    retrieve = retrievers.Request(
+        API_URL,
+        method="POST",
+        before=(_TOKEN,),
+        headers=lambda token, **_: {"x-csrf-token": token},
+        data=lambda token, city, district, street, housenumber, **_: {
+            "city": city,
+            "district": district,
+            "street": street,
+            "street_number": housenumber,
+        },
+    )
+    parse = ArgumentGuard(
+        JsonParser("waste_discharge"),
+        argument="city",
+        contains='"waste_discharge"',
+        suggestions=retrievers.Suggestions(
+            ADDRESS_URL,
+            method="POST",
+            before=(_TOKEN,),
+            headers=lambda token, **_: {
+                "x-csrf-token": token,
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            data=lambda token, **_: {"_token": token},
+            pick=_available_cities,
+        ),
+        hint="check city, district, street and house number on egn-abfallkalender.de",
+    )
+    preprocess = NestedDateGroups()
+    transform = RowTransformer(
+        type_value_map={
+            "HML": wt.GENERAL_WASTE,
+            "HML2": wt.GENERAL_WASTE,
+            "LVP": wt.RECYCLABLES,
+            "PPK": wt.PAPER,
+            "BIO": wt.ORGANIC,
+        },
+        carry_raw_label=True,
+    )

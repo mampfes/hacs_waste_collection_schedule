@@ -31,6 +31,7 @@ sys.path.insert(
 from importlib import import_module
 
 import cassette
+import cassette_scrubbers
 from fixtures_support import choices_path, error_fixture_path, fixture_path, slug
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
@@ -72,8 +73,9 @@ def record(module_name: str) -> None:
     for case_key, args in module.Source.TEST_CASES.items():
         path = fixture_path(module_name, case_key)
         os.makedirs(os.path.dirname(path), exist_ok=True)
+        scrub = cassette_scrubbers.for_case(module_name, args, today)
         try:
-            with cassette.recording(path, today):
+            with cassette.recording(path, today, scrub=scrub):
                 results = module.Source(**args).fetch()
             if not results:
                 # An empty fetch makes a useless cassette (provider down or a
@@ -107,8 +109,11 @@ def record_errors(module_name: str) -> None:
     for case_key, args in error_cases.items():
         path = error_fixture_path(module_name, case_key)
         os.makedirs(os.path.dirname(path), exist_ok=True)
+        scrub = cassette_scrubbers.for_case(module_name, args, today)
         try:
-            with cassette.recording(path, today, expect_exception=EXPECTED_ERRORS):
+            with cassette.recording(
+                path, today, expect_exception=EXPECTED_ERRORS, scrub=scrub
+            ):
                 module.Source(**args).fetch()
         except EXPECTED_ERRORS as exc:
             print(f"  recorded error case {slug(case_key)} ({type(exc).__name__})")

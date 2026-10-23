@@ -1,6 +1,8 @@
 # Ximmio
 
-Support for schedules provided by [Ximmio](https://www.ximmio.nl) (Netherlands).
+Support for schedules provided by [Ximmio](https://www.ximmio.nl).
+
+Source for Ximmio B.V. waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -10,47 +12,20 @@ waste_collection_schedule:
     - name: ximmio_nl
       args:
         company: COMPANY
-        post_code: POSTAL_CODE
+        post_code: POST_CODE
         house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**company**
+**company**  
 *(string) (required)*
 
-Short name identifying your waste collection provider. See supported companies below.
-
-**post_code**
+**post_code**  
 *(string) (required)*
 
-Your postal code (e.g. `3441AX`).
-
-**house_number**
-*(string or integer) (required)*
-
-Your house number.
-
-## Supported Companies
-
-| Title | company |
-|---|---|
-| ACV Group | `acv` |
-| Gemeente Almere | `almere` |
-| Area Afval | `areareiniging` |
-| Avalex | `avalex` |
-| Avri | `avri` |
-| Bar Afvalbeheer | `bar` |
-| Gemeente Hellendoorn | `hellendoorn` |
-| Meerlanden | `meerlanden` |
-| Gemeente Meppel | `meppel` |
-| Mijn Blink | `mijnblink` |
-| RAD BV | `rad` |
-| Twente Milieu | `twentemilieu` |
-| Waardlanden | `waardlanden` |
-| Gemeente Westland | `westland` |
-| Gemeente Venlo | `venlo` |
-| Woerden / Oudewater | `woerdenoudewater` |
+**house_number**  
+*(string) (required)*
 
 ## Example
 
@@ -59,7 +34,11 @@ waste_collection_schedule:
   sources:
     - name: ximmio_nl
       args:
-        company: woerdenoudewater
-        post_code: 3441AX
+        company: acv
+        post_code: 6721MH
         house_number: 1
 ```
+
+## How to get the source arguments
+
+Select your waste company, then enter the postcode and house number of your home address as on your company's waste calendar website.

@@ -1,34 +1,34 @@
 # Affärsverken
 
-Support for schedules provided by [Affärsverken](https://www.affarsverken.se/), Sweden.
+Support for schedules provided by [Affärsverken](https://www.affarsverken.se/).
+
+Source for Affärsverken.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: affarsverken_se
       args:
         address: ADDRESS
-        
 ```
 
 ### Configuration Variables
 
 **address**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: affarsverken_se
       args:
-        address: Albatrossvägen 5, Ramdala
-        
+        address: "Albatrossv\xE4gen 5, Ramdala"
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Write you address exactly like on [https://www.affarsverken.se/avfallstjanster/hamtningstider/](https://www.affarsverken.se/avfallstjanster/hamtningstider/).
+Enter the address as the Affärsverken website writes it, street and number followed by the locality, e.g. `Albatrossvägen 5, Ramdala`.

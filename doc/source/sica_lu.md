@@ -1,6 +1,8 @@
 # SICA
 
-Support for municipalities being part of "**S**yndicat **I**ntercommunal pour l'hygiène publique du canton de **CA**pellen"
+Support for schedules provided by [SICA](https://sica.lu).
+
+Source script for sica.lu served municipalities
 
 ## Configuration via configuration.yaml
 
@@ -9,37 +11,24 @@ waste_collection_schedule:
   sources:
     - name: sica_lu
       args:
-        municipality: Steinfort
+        municipality: MUNICIPALITY
 ```
 
 ### Configuration Variables
 
-The only configuration needed is the name of the municipality or town.
-
-**municipality**
+**municipality**  
 *(string) (required)*
 
-Valid values is one of the following:
+## Example
 
-- Bertrange
-- Capellen
-- Garnich
-- Habscht
-- Holzem
-- Kehlen
-- Koerich
-- Kopstal
-- Mamer
-- Steinfort
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: sica_lu
+      args:
+        municipality: habscht
+```
 
-## Included collection types
+## How to get the source arguments
 
-- Bulky waste
-- Clothing and Shoes
-- Glass
-- Organic waste
-- Paper /Carton
-- Residual waste
-- Scrap and electrical appliances
-- Hedges, Shrubs and Trees
-- Valorlux - blue bag
+Enter the name of your municipality as listed by SICA, e.g. 'Steinfort', 'Habscht' or 'Mamer'. A wrong name lists the valid ones.

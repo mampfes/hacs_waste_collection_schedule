@@ -1,32 +1,34 @@
 # Torbay Council
 
-Support for schedules provided by [Torbay Council](https://www.torbay.gov.uk/), Devon, UK.
+Support for schedules provided by [Torbay Council](https://www.torbay.gov.uk).
+
+Source for waste collection services for Torbay Council, Devon, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: torbay_council_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**uprn** _(string) (required)_
-Your Unique Property Reference Number (UPRN).
+**uprn**  
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: torbay_council_gov_uk
       args:
-        uprn: "100040542066"
+        uprn: '100040542066'
 ```
 
-## How to find your UPRN
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and entering your address details.
+Your Unique Property Reference Number (UPRN). Find yours at https://www.findmyaddress.co.uk/.

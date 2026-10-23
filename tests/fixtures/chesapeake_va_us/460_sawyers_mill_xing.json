@@ -1,0 +1,52 @@
+{
+  "recorded_at": "2026-10-11",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates d0d1cb0bea",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=460+Sawyers+Mill+Xing%2C+Chesapeake%2C+VA+23323&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"460 Sawyers Mill Xing, Chesapeake, VA 23323\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sun, 11 Oct 2026 19:39:02 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "227",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"f9ab192\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiNDYwIFNhd3llcnMgTWlsbCBYaW5nLCBDaGVzYXBlYWtlLCBWaXJnaW5pYSwgMjMzMjMiLCJsb2NhdGlvbiI6eyJ4IjotNzYuMzM4NzI0MTM4MzczLCJ5IjozNi43MjQ4MDM1MDIwNzh9LCJzY29yZSI6MTAwLCJhdHRyaWJ1dGVzIjp7fSwiZXh0ZW50Ijp7InhtaW4iOi03Ni4zMzk3MjQxMzgzNzMsInltaW4iOjM2LjcyMzgwMzUwMjA3OCwieG1heCI6LTc2LjMzNzcyNDEzODM3MywieW1heCI6MzYuNzI1ODAzNTAyMDc4fX1dfQ=="
+    },
+    {
+      "key": "GET https://gis.cityofchesapeake.net/mapping/rest/services/WasteManagement/Trash_Collection_Areas/MapServer/0/query f97506207f",
+      "method": "GET",
+      "url": "https://gis.cityofchesapeake.net/mapping/rest/services/WasteManagement/Trash_Collection_Areas/MapServer/0/query",
+      "final_url": "https://gis.cityofchesapeake.net/mapping/rest/services/WasteManagement/Trash_Collection_Areas/MapServer/0/query?outFields=PICKUP_DAY&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-76.338724138373%2C+%22y%22%3A+36.724803502078%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -76.338724138373, \\\"y\\\": 36.724803502078}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"PICKUP_DAY\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "161",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"19fa94fd\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": "AGS_ROLES=\"419jqfa+uOZgYod4xPOQ8Q==\"; Version=1; Max-Age=60; Expires=Sun, 11 Oct 2026 19:40:02 GMT; Path=/mapping/rest; Secure; HttpOnly",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 11 Oct 2026 19:39:02 GMT"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiU1VQRVJWSVNPUiIsImZpZWxkQWxpYXNlcyI6eyJQSUNLVVBfREFZIjoiUElDS1VQX0RBWSJ9LCJmaWVsZHMiOlt7Im5hbWUiOiJQSUNLVVBfREFZIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlBJQ0tVUF9EQVkiLCJsZW5ndGgiOjEwfV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IlBJQ0tVUF9EQVkiOiJUVUVTREFZIn19XX0="
+    }
+  ]
+}

@@ -1,145 +1,115 @@
-import logging
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    location_id,
+    street_address,
+)
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Warsaw"
-DESCRIPTION = "Source for Warsaw city garbage collection"
-URL = "https://warszawa19115.pl"
-TEST_CASES = {
-    "Street Name": {"street_address": "MARSZAŁKOWSKA 84/92, 00-514 Śródmieście"},
-    "Geolocation ID": {"geolocation_id": "3830963"},
-}
+_SCHEDULE_URL = "https://warszawa19115.pl/harmonogramy-wywozu-odpadow"
+_PORTLET = (
+    "portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ"
+)
 
-_LOGGER = logging.getLogger(__name__)
-
-
-class SourceConfigurationError(ValueError):
-    pass
-
-
-class SourceParseError(ValueError):
-    pass
+# The portal answers "no next date" with this placeholder instead of omitting
+# the entry.
+_NO_DATE = "1900-01-01"
 
 
-OC_URL = "https://warszawa19115.pl/harmonogramy-wywozu-odpadow"
-OC_PARAMS = {
-    "p_p_id": "portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ",
-    "p_p_lifecycle": "2",
-    "p_p_resource_id": "ajaxResource",
-}
-OC_HEADERS = {
-    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-}
-NAME_MAP = {
-    "BG": "Bio restauracyjne",
-    "BK": "Bio",
-    "MT": "Metale i tworzywa sztuczne",
-    "OP": "Papier",
-    "OS": "Szkło",
-    "OZ": "Zielone",
-    "WG": "Odpady wielkogabarytowe",
-    "ZM": "Odpady zmieszane",
-}
+def _address_point_id(response, *keys, street_address=None, **_) -> str:
+    """The address search answers ``[{"fullName": ..., "addressPointId": ...}]``."""
+    matches = response.json()
+    if not matches or "addressPointId" not in matches[0]:
+        raise SourceArgumentNotFound("street_address", street_address)
+    return str(matches[0]["addressPointId"])
 
 
-class Source:
-    def __init__(self, street_address=None, geolocation_id=None):
-        if street_address is None and geolocation_id is None:
-            raise SourceConfigurationError(
-                "Either street_address or geolocation_id must have a value"
-            )
-        self._street_address = street_address
-        self._geolocation_id = geolocation_id
+@final
+class Source(BaseSource):
+    TITLE = "Warsaw"
+    DESCRIPTION = "Source for Warsaw city garbage collection"
+    URL = "https://warszawa19115.pl"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
 
-    def get_geolocation_id(self, street_address) -> str:
-        geolocation_session = requests.Session()
-        geolocation_request = geolocation_session.get(OC_URL)
-        geolocation_request.raise_for_status()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GLASS,
+        wt.GARDEN_WASTE,
+        wt.BULKY_WASTE,
+        wt.GENERAL_WASTE,
+    ]
 
-        # Geolocation call requires 'autocompleteResourceURL' param to work
-        OC_PARAMS["p_p_resource_id"] = "autocompleteResource"
+    TEST_CASES: ClassVar[dict] = {
+        "Street Name": {"street_address": "MARSZAŁKOWSKA 84/92, 00-514 Śródmieście"},
+        "Geolocation ID": {"geolocation_id": "27044650"},
+    }
 
-        # Search for geolocation ID
-        OC_PARAMS[
-            "_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_name"
-        ] = street_address
-        geolocation_response = geolocation_session.get(
-            OC_URL,
-            headers=OC_HEADERS,
-            params=OC_PARAMS,
-        )
-        geolocation_response.raise_for_status()
+    PARAMS = (
+        alternatives(
+            [street_address("street_address")], [location_id("geolocation_id")]
+        ),
+    )
 
-        # Pull ID from results
-        geolocation_result = geolocation_response.json()
-        _LOGGER.debug(f"Search response: {geolocation_response!r}")
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your address as `street_address`, in the form the "
+            "[Warsaw 19115 portal](https://warszawa19115.pl/harmonogramy-wywozu-odpadow) "
+            "suggests it (for example `MARSZAŁKOWSKA 84/92, 00-514 Śródmieście`), "
+            "or the portal's numeric address point id as `geolocation_id`."
+        ),
+    }
 
-        if len(geolocation_result) < 1:
-            raise SourceParseError(
-                "Expected list of locations from address search, got empty or missing list"
-            )
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                _SCHEDULE_URL,
+                params=lambda street_address=None, **_: {
+                    "p_p_id": _PORTLET,
+                    "p_p_lifecycle": "2",
+                    "p_p_resource_id": "autocompleteResource",
+                    f"_{_PORTLET}_name": street_address,
+                },
+                given=lambda geolocation_id=None, **_: geolocation_id,
+                pick=_address_point_id,
+            ),
+        ),
+        url=_SCHEDULE_URL,
+        params=lambda address_point_id, **_: {
+            "p_p_id": _PORTLET,
+            "p_p_lifecycle": "2",
+            "p_p_resource_id": "ajaxResource",
+            f"_{_PORTLET}_addressPointId": address_point_id,
+        },
+    )
 
-        geolocation_data = geolocation_result[0]
+    parse = parsers.JsonParser()
 
-        if "addressPointId" not in geolocation_data:
-            raise SourceParseError(
-                "Location in address search result but missing geolocation ID"
-            )
+    preprocess = preprocessors.Compose(
+        preprocessors.ExplodeList("harmonogramyZ"),
+        preprocessors.RowFilter(
+            lambda record, _: record.get("data") not in (None, "", _NO_DATE)
+        ),
+    )
 
-        geolocation_id = geolocation_data["addressPointId"]
-        _LOGGER.info(
-            f"Address {street_address} mapped to geolocation ID {geolocation_id}"
-        )
-
-        return geolocation_id
-
-    def fetch(self):
-        # When only an address is specified, get geolocation on first fetch
-        if self._geolocation_id is None:
-            self._geolocation_id = self.get_geolocation_id(self._street_address)
-
-        # Calendar lookup cares about a cookie, so a Session must be used
-        calendar_session = requests.Session()
-        calendar_request = calendar_session.get(OC_URL)
-        calendar_request.raise_for_status()
-
-        # Calendar call requires 'ajaxResourceURL' param to work
-        OC_PARAMS["p_p_resource_id"] = "ajaxResource"
-
-        OC_PARAMS[
-            "_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_addressPointId"
-        ] = self._geolocation_id
-        calendar_request = calendar_session.get(
-            OC_URL,
-            headers=OC_HEADERS,
-            params=OC_PARAMS,
-        )
-        calendar_request.raise_for_status()
-
-        calendar_result = calendar_request.json()
-        _LOGGER.debug(f"Calendar response: {calendar_result!r}")
-
-        harmonogramy = "harmonogramyZ"
-        if (
-            len(calendar_result) <= 0
-            or harmonogramy not in calendar_result[0]
-            or not calendar_result[0][harmonogramy]
-            or len(calendar_result[0][harmonogramy]) <= 0
-        ):
-            raise SourceParseError(
-                "Expected list of dates from calendar search, got empty or missing list"
-            )
-
-        entries = []
-
-        for result in calendar_result:
-            for entry in result[harmonogramy]:
-                if entry["data"]:
-                    original_type = entry["frakcja"]["id_frakcja"]
-                    waste_type = NAME_MAP.get(original_type, original_type)
-                    waste_date = datetime.strptime(entry["data"], "%Y-%m-%d").date()
-                    entries.append(Collection(waste_date, waste_type))
-
-        return entries
+    transform = JsonTransformer(
+        date_key="data",
+        type_key=lambda record: record["frakcja"]["id_frakcja"],
+        type_value_map={
+            "BG": wt.FOOD_WASTE,
+            "BK": wt.FOOD_WASTE,
+            "MT": wt.RECYCLABLES,
+            "OP": wt.PAPER,
+            "OS": wt.GLASS,
+            "OZ": wt.GARDEN_WASTE,
+            "WG": wt.BULKY_WASTE,
+            "ZM": wt.GENERAL_WASTE,
+        },
+    )

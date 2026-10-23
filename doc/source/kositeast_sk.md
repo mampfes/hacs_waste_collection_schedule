@@ -1,8 +1,25 @@
 # KOSIT EAST
 
-You can find support for KOSIT EAST waste collection at [https://kositeast.sk/obyvatelia/harmonogram-zberu-odpadu-v-obciach/](https://kositeast.sk/obyvatelia/harmonogram-zberu-odpadu-v-obciach/).
+Support for schedules provided by [KOSIT EAST](https://kositeast.sk).
+
+Source for KOSIT EAST waste collection.
 
 ## Configuration via configuration.yaml
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: kositeast_sk
+      args:
+        town: TOWN
+```
+
+### Configuration Variables
+
+**town**  
+*(string) (required)*
+
+## Example
 
 ```yaml
 waste_collection_schedule:
@@ -12,10 +29,6 @@ waste_collection_schedule:
         town: Adidovce
 ```
 
-## Configuration parameters
+## How to get the source arguments
 
-- **town**: Town name as displayed on the kositeast.sk website.
-
-## HOW TO GET ARGUMENTS
-
-Find your town on [https://kositeast.sk/obyvatelia/harmonogram-zberu-odpadu-v-obciach/](https://kositeast.sk/obyvatelia/harmonogram-zberu-odpadu-v-obciach/) and enter it exactly as it appears in the link.
+Find your town on https://kositeast.sk/obyvatelia/harmonogram-zberu-odpadu-v-obciach/ and enter it exactly as it appears in the link.

@@ -1,6 +1,8 @@
 # Gänserndorf City / Gänserndorf App
 
-Support for schedules provided by [Gänserndorf City](https://www.gaenserndorf.at/) located in Gänserndorf, Austria. Uses the Jolioo mobile app API.
+Support for schedules provided by [Gänserndorf City / Gänserndorf App](https://www.gaenserndorf.at/).
+
+Source for waste collection schedule for the city of Gänserndorf, Austria. Uses the Jolioo mobile app API.
 
 ## Configuration via configuration.yaml
 
@@ -10,6 +12,7 @@ waste_collection_schedule:
     - name: gaenserndorf_city_at
       args:
         street: STREET
+        calendar_index: CALENDAR_INDEX
 ```
 
 ### Configuration Variables
@@ -17,51 +20,19 @@ waste_collection_schedule:
 **street**  
 *(string) (required)*
 
-The name of your street, e.g. `"Baumschulweg"`.
-
 **calendar_index**  
-*(integer) (optional, default: `0`)*
+*(string) (optional)*
 
-Some streets map to multiple waste calendars. Use this to select which calendar to use (starting at `0`).
-
-### How to get the source arguments
-
-Use the street name as shown in the [Gänserndorf App](https://www.gans-gaenserndorf.at/).
-If you have misspelled your street, check the debug output for all the valid streetnames which will be returned there.
-
-If your street has multiple calendars, you can specify the `calendar_index` parameter.
-
-### Waste types
-
-Please check the app for the waste types in your area as these names are the waste types it will return.
-Some of the most common waste types are:
-
-* Biomüll
-* Sondermüll
-* Restmüll
-* Restmüll Wohnblöcke 2-Wochen-Tour
-* Altpapier Großcontainer
-* Leicht- & Metallverpackungen/Gelbe Tonne/Gelber Sack
-
-## Examples
-
-**Simple**
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: gaenserndorf_city_at
       args:
-        street: "Baumschulweg"
+        street: Baumschulweg
 ```
 
-**Street with multiple calendars**
+## How to get the source arguments
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: gaenserndorf_city_at
-      args:
-        street: "Siebenbrunner Straße"
-        calendar_index: 0
-```
+Enter the name of your street as shown in the Gänserndorf App. `calendar_index` (starting at 0) picks the calendar when a street maps to several.

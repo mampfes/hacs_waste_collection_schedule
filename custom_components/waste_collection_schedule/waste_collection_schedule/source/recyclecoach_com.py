@@ -1,778 +1,649 @@
-import json
-from datetime import datetime
+from typing import Any, ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street, text_field
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.service.RecycleCoach import (
+    RecycleCoachParser,
+    RecycleCoachRetriever,
+)
+from waste_collection_schedule.transformers import JsonTransformer
+
+# Labels that announce a day without collection rather than a collection.
+_NO_COLLECTION = (
+    "Holiday",
+    "Stat Holiday - No Collection",
+    "No Collection Day",
 )
 
-TITLE = "Recycle Coach"
-DESCRIPTION = "Source loader for recyclecoach.com"
-URL = "https://recyclecoach.com"
-COUNTRY = "us"
-
-ICON_MAP = {
-    "Garbage": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Yard Waste": Icons.GARDEN,
-    "Holiday": Icons.NO_COLLECTION,
-    "Blue Zone Garbage": Icons.GENERAL_WASTE,
-    "Waste Reduction Week": Icons.EVENT,
-    "Treecycle": Icons.CHRISTMAS_TREE,
-    "Leaf and Yard Waste": Icons.GARDEN,
-    "Garbage Collection": Icons.GENERAL_WASTE,
-    "Blue Box": Icons.RECYCLING,
-    "Green Bin": Icons.BIO_KITCHEN,
-    "Yard Waste Collection": Icons.GARDEN,
-    "Curbside Giveaway Days": Icons.EVENT,
-    "Double-Up Days": Icons.EVENT,
-    "Christmas Tree Collection": Icons.CHRISTMAS_TREE,
-    "Blue Box (Container) Recycling": Icons.RECYCLING,
-    "Green Box (Fibre) Recycling": Icons.RECYCLING,
-    "Waste Collection": Icons.GENERAL_WASTE,
-    "Textile Collection": Icons.TEXTILE,
-    "Garbage (Residual Waste)": Icons.GENERAL_WASTE,
-    "Green Bin Organics": Icons.ORGANIC,
-    "Blue Box Recycling": Icons.RECYCLING,
-    "Curbside Giveaway": Icons.EVENT,
-    "Environment Round-Up Day": Icons.EVENT,
-    "Curbside Battery Collection": Icons.BATTERY,
-    "Blue Box Collection": Icons.RECYCLING,
-    "Green Bin Collection": Icons.BIO_KITCHEN,
-    "E-waste Event": Icons.ELECTRONICS,
-    "Additional EnviroDepot Hours": Icons.EVENT,
-    "Recycling Collection": Icons.RECYCLING,
-    "Waste": Icons.GENERAL_WASTE,
-    "FOGO": Icons.BIO_KITCHEN,
-    "Yard Waste Collection Week": Icons.GARDEN,
-    "3 Container Exemption Pick-up": Icons.EVENT,
-    "Holiday ": Icons.NO_COLLECTION,
-    "Trash": Icons.GENERAL_WASTE,
-    "Organics": Icons.ORGANIC,
-    "Saturday Drop-Off Site": Icons.EVENT,
-    "Christmas Trees": Icons.CHRISTMAS_TREE,
-    "Trash Collection": Icons.GENERAL_WASTE,
-    "HHW Drop-off - Pima West Campus": Icons.HAZARDOUS,
-    "HHW Drop-off - Eastside Service Center": Icons.HAZARDOUS,
-    "HHW Drop-Off - Rodeo Grounds": Icons.HAZARDOUS,
-    "HHW Drop-off - Jacobs Park": Icons.HAZARDOUS,
-    "HHW Drop-off IBEW": Icons.HAZARDOUS,
-    "Christmas Tree Drop-off Depots Open": Icons.CHRISTMAS_TREE,
-    "Brush and Bulky Collection": Icons.BULKY,
-    "Pop-Up Drop-Off - Shawnee Park": Icons.EVENT,
-    "Pop-Up Drop-Off - UofL Shelby Campus": Icons.EVENT,
-    "Pop-Up Drop-Off - Sun Valley Park": Icons.EVENT,
-    "Pop-Up Drop-Off - Metro Fleet Services": Icons.EVENT,
-    "Pop-Up Drop-Off - Fern Creek HS": Icons.EVENT,
-    "Pop-Up Drop-Off Doss High": Icons.EVENT,
-    "Backyard Composting Class": Icons.BIO_KITCHEN,
-    "Grey Household Waste Cart": Icons.GENERAL_WASTE,
-    "Blue Recycling Cart": Icons.RECYCLING,
-    "Green Organic Waste Cart": Icons.ORGANIC,
-    "No Collection Day": Icons.NO_COLLECTION,
-    "Blue Bin Paper Recycling": Icons.PAPER,
-    "Yellow Bin Container Recycling": Icons.RECYCLING,
-    "Christmas Tree": Icons.CHRISTMAS_TREE,
-    "Household Hazardous Waste Drop-Off": Icons.HAZARDOUS,
-    "Large Items": Icons.BULKY,
-    "Leaf": Icons.GARDEN,
-    "Compost Yard Open Saturday": Icons.EVENT,
-    "Compost Yard Open Wednesday": Icons.EVENT,
-    "3 Bags of Waste": Icons.GENERAL_WASTE,
-    "Red Landfill": Icons.GENERAL_WASTE,
-    "Organics Collection": Icons.ORGANIC,
-    "Newmarket Electronics Recycling Event": Icons.ELECTRONICS,
+_TYPE_MAP: dict[str, Any] = {
+    **dict.fromkeys(_NO_COLLECTION, None),
+    **dict.fromkeys(
+        (
+            "Garbage Collection",
+            "Garbage Service",
+            "Waste Collection",
+            "Trash Collection",
+            "Red Landfill",
+            "Blue Zone Garbage",
+            "Grey Household Waste Cart",
+            "Garbage (Residual Waste)",
+            "Waste",
+        ),
+        wt.GENERAL_WASTE,
+    ),
+    "Trash/Bulk Items": [wt.GENERAL_WASTE, wt.BULKY_WASTE],
+    **dict.fromkeys(
+        (
+            "Green Bin Collection",
+            "Green Bin",
+            "Green Bin Organics",
+            "Green Can",
+            "Organics",
+            "Green Organic Waste Cart",
+            "Organics Collection",
+        ),
+        wt.ORGANIC,
+    ),
+    **dict.fromkeys(
+        (
+            "Recycling Collection",
+            "Recycle Collection",
+            "Blue Box",
+            "Blue Box Recycling",
+            "Blue Box Collection",
+            "Blue Box (Container) Recycling",
+            "Container Recycling",
+            "Commingled Recycling",
+            "Blue Recycling Cart",
+            "Yellow Bin",
+            "Yellow Bin Container Recycling",
+        ),
+        wt.RECYCLABLES,
+    ),
+    **dict.fromkeys(
+        (
+            "Paper Recycling",
+            "Blue Bin Paper Recycling",
+            "Green Box (Fibre) Recycling",
+        ),
+        wt.PAPER,
+    ),
+    **dict.fromkeys(
+        (
+            "Yard Waste Collection",
+            "Yard Waste Collection Week",
+            "Leaf and Yard Waste",
+            "Leaf & Yard Waste Collection",
+            "Leaf",
+            "Brush",
+        ),
+        wt.GARDEN_WASTE,
+    ),
+    **dict.fromkeys(
+        ("Large Item Collection", "Brush and Bulky Collection"), wt.BULKY_WASTE
+    ),
+    "Curbside Battery Collection": wt.HAZARDOUS,
+    "Newmarket Electronics Recycling Event": wt.ELECTRONICS,
+    **dict.fromkeys(
+        (
+            "Treecycle",
+            "Christmas Tree",
+            "Christmas Tree Collection",
+            "Christmas Tree Drop Off",
+            "Christmas Tree Drop-off Depots Open",
+            "Saturday Drop-Off Site",
+            "Curbside Giveaway",
+            "Curbside Giveaway Days",
+            "Double-Up Days",
+            "3 Container Exemption Pick-up",
+            "3 Bags of Waste",
+            "Seasonal Roads Collection",
+            "Event",
+        ),
+        wt.OTHER,
+    ),
 }
 
-EXTRA_INFO = [
-    {
-        "title": "Albuquerque, New Mexico, USA",
-        "url": "https://recyclecoach.com/cities/usa-nm-city-of-albuquerque/",
-        "default_params": {"city": "Albuquerque", "state": "New Mexico"},
-    },
-    {
-        "title": "Tucson, Arizona, USA",
-        "url": "https://recyclecoach.com/cities/usa-az-city-of-tucson/",
-        "default_params": {"city": "Tucson", "state": "Arizona"},
-    },
-    {
-        "title": "Olympia, Washington, USA",
-        "url": "https://recyclecoach.com/cities/usa-wa-city-of-olympia/",
-        "default_params": {"city": "Olympia", "state": "Washington"},
-    },
-    {
-        "title": "Tacoma, Washington, USA",
-        "url": "https://recyclecoach.com/cities/usa-wa-city-of-tacoma/",
-        "default_params": {"city": "Tacoma", "state": "Washington"},
-    },
-    {
-        "title": "Newark, Delaware, USA",
-        "url": "https://recyclecoach.com/cities/usa-de-city-of-newark/",
-        "default_params": {"city": "Newark", "state": "Delaware"},
-    },
-    {
-        "title": "Louisville, Kentucky, USA",
-        "url": "https://recyclecoach.com/cities/usa-ky-city-of-louisville/",
-        "default_params": {"city": "Louisville", "state": "Kentucky"},
-    },
-    {
-        "title": "Frederick County, Maryland, USA",
-        "url": "https://www.frederickcountymd.gov/3447/Curbside-Collection-Schedule",
-        "default_params": {"city": "Frederick County", "state": "Maryland"},
-    },
-    {
-        "title": "Palm Beach County, Florida, USA",
-        "url": "https://www.swa.org/518/Pickup-Schedule",
-        "default_params": {"city": "Palm Beach County", "state": "Florida"},
-    },
-    {
-        "title": "London (ON)",
-        "url": "https://london.ca/",
-        "country": "ca",
-        "default_params": {"city": "London", "state": "Ontario"},
-    },
-    {
-        "title": "Aurora (ON)",
-        "url": "https://www.aurora.ca/",
-        "country": "ca",
-        "default_params": {"city": "Aurora", "state": "Ontario"},
-    },
-    {
-        "title": "Vaughan (ON)",
-        "url": "https://www.vaughan.ca/",
-        "country": "ca",
-        "default_params": {"city": "Vaughan", "state": "Ontario"},
-    },
-    {
-        "title": "Richmond Hill (ON)",
-        "url": "https://www.richmondhill.ca/",
-        "country": "ca",
-    },
-    {
-        "title": "Kawartha Lakes (ON)",
-        "url": "https://www.kawarthalakes.ca/",
-        "country": "ca",
-        "default_params": {"city": "Kawartha Lakes", "state": "Ontario"},
-    },
-    {
-        "title": "Norfolk County (ON)",
-        "url": "https://www.norfolkcounty.ca/",
-        "country": "ca",
-    },
-    {
-        "title": "Oak Bay (BC)",
-        "url": "https://www.oakbay.ca/",
-        "country": "ca",
-    },
-    {
-        "title": "Prince George (BC)",
-        "url": "https://www.princegeorge.ca/",
-        "country": "ca",
-    },
-    {
-        "title": "City of Hamilton (ON)",
-        "url": "https://www.hamilton.ca/",
-        "country": "ca",
-    },
-    {
-        "title": "Chatham-Kent (ON)",
-        "url": "https://www.chatham-kent.ca/",
-        "country": "ca",
-        "default_params": {"city": "Chatham-Kent", "state": "Ontario"},
-    },
-    {
-        "title": "Delta (BC)",
-        "url": "https://www.delta.ca/",
-        "country": "ca",
-        "default_params": {"city": "Delta", "state": "British Columbia"},
-    },
-    {
-        "title": "Burnaby (BC)",
-        "url": "https://www.burnaby.ca/",
-        "country": "ca",
-        "default_params": {"city": "Burnaby", "state": "British Columbia"},
-    },
-    {
-        "title": "Orillia (ON)",
-        "url": "https://www.orillia.ca/",
-        "country": "ca",
-        "default_params": {"city": "Orillia", "state": "Ontario"},
-    },
-    {
-        "title": "Medicine Hat (AB)",
-        "url": "https://www.medicinehat.ca/",
-        "country": "ca",
-        "default_params": {
-            "project_id": "500",
+# Label of the records that are an event of the municipality, not a collection.
+_EVENT = "Event"
+
+
+def _label(record: dict) -> str:
+    """The title of a collection; events other than the mapped ones share one label."""
+    title = record["title"]
+    if record["kind"] == "EVENT" and title.strip().lower() not in _KNOWN:
+        return _EVENT
+    return title
+
+
+def _description(record: dict) -> str | None:
+    """The title of an event, which its shared label does not say."""
+    return record["title"] if _label(record) == _EVENT else None
+
+
+_KNOWN = {label.strip().lower() for label in _TYPE_MAP}
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Recycle Coach"
+    DESCRIPTION = "Source loader for recyclecoach.com"
+    URL = "https://recyclecoach.com"
+    COUNTRY = "us"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.ORGANIC,
+        wt.GARDEN_WASTE,
+        wt.BULKY_WASTE,
+        wt.HAZARDOUS,
+        wt.ELECTRONICS,
+        wt.OTHER,
+    ]
+
+    REGIONS = (
+        region(
+            "Albuquerque, New Mexico, USA",
+            url="https://recyclecoach.com/cities/usa-nm-city-of-albuquerque/",
+            city="Albuquerque",
+            state="New Mexico",
+        ),
+        region(
+            "Tucson, Arizona, USA",
+            url="https://recyclecoach.com/cities/usa-az-city-of-tucson/",
+            city="Tucson",
+            state="Arizona",
+        ),
+        region(
+            "Olympia, Washington, USA",
+            url="https://recyclecoach.com/cities/usa-wa-city-of-olympia/",
+            city="Olympia",
+            state="Washington",
+        ),
+        region(
+            "Tacoma, Washington, USA",
+            url="https://recyclecoach.com/cities/usa-wa-city-of-tacoma/",
+            city="Tacoma",
+            state="Washington",
+        ),
+        region(
+            "Newark, Delaware, USA",
+            url="https://recyclecoach.com/cities/usa-de-city-of-newark/",
+            city="Newark",
+            state="Delaware",
+        ),
+        region(
+            "Louisville, Kentucky, USA",
+            url="https://recyclecoach.com/cities/usa-ky-city-of-louisville/",
+            city="Louisville",
+            state="Kentucky",
+        ),
+        region(
+            "Frederick County, Maryland, USA",
+            url="https://www.frederickcountymd.gov/3447/Curbside-Collection-Schedule",
+            city="Frederick County",
+            state="Maryland",
+        ),
+        region(
+            "Palm Beach County, Florida, USA",
+            url="https://www.swa.org/518/Pickup-Schedule",
+            city="Palm Beach County",
+            state="Florida",
+        ),
+        region(
+            "London (ON)",
+            url="https://london.ca/",
+            country="ca",
+            city="London",
+            state="Ontario",
+        ),
+        region(
+            "Aurora (ON)",
+            url="https://www.aurora.ca/",
+            country="ca",
+            city="Aurora",
+            state="Ontario",
+        ),
+        region(
+            "Vaughan (ON)",
+            url="https://www.vaughan.ca/",
+            country="ca",
+            city="Vaughan",
+            state="Ontario",
+        ),
+        region(
+            "Richmond Hill (ON)",
+            url="https://www.richmondhill.ca/",
+            country="ca",
+            city="Richmond Hill",
+            state="Ontario",
+        ),
+        region(
+            "Kawartha Lakes (ON)",
+            url="https://www.kawarthalakes.ca/",
+            country="ca",
+            city="Kawartha Lakes",
+            state="Ontario",
+        ),
+        region(
+            "Norfolk County (ON)",
+            url="https://www.norfolkcounty.ca/",
+            country="ca",
+            project_id="3107",
+            district_id="OLYMP",
+        ),
+        region(
+            "Oak Bay (BC)",
+            url="https://www.oakbay.ca/",
+            country="ca",
+            project_id="3187",
+            district_id="OAK",
+        ),
+        region(
+            "Prince George (BC)",
+            url="https://www.princegeorge.ca/",
+            country="ca",
+            project_id="523",
+            district_id="PrinceGeorge",
+        ),
+        region(
+            "City of Hamilton (ON)",
+            url="https://www.hamilton.ca/",
+            country="ca",
+            project_id="520",
+            district_id="HAM",
+        ),
+        region(
+            "Chatham-Kent (ON)",
+            url="https://www.chatham-kent.ca/",
+            country="ca",
+            city="Chatham-Kent",
+            state="Ontario",
+        ),
+        region(
+            "Delta (BC)",
+            url="https://www.delta.ca/",
+            country="ca",
+            city="Delta",
+            state="British Columbia",
+        ),
+        region(
+            "Burnaby (BC)",
+            url="https://www.burnaby.ca/",
+            country="ca",
+            city="Burnaby",
+            state="British Columbia",
+        ),
+        region(
+            "Orillia (ON)",
+            url="https://www.orillia.ca/",
+            country="ca",
+            city="Orillia",
+            state="Ontario",
+        ),
+        region(
+            "Medicine Hat (AB)",
+            url="https://www.medicinehat.ca/",
+            country="ca",
+            project_id="500",
+            district_id="MEDHAT",
+            zone_id="zone-z196",
+        ),
+        region(
+            "Township of Langley (BC)",
+            url="https://www.tol.ca/",
+            country="ca",
+            project_id="521",
+            district_id="LANGL",
+        ),
+        region(
+            "East Gwillimbury (ON)",
+            url="https://www.eastgwillimbury.ca/",
+            country="ca",
+            project_id="586",
+            district_id="EASTG",
+        ),
+        region(
+            "Brantford (ON)",
+            url="https://www.brantford.ca/",
+            country="ca",
+            project_id="3195",
+            district_id="BRAN",
+        ),
+        region(
+            "Kelowna (BC)",
+            url="https://www.rdco.com/",
+            country="ca",
+            project_id="502",
+            district_id="Kelowna",
+        ),
+        region(
+            "West Kelowna (BC)",
+            url="https://www.rdco.com/",
+            country="ca",
+            project_id="502",
+            district_id="WestKelowna",
+        ),
+        region(
+            "Plainville (CT)",
+            url="https://www.plainvillect.com/",
+            country="us",
+            project_id="3066",
+            district_id="PLA",
+        ),
+        region(
+            "LaSalle (ON)",
+            url="https://www.lasalle.ca/",
+            country="ca",
+            project_id="583",
+            district_id="LAS",
+        ),
+        region(
+            "Lakeshore (ON)",
+            url="https://www.lakeshore.ca/",
+            country="ca",
+            project_id="583",
+            district_id="LAK",
+        ),
+        region(
+            "Glenorchy City Council (TAS)",
+            url="https://www.gcc.tas.gov.au/",
+            country="au",
+            project_id="657",
+            district_id="GLENORCHY",
+        ),
+        region(
+            "Byron Shire Council (NSW)",
+            url="https://www.byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules",
+            country="au",
+            project_id="592",
+            district_id="BYSC",
+        ),
+        region(
+            "Toronto (ON) - Circular Materials",
+            url="https://www.toronto.ca/",
+            country="ca",
+            project_id="CIRCMATONT",
+            district_id="TORONTO",
+        ),
+        region(
+            "Mississauga (ON)",
+            url="https://www.mississauga.ca/",
+            country="ca",
+            project_id="3179",
+            district_id="MISS",
+        ),
+        region(
+            "Brampton (ON)",
+            url="https://www.brampton.ca/",
+            country="ca",
+            project_id="3179",
+            district_id="BRAMP",
+        ),
+        region(
+            "Caledon (ON)",
+            url="https://www.caledon.ca/",
+            country="ca",
+            project_id="3179",
+            district_id="CALED",
+        ),
+        region(
+            "Carleton Place (ON)",
+            url="https://carletonplace.ca/",
+            country="ca",
+            project_id="3149",
+            district_id="CARLETON",
+        ),
+        region(
+            "Burlington (ON)",
+            url="https://www.burlington.ca/",
+            country="ca",
+            project_id="3169",
+            district_id="BURL",
+        ),
+        region(
+            "Oakville (ON)",
+            url="https://www.oakville.ca/",
+            country="ca",
+            project_id="3169",
+            district_id="OAKV",
+        ),
+        region(
+            "Milton (ON)",
+            url="https://www.milton.ca/",
+            country="ca",
+            project_id="3169",
+            district_id="MILT",
+        ),
+        region(
+            "Halton Hills (ON)",
+            url="https://www.haltonhills.ca/",
+            country="ca",
+            project_id="3169",
+            district_id="HALT",
+        ),
+        region(
+            "Guelph (ON)",
+            url="https://guelph.ca/",
+            country="ca",
+            project_id="3194",
+            district_id="GUEL",
+        ),
+        region(
+            "New Rochelle (NY)",
+            url="https://www.newrochelleny.gov/791/Collection-Dates",
+            country="us",
+            project_id="3015",
+            district_id="NEWRO",
+        ),
+        region(
+            "Peoria (IL)",
+            url="https://www.peoriagov.org/533/Yes-Peoria-Picks-Up",
+            country="us",
+            project_id="PEORIA",
+            district_id="PEORIA",
+        ),
+        region(
+            "Bloomington (IL)",
+            url="https://www.bloomingtonil.gov/",
+            country="us",
+            project_id="621",
+            district_id="BLO",
+        ),
+        region(
+            "Newmarket (ON)",
+            url="https://www.newmarket.ca/",
+            country="ca",
+            project_id="530",
+            district_id="NEW",
+        ),
+    )
+
+    TEST_CASES: ClassVar[dict] = {
+        "Default": {
+            "street": "2242 grinstead drive",
+            "city": "louisville",
+            "state": "KY",
+        },
+        "Problematic City Lookup": {
+            "street": "2202 E Florence Dr",
+            "city": "Tucson",
+            "state": "AZ",
+            "district_id": "TUC",
+            "project_id": "532",
+        },
+        "olympia": {
+            "street": "1003 Lybarger St NE",
+            "city": "Olympia",
+            "state": "Washington",
+        },
+        "newark": {"street": "24 Townsend Rd", "city": "Newark", "state": "Delaware"},
+        "albuquerque": {
+            "street": "1505 Silver Ave SE",
+            "city": "Albuquerque",
+            "state": "New Mexico",
+        },
+        "london ontario": {
+            "street": "1065 Sunningdale Rd E",
+            "city": "London",
+            "state": "Ontario",
+        },
+        "london ontario with districtID": {
+            "street": "1065 Sunningdale Rd E",
+            "city": "London",
+            "state": "Ontario",
+            "project_id": "528",
+            "district_id": "CityofLondon",
+            "zone_id": "zone-z547",
+        },
+        "aurora ontario": {
+            "street": "123 Cranberry Lane",
+            "city": "Aurora",
+            "state": "Ontario",
+        },
+        "Vaughan, Ontario, Canada": {
+            "street": "Main St",
+            "city": "Vaughan",
+            "state": "Ontario",
+        },
+        "67 Baseline Rd Coboconk, ON": {
+            "street": "67 Baseline Rd",
+            "city": "Coboconk",
+            "state": "Ontario",
+        },
+        "Richmond Hill, Ontario, Canada": {
+            "street": "10235 Yonge Street",
+            "city": "Richmond Hill",
+            "state": "Ontario",
+        },
+        "Norfolk County, Ontario, Canada (with district_id, project_id & zone_id)": {
+            "district_id": "OLYMP",
+            "project_id": 3107,
+            "zone_id": "zone-z11266-z16205-z16208-z16218",
+        },
+        "Oak Bay, BC, Canada (with district_id, project_id & zone_id)": {
+            "district_id": "OAK",
+            "project_id": 3187,
+            "zone_id": "zone-z20122",
+        },
+        "Prince George, BC, Canada (with district_id, project_id & zone_id)": {
+            "district_id": "PrinceGeorge",
+            "project_id": 523,
+            "zone_id": "zone-z483-z1860",
+        },
+        "City of Hamilton, ON, Canada (with district_id, project_id & zone_id)": {
+            "district_id": "HAM",
+            "project_id": 520,
+            "zone_id": "zone-z1151",
+        },
+        "Chatham-Kent, ON, Canada (API results have trailing space)": {
+            "street": "20 Bloomfield Rd",
+            "city": "Chatham-Kent",
+            "state": "Ontario",
+        },
+        "6656 Ladner Trunk Rd, Delta, BC V4K 5C8, Kanada": {
+            "street": "6656 Ladner Trunk Rd",
+            "city": "Delta",
+            "state": "British Columbia",
+        },
+        "Burnaby, BC, Canada": {
+            "street": "215 Gilmore Ave N",
+            "city": "Burnaby",
+            "state": "British Columbia",
+        },
+        "City of Medicine Hat, AB, Canada (with district_id, project_id & zone_id)": {
             "district_id": "MEDHAT",
+            "project_id": 500,
             "zone_id": "zone-z196",
         },
-    },
-    {
-        "title": "Township of Langley (BC)",
-        "url": "https://www.tol.ca/",
-        "country": "ca",
-        "default_params": {
-            "project_id": "521",
-            "district_id": "LANGL",
-        },
-    },
-    {
-        "title": "East Gwillimbury (ON)",
-        "url": "https://www.eastgwillimbury.ca/",
-        "country": "ca",
-        "default_params": {
-            "project_id": "586",
-            "district_id": "EASTG",
-        },
-    },
-    {
-        "title": "Brantford (ON)",
-        "url": "https://www.brantford.ca/",
-        "country": "ca",
-        "default_params": {
-            "project_id": "3195",
-            "district_id": "BRAN",
-        },
-    },
-    {
-        "title": "Kelowna (BC)",
-        "url": "https://www.rdco.com/",
-        "country": "ca",
-        "default_params": {
-            "project_id": "502",
-            "district_id": "Kelowna",
-        },
-    },
-    {
-        "title": "West Kelowna (BC)",
-        "url": "https://www.rdco.com/",
-        "country": "ca",
-        "default_params": {
-            "project_id": "502",
-            "district_id": "WestKelowna",
-        },
-    },
-    {
-        "title": "Plainville (CT)",
-        "url": "https://www.plainvillect.com/",
-        "country": "us",
-        "default_params": {
-            "project_id": "3066",
-            "district_id": "PLA",
-        },
-    },
-    {
-        "title": "LaSalle (ON)",
-        "url": "https://www.lasalle.ca/",
-        "country": "ca",
-        "default_params": {
-            "project_id": "583",
-            "district_id": "LAS",
-        },
-    },
-    {
-        "title": "Lakeshore (ON)",
-        "url": "https://www.lakeshore.ca/",
-        "country": "ca",
-        "default_params": {
-            "project_id": "583",
-            "district_id": "LAK",
-        },
-    },
-    {
-        "title": "Glenorchy City Council (TAS)",
-        "url": "https://www.gcc.tas.gov.au/",
-        "country": "au",
-        "default_params": {
-            "project_id": "657",
+        "Glenorchy City Council, TAS, Australia": {
             "district_id": "GLENORCHY",
+            "project_id": 657,
+            "zone_id": "zone-z15322-z16165-z16823",
         },
-    },
-    {
-        "title": "Byron Shire Council (NSW)",
-        "url": "https://www.byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules",
-        "country": "au",
-        "default_params": {"project_id": "592", "district_id": "BYSC"},
-    },
-    {
-        "title": "Toronto (ON) - Circular Materials",
-        "url": "https://www.toronto.ca/",
-        "country": "ca",
-        "default_params": {"project_id": "CIRCMATONT", "district_id": "TORONTO"},
-    },
-    {
-        "title": "Mississauga (ON)",
-        "url": "https://www.mississauga.ca/",
-        "country": "ca",
-        "default_params": {"project_id": "3179", "district_id": "MISS"},
-    },
-    {
-        "title": "Brampton (ON)",
-        "url": "https://www.brampton.ca/",
-        "country": "ca",
-        "default_params": {"project_id": "3179", "district_id": "BRAMP"},
-    },
-    {
-        "title": "Caledon (ON)",
-        "url": "https://www.caledon.ca/",
-        "country": "ca",
-        "default_params": {"project_id": "3179", "district_id": "CALED"},
-    },
-    {
-        "title": "Carleton Place (ON)",
-        "url": "https://carletonplace.ca/",
-        "country": "ca",
-        "default_params": {"project_id": "3149", "district_id": "CARLETON"},
-    },
-    {
-        "title": "Burlington (ON)",
-        "url": "https://www.burlington.ca/",
-        "country": "ca",
-        "default_params": {"project_id": "3169", "district_id": "BURL"},
-    },
-    {
-        "title": "Oakville (ON)",
-        "url": "https://www.oakville.ca/",
-        "country": "ca",
-        "default_params": {"project_id": "3169", "district_id": "OAKV"},
-    },
-    {
-        "title": "Milton (ON)",
-        "url": "https://www.milton.ca/",
-        "country": "ca",
-        "default_params": {"project_id": "3169", "district_id": "MILT"},
-    },
-    {
-        "title": "Halton Hills (ON)",
-        "url": "https://www.haltonhills.ca/",
-        "country": "ca",
-        "default_params": {"project_id": "3169", "district_id": "HALT"},
-    },
-    {
-        "title": "Guelph (ON)",
-        "url": "https://guelph.ca/",
-        "country": "ca",
-        "default_params": {"project_id": "3194", "district_id": "GUEL"},
-    },
-    {
-        "title": "New Rochelle (NY)",
-        "url": "https://www.newrochelleny.gov/791/Collection-Dates",
-        "country": "us",
-        "default_params": {"project_id": "3015", "district_id": "NEWRO"},
-    },
-    {
-        "title": "Peoria (IL)",
-        "url": "https://www.peoriagov.org/533/Yes-Peoria-Picks-Up",
-        "country": "us",
-        "default_params": {"project_id": "PEORIA", "district_id": "PEORIA"},
-    },
-    {
-        "title": "Bloomington (IL)",
-        "url": "https://www.bloomingtonil.gov/",
-        "country": "us",
-        "default_params": {"project_id": "621", "district_id": "BLO"},
-    },
-    {
-        "title": "Newmarket (ON)",
-        "url": "https://www.newmarket.ca/",
-        "country": "ca",
-        "default_params": {"project_id": "530", "district_id": "NEW"},
-    },
-]
+        "Lakeshore, ON, Canada (with district_id, project_id & zone_id)": {
+            "district_id": "LAK",
+            "project_id": 583,
+            "zone_id": "zone-z9942",
+        },
+        "New Rochelle, NY, USA (with district_id, project_id & zone_id)": {
+            "district_id": "NEWRO",
+            "project_id": 3015,
+            "zone_id": "zone-z19582-z19705",
+        },
+        "West Kelowna, BC, Canada (with district_id & project_id)": {
+            "street": "2760 Cameron Rd",
+            "city": "West Kelowna",
+            "state": "British Columbia",
+            "district_id": "WestKelowna",
+            "project_id": "502",
+        },
+        "Peoria, IL, USA": {
+            "street": "10303 N Churchill Dr",
+            "city": "Peoria",
+            "state": "Illinois",
+        },
+        "Bloomington, IL, USA (with district_id, project_id & zone_id)": {
+            "district_id": "BLO",
+            "project_id": "621",
+            "zone_id": "zone-z11025",
+        },
+        "Byron Shire Council, NSW, Australia": {
+            "street": "120 Jonson St, Byron Bay",
+            "project_id": "592",
+            "district_id": "BYSC",
+        },
+        "Carleton Place, ON, Canada": {
+            "street": "175 Bridge St",
+            "city": "Carleton Place",
+            "state": "Ontario",
+        },
+        "Frederick County, MD, USA (with district_id, project_id & zone_id)": {
+            "district_id": "FRE",
+            "project_id": "527",
+            "zone_id": "zone-z652",
+        },
+        "Palm Beach County, FL, USA (with district_id, project_id & zone_id)": {
+            "district_id": "PB",
+            "project_id": "633",
+            "zone_id": "zone-z21670-z21652-z21659-z21666",
+        },
+        "Newmarket, ON, Canada (with district_id, project_id & zone_id)": {
+            "district_id": "NEW",
+            "project_id": "530",
+            "zone_id": "zone-z12563",
+        },
+    }
 
-TEST_CASES = {
-    "Default": {"street": "2242 grinstead drive", "city": "louisville", "state": "KY"},
-    "Problematic City Lookup": {
-        "street": "2202 E Florence Dr",
-        "city": "Tucson",
-        "state": "AZ",
-        "district_id": "TUC",
-        "project_id": "532",
-    },
-    "olympia": {
-        "street": "1003 Lybarger St NE",
-        "city": "Olympia",
-        "state": "Washington",
-    },
-    "newark": {"street": "24 Townsend Rd", "city": "Newark", "state": "Delaware"},
-    "albuquerque": {
-        "street": "1505 Silver Ave SE",
-        "city": "Albuquerque",
-        "state": "New Mexico",
-    },
-    "london ontario": {
-        "street": "1065 Sunningdale Rd E",
-        "city": "London",
-        "state": "Ontario",
-    },
-    "london ontario with districtID": {
-        "street": "1065 Sunningdale Rd E",
-        "city": "London",
-        "state": "Ontario",
-        "project_id": "528",
-        "district_id": "CityofLondon",
-        "zone_id": "zone-z547",
-    },
-    "aurora ontario": {
-        "street": "123 Cranberry Lane",
-        "city": "Aurora",
-        "state": "Ontario",
-    },
-    "Vaughan, Ontario, Canada": {  # https://app.my-waste.mobi/widget/576-Vaughan/home.php
-        "street": "Main St",
-        "city": "Vaughan",
-        "state": "Ontario",
-    },
-    "67 Baseline Rd Coboconk, ON": {
-        "street": "67 Baseline Rd",
-        "city": "Coboconk",
-        "state": "Ontario",
-    },
-    "Richmond Hill, Ontario, Canada": {
-        "street": "MOONLIGHT lane",
-        "city": "Richmond Hill",
-        "state": "Ontario",
-    },
-    "Norfolk County, Ontario, Canada (with district_id, project_id & zone_id)": {
-        "district_id": "OLYMP",
-        "project_id": 3107,
-        "zone_id": "zone-z11266-z16205-z16208-z16218",
-    },
-    "Oak Bay, BC, Canada (with district_id, project_id & zone_id)": {
-        "district_id": "OAK",
-        "project_id": 3187,
-        "zone_id": "zone-z20122",
-    },
-    "Prince George, BC, Canada (with district_id, project_id & zone_id)": {
-        "district_id": "PrinceGeorge",
-        "project_id": 523,
-        "zone_id": "zone-z483-z1860",
-    },
-    "City of Hamilton, ON, Canada (with district_id, project_id & zone_id)": {
-        "district_id": "HAM",
-        "project_id": 520,
-        "zone_id": "zone-z1151",
-    },
-    "Chatham-Kent, ON, Canada (API results have trailing space)": {
-        "street": "20 Bloomfield Rd",
-        "city": "Chatham-Kent",
-        "state": "Ontario",
-    },
-    "6656 Ladner Trunk Rd, Delta, BC V4K 5C8, Kanada": {
-        "street": "6656 Ladner Trunk Rd",
-        "city": "Delta",
-        "state": "British Columbia",
-    },
-    "Burnaby, BC, Canada": {
-        "street": "215 Gilmore Ave N",
-        "city": "Burnaby",
-        "state": "British Columbia",
-    },
-    "City of Medicine Hat, AB, Canada (with district_id, project_id & zone_id)": {
-        "district_id": "MEDHAT",
-        "project_id": 500,
-        "zone_id": "zone-z196",
-    },
-    "Glenorchy City Council, TAS, Australia": {
-        "district_id": "GLENORCHY",
-        "project_id": 657,
-        "zone_id": "zone-z15322-z16165-z16823",
-    },
-    "Lakeshore, ON, Canada (with district_id, project_id & zone_id)": {
-        "district_id": "LAK",
-        "project_id": 583,
-        "zone_id": "zone-z9942",
-    },
-    "New Rochelle, NY, USA (with district_id, project_id & zone_id)": {
-        "district_id": "NEWRO",
-        "project_id": 3015,
-        "zone_id": "zone-z19582-z19705",
-    },
-    "West Kelowna, BC, Canada (with district_id & project_id)": {
-        "street": "2760 Cameron Rd",
-        "city": "West Kelowna",
-        "state": "British Columbia",
-        "district_id": "WestKelowna",
-        "project_id": "502",
-    },
-    "Peoria, IL, USA": {
-        "street": "10303 N Churchill Dr",
-        "city": "Peoria",
-        "state": "Illinois",
-    },
-    "Bloomington, IL, USA (with district_id, project_id & zone_id)": {
-        "district_id": "BLO",
-        "project_id": "621",
-        "zone_id": "zone-z11025",
-    },
-    "Byron Shire Council, NSW, Australia": {
-        "street": "120 Jonson St, Byron Bay",
-        "project_id": "592",
-        "district_id": "BYSC",
-    },
-    "Carleton Place, ON, Canada": {
-        "street": "175 Bridge St",
-        "city": "Carleton Place",
-        "state": "Ontario",
-    },
-    "Frederick County, MD, USA (with district_id, project_id & zone_id)": {
-        "district_id": "FRE",
-        "project_id": "527",
-        "zone_id": "zone-z652",
-    },
-    "Palm Beach County, FL, USA (with district_id, project_id & zone_id)": {
-        "district_id": "PB",
-        "project_id": "633",
-        "zone_id": "zone-z21670-z21652-z21659-z21666",
-    },
-    "Newmarket, ON, Canada (with district_id, project_id & zone_id)": {
-        "district_id": "NEW",
-        "project_id": "530",
-        "zone_id": "zone-z12563",
-    },
-}
+    PARAMS = (
+        street(optional=True),
+        city(optional=True),
+        text_field("state", "State / Province", optional=True),
+        text_field(
+            "project_id",
+            "Project ID",
+            optional=True,
+            coerce=lambda value: str(value).strip(),
+        ),
+        text_field(
+            "district_id",
+            "District ID",
+            optional=True,
+            coerce=lambda value: str(value).strip(),
+        ),
+        text_field("zone_id", "Zone ID", optional=True),
+    )
 
-
-class Source:
-    def __init__(
-        self,
-        street=None,
-        city=None,
-        state=None,
-        project_id=None,
-        district_id=None,
-        zone_id=None,
-    ):  # argX correspond to the args dict in the source configuration
-        self.street = self._format_key(street)
-        self.city = self._format_key(city)
-        self.state = self._format_key(state)
-        self.project_id = self._format_key(project_id) if project_id else None
-        self.district_id = str(district_id).strip() if district_id else None
-
-        self.zone_id = zone_id  # uses lowercase z's, not sure if matters
-        self.stage = 0
-
-    def _format_key(self, param):
-        """Get rid of ambiguity in caps/spacing."""
-        return str(param).upper().strip()
-
-    def _lookup_city(self):
-        city_finder = f"https://api-city.recyclecoach.com/city/search?term={self.city}, {self.state}"
-        res = requests.get(city_finder, timeout=30)
-        city_data = res.json()
-
-        if len(city_data) == 1:
-            self.project_id = city_data[0]["project_id"]
-            self.district_id = city_data[0]["district_id"]
-            self.stage = float(city_data[0]["stage"])
-
-            if self.stage < 3:
-                raise Exception(
-                    "Found your city, but it is not yet supported fully by recycle coach."
-                )
-            return
-
-        if len(city_data) > 1:
-            for city in city_data:
-                if (
-                    city["city_nm"].upper() == self.city.upper()
-                    and float(city["stage"]) >= 3
-                ):
-                    self.project_id = city["project_id"]
-                    self.district_id = city["district_id"]
-                    self.stage = float(city["stage"])
-                    return
-
-            # No exact, fully supported match (or the exact match is an
-            # unsupported placeholder): suggest the fully supported candidates.
-            raise SourceArgumentNotFoundWithSuggestions(
-                "city",
-                self.city,
-                [c["city_nm"] for c in city_data if float(c["stage"]) >= 3],
-            )
-
-        raise Exception(
-            "Could not determine district or project, This probably means your city, state is wrong or not supported."
-        )
-
-    def _lookup_zones_with_geo(self):
-        geo_address_urls = [
-            f"https://us-web.apigw.recyclecoach.com/zone-setup/address/geo?address={self.street}&project_id={self.project_id}&district_id={self.district_id}",
-            f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/geo?address={self.street}&project_id={self.project_id}&district_id={self.district_id}",
-        ]
-        lat = None
-        pos_data = []
-        for pos_url in geo_address_urls:
-            try:
-                res = requests.get(pos_url, timeout=30)
-                res.raise_for_status()
-                pos_data = res.json()
-                if pos_data:
-                    break
-            except (requests.exceptions.RequestException, json.JSONDecodeError):
-                continue
-
-        streets = []
-        for pos_res in pos_data:
-            streetpart = self._format_key(pos_res["address"]).split(",")[0]
-            streets.append(pos_res["address"].strip().split(",")[0])
-
-            if streetpart in self.street:
-                lat = pos_res["lat"]
-                lng = pos_res["lng"]
-                break
-
-        if not lat:
-            if streets:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "street",
-                    self.street,
-                    streets,
-                )
-            raise SourceArgumentNotFound(
-                "street",
-                self.street,
-            )
-
-        zone_finder_urls = [
-            f"https://us-web.apigw.recyclecoach.com/zone-setup/address/geo/zone?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}",
-            f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/geo/zone?project_id={self.project_id}&district_id={self.district_id}&lat={lat}&lng={lng}",
-        ]
-        for zone_url in zone_finder_urls:
-            try:
-                res = requests.get(zone_url, timeout=30)
-                res.raise_for_status()
-                zone_data = {
-                    z["prompt_id"]: "z" + str(z["zone_id"]) for z in res.json()
-                }
-                if zone_data:
-                    self.zone_id = self._build_zone_string(zone_data)
-                    return self.zone_id
-            except (
-                requests.exceptions.RequestException,
-                json.JSONDecodeError,
-                KeyError,
-            ):
-                continue
-
-        raise SourceArgumentNotFound("street", self.street)
-
-    def _lookup_zones(self):
-        zone_lookup_urls = [
-            f"https://us-web.apigw.recyclecoach.com/zone-setup/address/single?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}",
-            f"https://ca-web.apigw.recyclecoach.com/zone-setup/address/single?sku={self.project_id}&district={self.district_id}&prompt=undefined&term={self.street}",
-        ]
-        zone_data = None
-        for zone_url in zone_lookup_urls:
-            try:
-                res = requests.get(zone_url, timeout=30)
-                res.raise_for_status()
-                zone_data = res.json()
-                if "results" in zone_data:
-                    break
-            except (requests.exceptions.RequestException, json.JSONDecodeError):
-                continue
-
-        if not zone_data or "results" not in zone_data:
-            return self._lookup_zones_with_geo()
-        streets = []
-        for zone_res in zone_data["results"]:
-            streetpart = self._format_key(zone_res["address"]).split(",")[0].strip()
-            streets.append(zone_res["address"].strip().split(",")[0])
-            if streetpart in self.street:
-                self.zone_id = self._build_zone_string(zone_res["zones"])
-                return self.zone_id
-        if streets:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street",
-                self.street,
-                streets,
-            )
-        raise SourceArgumentNotFound(
-            "street",
-            self.street,
-        )
-
-    def _build_zone_string(self, z_match):
-        """Take matching json and build a format zone-z12312-z1894323-z8461."""
-        zone_str = "zone"
-
-        for zonekey in z_match:
-            zone_str += f"-{z_match[zonekey]}"
-
-        return zone_str
-
-    def fetch(self):
-        """Build the date fetching request through looking up address on separate endpoints, skip these requests if you can provide the district_id, project_id and/or zone_id."""
-        if not self.project_id or not self.district_id:
-            self._lookup_city()
-
-        if not self.zone_id:
-            self._lookup_zones()
-
-        collection_urls = [
-            f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
-            f"https://ca-web.apigw.recyclecoach.com/zone-setup/zone/collections?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}&lang_cd=en_US",
-        ]
-
-        schedule_urls = [  # Some regions use different one of these should work
-            f"https://us-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
-            f"https://ca-web.apigw.recyclecoach.com/zone-setup/zone/schedules?project_id={self.project_id}&district_id={self.district_id}&zone_id={self.zone_id}",
-        ]
-
-        collection_def = None
-        schedule_def = None
-        collection_types = None
-
-        for collection_url in collection_urls:
-            try:
-                response = requests.get(collection_url, timeout=30)
-                response.raise_for_status()
-                collection_def = response.json()
-            except (requests.exceptions.RequestException, json.JSONDecodeError):
-                continue
-
-            if isinstance(collection_def, dict):
-                break  # retrieved correct schedule data
-
-        for schedule_url in schedule_urls:
-            response = requests.get(schedule_url, timeout=30)
-            schedule_def = json.loads(response.text)
-            if isinstance(schedule_def, dict):
-                break  # retrieved correct schedule data
-
-        coll_root = collection_def.get("collections") or collection_def.get(
-            "collection"
-        )
-        collection_types = coll_root["types"]
-
-        entries = []
-        date_format = "%Y-%m-%d"
-
-        if not isinstance(schedule_def, dict) or not isinstance(
-            schedule_def.get("DATA"), list
-        ):
-            raise SourceArgumentNotFound(
-                "street",
-                self.street,
-                "no collection schedule found for this address "
-                "(RecycleCoach returned no service zone)",
-            )
-
-        for year in schedule_def["DATA"]:
-            for month in year["months"]:
-                for event in month["events"]:
-                    for collection in event["collections"]:
-                        if collection["status"] == "is_none":
-                            continue
-                        ct = collection_types["collection-" + str(collection["id"])]
-                        c = Collection(
-                            datetime.strptime(event["date"], date_format).date(),
-                            ct["title"],
-                            ICON_MAP.get(ct["title"]),
-                        )
-                        entries.append(c)
-        return entries
+    retrieve = RecycleCoachRetriever()
+    parse = RecycleCoachParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key=_label,
+        description_key=_description,
+        type_value_map=_TYPE_MAP,
+        carry_raw_label=True,
+    )

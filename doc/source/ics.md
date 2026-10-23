@@ -1,5 +1,8 @@
 # ICS / iCal
 
+Municipalities and waste providers: see [how to publish a collection schedule](../publishing_collection_schedules.md)
+for a simple public feed that residents can subscribe to.
+
 Add support for schedules from ICS / iCal files. Files can be either stored in a  local folder or fetched from a static URL. The waste type will be taken from the `summary` attribute.
 
 This source has been successfully tested with the following service providers:
@@ -180,6 +183,7 @@ This source has been successfully tested with the following service providers:
 ### Belgium
 
 - [Eupen](/doc/ics/eupen_be.md) / eupen.be
+- [Intradel (community calendars)](/doc/ics/intradel_be.md) / intradel-icals.pages.dev
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
 
 ### Canada
@@ -549,7 +553,7 @@ In addition, users reported that the following service providers are working:
 
 - [ReCollect.net](https://recollect.net) ([Notes](#recollect))
 - [Waste Connections](https://www.wasteconnections.com/) ([Notes](#recollect))
-- [Western Disposal Residential (Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
+- [Western Disposal Residential (Boulder area, Colorado)](https://www.westerndisposal.com/residential/) (Unofficial, [Notes](#western-disposal-colorado))
 
 ***
 

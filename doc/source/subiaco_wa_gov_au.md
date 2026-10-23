@@ -1,26 +1,34 @@
-# City of Subiaco (WA)
+# City of Subiaco
 
-Support for City of Subiaco (Western Australia) waste collection services. This source uses a calculation based on your Area and Weekday.
+Support for schedules provided by [City of Subiaco](https://www.subiaco.wa.gov.au).
 
-## Configuration
+Source for City of Subiaco, WA waste collection.
+
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: subiaco_wa_gov_au
       args:
-        area: 1
-        day_of_week: Monday
-        
- ## Configuration Variables
- 
- Variable         |  Type   |  Requirement  |  Description
- ---------------------------------------------------------------------
-area                |  int       |  Required        |  Either 1 or 2 based on your location.
-day_of_week  |  string  |  Required        |  "The day your bins are usually collected (e.g., Monday)."
+        address: ADDRESS
+```
 
-## How to find your details
-Check the City of Subiaco Waste Area Guide. https://www.subiaco.wa.gov.au/residents/in-your-home/bins,-recycling-and-waste/waste-area-guide
-Area 1: North of Hamersley Road.
-Area 2: South of Hamersley Road.
-Your Day of Week is your standard scheduled collection day.
+### Configuration Variables
+
+**address**  
+*(string) (required)*
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: subiaco_wa_gov_au
+      args:
+        address: 241 Barker Road SUBIACO
+```
+
+## How to get the source arguments
+
+Enter your street address including suburb (e.g. '241 Barker Road SUBIACO').

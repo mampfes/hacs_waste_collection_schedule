@@ -1,0 +1,47 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://kundapi.affarsverken.se/api/v1/open-api/login b6ee60926c",
+      "method": "POST",
+      "url": "https://kundapi.affarsverken.se/api/v1/open-api/login",
+      "final_url": "https://kundapi.affarsverken.se/api/v1/open-api/login?BrandName=Affarsverken",
+      "body": "{\"body\":\"\",\"params\":[[\"BrandName\",\"Affarsverken\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "text/plain; charset=utf-8",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "server": "Kestrel",
+        "x-robots-tag": "none",
+        "api-supported-versions": "1.0",
+        "x-powered-by": "ASP.NET",
+        "date": "Tue, 13 Oct 2026 18:41:19 GMT"
+      },
+      "content_b64": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKQlptWmhjbk4yWlhKclpXNGlMQ0oxY200NllXWm1ZWEp6ZG1WeWEyVnVPbXR5YjI1aGEzSmhablE2YzJWamRYSnBkSGs2WTJ4aGFXMXpPbTl3Wlc0dFlYQnBJam9pZEhKMVpTSXNJblZ5YmpwaFptWmhjbk4yWlhKclpXNDZhM0p2Ym1GcmNtRm1kRHB6WldOMWNtbDBlVHBqYkdGcGJYTTZkR1Z1WVc1MElqb2lRV1ptWVhKemRtVnlhMlZ1SWl3aWJtSm1Jam94TnpreE9URTJPRGd3TENKbGVIQWlPakUzT1RFNU1qQTBPREFzSW1saGRDSTZNVGM1TVRreE5qZzRNQ3dpYVhOeklqb2lhSFIwY0hNNkx5OXJkVzVrYVc1c2IyZG5ibWx1Wnk1aFptWmhjbk4yWlhKclpXNHVjMlVpTENKaGRXUWlPaUoxY200NllXWm1ZWEp6ZG1WeWEyVnVPbk5qYjNCbE9tRndhWE02WTI5dWMzVnRaWElpZlEuYlFhR3NMelNmcHZHMnlUTXFvQTFDLUdVOThPNWFSd3M1Q0YzbGtLNmNpTk13TW5IaDJoalhtSzRWMXdZNkMxNFA5Tk1KNVIyTldzdkR2YTdNQjgzcUg3dWpReXlnUGJHbXBnWVJpX2diYmJxQWp4M3NjS1FydE9JbEZDNGFUVFB4czBNRXg0OWJ5VXdBM3haQ3NmbG5wNGpCdC1aTnlCN0tOTTU2aHJQMDl3NVExNkEtQ3JkazVvVmlyWmo2bW5sNTRYdnB5dndrd0UyXzBWTUEtRS1US2J1NHNrX0RyZ2I1bGhIaDJsbzcweXlxdmlsTUp3M1hWYWhNRUtIVkozUmlraXBqZFZuWmFwMnJMLXoxR3pRN3BSSXowdnNKekozZjZaSEgyektkMkx3N3VKN2tTZkExbkFJN3NMZjNrd2xpazVkR1dLYU1WcDM1M3BXY01DdURB"
+    },
+    {
+      "key": "GET https://kundapi.affarsverken.se/api/v1/open-api/waste/buildings/search 4d4eb35a2f",
+      "method": "GET",
+      "url": "https://kundapi.affarsverken.se/api/v1/open-api/waste/buildings/search",
+      "final_url": "https://kundapi.affarsverken.se/api/v1/open-api/waste/buildings/search?address=Ingen+gata+999",
+      "body": "{\"params\":[[\"address\",\"Ingen gata 999\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "server": "Kestrel",
+        "x-robots-tag": "none",
+        "api-supported-versions": "1.0",
+        "x-powered-by": "ASP.NET",
+        "date": "Tue, 13 Oct 2026 18:41:19 GMT"
+      },
+      "content_b64": "W10="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'address' with the value 'Ingen gata 999', We could not find any suggestions. Please also check other arguments."
+  }
+}

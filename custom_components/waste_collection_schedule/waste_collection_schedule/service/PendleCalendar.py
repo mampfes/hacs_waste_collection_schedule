@@ -1,0 +1,392 @@
+"""PendleCalendar: provider retrieval and parsing using the shared verified HTTP session."""
+
+import datetime
+import logging
+import re
+from typing import Any
+
+from waste_collection_schedule import recurrence
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentException,
+    SourceArgumentNotFound,
+    SourceArgumentRequired,
+)
+from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.retrievers import RetrieverFunc
+
+MAP_CONFIG_URL = "https://opus4.co.uk/api/v1/map-configs/{map_id}"
+ADDRESS_SEARCH_URL = "https://opus4.co.uk/api/v1/address-search"
+DEFAULT_CLIENT = "pendle"
+DEFAULT_CLIENT_ID = 5
+DEFAULT_MAP_ID = 3606
+DEFAULT_LANGUAGE = "en-GB"
+DEFAULT_WEEKS_AHEAD = 12
+_LOGGER = logging.getLogger(__name__)
+REQUEST_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0"
+}
+WEEKDAYS = {
+    "monday": 0,
+    "tuesday": 1,
+    "wednesday": 2,
+    "thursday": 3,
+    "friday": 4,
+    "saturday": 5,
+    "sunday": 6,
+}
+
+
+class _CalendarClient:
+    _session: Any
+
+    def __init__(
+        self,
+        postcode: str,
+        address: str,
+        collection_zone: str | None = None,
+        garden_waste_bin: bool = False,
+        future_collection_dates: bool = False,
+    ):
+        if not postcode:
+            raise SourceArgumentRequired(
+                "postcode", "it is needed to look up Pendle addresses"
+            )
+        if not address:
+            raise SourceArgumentRequired(
+                "address", "it is needed to pick the correct Pendle property"
+            )
+        self._postcode = postcode
+        self._address = address
+        self._collection_zone = (
+            str(collection_zone).strip() if collection_zone else None
+        )
+        self._garden_waste_bin = garden_waste_bin
+        self._future_collection_dates = future_collection_dates
+
+    @staticmethod
+    def _normalize(value: str | None) -> str:
+        if value is None:
+            return ""
+        return re.sub("[^A-Za-z0-9]", "", value).upper()
+
+    @staticmethod
+    def _parse_relative_date(value: str | None) -> datetime.date | None:
+        if not value:
+            return None
+        today = datetime.date.today()
+        text = value.strip().lower()
+        match = re.search("\\(in (\\d+) days?\\)", text)
+        if match:
+            return today + datetime.timedelta(days=int(match.group(1)))
+        match = re.search("\\bin (\\d+) days?\\b", text)
+        if match:
+            return today + datetime.timedelta(days=int(match.group(1)))
+        match = re.search(
+            "\\bin (\\d+) weeks?\\s+on\\s+(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\\b",
+            text,
+        )
+        if match:
+            weeks = int(match.group(1))
+            target = WEEKDAYS[match.group(2)]
+            days_ahead = (target - today.weekday()) % 7
+            return today + datetime.timedelta(days=days_ahead, weeks=weeks)
+        match = re.search("\\bin (\\d+) weeks?\\b", text)
+        if match:
+            return today + datetime.timedelta(weeks=int(match.group(1)))
+        if text == "today":
+            return today
+        if text == "tomorrow":
+            return today + datetime.timedelta(days=1)
+        match = re.search(
+            "\\bnext (monday|tuesday|wednesday|thursday|friday|saturday|sunday)\\b",
+            text,
+        )
+        if match:
+            target = WEEKDAYS[match.group(1)]
+            days_ahead = (target - today.weekday()) % 7
+            if days_ahead == 0:
+                days_ahead = 7
+            return today + datetime.timedelta(days=days_ahead)
+        return None
+
+    @staticmethod
+    def _parse_start_date(value: str | None) -> datetime.date | None:
+        if not value:
+            return None
+        try:
+            return datetime.datetime.strptime(value.strip(), "%d %B, %Y").date()
+        except ValueError:
+            return None
+
+    @staticmethod
+    def _next_occurrence_from_anchor(
+        start_date: datetime.date | None, frequency_weeks: int | None
+    ) -> datetime.date | None:
+        if start_date is None:
+            return None
+        if not frequency_weeks or frequency_weeks < 1:
+            return start_date
+        return recurrence.recurring_from_anchor(
+            start_date, datetime.timedelta(weeks=frequency_weeks), 1
+        )[0]
+
+    @staticmethod
+    def _parse_weekday(value: str | None) -> int | None:
+        if not value:
+            return None
+        return WEEKDAYS.get(value.strip().lower())
+
+    def _resolve_next_collection_date(
+        self, item: dict[str, Any], title: str, frequency_weeks: int | None
+    ) -> datetime.date | None:
+        expected_date = self._next_occurrence_from_anchor(
+            self._parse_start_date(item.get("startDate")), frequency_weeks
+        )
+        actual_date = self._parse_relative_date(item.get("when"))
+        weekday = self._parse_weekday(item.get("day"))
+        if (
+            actual_date is not None
+            and weekday is not None
+            and (actual_date.weekday() != weekday)
+        ):
+            _LOGGER.warning(
+                "Pendle parsed when mismatch for %s: parsed %s but council day is %s. Ignoring parsed date and falling back to schedule anchor.",
+                title,
+                actual_date.isoformat(),
+                item.get("day"),
+            )
+            actual_date = None
+        next_date = actual_date or expected_date
+        if next_date is None:
+            return None
+        if (
+            actual_date is not None
+            and expected_date is not None
+            and (actual_date != expected_date)
+        ):
+            _LOGGER.warning(
+                "Pendle schedule override for %s: expected %s from startDate/frequency, but council when says %s. Using council date.",
+                title,
+                expected_date.isoformat(),
+                actual_date.isoformat(),
+            )
+        if weekday is not None and next_date.weekday() != weekday:
+            _LOGGER.warning(
+                "Pendle weekday mismatch for %s: resolved %s but council day is %s.",
+                title,
+                next_date.isoformat(),
+                item.get("day"),
+            )
+        return next_date
+
+    def _expand_optional_collections(self, title: str) -> list[str]:
+        titles = [title]
+        normalized = title.strip().lower()
+        if self._garden_waste_bin and normalized in {
+            "blue collection",
+            "brown collection",
+        }:
+            titles.append("Green Collection")
+        return titles
+
+    @staticmethod
+    def _expand_dates(
+        first_date: datetime.date, frequency_weeks: int | None
+    ) -> list[datetime.date]:
+        if not frequency_weeks or frequency_weeks < 1:
+            return [first_date]
+        return recurrence.recurring_within(
+            first_date,
+            datetime.timedelta(weeks=frequency_weeks),
+            not_before=first_date,
+            until=first_date + datetime.timedelta(weeks=DEFAULT_WEEKS_AHEAD),
+        )
+
+    def _get_map_config(self) -> dict[str, Any]:
+        response = self._session.get(
+            MAP_CONFIG_URL.format(map_id=DEFAULT_MAP_ID),
+            params={"c": DEFAULT_CLIENT_ID, "l": DEFAULT_LANGUAGE},
+            timeout=30,
+        )
+        response.raise_for_status()
+        return response.json()
+
+    def _lookup_addresses(self) -> list[dict[str, Any]]:
+        response = self._session.get(
+            ADDRESS_SEARCH_URL,
+            params={
+                "address": self._address,
+                "postcode": self._postcode,
+                "page": 1,
+                "size": 25,
+                "client": DEFAULT_CLIENT,
+            },
+            timeout=30,
+        )
+        response.raise_for_status()
+        payload = response.json()
+        addresses = payload.get("Results", {}).get("Addresses", {}).get("Address")
+        if addresses is None:
+            raise SourceArgumentNotFound(
+                "postcode",
+                self._postcode,
+                "Pendle did not return any matching addresses",
+            )
+        if isinstance(addresses, dict):
+            return [addresses]
+        return list(addresses)
+
+    def _select_address(self, addresses: list[dict[str, Any]]) -> dict[str, Any]:
+        expected = self._normalize(self._address)
+        exact = [
+            item
+            for item in addresses
+            if self._normalize(item.get("FullAddress")) == expected
+        ]
+        if len(exact) == 1:
+            return exact[0]
+        if len(exact) > 1:
+            raise SourceArgAmbiguousWithSuggestions(
+                "address", self._address, [item.get("FullAddress") for item in exact]
+            )
+        matches = [
+            item
+            for item in addresses
+            if expected in self._normalize(item.get("FullAddress"))
+        ]
+        if len(matches) == 1:
+            return matches[0]
+        if len(matches) > 1:
+            raise SourceArgAmbiguousWithSuggestions(
+                "address", self._address, [item.get("FullAddress") for item in matches]
+            )
+        raise SourceArgumentNotFound(
+            "address",
+            self._address,
+            "no Pendle address matched that text within the postcode",
+        )
+
+    def _select_zone(self, collections: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        locations = sorted(
+            {
+                str(item.get("location")).strip()
+                for item in collections
+                if item.get("location") is not None
+                and str(item.get("location")).strip()
+            }
+        )
+        if len(locations) <= 1:
+            return collections
+        if self._collection_zone:
+            selected = [
+                item
+                for item in collections
+                if str(item.get("location", "")).strip() == self._collection_zone
+            ]
+            if selected:
+                return selected
+            raise SourceArgumentNotFound(
+                "collection_zone",
+                self._collection_zone,
+                "Pendle did not return that collection zone for the selected address",
+            )
+        raise SourceArgAmbiguousWithSuggestions(
+            "collection_zone",
+            "multiple Pendle collection zones were returned for this address",
+            locations,
+        )
+
+    def _fetch_collections(
+        self, x: float, y: float, wms_url: str, layer_id: str
+    ) -> list[dict[str, Any]]:
+        for buffer_size in (500, 1000, 1500):
+            response = self._session.get(
+                wms_url,
+                params={
+                    "service": "WMS",
+                    "version": "1.1.1",
+                    "request": "GetFeatureInfo",
+                    "layers": "none",
+                    "styles": "",
+                    "srs": "EPSG:27700",
+                    "bbox": f"{x - buffer_size},{y - buffer_size},{x + buffer_size},{y + buffer_size}",
+                    "width": 256,
+                    "height": 256,
+                    "query_layers": layer_id,
+                    "info_format": "application/json",
+                    "x": 128,
+                    "y": 128,
+                },
+                timeout=30,
+            )
+            response.raise_for_status()
+            data = response.json()
+            if data:
+                return list(data)
+        return []
+
+    def retrieve(self) -> Any:
+        self._session.headers.update(REQUEST_HEADERS)
+        map_config = self._get_map_config()
+        addresses = self._lookup_addresses()
+        selected_address = self._select_address(addresses)
+        layer_groups = map_config.get("legend", {}).get("layerGroups", [])
+        layers = layer_groups[0].get("layers", []) if layer_groups else []
+        layer_id = layers[0].get("id") if layers else None
+        double_click = map_config.get(
+            "doubleClick",  # codespell:ignore doubleclick
+            {},
+        )
+        wms_url = double_click.get("url")
+        if not layer_id or not wms_url:
+            raise SourceArgumentException(
+                "address", "Pendle map configuration is missing the query layer details"
+            )
+        collections = self._fetch_collections(
+            float(selected_address["X"]),
+            float(selected_address["Y"]),
+            wms_url,
+            layer_id,
+        )
+        collections = self._select_zone(collections)
+        if not collections:
+            raise SourceArgumentNotFound("address", self._address)
+        return collections
+
+    def parse(self, collections):
+        entries: list[dict] = []
+        for item in collections:
+            title = item.get("title", "Collection")
+            frequency_weeks = item.get("frequency")
+            next_date = self._resolve_next_collection_date(item, title, frequency_weeks)
+            if next_date is None:
+                continue
+            if self._future_collection_dates:
+                collection_dates = self._expand_dates(next_date, frequency_weeks)
+            else:
+                collection_dates = [next_date]
+            for collection_date in collection_dates:
+                for expanded_title in self._expand_optional_collections(title):
+                    entries.append({"date": collection_date, "type": expanded_title})
+        entries.sort(key=lambda item: (item["date"], item["type"]))
+        return entries
+
+
+class CalendarRetriever(RetrieverFunc):
+    def __call__(self, source: BaseSource) -> Any:
+        client = _CalendarClient(**source.params)
+        client._session = source.session
+        return client.retrieve()
+
+
+class CalendarParser(Parser[list[dict[str, Any]]]):
+    def __call__(
+        self, response: Any, source: BaseSource | None = None
+    ) -> list[dict[str, Any]]:
+        if source is None:
+            raise ValueError("Calendar parser requires a source")
+        client = _CalendarClient(**source.params)
+        client._session = source.session
+        return client.parse(response)

@@ -2,7 +2,6 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.regions import region
 from waste_collection_schedule.source.jumomind_de import Source as JumomindSource
 
 # Rhein-Hunsrück Entsorgung runs on Jumomind (service id "rhe"). This is the
@@ -29,7 +28,9 @@ class Source(JumomindSource):
         wt.HAZARDOUS,
     ]
 
-    REGIONS = (region("Rhein-Hunsrück Entsorgung (RHE)", url=URL),)
+    # Empty, not omitted: the Jumomind parent lists its own registry, which this
+    # pinned source must not inherit. The source entry itself is the listing.
+    REGIONS = ()
 
     TEST_CASES: ClassVar[dict] = {
         "Horn": {

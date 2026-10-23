@@ -1,56 +1,68 @@
 # Fermanagh and Omagh District Council
 
-Support for schedules provided by [Fermanagh and Omagh District Council](https://www.fermanaghomagh.com/services/environment-and-waste/waste-collection-calendar/), serving the Fermanagh and Omagh district of Northern Ireland.
+Support for schedules provided by [Fermanagh and Omagh District Council](https://www.fermanaghomagh.com/).
+
+Source for the Fermanagh and Omagh District Council, Northern Ireland
 
 ## Configuration via configuration.yaml
 
-(recommended)
+### Using property_id
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: fermanaghomagh_gov_uk
       args:
-        property_id: "PROPERTY_ID"
+        property_id: PROPERTY_ID
 ```
 
-or (not recommended)
+### Using postcode and house_number
 
 ```yaml
 waste_collection_schedule:
-    sources:
-        - name: fermanaghomagh_gov_uk
-          args:
-            postcode: "BT78 1RG"
-            house_number: "1"
+  sources:
+    - name: fermanaghomagh_gov_uk
+      args:
+        postcode: POSTCODE
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
 **property_id**  
-*(string) (required if postcode not provided)*
+*(string) (alternative)*
 
 **postcode**  
-*(string) (required if property_id not provided)*
+*(string) (alternative)*
 
 **house_number**  
-*(string) (required if property_id not provided)*
+*(string) (alternative)*
+
+Provide one of: `property_id` or `postcode` + `house_number`.
 
 ## Example
 
+### Using property_id
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: fermanaghomagh_gov_uk
       args:
-        property_id: "GMtpf6Tk1glK57Zj"
+        property_id: GMtpf6Tk1glK57Zj
 ```
 
-## How to get the property_id argument
+### Using postcode and house_number
 
-The property_id can be found in the URL when looking up your
-bin collection days at [Fermanagh and Omagh bin collection days](https://fermanaghomagh.isl-fusion.com).
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: fermanaghomagh_gov_uk
+      args:
+        postcode: BT78 1RG
+        house_number: '1'
+```
 
-## Why property_id over postcode and house_number?
+## How to get the source arguments
 
-The code has to do a search by postcode and house number then look up the bin collection time using the property ID. Providing the property_id directly skips this lookup step.
+Provide your postcode and house number (or name), or the property ID as found in the URL when looking up your bin collection days.

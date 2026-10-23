@@ -2,6 +2,8 @@
 
 Support for schedules provided by [Palm Coast, FL](https://www.palmcoast.gov).
 
+Source for Palm Coast, FL waste collection.
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -14,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**street**
+**street**  
 *(string) (required)*
 
 ## Example
@@ -24,9 +26,5 @@ waste_collection_schedule:
   sources:
     - name: palmcoast_fl_gov
       args:
-        street: "Ripcord Lane"
+        street: Ripcord Lane
 ```
-
-## How to get the source arguments
-
-Visit the Palm Coast [Solid Waste Collection](https://www.palmcoast.gov/Departments/Solid-Waste-Collection) page. Use your street name (e.g. "Ripcord Lane").

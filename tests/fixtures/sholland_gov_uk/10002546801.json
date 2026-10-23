@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-10-11",
+  "interactions": [
+    {
+      "key": "POST https://www.sholland.gov.uk/apiserver/ajaxlibrary 5d884379a5",
+      "method": "POST",
+      "url": "https://www.sholland.gov.uk/apiserver/ajaxlibrary",
+      "final_url": "https://www.sholland.gov.uk/apiserver/ajaxlibrary",
+      "body": "{\"body\":{\"id\":\"1\",\"jsonrpc\":\"2.0\",\"method\":\"SouthHolland.Waste.getCollectionDaysAjax\",\"params\":{\"UPRN\":\"10002546801\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 19:31:26 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "*",
+        "access-control-allow-methods": "*",
+        "access-control-expose-headers": "*",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "cloudflare",
+        "x-powered-by": "",
+        "cf-cache-status": "DYNAMIC",
+        "set-cookie": "__cf_bm=yRfvK4kUia_kdXChiM4pgk0FYTIVKqJjFIARBnCggP0-1791747085.6917555-1.0.1.1-_9I.B0aTh6Hdg8VowVDXizKDl2NzCXfKsRmEK4UmxWfcohguQVB3cfhhjTke5p0MebzQ2ZBshl2sXVBLc4SXc9YA5fHw5qmz6MvI664SdvIdOb5rn5hOuXZ5tFTUlaBz; HttpOnly; SameSite=None; Secure; Path=/; Domain=www.sholland.gov.uk; Expires=Sun, 11 Oct 2026 20:01:26 GMT",
+        "content-encoding": "gzip",
+        "cf-ray": "a49048f588917863-LHR"
+      },
+      "content_b64": "eyJpZCI6IjEiLCJyZXN1bHQiOnsic3VjY2VzcyI6dHJ1ZSwiZ2FyZGVuU3Vic2NyaXB0aW9uIjp7IlR5cGUiOiJCaW5zIiwiRGF5V2VlayI6IkZyaWRheSAoV2VlayAyKSIsIlllYXJFbmREYXRlIjoiMjAyNy0xMC0xNSIsIlllYXJFbmREYXRlRGlzcGxheSI6IkZyaWRheSAxNXRoIE9jdG9iZXIgMjAyNyIsIkVhcmxpZXN0UmVuZXdhbERhdGUiOiIyMDI3LTA5LTEwIiwiRWFybGllc3RSZW5ld2FsRGF0ZURpc3BsYXkiOiJGcmlkYXkgMTB0aCBTZXB0ZW1iZXIgMjAyNyIsIlN0YXR1cyI6IkN1cnJlbnQiLCJBdmFpbGFiaWxpdHkiOiJBZGRpdGlvbmFsIn0sInJlZnVzZURheSI6Ik1vbmRheSIsInJlY3ljbGluZ0RheSI6IkZyaWRheSIsIm5leHRSZWZ1c2VEYXRlIjoiMjAyNi0xMC0xMiIsIm5leHRSZWZ1c2VEYXRlRGlzcGxheSI6Ik1vbmRheSAxMnRoIE9jdG9iZXIiLCJuZXh0UmVmdXNlU2xpcCI6IiIsIm5leHRSZWN5Y2xpbmdEYXRlIjoiMjAyNi0xMC0xNiIsIm5leHRSZWN5Y2xpbmdEYXRlRGlzcGxheSI6IkZyaWRheSAxNnRoIE9jdG9iZXIiLCJuZXh0UmVjeWNsaW5nU2xpcCI6IiIsIm5leHRHYXJkZW5EYXRlIjoiMjAyNi0xMC0xNiIsIm5leHRHYXJkZW5EYXRlRGlzcGxheSI6IkZyaWRheSAxNnRoIE9jdG9iZXIiLCJuZXh0R2FyZGVuU2xpcCI6IiIsIm5leHRUeXBlcyI6InJlZnVzZSJ9LCJqc29ucnBjIjoiMi4wIn0="
+    }
+  ]
+}

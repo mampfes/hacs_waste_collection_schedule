@@ -1,22 +1,13 @@
-import logging
-from datetime import datetime, timedelta
+import datetime
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "Abfallwirtschaft Stadt Schweinfurt"
-DESCRIPTION = "Source for Schweinfurt, Germany"
-URL = "https://www.schweinfurt.de"
-TEST_CASES = {
-    "TestcaseI": {"address": "Ahornstrasse"},
-    "TestcaseII": {"address": "Ahornstrasse", "showmobile": "True"},
-    "TestcaseIII": {"address": "Ahornstrasse", "showmobile": "False"},
-    "TestcaseIV": {"address": "Ahornstrasse", "showmobile": False},
-}
-
-_LOGGER = logging.getLogger(__name__)
+from waste_collection_schedule import date_parsers, parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import boolean, street_address
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import JsonTransformer
 
 API_URL = "https://www.schweinfurt.de/umweltverkehr/abfall--entsorgung/mllkalender/14894.Aktuelle-Abfuhrtermine-und-Muellkalender.html"
 
@@ -28,74 +19,111 @@ API_URL = "https://www.schweinfurt.de/umweltverkehr/abfall--entsorgung/mllkalend
 NON_COLLECTION_KEYWORDS = ["geschlossen", "Aktion Kompostverkauf"]
 
 
-def _to_bool(value) -> bool:
-    """Coerce a bool or a (possibly quoted YAML) string into a bool.
+def _address_id(response, address, **_) -> str:
+    """Pick the value of the street <option> that contains the address."""
+    options = [
+        (tag.text.strip(), tag.get("value"))
+        for tag in BeautifulSoup(response.text, "html.parser").find_all("option")
+        if tag.get("value")
+    ]
+    matches = [value for text, value in options if address in text]
+    if not matches:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "address", address, [text for text, _ in options]
+        )
+    return matches[-1]
 
-    YAML configs sometimes pass booleans as quoted strings (e.g.
-    `showmobile: "False"`). A naive `bool("False")` evaluates to `True`
-    since any non-empty string is truthy, so this helper normalizes both
-    real booleans and their string representations.
-    """
-    if isinstance(value, str):
-        return value.strip().lower() == "true"
-    return bool(value)
+
+def _query(addr_id, **_) -> dict:
+    today = datetime.date.today()
+    return {
+        "_func": "evList",
+        "_mod": "events",
+        "ev[start]": today.strftime("%Y-%m-%d"),
+        "ev[end]": (today + datetime.timedelta(days=365)).strftime("%Y-%m-%d"),
+        "ev[addr]": addr_id,
+    }
 
 
-class Source:
-    def __init__(self, address, showmobile=False):
-        self._address = address
-        self._showmobile = _to_bool(showmobile)
+def _keep(record, source) -> bool:
+    title = record["title"]
+    if any(k.lower() in title.lower() for k in NON_COLLECTION_KEYWORDS):
+        return False
+    # showmobile may arrive as a quoted YAML string ("False" is truthy).
+    show_mobile = str(source.params.get("showmobile")).strip().lower() == "true"
+    return show_mobile or "Wertstoffhof" not in title
 
-    def fetch(self):
-        headers = {"referer": API_URL}
 
-        s = requests.session()
-        r = s.get(API_URL)
-        r.raise_for_status()
+def _location(record) -> str | None:
+    """The stop of a mobile collection ("... - Goethestraße")."""
+    _, sep, place = record["title"].partition(" - ")
+    return place if sep else None
 
-        soup = BeautifulSoup(r.text, "html.parser")
 
-        params = None
-        for tag in soup.find_all("option"):
-            if self._address in tag.text:
-                now = datetime.now()
-                nex = now + timedelta(days=365)
-                params = {
-                    "_func": "evList",
-                    "_mod": "events",
-                    "ev[start]": now.strftime("%Y-%m-%d"),
-                    "ev[end]": nex.strftime("%Y-%m-%d"),
-                    "ev[addr]": tag.get("value"),
-                }
+@final
+class Source(BaseSource):
+    TITLE = "Abfallwirtschaft Stadt Schweinfurt"
+    DESCRIPTION = "Source for Schweinfurt, Germany"
+    URL = "https://www.schweinfurt.de"
+    COUNTRY = "de"
 
-        if params is None:
-            raise SourceArgumentNotFound("address", self._address)
+    RAISE_ON_EMPTY = True
 
-        r = s.get(API_URL, params=params, headers=headers)
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "TestcaseI": {"address": "Ahornstrasse"},
+        "TestcaseII": {"address": "Ahornstrasse", "showmobile": "True"},
+        "TestcaseIII": {"address": "Ahornstrasse", "showmobile": "False"},
+        "TestcaseIV": {"address": "Ahornstrasse", "showmobile": False},
+    }
 
-        data = r.json()
+    WASTE_TYPES: ClassVar[list] = [
+        wt.PAPER,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.HAZARDOUS,
+    ]
 
-        s.close()
+    PARAMS = (
+        street_address(),
+        boolean("showmobile", "Show mobile recycling center", default=False),
+    )
 
-        entries = []
-        for entry in data["contents"]:
-            title = data["contents"][entry]["title"]
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the street name as listed in the street dropdown at "
+            "https://www.schweinfurt.de (e.g. 'Ahornstrasse'). Enable "
+            "'showmobile' to also include the mobile recycling center "
+            "(Mobiler Wertstoffhof) dates."
+        ),
+    }
 
-            if any(
-                keyword.lower() in title.lower() for keyword in NON_COLLECTION_KEYWORDS
-            ):
-                continue
-
-            if "Wertstoffhof" in title and not self._showmobile:
-                continue
-
-            entries.append(
-                Collection(
-                    datetime.strptime(
-                        data["contents"][entry]["start"], "%Y-%m-%d %H:%M:%S"
-                    ).date(),
-                    title,
-                )
-            )
-        return entries
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(retrievers.Lookup(API_URL, pick=_address_id),),
+        url=API_URL,
+        params=_query,
+        headers={"referer": API_URL},
+        raise_for_status=True,
+    )
+    parse = parsers.JsonParser("contents")
+    preprocess = preprocessors.Compose(
+        preprocessors.FlattenGroups(),
+        preprocessors.RowFilter(_keep),
+    )
+    transform = JsonTransformer(
+        date_key="start",
+        type_key="title",
+        parse_date=date_parsers.for_format("%Y-%m-%d %H:%M:%S"),
+        clean=lambda title: title.partition(" - ")[0],
+        location_key=_location,
+        type_value_map={
+            "Papier, Restmüll, Gelber Sack": [
+                wt.PAPER,
+                wt.GENERAL_WASTE,
+                wt.RECYCLABLES,
+            ],
+            "Mobiler Wertstoffhof und Problemabfallsammlung": [
+                wt.HAZARDOUS,
+                wt.RECYCLABLES,
+            ],
+        },
+    )

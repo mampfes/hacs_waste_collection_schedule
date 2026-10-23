@@ -1,0 +1,22 @@
+---
+title: Intradel (community calendars)
+url: https://intradel-icals.pages.dev
+country: be
+howto:
+  en: |
+    - Intradel (province of Liège) only publishes its collection calendars as PDF/Issuu documents. The community site <https://intradel-icals.pages.dev> (not official, maintained by a volunteer) converts them into one ICS file per commune and, where applicable, per zone or collection day.
+    - Go to <https://intradel-icals.pages.dev>, search for your commune and pick the calendar whose collection day matches your address.
+    - Click `Copier le lien` and use this link as the `url` parameter. The links look like `https://intradel-icals.pages.dev/ics/<commune>.ics` or `https://intradel-icals.pages.dev/ics/<commune>_zone<N>.ics`, e.g. `https://intradel-icals.pages.dev/ics/awans.ics` or `https://intradel-icals.pages.dev/ics/ans_zone2.ics`.
+    - The calendars only contain the dates of the current calendar year as published by Intradel. They only continue to work if the site is updated with the next year's calendars.
+  fr: |
+    - Intradel (province de Liège) publie ses calendriers de collecte uniquement en PDF/Issuu. Le site communautaire <https://intradel-icals.pages.dev> (non officiel, tenu par un bénévole) les convertit en un fichier ICS par commune et, le cas échéant, par zone ou jour de collecte.
+    - Allez sur <https://intradel-icals.pages.dev>, cherchez votre commune et choisissez le calendrier dont le jour de collecte correspond à votre adresse.
+    - Cliquez sur `Copier le lien` et utilisez ce lien comme paramètre `url`. Les liens ont la forme `https://intradel-icals.pages.dev/ics/<commune>.ics` ou `https://intradel-icals.pages.dev/ics/<commune>_zone<N>.ics`, p. ex. `https://intradel-icals.pages.dev/ics/awans.ics` ou `https://intradel-icals.pages.dev/ics/ans_zone2.ics`.
+    - Les calendriers ne contiennent que les dates de l'année en cours publiées par Intradel. Ils ne restent utilisables que si le site est mis à jour avec les calendriers de l'année suivante.
+test_cases:
+  Awans:
+    url: https://intradel-icals.pages.dev/ics/awans.ics
+  Ans, zone 2:
+    url: https://intradel-icals.pages.dev/ics/ans_zone2.ics
+  Liège, lundi:
+    url: https://intradel-icals.pages.dev/ics/liege_lundi.ics

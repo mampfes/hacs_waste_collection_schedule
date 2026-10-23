@@ -1,0 +1,73 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://geoapi.dorsetcouncil.gov.uk/v1/Services/refuseday/100040606087 ",
+      "method": "GET",
+      "url": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/refuseday/100040606087",
+      "final_url": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/refuseday/100040606087",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "api-supported-versions": "1.0",
+        "date": "Tue, 13 Oct 2026 15:46:21 GMT",
+        "set-cookie": "BIGipServerPMkqenQBLW3oKEJyRoA81Q=!5FQ0gxVNtZX0SMY88jfRe43qtYb9US1iqr5ATSRUe711YJy/uBZoIBdQE72xbr4A1d3CC8gQyMhfuA==; path=/; Httponly; Secure, TS01bf83d2=0139af320f7436518fbc512d8285e93ea8177fad140cefeef217b988f3725bb3f61182c6d22d96132fe40da3e19f68a93a5a10fc29c5d9e2ed4914da7a0ada65efaa6494bd; Path=/, TS161d06bf027=082e830715ab200028dadc930c6101b5d2584ac03d8c8821d87f83d8c28ef36bba4ce2c44ac303fc0877455ce01130000ed9f5896d1ec626f10a971da2115bf1e8bec3d26fc11a389ce213d8903992629f871aa2b8b94682eb81c659e792daec; Path=/",
+        "transfer-encoding": "chunked"
+      },
+      "content_b64": "eyJzZXJ2aWNlQ29kZSI6InJlZnVzZWRheSIsInNlcnZpY2VOYW1lIjoiUmVmdXNlIENvbGxlY3Rpb24gRGF5IiwidXBybiI6MTAwMDQwNjA2MDg3LCJ2YWx1ZXMiOlt7ImlkIjoiMTAwMDQwNjA2MDg3IiwibmFtZSI6IldFRCAyIiwidXJsIjoiaHR0cHM6Ly93d3cuZG9yc2V0Y291bmNpbC5nb3YudWsvZG9jdW1lbnRzLzM1MDI0LzE4OTc5NzYvQkFVK0NhbGVuZGFyK1dlZG5lc2RheSsyLnBkZi9kM2M5MDU4MS03OTQ5LWUwNjktYWRmMi0zYmUxMmE2NWVmMTc/dD0xNzAyMzc0MTE5MTIxIiwibWFwVVJMIjpudWxsLCJpbWFnZVVSTCI6bnVsbCwiZWFzdGluZyI6Mzk0NzE2LjUyLCJub3J0aGluZyI6OTUyMzAuNTIsImxhdGl0dWRlIjo1MC43NTY2NCwibG9uZ2l0dWRlIjotMi4wNzYyNiwibWJyTWluWCI6Mzk0NzE2LjUyLCJtYnJNYXhYIjozOTQ3MTYuNTIsIm1ick1pblkiOjk1MjMwLjUyLCJtYnJNYXhZIjo5NTIzMC41MiwiZGF0ZU5leHRWaXNpdCI6IjIwMjYtMTAtMTQiLCJkYXlPZldlZWsiOiJXZWRuZXNkYXkiLCJmcmVxdWVuY3kiOiJGb3J0bmlnaHRseSIsInR5cGUiOiJSZWZ1c2UiLCJuZXdVUkwiOiJiaW5zLXdlZG5lc2RheTIiLCJuZXdVUkxDb21tZW5jZW1lbnREYXRlIjoiMjAyNi0wOS0zMCJ9XX0="
+    },
+    {
+      "key": "GET https://geoapi.dorsetcouncil.gov.uk/v1/Services/recyclingday/100040606087 ",
+      "method": "GET",
+      "url": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/recyclingday/100040606087",
+      "final_url": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/recyclingday/100040606087",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "api-supported-versions": "1.0",
+        "date": "Tue, 13 Oct 2026 15:46:22 GMT",
+        "set-cookie": "TS161d06bf027=082e830715ab2000dcc155821ba2c94bbdd1b0305f50661557ca1604290d8cfd8e1f8afd6ced193108b97b5276113000d94b4d6d9ea96fb34d6c85a6a76a018887717c5c976e74eb82c12399f05e1c503b01503929bdacb8bff0d2ea5807a4c6; Path=/",
+        "transfer-encoding": "chunked"
+      },
+      "content_b64": "eyJzZXJ2aWNlQ29kZSI6InJlY3ljbGluZ2RheSIsInNlcnZpY2VOYW1lIjoiUmVjeWNsaW5nIENvbGxlY3Rpb24gRGF5IiwidXBybiI6MTAwMDQwNjA2MDg3LCJ2YWx1ZXMiOlt7ImlkIjoiMTAwMDQwNjA2MDg3IiwibmFtZSI6IldFRCAyIiwidXJsIjoiaHR0cHM6Ly93d3cuZG9yc2V0Y291bmNpbC5nb3YudWsvZG9jdW1lbnRzLzM1MDI0LzE4OTc5NzYvQkFVK0NhbGVuZGFyK1dlZG5lc2RheSsyLnBkZi9kM2M5MDU4MS03OTQ5LWUwNjktYWRmMi0zYmUxMmE2NWVmMTc/dD0xNzAyMzc0MTE5MTIxIiwibWFwVVJMIjpudWxsLCJpbWFnZVVSTCI6bnVsbCwiZWFzdGluZyI6Mzk0NzE2LjUyLCJub3J0aGluZyI6OTUyMzAuNTIsImxhdGl0dWRlIjo1MC43NTY2NCwibG9uZ2l0dWRlIjotMi4wNzYyNiwibWJyTWluWCI6Mzk0NzE2LjUyLCJtYnJNYXhYIjozOTQ3MTYuNTIsIm1ick1pblkiOjk1MjMwLjUyLCJtYnJNYXhZIjo5NTIzMC41MiwiZGF0ZU5leHRWaXNpdCI6IjIwMjYtMTAtMjEiLCJkYXlPZldlZWsiOiJXZWRuZXNkYXkiLCJmcmVxdWVuY3kiOiJGb3J0bmlnaHRseSIsInR5cGUiOiJSZWN5Y2xpbmciLCJuZXdVUkwiOiJiaW5zLXdlZG5lc2RheTIiLCJuZXdVUkxDb21tZW5jZW1lbnREYXRlIjoiMjAyNi0wOS0zMCJ9XX0="
+    },
+    {
+      "key": "GET https://geoapi.dorsetcouncil.gov.uk/v1/Services/gardenwasteday/100040606087 ",
+      "method": "GET",
+      "url": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/gardenwasteday/100040606087",
+      "final_url": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/gardenwasteday/100040606087",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "api-supported-versions": "1.0",
+        "date": "Tue, 13 Oct 2026 15:46:22 GMT",
+        "set-cookie": "TS161d06bf027=082e830715ab20005b9dcd37a47787c6941dadb336e09c08de4cff070d9476544d1ec76737c050da08d9e2ec67113000a1feef69dc2063f54d6c85a6a76a018887717c5c976e74eb82c12399f05e1c503b01503929bdacb8bff0d2ea5807a4c6; Path=/",
+        "transfer-encoding": "chunked"
+      },
+      "content_b64": "eyJzZXJ2aWNlQ29kZSI6ImdhcmRlbndhc3RlZGF5Iiwic2VydmljZU5hbWUiOiJHYXJkZW4gV2FzdGUgQ29sbGVjdGlvbiBEYXkiLCJ1cHJuIjoxMDAwNDA2MDYwODcsInZhbHVlcyI6W3siaWQiOiIxMDAwNDA2MDYwODciLCJuYW1lIjoiVEhVIEdXMiIsInVybCI6Imh0dHBzOi8vZG9yc2V0Y291bmNpbC5nb3YudWsvYmluLWNvbGxlY3Rpb24tY2FsZW5kYXIvZ3ctdGh1cnNkYXkyIiwibWFwVVJMIjpudWxsLCJpbWFnZVVSTCI6bnVsbCwiZWFzdGluZyI6Mzk0NzE2LjUyLCJub3J0aGluZyI6OTUyMzAuNTIsImxhdGl0dWRlIjo1MC43NTY2NCwibG9uZ2l0dWRlIjotMi4wNzYyNiwibWJyTWluWCI6Mzk0NzE2LjUyLCJtYnJNYXhYIjozOTQ3MTYuNTIsIm1ick1pblkiOjk1MjMwLjUyLCJtYnJNYXhZIjo5NTIzMC41MiwiZGF0ZU5leHRWaXNpdCI6IjIwMjYtMTAtMjIiLCJkYXlPZldlZWsiOiJUaHVyc2RheSIsImZyZXF1ZW5jeSI6IkZvcnRuaWdodGx5IiwidHlwZSI6IkdhcmRlbiIsIm5ld1VSTCI6bnVsbCwibmV3VVJMQ29tbWVuY2VtZW50RGF0ZSI6bnVsbH1dfQ=="
+    },
+    {
+      "key": "GET https://geoapi.dorsetcouncil.gov.uk/v1/Services/foodwasteday/100040606087 ",
+      "method": "GET",
+      "url": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/foodwasteday/100040606087",
+      "final_url": "https://geoapi.dorsetcouncil.gov.uk/v1/Services/foodwasteday/100040606087",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "api-supported-versions": "1.0",
+        "date": "Tue, 13 Oct 2026 15:46:23 GMT",
+        "set-cookie": "TS161d06bf027=082e830715ab2000db661c13cd5fd6fb241260c5f99e091bf69285a153c9d4ed9ac7e621349863dd08ffc7123f113000998da44b7c689cc41e2b36211aa4b0a022e8ccca370dbbab08e838ea22b1cb69e6aa2249206a665aaa5955387fa093ca; Path=/",
+        "transfer-encoding": "chunked"
+      },
+      "content_b64": "eyJzZXJ2aWNlQ29kZSI6ImZvb2R3YXN0ZWRheSIsInNlcnZpY2VOYW1lIjoiRm9vZCBXYXN0ZSBDb2xsZWN0aW9uIERheSIsInVwcm4iOjEwMDA0MDYwNjA4NywidmFsdWVzIjpbeyJpZCI6IjEwMDA0MDYwNjA4NyIsIm5hbWUiOiJXRUQgMiIsInVybCI6Imh0dHBzOi8vd3d3LmRvcnNldGNvdW5jaWwuZ292LnVrL2RvY3VtZW50cy8zNTAyNC8xODk3OTc2L0JBVStDYWxlbmRhcitXZWRuZXNkYXkrMi5wZGYvZDNjOTA1ODEtNzk0OS1lMDY5LWFkZjItM2JlMTJhNjVlZjE3P3Q9MTcwMjM3NDExOTEyMSIsIm1hcFVSTCI6bnVsbCwiaW1hZ2VVUkwiOm51bGwsImVhc3RpbmciOjM5NDcxNi41Miwibm9ydGhpbmciOjk1MjMwLjUyLCJsYXRpdHVkZSI6NTAuNzU2NjQsImxvbmdpdHVkZSI6LTIuMDc2MjYsIm1ick1pblgiOjM5NDcxNi41MiwibWJyTWF4WCI6Mzk0NzE2LjUyLCJtYnJNaW5ZIjo5NTIzMC41MiwibWJyTWF4WSI6OTUyMzAuNTIsImRhdGVOZXh0VmlzaXQiOiIyMDI2LTEwLTE0IiwiZGF5T2ZXZWVrIjoiV2VkbmVzZGF5IiwiZnJlcXVlbmN5IjoiV2Vla2x5IiwidHlwZSI6IkZvb2QiLCJuZXdVUkwiOiJiaW5zLXdlZG5lc2RheTIiLCJuZXdVUkxDb21tZW5jZW1lbnREYXRlIjoiMjAyNi0wOS0zMCJ9XX0="
+    }
+  ]
+}

@@ -1,10 +1,22 @@
 # West Berkshire Council
 
-Support for schedules provided by [West Berkshire Council](https://www.westberks.gov.uk/).
+Support for schedules provided by [West Berkshire Council](https://westberks.gov.uk).
 
-If collection data is available for the address provided, it will return rubbish and recycling waste collection dates.
+Source for westberks.gov.uk services for West Berkshire Council
 
 ## Configuration via configuration.yaml
+
+### Using uprn
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: westberks_gov_uk
+      args:
+        uprn: UPRN
+```
+
+### Using postcode and housenumberorname
 
 ```yaml
 waste_collection_schedule:
@@ -12,41 +24,45 @@ waste_collection_schedule:
     - name: westberks_gov_uk
       args:
         postcode: POSTCODE
-        uprn: UPRN
+        housenumberorname: HOUSENUMBERORNAME
 ```
 
 ### Configuration Variables
 
-**postcode**
-_(string) (optional)_
+**uprn**  
+*(string) (alternative)*
 
-**housenumberorname**
-_(string) (optional)_
+**postcode**  
+*(string) (alternative)*
 
-**uprn**
-_(string) (optional)_
+**housenumberorname**  
+*(string) (alternative)*
 
-Either the postcode _and_ housenumberorname or the UPRN should be supplied in the arguments
+Provide one of: `uprn` or `postcode` + `housenumberorname`.
 
-## Examples
+## Example
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: westberks_gov_uk
-      args:
-        uprn: "100080241094"
-```
+### Using uprn
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: westberks_gov_uk
       args:
-        postcode: "RG18 4QU"
-        housenumberorname: "6"
+        uprn: '100080241094'
 ```
 
-## How to find your UPRN
+### Using postcode and housenumberorname
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and providing your address details.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: westberks_gov_uk
+      args:
+        postcode: RG7 6NZ
+        housenumberorname: PARROG HOUSE
+```
+
+## How to get the source arguments
+
+Provide your UPRN, or your postcode plus your house name or number. Find your UPRN at https://www.findmyaddress.co.uk/

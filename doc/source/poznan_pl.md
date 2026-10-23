@@ -1,6 +1,8 @@
 # Poznań
 
-Support for schedules provided by [Poznań](https://poznan.pl).
+Support for schedules provided by [Poznań](https://www.poznan.pl/mim/odpady).
+
+Source for Poznań city garbage collection
 
 ## Configuration via configuration.yaml
 
@@ -9,19 +11,17 @@ waste_collection_schedule:
   sources:
     - name: poznan_pl
       args:
-        street_name: Święty Marcin
-        street_number: 1
+        street_name: STREET_NAME
+        street_number: STREET_NUMBER
 ```
 
 ### Configuration Variables
 
-**street_address**  
+**street_name**  
 *(string) (required)*
 
 **street_number**  
-*(string)(required)*
-
-All arguments must be provided.
+*(string) (required)*
 
 ## Example
 
@@ -30,11 +30,10 @@ waste_collection_schedule:
   sources:
     - name: poznan_pl
       args:
-        street_name: Święty Marcin
-        street_number: 1
+        street_name: "\u015AWI\u0118TY MARCIN"
+        street_number: '2'
 ```
 
 ## How to get the source arguments
 
-You have to provide your street name and house number (eg 1 or 7/3).
-You can check if your address is covered by SepanRemondis provider at page [poznan.pl](https://www.poznan.pl/mim/odpady/harmonogramy.html)
+Enter the street name and building number exactly as offered on https://www.poznan.pl/mim/odpady/harmonogramy.html.

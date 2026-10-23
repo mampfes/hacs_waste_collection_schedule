@@ -1,43 +1,39 @@
 # Northumberland County Council
 
-Support for schedules provided by [Northumberland County Council](https://www.northumberland.gov.uk), serving Northumberland, UK.
+Support for schedules provided by [Northumberland County Council](https://www.northumberland.gov.uk).
+
+Source for Northumberland County Council waste collection schedule.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: northumberland_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
         postcode: POSTCODE
 ```
 
 ### Configuration Variables
 
-**uprn**
+**uprn**  
 *(string) (required)*
 
-Your Unique Property Reference Number (UPRN).
-
-**postcode**
+**postcode**  
 *(string) (required)*
-
-Your property postcode (e.g. `NE46 1UF`).
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: northumberland_gov_uk
       args:
-        uprn: "100110637553"
-        postcode: "NE46 1UF"
+        uprn: '100110637553'
+        postcode: NE46 1UF
 ```
 
-## How to find your UPRN and postcode
+## How to get the source arguments
 
-Visit <https://bincollection.northumberland.gov.uk/postcode>, enter your postcode, and select your address. The UPRN is shown in the address dropdown option value.
-
-Alternatively, find your UPRN at <https://www.findmyaddress.co.uk/>.
+Visit https://bincollection.northumberland.gov.uk/postcode, enter your postcode and select your address. The UPRN is the number in the address dropdown (or find it at https://www.findmyaddress.co.uk/).

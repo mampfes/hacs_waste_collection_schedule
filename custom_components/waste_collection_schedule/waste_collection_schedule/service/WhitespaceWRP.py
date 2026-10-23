@@ -1,4 +1,5 @@
 import logging
+from collections.abc import Callable
 from typing import TYPE_CHECKING, Any
 
 import requests
@@ -166,7 +167,9 @@ class WhitespaceRetriever(RetrieverFunc):
 
     Args are the ``source.params`` field names holding the address parts. The
     portal base URL is read from the source's ``API_URL`` (each council has its
-    own ``*-wrp.whitespacews.com`` host) unless ``base_url`` is given. ``street``
+    own ``*-wrp.whitespacews.com`` host) unless ``base_url`` is given; a
+    ``base_url`` callable is called with the source params, for a source that
+    serves several councils on hosts of one pattern. ``street``
     and ``town`` are optional: when no field name is configured the form is
     submitted with an empty street and no town, matching the councils that key
     only on house number + postcode.
@@ -179,7 +182,7 @@ class WhitespaceRetriever(RetrieverFunc):
         postcode: str = "postcode",
         street: str | None = None,
         town: str | None = None,
-        base_url: str | None = None,
+        base_url: "str | Callable[..., str] | None" = None,
     ):
         self.name_number = name_number
         self.postcode = postcode
@@ -189,7 +192,10 @@ class WhitespaceRetriever(RetrieverFunc):
 
     def __call__(self, source: "BaseSource") -> list:
         params = source.params
-        client = WhitespaceClient(self.base_url or source.API_URL)
+        base_url = self.base_url or source.API_URL
+        if callable(base_url):
+            base_url = base_url(**params)
+        client = WhitespaceClient(base_url)
         return client.fetch_schedule(
             address_name_number=params.get(self.name_number),
             address_postcode=params[self.postcode],

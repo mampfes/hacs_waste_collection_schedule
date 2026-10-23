@@ -1,12 +1,14 @@
 # Knowsley Council
 
-Support for schedules provided by [Knowsley Council](https://www.knowsley.gov.uk/), serving Knowsley Council, UK.
+Support for schedules provided by [Knowsley Council](https://www.knowsley.gov.uk/).
+
+Source for Knowsley Council.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: knowsley_gov_uk
       args:
         postcode: POSTCODE
@@ -16,33 +18,22 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **postcode**  
-*(String) (required)*
+*(string) (required)*
 
 **uprn**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: knowsley_gov_uk
       args:
         postcode: L364AR
-        uprn: "000040082756"
+        uprn: 000040082756
 ```
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: knowsley_gov_uk
-      args:
-        postcode: L34 0HZ
-        uprn: 40029195
-```
+## How to get the source arguments
 
-## How to get the source argument
-
-Use your postcode as the `postcode` argument and your Unique Property Reference Number (UPRN) as the `uprn` argument.
-
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+Enter your postcode and your property's UPRN (find it at https://www.findmyaddress.co.uk/).

@@ -15,6 +15,7 @@ with ``recurrence.next_weekday`` and a ``Schedule`` in the source's describe().
 from __future__ import annotations
 
 import re
+import unicodedata
 from collections.abc import Mapping
 from typing import TypeVar
 
@@ -26,6 +27,22 @@ V = TypeVar("V")
 def normalize_text(value: object) -> str:
     """Casefold, trim, and collapse internal whitespace for tolerant matching."""
     return re.sub(r"\s+", " ", str(value).strip()).casefold()
+
+
+# Letters NFKD does not decompose into a base letter and an accent.
+_UNDECOMPOSED = str.maketrans("łŁđĐøØ", "lLdDoO")
+
+
+def normalize_loose(value: object) -> str:
+    """Like :func:`normalize_text`, but also drop accents and punctuation.
+
+    For names a user types without the diacritics or hyphens the provider
+    prints: "Jamno Labusz" matches "Jamno-Łabusz", "Perouges hors cite"
+    matches "Pérouges hors cité".
+    """
+    text = unicodedata.normalize("NFKD", str(value).translate(_UNDECOMPOSED))
+    text = "".join(char for char in text if not unicodedata.combining(char))
+    return re.sub(r"[\W_]+", " ", text).strip().casefold()
 
 
 def resolve(

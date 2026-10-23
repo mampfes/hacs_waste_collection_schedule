@@ -1,0 +1,90 @@
+{
+  "recorded_at": "2026-10-11",
+  "interactions": [
+    {
+      "key": "POST https://www.westberks.gov.uk/apiserver/ajaxlibrary 4fbd2fb276",
+      "method": "POST",
+      "url": "https://www.westberks.gov.uk/apiserver/ajaxlibrary",
+      "final_url": "https://www.westberks.gov.uk/apiserver/ajaxlibrary",
+      "body": "{\"body\":{\"id\":\"1\",\"jsonrpc\":\"2.0\",\"method\":\"goss.echo.westberks.forms.getNextRubbishCollectionDate\",\"params\":{\"uprn\":\"100081026602\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 19:36:29 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "*",
+        "access-control-allow-methods": "*",
+        "access-control-expose-headers": "*",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "cloudflare",
+        "x-powered-by": "",
+        "cf-cache-status": "DYNAMIC",
+        "set-cookie": "__cf_bm=TPNQdAtHKjQhQ56EzdPWzQDNkRovdziKJQdi3sjWbsk-1791747389.5304153-1.0.1.1-JJwpEzBq2hs3Hc1hZzCpnIsuocwduE.dUzN1k1xyq6N8EgJcLGR80_zr0miW5aufBP5PXxNS2lprHJepKmMoJ0mJIAWZC7idGZQx2dVxHC38uirJyLr6dPygLesUuSaq; HttpOnly; SameSite=None; Secure; Path=/; Domain=www.westberks.gov.uk; Expires=Sun, 11 Oct 2026 20:06:29 GMT",
+        "content-encoding": "gzip",
+        "cf-ray": "a49050608870d7e8-LHR"
+      },
+      "content_b64": "eyJpZCI6IjEiLCJyZXN1bHQiOnsicnViYmlzaFRleHQiOiJuZXh0ICIsIm5leHRSdWJiaXNoRGF0ZVRleHQiOiJUaHVyc2RheSAxNSBPY3RvYmVyIiwibmV4dFJ1YmJpc2hEYXRlU3ViVGV4dCI6IiJ9LCJqc29ucnBjIjoiMi4wIn0="
+    },
+    {
+      "key": "POST https://www.westberks.gov.uk/apiserver/ajaxlibrary 65fa0aa0ec",
+      "method": "POST",
+      "url": "https://www.westberks.gov.uk/apiserver/ajaxlibrary",
+      "final_url": "https://www.westberks.gov.uk/apiserver/ajaxlibrary",
+      "body": "{\"body\":{\"id\":\"1\",\"jsonrpc\":\"2.0\",\"method\":\"goss.echo.westberks.forms.getNextRecyclingCollectionDate\",\"params\":{\"uprn\":\"100081026602\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 19:36:30 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "*",
+        "access-control-allow-methods": "*",
+        "access-control-expose-headers": "*",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "cloudflare",
+        "x-powered-by": "",
+        "cf-cache-status": "DYNAMIC",
+        "content-encoding": "gzip",
+        "cf-ray": "a49050625e4fd7e8-LHR"
+      },
+      "content_b64": "eyJpZCI6IjEiLCJyZXN1bHQiOnsicmVjeWNsaW5nVGV4dCI6Im5leHQgIiwibmV4dFJlY3ljbGluZ0RhdGVUZXh0IjoiVGh1cnNkYXkgMjIgT2N0b2JlciIsIm5leHRSZWN5Y2xpbmdEYXRlU3ViVGV4dCI6IiJ9LCJqc29ucnBjIjoiMi4wIn0="
+    },
+    {
+      "key": "POST https://www.westberks.gov.uk/apiserver/ajaxlibrary 0e9edde611",
+      "method": "POST",
+      "url": "https://www.westberks.gov.uk/apiserver/ajaxlibrary",
+      "final_url": "https://www.westberks.gov.uk/apiserver/ajaxlibrary",
+      "body": "{\"body\":{\"id\":\"1\",\"jsonrpc\":\"2.0\",\"method\":\"goss.echo.westberks.forms.getNextFoodWasteCollectionDate\",\"params\":{\"uprn\":\"100081026602\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 11 Oct 2026 19:36:30 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "*",
+        "access-control-allow-methods": "*",
+        "access-control-expose-headers": "*",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "cloudflare",
+        "x-powered-by": "",
+        "cf-cache-status": "DYNAMIC",
+        "content-encoding": "gzip",
+        "cf-ray": "a49050642cbad7e8-LHR"
+      },
+      "content_b64": "eyJpZCI6IjEiLCJyZXN1bHQiOnsiRm9vZFdhc3RlVGV4dCI6Im5leHQgIiwibmV4dEZvb2RXYXN0ZURhdGVUZXh0IjoiVGh1cnNkYXkgMTUgT2N0b2JlciIsIm5leHRGb29kV2FzdGVEYXRlU3ViVGV4dCI6IiJ9LCJqc29ucnBjIjoiMi4wIn0="
+    }
+  ]
+}

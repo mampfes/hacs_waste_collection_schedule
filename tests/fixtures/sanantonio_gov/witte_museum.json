@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-10-14",
+  "interactions": [
+    {
+      "key": "GET https://gis.sanantonio.gov/swmd/mycollectionday/Request.aspx?addr=3801%20Broadway ",
+      "method": "GET",
+      "url": "https://gis.sanantonio.gov/swmd/mycollectionday/Request.aspx?addr=3801%20Broadway",
+      "final_url": "https://gis.sanantonio.gov/swmd/mycollectionday/Request.aspx?addr=3801%20Broadway",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Wed, 14 Oct 2026 16:41:12 GMT",
+        "content-length": "231",
+        "x-envoy-upstream-service-time": "181",
+        "server": "envoy"
+      },
+      "content_b64": "W3siYXR0cmlidXRlcyI6eyJBZGRyZXNzIjoiMzgwMSBCUk9BRFdBWSIsIkdhcmJhZ2UiOiJXRURORVNEQVkiLCJSZWN5Y2xlIjoiTU9OREFZIiwiT3JnYW5pY3MiOiJNT05EQVkiLCJCcnVzaCI6Ik5PIFNFUlZJQ0UiLCJCdWxreSI6Ik5PIFNFUlZJQ0UiLCJDZW50ZXIiOiJTb3V0aEVhc3QiLCJpc1F1YWxpZnlPcmdhbmljcyI6dHJ1ZX0sImdlb21ldHJ5Ijp7IngiOjIxMzc5OTgsInkiOjEzNzE1NzI0fX1d"
+    }
+  ]
+}

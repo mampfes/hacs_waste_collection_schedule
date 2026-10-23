@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-10-14",
+  "interactions": [
+    {
+      "key": "GET https://gis.sanantonio.gov/swmd/mycollectionday/Request.aspx?addr=646%20S%20Flores%20St ",
+      "method": "GET",
+      "url": "https://gis.sanantonio.gov/swmd/mycollectionday/Request.aspx?addr=646%20S%20Flores%20St",
+      "final_url": "https://gis.sanantonio.gov/swmd/mycollectionday/Request.aspx?addr=646%20S%20Flores%20St",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Wed, 14 Oct 2026 16:41:11 GMT",
+        "content-length": "254",
+        "x-envoy-upstream-service-time": "1084",
+        "server": "envoy"
+      },
+      "content_b64": "W3siYXR0cmlidXRlcyI6eyJBZGRyZXNzIjoiNjQ2IFMgRkxPUkVTIFNUIiwiR2FyYmFnZSI6IlRIVVJTREFZIiwiUmVjeWNsZSI6IlRVRVNEQVkiLCJPcmdhbmljcyI6IlRVRVNEQVkiLCJCcnVzaCI6IldlZWsgb2YgMTEvMzAvMjAyNiIsIkJ1bGt5IjoiV2VlayBvZiAwMy8wOC8yMDI3IiwiQ2VudGVyIjoiU291dGhFYXN0IiwiaXNRdWFsaWZ5T3JnYW5pY3MiOnRydWV9LCJnZW9tZXRyeSI6eyJ4IjoyMTI4NjA4LjQsInkiOjEzNjk5NzY4LjZ9fV0="
+    }
+  ]
+}

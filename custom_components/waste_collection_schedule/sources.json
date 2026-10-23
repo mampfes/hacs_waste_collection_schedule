@@ -566,6 +566,12 @@
       "id": "app_my_local_services_au"
     },
     {
+      "title": "City of Wodonga",
+      "module": "wodonga_vic_gov_au",
+      "default_params": {},
+      "id": "wodonga_vic_gov_au"
+    },
+    {
       "title": "City of Yarra",
       "module": "yarracity_vic_gov_au",
       "default_params": {},
@@ -1399,6 +1405,12 @@
       "module": "unley_sa_gov_au",
       "default_params": {},
       "id": "unley_sa_gov_au"
+    },
+    {
+      "title": "Upper Lachlan Shire Council",
+      "module": "upperlachlan_nsw_gov_au",
+      "default_params": {},
+      "id": "upperlachlan_nsw_gov_au"
     },
     {
       "title": "Wagga Wagga City Council",
@@ -2585,26 +2597,12 @@
       "id": "scheibbs_umweltverbaende_at"
     },
     {
-      "title": "GVU Scheibbs",
-      "module": "umweltverbaende_at",
-      "default_params": {
-        "district": "scheibbs"
-      },
-      "id": "umweltverbaende_at"
-    },
-    {
       "title": "GVU St. P\u00f6lten",
       "module": "umweltverbaende_at",
       "default_params": {
         "district": "stpoeltenland"
       },
       "id": "umweltverbaende_at"
-    },
-    {
-      "title": "G\u00e4nserndorf",
-      "module": "gaenserndorf_city_at",
-      "default_params": {},
-      "id": "gaenserndorf_city_at"
     },
     {
       "title": "G\u00e4nserndorf City / G\u00e4nserndorf App",
@@ -2867,6 +2865,12 @@
       "module": "lipizzanerheimat_at",
       "default_params": {},
       "id": "lipizzanerheimat_at"
+    },
+    {
+      "title": "Kainbach bei Graz",
+      "module": "kainbach_gv_at",
+      "default_params": {},
+      "id": "kainbach_gv_at"
     },
     {
       "title": "Kaindorf",
@@ -5021,6 +5025,12 @@
       "id": "hygea_be"
     },
     {
+      "title": "Intradel (community calendars)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_intradel_be"
+    },
+    {
       "title": "Ittre",
       "module": "ittre_be",
       "default_params": {},
@@ -5201,7 +5211,10 @@
     {
       "title": "City of Hamilton (ON)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "district_id": "HAM",
+        "project_id": "520"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -5569,7 +5582,10 @@
     {
       "title": "Norfolk County (ON)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "district_id": "OLYMP",
+        "project_id": "3107"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -5581,7 +5597,10 @@
     {
       "title": "Oak Bay (BC)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "district_id": "OAK",
+        "project_id": "3187"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -5635,7 +5654,10 @@
     {
       "title": "Prince George (BC)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "district_id": "PrinceGeorge",
+        "project_id": "523"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -5673,7 +5695,10 @@
     {
       "title": "Richmond Hill (ON)",
       "module": "recyclecoach_com",
-      "default_params": {},
+      "default_params": {
+        "city": "Richmond Hill",
+        "state": "Ontario"
+      },
       "id": "recyclecoach_com"
     },
     {
@@ -6194,22 +6219,6 @@
       "id": "chartres_metropole_fr"
     },
     {
-      "title": "Ambar\u00e8s-et-Lagrave",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Ambar\u00e8s-et-Lagrave"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
-      "title": "Amb\u00e8s",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Amb\u00e8s"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Amilly",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -6392,14 +6401,6 @@
       "id": "terrestouloises_com"
     },
     {
-      "title": "Blanquefort",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Blanquefort"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Bois-de-Haye",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6454,14 +6455,6 @@
         "commune": "Bonneuil-sur-Marne"
       },
       "id": "sudestavenir_fr"
-    },
-    {
-      "title": "Bordeaux",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Bordeaux"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Bordeaux M\u00e9tropole",
@@ -6526,14 +6519,6 @@
       "id": "mulhouse_alsace_fr"
     },
     {
-      "title": "Bruges",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Bruges"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Bruley",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6564,14 +6549,6 @@
         "commune": "Br\u00e9c\u00e9"
       },
       "id": "metropole_rennes_fr"
-    },
-    {
-      "title": "B\u00e8gles",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "B\u00e8gles"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "B\u00e9cherel",
@@ -6856,10 +6833,22 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Communaut\u00e9 de Communes de la Plaine de l'Ain",
+      "module": "cc_plainedelain_fr",
+      "default_params": {},
+      "id": "cc_plainedelain_fr"
+    },
+    {
       "title": "Communaut\u00e9 de Communes de Montesquieu",
       "module": "cc-montesquieu_fr",
       "default_params": {},
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Communaut\u00e9 de Communes du Pays de Craon",
+      "module": "paysdecraon_fr",
+      "default_params": {},
+      "id": "paysdecraon_fr"
     },
     {
       "title": "Communaut\u00e9 de Communes P\u00e9v\u00e8le Carembault",
@@ -6892,6 +6881,12 @@
         "commune": "Cr\u00e9teil"
       },
       "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Cyclad",
+      "module": "cyclad_org",
+      "default_params": {},
+      "id": "cyclad_org"
     },
     {
       "title": "Dammarie et Bois-de-Mivoye",
@@ -6980,14 +6975,6 @@
         "commune": "Eschentzwiller"
       },
       "id": "mulhouse_alsace_fr"
-    },
-    {
-      "title": "Eysines",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Eysines"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Feldkirch",
@@ -7140,14 +7127,6 @@
         "commune": "Goupilli\u00e8res"
       },
       "id": "coeur_yvelines_fr"
-    },
-    {
-      "title": "Gradignan",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Gradignan"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Grand Besan\u00e7on M\u00e9tropole",
@@ -7458,14 +7437,6 @@
       "id": "terrestouloises_com"
     },
     {
-      "title": "Le Bouscat",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Le Bouscat"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Le Cotentin",
       "module": "publidata_fr",
       "default_params": {
@@ -7480,14 +7451,6 @@
         "commune": "Le Coudray"
       },
       "id": "chartres_metropole_fr"
-    },
-    {
-      "title": "Le Haillan",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Le Haillan"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Le Havre Seine M\u00e9tropole",
@@ -7512,14 +7475,6 @@
         "commune": "Le Rheu"
       },
       "id": "metropole_rennes_fr"
-    },
-    {
-      "title": "Le Taillan-M\u00e9doc",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Le Taillan-M\u00e9doc"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Le Tremblay-sur-Mauldre",
@@ -7678,14 +7633,6 @@
         "commune": "Mareil-le-Guyon"
       },
       "id": "coeur_yvelines_fr"
-    },
-    {
-      "title": "Martignas-sur-Jalle",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Martignas-sur-Jalle"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Martillac",
@@ -7849,14 +7796,6 @@
       "id": "terrestouloises_com"
     },
     {
-      "title": "M\u00e9rignac",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "M\u00e9rignac"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "M\u00e9r\u00e9",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -7885,6 +7824,12 @@
         "instance_id": 876
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "M\u00e9tropole Nice C\u00f4te d'Azur",
+      "module": "nice_cotedazur_fr",
+      "default_params": {},
+      "id": "nice_cotedazur_fr"
     },
     {
       "title": "Nantes M\u00e9tropole",
@@ -8029,28 +7974,12 @@
       "id": "terrestouloises_com"
     },
     {
-      "title": "Parempuyre",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Parempuyre"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Parthenay-de-Bretagne",
       "module": "metropole_rennes_fr",
       "default_params": {
         "commune": "Parthenay-de-Bretagne"
       },
       "id": "metropole_rennes_fr"
-    },
-    {
-      "title": "Pessac",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Pessac"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Petit-Landau",
@@ -8303,14 +8232,6 @@
       "id": "metropole_rennes_fr"
     },
     {
-      "title": "Saint-Aubin-de-M\u00e9doc",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Saint-Aubin-de-M\u00e9doc"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Saint-Aubin-des-Bois",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -8383,14 +8304,6 @@
       "id": "metropole_rennes_fr"
     },
     {
-      "title": "Saint-Louis-de-Montferrand",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Saint-Louis-de-Montferrand"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
-    },
-    {
       "title": "Saint-Lumine-de-Clisson - Zone A",
       "module": "clissonsevremaine_fr",
       "default_params": {
@@ -8415,6 +8328,15 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Saint-Michel-de-la-Ro\u00eb",
+      "module": "paysdecraon_fr",
+      "default_params": {
+        "commune": "Saint-Michel-de-la-Ro\u00eb",
+        "weekday": "lundi"
+      },
+      "id": "paysdecraon_fr"
+    },
+    {
       "title": "Saint-Morillon",
       "module": "cc-montesquieu_fr",
       "default_params": {
@@ -8429,14 +8351,6 @@
         "commune": "Saint-M\u00e9dard-d'Eyrans"
       },
       "id": "cc-montesquieu_fr"
-    },
-    {
-      "title": "Saint-M\u00e9dard-en-Jalles",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Saint-M\u00e9dard-en-Jalles"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Saint-Prest",
@@ -8469,14 +8383,6 @@
         "commune": "Saint-Sulpice-la-For\u00eat"
       },
       "id": "metropole_rennes_fr"
-    },
-    {
-      "title": "Saint-Vincent-de-Paul",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Saint-Vincent-de-Paul"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Sandarville",
@@ -8629,14 +8535,6 @@
         "instance_id": 1483
       },
       "id": "publidata_fr"
-    },
-    {
-      "title": "Talence",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Talence"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Terres Touloises",
@@ -8809,14 +8707,6 @@
         "commune": "Vieillevigne"
       },
       "id": "clissonsevremaine_fr"
-    },
-    {
-      "title": "Villenave-d'Ornon",
-      "module": "opendata_bordeauxmetropole_fr",
-      "default_params": {
-        "city": "Villenave-d'Ornon"
-      },
-      "id": "opendata_bordeauxmetropole_fr"
     },
     {
       "title": "Villey-le-Sec",
@@ -19472,12 +19362,6 @@
       "id": "rh_entsorgung_de"
     },
     {
-      "title": "Rhein-Hunsr\u00fcck Entsorgung (RHE)",
-      "module": "rh_entsorgung_de",
-      "default_params": {},
-      "id": "rh_entsorgung_de"
-    },
-    {
       "title": "Rhein-Lahn Kreis",
       "module": "ics",
       "default_params": {},
@@ -19692,12 +19576,6 @@
         "client": "Saalekreis"
       },
       "id": "muellabfuhr_de"
-    },
-    {
-      "title": "SAB Magdeburg Abfuhrkalender",
-      "module": "magdeburg_de",
-      "default_params": {},
-      "id": "magdeburg_de"
     },
     {
       "title": "Salgen",
@@ -20386,12 +20264,6 @@
         "customer": "kaufbeuren"
       },
       "id": "awido_de"
-    },
-    {
-      "title": "Stadt Kerpen",
-      "module": "stadt_kerpen_de",
-      "default_params": {},
-      "id": "stadt_kerpen_de"
     },
     {
       "title": "Stadt Kerpen",
@@ -22496,14 +22368,6 @@
       "id": "siunet_it"
     },
     {
-      "title": "Acate (RG)",
-      "module": "municipium_it",
-      "default_params": {
-        "municipality": "Acate"
-      },
-      "id": "municipium_it"
-    },
-    {
       "title": "Aci Sant'Antonio",
       "module": "junker_app",
       "default_params": {},
@@ -22514,6 +22378,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Acquanegra sul Chiese",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Acquanegra sul Chiese"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "AET Ambiente Energia Territorio S.p.A.",
@@ -22538,7 +22410,9 @@
     {
       "title": "Agrate Brianza",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Agrate Brianza"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -22550,9 +22424,19 @@
       "id": "siunet_it"
     },
     {
+      "title": "Agrate Conturbia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Agrate Conturbia"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Aicurzio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Aicurzio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -22662,6 +22546,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Ameno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Ameno"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "AMSA",
       "module": "amsa_it",
       "default_params": {},
@@ -22764,7 +22656,9 @@
     {
       "title": "Arcore",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Arcore"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -22790,10 +22684,42 @@
       "id": "geovest_it"
     },
     {
+      "title": "Armeno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Armeno"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "ARO Figulinas - DLR Ambiente - Ciclat",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Arona (zona C)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Arona (zona C)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Arona (zona D)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Arona (zona D)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Arona (zone A-B)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Arona (zone A-B)"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Arosio - Service 24 Ambiente Srl",
@@ -22838,6 +22764,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Asola",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Asola"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Assago - San Germano - Gruppo Iren",
@@ -22900,6 +22834,14 @@
         "municipality": "Bagno a Ripoli"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Bagnolo San Vito",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Bagnolo San Vito"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Ballabio",
@@ -22966,7 +22908,9 @@
     {
       "title": "Basiano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Basiano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23016,7 +22960,9 @@
     {
       "title": "Bellinzago Lombardo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Bellinzago Lombardo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23036,7 +22982,9 @@
     {
       "title": "Bellusco",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Bellusco"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23050,7 +22998,9 @@
     {
       "title": "Bernareggio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Bernareggio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23112,12 +23062,36 @@
       "id": "junker_app"
     },
     {
+      "title": "Boca",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Boca"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Boffalora Sopra Ticino",
       "module": "siunet_it",
       "default_params": {
         "comune": "BOFFALORA SOPRA TICINO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Bogogno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Bogogno"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Bolzano Novarese",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Bolzano Novarese"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Bolzano Vicentino",
@@ -23134,9 +23108,19 @@
       "id": "junker_app"
     },
     {
+      "title": "Borgo Mantovano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Borgo Mantovano"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Borgo San Giovanni",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Borgo San Giovanni"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23154,6 +23138,46 @@
         "municipality": "Borgo San Lorenzo"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Borgo Ticino",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Borgo Ticino"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Borgocarbonara",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Borgocarbonara"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Borgomanero (zona A)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Borgomanero (zona A)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Borgomanero (zona B)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Borgomanero (zona B)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Borgomanero (zona C)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Borgomanero (zona C)"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Borgomaro",
@@ -23192,6 +23216,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Bozzolo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Bozzolo"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Brandizzo",
       "module": "junker_app",
       "default_params": {},
@@ -23210,6 +23242,14 @@
         "comune": "BRESSANVIDO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Briga Novarese",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Briga Novarese"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Briosco",
@@ -23242,7 +23282,9 @@
     {
       "title": "Brugherio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Brugherio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23290,7 +23332,9 @@
     {
       "title": "Burago Di Molgora",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Burago Di Molgora"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23312,7 +23356,9 @@
     {
       "title": "Busnago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Busnago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23326,7 +23372,9 @@
     {
       "title": "Bussero",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Bussero"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23420,7 +23468,9 @@
     {
       "title": "Cambiago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cambiago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23454,7 +23504,9 @@
     {
       "title": "Camparada",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Camparada"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23522,7 +23574,9 @@
     {
       "title": "Caponago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Caponago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23580,7 +23634,9 @@
     {
       "title": "Carnate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Carnate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23608,7 +23664,9 @@
     {
       "title": "Carpiano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Carpiano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23626,6 +23684,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Carpignano Sesia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Carpignano Sesia"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Carrara - Nausicaa S.p.a",
       "module": "junker_app",
       "default_params": {},
@@ -23634,7 +23700,9 @@
     {
       "title": "Carugate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Carugate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23662,7 +23730,9 @@
     {
       "title": "Casaletto Lodigiano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Casaletto Lodigiano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23676,7 +23746,9 @@
     {
       "title": "Casalmaiocco",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Casalmaiocco"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23686,6 +23758,30 @@
         "comune": "CASALMAIOCCO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Casalmoro",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Casalmoro"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Casaloldo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Casaloldo"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Casalromano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Casalromano"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Casargo",
@@ -23720,7 +23816,9 @@
     {
       "title": "Caselle Lurani",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Caselle Lurani"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23742,7 +23840,9 @@
     {
       "title": "Cassano D'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cassano D'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23756,7 +23856,9 @@
     {
       "title": "Cassina De' Pecchi",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cassina De' Pecchi"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23792,10 +23894,26 @@
       "id": "siunet_it"
     },
     {
+      "title": "Castel d'Ario",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castel d'Ario"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Castel Gandolfo - Coop 134",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Castel Goffredo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castel Goffredo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Castel Maggiore",
@@ -23810,6 +23928,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Castelbelforte",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castelbelforte"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Castelbuono - Castelbuono Ambiente srl",
@@ -23846,12 +23972,36 @@
       "id": "siunet_it"
     },
     {
+      "title": "Castelletto Sopra Ticino (zona A)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Castelletto Sopra Ticino (zona A)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Castelletto Sopra Ticino (zona B)",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Castelletto Sopra Ticino (zona B)"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Castello Di Brianza",
       "module": "siunet_it",
       "default_params": {
         "comune": "CASTELLO DI BRIANZA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Castellucchio",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castellucchio"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Castelnuovo di Porto",
@@ -23878,9 +24028,35 @@
       "id": "junker_app"
     },
     {
+      "title": "Cavaglietto",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Cavaglietto"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Cavaglio d'Agogna",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Cavaglio d'Agogna"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Cavallirio",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Cavallirio"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Cavenago Di Brianza",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cavenago Di Brianza"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23896,6 +24072,14 @@
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Ceresara",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Ceresara"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Ceriano Laghetto",
@@ -23916,7 +24100,9 @@
     {
       "title": "Cernusco Sul Naviglio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cernusco Sul Naviglio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23938,7 +24124,9 @@
     {
       "title": "Cerro Al Lambro",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cerro Al Lambro"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -23966,7 +24154,9 @@
     {
       "title": "Cervignano D'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cervignano D'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24134,6 +24324,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Colazza",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Colazza"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Colico",
       "module": "siunet_it",
       "default_params": {
@@ -24158,7 +24356,9 @@
     {
       "title": "Cologno Monzese",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cologno Monzese"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24178,7 +24378,9 @@
     {
       "title": "Colturano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Colturano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24192,7 +24394,9 @@
     {
       "title": "Comazzo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Comazzo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24202,6 +24406,14 @@
         "comune": "COMAZZO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Comignago",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Comignago"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Comune.Digital",
@@ -24256,7 +24468,9 @@
     {
       "title": "Concorezzo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Concorezzo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24278,6 +24492,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Consorzio Area Vasta Medio Novarese",
+      "module": "consorziomedionovarese_it",
+      "default_params": {},
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Contarina S.p.A",
@@ -24306,7 +24526,9 @@
     {
       "title": "Cornate D'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Cornate D'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24320,7 +24542,9 @@
     {
       "title": "Correzzana",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Correzzana"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24396,6 +24620,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Cressa",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Cressa"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Crevalcore",
       "module": "geovest_it",
       "default_params": {
@@ -24416,6 +24648,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Cureggio",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Cureggio"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Curti - WM Magenta Srl",
@@ -24494,6 +24734,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Divignano",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Divignano"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "DLR Ambiente - Ciclat",
       "module": "junker_app",
       "default_params": {},
@@ -24522,9 +24770,19 @@
       "id": "siunet_it"
     },
     {
+      "title": "Dormelletto",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Dormelletto"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Dresano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Dresano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24632,6 +24890,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Fara Novarese",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Fara Novarese"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Fasano",
       "module": "siunet_it",
       "default_params": {
@@ -24714,6 +24980,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Fontaneto d'Agogna",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Fontaneto d'Agogna"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Formula Ambiente Spa - Abruzzo",
@@ -24802,12 +25076,28 @@
       "id": "junker_app"
     },
     {
+      "title": "Gargallo",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Gargallo"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Garlate",
       "module": "siunet_it",
       "default_params": {
         "comune": "GARLATE"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Gattico-Veruno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Gattico-Veruno"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Gavorrano",
@@ -24822,6 +25112,14 @@
         "comune": "GAZZO VERONESE"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Gazzuolo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Gazzuolo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "GEA Srl",
@@ -24852,7 +25150,9 @@
     {
       "title": "Gessate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Gessate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24868,6 +25168,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Ghemme",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Ghemme"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Giarre - IGM rifiuti industriali",
@@ -24902,15 +25210,33 @@
       "id": "siunet_it"
     },
     {
+      "title": "Goito",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Goito"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Gonnesa - De Vizia Transfer Spa",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
     },
     {
+      "title": "Gonzaga",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Gonzaga"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Gorgonzola",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Gorgonzola"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24920,6 +25246,14 @@
         "comune": "GORGONZOLA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Gozzano",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Gozzano"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Greve in Chianti",
@@ -24932,7 +25266,9 @@
     {
       "title": "Grezzago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Grezzago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -24942,6 +25278,14 @@
         "comune": "GREZZAGO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Grignasco",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Grignasco"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Grisignano Di Zocco",
@@ -25034,9 +25378,19 @@
       "id": "junker_app"
     },
     {
+      "title": "Invorio",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Invorio"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Inzago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Inzago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25400,6 +25754,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Lesa",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Lesa"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Lesina",
       "module": "siunet_it",
       "default_params": {
@@ -25410,7 +25772,9 @@
     {
       "title": "Lesmo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Lesmo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25458,7 +25822,9 @@
     {
       "title": "Liscate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Liscate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25540,7 +25906,9 @@
     {
       "title": "Macherio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Macherio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25558,6 +25926,22 @@
         "comune": "MAGENTA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Maggiora",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Maggiora"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Magnacavallo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Magnacavallo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Magnago",
@@ -25598,6 +25982,20 @@
       "id": "siunet_it"
     },
     {
+      "title": "Mantova",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Mantova"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Mantova Ambiente",
+      "module": "mantovaambiente_it",
+      "default_params": {},
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Maracalagonis - Formula Ambiente Spa",
       "module": "junker_app",
       "default_params": {},
@@ -25616,6 +26014,14 @@
         "comune": "MARCALLO CON CASONE"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Marcaria",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Marcaria"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Marche Multiservizi Falconara",
@@ -25640,12 +26046,28 @@
       "id": "siunet_it"
     },
     {
+      "title": "Mariana Mantovana",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Mariana Mantovana"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Marliana",
       "module": "aliaserviziambientali_it",
       "default_params": {
         "municipality": "Marliana"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Marmirolo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Marmirolo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Marsala, Trapani e Misiliscemi- Formula Ambiente Spa",
@@ -25672,7 +26094,9 @@
     {
       "title": "Masate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Masate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25694,7 +26118,9 @@
     {
       "title": "Massalengo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Massalengo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25712,6 +26138,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Massino Visconti",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Massino Visconti"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Meda",
       "module": "junker_app",
       "default_params": {},
@@ -25720,7 +26154,9 @@
     {
       "title": "Mediglia",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Mediglia"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25732,9 +26168,27 @@
       "id": "siunet_it"
     },
     {
+      "title": "Medole",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Medole"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Meina",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Meina"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Melegnano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Melegnano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25756,7 +26210,9 @@
     {
       "title": "Melzo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Melzo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25790,7 +26246,9 @@
     {
       "title": "Merlino",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Merlino"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25810,7 +26268,9 @@
     {
       "title": "Mezzago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Mezzago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -25820,6 +26280,14 @@
         "comune": "MEZZAGO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Miasino",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Miasino"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Minerva Ambiente",
@@ -26106,6 +26574,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Monzambano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Monzambano"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Morciano Di Leuca",
       "module": "siunet_it",
       "default_params": {
@@ -26128,6 +26604,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Motteggiana",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Motteggiana"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Mottola e Laterza - Meridionale Servizi Ambientali Srl",
       "module": "junker_app",
       "default_params": {},
@@ -26136,7 +26620,9 @@
     {
       "title": "Mulazzano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Mulazzano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26166,6 +26652,14 @@
         "comune": "NARNI"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Nebbiuno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Nebbiuno"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "NET SpA - Udine",
@@ -26254,6 +26748,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Oleggio Castello",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Oleggio Castello"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Olgiate Molgora",
       "module": "siunet_it",
       "default_params": {
@@ -26300,7 +26802,9 @@
     {
       "title": "Ornago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Ornago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26316,6 +26820,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Orta San Giulio",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Orta San Giulio"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Osimo - Astea",
@@ -26384,7 +26896,9 @@
     {
       "title": "Pantigliate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Pantigliate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26412,6 +26926,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Paruzzaro",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Paruzzaro"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Passerano Marmorito",
       "module": "junker_app",
       "default_params": {},
@@ -26434,7 +26956,9 @@
     {
       "title": "Paullo",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Paullo"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26450,6 +26974,22 @@
         "comune": "PAULLO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Pegognaga",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Pegognaga"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Pella",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Pella"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Perdasdefogu - Eco-Sistemi",
@@ -26490,7 +27030,9 @@
     {
       "title": "Pessano Con Bornago",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Pessano Con Bornago"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26500,6 +27042,14 @@
         "comune": "PESSANO CON BORNAGO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Pettenasco",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Pettenasco"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Piazza Brembana",
@@ -26536,6 +27086,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Pisano",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Pisano"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Pistoia",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -26560,6 +27118,22 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Poggio Rusco",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Poggio Rusco"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Pogno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Pogno"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Polino",
       "module": "siunet_it",
       "default_params": {
@@ -26574,12 +27148,36 @@
       "id": "junker_app"
     },
     {
+      "title": "Pombia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Pombia"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Ponte Buggianese",
       "module": "aliaserviziambientali_it",
       "default_params": {
         "municipality": "Ponte Buggianese"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Ponti sul Mincio",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Ponti sul Mincio"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Porto Mantovano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Porto Mantovano"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Posada - Formula Ambiente Spa",
@@ -26596,7 +27194,9 @@
     {
       "title": "Pozzo D'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Pozzo D'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26610,7 +27210,9 @@
     {
       "title": "Pozzuolo Martesana",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Pozzuolo Martesana"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26628,6 +27230,14 @@
         "municipality": "Prato"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Prato Sesia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Prato Sesia"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Pratola Peligna - Diodoro Ecologia",
@@ -26692,12 +27302,28 @@
       "id": "junker_app"
     },
     {
+      "title": "Quingentole",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Quingentole"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Quinto Vicentino",
       "module": "siunet_it",
       "default_params": {
         "comune": "QUINTO VICENTINO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Quistello",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Quistello"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Racale",
@@ -26720,6 +27346,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Redondesco",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Redondesco"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Renate (1)",
@@ -26808,6 +27442,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Rivarolo Mantovano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Rivarolo Mantovano"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Rivolta D'Adda",
       "module": "siunet_it",
       "default_params": {
@@ -26852,7 +27494,9 @@
     {
       "title": "Rodano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Rodano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26862,6 +27506,14 @@
         "comune": "RODANO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Rodigo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Rodigo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Rogeno",
@@ -26880,9 +27532,19 @@
       "id": "siunet_it"
     },
     {
+      "title": "Romagnano Sesia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Romagnano Sesia"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Roncello",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Roncello"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26904,7 +27566,9 @@
     {
       "title": "Ronco Briantino",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Ronco Briantino"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -26914,6 +27578,14 @@
         "comune": "RONCO BRIANTINO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Roncoferraro",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Roncoferraro"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Rosate",
@@ -26944,6 +27616,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Roverbella",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Roverbella"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Roverchiara",
       "module": "siunet_it",
       "default_params": {
@@ -26964,6 +27644,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Sabbioneta",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Sabbioneta"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Sala Bolognese",
       "module": "geovest_it",
       "default_params": {
@@ -26980,7 +27668,9 @@
     {
       "title": "Salerano sul Lambro",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Salerano sul Lambro"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27064,12 +27754,36 @@
       "id": "siunet_it"
     },
     {
+      "title": "San Giacomo delle Segnate",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Giacomo delle Segnate"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "San Giorgio Bigarello",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Giorgio Bigarello"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "San Giorgio Su Legnano",
       "module": "siunet_it",
       "default_params": {
         "comune": "SAN GIORGIO SU LEGNANO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "San Giovanni del Dosso",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Giovanni del Dosso"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "San Giovanni in Persiceto",
@@ -27102,6 +27816,22 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "San Martino dall'Argine",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Martino dall'Argine"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "San Maurizio d'Opaglio",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "San Maurizio d'Opaglio"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "San Pietro Di Morubio",
       "module": "siunet_it",
       "default_params": {
@@ -27112,7 +27842,9 @@
     {
       "title": "San Zenone Al Lambro",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "San Zenone Al Lambro"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27156,7 +27888,9 @@
     {
       "title": "Sant'Angelo Lodigiano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Sant'Angelo Lodigiano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27252,6 +27986,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Schivenoglia",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Schivenoglia"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "SEAB Biella",
       "module": "seab_biella_it",
       "default_params": {},
@@ -27278,18 +28020,18 @@
       "id": "siunet_it"
     },
     {
+      "title": "Sermide e Felonica",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Sermide e Felonica"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Sermoneta - Del Prete Srl",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
-    },
-    {
-      "title": "Serrastretta (CZ)",
-      "module": "municipium_it",
-      "default_params": {
-        "municipality": "Serrastretta"
-      },
-      "id": "municipium_it"
     },
     {
       "title": "Serravalle Pistoiese",
@@ -27316,7 +28058,9 @@
     {
       "title": "Settala",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Settala"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27326,6 +28070,14 @@
         "comune": "SETTALA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Settimo Milanese",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Settimo Milanese"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Seveso",
@@ -27396,6 +28148,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Sizzano",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Sizzano"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
       "title": "Solbiate Olona",
       "module": "siunet_it",
       "default_params": {
@@ -27408,6 +28168,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Solferino",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Solferino"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Solza",
@@ -27426,7 +28194,9 @@
     {
       "title": "Sordio",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Sordio"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27444,6 +28214,14 @@
         "comune": "SORG\u00c0"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Soriso",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Soriso"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Sovico",
@@ -27504,7 +28282,9 @@
     {
       "title": "Sulbiate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Sulbiate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27517,9 +28297,25 @@
     },
     {
       "title": "Suno",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Suno"
+      },
+      "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Suno",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Suzzara",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Suzzara"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Taceno",
@@ -27634,7 +28430,9 @@
     {
       "title": "Torrevecchia Pia",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Torrevecchia Pia"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27682,17 +28480,11 @@
       "id": "siunet_it"
     },
     {
-      "title": "Treviglio (BG)",
-      "module": "municipium_it",
-      "default_params": {
-        "municipality": "Treviglio"
-      },
-      "id": "municipium_it"
-    },
-    {
       "title": "Trezzano Rosa",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Trezzano Rosa"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27706,7 +28498,9 @@
     {
       "title": "Trezzo Sull'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Trezzo Sull'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27720,7 +28514,9 @@
     {
       "title": "Tribiano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Tribiano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27768,7 +28564,9 @@
     {
       "title": "Truccazzano",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Truccazzano"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27850,7 +28648,9 @@
     {
       "title": "Usmate Velate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Usmate Velate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27936,7 +28736,9 @@
     {
       "title": "Vaprio D'Adda",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vaprio D'Adda"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -27946,6 +28748,14 @@
         "comune": "VAPRIO D'ADDA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Varallo Pombia",
+      "module": "consorziomedionovarese_it",
+      "default_params": {
+        "municipality": "Varallo Pombia"
+      },
+      "id": "consorziomedionovarese_it"
     },
     {
       "title": "Varedo",
@@ -27972,7 +28782,9 @@
     {
       "title": "Vedano Al Lambro",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vedano Al Lambro"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28082,7 +28894,9 @@
     {
       "title": "Vignate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vignate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28130,7 +28944,9 @@
     {
       "title": "Villasanta",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Villasanta"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28150,7 +28966,9 @@
     {
       "title": "Vimercate",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vimercate"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28172,7 +28990,9 @@
     {
       "title": "Vimodrone",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vimodrone"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28206,7 +29026,9 @@
     {
       "title": "Vizzolo Predabissi",
       "module": "cem_ambiente_it",
-      "default_params": {},
+      "default_params": {
+        "city": "Vizzolo Predabissi"
+      },
       "id": "cem_ambiente_it"
     },
     {
@@ -28222,6 +29044,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Volta Mantovana",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Volta Mantovana"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Volterra",
@@ -28460,12 +29290,6 @@
   ],
   "Netherlands": [
     {
-      "title": "Achtkarspelen",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
       "title": "ACV Group",
       "module": "ximmio_nl",
       "default_params": {
@@ -28492,12 +29316,6 @@
         "service": "alphenaandenrijn"
       },
       "id": "hvcgroep_nl"
-    },
-    {
-      "title": "Ameland",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
     },
     {
       "title": "Area Afval",
@@ -28606,24 +29424,6 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_edam_volendam_nl"
-    },
-    {
-      "title": "Eemsdelta",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Elburg",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Ermelo",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
     },
     {
       "title": "GAD",
@@ -28818,34 +29618,16 @@
       "id": "ics_goes_nl"
     },
     {
-      "title": "Harderwijk",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Harlingen",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Heerenveen",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
       "title": "Helmond",
       "module": "deafvalapp_nl",
       "default_params": {},
       "id": "deafvalapp_nl"
     },
     {
-      "title": "Het Hogeland",
-      "module": "omrin_nl",
+      "title": "HVC Groep",
+      "module": "hvcgroep_nl",
       "default_params": {},
-      "id": "omrin_nl"
+      "id": "hvcgroep_nl"
     },
     {
       "title": "HVC Groep",
@@ -28866,12 +29648,6 @@
       "module": "deafvalapp_nl",
       "default_params": {},
       "id": "deafvalapp_nl"
-    },
-    {
-      "title": "Leeuwarden",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
     },
     {
       "title": "Maashorst",
@@ -28904,37 +29680,7 @@
       "id": "ximmio_nl"
     },
     {
-      "title": "Nunspeet",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Oldebroek",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
       "title": "Omrin",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Ooststellingwerf",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Opsterland",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Pekela",
       "module": "omrin_nl",
       "default_params": {},
       "id": "omrin_nl"
@@ -28992,16 +29738,18 @@
       "id": "rova_nl"
     },
     {
+      "title": "RWM",
+      "module": "hvcgroep_nl",
+      "default_params": {
+        "service": "rwm"
+      },
+      "id": "hvcgroep_nl"
+    },
+    {
       "title": "Saver",
       "module": "saver_nl",
       "default_params": {},
       "id": "saver_nl"
-    },
-    {
-      "title": "Schiermonnikoog",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
     },
     {
       "title": "Spaarnelanden",
@@ -29018,12 +29766,6 @@
       "id": "straatbeeld_online"
     },
     {
-      "title": "Terschelling",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
       "title": "Twente Milieu",
       "module": "ximmio_nl",
       "default_params": {
@@ -29032,36 +29774,12 @@
       "id": "ximmio_nl"
     },
     {
-      "title": "Tytsjerksteradiel",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Waadhoeke",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
       "title": "Waardlanden",
       "module": "ximmio_nl",
       "default_params": {
         "company": "waardlanden"
       },
       "id": "ximmio_nl"
-    },
-    {
-      "title": "Westerwolde",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
-    },
-    {
-      "title": "Weststellingwerf",
-      "module": "omrin_nl",
-      "default_params": {},
-      "id": "omrin_nl"
     },
     {
       "title": "Woerden / Oudewater",
@@ -29823,6 +30541,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Mas\u0142\u00f3w",
+      "module": "maslow_pl",
+      "default_params": {},
+      "id": "maslow_pl"
+    },
+    {
       "title": "Gmina Miedziana G\u00f3ra",
       "module": "sims_pl",
       "default_params": {
@@ -30455,6 +31179,14 @@
       "id": "bochnia_gmina_pl"
     },
     {
+      "title": "Legnica",
+      "module": "ecoharmonogram_pl",
+      "default_params": {
+        "app": "legnica"
+      },
+      "id": "ecoharmonogram_pl"
+    },
+    {
       "title": "Majkowice",
       "module": "bochnia_gmina_pl",
       "default_params": {
@@ -30619,6 +31351,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "PGK Koszalin",
+      "module": "pgkkoszalin_pl",
+      "default_params": {},
+      "id": "pgkkoszalin_pl"
+    },
+    {
       "title": "Pobiedziska",
       "module": "ichisystem_eu",
       "default_params": {
@@ -30677,6 +31415,12 @@
         "owner": "Przedsi\u0119biorstwo Gospodarki Komunalnej w Wo\u0142owie Sp. z o.o."
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "REMONDIS (res.remondis.pl)",
+      "module": "res_remondis_pl",
+      "default_params": {},
+      "id": "res_remondis_pl"
     },
     {
       "title": "Rybnik",
@@ -30931,10 +31675,22 @@
       "id": "komunala_kranj_si"
     },
     {
+      "title": "Komunala Slovenska Bistrica",
+      "module": "komunala_slb_si",
+      "default_params": {},
+      "id": "komunala_slb_si"
+    },
+    {
       "title": "Kostak Kr\u0161ko",
       "module": "kostak_si",
       "default_params": {},
       "id": "kostak_si"
+    },
+    {
+      "title": "KSP Ljutomer",
+      "module": "ksp_ljutomer_si",
+      "default_params": {},
+      "id": "ksp_ljutomer_si"
     },
     {
       "title": "Moji odpadki, Ljubljana",
@@ -31091,14 +31847,6 @@
       "module": "edpevent_se",
       "default_params": {},
       "id": "edpevent_se"
-    },
-    {
-      "title": "Eker\u00f6",
-      "module": "roslagsvatten_se",
-      "default_params": {
-        "municipality": "ekero"
-      },
-      "id": "roslagsvatten_se"
     },
     {
       "title": "Falu Energi & Vatten (FEV)",
@@ -31319,7 +32067,7 @@
       "id": "avfallsapp_se"
     },
     {
-      "title": "Norrtalje Vatten & Avfall",
+      "title": "Norrt\u00e4lje Vatten & Avfall",
       "module": "nvaa_se",
       "default_params": {},
       "id": "nvaa_se"
@@ -31332,12 +32080,6 @@
     },
     {
       "title": "NSR - Nordv\u00e4stra Sk\u00e5nes Renh\u00e5llnings AB",
-      "module": "nsr_se",
-      "default_params": {},
-      "id": "nsr_se"
-    },
-    {
-      "title": "NSR T\u00f6mningskalender",
       "module": "nsr_se",
       "default_params": {},
       "id": "nsr_se"
@@ -31557,14 +32299,6 @@
       "id": "vattenmiljoresurs_se"
     },
     {
-      "title": "Vaxholm",
-      "module": "roslagsvatten_se",
-      "default_params": {
-        "municipality": "vaxholm"
-      },
-      "id": "roslagsvatten_se"
-    },
-    {
       "title": "VIVAB Soph\u00e4mtning",
       "module": "vivab_se",
       "default_params": {},
@@ -31629,14 +32363,6 @@
       "module": "ostersund_se",
       "default_params": {},
       "id": "ostersund_se"
-    },
-    {
-      "title": "\u00d6ster\u00e5ker",
-      "module": "roslagsvatten_se",
-      "default_params": {
-        "municipality": "osteraker"
-      },
-      "id": "roslagsvatten_se"
     }
   ],
   "Switzerland": [
@@ -31818,6 +32544,14 @@
       "id": "zab_ch"
     },
     {
+      "title": "Bremgarten AG",
+      "module": "iweb_ch",
+      "default_params": {
+        "website": "https://www.bremgarten.ch"
+      },
+      "id": "iweb_ch"
+    },
+    {
       "title": "Buch",
       "module": "kvatg_ch",
       "default_params": {
@@ -31994,6 +32728,14 @@
         "municipality": "Flawil"
       },
       "id": "zab_ch"
+    },
+    {
+      "title": "Flums",
+      "module": "iweb_ch",
+      "default_params": {
+        "website": "https://www.flums.ch"
+      },
+      "id": "iweb_ch"
     },
     {
       "title": "Frauenfeld",
@@ -32241,6 +32983,12 @@
         "community": "H\u00fcttwilen"
       },
       "id": "kvatg_ch"
+    },
+    {
+      "title": "i-web (Swiss municipalities)",
+      "module": "iweb_ch",
+      "default_params": {},
+      "id": "iweb_ch"
     },
     {
       "title": "Jonschwil",
@@ -32923,6 +33671,14 @@
       "id": "kvatg_ch"
     },
     {
+      "title": "Uetikon am See",
+      "module": "iweb_ch",
+      "default_params": {
+        "website": "https://www.uetikonamsee.ch"
+      },
+      "id": "iweb_ch"
+    },
+    {
       "title": "Untereggen",
       "module": "a_region_ch",
       "default_params": {
@@ -33186,12 +33942,6 @@
       "module": "adur_worthing_gov_uk",
       "default_params": {},
       "id": "adur_worthing_gov_uk"
-    },
-    {
-      "title": "Allerdale Borough Council",
-      "module": "allerdale_gov_uk",
-      "default_params": {},
-      "id": "allerdale_gov_uk"
     },
     {
       "title": "Amber Valley Borough Council",
@@ -33938,7 +34688,7 @@
       "id": "flintshire_gov_uk"
     },
     {
-      "title": "Folkestone and Hythe District Councol",
+      "title": "Folkestone and Hythe District Council",
       "module": "folkestone_hythe_gov_uk",
       "default_params": {},
       "id": "folkestone_hythe_gov_uk"
@@ -34498,6 +35248,12 @@
       "id": "north_ayrshire_gov_uk"
     },
     {
+      "title": "North East Derbyshire District Council",
+      "module": "ne_derbyshire_gov_uk",
+      "default_params": {},
+      "id": "ne_derbyshire_gov_uk"
+    },
+    {
       "title": "North East Lincolnshire Council",
       "module": "nelincs_gov_uk",
       "default_params": {},
@@ -34618,6 +35374,12 @@
       "id": "nottingham_city_gov_uk"
     },
     {
+      "title": "Nuneaton and Bedworth Borough Council",
+      "module": "nuneatonandbedworth_gov_uk",
+      "default_params": {},
+      "id": "nuneatonandbedworth_gov_uk"
+    },
+    {
       "title": "Oadby and Wigston Council",
       "module": "oadby_wigston_gov_uk",
       "default_params": {},
@@ -34702,14 +35464,6 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
-    },
-    {
-      "title": "Redditch Borough Council",
-      "module": "bromsgrove_gov_uk",
-      "default_params": {
-        "council": "redditch"
-      },
-      "id": "bromsgrove_gov_uk"
     },
     {
       "title": "Reigate & Banstead Borough Council",
@@ -35852,6 +36606,12 @@
         "state": "Delaware"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Noble Environmental",
+      "module": "nobleenviro_com",
+      "default_params": {},
+      "id": "nobleenviro_com"
     },
     {
       "title": "Northville Township, MI",

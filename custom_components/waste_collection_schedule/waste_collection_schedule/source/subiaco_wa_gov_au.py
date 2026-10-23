@@ -1,106 +1,95 @@
-import datetime
+import re
+from typing import ClassVar, final
 
-from dateutil.easter import easter
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
+from waste_collection_schedule.service.IntraMaps import (
+    IntraMapsPanelParser,
+    IntraMapsRetriever,
+    MapsClientConfig,
+)
+from waste_collection_schedule.transformers import ICSTransformer
 
-TITLE = "City of Subiaco"
-DESCRIPTION = "Source for City of Subiaco, WA waste collection using Area and Weekday."
-URL = "https://www.subiaco.wa.gov.au"
-COUNTRY = "au"
+# The council's "Find my bin day" map returns free text per bin:
+#   FOGO                "Monday (Weekly)"
+#   General Waste       "Tuesday, Week 2 (13 Oct 2026)"
+#   Recycling           "Tuesday, Week 1 (20 Oct 2026)"
+# FOGO is weekly on its own weekday (which can differ from the other bins and
+# is per address, not per area); General Waste and Recycling are fortnightly
+# from the stated next date.
 
-WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+INTRAMAPS_CONFIG = MapsClientConfig(
+    base_url="https://subiaco.spatial.t1cloud.com",
+    instance="spatial/intramaps",
+    config_id="95fc31a6-7249-4e7f-81cd-342f8e977833",
+    project="3ef9ed21-2b91-467a-a7c0-ca0da50db9e7",
+    default_selection_layer="b5583c5c-337e-4ab1-8987-caad834d5016",
+)
 
-TEST_CASES = {
-    "Area 1 Monday": {"area": 1, "day_of_week": "Monday"},
-    "Area 2 Wednesday": {"area": 2, "day_of_week": "Wednesday"},
+_TYPE_MAP = {
+    "Day": wt.ORGANIC,
+    "General Waste Collection Day": wt.GENERAL_WASTE,
+    "Recycle Collection Day": wt.RECYCLABLES,
 }
 
-ICON_MAP = {
-    "FOGO": Icons.BIO_KITCHEN,
-    "Recycling": Icons.RECYCLING,
-    "General Waste": Icons.GENERAL_WASTE,
-}
+_DATE_RE = re.compile(r"\((\d{1,2}\s+\w+\s+\d{4})\)")
+_WEEKDAY_RE = re.compile(r"^\s*(\w+)")
 
 
-class Source:
-    def __init__(self, area: int, day_of_week: str):
-        self._area = int(area)
-        self._day_of_week = day_of_week.strip().capitalize()
-        if self._day_of_week not in WEEKDAYS:
-            raise ValueError(
-                f"Invalid day_of_week. Must be one of: {', '.join(WEEKDAYS)}"
-            )
+def _describe(record, source):
+    column = record.get("column", "")
+    if column not in _TYPE_MAP:
+        return
+    text = record.get("value", "").strip()
+    if not text:
+        return
 
-    def is_holiday(self, dt):
-        """Check for New Year's, Christmas, and Good Friday with Monday-observed logic."""
-        year = dt.year
+    match = _DATE_RE.search(text)
+    if match:  # "Tuesday, Week 2 (13 Oct 2026)" -> fortnightly from that date
+        try:
+            next_date = date_parsers.auto(match.group(1))
+        except (ValueError, TypeError):
+            return
+        yield Schedule(column, next_date, recurrence.FORTNIGHTLY, 13)
+        return
 
-        # 1. Good Friday (Dynamic)
-        if dt == easter(year) - datetime.timedelta(days=2):
-            return True
+    match = _WEEKDAY_RE.match(text)  # "Monday (Weekly)" -> weekly
+    if not match:
+        return
+    weekday = recurrence.weekday(match.group(1))
+    if weekday is not None:
+        yield Schedule(column, recurrence.next_weekday(weekday), recurrence.WEEKLY, 26)
 
-        # 2. Fixed Dates with 'Following Monday' Rule
-        # Only New Year's and Christmas as requested
-        for month, day in [(1, 1), (12, 25)]:
-            actual_date = datetime.date(year, month, day)
-            if actual_date.weekday() == 5:  # Saturday
-                observed = actual_date + datetime.timedelta(days=2)
-            elif actual_date.weekday() == 6:  # Sunday
-                observed = actual_date + datetime.timedelta(days=1)
-            else:
-                observed = actual_date
 
-            if dt == observed:
-                return True
+@final
+class Source(BaseSource):
+    TITLE = "City of Subiaco"
+    DESCRIPTION = "Source for City of Subiaco, WA waste collection."
+    URL = "https://www.subiaco.wa.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-        return False
+    TEST_CASES: ClassVar[dict] = {
+        "Barker Road Subiaco": {"address": "241 Barker Road SUBIACO"},
+        "Hay Street Subiaco": {"address": "10 Hay Street SUBIACO"},
+    }
 
-    def fetch(self):
-        entries = []
-        now = datetime.date.today()
-        start_date = now - datetime.timedelta(days=30)
+    PARAMS = (street_address(),)
 
-        # Reference Dates
-        ref_rec_area1 = datetime.date(2024, 6, 24)
-        ref_rec_area2 = datetime.date(2024, 7, 1)
-        ref_base = ref_rec_area1 if self._area == 1 else ref_rec_area2
+    WASTE_TYPES: ClassVar[list] = [wt.ORGANIC, wt.GENERAL_WASTE, wt.RECYCLABLES]
 
-        target_weekday = WEEKDAYS.index(self._day_of_week)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your street address including suburb "
+            "(e.g. '241 Barker Road SUBIACO')."
+        ),
+    }
 
-        for i in range(400):
-            d = start_date + datetime.timedelta(days=i)
+    retrieve = IntraMapsRetriever(INTRAMAPS_CONFIG, address="address")
+    parse = IntraMapsPanelParser()
+    preprocess = RecurrenceExpander(_describe)
 
-            if d.weekday() == target_weekday:
-                collection_date = d
-
-                # If the scheduled day is one of the three holidays, push forward by 1 day
-                if self.is_holiday(d):
-                    collection_date += datetime.timedelta(days=1)
-
-                # FOGO: Weekly
-                entries.append(
-                    Collection(
-                        date=collection_date, t="FOGO", icon=ICON_MAP.get("FOGO")
-                    )
-                )
-
-                # Recycling vs General Waste: Fortnightly rotation
-                delta_weeks = (d - ref_base).days // 7
-                if delta_weeks % 2 == 0:
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t="Recycling",
-                            icon=ICON_MAP.get("Recycling"),
-                        )
-                    )
-                else:
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t="General Waste",
-                            icon=ICON_MAP.get("General Waste"),
-                        )
-                    )
-
-        return entries
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)

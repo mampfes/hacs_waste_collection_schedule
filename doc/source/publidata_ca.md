@@ -1,41 +1,34 @@
-# Publidata — provider for waste management schedules
+# Publidata (Canada) generic source
 
-Support for schedules provided by [Publidata Canada] (https://www.publidata.ca).
+Support for schedules provided by [Publidata (Canada) generic source](https://www.publidata.ca).
 
-They operate the schedules of at least the following communities:
-
-  - Calixa-Lavallée
-  - Contrecoeur
-  - Saint-Amable
-  - Sainte-Julie
-  - Varennes
-  - Verchères
-
+Publidata is a Canadian public operator. Check if your area is concerned on their website.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: publidata_ca
       args:
-        address: "1580 Chem. du Fer-à-Cheval, Sainte-Julie, QC J3E 0A2"
-
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
-## Examples
+**address**  
+*(string) (required)*
+
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: publidata_ca
       args:
-        address: "1580 Chem. du Fer-à-Cheval, Sainte-Julie, QC J3E 0A2"
+        address: "1580 Chem. du Fer-\xE0-Cheval, Sainte-Julie, QC J3E 0A2"
 ```
 
+## How to get the source arguments
 
-## How to ensure your address is valid
-
-Go on the [MRC's website](https://margueritedyouville.ca/environnement/matieres-residuelles/tri-facile-pour-une-saine-gestion-de-vos-matieres-residuelles) and check how the autocomplete formats your address.
+Enter your full address, e.g. `1580 Chem. du Fer-à-Cheval, Sainte-Julie, QC J3E 0A2`.

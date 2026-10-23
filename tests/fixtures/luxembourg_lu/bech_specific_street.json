@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://data.public.lu/fr/datasets/r/c3805ec5-7836-49a4-9983-effaf81910d0 ",
+      "method": "GET",
+      "url": "https://data.public.lu/fr/datasets/r/c3805ec5-7836-49a4-9983-effaf81910d0",
+      "final_url": "https://download.data.public.lu/resources/waste-municipal-waste-collection-calendars-dechets-calendriers-municipaux-de-collecte-des-dechets/20261013-010700/calendrierdechet.csv",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "text/csv",
+        "content-encoding": "gzip",
+        "date": "Tue, 13 Oct 2026 14:22:38 GMT",
+        "server": "AmazonS3",
+        "last-modified": "Tue, 13 Oct 2026 01:07:01 GMT",
+        "x-amz-server-side-encryption": "AES256",
+        "x-amz-version-id": "pcrgLPRkphv6y6XvktLglwG0x2FVuY.J",
+        "etag": "W/\"ee65e7a25f0e29ff6e746c6402edfa61\"",
+        "vary": "Accept-Encoding, Origin",
+        "x-cache": "Hit from cloudfront",
+        "via": "1.1 4b811bf2f99982cd7e4724dc1f884988.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "DUS51-P7",
+        "x-amz-cf-id": "v1p1sjxpZeXULTUiUu4KCW7eEKFsNQE9WfCyPaodG4nvp7xQGGyuUg==",
+        "age": "16688",
+        "accept-ranges": "bytes"
+      },
+      "content_b64": "77u/IkRhdGUiOyJUeXBlIGRlIGNvbGxlY3RlIjsiQ29tbXVuZSI7IkxvY2FsaXTDqSI7IlJ1ZSIKIjIwLzEwLzIwMjYiOyJCaW9kw6ljaGV0cyI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIyMC8xMC8yMDI2IjsiRMOpY2hldHMgbcOpbmFnZXJzIGVuIG3DqWxhbmdlIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjIxLzEwLzIwMjYiOyJQYXBpZXIvQ2FydG9uIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjIxLzEwLzIwMjYiOyJWZXJyZSI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIyNy8xMC8yMDI2IjsiQmlvZMOpY2hldHMiOyJCZWNoIjsiQmVjaCI7IkFtIEJpaXJrIgoiMjcvMTAvMjAyNiI7IkTDqWNoZXRzIG3DqW5hZ2VycyBlbiBtw6lsYW5nZSI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIyNy8xMC8yMDI2IjsiVmFsb3JsdXgiOyJCZWNoIjs7IlRvdXRlcyBsZXMgcnVlcyIKIjAzLzExLzIwMjYiOyJCaW9kw6ljaGV0cyI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIwMy8xMS8yMDI2IjsiRMOpY2hldHMgbcOpbmFnZXJzIGVuIG3DqWxhbmdlIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjA0LzExLzIwMjYiOyJQYXBpZXIvQ2FydG9uIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjA0LzExLzIwMjYiOyJWZXJyZSI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIwOS8xMS8yMDI2IjsiRMOpY2hldHMgZGUgdmVyZHVyZSI7IkJlY2giOzsiVG91dGVzIGxlcyBydWVzIgoiMTAvMTEvMjAyNiI7IkJpb2TDqWNoZXRzIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjEwLzExLzIwMjYiOyJEw6ljaGV0cyBkZSB2ZXJkdXJlIjsiQmVjaCI7OyJUb3V0ZXMgbGVzIHJ1ZXMiCiIxMC8xMS8yMDI2IjsiRMOpY2hldHMgbcOpbmFnZXJzIGVuIG3DqWxhbmdlIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjEwLzExLzIwMjYiOyJWYWxvcmx1eCI7IkJlY2giOzsiVG91dGVzIGxlcyBydWVzIgoiMTEvMTEvMjAyNiI7IkTDqWNoZXRzIGRlIHZlcmR1cmUiOyJCZWNoIjs7IlRvdXRlcyBsZXMgcnVlcyIKIjE3LzExLzIwMjYiOyJCaW9kw6ljaGV0cyI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIxNy8xMS8yMDI2IjsiRMOpY2hldHMgbcOpbmFnZXJzIGVuIG3DqWxhbmdlIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjE4LzExLzIwMjYiOyJQYXBpZXIvQ2FydG9uIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjE4LzExLzIwMjYiOyJWZXJyZSI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIyNC8xMS8yMDI2IjsiQmlvZMOpY2hldHMiOyJCZWNoIjsiQmVjaCI7IkFtIEJpaXJrIgoiMjQvMTEvMjAyNiI7IkTDqWNoZXRzIG3DqW5hZ2VycyBlbiBtw6lsYW5nZSI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIyNC8xMS8yMDI2IjsiVmFsb3JsdXgiOyJCZWNoIjs7IlRvdXRlcyBsZXMgcnVlcyIKIjI1LzExLzIwMjYiOyJTdXBlckRyZWNrc0vDq3NjaHQiOyJCZWNoIjs7IlRvdXRlcyBsZXMgcnVlcyIKIjAxLzEyLzIwMjYiOyJCaW9kw6ljaGV0cyI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIwMS8xMi8yMDI2IjsiRMOpY2hldHMgbcOpbmFnZXJzIGVuIG3DqWxhbmdlIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjAyLzEyLzIwMjYiOyJQYXBpZXIvQ2FydG9uIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjAyLzEyLzIwMjYiOyJWZXJyZSI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIwOC8xMi8yMDI2IjsiQmlvZMOpY2hldHMiOyJCZWNoIjsiQmVjaCI7IkFtIEJpaXJrIgoiMDgvMTIvMjAyNiI7IkTDqWNoZXRzIG3DqW5hZ2VycyBlbiBtw6lsYW5nZSI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIwOC8xMi8yMDI2IjsiVmFsb3JsdXgiOyJCZWNoIjs7IlRvdXRlcyBsZXMgcnVlcyIKIjE1LzEyLzIwMjYiOyJCaW9kw6ljaGV0cyI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIxNS8xMi8yMDI2IjsiRMOpY2hldHMgbcOpbmFnZXJzIGVuIG3DqWxhbmdlIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjE2LzEyLzIwMjYiOyJQYXBpZXIvQ2FydG9uIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIKIjE2LzEyLzIwMjYiOyJWZXJyZSI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIyMi8xMi8yMDI2IjsiQmlvZMOpY2hldHMiOyJCZWNoIjsiQmVjaCI7IkFtIEJpaXJrIgoiMjIvMTIvMjAyNiI7IkTDqWNoZXRzIG3DqW5hZ2VycyBlbiBtw6lsYW5nZSI7IkJlY2giOyJCZWNoIjsiQW0gQmlpcmsiCiIyMi8xMi8yMDI2IjsiVmFsb3JsdXgiOyJCZWNoIjs7IlRvdXRlcyBsZXMgcnVlcyIKIjI5LzEyLzIwMjYiOyJEw6ljaGV0cyBtw6luYWdlcnMgZW4gbcOpbGFuZ2UiOyJCZWNoIjsiQmVjaCI7IkFtIEJpaXJrIgoiMzAvMTIvMjAyNiI7IlBhcGllci9DYXJ0b24iOyJCZWNoIjsiQmVjaCI7IkFtIEJpaXJrIgoiMzAvMTIvMjAyNiI7IlZlcnJlIjsiQmVjaCI7IkJlY2giOyJBbSBCaWlyayIK"
+    }
+  ]
+}

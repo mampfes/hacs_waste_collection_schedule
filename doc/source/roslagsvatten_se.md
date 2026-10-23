@@ -1,16 +1,18 @@
-# Roslagsvatten Sweden
+# Roslagsvatten
 
-Support for upcoming pick-ups provided by [Roslagsvatten self-service portal](https://roslagsvatten.se/hamtningsschema).
+Support for schedules provided by [Roslagsvatten](https://roslagsvatten.se).
+
+Source for Roslagsvatten waste collection (Österåker, Vaxholm and Ekerö).
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: roslagsvatten_se
       args:
-        street_address: "YOUR_STREET_ADDRESS" # Formatted as: Streetname number, City
-        municipality: "YOUR_MUNICIPALITY" # One of: osteraker, vaxholm, ekero
+        street_address: STREET_ADDRESS
+        municipality: MUNICIPALITY
 ```
 
 ### Configuration Variables
@@ -19,18 +21,19 @@ waste_collection_schedule:
 *(string) (required)*
 
 **municipality**  
-*(string) (required)* one of 
+*(string) (required)*
 
 ## Example
-
-An example configuration:
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: roslagsvatten_se
       args:
-        street_address: "Andromedavägen 1, Åkersberga" 
-        municipality: "osteraker"
+        street_address: "Andromedav\xE4gen 1, \xC5kersberga"
+        municipality: osteraker
 ```
 
+## How to get the source arguments
+
+Enter the address as the Roslagsvatten schedule search writes it, street and number followed by the locality, e.g. `Andromedavägen 1, Åkersberga`, and pick your municipality.

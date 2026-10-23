@@ -1,12 +1,14 @@
 # East Staffordshire Borough Council
 
-Support for schedules provided by [East Staffordshire Borough Council](https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates), UK.
+Support for schedules provided by [East Staffordshire Borough Council](https://www.eaststaffsbc.gov.uk/).
+
+Source for East Staffordshire Borough Council
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: eaststaffsbc_gov_uk
       args:
         uid: UID
@@ -14,23 +16,19 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**uid**</br>
-*(integer | string) (required)*
-The unique identifier East Staffs has assigned your property.
-
+**uid**  
+*(string) (required)*
 
 ## Example
+
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: eaststaffsbc_gov_uk
       args:
         uid: 103368
 ```
 
-#### How to find your `UID`
-Go to the [East Staffordshire Borough Council](https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates) website and search for your collection schedule. Your UID is the number at the end of the url when the page showing your collection dates is displayed. For example: <br>
-_www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates/`103366`_
+## How to get the source arguments
 
-
-
+Search for your address on the [East Staffordshire collection dates page](https://www.eaststaffsbc.gov.uk/bins-rubbish-recycling/collection-dates). The number at the end of the resulting address (`.../collection-dates/<uid>`) is your `uid`.

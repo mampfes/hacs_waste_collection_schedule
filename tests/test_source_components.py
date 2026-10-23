@@ -169,8 +169,10 @@ def test_no_extra_ics_mds() -> None:
 
 
 def test_enfield_address_match_uses_whole_house_number() -> None:
-    module = _get_module("enfield_gov_uk")
-    normalized_input = module.Source._normalize_address("51 Example Road AB1 2CD")
+    module = import_module("waste_collection_schedule.service.EnfieldCalendar")
+    normalized_input = module._CalendarClient._normalize_address(
+        "51 Example Road AB1 2CD"
+    )
 
     correct_candidate = {
         "ADDRESS": "51, EXAMPLE ROAD, EXAMPLE, AB1 2CD",
@@ -185,8 +187,10 @@ def test_enfield_address_match_uses_whole_house_number() -> None:
         "POSTCODE_LOCATOR": "AB1 2CD",
     }
 
-    assert module.Source._matches_address(normalized_input, correct_candidate)
-    assert not module.Source._matches_address(normalized_input, embedded_candidate)
+    assert module._CalendarClient._matches_address(normalized_input, correct_candidate)
+    assert not module._CalendarClient._matches_address(
+        normalized_input, embedded_candidate
+    )
 
 
 def _param_translation_check(
@@ -1315,7 +1319,7 @@ def test_opencities_projection_is_off_unless_its_switch_param_is_set() -> None:
 
 
 def test_wm_com_parses_service_date_delay() -> None:
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     result = module._parse_holiday_message(
         "Due to the Thanksgiving holiday, your service on 11/24/2026 will be on "
@@ -1339,7 +1343,7 @@ def test_wm_com_parses_service_date_delay() -> None:
 def test_wm_com_keeps_no_year_holiday_on_today() -> None:
     from datetime import date as _date
 
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     result = module._parse_holiday_message(
         "Labor Day is on Monday, September 7th. Weekday collections will "
@@ -1358,7 +1362,7 @@ def test_wm_com_keeps_no_year_holiday_on_today() -> None:
 def test_wm_com_keeps_recent_no_year_holiday_in_current_year() -> None:
     from datetime import date as _date
 
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     result = module._parse_holiday_message(
         "Labor Day is on Monday, September 7th. Weekday collections will "
@@ -1377,7 +1381,7 @@ def test_wm_com_keeps_recent_no_year_holiday_in_current_year() -> None:
 def test_wm_com_rolls_stale_no_year_holiday_into_next_year() -> None:
     from datetime import date as _date
 
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     # Once the delayed collection week has fully passed, a year-less notice
     # refers to next year's occurrence rather than the one just gone.
@@ -1396,7 +1400,7 @@ def test_wm_com_rolls_stale_no_year_holiday_into_next_year() -> None:
 
 
 def test_wm_com_parses_weekday_collection_delays() -> None:
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     labor_day = module._parse_holiday_message(
         "Residential: Labor Day is on Monday, September 7th, 2026, and we will be "
@@ -1422,7 +1426,7 @@ def test_wm_com_parses_weekday_collection_delays() -> None:
 
 
 def test_wm_com_anchors_weekend_holiday_to_observed_weekday() -> None:
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     # 2026-11-01 is a Sunday, observed on Monday the 2nd: the whole of that
     # week's weekday collections shift.
@@ -1449,7 +1453,7 @@ def test_wm_com_anchors_weekend_holiday_to_observed_weekday() -> None:
 
 
 def test_wm_com_parses_delay_length_after_the_word_delay() -> None:
-    module = _get_module("wm_com")
+    module = import_module("waste_collection_schedule.service.WasteManagementCalendar")
 
     numeric_after = module._parse_holiday_message(
         "Due to the holiday, your service on 11/24/2026 will be on a delay of 2 days.",
@@ -1642,34 +1646,96 @@ def test_doncaster_gov_uk_picks_address_and_parses_collections() -> None:
     module = _get_module("doncaster_gov_uk")
     from waste_collection_schedule.exceptions import (
         SourceArgAmbiguousWithSuggestions,
+        SourceArgumentNotFound,
         SourceArgumentNotFoundWithSuggestions,
-        SourceArgumentRequired,
     )
 
-    form = (
-        '<form class="page_widget_group" data-submit_destination='
-        '"/w/webpage/bin-query?webpage_subpage_id=PAG1&amp;webpage_token=abc">'
-        '<input type="hidden" name="form_check" value="check1" />'
-        '<label for="field_prop">Property Number or Name</label>'
-        '<input name="field_prop" id="field_prop" />'
-        '<label for="field_pc">Postcode</label>'
-        '<input name="field_pc" id="field_pc" />'
-        '<input type="submit" name="field_btn" value="Search" />'
-        "</form>"
+    class _Response:
+        def __init__(self, payload) -> None:
+            self._payload = payload
+
+        def json(self):
+            return {"data": self._payload}
+
+    form = module._form(
+        _Response(
+            '<form class="page_widget_group" data-submit_destination='
+            '"/w/webpage/bin-query?webpage_subpage_id=PAG1&amp;webpage_token=abc">'
+            '<input type="hidden" name="form_check" value="check1" />'
+            '<label for="field_prop">Property Number or Name</label>'
+            '<input name="field_prop" id="field_prop" />'
+            '<label for="field_pc">Postcode</label>'
+            '<input name="field_pc" id="field_pc" />'
+            '<input type="submit" name="field_btn" value="Search" />'
+            "</form>"
+        )
     )
-    results = (
-        '<a href="/w/webpage/address-collections?id=10&amp;auth=a" '
-        'aria-label="View collection details, 10 High Street Doncaster DN1 1AA">x</a>'
-        '<a href="/w/webpage/address-collections?id=1&amp;auth=b" '
-        'aria-label="View collection details, 1 High Street Doncaster DN1 1AA">x</a>'
-        '<a href="/w/webpage/address-collections?id=20&amp;auth=c" '
-        'aria-label="View collection details, Rose Cottage, High Street Doncaster DN1 1AA">x</a>'
-        '<a href="/w/webpage/address-collections?id=31&amp;auth=d" '
-        'aria-label="View collection details, Flat 1, 5 High Street Doncaster DN1 1AA">x</a>'
-        '<a href="/w/webpage/address-collections?id=32&amp;auth=e" '
-        'aria-label="View collection details, Flat 2, 5 High Street Doncaster DN1 1AA">x</a>'
-        "<li><a>Results 1-5 of 5 found</a></li>"
+    assert form["action"] == (
+        module._BASE_URL
+        + "/w/webpage/bin-query?webpage_subpage_id=PAG1&webpage_token=abc"
     )
+    # The boxes are found by their labels and the postcode is normalised.
+    assert module._postcode("dn11aa") == "DN1 1AA"
+    data = module._search_data(form, module._postcode("dn11aa"), "")
+    assert data == {
+        "form_check": "check1",
+        "field_btn": "Search",
+        "field_pc": "DN1 1AA",
+        "field_prop": "",
+    }
+
+    results = module._results(
+        _Response(
+            '<a href="/w/webpage/address-collections?id=10&amp;auth=a" '
+            'aria-label="View collection details, 10 High Street Doncaster DN1 1AA">x</a>'
+            '<a href="/w/webpage/address-collections?id=1&amp;auth=b" '
+            'aria-label="View collection details, 1 High Street Doncaster DN1 1AA">x</a>'
+            '<a href="/w/webpage/address-collections?id=20&amp;auth=c" '
+            'aria-label="View collection details, Rose Cottage, High Street Doncaster DN1 1AA">x</a>'
+            '<a href="/w/webpage/address-collections?id=31&amp;auth=d" '
+            'aria-label="View collection details, Flat 1, 5 High Street Doncaster DN1 1AA">x</a>'
+            '<a href="/w/webpage/address-collections?id=32&amp;auth=e" '
+            'aria-label="View collection details, Flat 2, 5 High Street Doncaster DN1 1AA">x</a>'
+            "<li><a>Results 1-5 of 5 found</a></li>"
+        )
+    )
+    assert results["total"] == 5 and len(results["addresses"]) == 5
+
+    def link(address: str, filtered=None) -> str:
+        return module._collection_link((None, form, results, None, filtered), address)
+
+    # "1" must pick "1 High Street", not "10 High Street".
+    assert link("1") == "/w/webpage/address-collections?id=1&auth=b"
+    # House names work with different case and with or without commas.
+    assert link("rose cottage").endswith("id=20&auth=c")
+    assert link("flat 1 5 high street").endswith("id=31&auth=d")
+    # An address matching several properties lists them instead of guessing.
+    with pytest.raises(SourceArgAmbiguousWithSuggestions):
+        link("Flat")
+    # An address that matches nothing lists the properties of the postcode.
+    with pytest.raises(SourceArgumentNotFoundWithSuggestions):
+        link("High")
+
+    # A search filtered by name replaces the first page when it found something,
+    # and the first page is used when it found nothing.
+    filtered = {"addresses": [("Flat 1, 5 High Street", "/x?id=99")], "total": 1}
+    assert link("Flat 1, 5 High Street", filtered) == "/x?id=99"
+    empty = {"addresses": [], "total": 0}
+    assert link("Flat 1, 5 High Street", empty).endswith("id=31&auth=d")
+    with pytest.raises(SourceArgumentNotFoundWithSuggestions):
+        link("Flat 999, Tower", empty)
+
+    # More properties than one page holds trigger the name search.
+    assert module._too_many(None, form, {"addresses": [("a", "b")], "total": 40})
+    assert not module._too_many(None, form, results)
+
+    # A postcode with no properties is reported against the postcode.
+    with pytest.raises(SourceArgumentNotFound):
+        module._first_search(
+            _Response("<li><a>Results 1-0 of 0 found</a></li>"), postcode="DN1 1AA"
+        )
+
+    # The collection page carries its events as JSON in an attribute.
     params = (
         '{"template_data":{"events":['
         '{"id":1,"title":"Refuse","date":"2026-10-15"},'
@@ -1677,110 +1743,9 @@ def test_doncaster_gov_uk_picks_address_and_parses_collections() -> None:
         '{"id":3,"title":"Green Garden Waste Collection Service","date":"2026-10-22"}'
         "]}}"
     )
-    detail = f"<div data-params='{params}'></div>"
-
-    class _Response:
-        def __init__(self, payload=None):
-            self._payload = payload
-
-        def raise_for_status(self) -> None:
-            return None
-
-        def json(self):
-            return {"data": self._payload}
-
-    submitted: list[dict] = []
-    detail_urls: list[str] = []
-    state = {"results": results}
-
-    class _Session:
-        def __init__(self) -> None:
-            self.headers: dict = {}
-
-        def get(self, url, **kwargs):
-            return _Response()
-
-        def post(self, url, data=None, **kwargs):
-            if "webpage_token=abc" in url:
-                submitted.append(data)
-                return _Response(state["results"])
-            if "address-collections" in url:
-                detail_urls.append(url)
-                return _Response(detail)
-            return _Response(form)
-
-    with patch.object(module.requests, "Session", _Session):
-        entries = module.Source(postcode="dn11aa", address="1").fetch()
-
-        assert len(submitted) == 1
-        assert submitted[0]["field_pc"] == "DN1 1AA"
-        assert submitted[0]["field_prop"] == ""
-        assert submitted[0]["form_check"] == "check1"
-        assert submitted[0]["field_btn"] == "Search"
-        # "1" must pick "1 High Street", not "10 High Street".
-        assert detail_urls == [
-            module.BASE_URL + "/w/webpage/address-collections?id=1&auth=b"
-        ]
-        assert [(e.date.isoformat(), e.type) for e in entries] == [
-            ("2026-10-15", "Refuse"),
-            ("2026-10-08", "Recycling"),
-            ("2026-10-22", "Green Garden Waste Collection Service"),
-        ]
-
-        # House names work with different case and with or without commas.
-        module.Source(postcode="DN1 1AA", address="rose cottage").fetch()
-        assert detail_urls[-1].endswith("id=20&auth=c")
-        module.Source(postcode="DN1 1AA", address="flat 1 5 high street").fetch()
-        assert detail_urls[-1].endswith("id=31&auth=d")
-
-        # An address matching several properties lists them instead of guessing.
-        with pytest.raises(SourceArgAmbiguousWithSuggestions):
-            module.Source(postcode="DN1 1AA", address="Flat").fetch()
-
-        # An address that matches nothing lists the properties of the postcode.
-        with pytest.raises(SourceArgumentNotFoundWithSuggestions):
-            module.Source(postcode="DN1 1AA", address="High").fetch()
-
-    # A result page that holds only part of the matches is searched again with
-    # the house number or name, so the council filters the list.
-    state["results"] = results.replace("of 5 found", "of 40 found")
-    submitted.clear()
-    with patch.object(module.requests, "Session", _Session):
-        module.Source(postcode="DN1 1AA", address="Rose Cottage").fetch()
-    assert [d["field_prop"] for d in submitted] == ["", "Rose Cottage"]
-
-    # The council's box only matches text inside the house number or name: the
-    # search sends the part before the first comma, and when that finds nothing
-    # the first page is used, so an unknown address still gets suggestions.
-    empty = "<li><a>Results 1-0 of 0 found</a></li>"
-    original_post = _Session.post
-
-    def _post_empty_when_filtered(self, url, data=None, **kwargs):
-        if "webpage_token=abc" in url and data and data.get("field_prop"):
-            submitted.append(data)
-            return _Response(empty)
-        return original_post(self, url, data=data, **kwargs)
-
-    submitted.clear()
-    with patch.object(_Session, "post", _post_empty_when_filtered):
-        with patch.object(module.requests, "Session", _Session):
-            with pytest.raises(SourceArgumentNotFoundWithSuggestions):
-                module.Source(postcode="DN1 1AA", address="Flat 999, Tower").fetch()
-            module.Source(postcode="DN1 1AA", address="Flat 1, 5 High Street").fetch()
-    assert [d["field_prop"] for d in submitted] == [
-        "",
-        "Flat 999",
-        "",
-        "Flat 1",
+    events = module.Source.parse(_Response(f"<div data-params='{params}'></div>"))
+    assert [(e["date"], e["title"]) for e in events] == [
+        ("2026-10-15", "Refuse"),
+        ("2026-10-08", "Recycling"),
+        ("2026-10-22", "Green Garden Waste Collection Service"),
     ]
-    assert detail_urls[-1].endswith("id=31&auth=d")
-
-    # The 'uprn' wording is only used when a uprn was configured.
-    with pytest.raises(SourceArgumentRequired) as error:
-        module.Source(postcode="DN1 1AA").fetch()
-    assert "UPRN" not in str(error.value)
-
-    # Configurations written for the old UPRN lookup get a clear message.
-    with pytest.raises(SourceArgumentRequired) as error:
-        module.Source(uprn="100050701118").fetch()
-    assert "UPRN" in str(error.value)

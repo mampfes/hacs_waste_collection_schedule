@@ -1,10 +1,25 @@
 # SICTOM du Val de Saône
 
-Support for [SICTOM du Val de Saône](https://www.sictomvds.com) waste collection schedules in Haute-Saône (70), France.
+Support for schedules provided by [SICTOM du Val de Saône](https://www.sictomvds.com).
 
-Schedules are fetched live from the SICTOM interactive map (commune → PDF lookup) — no hardcoded dates.
+Source for SICTOM du Val de Saône waste collection schedules in Haute-Saône, France.
 
-## Configuration via YAML
+## Configuration via configuration.yaml
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: sictomvds_com
+      args:
+        commune: COMMUNE
+```
+
+### Configuration Variables
+
+**commune**  
+*(string) (required)*
+
+## Example
 
 ```yaml
 waste_collection_schedule:
@@ -14,15 +29,6 @@ waste_collection_schedule:
         commune: Velleminfroy
 ```
 
-## Configuration via UI
+## How to get the source arguments
 
-| Parameter | Type   | Required | Description |
-|-----------|--------|----------|-------------|
-| commune   | string | yes      | Name of the municipality as shown on the SICTOM map (e.g. `Velleminfroy`, `Ancier`, `Mantoche`). Case-insensitive, accents optional. |
-
-## Notes
-
-- Covers ~266 communes served by SICTOM Val de Saône.
-- Two waste streams are returned: **Ordures ménagères** (general waste) and **Tri** (recyclables).
-- Glass collection is drop-off only and is not included.
-- Collection days shift by +1 day for 1 January, 1 May, and 25 December only; all other public holidays are collected as normal.
+Enter your commune as it is named on the map at https://www.sictomvds.com (for example 'Velleminfroy').

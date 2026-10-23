@@ -9,9 +9,11 @@ to the hand-written files, because the prose around the structure varies.
 
 import calendar  # noqa: F401 — stdlib calendar must be imported FIRST
 import importlib
+import json
 import os
 import pathlib
 import sys
+from string import Formatter
 
 import pytest
 
@@ -35,6 +37,63 @@ from doc_generator import render_source_doc
 def _load_source(source_id: str):
     module = importlib.import_module(f"waste_collection_schedule.source.{source_id}")
     return module.Source
+
+
+@pytest.mark.parametrize("existing", [False, True])
+def test_finnish_translation_seed_generates_provider_steps(
+    tmp_path, monkeypatch, existing
+):
+    """A missing output is bootstrapped; an old output cannot hide UI updates."""
+    import update_docu_links as generator
+
+    monkeypatch.setattr(generator, "PACKAGE_DIR", tmp_path)
+    monkeypatch.setattr(generator, "LANGUAGES", ["fi"])
+    monkeypatch.setattr(generator, "update_sources_json", lambda countries: None)
+    output = tmp_path / "translations" / "fi.json"
+    if existing:
+        output.parent.mkdir()
+        output.write_text('{"title": "Old UI"}', encoding="utf-8")
+    _, sources = generator.get_source_by_file("kiertokapula_fi")
+    generator.update_json({"Finland": sources})
+    translation = json.loads(output.read_text(encoding="utf-8"))
+    steps = translation["config"]["step"]
+    assert steps["user"]["title"] == "Valitse maa"
+    for step in ("args_kiertokapula_fi", "reconfigure_kiertokapula_fi"):
+        assert steps[step]["data"]["username"] == "Käyttäjätunnus"
+        assert steps[step]["data"]["password"] == "Salasana"
+        assert "Kiertokapulan" in steps[step]["data_description"]["username"]
+
+
+def test_finnish_ui_has_all_common_keys_and_matching_placeholders():
+    """Translation must not remove fields or break HA formatting variables."""
+    root = pathlib.Path(__file__).resolve().parent.parent
+    english = json.loads(
+        (
+            root / "custom_components/waste_collection_schedule/translations/en.json"
+        ).read_text(encoding="utf-8")
+    )
+    finnish = json.loads(
+        (root / "translation_templates/fi.json").read_text(encoding="utf-8")
+    )
+    english["config"]["step"] = {
+        key: value
+        for key, value in english["config"]["step"].items()
+        if not key.startswith(("args_", "reconfigure_"))
+    }
+
+    def compare(reference, translated):
+        if isinstance(reference, dict):
+            assert reference.keys() == translated.keys()
+            for key in reference:
+                compare(reference[key], translated[key])
+        else:
+            assert isinstance(translated, str) and translated
+            formatter = Formatter()
+            expected = {field for _, field, _, _ in formatter.parse(reference) if field}
+            actual = {field for _, field, _, _ in formatter.parse(translated) if field}
+            assert expected == actual
+
+    compare(english, finnish)
 
 
 # (source_id, expects_howto)

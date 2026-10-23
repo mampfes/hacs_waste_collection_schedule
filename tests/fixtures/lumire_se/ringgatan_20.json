@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://lumire.se/api/waste-pickup 51c336ed98",
+      "method": "GET",
+      "url": "https://lumire.se/api/waste-pickup",
+      "final_url": "https://lumire.se/api/waste-pickup?q=Ringgatan+20",
+      "body": "{\"params\":[[\"q\",\"Ringgatan 20\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "content-type": "application/json",
+        "vary": "Accept-Encoding",
+        "cache-control": "no-cache, private",
+        "date": "Tue, 13 Oct 2026 09:48:00 GMT",
+        "access-control-allow-origin": "*",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "x-cache": "BYPASS",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJhZGRyZXNzZXMiOlt7ImFkZHJlc3MiOiJSaW5nZ2F0YW4gMjAsIEx1bGVcdTAwZTUiLCJidWlsZGluZ0lkIjoiMTI0MTQwMSJ9XX0="
+    },
+    {
+      "key": "GET https://lumire.se/api/waste-pickup/1241401 ",
+      "method": "GET",
+      "url": "https://lumire.se/api/waste-pickup/1241401",
+      "final_url": "https://lumire.se/api/waste-pickup/1241401",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "content-type": "application/json",
+        "vary": "Accept-Encoding",
+        "cache-control": "no-cache, private",
+        "date": "Tue, 13 Oct 2026 09:48:00 GMT",
+        "access-control-allow-origin": "*",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "x-cache": "MISS",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "eyJkYXRhIjpbeyJpZCI6IjEwMzE3OCIsImJ1aWxkaW5nSWQiOiIxMjQxNDAxIiwiZGVzY3JpcHRpb24iOiJSZXN0YXZmYWxsLCAzNzBsIHZhcmplIHZlY2thIiwibmV4dFBpY2t1cCI6IjIwMjYtMTAtMTQiLCJpc0FjdGl2ZSI6dHJ1ZSwiYmluVHlwZSI6eyJjb2RlIjoiSzM3MCIsImNvbnRhaW5lcl90eXBlIjoiS1x1MDBlNHJsIiwic2l6ZSI6IjM3MC4wMCIsInVuaXQiOiJMIn0sImZlZSI6eyJjYWxjdWxhdGVkX2Nvc3QiOiIwIiwiY29kZSI6IjFCMzcwMSIsImRlc2lnbmF0aW9uIjoiUmVzdGF2ZmFsbCwgMzcwbCB2YXJqZSB2ZWNrYSIsImlkIjoiMCIsImlzX2Nvc3RfY2FsY3VsYXRlZCI6ImZhbHNlIiwicGFydF9wcm9kdWN0IjoiSFVTSCIsInBhcnRfeWVhcl9kZXNjcmlwdGlvbiI6W10sInBhcnRfeWVhcl9lbmRzIjoiMDAwMS0wMS0wMVQwMDowMDowMCIsInBhcnRfeWVhcl9zdGFydHMiOiIwMDAxLTAxLTAxVDAwOjAwOjAwIiwicHJvZHVjdCI6IlJFTkgiLCJiaW5fdHlwZSI6eyJiX2NvZGUiOiJLMzcwIiwiYl9jb250YWluZXJUeXBlIjoiS1x1MDBlNHJsIiwiYl9zaXplIjoiMzcwLjAwIiwiYl91bml0IjoiTCJ9LCJjaGFuZ2VfZnJlcXVlbmN5X3RleHQiOltdLCJjaGFuZ2Vfc2l6ZV9vZl9iaW5fdGV4dCI6W10sImRlc2NyaXB0aW9uIjoiUmVzdGF2ZmFsbCwgMzcwbCB2YXJqZSB2ZWNrYSIsIndhc3RlX3BpY2t1cF9mcmVxdWVuY3kiOiIxIGdcL3ZlY2thIiwid2FzdGVfcGlja3VwX2ZyZXF1ZW5jeV9jb2RlIjoiMSBnXC92Iiwid2FzdGVfcGlja3Vwc19wZXJfeWVhciI6IjUyIiwid2FzdGVfdHlwZSI6IlJlc3RhdmZhbGwifX0seyJpZCI6IjEwMzE3OSIsImJ1aWxkaW5nSWQiOiIxMjQxNDAxIiwiZGVzY3JpcHRpb24iOiJNYXRhdmZhbGwsIDE0MGwgdmFyamUgdmVja2EiLCJuZXh0UGlja3VwIjoiMjAyNi0xMC0xNCIsImlzQWN0aXZlIjp0cnVlLCJiaW5UeXBlIjp7ImNvZGUiOiJLMTQwIiwiY29udGFpbmVyX3R5cGUiOiJLXHUwMGU0cmwiLCJzaXplIjoiMTQwLjAwIiwidW5pdCI6IkwifSwiZmVlIjp7ImNhbGN1bGF0ZWRfY29zdCI6IjAiLCJjb2RlIjoiMUsxNDAxIiwiZGVzaWduYXRpb24iOiJNYXRhdmZhbGwsIDE0MGwgdmFyamUgdmVja2EiLCJpZCI6IjAiLCJpc19jb3N0X2NhbGN1bGF0ZWQiOiJmYWxzZSIsInBhcnRfcHJvZHVjdCI6IkhVU0giLCJwYXJ0X3llYXJfZGVzY3JpcHRpb24iOltdLCJwYXJ0X3llYXJfZW5kcyI6IjAwMDEtMDEtMDFUMDA6MDA6MDAiLCJwYXJ0X3llYXJfc3RhcnRzIjoiMDAwMS0wMS0wMVQwMDowMDowMCIsInByb2R1Y3QiOiJSRU5IIiwiYmluX3R5cGUiOnsiYl9jb2RlIjoiSzE0MCIsImJfY29udGFpbmVyVHlwZSI6IktcdTAwZTRybCIsImJfc2l6ZSI6IjE0MC4wMCIsImJfdW5pdCI6IkwifSwiY2hhbmdlX2ZyZXF1ZW5jeV90ZXh0IjpbXSwiY2hhbmdlX3NpemVfb2ZfYmluX3RleHQiOltdLCJkZXNjcmlwdGlvbiI6Ik1hdGF2ZmFsbCwgMTQwbCB2YXJqZSB2ZWNrYSIsIndhc3RlX3BpY2t1cF9mcmVxdWVuY3kiOiIxIGdcL3ZlY2thIiwid2FzdGVfcGlja3VwX2ZyZXF1ZW5jeV9jb2RlIjoiMSBnXC92Iiwid2FzdGVfcGlja3Vwc19wZXJfeWVhciI6IjUyIiwid2FzdGVfdHlwZSI6Ik1hdGF2ZmFsbCJ9fV19"
+    }
+  ]
+}

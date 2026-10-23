@@ -1,6 +1,8 @@
 # Abfallwirtschaft Stadt Schweinfurt
 
-Support for schedules provided by [Schweinfurt](https://www.schweinfurt.de/umweltverkehr/abfall--entsorgung/mllkalender/14894.Aktuelle-Abfuhrtermine-und-Muellkalender.html), Germany.
+Support for schedules provided by [Abfallwirtschaft Stadt Schweinfurt](https://www.schweinfurt.de).
+
+Source for Schweinfurt, Germany
 
 ## Configuration via configuration.yaml
 
@@ -18,35 +20,19 @@ waste_collection_schedule:
 **address**  
 *(string) (required)*
 
-**showmobile** (default=false)
-*(bool) (optional)*  case-sensitive
+**showmobile**  
+*(string) (optional)*
 
 ## Example
 
-
 ```yaml
 waste_collection_schedule:
   sources:
     - name: schweinfurt_de
       args:
-        address: "Ahornstrasse"
-        showmobile: "True"
-```
-
-parameter showmobile is optional
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: schweinfurt_de
-      args:
-        address: "Ahornstrasse"
-        showmobile: "False"
+        address: Ahornstrasse
 ```
 
 ## How to get the source arguments
 
-1. Go to your calendar at [Schweinfurt - Abfallkalender](https://www.schweinfurt.de/umweltverkehr/abfall--entsorgung/mllkalender/14894.Aktuelle-Abfuhrtermine-und-Muellkalender.html)
-2. Enter your street and housenumber
-3. Copy the exact values from the textboxes street in the source configuration.
-
-Use the showmobile parameter to include schedules for "Mobiler Wertstoffhof"
+Enter the street name as listed in the street dropdown at https://www.schweinfurt.de (e.g. 'Ahornstrasse'). Enable 'showmobile' to also include the mobile recycling center (Mobiler Wertstoffhof) dates.

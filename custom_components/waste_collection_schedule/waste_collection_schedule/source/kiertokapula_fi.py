@@ -21,13 +21,18 @@ TENANT_ID = "493c3a57-70d8-4515-aa94-05dd1185b986"
 
 PARAM_TRANSLATIONS = {
     "en": {"username": "Username", "password": "Password"},
+    "fi": {"username": "Käyttäjätunnus", "password": "Salasana"},
 }
 
 PARAM_DESCRIPTIONS = {
+    "fi": {
+        "username": "Kiertokapulan sähköisen asioinnin käyttäjätunnus (aiemmin laskun tai asiakkaan numero)",
+        "password": "Kiertokapulan sähköisen asioinnin salasana",
+    },
     "en": {
         "username": "Your Kiertokapula e-services username (previously the bill/customer number)",
         "password": "Your Kiertokapula e-services password",
-    }
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)

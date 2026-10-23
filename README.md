@@ -121,9 +121,10 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Wanneroo](/doc/source/wanneroo_wa_gov_au.md) / wanneroo.wa.gov.au
 - [City of West Torrens](/doc/source/app_my_local_services_au.md) / westtorrens.sa.gov.au
 - [City of Whyalla](/doc/source/app_my_local_services_au.md) / whyalla.sa.gov.au
+- [City of Wodonga](/doc/source/wodonga_vic_gov_au.md) / wodonga.vic.gov.au
 - [City of Yarra](/doc/source/yarracity_vic_gov_au.md) / yarracity.vic.gov.au
 - [Clare and Gilbert Valleys Council](/doc/source/app_my_local_services_au.md) / claregilbertvalleys.sa.gov.au
-- [Clarence City Council](/doc/source/ccc_tas_gov_au.md) / ccc.tas.gov.au/wp-json/waste-collection
+- [Clarence City Council](/doc/source/ccc_tas_gov_au.md) / ccc.tas.gov.au
 - [Clarence Valley Council](/doc/source/impactapps_com_au.md) / clarence.nsw.gov.au
 - [Coffs Coast Waste Services](/doc/source/impactapps_com_au.md) / coffsharbour.nsw.gov.au
 - [Coorong District Council](/doc/source/app_my_local_services_au.md) / coorong.sa.gov.au
@@ -251,6 +252,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Town of Walkerville](/doc/source/app_my_local_services_au.md) / walkerville.sa.gov.au
 - [Townsville](/doc/source/townsville_qld_gov_au.md) / townsville.qld.gov.au
 - [Unley City Council (SA)](/doc/source/unley_sa_gov_au.md) / unley.sa.gov.au
+- [Upper Lachlan Shire Council](/doc/source/upperlachlan_nsw_gov_au.md) / upperlachlan.nsw.gov.au/services/waste
 - [Wagga Wagga City Council](/doc/source/wagga_nsw_gov_au.md) / wagga.nsw.gov.au
 - [Wakefield Regional Council](/doc/source/app_my_local_services_au.md) / wakefieldrc.sa.gov.au
 - [Warrnambool City Council](/doc/source/warrnambool_vic_gov_au.md) / warrnambool.vic.gov.au
@@ -447,9 +449,7 @@ If you already have enough information for your municipality/region, you are ver
 - [GVU Bezirk Gänserndorf](/doc/source/umweltverbaende_at.md) / gaenserndorf.umweltverbaende.at
 - [GVU Melk](/doc/source/umweltverbaende_at.md) / melk.umweltverbaende.at
 - [GVU Scheibbs](/doc/source/scheibbs_umweltverbaende_at.md) / scheibbs.umweltverbaende.at
-- [GVU Scheibbs](/doc/source/umweltverbaende_at.md) / scheibbs.umweltverbaende.at
 - [GVU St. Pölten](/doc/source/umweltverbaende_at.md) / stpoeltenland.umweltverbaende.at
-- [Gänserndorf](/doc/source/gaenserndorf_city_at.md) / gaenserndorf.at
 - [Gänserndorf City / Gänserndorf App](/doc/source/gaenserndorf_city_at.md) / gaenserndorf.at
 - [Güssing](/doc/source/citiesapps_com.md) / guessing.co.at
 - [Güttenbach](/doc/source/citiesapps_com.md) / guettenbach.at
@@ -493,6 +493,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Jagerberg](/doc/source/citiesapps_com.md) / jagerberg.info
 - [Jochberg](/doc/source/jochberg_gv_at.md) / jochberg.gv.at
 - [Kainach](/doc/source/lipizzanerheimat_at.md) / kainach.at
+- [Kainbach bei Graz](/doc/source/kainbach_gv_at.md) / kainbach.gv.at
 - [Kaindorf](/doc/source/citiesapps_com.md) / kaindorf.at
 - [Kaisersdorf](/doc/source/citiesapps_com.md) / kaisersdorf.com
 - [Kalsdorf bei Graz](/doc/source/citiesapps_com.md) / kalsdorf-graz.gv.at
@@ -856,6 +857,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bep-Environnement](/doc/source/bep_environnement_be.md) / bep-environnement.be
 - [Eupen](/doc/ics/eupen_be.md) / eupen.be
 - [Hygea](/doc/source/hygea_be.md) / hygea.be
+- [Intradel (community calendars)](/doc/ics/intradel_be.md) / intradel-icals.pages.dev
 - [Ittre](/doc/source/ittre_be.md) / ittre.be
 - [Limburg.net](/doc/ics/limburg_net.md) / limburg.net
 - [Recycle!](/doc/source/recycleapp_be.md) / recycleapp.be
@@ -1039,8 +1041,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Aingeray](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Alfortville](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
 - [Allones](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
-- [Ambarès-et-Lagrave](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
-- [Ambès](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Amilly](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Andilly](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Angers Loire Métropole](/doc/source/data_angers_fr.md) / data.angers.fr
@@ -1064,7 +1064,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Betton](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Beynes](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Bicqueley](/doc/source/terrestouloises_com.md) / terrestouloises.com
-- [Blanquefort](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bois-de-Haye](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Boissy-Saint-Léger](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
 - [Boissy-sans-Avoir](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
@@ -1072,7 +1071,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Bollwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Boncé](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Bonneuil-sur-Marne](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
-- [Bordeaux](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bordeaux Métropole](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Boucq](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Bouglainval](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
@@ -1081,12 +1079,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Bouvron](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Briconville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Bruebach](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
-- [Bruges](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bruley](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Brunstatt-Didenheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Bruz](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Brécé](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
-- [Bègles](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Bécherel](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [CA Saint Germain Boucles de Seine](/doc/source/publidata_fr.md) / saintgermainbouclesdeseine.fr
 - [CA Sophia Antipolis](/doc/source/publidata_fr.md) / agglo-sophiaantipolis.fr/vivre-et-habiter/gerer-ses-dechets
@@ -1123,11 +1119,14 @@ If you already have enough information for your municipality/region, you are ver
 - [Clévilliers](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Coeur d'Yvelines](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Coltainville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Communauté de Communes de la Plaine de l'Ain](/doc/source/cc_plainedelain_fr.md) / cc-plainedelain.fr
 - [Communauté de Communes de Montesquieu](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
+- [Communauté de Communes du Pays de Craon](/doc/source/paysdecraon_fr.md) / paysdecraon.fr
 - [Communauté de Communes Pévèle Carembault](/doc/source/publidata_fr.md) / pevelecarembault.fr
 - [Corancez](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Corps-Nuds](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Créteil](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
+- [Cyclad](/doc/source/cyclad_org.md) / cyclad.org
 - [Dammarie et Bois-de-Mivoye](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Dangers](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Denonville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
@@ -1139,7 +1138,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Dunkerque Grand Littoral](/doc/source/publidata_fr.md) / mesinfosdechets.cud.fr
 - [Ermenonville-la-Grande](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Eschentzwiller](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
-- [Eysines](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Feldkirch](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Flaxlanden](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Flexanville](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
@@ -1159,7 +1157,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Gondreville](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Gorges](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Goupillières](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
-- [Gradignan](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Grand Besançon Métropole](/doc/source/grandbesancon_fr.md) / grandbesancon.fr
 - [Grand Calais Terres et Mers](/doc/source/publidata_fr.md) / grandcalais.fr
 - [Grand Paris Seine et Oise](/doc/source/publidata_fr.md) / infos-dechets.gpseo.fr
@@ -1199,14 +1196,11 @@ If you already have enough information for your municipality/region, you are ver
 - [Laneuveville-derrière-Foug](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Langan](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Lay-Saint-Rémy](/doc/source/terrestouloises_com.md) / terrestouloises.com
-- [Le Bouscat](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Le Cotentin](/doc/source/publidata_fr.md) / dechets.lecotentin.fr
 - [Le Coudray](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
-- [Le Haillan](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Le Havre Seine Métropole](/doc/source/publidata_fr.md) / tripratik.lehavreseinemetropole.fr
 - [Le Plessis-Trévise](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
 - [Le Rheu](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
-- [Le Taillan-Médoc](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Le Tremblay-sur-Mauldre](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Le Verger](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Les Mesnuls](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
@@ -1227,7 +1221,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Manonville](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Marcq](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Mareil-le-Guyon](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
-- [Martignas-sur-Jalle](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Martillac](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Meslay-le-Grenet](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Meslay-le-Vidame](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
@@ -1249,11 +1242,11 @@ If you already have enough information for your municipality/region, you are ver
 - [Mulhouse Alsace Agglomération (m2A)](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Mémotri - Agglomération Pau Béarn Pyrénées](/doc/source/memotri_agglo_pau_fr.md) / memotri.agglo-pau.fr
 - [Ménil-la-Tour](/doc/source/terrestouloises_com.md) / terrestouloises.com
-- [Mérignac](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Méré](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Métropole de Lyon](/doc/source/data_grandlyon_com.md) / data.grandlyon.com
 - [Métropole du Grand Nancy](/doc/source/publidata_fr.md) / mhdd.grandnancy.eu
 - [Métropole Européenne de Lille](/doc/source/publidata_fr.md) / lillemetropole.fr
+- [Métropole Nice Côte d'Azur](/doc/source/nice_cotedazur_fr.md) / nicecotedazur.org
 - [Nantes Métropole](/doc/source/data_nantesmetropole_fr.md) / data.nantesmetropole.fr
 - [Neauphle-le-Château](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Neauphle-le-Vieux](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
@@ -1272,9 +1265,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ottmarsheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Pacé](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Pagney-derrière-Barine](/doc/source/terrestouloises_com.md) / terrestouloises.com
-- [Parempuyre](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Parthenay-de-Bretagne](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
-- [Pessac](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Petit-Landau](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Pfastatt](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Pierre-la-Treiche](/doc/source/terrestouloises_com.md) / terrestouloises.com
@@ -1307,7 +1298,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Ruelisheim](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Saint Quentin en Yvelines](/doc/source/publidata_fr.md) / saint-quentin-en-yvelines.fr
 - [Saint-Armel](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
-- [Saint-Aubin-de-Médoc](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Saint-Aubin-des-Bois](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Saint-Erblon](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Saint-Georges-sur-Eure](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
@@ -1317,18 +1307,16 @@ If you already have enough information for your municipality/region, you are ver
 - [Saint-Hilaire-de-Clisson - Zone A](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Saint-Hilaire-de-Clisson - Zone B](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Saint-Jacques-de-la-Lande](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
-- [Saint-Louis-de-Montferrand](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Saint-Lumine-de-Clisson - Zone A](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Saint-Lumine-de-Clisson - Zone B](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Saint-Léger-des-Aubées](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Saint-Michel-de-la-Roë](/doc/source/paysdecraon_fr.md) / paysdecraon.fr
 - [Saint-Morillon](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Médard-d'Eyrans](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
-- [Saint-Médard-en-Jalles](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Saint-Prest](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Saint-Rémy-l'Honoré](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Saint-Selve](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
 - [Saint-Sulpice-la-Forêt](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
-- [Saint-Vincent-de-Paul](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Sandarville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Santeuil](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Sanzey](/doc/source/terrestouloises_com.md) / terrestouloises.com
@@ -1349,7 +1337,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Steinbrunn-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Sucy-en-Brie](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
 - [Sud Sainte Baume](/doc/source/publidata_fr.md) / agglo-sudsaintebaume.fr
-- [Talence](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Terres Touloises](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Theuville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Thivars](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
@@ -1372,7 +1359,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Vezin-le-Coquet](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Vicq](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
 - [Vieillevigne](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
-- [Villenave-d'Ornon](/doc/source/opendata_bordeauxmetropole_fr.md) / opendata.bordeaux-metropole.fr
 - [Villey-le-Sec](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Villey-Saint-Étienne](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Villiers-le-Mahieu](/doc/source/coeur_yvelines_fr.md) / coeur-yvelines.fr
@@ -2643,7 +2629,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Reutlingen](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Rhein-Hunsrück (Jumomind)](/doc/source/jumomind_de.md) / rh-entsorgung.de
 - [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
-- [Rhein-Hunsrück Entsorgung (RHE)](/doc/source/rh_entsorgung_de.md) / rh-entsorgung.de
 - [Rhein-Lahn Kreis](/doc/ics/rhein_lahn_kreis_abfallwirtschaft_de.md) / rhein-lahn-kreis-abfallwirtschaft.de
 - [Rhein-Neckar-Kreis](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Rhein-Neckar-Kreis](/doc/source/abfall_io.md) / rhein-neckar-kreis.de
@@ -2671,7 +2656,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Röttenbach](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/rottenbach/abfallkalender
 - [Rüthen](/doc/source/lobbe_app.md) / lobbe.app
 - [Saalekreis](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
-- [SAB Magdeburg Abfuhrkalender](/doc/source/magdeburg_de.md) / sab.ssl.metageneric.de/app/sab_i_tp/index.php
 - [Salgen](/doc/source/heimat_info_de.md) / heimat-info.de/gemeinden/salgen/abfallkalender
 - [Salzderhelden](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Salzgitter (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
@@ -2755,7 +2739,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadt Hanau](/doc/source/muellmax_de.md) / hanau.de
 - [Stadt Hilchenbach](/doc/source/hilchenbach_de.md) / hilchenbach.de
 - [Stadt Kaufbeuren](/doc/source/awido_de.md) / kaufbeuren.de
-- [Stadt Kerpen](/doc/source/stadt_kerpen_de.md) / stadt-kerpen.de
 - [Stadt Kerpen](/doc/source/stadt_kerpen_de.md) / stadt-kerpen.de
 - [Stadt Koblenz](/doc/ics/koblenz_de.md) / koblenz.de
 - [Stadt Königstein im Taunus](/doc/source/awido_de.md) / koenigstein.de
@@ -3035,14 +3018,15 @@ If you already have enough information for your municipality/region, you are ver
 - [A&T 2000 Spa](/doc/source/junker_app.md) / junker.app
 - [Abbadia Lariana (1)](/doc/source/siunet_it.md) / siunet.it
 - [Abbadia Lariana (2)](/doc/source/siunet_it.md) / siunet.it
-- [Acate (RG)](/doc/source/municipium_it.md) / municipiumapp.it
 - [Aci Sant'Antonio](/doc/source/junker_app.md) / junker.app
 - [Acinque Spa](/doc/source/junker_app.md) / junker.app
+- [Acquanegra sul Chiese](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/acquanegra-sul-chiese
 - [AET Ambiente Energia Territorio S.p.A.](/doc/source/junker_app.md) / junker.app
 - [Agliana](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Agno Chiampo Ambiente](/doc/source/junker_app.md) / junker.app
 - [Agrate Brianza](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Agrate Brianza](/doc/source/siunet_it.md) / siunet.it
+- [Agrate Conturbia](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Aicurzio](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Aicurzio](/doc/source/siunet_it.md) / siunet.it
 - [Airuno](/doc/source/siunet_it.md) / siunet.it
@@ -3059,6 +3043,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Amaie Energia e Servizi Srl](/doc/source/junker_app.md) / junker.app
 - [Amalfi](/doc/source/junker_app.md) / junker.app
 - [Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Ameno](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [AMSA](/doc/source/amsa_it.md) / amsa.it/it/milano
 - [AnconAmbiente](/doc/source/junker_app.md) / junker.app
 - [Andora](/doc/source/junker_app.md) / junker.app
@@ -3077,7 +3062,11 @@ If you already have enough information for your municipality/region, you are ver
 - [Arcore](/doc/source/siunet_it.md) / siunet.it
 - [Ardea - DM Technology Srl](/doc/source/junker_app.md) / junker.app
 - [Argelato](/doc/source/geovest_it.md) / geovest.bluemilk.dev
+- [Armeno](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [ARO Figulinas - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Arona (zona C)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Arona (zona D)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Arona (zone A-B)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Arosio - Service 24 Ambiente Srl](/doc/source/junker_app.md) / junker.app
 - [Arrone](/doc/source/siunet_it.md) / siunet.it
 - [Artena](/doc/source/junker_app.md) / junker.app
@@ -3085,6 +3074,7 @@ If you already have enough information for your municipality/region, you are ver
 - [ASIA Azienda Speciale per l'Igiene Ambientale](/doc/source/junker_app.md) / junker.app
 - [ASM Pavia](/doc/source/asm_pv_it.md) / asm.pv.it
 - [Asm Terni](/doc/source/junker_app.md) / junker.app
+- [Asola](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/asola
 - [Assago - San Germano - Gruppo Iren](/doc/source/junker_app.md) / junker.app
 - [Assisi - ECE Srl](/doc/source/junker_app.md) / junker.app
 - [Asti - ASP S.p.A.](/doc/source/junker_app.md) / junker.app
@@ -3095,6 +3085,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bacino Ventimigliese - TeknoService](/doc/source/junker_app.md) / junker.app
 - [Bagheria - A.M.B. S.p.a](/doc/source/junker_app.md) / junker.app
 - [Bagno a Ripoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Bagnolo San Vito](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/bagnolo-san-vito
 - [Ballabio](/doc/source/siunet_it.md) / siunet.it
 - [Barberino di Mugello](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Barberino Tavarnelle](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -3124,20 +3115,31 @@ If you already have enough information for your municipality/region, you are ver
 - [Binasco](/doc/source/siunet_it.md) / siunet.it
 - [Bitti, Luna e Onanì - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Blera](/doc/source/junker_app.md) / junker.app
+- [Boca](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Boffalora Sopra Ticino](/doc/source/siunet_it.md) / siunet.it
+- [Bogogno](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Bolzano Novarese](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Bolzano Vicentino](/doc/source/siunet_it.md) / siunet.it
 - [Borghetto di Borbera](/doc/source/junker_app.md) / junker.app
+- [Borgo Mantovano](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/borgo-mantovano-1
 - [Borgo San Giovanni](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Borgo San Giovanni](/doc/source/siunet_it.md) / siunet.it
 - [Borgo San Lorenzo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Borgo Ticino](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Borgocarbonara](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/borgocarbonara
+- [Borgomanero (zona A)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Borgomanero (zona B)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Borgomanero (zona C)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Borgomaro](/doc/source/junker_app.md) / junker.app
 - [Borgosesia - Seso Srl](/doc/source/junker_app.md) / junker.app
 - [Bosisio Parini](/doc/source/siunet_it.md) / siunet.it
 - [Bovisio Masciago](/doc/source/siunet_it.md) / siunet.it
 - [Bovolone](/doc/source/siunet_it.md) / siunet.it
+- [Bozzolo](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/bozzolo
 - [Brandizzo](/doc/source/junker_app.md) / junker.app
 - [Brembate](/doc/source/junker_app.md) / junker.app
 - [Bressanvido](/doc/source/siunet_it.md) / siunet.it
+- [Briga Novarese](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Briosco](/doc/source/siunet_it.md) / siunet.it
 - [Brivio](/doc/source/siunet_it.md) / siunet.it
 - [Brixen/Bressanone - Stadtwerke Brixen AG/ASM Bressanone SpA](/doc/source/junker_app.md) / junker.app
@@ -3197,6 +3199,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Carpiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Carpiano](/doc/source/siunet_it.md) / siunet.it
 - [Carpignano Salentino](/doc/source/junker_app.md) / junker.app
+- [Carpignano Sesia](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Carrara - Nausicaa S.p.a](/doc/source/junker_app.md) / junker.app
 - [Carugate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Carugate](/doc/source/siunet_it.md) / siunet.it
@@ -3206,6 +3209,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Casaletto Lodigiano](/doc/source/siunet_it.md) / siunet.it
 - [Casalmaiocco](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Casalmaiocco](/doc/source/siunet_it.md) / siunet.it
+- [Casalmoro](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/casalmoro
+- [Casaloldo](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/casaloldo
+- [Casalromano](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/casalromano
 - [Casargo](/doc/source/siunet_it.md) / siunet.it
 - [Casarile](/doc/source/siunet_it.md) / siunet.it
 - [Casatenovo](/doc/source/siunet_it.md) / siunet.it
@@ -3220,22 +3226,32 @@ If you already have enough information for your municipality/region, you are ver
 - [Cassina Valsassina](/doc/source/siunet_it.md) / siunet.it
 - [Castagnaro](/doc/source/siunet_it.md) / siunet.it
 - [Castegnero](/doc/source/siunet_it.md) / siunet.it
+- [Castel d'Ario](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/casteldario
 - [Castel Gandolfo - Coop 134](/doc/source/junker_app.md) / junker.app
+- [Castel Goffredo](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/castel-goffredo
 - [Castel Maggiore](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Castel Volturno - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
+- [Castelbelforte](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/castelbelforte-1
 - [Castelbuono - Castelbuono Ambiente srl](/doc/source/junker_app.md) / junker.app
 - [Castelfiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Castelforte](/doc/source/junker_app.md) / junker.app
 - [Castellammare del Golfo - Agesp Spa](/doc/source/junker_app.md) / junker.app
 - [Castellanza](/doc/source/siunet_it.md) / siunet.it
+- [Castelletto Sopra Ticino (zona A)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Castelletto Sopra Ticino (zona B)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Castello Di Brianza](/doc/source/siunet_it.md) / siunet.it
+- [Castellucchio](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/castellucchio
 - [Castelnuovo di Porto](/doc/source/junker_app.md) / junker.app
 - [Castelsardo](/doc/source/junker_app.md) / junker.app
 - [Castelvetrano](/doc/source/junker_app.md) / junker.app
 - [Castiglione in Teverina - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
+- [Cavaglietto](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Cavaglio d'Agogna](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Cavallirio](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Cavenago Di Brianza](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Cavenago Di Brianza](/doc/source/siunet_it.md) / siunet.it
 - [CEM Ambiente](/doc/source/cem_ambiente_it.md) / cemambiente.it
+- [Ceresara](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/ceresara
 - [Ceriano Laghetto](/doc/source/siunet_it.md) / siunet.it
 - [Cernusco Lombardone](/doc/source/siunet_it.md) / siunet.it
 - [Cernusco Sul Naviglio](/doc/source/cem_ambiente_it.md) / cemambiente.it
@@ -3270,6 +3286,7 @@ If you already have enough information for your municipality/region, you are ver
 - [CLARA Ambiente](/doc/source/junker_app.md) / junker.app
 - [Co.S.R.A.B](/doc/source/junker_app.md) / junker.app
 - [Cogliate](/doc/source/siunet_it.md) / siunet.it
+- [Colazza](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Colico](/doc/source/siunet_it.md) / siunet.it
 - [Colle Brianza](/doc/source/siunet_it.md) / siunet.it
 - [Collinas](/doc/source/junker_app.md) / junker.app
@@ -3280,6 +3297,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Colturano](/doc/source/siunet_it.md) / siunet.it
 - [Comazzo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Comazzo](/doc/source/siunet_it.md) / siunet.it
+- [Comignago](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Comune.Digital](/doc/source/comune_digital_it.md) / comune.digital
 - [Comuni della Convenzione di Sesto Calende - Econord](/doc/source/junker_app.md) / junker.app
 - [Comunità della Vallagarina - Dolomiti Ambiente Srl](/doc/source/junker_app.md) / junker.app
@@ -3292,6 +3310,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Concorezzo](/doc/source/siunet_it.md) / siunet.it
 - [Consac](/doc/source/junker_app.md) / junker.app
 - [Consorzio Area Vasta Basso Novarese](/doc/source/junker_app.md) / junker.app
+- [Consorzio Area Vasta Medio Novarese](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Contarina S.p.A](/doc/ics/contarina_it.md) / contarina.it
 - [Cooperativa Trasforma](/doc/source/junker_app.md) / junker.app
 - [Cornaredo](/doc/source/siunet_it.md) / siunet.it
@@ -3308,9 +3327,11 @@ If you already have enough information for your municipality/region, you are ver
 - [Crandola Valsassina](/doc/source/siunet_it.md) / siunet.it
 - [Cremella](/doc/source/siunet_it.md) / siunet.it
 - [Cremeno](/doc/source/siunet_it.md) / siunet.it
+- [Cressa](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Crevalcore](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Cuggiono](/doc/source/siunet_it.md) / siunet.it
 - [Cupello - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
+- [Cureggio](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Curti - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
 - [Cusano Milanino](/doc/source/siunet_it.md) / siunet.it
 - [Dairago](/doc/source/siunet_it.md) / siunet.it
@@ -3321,10 +3342,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Diano Castello](/doc/source/siunet_it.md) / siunet.it
 - [Diano Marina](/doc/source/siunet_it.md) / siunet.it
 - [Diano San Pietro](/doc/source/siunet_it.md) / siunet.it
+- [Divignano](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Dolomiti Ambiente Srl](/doc/source/junker_app.md) / junker.app
 - [Dolzago](/doc/source/siunet_it.md) / siunet.it
 - [Dorio](/doc/source/siunet_it.md) / siunet.it
+- [Dormelletto](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Dresano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Dresano](/doc/source/siunet_it.md) / siunet.it
 - [Dueville](/doc/source/siunet_it.md) / siunet.it
@@ -3341,6 +3364,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Esino Lario](/doc/source/siunet_it.md) / siunet.it
 - [ETRA S.p.A.](/doc/source/etraspa_it.md) / etraspa.it
 - [Faleria](/doc/source/junker_app.md) / junker.app
+- [Fara Novarese](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Fasano](/doc/source/siunet_it.md) / siunet.it
 - [Ferentillo](/doc/source/siunet_it.md) / siunet.it
 - [Fiemme Servizi](/doc/source/junker_app.md) / junker.app
@@ -3353,6 +3377,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Follonica](/doc/source/junker_app.md) / junker.app
 - [Fondi - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Fonni, Oliena e Orgosolo - San Germano - Gruppo Iren](/doc/source/junker_app.md) / junker.app
+- [Fontaneto d'Agogna](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Formula Ambiente Spa - Abruzzo](/doc/source/junker_app.md) / junker.app
 - [Frosinone - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Fucecchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -3365,9 +3390,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Garbagnate Monastero](/doc/source/siunet_it.md) / siunet.it
 - [GardaUno Spa](/doc/source/junker_app.md) / junker.app
 - [Garfagnana Ecologia Ambiente - GEA](/doc/source/junker_app.md) / junker.app
+- [Gargallo](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Garlate](/doc/source/siunet_it.md) / siunet.it
+- [Gattico-Veruno](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Gavorrano](/doc/source/junker_app.md) / junker.app
 - [Gazzo Veronese](/doc/source/siunet_it.md) / siunet.it
+- [Gazzuolo](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/gazzuolo
 - [GEA Srl](/doc/source/junker_app.md) / junker.app
 - [Genova](/doc/source/siunet_it.md) / siunet.it
 - [Geovest](/doc/source/geovest_it.md) / geovest.bluemilk.dev
@@ -3375,17 +3403,22 @@ If you already have enough information for your municipality/region, you are ver
 - [Gessate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Gessate](/doc/source/siunet_it.md) / siunet.it
 - [Gestione Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Ghemme](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Giarre - IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
 - [Ginosa](/doc/source/junker_app.md) / junker.app
 - [Gioiosa Ionica](/doc/source/junker_app.md) / junker.app
 - [Gioiosa Marea - Pizzo Pippo](/doc/source/junker_app.md) / junker.app
 - [Giussano](/doc/source/siunet_it.md) / siunet.it
+- [Goito](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/goito
 - [Gonnesa - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
+- [Gonzaga](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/gonzaga
 - [Gorgonzola](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Gorgonzola](/doc/source/siunet_it.md) / siunet.it
+- [Gozzano](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Greve in Chianti](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Grezzago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Grezzago](/doc/source/siunet_it.md) / siunet.it
+- [Grignasco](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Grisignano Di Zocco](/doc/source/siunet_it.md) / siunet.it
 - [Grumolo Delle Abbadesse](/doc/source/siunet_it.md) / siunet.it
 - [Gruppo Veritas](/doc/source/gruppoveritas_it.md) / gruppoveritas.it
@@ -3399,6 +3432,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Impruneta](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Introbio](/doc/source/siunet_it.md) / siunet.it
 - [Inverno e Monteleone](/doc/source/junker_app.md) / junker.app
+- [Invorio](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Inzago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Inzago](/doc/source/siunet_it.md) / siunet.it
 - [Iren Ambiente](/doc/source/irenambiente_it.md) / servizi.irenambiente.it
@@ -3456,6 +3490,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Leinì](/doc/source/junker_app.md) / junker.app
 - [Lentate sul Seveso](/doc/source/junker_app.md) / junker.app
 - [Leporano - Impregico Srl](/doc/source/junker_app.md) / junker.app
+- [Lesa](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Lesina](/doc/source/siunet_it.md) / siunet.it
 - [Lesmo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Lesmo](/doc/source/siunet_it.md) / siunet.it
@@ -3479,18 +3514,25 @@ If you already have enough information for your municipality/region, you are ver
 - [Macherio](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Macherio](/doc/source/siunet_it.md) / siunet.it
 - [Magenta](/doc/source/siunet_it.md) / siunet.it
+- [Maggiora](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Magnacavallo](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/magnacavallo
 - [Magnago](/doc/source/siunet_it.md) / siunet.it
 - [Malgrate](/doc/source/siunet_it.md) / siunet.it
 - [Mandas - C.A.P.R.I.](/doc/source/junker_app.md) / junker.app
 - [Mandello Del Lario](/doc/source/siunet_it.md) / siunet.it
 - [Manduria](/doc/source/siunet_it.md) / siunet.it
+- [Mantova](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/mantova
+- [Mantova Ambiente](/doc/source/mantovaambiente_it.md) / mantovaambiente.it
 - [Maracalagonis - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Marcallo con Casone](/doc/source/junker_app.md) / junker.app
 - [Marcallo Con Casone](/doc/source/siunet_it.md) / siunet.it
+- [Marcaria](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/marcaria
 - [Marche Multiservizi Falconara](/doc/source/junker_app.md) / junker.app
 - [Margherita Di Savoia](/doc/source/siunet_it.md) / siunet.it
 - [Margno](/doc/source/siunet_it.md) / siunet.it
+- [Mariana Mantovana](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/mariana
 - [Marliana](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Marmirolo](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/marmirolo
 - [Marsala, Trapani e Misiliscemi- Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Martignano](/doc/source/siunet_it.md) / siunet.it
 - [Martina Franca](/doc/source/siunet_it.md) / siunet.it
@@ -3500,9 +3542,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Massalengo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Massalengo](/doc/source/junker_app.md) / junker.app
 - [Massalengo](/doc/source/siunet_it.md) / siunet.it
+- [Massino Visconti](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Meda](/doc/source/junker_app.md) / junker.app
 - [Mediglia](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Mediglia](/doc/source/siunet_it.md) / siunet.it
+- [Medole](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/medole
+- [Meina](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Melegnano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Melegnano](/doc/source/siunet_it.md) / siunet.it
 - [Melissano](/doc/source/siunet_it.md) / siunet.it
@@ -3516,6 +3561,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Messina - Messinaservizi Bene Comune](/doc/source/junker_app.md) / junker.app
 - [Mezzago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Mezzago](/doc/source/siunet_it.md) / siunet.it
+- [Miasino](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Minerva Ambiente](/doc/source/junker_app.md) / junker.app
 - [Minturno](/doc/source/junker_app.md) / junker.app
 - [Miramare Service Srl](/doc/source/junker_app.md) / junker.app
@@ -3557,15 +3603,18 @@ If you already have enough information for your municipality/region, you are ver
 - [Monticello Conte Otto](/doc/source/siunet_it.md) / siunet.it
 - [Monticiano](/doc/source/junker_app.md) / junker.app
 - [Monza - Impresa Sangalli](/doc/source/junker_app.md) / junker.app
+- [Monzambano](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/monzambano
 - [Morciano Di Leuca](/doc/source/siunet_it.md) / siunet.it
 - [Morterone](/doc/source/siunet_it.md) / siunet.it
 - [Mosciano Sant'Angelo - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
+- [Motteggiana](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/motteggiana
 - [Mottola e Laterza - Meridionale Servizi Ambientali Srl](/doc/source/junker_app.md) / junker.app
 - [Mulazzano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Mulazzano](/doc/source/siunet_it.md) / siunet.it
 - [Municipium](/doc/source/municipium_it.md) / municipiumapp.it
 - [Muraca Srl](/doc/source/junker_app.md) / junker.app
 - [Narni](/doc/source/siunet_it.md) / siunet.it
+- [Nebbiuno](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [NET SpA - Udine](/doc/source/junker_app.md) / junker.app
 - [Nibionno](/doc/source/siunet_it.md) / siunet.it
 - [Nicosia - Leukosia](/doc/source/junker_app.md) / junker.app
@@ -3578,6 +3627,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Noviglio](/doc/source/siunet_it.md) / siunet.it
 - [Nuoro - È-Comune srl](/doc/source/junker_app.md) / junker.app
 - [Oggiono](/doc/source/siunet_it.md) / siunet.it
+- [Oleggio Castello](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Olgiate Molgora](/doc/source/siunet_it.md) / siunet.it
 - [Olginate](/doc/source/siunet_it.md) / siunet.it
 - [Oliveto Lario](/doc/source/siunet_it.md) / siunet.it
@@ -3587,6 +3637,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ornago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Ornago](/doc/source/siunet_it.md) / siunet.it
 - [Orosei - Sceas - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Orta San Giulio](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Osimo - Astea](/doc/source/junker_app.md) / junker.app
 - [Osnago](/doc/source/siunet_it.md) / siunet.it
 - [Ossago Lodigiano](/doc/source/junker_app.md) / junker.app
@@ -3600,12 +3651,15 @@ If you already have enough information for your municipality/region, you are ver
 - [Pantigliate](/doc/source/siunet_it.md) / siunet.it
 - [Parabiago](/doc/source/siunet_it.md) / siunet.it
 - [Parlasco](/doc/source/siunet_it.md) / siunet.it
+- [Paruzzaro](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Passerano Marmorito](/doc/source/junker_app.md) / junker.app
 - [Pasturo](/doc/source/siunet_it.md) / siunet.it
 - [Patti - Pizzo Pippo](/doc/source/junker_app.md) / junker.app
 - [Paullo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Paullo](/doc/source/junker_app.md) / junker.app
 - [Paullo](/doc/source/siunet_it.md) / siunet.it
+- [Pegognaga](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/pegognaga
+- [Pella](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Perdasdefogu - Eco-Sistemi](/doc/source/junker_app.md) / junker.app
 - [Perledo](/doc/source/siunet_it.md) / siunet.it
 - [Pescate](/doc/source/siunet_it.md) / siunet.it
@@ -3613,17 +3667,24 @@ If you already have enough information for your municipality/region, you are ver
 - [Pescina - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
 - [Pessano Con Bornago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Pessano Con Bornago](/doc/source/siunet_it.md) / siunet.it
+- [Pettenasco](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Piazza Brembana](/doc/source/junker_app.md) / junker.app
 - [Pietrabruna](/doc/source/junker_app.md) / junker.app
 - [Pieve a Nievole](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Pieve Emanuele](/doc/source/siunet_it.md) / siunet.it
 - [Pimonte - Ecogin Srl](/doc/source/junker_app.md) / junker.app
+- [Pisano](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Pistoia](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Poggiardo](/doc/source/siunet_it.md) / siunet.it
 - [Poggio a Caiano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Poggio Rusco](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/poggio-rusco
+- [Pogno](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Polino](/doc/source/siunet_it.md) / siunet.it
 - [Pomarance](/doc/source/junker_app.md) / junker.app
+- [Pombia](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Ponte Buggianese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Ponti sul Mincio](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/ponti-sul-mincio
+- [Porto Mantovano](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/porto-mantovano
 - [Posada - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Potenza - Acta Spa](/doc/source/junker_app.md) / junker.app
 - [Pozzo D'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
@@ -3631,6 +3692,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Pozzuolo Martesana](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Pozzuolo Martesana](/doc/source/siunet_it.md) / siunet.it
 - [Prato](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Prato Sesia](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Pratola Peligna - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Premana](/doc/source/siunet_it.md) / siunet.it
 - [Primaluna](/doc/source/siunet_it.md) / siunet.it
@@ -3640,10 +3702,13 @@ If you already have enough information for your municipality/region, you are ver
 - [Pusiano](/doc/source/siunet_it.md) / siunet.it
 - [Quarrata](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Quarto - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Quingentole](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/quingentole
 - [Quinto Vicentino](/doc/source/siunet_it.md) / siunet.it
+- [Quistello](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/quistello
 - [Racale](/doc/source/siunet_it.md) / siunet.it
 - [Ravarino](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Ravello](/doc/source/junker_app.md) / junker.app
+- [Redondesco](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/redondesco
 - [Renate (1)](/doc/source/siunet_it.md) / siunet.it
 - [Renate (2)](/doc/source/siunet_it.md) / siunet.it
 - [Rescaldina](/doc/source/junker_app.md) / junker.app
@@ -3657,6 +3722,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Riola Sardo - EffeAmbiente](/doc/source/junker_app.md) / junker.app
 - [Ripalimosani](/doc/source/junker_app.md) / junker.app
 - [Riparbella](/doc/source/junker_app.md) / junker.app
+- [Rivarolo Mantovano](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/rivarolo-mantovano
 - [Rivolta D'Adda](/doc/source/siunet_it.md) / siunet.it
 - [Robbiate](/doc/source/siunet_it.md) / siunet.it
 - [Robecchetto con Induno](/doc/source/junker_app.md) / junker.app
@@ -3665,20 +3731,25 @@ If you already have enough information for your municipality/region, you are ver
 - [Roccella Ionica - Jonica Multiservizi Spa](/doc/source/junker_app.md) / junker.app
 - [Rodano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Rodano](/doc/source/siunet_it.md) / siunet.it
+- [Rodigo](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/rodigo
 - [Rogeno](/doc/source/siunet_it.md) / siunet.it
 - [Rognano](/doc/source/siunet_it.md) / siunet.it
+- [Romagnano Sesia](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Roncello](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Roncello](/doc/source/siunet_it.md) / siunet.it
 - [Ronco All'Adige](/doc/source/siunet_it.md) / siunet.it
 - [Ronco Briantino](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Ronco Briantino](/doc/source/siunet_it.md) / siunet.it
+- [Roncoferraro](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/roncoferraro
 - [Rosate](/doc/source/siunet_it.md) / siunet.it
 - [Rosora](/doc/source/junker_app.md) / junker.app
 - [Rovellasca](/doc/source/junker_app.md) / junker.app
 - [Rovello Porro](/doc/source/siunet_it.md) / siunet.it
+- [Roverbella](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/roverbella
 - [Roverchiara](/doc/source/siunet_it.md) / siunet.it
 - [S.E.S.A.](/doc/source/sesaeste_it.md) / sesaeste.it
 - [Sabaudia - Del Prete Srl](/doc/source/junker_app.md) / junker.app
+- [Sabbioneta](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/sabbioneta
 - [Sala Bolognese](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Sala Consilina - SuperEco SRL](/doc/source/junker_app.md) / junker.app
 - [Salerano sul Lambro](/doc/source/cem_ambiente_it.md) / cemambiente.it
@@ -3693,11 +3764,16 @@ If you already have enough information for your municipality/region, you are ver
 - [San Casciano in Val di Pesa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [San Cipriano Po](/doc/source/junker_app.md) / junker.app
 - [San Ferdinando Di Puglia](/doc/source/siunet_it.md) / siunet.it
+- [San Giacomo delle Segnate](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/san-giacomo-delle-segnate
+- [San Giorgio Bigarello](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/san-giorgio-e-bigarello
 - [San Giorgio Su Legnano](/doc/source/siunet_it.md) / siunet.it
+- [San Giovanni del Dosso](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/san-giovanni-del-dosso
 - [San Giovanni in Persiceto](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [San Giovanni Lupatoto](/doc/source/siunet_it.md) / siunet.it
 - [San Giovanni Teatino](/doc/source/junker_app.md) / junker.app
 - [San Marcello Piteglio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [San Martino dall'Argine](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/san-martino-dall-argine
+- [San Maurizio d'Opaglio](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [San Pietro Di Morubio](/doc/source/siunet_it.md) / siunet.it
 - [San Zenone Al Lambro](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [San Zenone Al Lambro](/doc/source/siunet_it.md) / siunet.it
@@ -3720,17 +3796,19 @@ If you already have enough information for your municipality/region, you are ver
 - [Scandicci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Scanzorosciate](/doc/source/junker_app.md) / junker.app
 - [Scarperia e San Piero](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Schivenoglia](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/schivenoglia
 - [SEAB Biella](/doc/source/seab_biella_it.md) / seab.biella.it
 - [Seab SPA Bolzano](/doc/source/junker_app.md) / junker.app
 - [Sennori e Sorso - Gesenu Spa](/doc/source/junker_app.md) / junker.app
 - [Seregno](/doc/source/siunet_it.md) / siunet.it
+- [Sermide e Felonica](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/sermide-e-felonica-1
 - [Sermoneta - Del Prete Srl](/doc/source/junker_app.md) / junker.app
-- [Serrastretta (CZ)](/doc/source/municipium_it.md) / municipiumapp.it
 - [Serravalle Pistoiese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Sesto Fiorentino](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Sesto San Giovanni - Impresa Sangalli](/doc/source/junker_app.md) / junker.app
 - [Settala](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Settala](/doc/source/siunet_it.md) / siunet.it
+- [Settimo Milanese](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/settimo-milanese
 - [Seveso](/doc/source/siunet_it.md) / siunet.it
 - [Sezze - SPL](/doc/source/junker_app.md) / junker.app
 - [Sieco Spa](/doc/source/junker_app.md) / junker.app
@@ -3741,13 +3819,16 @@ If you already have enough information for your municipality/region, you are ver
 - [Sirone](/doc/source/siunet_it.md) / siunet.it
 - [Sirtori](/doc/source/siunet_it.md) / siunet.it
 - [SiUnet](/doc/source/siunet_it.md) / siunet.it
+- [Sizzano](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Solbiate Olona](/doc/source/siunet_it.md) / siunet.it
 - [Soleto](/doc/source/junker_app.md) / junker.app
+- [Solferino](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/solferino
 - [Solza](/doc/source/junker_app.md) / junker.app
 - [Sondrio](/doc/source/siunet_it.md) / siunet.it
 - [Sordio](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Sordio](/doc/source/siunet_it.md) / siunet.it
 - [Sorgà](/doc/source/siunet_it.md) / siunet.it
+- [Soriso](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Sovico](/doc/source/siunet_it.md) / siunet.it
 - [Spoltore - Rieco](/doc/source/junker_app.md) / junker.app
 - [Squillace - Sieco Spa](/doc/source/junker_app.md) / junker.app
@@ -3758,7 +3839,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Suello](/doc/source/siunet_it.md) / siunet.it
 - [Sulbiate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Sulbiate](/doc/source/siunet_it.md) / siunet.it
+- [Suno](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Suno](/doc/source/junker_app.md) / junker.app
+- [Suzzara](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/suzzara
 - [Taceno](/doc/source/siunet_it.md) / siunet.it
 - [Taranto (araccolta.it)](/doc/source/araccolta_it.md) / araccolta.it
 - [Taviano](/doc/source/siunet_it.md) / siunet.it
@@ -3782,7 +3865,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Trappeto](/doc/source/junker_app.md) / junker.app
 - [Trevenzuolo](/doc/source/siunet_it.md) / siunet.it
 - [Treviglio](/doc/source/siunet_it.md) / siunet.it
-- [Treviglio (BG)](/doc/source/municipium_it.md) / municipiumapp.it
 - [Trezzano Rosa](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Trezzano Rosa](/doc/source/siunet_it.md) / siunet.it
 - [Trezzo Sull'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
@@ -3821,6 +3903,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Valvarrone](/doc/source/siunet_it.md) / siunet.it
 - [Vaprio D'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Vaprio D'Adda](/doc/source/siunet_it.md) / siunet.it
+- [Varallo Pombia](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Varedo](/doc/source/siunet_it.md) / siunet.it
 - [Varenna](/doc/source/siunet_it.md) / siunet.it
 - [Vasto - Pulchra Ambiente Srl](/doc/source/junker_app.md) / junker.app
@@ -3860,6 +3943,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Vizzolo Predabissi](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Vizzolo Predabissi](/doc/source/siunet_it.md) / siunet.it
 - [Volsca Ambiente](/doc/source/junker_app.md) / junker.app
+- [Volta Mantovana](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/volta-mantovana
 - [Volterra](/doc/source/junker_app.md) / junker.app
 - [Wipptal](/doc/source/junker_app.md) / junker.app
 - [Zambrone - Tecnew Srl](/doc/source/junker_app.md) / junker.app
@@ -3923,12 +4007,10 @@ If you already have enough information for your municipality/region, you are ver
 <details>
 <summary>Netherlands</summary>
 
-- [Achtkarspelen](/doc/source/omrin_nl.md) / omrin.nl
 - [ACV Group](/doc/source/ximmio_nl.md) / acv-afvalkalender.nl
 - [Afval Wijzer](/doc/source/mijnafvalwijzer_nl.md) / mijnafvalwijzer.nl
 - [Afvalstoffendienst.nl](/doc/source/afvalstoffendienst_nl.md) / afvalstoffendienst.nl
 - [Alpen an den Rijn](/doc/source/hvcgroep_nl.md) / alphenaandenrijn.nl
-- [Ameland](/doc/source/omrin_nl.md) / omrin.nl
 - [Area Afval](/doc/source/ximmio_nl.md) / area-afval.nl
 - [Avalex](/doc/source/ximmio_nl.md) / avalex.nl
 - [Avri](/doc/source/ximmio_nl.md) / avri.nl
@@ -3944,9 +4026,6 @@ If you already have enough information for your municipality/region, you are ver
 - [De Afvalapp](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
 - [Den Haag](/doc/source/hvcgroep_nl.md) / denhaag.nl
 - [Edam-Volendam](/doc/ics/edam_volendam_nl.md) / edam-volendam.nl
-- [Eemsdelta](/doc/source/omrin_nl.md) / omrin.nl
-- [Elburg](/doc/source/omrin_nl.md) / omrin.nl
-- [Ermelo](/doc/source/omrin_nl.md) / omrin.nl
 - [GAD](/doc/source/hvcgroep_nl.md) / gad.nl
 - [Gemeente Almere](/doc/source/ximmio_nl.md) / almere.nl
 - [Gemeente Assen](/doc/source/burgerportaal_nl.md) / assen.nl
@@ -3972,25 +4051,16 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeente Waalre](/doc/source/hvcgroep_nl.md) / waalre.nl
 - [Gemeente Westland](/doc/source/ximmio_nl.md) / gemeentewestland.nl
 - [Goes](/doc/ics/goes_nl.md) / goes.nl
-- [Harderwijk](/doc/source/omrin_nl.md) / omrin.nl
-- [Harlingen](/doc/source/omrin_nl.md) / omrin.nl
-- [Heerenveen](/doc/source/omrin_nl.md) / omrin.nl
 - [Helmond](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
-- [Het Hogeland](/doc/source/omrin_nl.md) / omrin.nl
+- [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
 - [HVC Groep](/doc/source/hvcgroep_nl.md) / hvcgroep.nl
 - [Irado](/doc/source/irado_nl.md) / irado.nl
 - [Land van Cuijk](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
-- [Leeuwarden](/doc/source/omrin_nl.md) / omrin.nl
 - [Maashorst](/doc/source/deafvalapp_nl.md) / deafvalapp.nl
 - [Meerlanden](/doc/source/ximmio_nl.md) / meerlanden.nl
 - [Mijn Afval Zaken - BUCH](/doc/source/hvcgroep_nl.md) / mijnafvalzaken.nl
 - [Mijn Blink](/doc/source/ximmio_nl.md) / mijnblink.nl
-- [Nunspeet](/doc/source/omrin_nl.md) / omrin.nl
-- [Oldebroek](/doc/source/omrin_nl.md) / omrin.nl
 - [Omrin](/doc/source/omrin_nl.md) / omrin.nl
-- [Ooststellingwerf](/doc/source/omrin_nl.md) / omrin.nl
-- [Opsterland](/doc/source/omrin_nl.md) / omrin.nl
-- [Pekela](/doc/source/omrin_nl.md) / omrin.nl
 - [PreZero](/doc/source/hvcgroep_nl.md) / prezero.nl
 - [Purmerend](/doc/source/hvcgroep_nl.md) / purmerend.nl
 - [RAD BV](/doc/source/ximmio_nl.md) / radbv.nl
@@ -3998,17 +4068,12 @@ If you already have enough information for your municipality/region, you are ver
 - [Reinigingsdienst Midden Nederland](/doc/source/burgerportaal_nl.md) / rmn.nl
 - [Reinis](/doc/source/hvcgroep_nl.md) / reinis.nl
 - [Rova](/doc/source/rova_nl.md) / rova.nl
+- [RWM](/doc/source/hvcgroep_nl.md) / rwm.nl
 - [Saver](/doc/source/saver_nl.md) / saver.nl
-- [Schiermonnikoog](/doc/source/omrin_nl.md) / omrin.nl
 - [Spaarnelanden](/doc/source/hvcgroep_nl.md) / spaarnelanden.nl
 - [Straatbeeld Online](/doc/source/straatbeeld_online.md) / afvalkalender.straatbeeld.online
-- [Terschelling](/doc/source/omrin_nl.md) / omrin.nl
 - [Twente Milieu](/doc/source/ximmio_nl.md) / twentemilieu.nl
-- [Tytsjerksteradiel](/doc/source/omrin_nl.md) / omrin.nl
-- [Waadhoeke](/doc/source/omrin_nl.md) / omrin.nl
 - [Waardlanden](/doc/source/ximmio_nl.md) / waardlanden.nl
-- [Westerwolde](/doc/source/omrin_nl.md) / omrin.nl
-- [Weststellingwerf](/doc/source/omrin_nl.md) / omrin.nl
 - [Woerden / Oudewater](/doc/source/ximmio_nl.md) / woerden.nl
 - [Ximmio](/doc/source/ximmio_nl.md) / ximmio.nl
 - [ZRD](/doc/source/hvcgroep_nl.md) / zrd.nl
@@ -4131,6 +4196,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Krzanowice](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Legnickie Pole](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Lubrza](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Masłów](/doc/source/maslow_pl.md) / maslow.pl
 - [Gmina Miedziana Góra](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Miejska Hrubieszów](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Miejska Kowal](/doc/source/sims_pl.md) / sisms.pl
@@ -4213,6 +4279,7 @@ If you already have enough information for your municipality/region, you are ver
 - [KOMUS](/doc/source/sims_pl.md) / sisms.pl
 - [Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
 - [Krzyżanowice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Legnica](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Majkowice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Miasto i Gmina Morawica](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto i Gmina Łasin](/doc/source/sims_pl.md) / sisms.pl
@@ -4234,6 +4301,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ostrów Szlachecki](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Pabianice](/doc/source/kiedyodpady_pl.md) / pabianice.kiedyodpady.pl
 - [Parafia św. Wojciecha Biskupa i Męczennika w Nidzicy](/doc/source/sims_pl.md) / sisms.pl
+- [PGK Koszalin](/doc/source/pgkkoszalin_pl.md) / pgkkoszalin.pl
 - [Pobiedziska](/doc/source/ichisystem_eu.md) / harmonogram.ichisystem.eu/hemar
 - [Pogwizdów](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Polkowice](/doc/source/sims_pl.md) / sisms.pl
@@ -4242,6 +4310,7 @@ If you already have enough information for your municipality/region, you are ver
 - [PreZero Bielsko-Biała](/doc/source/prezero_bielsko_pl.md) / prezero-bielsko.pl/harmonogram-odbioru-odpadow
 - [Proszówki](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Przedsiębiorstwo Gospodarki Komunalnej w Wołowie Sp. z o.o.](/doc/source/sims_pl.md) / sisms.pl
+- [REMONDIS (res.remondis.pl)](/doc/source/res_remondis_pl.md) / res.remondis.pl/harmonogram
 - [Rybnik](/doc/source/rybnik_pl.md) / rybnik.eu
 - [Siedlec](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [SISMS.pl / BLISKO](/doc/source/sims_pl.md) / sisms.pl
@@ -4292,7 +4361,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Kamnik](/doc/ics/publicus_si.md) / kamnik.si
 - [Komenda](/doc/ics/publicus_si.md) / komenda.si
 - [Komunala Kranj](/doc/source/komunala_kranj_si.md) / komunala-kranj.si
+- [Komunala Slovenska Bistrica](/doc/source/komunala_slb_si.md) / komunala-slb.si
 - [Kostak Krško](/doc/source/kostak_si.md) / kostak.si
+- [KSP Ljutomer](/doc/source/ksp_ljutomer_si.md) / ksp-ljutomer.si
 - [Moji odpadki, Ljubljana](/doc/source/mojiodpadki_si.md) / mojiodpadki.si
 - [Pivka](/doc/ics/publicus_si.md) / pivka.si
 - [Postojna](/doc/ics/publicus_si.md) / postojna.si
@@ -4326,7 +4397,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Dala Vatten och Avfall](/doc/source/avfallsapp_se.md) / dalavatten.se
 - [Danderyds kommun](/doc/source/edpevent_se.md) / danderyd.se
 - [EDPEvent - Multi Source](/doc/source/edpevent_se.md) / edpevent.se
-- [Ekerö](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [Falu Energi & Vatten (FEV)](/doc/source/fev_se.md) / fev.se
 - [Finspång](/doc/source/avfallsapp_se.md) / finspang.se
 - [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
@@ -4358,10 +4428,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Motala](/doc/source/avfallsapp_se.md) / motala.se
 - [Mölndal](/doc/source/molndal_se.md) / molndal.se
 - [Nodra (Norrköping)](/doc/source/avfallsapp_se.md) / nodra.se
-- [Norrtalje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
+- [Norrtälje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
 - [NSR - Nordvästra Skånes Renhållnings AB](/doc/source/nsr_se.md) / nsr.se
-- [NSR Tömningskalender](/doc/source/nsr_se.md) / nsr.se/privat/allt-om-din-sophamtning/nar-toms-mitt-karl/tomningskalender
 - [NVOA - Nacka Vatten och Avfall](/doc/source/edpevent_se.md) / nacka.se/nackavattenavfall/avfall/sophamtning/tomningsdag
 - [Nårab - Norra Åsbo Renhållnings AB](/doc/source/narab_se.md) / narab.se
 - [Orust kommun](/doc/source/edpevent_se.md) / orust.se
@@ -4393,7 +4462,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Vafab Miljö](/doc/source/edpevent_se.md) / vafabmiljo.se
 - [Vallentuna](/doc/source/avfallsapp_se.md) / vallentuna.se
 - [Vatten och Miljöresurs](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se
-- [Vaxholm](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 - [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
 - [VMAB](/doc/source/vmab_se.md) / vmab.se
 - [Vänersborg](/doc/source/avfallsapp_se.md) / vanersborg.se
@@ -4404,7 +4472,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Ökrab Sophämntning](/doc/source/okrab_se.md) / okrab.se
 - [Örebro kommun](/doc/source/edpevent_se.md) / orebro.se
 - [Östersunds kommun](/doc/source/ostersund_se.md) / ostersund.se
-- [Österåker](/doc/source/roslagsvatten_se.md) / roslagsvatten.se
 </details>
 
 <details>
@@ -4433,6 +4500,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bischofszell](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Bottighofen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Braunau](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Bremgarten AG](/doc/source/iweb_ch.md) / bremgarten.ch
 - [Buch](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Buchegg](/doc/source/buchegg_so_ch.md) / buchegg-so.ch
 - [Bussnang](/doc/source/kvatg_ch.md) / kvatg.ch
@@ -4455,6 +4523,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Felben-Wellhausen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Fischingen](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Flawil](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Flums](/doc/source/iweb_ch.md) / flums.ch
 - [Frauenfeld](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Gachnang](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Gais](/doc/source/a_region_ch.md) / a-region.ch
@@ -4488,6 +4557,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Häggenschwil](/doc/source/a_region_ch.md) / a-region.ch
 - [Hüttlingen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Hüttwilen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [i-web (Swiss municipalities)](/doc/source/iweb_ch.md) / i-web.ch
 - [Jonschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Kemmental](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Kesswil](/doc/source/kvatg_ch.md) / kvatg.ch
@@ -4576,6 +4646,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Tägerwilen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Tübach](/doc/source/a_region_ch.md) / a-region.ch
 - [Uesslingen-Buch](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Uetikon am See](/doc/source/iweb_ch.md) / uetikonamsee.ch
 - [Untereggen](/doc/source/a_region_ch.md) / a-region.ch
 - [Urnäsch](/doc/source/a_region_ch.md) / a-region.ch
 - [Uttwil](/doc/source/kvatg_ch.md) / kvatg.ch
@@ -4615,7 +4686,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Aberdeen City Council](/doc/source/aberdeencity_gov_uk.md) / aberdeencity.gov.uk
 - [Aberdeenshire Council](/doc/source/aberdeenshire_gov_uk.md) / aberdeenshire.gov.uk
 - [Adur & Worthing Councils](/doc/source/adur_worthing_gov_uk.md) / adur-worthing.gov.uk
-- [Allerdale Borough Council](/doc/source/allerdale_gov_uk.md) / allerdale.gov.uk
 - [Amber Valley Borough Council](/doc/source/ambervalley_gov_uk.md) / ambervalley.gov.uk
 - [Anglesey](/doc/ics/anglesey_gov_wales.md) / anglesey.gov.wales
 - [Angus Council](/doc/source/angus_gov_uk.md) / angus.gov.uk
@@ -4737,7 +4807,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Fermanagh and Omagh District Council](/doc/source/fermanaghomagh_gov_uk.md) / fermanaghomagh.com
 - [Fife Council](/doc/source/fife_gov_uk.md) / fife.gov.uk
 - [Flintshire](/doc/source/flintshire_gov_uk.md) / flintshire.gov.uk
-- [Folkestone and Hythe District Councol](/doc/source/folkestone_hythe_gov_uk.md) / folkestone-hythe.gov.uk
+- [Folkestone and Hythe District Council](/doc/source/folkestone_hythe_gov_uk.md) / folkestone-hythe.gov.uk
 - [Forest of Dean District Council](/doc/source/forest_of_dean_gov_uk.md) / fdean.gov.uk
 - [Fylde Council](/doc/source/fylde_gov_uk.md) / waste.fylde.gov.uk
 - [Gateshead Council](/doc/source/gateshead_gov_uk.md) / gateshead.gov.uk
@@ -4827,6 +4897,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Newcastle upon Tyne](/doc/ics/recollect.md) / new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day
 - [Newport City Council](/doc/source/iapp_itouchvision_com.md) / newport.gov.uk
 - [North Ayrshire Council](/doc/source/north_ayrshire_gov_uk.md) / north-ayrshire.gov.uk
+- [North East Derbyshire District Council](/doc/source/ne_derbyshire_gov_uk.md) / ne-derbyshire.gov.uk
 - [North East Lincolnshire Council](/doc/source/nelincs_gov_uk.md) / nelincs.gov.uk
 - [North Herts Council](/doc/source/northherts_gov_uk.md) / north-herts.gov.uk
 - [North Kesteven District Council](/doc/source/north_kesteven_org_uk.md) / n-kesteven.org.uk
@@ -4847,6 +4918,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Northumberland County Council](/doc/source/northumberland_gov_uk.md) / northumberland.gov.uk
 - [Norwich City Council](/doc/source/norwich_gov_uk.md) / norwich.gov.uk/bins-and-recycling
 - [Nottingham City Council](/doc/source/nottingham_city_gov_uk.md) / nottinghamcity.gov.uk
+- [Nuneaton and Bedworth Borough Council](/doc/source/nuneatonandbedworth_gov_uk.md) / nuneatonandbedworth.gov.uk
 - [Oadby and Wigston Council](/doc/source/oadby_wigston_gov_uk.md) / oadby-wigston.gov.uk
 - [Oldham Council](/doc/source/oldham_gov_uk.md) / oldham.gov.uk
 - [Oxford City Council](/doc/source/oxford_gov_uk.md) / oxford.gov.uk
@@ -4861,7 +4933,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Reading Council](/doc/source/reading_gov_uk.md) / reading.gov.uk
 - [Redbridge Council](/doc/source/redbridge_gov_uk.md) / redbridge.gov.uk
 - [Redcar & Cleveland, UK](/doc/ics/recollect.md) / redcar-cleveland.gov.uk
-- [Redditch Borough Council](/doc/source/bromsgrove_gov_uk.md) / redditchbc.gov.uk
 - [Reigate & Banstead Borough Council](/doc/source/reigatebanstead_gov_uk.md) / reigate-banstead.gov.uk
 - [Renfrewshire Council](/doc/source/renfrewshire_gov_uk.md) / renfrewshire.gov.uk
 - [Rhondda Cynon Taf County Borough Council](/doc/source/rctcbc_gov_uk.md) / rctcbc.gov.uk
@@ -5043,6 +5114,7 @@ If you already have enough information for your municipality/region, you are ver
 - [New Rochelle (NY)](/doc/source/recyclecoach_com.md) / newrochelleny.gov/791/Collection-Dates
 - [New York City](/doc/source/nyc_gov.md) / nyc.gov
 - [Newark, Delaware, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-de-city-of-newark
+- [Noble Environmental](/doc/source/nobleenviro_com.md) / nobleenviro.com
 - [Northville Township, MI](/doc/source/northville_township_mi_us.md) / twp.northville.mi.us
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
 - [Orange County, FL](/doc/source/ocarcims_ocfl_net.md) / ocarcims.ocfl.net

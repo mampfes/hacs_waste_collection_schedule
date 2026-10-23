@@ -1,8 +1,8 @@
 # AKSD Debrecen
 
-Support for schedules provided by [A.K.S.D. Kft.](https://www.aksd.hu/hulladeknaptar), the waste management company of Debrecen, Hungary.
+Support for schedules provided by [AKSD Debrecen](https://www.aksd.hu).
 
-The provider only publishes the collection weekday per street (and "every odd week" for some bins), so the dates are generated from that weekly rule for the next year. Garden waste (brown bin and green bag) is only generated for March to December. Odd weeks are interpreted as odd ISO week numbers.
+Source for waste collection in Debrecen, Hungary, provided by A.K.S.D. Kft.
 
 ## Configuration via configuration.yaml
 
@@ -11,12 +11,12 @@ waste_collection_schedule:
   sources:
     - name: aksd_hu
       args:
-        street: STREET_NAME
+        street: STREET
 ```
 
 ### Configuration Variables
 
-**street**
+**street**  
 *(string) (required)*
 
 ## Example
@@ -31,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Enter the street name exactly as it appears in the street search at <https://www.aksd.hu/hulladeknaptar> (e.g. `Kinizsi utca`). Upper/lower case and accents are ignored.
+Enter the street name exactly as it appears in the street search at https://www.aksd.hu/hulladeknaptar (e.g. `Kinizsi utca`). Upper/lower case and accents are ignored.

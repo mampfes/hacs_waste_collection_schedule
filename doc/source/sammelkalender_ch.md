@@ -1,56 +1,49 @@
 # Sammelkalender.ch
 
-Support for schedules provided by [Sammelkalender.ch](https://info.sammelkalender.ch), serving multiple regions in Switzerland.
+Support for schedules provided by [Sammelkalender.ch](https://info.sammelkalender.ch).
+
+Source for Sammelkalender.ch.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sammelkalender_ch
       args:
-        service_provider: SERVICE PROVIDER
-        municipality: MUNICIPALITY (Gemeinde)
-        street: STREET (Straße)
-        hnr: HOUSE NUMBER (Hausnummer)   
+        service_provider: SERVICE_PROVIDER
+        municipality: MUNICIPALITY
+        street: STREET
+        hnr: HNR
 ```
 
 ### Configuration Variables
 
 **service_provider**  
-*(String) (required)*
+*(string) (required)*
 
 **municipality**  
-*(String) (required)*
+*(string) (required)*
 
 **street**  
-*(String) (optional)* only required if the form asks for it
+*(string) (optional)*
 
-**hnr**
-*(String) (optional)* only required if the form asks for it
-
-Supported service providers are:
-
-- zeba: https://www.zebazug.ch
-- zkri: https://zkri.ch
-- real_luzern: https://www.realluzern.ch
-- zaku: https://www.zaku.ch
+**hnr**  
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sammelkalender_ch
       args:
         service_provider: zeba
         municipality: Baar
         street: Aberenrain
+        hnr: 10
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-You can check if your parameters work by visiting the website of the service provider and entering your address. Or using the app:
-
-- [IOS AppStore](https://apps.apple.com/ch/app/sammelkalender/id1502137213?l)
-- [Android PlayStore](https://play.google.com/store/apps/details?id=ch.sammelkalender.app2020)
+Choose the waste association (`service_provider`) and enter your municipality as the association's calendar writes it. A municipality divided by street also needs `street` (and `hnr` for long streets); one divided into collection areas needs the area's name or abbreviation as `street`. The error message lists the valid values.

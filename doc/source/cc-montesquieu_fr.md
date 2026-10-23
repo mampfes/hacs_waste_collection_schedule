@@ -1,46 +1,34 @@
 # Communauté de Communes de Montesquieu
 
-Support for schedules provided by [Communauté de Communes de Montesquieu](https://www.cc-montesquieu.fr/vivre/dechets/collectes-des-dechets), serving french cities :
+Support for schedules provided by [Communauté de Communes de Montesquieu](https://www.cc-montesquieu.fr/).
 
-- Ayguemorte-les-Graves
-- Beautiran
-- Cabanac-et-Villagrains
-- Cadaujac
-- Castres-Gironde
-- Isle Saint-Georges
-- La Brède
-- Léognan
-- Martillac
-- Saint-Médard-d’Eyrans
-- Saint-Morillon
-- Saint-Selve
-- Saucats.
+Source for the waste collection of the Communauté de Communes de Montesquieu (Gironde).
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: cc-montesquieu_fr
       args:
-        commune: <commune from the list>
+        commune: COMMUNE
 ```
 
 ### Configuration Variables
 
-**commune**
-*(String) (required)*
+**commune**  
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: cc-montesquieu_fr
       args:
-        commune: Martillac
+        commune: Ayguemorte-les-Graves
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Use the cities list or visit [https://www.cc-montesquieu.fr/vivre/dechets/collectes-des-dechets](https://www.cc-montesquieu.fr/vivre/dechets/collectes-des-dechets) and look for your city.
+Enter your commune as it is listed on https://www.cc-montesquieu.fr/vivre/dechets/collectes-des-dechets (for example 'La Brède' or 'Saint-Médard-d'Eyrans').

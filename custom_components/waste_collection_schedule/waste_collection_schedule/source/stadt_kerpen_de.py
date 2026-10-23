@@ -3,7 +3,6 @@ from typing import ClassVar, final
 from waste_collection_schedule import field_terms
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.config_params import cascading_select, waste_types
-from waste_collection_schedule.regions import region
 from waste_collection_schedule.source.abfall_io import Source as AbfallIOSource
 from waste_collection_schedule.transformers import ICSTransformer
 
@@ -26,7 +25,9 @@ class Source(AbfallIOSource):
     URL = "https://www.stadt-kerpen.de"
     COUNTRY = "de"
 
-    REGIONS = (region(TITLE, url=URL),)
+    # Empty, not omitted: the abfall.io parent lists its own registry, which this
+    # pinned source must not inherit. The source entry itself is the listing.
+    REGIONS = ()
 
     TEST_CASES: ClassVar[dict] = {
         # The ids the config flow's district -> street -> house number cascade

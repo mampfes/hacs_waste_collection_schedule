@@ -1,95 +1,102 @@
 import re
-from datetime import datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode
 from waste_collection_schedule.exceptions import (
-    SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Fenland District Council"
-DESCRIPTION = "Source script for fenland.gov.uk services for Fenland"
-URL = "https://www.fenland.gov.uk/"
-TEST_CASES = {
-    "Address1": {"post_code": "PE13 1JR", "house_number": "Flat 1"},
-    "Address2": {"post_code": "PE15 0SD", "house_number": 1},
-}
-
-ICON_MAP = {
-    "Empty Bin GREEN 240": Icons.GENERAL_WASTE,
-    "Empty Bin REFUSE SACK": Icons.GENERAL_WASTE,
-    "Empty Bin BLUE 240": Icons.RECYCLING,
-    "Empty Bin RECYCLING SACK": Icons.RECYCLING,
-    "Empty Bin BROWN 240": Icons.ORGANIC,
-}
+_FIND_URL = "https://www.fenland.gov.uk/find"
 
 
-class Source:
-    def __init__(self, post_code: str, house_number: str):
-        self._post_code = post_code
-        self._house_number = house_number
+def _pick_address(response, post_code=None, house_number=None, **_) -> tuple:
+    """Postcode search -> (uprn, lat, lng) of the first address starting with the house number."""
+    addresses = response.json()
+    if not addresses:
+        raise SourceArgumentNotFound("post_code", post_code)
+    # House numbers are not separated from the address line.
+    wanted = re.compile(rf"^{re.escape(str(house_number).strip())} ", re.IGNORECASE)
+    for address in addresses:
+        if wanted.search(address["line1"]):
+            return address["udprn"], address["latitude"], address["longitude"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "house_number",
+        house_number,
+        list(dict.fromkeys(a["line1"].split(" ")[0] for a in addresses)),
+    )
 
-    def fetch(self):
-        params = {"type": "postcodesearch", "postcode": self._post_code}
-        r = requests.get(
-            "https://www.fenland.gov.uk/find",
-            params=params,
-            headers={"Accept": "application/json"},
-        )
-        r.raise_for_status()
 
-        addresses = r.json()
-        if len(addresses) == 0:
-            raise SourceArgumentNotFound("post_code", self._post_code)
+@final
+class Source(BaseSource):
+    TITLE = "Fenland District Council"
+    DESCRIPTION = "Source script for fenland.gov.uk services for Fenland"
+    URL = "https://www.fenland.gov.uk/"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        address_ids = [
-            address
-            for address in addresses
-            if re.search(
-                f"^{self._house_number} ", address["line1"]
-            )  # House numbers are not separated from address line
-        ]
+    TEST_CASES: ClassVar[dict] = {
+        "Address1": {"post_code": "PE13 1JR", "house_number": "Flat 1"},
+        "Address2": {"post_code": "PE15 0SD", "house_number": 1},
+    }
 
-        if len(address_ids) == 0:
-            raise SourceArgAmbiguousWithSuggestions(
-                "house_number",
-                self._house_number,
-                [(address["line1"].split(" ")[0]) for address in addresses],
-            )
+    PARAMS = (postcode("post_code", "house_number"),)
 
-        params = {
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your postcode and the house number (or flat or house name) as "
+            "it starts your address, e.g. `Flat 1` for `Flat 1 24 North Brink`."
+        ),
+    }
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+    ]
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                _FIND_URL,
+                params=lambda post_code=None, **_: {
+                    "type": "postcodesearch",
+                    "postcode": post_code,
+                },
+                headers={"Accept": "application/json"},
+                pick=_pick_address,
+            ),
+        ),
+        url=_FIND_URL,
+        params=lambda address, **_: {
             "type": "loadlayer",
             "layerId": 2,
-            "uprn": address_ids[0]["udprn"],
-            "lat": address_ids[0]["latitude"],
-            "lng": address_ids[0]["longitude"],
-        }
-        r = requests.get(
-            "https://www.fenland.gov.uk/find",
-            params=params,
-            headers={"Accept": "application/json"},
-        )
-        r.raise_for_status()
+            "uprn": address[0],
+            "lat": address[1],
+            "lng": address[2],
+        },
+        headers={"Accept": "application/json"},
+    )
 
-        entries = []
+    parse = parsers.JsonParser("features", 0, "properties", "upcoming")
 
-        collections = r.json()["features"][0]["properties"]["upcoming"]
-        for collection_date_dict in collections:
-            collection_date = datetime.strptime(
-                collection_date_dict["date"], "%Y-%m-%dT%H:%M:%SZ"
-            )
-            if collection_date.hour == 23:
-                collection_date = (timedelta(days=1) + collection_date).date()
-            else:
-                collection_date = collection_date.date()
-            for collection in collection_date_dict["collections"]:
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=collection["desc"],
-                        icon=ICON_MAP.get(collection["name"]),
-                    )
-                )
+    preprocess = preprocessors.ExplodeList("collections")
 
-        return entries
+    # collectionDate is an instant (23:00Z is midnight of the next day in BST).
+    transform = JsonTransformer(
+        date_key="collectionDate",
+        type_key="name",
+        parse_date=date_parsers.in_timezone("Europe/London"),
+        type_value_map={
+            "Empty Bin FOOD CADDY": wt.FOOD_WASTE,
+            "Empty Bin GREEN 240": wt.GENERAL_WASTE,
+            "Empty Bin REFUSE SACK": wt.GENERAL_WASTE,
+            "Empty Bin BLUE 240": wt.RECYCLABLES,
+            "Empty Bin RECYCLING SACK": wt.RECYCLABLES,
+            "Empty Bin BROWN 240": wt.ORGANIC,
+        },
+    )

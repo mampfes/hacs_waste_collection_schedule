@@ -1,218 +1,126 @@
 import datetime
-import urllib.parse
+from typing import ClassVar, final
+from urllib.parse import urlencode
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from bs4 import Tag
+from waste_collection_schedule import parsers, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import city, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Samverkan Återvinning Miljö (SÅM)"
-DESCRIPTION = "Source script for samiljo.se"
-URL = "https://www.samiljo.se"
+API = "https://webbservice.indecta.se/kunder/sam/kalender/basfiler"
 
-TEST_CASES = {
-    "Test1": {"city": "Reftele", "street": "Storgatan 6"},
-    "Test2": {"city": "Värnamo", "street": "Västra Kyrkogårdsgatan 2"},
-    "Test3": {"city": "Burseryd", "street": "Storgatan 1"},
-}
-
-API_URLS = {
-    "address_search": "https://webbservice.indecta.se/kunder/sam/kalender/basfiler/laddaadresser.php",
-    "collection": "https://webbservice.indecta.se/kunder/sam/kalender/basfiler/onlinekalender.php",
-}
-
-# Maximum number of parent elements to traverse when searching for day cell
-MAX_PARENT_TRAVERSAL_STEPS = 10
-
-ICON_MAP = {
-    "HKARL1": Icons.GENERAL_WASTE,
-    "HKARL1-H": Icons.GENERAL_WASTE,
-    "HKARL2": Icons.RECYCLING,
-    "HKARL2-H": Icons.RECYCLING,
-    "HMAT": Icons.BIO_KITCHEN,
-    "HMAT-H": Icons.BIO_KITCHEN,
-    "HREST": Icons.GENERAL_WASTE,
-    "HREST-H": Icons.GENERAL_WASTE,
-    "HOSORT": Icons.GENERAL_WASTE,
-    "HOSORT-H": Icons.GENERAL_WASTE,
-    "FKARL1": Icons.GENERAL_WASTE,
-    "FKARL2": Icons.RECYCLING,
-    "FKARL1-H": Icons.GENERAL_WASTE,
-    "FKARL2-H": Icons.RECYCLING,
-    "FOSORT": Icons.GENERAL_WASTE,
-    "FOSORT-H": Icons.GENERAL_WASTE,
-    "HREST-HK": Icons.GENERAL_WASTE,
-    "HREST-HK-H": Icons.GENERAL_WASTE,
-    "HKARL1-HK": Icons.GENERAL_WASTE,
-    "HKARL1-HK-H": Icons.GENERAL_WASTE,
-    "TRG": Icons.ORGANIC,
-    "TRG-H": Icons.ORGANIC,
-    "FREST-HK": Icons.GENERAL_WASTE,
-    "FREST-HK-H": Icons.GENERAL_WASTE,
-    "FKARL1-HK-H": Icons.GENERAL_WASTE,
-    "FKARL1-HK": Icons.GENERAL_WASTE,
-    "FREST": Icons.GENERAL_WASTE,
-    "FREST-H": Icons.GENERAL_WASTE,
-}
-
-NAME_MAP = {
-    "HKARL1": "Fyrfackskärl 1",  # Matavfall, Restavfall, Tidningar & Färgat glas
-    "HKARL1-H": "Fyrfackskärl 1 - Helgvecka",  # Matavfall, Restavfall, Tidningar & Färgat glas
-    "HKARL2": "Fyrfackskärl 2",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    "HKARL2-H": "Fyrfackskärl 2 - Helgvecka",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
+# The calendar marks every collection with an empty cell whose class is the bin
+# code. A code ending in `-H` is the same bin in a holiday week.
+_HOLIDAY = " - Helgvecka"
+_BINS = {
+    "HKARL1": "Fyrfackskärl 1",  # food, residual, newspapers and coloured glass
+    "HKARL2": "Fyrfackskärl 2",  # packaging and clear glass
     "HMAT": "Matavfall",
-    "HMAT-H": "Matavfall - Helgvecka",
     "HREST": "Restavfall",
-    "HREST-H": "Restavfall - Helgvecka",
     "HOSORT": "Blandat Mat- och Restavfall",
-    "HOSORT-H": "Blandat Mat- och Restavfall - Helgvecka",
-    "FKARL1": "Fyrfackskärl 1",  # Matavfall, Restavfall, Tidningar & Färgat glas
-    "FKARL2": "Fyrfackskärl 2",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
-    "FKARL1-H": "Fyrfackskärl 1 - Helgvecka",  # Matavfall, Restavfall, Tidningar & Färgat glas
-    "FKARL2-H": "Fyrfackskärl 2 - Helgvecka",  # Förpackningar av Papper, Plast & Metall samt Ofärgat glas
+    "FKARL1": "Fyrfackskärl 1",
+    "FKARL2": "Fyrfackskärl 2",
     "FOSORT": "Blandat Mat- och Restavfall",
-    "FOSORT-H": "Blandat Mat- och Restavfall - Helgvecka",
     "HREST-HK": "Restavfall med Hemkompost",
-    "HREST-HK-H": "Restavfall med Hemkompost - Helgvecka",
-    "HKARL1-HK": "Fyrfackskärl 1 med Hemkompost",  # Restavfall, Tidningar & Färgat glas
-    "HKARL1-HK-H": "Fyrfackskärl 1 med Hemkompost - Helgvecka",  # Restavfall, Tidningar & Färgat glas
+    "HKARL1-HK": "Fyrfackskärl 1 med Hemkompost",
     "TRG": "Trädgårdskärl",
-    "TRG-H": "Trädgårdskärl - Helgvecka",
     "FREST-HK": "Restavfall med Hemkompost",
-    "FREST-HK-H": "Restavfall med Hemkompost - Helgvecka",
-    "FKARL1-HK-H": "Fyrfackskärl 1 med Hemkompost",
-    "FKARL1-HK": "Fyrfackskärl 1 med Hemkompost - Helgvecka",
+    "FKARL1-HK": "Fyrfackskärl 1 med Hemkompost",
     "FREST": "Restavfall",
-    "FREST-H": "Restavfall - Helgvecka",
 }
 
-MONTH_MAP = {
-    "januari": 1,
-    "februari": 2,
-    "mars": 3,
-    "april": 4,
-    "maj": 5,
-    "juni": 6,
-    "juli": 7,
-    "augusti": 8,
-    "september": 9,
-    "oktober": 10,
-    "november": 11,
-    "december": 12,
-}
+_MARKER = ", ".join(f"td.{code}, td.{code}-H" for code in _BINS)
 
 
-class Source:
-    def __init__(self, street, city):
-        self.street = street
-        self.city = city
+def _address_id(response, *_keys, street: str = "", city: str = "", **_params) -> str:
+    """The `nrA` of the address list line matching street and city."""
+    wanted = f"{street}|{city}".lower()
+    lines = response.text.splitlines()
+    for line in lines:
+        if wanted in line.lower():
+            return line.split("|")[3]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street",
+        street,
+        [f"{p[0]}, {p[1]}" for p in (x.split("|") for x in lines) if len(p) > 3],
+    )
 
-    def fetch(self):
-        # request to get an adresslist containing the parameter A used for the wasteschedule request.
-        adresslist = requests.get(
-            API_URLS["address_search"], params={"svar": self.street}
-        )
-        adresslist.raise_for_status()
 
-        streetcitylist = (self.street.lower(), self.city.lower())
-        streetcityjoined = "|".join(streetcitylist)
-        adresslistalines = adresslist.text.lower().splitlines()
-        A = None
-        for line in adresslistalines:
-            if streetcityjoined in line:
-                A = line.split("|")[3]
-                break
+def _code(cell: Tag) -> str:
+    return next(c for c in cell["class"] if c.removesuffix("-H") in _BINS)
 
-        if A is None:
-            raise Exception(
-                "Address not found, please verify the street name and city are correct."
+
+def _name(cell: Tag) -> str:
+    code = _code(cell)
+    return _BINS[code.removesuffix("-H")] + (_HOLIDAY if code.endswith("-H") else "")
+
+
+def _date(cell: Tag) -> datetime.date:
+    """The date of the day cell the marker sits in (month from the heading)."""
+    day_cell = cell.find_parent("table").find_parent("td")
+    day = day_cell.find("div", ["styleInteIdag", "styleIdag"]).get_text(strip=True)
+    month_name, year = day_cell.find_previous("td", "styleMonthName").text.split("-")
+    return datetime.date(int(year), recurrence.month(month_name) or 0, int(day))
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Samverkan Återvinning Miljö (SÅM)"
+    DESCRIPTION = "Source for Samverkan Återvinning Miljö (SÅM) waste collection."
+    URL = "https://www.samiljo.se"
+    COUNTRY = "se"
+    RAISE_ON_EMPTY = True
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the street name with number and the city as they appear in "
+            "the calendar search on https://www.samiljo.se. Collections in a "
+            "holiday week are marked 'Helgvecka' in the description."
+        ),
+    }
+
+    WASTE_TYPES: ClassVar[list] = [wt.OTHER, wt.FOOD_WASTE, wt.GENERAL_WASTE]
+
+    TEST_CASES: ClassVar[dict] = {
+        "Test1": {"city": "Reftele", "street": "Storgatan 6"},
+        "Test2": {"city": "Värnamo", "street": "Västra Kyrkogårdsgatan 2"},
+        "Test3": {"city": "Burseryd", "street": "Storgatan 1"},
+    }
+
+    PARAMS = (street("street"), city("city"))
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                f"{API}/laddaadresser.php",
+                params=lambda street, **_: {"svar": street},
+                encoding="cp1252",
+                pick=_address_id,
+            ),
+        ),
+        url=lambda address_id, street, city, **_: (
+            f"{API}/onlinekalender.php?"
+            + urlencode(
+                {"hsG": street, "hsO": city, "nrA": address_id}, encoding="cp1252"
             )
-
-        payload = {"hsG": self.street, "hsO": self.city, "nrA": A}
-        payload_str = urllib.parse.urlencode(payload, encoding="cp1252")
-        # request for the wasteschedule
-        wasteschedule = requests.get(API_URLS["collection"], params=payload_str)
-        wasteschedule.raise_for_status()
-
-        soup = BeautifulSoup(wasteschedule.text, "html.parser")
-
-        entries = []
-
-        # Find all td elements that have a class attribute but don't start with 'style'
-        # These are the bin type markers (like HKARL1, FKARL2, etc.)
-        # We discover them dynamically instead of hardcoding the list
-        bin_type_elements = []
-        seen_bin_types = set()
-
-        for td in soup.find_all("td", class_=True):
-            classes = td.get("class", [])
-            for cls in classes:
-                # Skip style-related classes and empty classes
-                if cls and not cls.startswith("style") and not cls.startswith("m"):
-                    if cls not in seen_bin_types:
-                        seen_bin_types.add(cls)
-                    bin_type_elements.append((td, cls))
-                    break  # Only take first non-style class per element
-
-        for element, bin_type in bin_type_elements:
-            # Find the day cell containing this bin collection
-            # Navigate up the tree to find the parent td that contains the day info
-            day_cell = element
-            steps = 0
-            while day_cell and steps < MAX_PARENT_TRAVERSAL_STEPS:
-                day_cell = day_cell.parent
-                steps += 1
-
-                if day_cell and day_cell.name == "td" and day_cell.get("class"):
-                    day_classes = day_cell.get("class")
-                    if any("styleDay" in cls for cls in day_classes):
-                        break
-
-                if day_cell and day_cell.name == "body":
-                    day_cell = None
-                    break
-
-            if not day_cell:
-                continue
-
-            # Find day number
-            day_element = day_cell.find("div", ["styleInteIdag", "styleIdag"])
-            if not day_element:
-                continue
-
-            day_text = day_element.get_text().strip()
-            if not day_text.isdigit():
-                continue
-
-            day = int(day_text)
-
-            # Find month
-            month_element = day_cell.find_previous("td", "styleMonthName")
-            if not month_element:
-                continue
-
-            month_text = month_element.get_text().strip()
-            if "-" not in month_text:
-                continue
-
-            # Parse month and year
-            month_part, year_part = month_text.split("-", 1)
-            month_name = month_part.strip().lower()
-
-            if month_name not in MONTH_MAP:
-                continue
-
-            year = int(year_part.strip())
-            month = MONTH_MAP[month_name]
-
-            # Create collection entry
-            t = NAME_MAP.get(bin_type, bin_type)
-            icon = ICON_MAP.get(bin_type)
-            entries.append(
-                Collection(
-                    t=t,
-                    icon=icon,
-                    date=datetime.date(year, month, day),
-                )
-            )
-
-        return entries
+        ),
+    )
+    parse = parsers.HtmlParser(_MARKER)
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=lambda cell: _name(cell).removesuffix(_HOLIDAY),
+        description_getter=lambda cell: _name(cell),
+        type_value_map={
+            "Fyrfackskärl 1": wt.OTHER,
+            "Fyrfackskärl 2": wt.OTHER,
+            "Fyrfackskärl 1 med Hemkompost": wt.OTHER,
+            "Matavfall": wt.FOOD_WASTE,
+            "Restavfall": wt.GENERAL_WASTE,
+            "Restavfall med Hemkompost": wt.GENERAL_WASTE,
+            "Blandat Mat- och Restavfall": wt.OTHER,
+            "Trädgårdskärl": wt.GARDEN_WASTE,
+        },
+    )

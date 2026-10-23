@@ -1,0 +1,84 @@
+{
+  "recorded_at": "2026-10-11",
+  "interactions": [
+    {
+      "key": "GET https://fritekstsok.api.norkart.no/search/kommunecustom 99b9e4ebf6",
+      "method": "GET",
+      "url": "https://fritekstsok.api.norkart.no/search/kommunecustom",
+      "final_url": "https://fritekstsok.api.norkart.no/search/kommunecustom?Targets=gateadresse&Query=V%C3%A5lerveien+1148%2C+V%C3%A5ler&Size=100",
+      "body": "{\"params\":[[\"Query\",\"V\u00e5lerveien 1148, V\u00e5ler\"],[\"Size\",\"100\"],[\"Targets\",\"gateadresse\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "request-context": "appId=cid-v1:b6c9495a-28cb-4a35-acc4-a812aac2873d",
+        "x-frontserver": "LABS-SVC1",
+        "date": "Sun, 11 Oct 2026 18:47:37 GMT",
+        "strict-transport-security": "max-age=16070400",
+        "transfer-encoding": "chunked"
+      },
+      "content_b64": "eyJTZWFyY2hSZXN1bHRzIjpbeyJTb3VyY2UiOnsiX190eXBlIjoiV0FBUEkuRnJpdGVrc3RTb2suU2VydmljZU1vZGVsLkdhdGVBZHJlc3NlLCBXQUFQSS5Gcml0ZWtzdFNvay5TZXJ2aWNlTW9kZWwiLCJBZHJlc3NlTWF0cmlra2VsZW5oZXRJZCI6IjMxMTQwMDA1MjAwMDMwMDAwMDAwIiwiQWRyZXNzZUh1c051bW1lciI6MTE0OCwiQWRyZXNzZUJva3N0YXYiOiIiLCJHYXRlSWQiOiIzMTE0MDEwNzkiLCJHYXRlTmF2biI6IlbDpWxlcnZlaWVuIiwiS29tbXVuZU5hdm4iOiJWw6VsZXIiLCJLb21tdW5lTnVtbWVyIjozMTE0LCJGeWxrZU5hdm4iOiLDmHN0Zm9sZCIsIkZ5bGtlTnVtbWVyIjozMSwiQWRyZXNzZUFsdGVybmF0aXZ0TmF2biI6IiIsIkFkcmVzc2VLb29yZGluYXRLdmFsaXRldEtvZGUiOjAsIkJydWtzZW5oZXRlciI6W3siQnlnbmluZ051bW1lciI6MTQ4NTI1ODYyLCJCeWdnSWQiOiIxNDg1MjU4NjIwMDAiLCJCcnVrc2VuaGV0SWQiOjU2MTY1NDA0LCJNYXRyaWtrZWxlbmhldElkIjoiMzExNDAwMDUyMDAwMzAwMDAwMDAiLCJVbmlrTWF0cmlra2VsZW5oZXRJZCI6NTYxMjg1NDN9XSwiQWRrb21zdHB1bmt0ZXIiOltdLCJUZXh0IjoiVsOlbGVydmVpZW4gMTE0OCwgVsOlbGVyIiwiQWRyZXNzZUlkIjoiMzExNDAxMDc5MTE0ODAwMDAwMDAiLCJVbmlrQWRyZXNzZUlkIjozNzQ3ODg1MDQsIlZlZ0FkcmVzc2VJZCI6IjMxMTQwMTA3OTExNDgwIiwiUG9zaXNqb24iOnsiWCI6MTAuODQyOTQ0MDE0ODQyNjQsIlkiOjU5LjQ1MjU0MzAwMjU3ODk5LCJTUlMiOjQzMjZ9LCJQb3N0TnVtbWVyIjoiMTU5MSIsIlBvc3RTdGVkIjoiU1BFUlJFQk9UTiJ9LCJVcmwiOiJodHRwczovL2ZyaXRla3N0c29rLmFwaS5ub3JrYXJ0Lm5vL2RhdGEvbWF0cmlra2VsL2FkcmVzc2UvZ2F0ZWFkcmVzc2UvMzExNDAxMDc5MTE0ODAwMDAwMDAiLCJJZCI6IjMxMTQwMTA3OTExNDgwMDAwMDAwIiwiU2NvcmUiOjM5Mi42MDA1MiwiVGV4dCI6IlbDpWxlcnZlaWVuIDExNDgsIFbDpWxlciIsIlR5cGUiOiJnYXRlYWRyZXNzZSJ9XSwiTWF4U2NvcmUiOjM5Mi42MDA1MiwiVG90YWxIaXRzIjoxLCJGcm9tIjowLCJTUlMiOjQzMjZ9"
+    },
+    {
+      "key": "GET https://mdt-proxy.movar.no/api/Fraksjoner c98c914e13",
+      "method": "GET",
+      "url": "https://mdt-proxy.movar.no/api/Fraksjoner",
+      "final_url": "https://mdt-proxy.movar.no/api/Fraksjoner?apitoken=e6727744-e3f9-4162-a43f-3480fdb1861d",
+      "body": "{\"params\":[[\"apitoken\",\"e6727744-e3f9-4162-a43f-3480fdb1861d\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-credentials": "true",
+        "access-control-allow-headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Kommunenr, Authorization",
+        "access-control-allow-methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+        "access-control-allow-origin": "*",
+        "age": "0",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "content-type": "application/json; charset=utf-8; ver=1.0",
+        "date": "Sun, 11 Oct 2026 18:47:39 GMT",
+        "request-context": "appId=cid-v1:1884af10-1f0e-4b4e-bd33-a4158092712e",
+        "server": "Vercel",
+        "strict-transport-security": "max-age=63072000",
+        "x-frontserver": "LABS-SVC5",
+        "x-powered-by": "ASP.NET",
+        "x-vercel-cache": "MISS",
+        "x-vercel-id": "lhr1::arn1::jf85l-1791744458994-ed07c381bb7c"
+      },
+      "content_b64": "W3siaWQiOjEsIm5hdm4iOiJSZXN0YXZmYWxsIiwiaWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9taW5yZW5vdmFzam9uLmFwaS9Ja29uZXIvYnJ1c2gucG5nIiwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6MSwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjoiaHR0cHM6Ly9rdHRqZW5lc3RlLm5vcmthcnQubm8vQXZmYWxsc3N5bWJvbGVyLzEucG5nIn0seyJpZCI6MiwibmF2biI6IlBhcHAgb2cgcGFwaXIiLCJpa29uIjoiaHR0cDovL2tvbXRla3NreS5ub3JrYXJ0Lm5vL21pbnJlbm92YXNqb24uYXBpL0lrb25lci9icnVzaC5wbmciLCJub3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklkIjo2LCJub3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklrb24iOiJodHRwczovL2t0dGplbmVzdGUubm9ya2FydC5uby9BdmZhbGxzc3ltYm9sZXIvNi5wbmcifSx7ImlkIjozLCJuYXZuIjoiVsOldG9yZ2FuaXNrIiwiaWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9taW5yZW5vdmFzam9uLmFwaS9Ja29uZXIvYnJ1c2gucG5nIiwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6MTMsIm5vcmthcnRTdGFuZGFyZEZyYWtzam9uSWtvbiI6Imh0dHBzOi8va3R0amVuZXN0ZS5ub3JrYXJ0Lm5vL0F2ZmFsbHNzeW1ib2xlci8xMy5wbmcifSx7ImlkIjo0LCJuYXZuIjoiR2xhc3Mgb2cgbWV0YWxsZW1iYWxsYXNqZSIsImlrb24iOiJodHRwOi8va29tdGVrc2t5Lm5vcmthcnQubm8vbWlucmVub3Zhc2pvbi5hcGkvSWtvbmVyL2JydXNoLnBuZyIsIm5vcmthcnRTdGFuZGFyZEZyYWtzam9uSWQiOjUsIm5vcmthcnRTdGFuZGFyZEZyYWtzam9uSWtvbiI6Imh0dHBzOi8va3R0amVuZXN0ZS5ub3JrYXJ0Lm5vL0F2ZmFsbHNzeW1ib2xlci81LnBuZyJ9LHsiaWQiOjUsIm5hdm4iOiJEcmlra2VrYXJ0b25nZXIiLCJpa29uIjoiaHR0cDovL2tvbXRla3NreS5ub3JrYXJ0Lm5vL21pbnJlbm92YXNqb24uYXBpL0lrb25lci9icnVzaC5wbmciLCJub3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklkIjo2LCJub3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklrb24iOiJodHRwczovL2t0dGplbmVzdGUubm9ya2FydC5uby9BdmZhbGxzc3ltYm9sZXIvNi5wbmcifSx7ImlkIjo2LCJuYXZuIjoiU3Blc2lhbGF2ZmFsbCIsImlrb24iOiJodHRwOi8va29tdGVrc2t5Lm5vcmthcnQubm8vbWlucmVub3Zhc2pvbi5hcGkvSWtvbmVyL2JydXNoLnBuZyIsIm5vcmthcnRTdGFuZGFyZEZyYWtzam9uSWQiOjcsIm5vcmthcnRTdGFuZGFyZEZyYWtzam9uSWtvbiI6Imh0dHBzOi8va3R0amVuZXN0ZS5ub3JrYXJ0Lm5vL0F2ZmFsbHNzeW1ib2xlci83LnBuZyJ9LHsiaWQiOjcsIm5hdm4iOiJQbGFzdGVtYmFsbGFzamUiLCJpa29uIjoiaHR0cDovL2tvbXRla3NreS5ub3JrYXJ0Lm5vL21pbnJlbm92YXNqb24uYXBpL0lrb25lci9icnVzaC5wbmciLCJub3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklkIjo0LCJub3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklrb24iOiJodHRwczovL2t0dGplbmVzdGUubm9ya2FydC5uby9BdmZhbGxzc3ltYm9sZXIvNC5wbmcifSx7ImlkIjoxMCwibmF2biI6IkhhZ2VhdmZhbGwiLCJpa29uIjoiaHR0cDovL2tvbXRla3NreS5ub3JrYXJ0Lm5vL21pbnJlbm92YXNqb24uYXBpL0lrb25lci9icnVzaC5wbmciLCJub3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklkIjo4LCJub3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklrb24iOiJodHRwczovL2t0dGplbmVzdGUubm9ya2FydC5uby9BdmZhbGxzc3ltYm9sZXIvOC5wbmcifSx7ImlkIjoxMSwibmF2biI6Ik1ldGFsbGVyIiwiaWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9taW5yZW5vdmFzam9uLmFwaS9Ja29uZXIvYnJ1c2gucG5nIiwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6MTEsIm5vcmthcnRTdGFuZGFyZEZyYWtzam9uSWtvbiI6Imh0dHBzOi8va3R0amVuZXN0ZS5ub3JrYXJ0Lm5vL0F2ZmFsbHNzeW1ib2xlci8xMS5wbmcifSx7ImlkIjoxMywibmF2biI6IlBhcHAiLCJpa29uIjoiaHR0cDovL2tvbXRla3NreS5ub3JrYXJ0Lm5vL21pbnJlbm92YXNqb24uYXBpL0lrb25lci9icnVzaC5wbmciLCJub3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklkIjoxMiwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjoiaHR0cHM6Ly9rdHRqZW5lc3RlLm5vcmthcnQubm8vQXZmYWxsc3N5bWJvbGVyLzEyLnBuZyJ9LHsiaWQiOjE1LCJuYXZuIjoiTWF0YXZmYWxsIiwiaWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9taW5yZW5vdmFzam9uLmFwaS9Ja29uZXIvYnJ1c2gucG5nIiwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6Miwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjoiaHR0cHM6Ly9rdHRqZW5lc3RlLm5vcmthcnQubm8vQXZmYWxsc3N5bWJvbGVyLzIucG5nIn0seyJpZCI6MTYsIm5hdm4iOiJLdXJ2IiwiaWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9taW5yZW5vdmFzam9uLmFwaS9Ja29uZXIvYnJ1c2gucG5nIiwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6Miwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjoiaHR0cHM6Ly9rdHRqZW5lc3RlLm5vcmthcnQubm8vQXZmYWxsc3N5bWJvbGVyLzIucG5nIn0seyJpZCI6MTcsIm5hdm4iOiJVdGxldmVyaW5nc2JlaG9sZGVyIiwiaWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9taW5yZW5vdmFzam9uLmFwaS9Ja29uZXIvYnJ1c2gucG5nIiwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6bnVsbCwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjpudWxsfSx7ImlkIjoxOCwibmF2biI6IkJpb3Bvc2VyIiwiaWtvbiI6Imh0dHA6Ly9rb210ZWtza3kubm9ya2FydC5uby9taW5yZW5vdmFzam9uLmFwaS9Ja29uZXIvYnJ1c2gucG5nIiwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25JZCI6bnVsbCwibm9ya2FydFN0YW5kYXJkRnJha3Nqb25Ja29uIjpudWxsfSx7ImlkIjoxOSwibmF2biI6IkJyYWtldHQiLCJpa29uIjoiaHR0cDovL2tvbXRla3NreS5ub3JrYXJ0Lm5vL21pbnJlbm92YXNqb24uYXBpL0lrb25lci9icnVzaC5wbmciLCJub3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklkIjpudWxsLCJub3JrYXJ0U3RhbmRhcmRGcmFrc2pvbklrb24iOm51bGx9XQ=="
+    },
+    {
+      "key": "GET https://mdt-proxy.movar.no/api/Tommekalender 1ba3385fe2",
+      "method": "GET",
+      "url": "https://mdt-proxy.movar.no/api/Tommekalender",
+      "final_url": "https://mdt-proxy.movar.no/api/Tommekalender?dato=2027-12-31T23%3A59%3A59%2B11%3A00&gatenavn=V%C3%A5lerveien&husnr=1148&apitoken=e6727744-e3f9-4162-a43f-3480fdb1861d",
+      "body": "{\"params\":[[\"apitoken\",\"e6727744-e3f9-4162-a43f-3480fdb1861d\"],[\"dato\",\"2027-12-31T23:59:59+11:00\"],[\"gatenavn\",\"V\u00e5lerveien\"],[\"husnr\",\"1148\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "access-control-allow-credentials": "true",
+        "access-control-allow-headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Kommunenr, Authorization",
+        "access-control-allow-methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+        "access-control-allow-origin": "*",
+        "age": "0",
+        "api-deprecated-versions": "1",
+        "api-supported-versions": "2",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-type": "application/json; charset=utf-8; ver=1.0",
+        "date": "Sun, 11 Oct 2026 18:47:39 GMT",
+        "request-context": "appId=cid-v1:1884af10-1f0e-4b4e-bd33-a4158092712e",
+        "server": "Vercel",
+        "strict-transport-security": "max-age=63072000",
+        "x-frontserver": "LABS-SVC5",
+        "x-powered-by": "ASP.NET",
+        "x-rate-limit-limit": "1m",
+        "x-rate-limit-remaining": "21",
+        "x-rate-limit-reset": "2026-10-11T18:47:57.3674033Z",
+        "x-vercel-cache": "MISS",
+        "x-vercel-id": "lhr1::arn1::jf85l-1791744459270-a1c613191cbf",
+        "content-length": "563"
+      },
+      "content_b64": "W3siZnJha3Nqb25JZCI6MiwidG9tbWVkYXRvZXIiOlsiMjAyNi0xMC0xNFQwMDowMDowMCIsIjIwMjYtMTEtMTFUMDA6MDA6MDAiLCIyMDI2LTEyLTA5VDAwOjAwOjAwIl19LHsiZnJha3Nqb25JZCI6MSwidG9tbWVkYXRvZXIiOlsiMjAyNi0xMC0yMVQwMDowMDowMCIsIjIwMjYtMTEtMDRUMDA6MDA6MDAiLCIyMDI2LTExLTE4VDAwOjAwOjAwIiwiMjAyNi0xMi0wMlQwMDowMDowMCIsIjIwMjYtMTItMTZUMDA6MDA6MDAiXX0seyJmcmFrc2pvbklkIjoxNSwidG9tbWVkYXRvZXIiOlsiMjAyNi0xMC0yMVQwMDowMDowMCIsIjIwMjYtMTEtMDRUMDA6MDA6MDAiLCIyMDI2LTExLTE4VDAwOjAwOjAwIiwiMjAyNi0xMi0wMlQwMDowMDowMCIsIjIwMjYtMTItMTZUMDA6MDA6MDAiXX0seyJmcmFrc2pvbklkIjo3LCJ0b21tZWRhdG9lciI6WyIyMDI2LTEwLTI4VDAwOjAwOjAwIiwiMjAyNi0xMS0yNVQwMDowMDowMCIsIjIwMjYtMTItMjNUMDA6MDA6MDAiXX0seyJmcmFrc2pvbklkIjo0LCJ0b21tZWRhdG9lciI6WyIyMDI2LTEwLTI5VDAwOjAwOjAwIiwiMjAyNi0xMi0yOFQwMDowMDowMCJdfV0="
+    }
+  ]
+}

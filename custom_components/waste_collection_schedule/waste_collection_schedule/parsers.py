@@ -116,11 +116,28 @@ class EachResponse(Parser["list[Any]"]):
             default, because a response that will not parse is normally the
             provider changing shape, which should be heard about rather than
             silently half-swallowed.
+        then: optional preprocessor applied to each response's parsed records
+            on their own, before they are concatenated. For a document whose
+            records only make sense within it: one PDF per year whose year is
+            printed once in its heading, read by a ``PdfMonthRows`` or a
+            ``TextGroupedDates``, cannot be joined with next year's first::
+
+                parse = parsers.EachResponse(
+                    parsers.PdfTextParser(min_chars=200),
+                    then=preprocessors.TextGroupedDates(...),
+                )
     """
 
-    def __init__(self, parser: Parser, *, skip_failures: bool = False):
+    def __init__(
+        self,
+        parser: Parser,
+        *,
+        skip_failures: bool = False,
+        then: "Callable[..., Iterable[Any]] | None" = None,
+    ):
         self.parser = parser
         self.skip_failures = skip_failures
+        self.then = then
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -129,7 +146,10 @@ class EachResponse(Parser["list[Any]"]):
         records: list[Any] = []
         for item in responses:  # type: ignore[union-attr]
             try:
-                records.extend(self.parser(item, source))
+                parsed = self.parser(item, source)
+                records.extend(
+                    self.then(parsed, source) if self.then is not None else parsed
+                )
             except Exception as error:
                 if not self.skip_failures:
                     raise
@@ -428,6 +448,9 @@ class ArgumentGuard(Parser[Any]):
         parser: the inner parser, applied once the response passes the check.
         argument: the config param blamed for the mismatch.
         contains: text that every valid response carries.
+        matches: alternative to ``contains`` for a check a fixed string cannot
+            express, e.g. a postcode compared ignoring case and spacing:
+            ``callable(response, source) -> bool``, True for a valid response.
         suggestions: optional ``callable(source) -> Iterable[str]`` returning the
             valid values, usually read off the provider's own index page. It runs
             only on the failure path, so a healthy fetch pays nothing for it. If
@@ -441,18 +464,26 @@ class ArgumentGuard(Parser[Any]):
         parser: Parser,
         *,
         argument: str,
-        contains: str,
+        contains: "str | None" = None,
+        matches: "Callable[[Response, BaseSource | None], bool] | None" = None,
         suggestions: "Callable[[BaseSource | None], Iterable[str]] | None" = None,
         hint: str = "",
     ):
+        if (contains is None) == (matches is None):
+            raise ValueError("ArgumentGuard needs exactly one of contains/matches")
         self.parser = parser
         self.argument = argument
         self.contains = contains
+        self.matches = matches
         self.suggestions = suggestions
         self.hint = hint
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
-        if self.contains not in response.text:
+        if self.matches is not None:
+            valid = self.matches(response, source)
+        else:
+            valid = self.contains in response.text  # type: ignore[operator]
+        if not valid:
             self._reject(source)
         return self.parser(response, source)
 
@@ -546,6 +577,62 @@ class JsonParser(Parser[Any]):
         return data
 
 
+class JsonLookupJoin(Parser["list[dict[str, Any]]"]):
+    """Join JSON records to a reference list the same retrieve fetched first.
+
+    For an API that returns its calendar as bare ids (``{"afvalstroom_id": 4,
+    "ophaaldatum": "2026-01-14"}``) and the names of those ids from a second
+    endpoint. ``retrieve`` returns the reference response first and the record
+    responses after it (see :class:`~waste_collection_schedule.retrievers.FanOutRetriever`)::
+
+        parse = parsers.JsonLookupJoin(
+            key="afvalstroom_id", reference_key="id", value_key="title", into="title"
+        )
+
+    Each record comes back as a copy with ``into`` set to the referenced
+    ``value_key``. A record whose id the reference does not list gets
+    ``default`` (or is dropped when that is ``None``).
+
+    Args:
+        key: the record field holding the reference id.
+        reference_key: the reference field holding the id (default ``"id"``).
+        value_key: the reference field to copy onto the record.
+        into: the field to set on the record.
+        default: ``into`` for an unlisted id; ``None`` drops such records.
+    """
+
+    def __init__(
+        self,
+        *,
+        key: str,
+        value_key: str,
+        into: str,
+        reference_key: str = "id",
+        default: str | None = None,
+    ):
+        self.key = key
+        self.value_key = value_key
+        self.into = into
+        self.reference_key = reference_key
+        self.default = default
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[dict[str, Any]]":
+        responses = list(cast(Any, response))
+        reference = {
+            item[self.reference_key]: item[self.value_key]
+            for item in _json(responses[0])
+        }
+        records: list[dict[str, Any]] = []
+        for item in responses[1:]:
+            for record in _json(item):
+                value = reference.get(record[self.key], self.default)
+                if value is not None:
+                    records.append({**record, self.into: value})
+        return records
+
+
 def eval_json(response: Response) -> Any:
     """The JSON a response wraps in a JavaScript ``eval(...)`` call.
 
@@ -598,12 +685,17 @@ class JsVarParser(Parser[Any]):
     One name returns its value; several return a ``{name: value}`` dict. A
     variable that is missing or not a JSON literal means the page changed: the
     response is logged and ``ResponseShapeError`` is raised.
+
+    ``json_parse=True`` reads the other common shipping form, a JSON *string*
+    handed to ``JSON.parse`` (``events: JSON.parse(`[{"start": ...}]`)``, as a
+    property of a config object or an assignment), by the same name rules.
     """
 
-    def __init__(self, *names: str):
+    def __init__(self, *names: str, json_parse: bool = False):
         if not names:
             raise ValueError("JsVarParser needs at least one variable name")
         self.names = names
+        self.json_parse = json_parse
 
     def __call__(self, response: Response, source: "BaseSource | None" = None) -> Any:
         import json
@@ -613,6 +705,24 @@ class JsVarParser(Parser[Any]):
         source_name = response_shape.source_name(source)
         values: dict[str, Any] = {}
         for name in self.names:
+            if self.json_parse:
+                literal = re.search(
+                    rf"\b{re.escape(name)}\s*[:=]\s*JSON\.parse\(\s*([`'\"])(.*?)(?<!\\)\1",
+                    text,
+                    re.DOTALL,
+                )
+                try:
+                    if literal is None:
+                        raise ValueError
+                    values[name] = json.loads(literal.group(2))
+                except ValueError:
+                    response_shape.expect(
+                        False,
+                        source_name=source_name,
+                        detail=f"JSON.parse literal {name!r} not found or not JSON",
+                        raw=text[:500],
+                    )
+                continue
             match = re.search(rf"\b(?:var|let|const)\s+{re.escape(name)}\s*=\s*", text)
             if match is None:
                 response_shape.expect(
@@ -718,16 +828,38 @@ class KeyedDateListsParser(Parser["list[tuple[Any, str]]"]):
         keys: optional path to the object carrying the arrays.
         fields: the field names to read, one per round. Pass the transformer's
             ``type_value_map`` directly; its keys are exactly that set.
+        from_element: optional CSS selector of an HTML element (typically
+            ``script[type="application/json"]``) whose text holds the JSON,
+            for a server-rendered page that ships its data inline. The first
+            match is read; a page without one yields no rows.
     """
 
-    def __init__(self, *keys: "str | int", fields: Iterable[str]):
+    def __init__(
+        self,
+        *keys: "str | int",
+        fields: Iterable[str],
+        from_element: "str | None" = None,
+    ):
         self.keys = keys
         self.fields = tuple(fields)
+        self.from_element = from_element
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> "list[tuple[Any, str]]":
-        data = response.json()
+        data: Any
+        if self.from_element is None:
+            data = response.json()
+        else:
+            import json
+
+            element = BeautifulSoup(response.text, "html.parser").select_one(
+                self.from_element
+            )
+            try:
+                data = json.loads(element.get_text()) if element else None
+            except ValueError:
+                data = None
         try:
             for key in self.keys:
                 data = data[key]
@@ -854,7 +986,7 @@ class HtmlParser(Parser[list[Tag]]):
                     bool(soup.select(sel)),
                     source_name=name,
                     detail=f"required element {sel!r} not found",
-                    raw=response.text,
+                    raw=markup,
                 )
         return soup.select(self.selector)[self.skip :]
 
@@ -997,8 +1129,10 @@ class HtmlLabelledDates(Parser["list[tuple[str, str]]"]):
             return found.get_text(separator, strip=True) if found is not None else None
         caption = element.find(string=self.date_after)
         holder = caption.parent if caption is not None else None
-        sibling = holder.find_next_sibling() if isinstance(holder, Tag) else None
-        if not isinstance(sibling, Tag):
+        if holder is None or not isinstance(holder, Tag):
+            return None
+        sibling = holder.find_next_sibling()
+        if sibling is None or not isinstance(sibling, Tag):
             return None
         return sibling.get_text(separator, strip=True)
 
@@ -1154,6 +1288,373 @@ class HtmlMonthRows(Parser["list[tuple[datetime.date, str]]"]):
         return rows
 
 
+class HtmlColumnDates(Parser["list[tuple[datetime.date, str]]"]):
+    """A table with a collection round per column and one date per cell.
+
+    Each header cell names a round and the cells beneath it are that round's
+    dates, one per row, so the columns have different lengths and shorter ones
+    are padded with empty cells::
+
+        | zmieszane  | papier     | BIO        |
+        | 2026-10-15 | 2026-10-15 | 2026-10-16 |
+        | 2026-10-19 | 2026-10-19 | 2026-10-23 |
+
+    Every cell holding a date becomes one ``(date, round name)`` row, the round
+    named by the column's header. A cell that is empty or not a date is skipped::
+
+        parse = parsers.HtmlColumnDates(from_json_key="wiadomoscRWD")
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    Args:
+        parse_date: callable turning a cell's text into a date, raising
+            ``ValueError`` for text that is not one (default ISO ``YYYY-MM-DD``).
+        require: header texts (matched exactly) that the wanted table must all
+            carry. Unset takes the first table on the page.
+        from_json_key: read the HTML from this key (or path of keys) of a JSON
+            response instead of ``response.text``, as :class:`HtmlParser` does.
+    """
+
+    def __init__(
+        self,
+        *,
+        parse_date: Callable[[str], datetime.date] = datetime.date.fromisoformat,
+        require: "Iterable[str] | None" = None,
+        from_json_key: "str | tuple[str | int, ...] | None" = None,
+    ):
+        self.parse_date = parse_date
+        self.require = frozenset(require) if require is not None else None
+        self.from_json_key = from_json_key
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[datetime.date, str]]":
+        if self.from_json_key is not None:
+            data: Any = (
+                response if isinstance(response, (dict, list)) else response.json()
+            )
+            keys = (
+                (self.from_json_key,)
+                if isinstance(self.from_json_key, str)
+                else self.from_json_key
+            )
+            for key in keys:
+                if isinstance(key, int) and not data:
+                    return []
+                data = data[key]
+            markup = str(data)
+        else:
+            markup = response.text
+        soup = BeautifulSoup(markup, "html.parser")
+
+        table = None
+        for candidate in soup.find_all("table"):
+            headers = {th.get_text(strip=True) for th in candidate.find_all("th")}
+            if self.require is None or self.require <= headers:
+                table = candidate
+                break
+        if table is None:
+            return []
+
+        head = table.find("tr")
+        if not isinstance(head, Tag):
+            return []
+        rounds = [c.get_text(strip=True) for c in head.find_all(["th", "td"])]
+
+        rows: list[tuple[datetime.date, str]] = []
+        for row in table.find_all("tr")[1:]:
+            for name, cell in zip(rounds, row.find_all(["td", "th"]), strict=False):
+                text = cell.get_text(strip=True)
+                if not text:
+                    continue
+                try:
+                    rows.append((self.parse_date(text), name))
+                except ValueError:
+                    continue
+        return rows
+
+
+class HtmlMonthColumns(Parser["list[tuple[datetime.date, str]]"]):
+    """A table with a month per column and a collection round per row.
+
+    The transpose of :class:`HtmlMonthRows`. A council that publishes its year
+    as one grid puts the months across the header and gives each round a row,
+    whose cell for a month lists the days it is collected::
+
+        | ITTRE        | JAN     | FEV     | ...
+        | Residual     | 12 - 26 | 09 - 23 | ...
+        | Organic      |  Every Monday (spanning Feb-Dec)  |
+
+    Every number in a cell is one collection day. A cell with no number but a
+    weekday name is a weekly round: it recurs on that weekday over every month
+    the cell spans (``colspan`` is honoured, in the header and the body alike).
+    A cell naming neither is skipped. Each date becomes one ``(date, round
+    name)`` row, the round named by the row's first cell::
+
+        parse = parsers.HtmlMonthColumns()
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    Months and weekdays are read with :func:`recurrence.month` and
+    :func:`recurrence.weekday`, so any supported language resolves.
+
+    Args:
+        require: header texts (lowercased, matched exactly) that the wanted
+            table must all carry. Unset takes the first table on the page.
+        year: fallback year (default the current year at fetch time).
+        month_attr: name of an attribute on the header cells that carries the
+            month and year as ``"M.YYYY"`` (``"data-value"``), for a table
+            whose header text is no month name ("Dzień odbioru" repeated).
+            Each column then has its own year, so a schedule that crosses a
+            year boundary resolves correctly.
+    """
+
+    def __init__(
+        self,
+        *,
+        require: "Iterable[str] | None" = None,
+        year: "int | None" = None,
+        month_attr: "str | None" = None,
+    ):
+        self.require = frozenset(require) if require is not None else None
+        self.year = year
+        self.month_attr = month_attr
+
+    def _table(self, soup: BeautifulSoup) -> "Tag | None":
+        for candidate in soup.find_all("table"):
+            if self.require is None:
+                return candidate
+            headers = {
+                th.get_text(strip=True).lower() for th in candidate.find_all("th")
+            }
+            if self.require <= headers:
+                return candidate
+        return None
+
+    @staticmethod
+    def _span(cell: Tag) -> int:
+        try:
+            return max(int(str(cell.get("colspan", "1"))), 1)
+        except ValueError:
+            return 1
+
+    @staticmethod
+    def _month(text: str) -> "int | None":
+        """A month name, or an abbreviation of one ("FEV", "SEPT", "AOUT")."""
+        from waste_collection_schedule import recurrence
+
+        exact = recurrence.month(text)
+        if exact is not None:
+            return exact
+        key = recurrence._strip_accents(text.strip().lower())
+        if len(key) < 3 or not key.isalpha():
+            return None
+        found = {
+            number for name, number in recurrence.MONTHS.items() if name.startswith(key)
+        }
+        return found.pop() if len(found) == 1 else None
+
+    @staticmethod
+    def _weekday(word: str) -> "int | None":
+        """A weekday name, singular or with a plural "s" ("lundis")."""
+        from waste_collection_schedule import recurrence
+
+        found = recurrence.weekday(word)
+        if found is None and word.lower().endswith("s"):
+            found = recurrence.weekday(word[:-1])
+        return found
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[datetime.date, str]]":
+        soup = BeautifulSoup(response.text, "html.parser")
+        table = self._table(soup)
+        if table is None:
+            return []
+        header_row = table.find("tr")
+        if not isinstance(header_row, Tag):
+            return []
+
+        # Column position -> month number, from the first row (colspan aware).
+        months: dict[int, int] = {}
+        years: dict[int, int] = {}
+        position = 0
+        for cell in header_row.find_all(["th", "td"]):
+            month = self._month(cell.get_text(strip=True))
+            column_year = None
+            if self.month_attr is not None:
+                found = re.fullmatch(
+                    r"\s*(\d{1,2})\.(\d{4})\s*", str(cell.get(self.month_attr, ""))
+                )
+                if found:
+                    month, column_year = int(found.group(1)), int(found.group(2))
+            if month is not None:
+                for offset in range(self._span(cell)):
+                    months[position + offset] = month
+                    if column_year is not None:
+                        years[position + offset] = column_year
+            position += self._span(cell)
+
+        year = self.year or datetime.date.today().year
+        rows: list[tuple[datetime.date, str]] = []
+        for row in table.find_all("tr")[1:]:
+            cells = row.find_all(["th", "td"])
+            if len(cells) < 2:
+                continue
+            name = " ".join(cells[0].get_text(" ").split())
+            position = self._span(cells[0])
+            for cell in cells[1:]:
+                span = self._span(cell)
+                covered = [
+                    months[p] for p in range(position, position + span) if p in months
+                ]
+                cell_year = years.get(position, year)
+                position += span
+                if not covered:
+                    continue
+                text = cell.get_text(" ")
+                days = re.findall(r"\b\d{1,2}\b", text)
+                if days:
+                    for day in days:
+                        try:
+                            rows.append(
+                                (datetime.date(cell_year, covered[0], int(day)), name)
+                            )
+                        except ValueError:
+                            continue
+                    continue
+                weekday = next(
+                    (
+                        w
+                        for w in (
+                            self._weekday(word)
+                            for word in re.findall(r"[^\W\d_]+", text)
+                        )
+                        if w is not None
+                    ),
+                    None,
+                )
+                if weekday is None:
+                    continue
+                current = datetime.date(year, covered[0], 1)
+                while current.month <= covered[-1] and current.year == year:
+                    if current.weekday() == weekday:
+                        rows.append((current, name))
+                    current += datetime.timedelta(days=1)
+        return rows
+
+
+class HtmlMonthHeadedRows(Parser["list[tuple[datetime.date, str]]"]):
+    """A table with a heading row per month and a row per collection day.
+
+    The other way round from :class:`HtmlMonthRows`: the month is a row of its
+    own that spans the table ("October 2026"), and the rows under it give one
+    day each, with the weekday, the container and what is collected::
+
+        | October 2026                                          |
+        | 15 | Thursday | recycle 24x24 | Recycling                |
+        | 22 | Thursday | brown 24x24   | General waste & Recycling |
+
+    Each row becomes one ``(date, label)`` row, or several when the label lists
+    more than one round and a ``label_separator`` splits it::
+
+        parse = parsers.HtmlMonthHeadedRows(label_separator="&")
+        transform = ICSTransformer(type_value_map=TYPE_MAP)
+
+    The month heading is read with :func:`recurrence.month`, so a month named in
+    any supported language resolves. A row before the first heading, or whose
+    first cell is not a day number, is skipped.
+
+    Args:
+        day_column: index of the cell holding the day of the month (default 0).
+        label_column: index of the cell holding what is collected (default
+            -1, the last).
+        label_separator: split the label at this text, one row each.
+        table: CSS selector for the table (default the first ``table``).
+        all_tables: read every table the selector matches rather than the
+            first, for a page with one table per month. Each table's heading
+            sets the month for its own rows.
+        day_pattern: regex whose first match in the day cell (group 1, or the
+            whole match) is the day number, for a cell that reads
+            "Thursday 15 October" rather than "15".
+        current_year: a heading naming only the month ("October") falls in the
+            current year (a year-less heading is skipped otherwise).
+    """
+
+    def __init__(
+        self,
+        *,
+        day_column: int = 0,
+        label_column: int = -1,
+        label_separator: "str | None" = None,
+        table: str = "table",
+        all_tables: bool = False,
+        day_pattern: "str | None" = None,
+        current_year: bool = False,
+    ):
+        self.day_column = day_column
+        self.label_column = label_column
+        self.label_separator = label_separator
+        self.table = table
+        self.all_tables = all_tables
+        self.day_pattern = re.compile(day_pattern) if day_pattern else None
+        self.current_year = current_year
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[tuple[datetime.date, str]]":
+        from waste_collection_schedule import recurrence
+
+        soup = BeautifulSoup(response.text, "html.parser")
+        tables = soup.select(self.table)
+        if not self.all_tables:
+            tables = tables[:1]
+
+        rows: list[tuple[datetime.date, str]] = []
+        for table in tables:
+            month: tuple[int, int] | None = None
+            for row in table.find_all("tr"):
+                values = [
+                    c.get_text(" ", strip=True) for c in row.find_all(["th", "td"])
+                ]
+                if len(values) == 1:
+                    parts = values[0].split()
+                    number = recurrence.month(parts[0]) if parts else None
+                    if number is None:
+                        continue
+                    if len(parts) > 1 and parts[1].isdigit():
+                        month = (int(parts[1]), number)
+                    elif self.current_year and len(parts) == 1:
+                        month = (datetime.date.today().year, number)
+                    continue
+                if month is None or len(values) < 2:
+                    continue
+                try:
+                    day = values[self.day_column]
+                    label = values[self.label_column]
+                except IndexError:
+                    continue
+                if self.day_pattern is not None:
+                    found = self.day_pattern.search(day)
+                    if found is None:
+                        continue
+                    day = found.group(1) if found.groups() else found.group(0)
+                if not day.isdigit():
+                    continue
+                labels = (
+                    label.split(self.label_separator)
+                    if self.label_separator
+                    else [label]
+                )
+                for name in labels:
+                    name = name.strip()
+                    if not name:
+                        continue
+                    try:
+                        rows.append((datetime.date(month[0], month[1], int(day)), name))
+                    except ValueError:
+                        continue
+        return rows
+
+
 class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
     """A month-grid calendar whose day cells carry marked-up collection markers.
 
@@ -1191,7 +1692,8 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         marker: CSS selector, within a day cell, for the collection markers
             (default ``"span"``).
         attribute: the marker attribute identifying the round (default
-            ``"class"``). Where it holds several values, the first is used.
+            ``"class"``). A tuple tries the next attribute only when the previous one is absent.
+            Where an attribute holds several values, the first is used.
     """
 
     def __init__(
@@ -1200,7 +1702,7 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         table: str,
         header: str,
         marker: str = "span",
-        attribute: str = "class",
+        attribute: str | tuple[str, ...] = "class",
     ):
         self.table = table
         self.header = header
@@ -1220,10 +1722,17 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         return None
 
     def _marker_name(self, element: Tag) -> "str | None":
-        value = element.get(self.attribute)
-        if isinstance(value, list):
-            return str(value[0]) if value else None
-        return str(value) if value else None
+        attributes = (
+            (self.attribute,) if isinstance(self.attribute, str) else self.attribute
+        )
+        for attribute in attributes:
+            if attribute not in element.attrs:
+                continue
+            value = element.get(attribute)
+            if isinstance(value, list):
+                return str(value[0]) if value else None
+            return str(value) if value else None
+        return None
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -1356,6 +1865,9 @@ class AttributeJsonParser(Parser["list[Any]"]):
             as well as the schedule), and the first block with a record carrying
             all of these wins. A block that is not JSON, or whose key path does
             not resolve, is skipped.
+        from_json_key: read the HTML from this key (or path of keys) of a JSON
+            response instead of ``response.text``, as :class:`HtmlParser` does,
+            for a page fragment delivered inside a JSON envelope.
         strip_html: reduce every string field of every record to its visible
             text. These payloads commonly hold an HTML fragment per field (an
             ``<a>`` around the name, a pair of responsive ``<span>``s around the
@@ -1372,19 +1884,33 @@ class AttributeJsonParser(Parser["list[Any]"]):
         *keys: str,
         require_keys: Iterable[str] = (),
         strip_html: bool = False,
+        from_json_key: "str | tuple[str | int, ...] | None" = None,
     ):
         self.selector = selector
         self.attribute = attribute
         self.keys = keys
         self.require_keys = tuple(require_keys)
         self.strip_html = strip_html
+        self.from_json_key = from_json_key
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> "list[Any]":
         import json
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        if self.from_json_key is None:
+            markup = response.text
+        else:
+            data: Any = response.json()
+            keys = (
+                (self.from_json_key,)
+                if isinstance(self.from_json_key, str)
+                else self.from_json_key
+            )
+            for key in keys:
+                data = data[key]
+            markup = str(data)
+        soup = BeautifulSoup(markup, "html.parser")
         for element in soup.select(self.selector):
             blob = element.get(self.attribute)
             if not isinstance(blob, str):
@@ -1638,16 +2164,27 @@ class PdfDocumentLayout(NamedTuple):
     vectors: tuple[PdfVector, ...]
 
 
-def _pdf_color(value: Any) -> tuple[float, ...] | None:
-    """Normalise pdfminer colour values to a numeric tuple when possible."""
+def _pdf_color(
+    value: Any, *, grayscale_to_rgb: bool = False
+) -> tuple[float, ...] | None:
+    """Normalise numeric colours, optionally expanding greyscale to RGB.
+
+    Pattern colour names and other non-numeric components are not colours
+    this layout representation can compare, so return None for them.
+    """
+    components: tuple[float, ...]
     if isinstance(value, (int, float)):
-        return (float(value),)
-    if not isinstance(value, (list, tuple)):
+        components = (float(value),)
+    elif isinstance(value, (list, tuple)):
+        try:
+            components = tuple(float(component) for component in value)
+        except (TypeError, ValueError):
+            return None
+    else:
         return None
-    try:
-        return tuple(float(component) for component in value)
-    except (TypeError, ValueError):
-        return None
+    if grayscale_to_rgb and len(components) == 1:
+        return components * 3
+    return components
 
 
 class PdfLayoutParser(Parser[PdfDocumentLayout]):
@@ -1752,6 +2289,120 @@ class PdfLayoutParser(Parser[PdfDocumentLayout]):
         return PdfDocumentLayout(text, tuple(fragments), tuple(vectors))
 
 
+class PdfWordLayout(NamedTuple):
+    lines: list[PdfTextFragment]
+    words: list[PdfTextFragment]
+    vectors: list[PdfVector]
+
+
+def _pdf_word_layout(
+    response: Response, *, include_form_text: bool = False
+) -> PdfWordLayout:
+    """Retain individual word centres even when lines span several grid cells."""
+    from io import BytesIO
+
+    from pdfminer.high_level import extract_pages
+    from pdfminer.layout import (
+        LAParams,
+        LTChar,
+        LTContainer,
+        LTCurve,
+        LTTextLineHorizontal,
+    )
+
+    lines, words, vectors = [], [], []
+
+    def visit(item, page):
+        if isinstance(item, LTTextLineHorizontal):
+            lines.append(
+                PdfTextFragment(
+                    page,
+                    " ".join(item.get_text().split()),
+                    (item.x0 + item.x1) / 2,
+                    (item.y0 + item.y1) / 2,
+                )
+            )
+            chars = []
+
+            def flush():
+                if chars:
+                    words.append(
+                        PdfTextFragment(
+                            page,
+                            "".join(c.get_text() for c in chars),
+                            (chars[0].x0 + chars[-1].x1) / 2,
+                            (chars[0].y0 + chars[0].y1) / 2,
+                        )
+                    )
+                    chars.clear()
+
+            for char in item:
+                if isinstance(char, LTChar) and not char.get_text().isspace():
+                    chars.append(char)
+                else:
+                    flush()
+            flush()
+        elif isinstance(item, LTContainer):
+            for child in item:
+                visit(child, page)
+        elif isinstance(item, LTCurve) and item.fill:
+            vectors.append(
+                PdfVector(
+                    page,
+                    item.x0,
+                    item.y0,
+                    item.x1,
+                    item.y1,
+                    _pdf_color(item.stroking_color, grayscale_to_rgb=True),
+                    _pdf_color(item.non_stroking_color, grayscale_to_rgb=True),
+                )
+            )
+
+    for page, layout in enumerate(
+        extract_pages(
+            BytesIO(response.content), laparams=LAParams(all_texts=include_form_text)
+        )
+    ):
+        visit(layout, page)
+    return PdfWordLayout(lines, words, vectors)
+
+
+class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
+    """Return one document with word/line centres and filled vector geometry.
+
+    Coordinates use the PDF origin at bottom left and zero-based page numbers.
+    Greyscale fills are normalised to RGB triples for comparison with RGB
+    legends. An optional minimum word/vector count detects empty or changed
+    documents. Set ``include_form_text`` for text inside Form XObjects, which
+    needs pdfminer's ``all_texts`` grouping to become positioned words.
+    The one-item list composes with ``parsers.EachResponse``.
+    """
+
+    def __init__(
+        self,
+        *,
+        min_words: int = 1,
+        min_vectors: int = 0,
+        include_form_text: bool = False,
+    ):
+        self.min_words = min_words
+        self.min_vectors = min_vectors
+        self.include_form_text = include_form_text
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> list[PdfWordLayout]:
+        layout = _pdf_word_layout(response, include_form_text=self.include_form_text)
+        response_shape.expect(
+            len(layout.words) >= self.min_words
+            and len(layout.vectors) >= self.min_vectors,
+            source_name=response_shape.source_name(source),
+            detail="PDF has too few positioned words or filled vectors (image-only or changed layout?)",
+            raw=str(layout.lines[:10]),
+        )
+        return [layout]
+
+
 class PdfWord(NamedTuple):
     """A run of text on a PDF page with its horizontal span (PDF points)."""
 
@@ -1817,8 +2468,10 @@ class PdfTableParser(Parser["list[PdfRow]"]):
 
         # (page, y1, x0, x1, text) for every text run on every page.
         runs: list[tuple[int, float, float, float, str]] = []
+        # We sort text runs by coordinates below. Skip pdfminer's expensive
+        # reading-order grouping, which does not affect line text or geometry.
         for page_no, layout in enumerate(
-            extract_pages(BytesIO(response.content), laparams=LAParams())
+            extract_pages(BytesIO(response.content), laparams=LAParams(boxes_flow=None))
         ):
             for element in layout:
                 if not isinstance(element, LTTextContainer):
@@ -1950,11 +2603,22 @@ class CsvParser(Parser["list[dict[str, str]]"]):
     the columns the source reads::
 
         parse = parsers.CsvParser(require=["date", "type"])
+
+    Pass ``columns`` (the column names, in order) for an export without a header
+    row; every line is then a data row::
+
+        parse = parsers.CsvParser(delimiter=";", columns=["id", "date", "type"])
     """
 
-    def __init__(self, delimiter: str = ",", require: "list[str] | None" = None):
+    def __init__(
+        self,
+        delimiter: str = ",",
+        require: "list[str] | None" = None,
+        columns: "list[str] | None" = None,
+    ):
         self.delimiter = delimiter
         self.require = require
+        self.columns = columns
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -1965,7 +2629,9 @@ class CsvParser(Parser["list[dict[str, str]]"]):
         # Decode utf-8-sig so a UTF-8 BOM doesn't contaminate the first column
         # name (a common export quirk).
         text = response.content.decode("utf-8-sig", errors="replace")
-        reader = csv.DictReader(io.StringIO(text), delimiter=self.delimiter)
+        reader = csv.DictReader(
+            io.StringIO(text), fieldnames=self.columns, delimiter=self.delimiter
+        )
         rows = list(reader)
         if self.require:
             columns = set(reader.fieldnames or [])

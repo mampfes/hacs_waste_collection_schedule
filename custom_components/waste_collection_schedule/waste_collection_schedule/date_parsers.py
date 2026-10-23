@@ -13,6 +13,8 @@ Ergonomic module aliases are provided::
 """
 
 import datetime
+import re
+import zoneinfo
 from typing import Protocol
 
 from dateutil import parser as dateutil_parser
@@ -69,7 +71,7 @@ class DateParserFromEpoch(DateParser):
     def __init__(
         self,
         unit: str = "s",
-        tz: datetime.timezone = datetime.UTC,
+        tz: datetime.tzinfo = datetime.UTC,
     ):
         if unit not in ("s", "ms"):
             raise ValueError("unit must be 's' (seconds) or 'ms' (milliseconds)")
@@ -194,6 +196,88 @@ class DateParserNearestYear(DateParser):
         return min(candidates, key=lambda candidate: abs(candidate - today))
 
 
+class DateParserNamedMonth(DateParser):
+    """Parse a day, a month *name* and a year, in any supported language.
+
+    For "Tisdag 4 juni 2024", "4. Juni 2024" or "wtorek, 4 czerwca 2024": an
+    optional leading weekday is ignored, the month name resolves through
+    :func:`recurrence.month` (so no per-source month table). Prefer the
+    ``named_month()`` factory.
+    """
+
+    _PATTERN = re.compile(r"(\d{1,2})\.?\s+([^\W\d_]+)\.?,?\s+(\d{4})")
+
+    def __call__(self, *args: str) -> datetime.date:
+        from . import recurrence
+
+        date_str = str(args[-1]).strip()
+        match = self._PATTERN.search(date_str)
+        month = recurrence.month(match.group(2)) if match else None
+        if match is None or month is None:
+            raise ValueError(f"{date_str!r} is not a day, month name and year")
+        return datetime.date(int(match.group(3)), month, int(match.group(1)))
+
+
+class DateParserIsoWeek(DateParser):
+    """Parse a calendar week ("v10 2025", "KW 10 2025") to that week's Monday.
+
+    A week range ("v27 - v28 2025") resolves to the start of its first week.
+    Weeks are ISO 8601 weeks, which is how week numbers are printed. Prefer
+    the ``iso_week()`` factory. A month name between week and year ("v41 Okt
+    2027") is ignored: the week number decides.
+    """
+
+    _PATTERN = re.compile(
+        r"^[^\W\d_]{1,4}\.?\s*(\d{1,2})(?:\s*-\s*[^\W\d_]{0,4}\.?\s*\d{1,2})?"
+        r"(?:\s+[^\W\d_]{3,}\.?)?\s+(\d{4})$"
+    )
+
+    def __call__(self, *args: str) -> datetime.date:
+        date_str = str(args[-1]).strip()
+        match = self._PATTERN.match(date_str)
+        if match is None:
+            raise ValueError(f"{date_str!r} is not a calendar week and year")
+        return datetime.date.fromisocalendar(
+            int(match.group(2)), int(match.group(1)), 1
+        )
+
+
+class DateParserFirstOf(DateParser):
+    """Try several parsers in turn, for a field that mixes date notations."""
+
+    def __init__(self, *parsers: DateParser):
+        self.parsers = parsers
+
+    def __call__(self, *args: str) -> datetime.date:
+        for parser in self.parsers:
+            try:
+                return parser(*args)
+            except ValueError:
+                continue
+        raise ValueError(f"{args[-1]!r} matches none of the accepted date formats")
+
+
+class DateParserInZone(DateParser):
+    """Read an ISO 8601 timestamp as the calendar date it falls on in a zone.
+
+    For an API that stamps a collection with an instant (``2026-10-14T22:00:00Z``)
+    where the day it means is the one on the clock in the provider's own
+    time zone (15 October in Copenhagen). ``DateParserAuto`` would keep the UTC
+    date, which is a day off for every instant in the zone's first hours. A
+    timestamp with no offset is taken to be in the zone already. Prefer the
+    ``in_timezone(zone)`` factory. The last positional argument is the string.
+    """
+
+    def __init__(self, zone: str):
+        self.zone = zoneinfo.ZoneInfo(zone)
+
+    def __call__(self, *args: str) -> datetime.date:
+        stamp = dateutil_parser.isoparse(str(args[-1]).strip())
+        if stamp.tzinfo is None:
+            return stamp.date()
+        return stamp.astimezone(self.zone).date()
+
+
 # Ergonomic module-level aliases.
 auto = DateParserAuto()
 
@@ -205,7 +289,7 @@ def for_format(fmt: str) -> DateParserForFormat:
 
 def from_epoch(
     unit: str = "s",
-    tz: datetime.timezone = datetime.UTC,
+    tz: datetime.tzinfo = datetime.UTC,
 ) -> DateParserFromEpoch:
     """Return a DateParser for Unix timestamps (``unit`` is ``"s"`` or ``"ms"``)."""
     return DateParserFromEpoch(unit=unit, tz=tz)
@@ -241,3 +325,87 @@ def nearest_year(fmt: str) -> DateParserNearestYear:
     that may include the one just past and may cross the new year.
     """
     return DateParserNearestYear(fmt)
+
+
+def named_month() -> DateParserNamedMonth:
+    """Return a DateParser for "<weekday> 4 <month name> 2024" in any language."""
+    return DateParserNamedMonth()
+
+
+def iso_week() -> DateParserIsoWeek:
+    """Return a DateParser for a calendar week ("v10 2025") as its Monday."""
+    return DateParserIsoWeek()
+
+
+def first_of(*parsers: DateParser) -> DateParserFirstOf:
+    """Return a DateParser trying each of ``parsers`` until one accepts."""
+    return DateParserFirstOf(*parsers)
+
+
+def in_timezone(zone: str) -> DateParserInZone:
+    """Return a DateParser giving the date an ISO timestamp falls on in ``zone``."""
+    return DateParserInZone(zone)
+
+
+class DateParserRelativeWords(DateParser):
+    """Resolve "Today" / "Tomorrow" itself and hand every other date on.
+
+    For a "your next collections" list that prints the nearest days as words
+    instead of dates ("Tomorrow", then "Fri 16th Oct"). The word is matched
+    case-insensitively against ``words`` (a name to day-offset mapping) and
+    resolved relative to today; anything else goes to ``fallback``. Prefer the
+    ``relative_words(fallback)`` factory.
+    """
+
+    def __init__(
+        self,
+        fallback: DateParser,
+        words: "dict[str, int] | None" = None,
+    ):
+        self.fallback = fallback
+        self.words = {
+            word.casefold(): offset
+            for word, offset in (words or {"today": 0, "tomorrow": 1}).items()
+        }
+
+    def __call__(self, *args: str) -> datetime.date:
+        offset = self.words.get(str(args[-1]).strip().casefold())
+        if offset is None:
+            return self.fallback(*args)
+        return datetime.date.today() + datetime.timedelta(days=offset)
+
+
+class DateParserWithoutOrdinals(DateParser):
+    """Drop the English ordinal suffix before parsing ("Fri 16th Oct").
+
+    ``strptime`` has no directive for "16th"; this removes the ``st``/``nd``/
+    ``rd``/``th`` that follows a day number and hands the rest to ``fallback``.
+    Prefer the ``without_ordinals(fallback)`` factory.
+    """
+
+    _ORDINAL = re.compile(r"(?<=\d)(?:st|nd|rd|th)\b", re.IGNORECASE)
+
+    def __init__(self, fallback: DateParser):
+        self.fallback = fallback
+
+    def __call__(self, *args: str) -> datetime.date:
+        cleaned = self._ORDINAL.sub("", str(args[-1]))
+        return self.fallback(*args[:-1], cleaned)
+
+
+def relative_words(
+    fallback: DateParser, words: "dict[str, int] | None" = None
+) -> DateParserRelativeWords:
+    """Return a DateParser resolving "Today"/"Tomorrow", else using ``fallback``.
+
+    See :class:`DateParserRelativeWords`.
+    """
+    return DateParserRelativeWords(fallback, words)
+
+
+def without_ordinals(fallback: DateParser) -> DateParserWithoutOrdinals:
+    """Return a DateParser stripping "st"/"nd"/"rd"/"th" before ``fallback``.
+
+    See :class:`DateParserWithoutOrdinals`.
+    """
+    return DateParserWithoutOrdinals(fallback)

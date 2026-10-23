@@ -33,9 +33,22 @@ sys.path.append(
     )
 )
 
-from waste_collection_schedule.source.sutherlandshire_nsw_gov_au import (
-    _generate_collections,
-)
+from waste_collection_schedule.preprocessors import RecurrenceExpander
+from waste_collection_schedule.source.sutherlandshire_nsw_gov_au import _schedules
+
+
+def _generate_collections(weekday, zone, start, end, weekly_recycling):
+    """The (date, type) rows the source projects for start..end."""
+    schedules = _schedules(weekday, zone, start, weekly_recycling)
+    rows = RecurrenceExpander(lambda record, _source: [record])(schedules)
+    return [_Entry(d, t) for d, t in sorted(rows) if start <= d <= end]
+
+
+class _Entry:
+    def __init__(self, date, type):
+        self.date = date
+        self.type = type
+
 
 MONDAY = 0
 FRIDAY = 4

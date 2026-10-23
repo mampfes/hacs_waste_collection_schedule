@@ -17,6 +17,7 @@ from __future__ import annotations
 import base64
 import json
 import os
+import subprocess
 import sys
 import typing
 
@@ -26,6 +27,108 @@ import requests
 sys.path.insert(0, os.path.dirname(__file__))
 
 import cassette
+
+
+@pytest.mark.parametrize(
+    "fault,expected_error",
+    [
+        ("", None),
+        ("budget", "above the ceiling"),
+        ("completion", "not replayed to completion"),
+        ("counters", "missing replay counters"),
+        ("worker", "missing results from"),
+        ("duplicate", "replayed by multiple workers"),
+        ("manifest", "workers disagree on replay budget"),
+        ("filtered", None),
+    ],
+)
+def test_parallel_replay_checks_all_worker_results(tmp_path, fault, expected_error):
+    """Worker-local success must not conceal an aggregate replay failure."""
+    pytest.importorskip("xdist")
+    (tmp_path / "pytest.ini").write_text("[pytest]\n", encoding="utf-8")
+    (tmp_path / "test_offline_fixtures.py").write_text(
+        """
+import os
+from types import SimpleNamespace
+import pytest
+
+FAULT = os.environ["REPLAY_TEST_FAULT"]
+_FIXTURES = [("source", name, os.path.abspath(name)) for name in ("a", "b")]
+_CHOICE_FIXTURES = []
+_ERROR_FIXTURES = []
+_COMPLETED = set()
+FALLBACK_BUDGET = 1
+cassette = SimpleNamespace(REPLAY_FALLBACKS={}, REPLAY_MATCHES={})
+
+@pytest.mark.parametrize("path", [case[2] for case in _FIXTURES])
+def test_offline_replay(path):
+    if FAULT != "completion":
+        _COMPLETED.add(path)
+    if FAULT == "duplicate":
+        _COMPLETED.update(case[2] for case in _FIXTURES)
+    if FAULT != "counters":
+        cassette.REPLAY_FALLBACKS[path] = 1 if FAULT == "budget" else 0
+        cassette.REPLAY_MATCHES[path] = 1
+
+def test_the_replay_fallback_budget_is_not_exceeded():
+    pytest.fail("the controller must run this check, not a worker")
+""",
+        encoding="utf-8",
+    )
+    (tmp_path / "fault_injection.py").write_text(
+        """
+import os
+import pytest
+
+@pytest.hookimpl(trylast=True)
+def pytest_sessionfinish(session, exitstatus):
+    if hasattr(session.config, "workerinput"):
+        if os.environ["REPLAY_TEST_FAULT"] == "worker":
+            session.config.workeroutput.pop("offline_replay", None)
+        if os.environ["REPLAY_TEST_FAULT"] == "manifest" and session.config.workerinput["workerid"] == "gw0":
+            session.config.workeroutput["offline_replay"]["budget"] += 1
+""",
+        encoding="utf-8",
+    )
+    env = dict(
+        os.environ,
+        REPLAY_TEST_FAULT=fault,
+        PYTHONPATH=os.pathsep.join([os.path.dirname(__file__), str(tmp_path)]),
+    )
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pytest",
+            "-p",
+            "offline_replay",
+            "-p",
+            "fault_injection",
+            "-n",
+            "2",
+            "-q",
+            *(["-k", "replay_fallback_budget"] if fault == "filtered" else []),
+        ],
+        cwd=tmp_path,
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=60,
+        check=False,
+    )
+    assert "cassette replay validation" in result.stdout
+    if fault == "filtered":
+        assert result.returncode == 0, result.stdout + result.stderr
+        assert "Filtered replay run" in result.stdout
+        return
+    assert "2 passed" in result.stdout, result.stdout + result.stderr
+    if expected_error is None:
+        assert result.returncode == 0, result.stdout + result.stderr
+        assert "0 of 2 replayed requests" in result.stdout
+    else:
+        assert result.returncode == 1, result.stdout + result.stderr
+        assert expected_error in result.stdout
+
 
 URL = "https://example.invalid/api"
 

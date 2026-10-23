@@ -1,22 +1,34 @@
 # SIDEC
 
-Support for SIDEC waste collections.
+Support for schedules provided by [SIDEC](https://www.sidec.lu).
 
-## Configuration
+Source for SIDEC waste collection.
+
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: sidec_lu
       args:
-        commune: MUNICIPALITY
+        commune: COMMUNE
 ```
 
-### Arguments
+### Configuration Variables
 
 **commune**  
 *(string) (required)*
 
-The name of your municipality (`commune`).
+## Example
 
-This will be a dropdown menu in the Home Assistant UI, so you can simply select your municipality from the list.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: sidec_lu
+      args:
+        commune: Parc Hosingen
+```
+
+## How to get the source arguments
+
+Enter your commune as listed on the SIDEC website, e.g. 'Mersch'. An unknown commune lists the valid ones.

@@ -1,6 +1,8 @@
 # Cotswold District Council
 
-Support for waste collection schedules provided by [Cotswold District Council](https://www.cotswold.gov.uk/), UK.
+Support for schedules provided by [Cotswold District Council](https://www.cotswold.gov.uk/).
+
+Source for Cotswold District Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -14,17 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
-
-The full address string exactly as returned by the address lookup on the waste collection enquiry page.
-
-## How to find your `address`
-
-1. Go to the [Cotswold District Council waste collection enquiry page](https://community.cotswold.gov.uk/s/waste-collection-enquiry).
-2. Start typing your postcode or street name into the address lookup field.
-3. Select your property from the autocomplete suggestions.
-4. Use the full address string exactly as it appears in the suggestion (including the postcode), for example `10 HAVEN HILL, CIRENCESTER, GL7 1BN`.
 
 ## Example
 
@@ -33,5 +26,9 @@ waste_collection_schedule:
   sources:
     - name: cotswold_gov_uk
       args:
-        address: "10 HAVEN HILL, CIRENCESTER, GL7 1BN"
+        address: PARSONS PIECE, 1 GLEBE LANE, KEMBLE, CIRENCESTER, GL7 6BD
 ```
+
+## How to get the source arguments
+
+Go to the Cotswold District Council waste collection enquiry page (https://community.cotswold.gov.uk/s/waste-collection-enquiry) and start typing your postcode or street name into the address lookup. Select your property from the autocomplete suggestions and use the full address string exactly as it appears (e.g. '10 HAVEN HILL, CIRENCESTER, GL7 1BN').

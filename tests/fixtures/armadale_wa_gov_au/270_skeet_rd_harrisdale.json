@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://api.my.armadale.wa.gov.au/bins 4452b21074",
+      "method": "GET",
+      "url": "https://api.my.armadale.wa.gov.au/bins",
+      "final_url": "https://api.my.armadale.wa.gov.au/bins?address=270+Skeet+Rd%2C+HARRISDALE",
+      "body": "{\"params\":[[\"address\",\"270 Skeet Rd, HARRISDALE\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:14 GMT",
+        "content-type": "application/json",
+        "content-length": "121",
+        "x-amzn-requestid": "2f7af142-2199-4d7d-ad93-b8c26d06ed07",
+        "x-amz-apigw-id": "FM2VvG2HywMEZ7w=",
+        "x-amzn-trace-id": "Root=1-6ace9dbd-4fd2fb8f4ef407a77cb6d2b4;Parent=5079bc543f98c583;Sampled=0;Lineage=1:9a9707dc:0",
+        "x-envoy-upstream-service-time": "1404",
+        "server": "envoy"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjI3MCBTa2VldCBSb2FkLCBIQVJSSVNEQUxFIiwiYmluX2RheSI6IlRodXJzZGF5IiwicmVjeWNsZV9hcmVhIjoiVGhpcyBXZWVrIChBcmVhIDIpIiwidmVyZ2VzaWRlX3pvbmUiOiIxMyJ9XQ=="
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://warszawa19115.pl/harmonogramy-wywozu-odpadow 9af5d62661",
+      "method": "GET",
+      "url": "https://warszawa19115.pl/harmonogramy-wywozu-odpadow",
+      "final_url": "https://warszawa19115.pl/harmonogramy-wywozu-odpadow?p_p_id=portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ&p_p_lifecycle=2&p_p_resource_id=autocompleteResource&_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_name=MARSZA%C5%81KOWSKA+84%2F92%2C+00-514+%C5%9Ar%C3%B3dmie%C5%9Bcie",
+      "body": "{\"params\":[[\"_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_name\",\"MARSZA\u0141KOWSKA 84/92, 00-514 \u015ar\u00f3dmie\u015bcie\"],[\"p_p_id\",\"portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ\"],[\"p_p_lifecycle\",\"2\"],[\"p_p_resource_id\",\"autocompleteResource\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 08:37:54 GMT",
+        "content-type": "application/json;charset=UTF-8",
+        "connection": "keep-alive",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "set-cookie": "JSESSIONID=8FA1F6F24671881CFCE040612318FD07; Path=/; HttpOnly, COOKIE_SUPPORT=true; Max-Age=31536000; Expires=Wed, 13-Oct-2027 08:37:55 GMT; Path=/; HttpOnly, GUEST_LANGUAGE_ID=pl_PL; Max-Age=31536000; Expires=Wed, 13-Oct-2027 08:37:55 GMT; Path=/; HttpOnly, TS01746353=0122371ac8d143b85ed63836a8f13c30cd6cf142ef467a328446ac8ebe3d2a0f09c0b493020b19ac0744ee3cf125460efc5d9d09cc5e294e0782f7a0a883fdf0de5bdc2b90252d33db6a019a073c44c4934d169dd4f106022856a8a6b161cd2227c8d780c2; Path=/; Domain=.warszawa19115.pl",
+        "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "liferay-portal": "Liferay Community Edition Portal 7.3.6 CE GA7 (Athanasius / Build 7306 / February 23, 2021)",
+        "usid": "782681s87ds878.s1",
+        "transfer-encoding": "chunked",
+        "public-key-pins-report-only": "pin-sha256=\"0JINbj69CxWyGCvgF6I49UCVbVAr4B9OeIUXotruhO8=\"; pin-sha256=\"SoFCm4qoQgj2h7VZkPZuglKI1+wTCs4imvCo8F0QrIU=\"; pin-sha256=\"S4AbJNGvyS57nzJwv8sPMUML8VHSqH1vbiBftdPcErI=\"",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-powered-by": "/.",
+        "strict-transport-security": "max-age=15552000; preload;",
+        "content-security-policy": "upgrade-insecure-requests",
+        "server": "Server",
+        "x-aspnet-version": "./"
+      },
+      "content_b64": "W3siZnVsbE5hbWUiOiJNQVJTWkHFgUtPV1NLQSA4NC85MiAwMC01MTQgxZpyw7NkbWllxZtjaWUiLCJhZGRyZXNzUG9pbnRJZCI6IjI3MDQ0NjUwIn1d"
+    },
+    {
+      "key": "GET https://warszawa19115.pl/harmonogramy-wywozu-odpadow 027b3373fd",
+      "method": "GET",
+      "url": "https://warszawa19115.pl/harmonogramy-wywozu-odpadow",
+      "final_url": "https://warszawa19115.pl/harmonogramy-wywozu-odpadow?p_p_id=portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ&p_p_lifecycle=2&p_p_resource_id=ajaxResource&_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_addressPointId=27044650",
+      "body": "{\"params\":[[\"_portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ_addressPointId\",\"27044650\"],[\"p_p_id\",\"portalCKMjunkschedules_WAR_portalCKMjunkschedulesportlet_INSTANCE_o5AIb2mimbRJ\"],[\"p_p_lifecycle\",\"2\"],[\"p_p_resource_id\",\"ajaxResource\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 08:37:55 GMT",
+        "content-type": "text/html;charset=UTF-8",
+        "connection": "keep-alive",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+        "cache-control": "private, no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "liferay-portal": "Liferay Community Edition Portal 7.3.6 CE GA7 (Athanasius / Build 7306 / February 23, 2021)",
+        "usid": "782681s87ds878.s1",
+        "transfer-encoding": "chunked",
+        "public-key-pins-report-only": "pin-sha256=\"0JINbj69CxWyGCvgF6I49UCVbVAr4B9OeIUXotruhO8=\"; pin-sha256=\"SoFCm4qoQgj2h7VZkPZuglKI1+wTCs4imvCo8F0QrIU=\"; pin-sha256=\"S4AbJNGvyS57nzJwv8sPMUML8VHSqH1vbiBftdPcErI=\"",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-powered-by": "/.",
+        "strict-transport-security": "max-age=15552000; preload;",
+        "content-security-policy": "upgrade-insecure-requests",
+        "server": "Server",
+        "x-aspnet-version": "./"
+      },
+      "content_b64": "W3siYWRyZXMiOiJNQVJTWkHFgUtPV1NLQSA4NC85MiIsImR6aWVsbmljeSI6IsWacsOzZG1pZcWbY2llIiwiaGFybW9ub2dyYW15IjpbeyJkYXRhIjoiMjAyNi0xMC0xMyIsImZyYWtjamEiOnsiaWRfZnJha2NqYSI6Ik9QIiwibmF6d2EiOiJvcGFrb3dhbmlhIHogcGFwaWVydSBpIHRla3R1cnkifX0seyJkYXRhIjoiMjAyNi0xMC0xMyIsImZyYWtjamEiOnsiaWRfZnJha2NqYSI6Ik1UIiwibmF6d2EiOiJ6bWllc3phbmUgb2RwYWR5IG9wYWtvd2FuaW93ZSJ9fSx7ImRhdGEiOiIyMDI2LTEwLTE5IiwiZnJha2NqYSI6eyJpZF9mcmFrY2phIjoiT1MiLCJuYXp3YSI6Im9wYWtvd2FuaWEgemUgc3prxYJhIn19LHsiZGF0YSI6IjE5MDAtMDEtMDEiLCJmcmFrY2phIjp7ImlkX2ZyYWtjamEiOiJPWiIsIm5hendhIjoib2RwYWR5IHVsZWdhasSFY2UgYmlvZGVncmFkYWNqaSJ9fSx7ImRhdGEiOiIyMDI2LTEwLTE1IiwiZnJha2NqYSI6eyJpZF9mcmFrY2phIjoiQksiLCJuYXp3YSI6Im9kcGFkeSBrdWNoZW5uZSB1bGVnYWrEhWNlIGJpb2RlZ3JhZGFjamkifX0seyJkYXRhIjoiMTkwMC0wMS0wMSIsImZyYWtjamEiOnsiaWRfZnJha2NqYSI6IldHIiwibmF6d2EiOiJvZHBhZHkgd2llbGtvZ2FiYXJ5dG93ZSJ9fSx7ImRhdGEiOiIyMDI2LTEwLTEzIiwiZnJha2NqYSI6eyJpZF9mcmFrY2phIjoiWk0iLCJuYXp3YSI6Im5pZXNlZ3JlZ293YW5lICh6bWllc3phbmUpIG9kcGFkeSBrb211bmFsbmUifX1dLCJoYXJtb25vZ3JhbXlOIjpbXSwiaGFybW9ub2dyYW15WiI6W3siZGF0YSI6IjIwMjYtMTAtMTMiLCJmcmFrY2phIjp7ImlkX2ZyYWtjamEiOiJPUCIsIm5hendhIjoib3Bha293YW5pYSB6IHBhcGllcnUgaSB0ZWt0dXJ5In19LHsiZGF0YSI6IjIwMjYtMTAtMTMiLCJmcmFrY2phIjp7ImlkX2ZyYWtjamEiOiJNVCIsIm5hendhIjoiem1pZXN6YW5lIG9kcGFkeSBvcGFrb3dhbmlvd2UifX0seyJkYXRhIjoiMjAyNi0xMC0xOSIsImZyYWtjamEiOnsiaWRfZnJha2NqYSI6Ik9TIiwibmF6d2EiOiJvcGFrb3dhbmlhIHplIHN6a8WCYSJ9fSx7ImRhdGEiOiIxOTAwLTAxLTAxIiwiZnJha2NqYSI6eyJpZF9mcmFrY2phIjoiT1oiLCJuYXp3YSI6Im9kcGFkeSB1bGVnYWrEhWNlIGJpb2RlZ3JhZGFjamkifX0seyJkYXRhIjoiMjAyNi0xMC0xNSIsImZyYWtjamEiOnsiaWRfZnJha2NqYSI6IkJLIiwibmF6d2EiOiJvZHBhZHkga3VjaGVubmUgdWxlZ2FqxIVjZSBiaW9kZWdyYWRhY2ppIn19LHsiZGF0YSI6IjE5MDAtMDEtMDEiLCJmcmFrY2phIjp7ImlkX2ZyYWtjamEiOiJXRyIsIm5hendhIjoib2RwYWR5IHdpZWxrb2dhYmFyeXRvd2UifX0seyJkYXRhIjoiMjAyNi0xMC0xMyIsImZyYWtjamEiOnsiaWRfZnJha2NqYSI6IlpNIiwibmF6d2EiOiJuaWVzZWdyZWdvd2FuZSAoem1pZXN6YW5lKSBvZHBhZHkga29tdW5hbG5lIn19XX1d"
+    }
+  ]
+}

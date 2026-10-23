@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://data.montpellier3m.fr/sites/default/files/ressources/MMM_MMM_ReferentielCollecte.csv ",
+      "method": "GET",
+      "url": "https://data.montpellier3m.fr/sites/default/files/ressources/MMM_MMM_ReferentielCollecte.csv",
+      "final_url": "https://data.montpellier3m.fr/sites/default/files/ressources/MMM_MMM_ReferentielCollecte.csv",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 20:38:38 GMT",
+        "server": "envoy",
+        "last-modified": "Tue, 13 Oct 2026 05:02:05 GMT",
+        "etag": "\"197030c-65db1b7439aa8\"",
+        "accept-ranges": "bytes",
+        "content-length": "26673932",
+        "content-type": "text/csv",
+        "x-envoy-upstream-service-time": "231"
+      },
+      "content_b64": "77u/b2JqZWN0aWRfMSxpZF9wb2ludCxpZF9zb3VyY2Usbm9tX3ZvaWUsb2JqZWN0aWQsbnVtZXJvLHJlcCxjb21wbCxjb2RlX2luc2VlLGNvZGVfcG9zdCxjb21tdW5lLGNvdGUscHJlc3RhdGFpcixsb3Qsb20sb21fdHlwX2NvbCxvbV9hcHMsb21fam91cixmcmVxX29tLHRzLHRzX3R5cF9jb2wsdHNfYXBzLHRzX2pvdXIsZnJlcV90cyxiaW8sYmlvX3R5cF9jbyxiaW9fYXBzLGJpb19qb3VyLGZyZXFfYmlvLGVuY191c2FnZXIsZW51X3R5cF9jbyxlbmNfdV9hcHMsZW5jX3Vfam91cixmcmVxX2VuY191LG5ld19wb2ludCxmb3JtdWxhaXJlDQoyMzkzNDMsNzk3MzAsMzQxNzJfNDEzNV8wMDAwOCxSIFBBUkxJRVIsMCw4LCAsTlIsMzQxNzIsMzQwMDAsTU9OVFBFTExJRVIsTlIsU01OLDEtQ2VudHJlLE9NMSxQQVAsUE0sVyxPTTFfUEFQX1csVFMxLFBBUCxQTSxWLFRTMV9QQVBfVixOUixQQVYsTlIsTlIsQklPMV9QQVBfTCxFVTEsREVQLEFNLFMsRVUxX0RFUF9TLCAsQklPMV9QQVBfTA0K"
+    }
+  ]
+}

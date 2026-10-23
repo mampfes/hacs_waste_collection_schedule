@@ -1,86 +1,113 @@
-from datetime import date, datetime
+import re
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    postcode,
+    text_field,
+    uprn,
+)
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Cornwall Council"
-DESCRIPTION = "Source for cornwall.gov.uk services for Cornwall Council"
-URL = "https://cornwall.gov.uk"
-TEST_CASES = {
-    "known_uprn": {"uprn": "100040118005"},
-    "unknown_uprn": {"postcode": "TR261SP", "housenumberorname": "7"},
-    "unknown_uprn_int": {"postcode": "PL17 8PL", "housenumberorname": 3},
-    "uprn_with_garden_int_uprn": {"uprn": 100040080721},
-}
-
-SEARCH_URLS = {
-    "uprn_search": "https://www.cornwall.gov.uk/my-area/",
-    "collection_search": "https://www.cornwall.gov.uk/umbraco/Surface/Waste/MyCollectionDays?subscribe=False",
-}
-ICON_MAP = {
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden": Icons.GARDEN,
-}
+_ADDRESS_URL = "https://www.cornwall.gov.uk/my-area/"
+_COLLECTION_URL = "https://www.cornwall.gov.uk/umbraco/Surface/Waste/MyCollectionDays"
 
 
-class Source:
-    def __init__(
-        self, uprn=None, postcode=None, housenumberorname=None
-    ):  # argX correspond to the args dict in the source configuration
-        self._uprn = uprn
-        self._postcode = postcode
-        self._housenumberorname = str(housenumberorname) if housenumberorname else None
+def _pick_uprn(response, postcode=None, housenumberorname=None, **_) -> str:
+    """Address lookup page -> UPRN of the address starting with the house name/number."""
+    soup = BeautifulSoup(response.text, "html.parser")
+    options = [
+        (o.text.strip(), o["value"])
+        for o in soup.select('select[name="Uprn"] option')
+        if o.get("value") and o["value"] != "UNLISTED"
+    ]
+    if not options:
+        raise SourceArgumentNotFound("postcode", postcode)
+    wanted = str(housenumberorname).strip().lower()
+    for text, value in options:
+        if re.match(re.escape(wanted) + r"(?![0-9A-Za-z])", text.lower()):
+            return value
+    raise SourceArgumentNotFoundWithSuggestions(
+        "housenumberorname",
+        housenumberorname,
+        list(dict.fromkeys(text for text, _ in options)),
+    )
 
-    def fetch(self):
-        entries = []
-        session = requests.Session()
 
-        # Find the UPRN based on the postcode and the property name/number
-        if self._uprn is None:
-            args = {"Postcode": self._postcode}
-            r = session.get(SEARCH_URLS["uprn_search"], params=args)
-            r.raise_for_status()
-            soup = BeautifulSoup(r.text, features="html.parser")
-            propertyUprns = soup.find(id="Uprn").find_all("option")
-            if len(propertyUprns) == 0:
-                raise SourceArgumentNotFound(
-                    "postcode",
-                    self._postcode,
-                )
-            for match in propertyUprns:
-                if match.text.startswith(self._housenumberorname):
-                    self._uprn = match["value"]
-            if self._uprn is None:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "housenumberorname",
-                    self._housenumberorname,
-                    [match.text for match in propertyUprns],
-                )
+@final
+class Source(BaseSource):
+    TITLE = "Cornwall Council"
+    DESCRIPTION = "Source for cornwall.gov.uk services for Cornwall Council"
+    URL = "https://cornwall.gov.uk"
+    COUNTRY = "uk"
 
-        # Get the collection days based on the UPRN (either supplied through arguments or searched for above)
-        args = {"uprn": self._uprn}
-        r = session.get(SEARCH_URLS["collection_search"], params=args)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, features="html.parser")
-        for collection_div in soup.find_all("div", class_="collection"):
-            spans = collection_div.find_all("span")
-            if not spans:
-                continue
-            collection = spans[0].text
-            d = spans[-1].text + " " + str(date.today().year)
+    RAISE_ON_EMPTY = True
 
-            entries.append(
-                Collection(
-                    datetime.strptime(d, "%d %b %Y").date(),
-                    collection,
-                    icon=ICON_MAP.get(collection),
-                )
-            )
+    TEST_CASES: ClassVar[dict] = {
+        "known_uprn": {"uprn": "100040118005"},
+        "unknown_uprn": {"postcode": "TR261SP", "housenumberorname": "7"},
+        "unknown_uprn_int": {"postcode": "PL17 8PL", "housenumberorname": 3},
+        "uprn_with_garden_int_uprn": {"uprn": 100040080721},
+    }
 
-        return entries
+    PARAMS = (
+        alternatives(
+            [uprn()],
+            [
+                postcode(),
+                text_field("housenumberorname", label="House Name or Number"),
+            ],
+        ),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Provide your UPRN, or provide both your postcode and house name "
+            "or number. Find your UPRN at https://www.findmyaddress.co.uk/"
+        ),
+    }
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
+
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                _ADDRESS_URL,
+                params=lambda postcode=None, **_: {"Postcode": postcode},
+                given=lambda uprn=None, **_: uprn,
+                pick=_pick_uprn,
+            ),
+        ),
+        url=_COLLECTION_URL,
+        params=lambda uprn_key, **_: {"subscribe": "False", "uprn": uprn_key},
+    )
+
+    parse = parsers.HtmlLabelledDates(
+        "div.collection",
+        label="span:nth-of-type(1)",
+        date="span:nth-of-type(3)",
+        date_pattern=r"(\d{1,2} \w{3})",
+    )
+
+    transform = RowTransformer(
+        parse_date=date_parsers.nearest_year("%d %b"),
+        type_value_map={
+            "Food": wt.FOOD_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Rubbish": wt.GENERAL_WASTE,
+            "Garden": wt.GARDEN_WASTE,
+        },
+    )

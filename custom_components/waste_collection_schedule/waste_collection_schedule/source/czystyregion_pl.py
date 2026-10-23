@@ -1,99 +1,31 @@
 import json
 import re
-from datetime import datetime
+from typing import ClassVar, NamedTuple, final
 
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, preprocessors
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    city,
+    dropdown,
+    municipality,
+    street,
+)
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.retrievers import FanOutRetriever, Lookup, Request
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Czysty Region"
-DESCRIPTION = "Source for Związek Międzygminny Czysty Region waste collection (Opole/Silesia region, Poland)."
-URL = "https://www.czystyregion.pl"
-COUNTRY = "pl"
+HARMONOGRAMY_URL = "https://www.czystyregion.pl/Harmonogramy"
+RODZAJ_CHOICES = ["wielorodzinna", "jednorodzinna", "firma"]
 
-HARMONOGRAMY_URL = f"{URL}/Harmonogramy"
 
-RODZAJ_CHOICES = {"wielorodzinna", "jednorodzinna", "firma"}
-
-TEST_CASES = {
-    "Cisek (jednorodzinna)": {
-        "gmina": "Cisek",
-        "miejscowosc": "Cisek",
-        "rodzaj": "jednorodzinna",
-    },
-    "Cisek (firma)": {
-        "gmina": "Cisek",
-        "miejscowosc": "Cisek",
-        "rodzaj": "firma",
-    },
-    "Kędzierzyn-Koźle, ul. Piastów (wielorodzinna)": {
-        "gmina": "Kędzierzyn-Koźle",
-        "miejscowosc": "Kędzierzyn-Koźle",
-        "rodzaj": "wielorodzinna",
-        "ulica": "Piastów",
-    },
-    "Polska Cerekiew, ul. Kozielska (jednorodzinna)": {
-        "gmina": "Polska Cerekiew",
-        "miejscowosc": "Polska Cerekiew",
-        "rodzaj": "jednorodzinna",
-        "ulica": "Kozielska",
-    },
-}
-
-ICON_MAP = {
-    "Odpady zmieszane": Icons.GENERAL_WASTE,
-    "Tworzywa sztuczne/ Metale": Icons.RECYCLING,
-    "Papier": Icons.PAPER,
-    "Szkło": Icons.GLASS,
-    "Odpady BIO": Icons.ORGANIC,
-    "Popiół": Icons.GENERAL_WASTE,
-    "Zbiórka Akcyjna": Icons.BULKY,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Open https://www.czystyregion.pl/Harmonogramy and step through the "
-        "dropdowns (Wybierz gminę -> Wybierz rodzaj -> Wybierz miejscowość) "
-        "to find the exact spelling of your commune (gmina) and town/village "
-        "(miejscowość). If the result table lists more than one row for your "
-        "town (e.g. large towns split into several 'Rejon' street groups), "
-        "also note a distinctive street name from the 'Rejon' description "
-        "shown for your area and pass it as 'ulica'."
-    ),
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "gmina": "Commune (gmina)",
-        "miejscowosc": "Town/village (miejscowość)",
-        "rodzaj": "Property type (rodzaj)",
-        "ulica": "Street (for disambiguation)",
-    },
-    "de": {
-        "gmina": "Gemeinde (gmina)",
-        "miejscowosc": "Ort (miejscowość)",
-        "rodzaj": "Immobilientyp (rodzaj)",
-        "ulica": "Straße (zur Unterscheidung)",
-    },
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "gmina": "Name of the commune (gmina) as listed on czystyregion.pl.",
-        "miejscowosc": "Name of the town/village as listed on czystyregion.pl.",
-        "rodzaj": "One of: wielorodzinna (multi-family), jednorodzinna (single-family), firma (business).",
-        "ulica": "Optional street name used to pick the right area when your town has several separate schedules (only needed if the source reports an ambiguous result).",
-    },
-    "de": {
-        "gmina": "Name der Gemeinde (gmina), wie auf czystyregion.pl gelistet.",
-        "miejscowosc": "Name des Ortes, wie auf czystyregion.pl gelistet.",
-        "rodzaj": "Einer von: wielorodzinna (Mehrfamilienhaus), jednorodzinna (Einfamilienhaus), firma (Gewerbe).",
-        "ulica": "Optionaler Straßenname zur Auswahl des richtigen Bereichs, falls der Ort mehrere separate Pläne hat (nur bei mehrdeutigem Ergebnis nötig).",
-    },
-}
+class _Form(NamedTuple):
+    token: str
+    gmina_id: str
+    region_ids: tuple[str, ...]
 
 
 def _strip_tags(html: str) -> str:
@@ -101,139 +33,166 @@ def _strip_tags(html: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
-class Source:
-    def __init__(
-        self, gmina: str, miejscowosc: str, rodzaj: str, ulica: str = ""
-    ) -> None:
-        self._gmina = str(gmina).strip()
-        self._miejscowosc = str(miejscowosc).strip()
-        self._rodzaj = str(rodzaj).strip()
-        self._ulica = str(ulica).strip()
-        if self._rodzaj not in RODZAJ_CHOICES:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "rodzaj", rodzaj, sorted(RODZAJ_CHOICES)
-            )
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session(impersonate="chrome")
-
-        r = session.get(HARMONOGRAMY_URL, timeout=30)
-        r.raise_for_status()
-        html = r.text
-
-        token_match = re.search(r'name="_token" value="([^"]*)"', html)
-        if not token_match:
-            raise SourceArgumentNotFoundWithSuggestions("gmina", self._gmina, [])
-        token = token_match.group(1)
-
-        gminy_block_match = re.search(r'id="gminy"[^>]*>(.*?)</select>', html, re.S)
-        gminy = {
-            name.strip(): gid
-            for gid, name in re.findall(
-                r'<option value="(\d*)">([^<]*)</option>',
-                gminy_block_match.group(1) if gminy_block_match else "",
-            )
-            if gid
-        }
-        gmina_id = next(
-            (
-                gid
-                for name, gid in gminy.items()
-                if name.casefold() == self._gmina.casefold()
-            ),
-            None,
+def _form(response, gmina, miejscowosc, **_) -> _Form:
+    """Resolve the commune and town against the dropdown data of the page."""
+    html = response.text
+    token = re.search(r'name="_token" value="([^"]*)"', html)
+    block = re.search(r'id="gminy"[^>]*>(.*?)</select>', html, re.S)
+    gminy = {
+        name.strip(): gid
+        for gid, name in re.findall(
+            r'<option value="(\d*)">([^<]*)</option>', block.group(1) if block else ""
         )
-        if gmina_id is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "gmina", self._gmina, sorted(gminy)
-            )
+        if gid
+    }
+    gmina_id = next(
+        (gid for name, gid in gminy.items() if name.casefold() == gmina.casefold()),
+        None,
+    )
+    if token is None or gmina_id is None:
+        raise SourceArgumentNotFoundWithSuggestions("gmina", gmina, sorted(gminy))
 
-        regiony_match = re.search(r"var regiony = (\[.*?\]);", html, re.S)
-        regiony = json.loads(regiony_match.group(1)) if regiony_match else []
-        candidate_region_ids = [
-            str(region["id"])
-            for region in regiony
-            if str(region.get("gmina_id")) == gmina_id
-            and str(region.get("name", "")).strip().casefold()
-            == self._miejscowosc.casefold()
-        ]
-        if not candidate_region_ids:
-            names_for_gmina = sorted(
-                {
-                    str(region.get("name"))
-                    for region in regiony
-                    if str(region.get("gmina_id")) == gmina_id
-                }
-            )
-            raise SourceArgumentNotFoundWithSuggestions(
-                "miejscowosc", self._miejscowosc, names_for_gmina
-            )
+    regiony_match = re.search(r"var regiony = (\[.*?\]);", html, re.S)
+    regiony = json.loads(regiony_match.group(1)) if regiony_match else []
+    in_gmina = [r for r in regiony if str(r.get("gmina_id")) == gmina_id]
+    region_ids = tuple(
+        str(r["id"])
+        for r in in_gmina
+        if str(r.get("name", "")).strip().casefold() == miejscowosc.casefold()
+    )
+    if not region_ids:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "miejscowosc", miejscowosc, sorted({str(r.get("name")) for r in in_gmina})
+        )
+    return _Form(token.group(1), gmina_id, region_ids)
 
-        rows: list[tuple[str, str]] = []
-        for region_id in candidate_region_ids:
-            resp = session.post(
-                HARMONOGRAMY_URL,
-                data={
-                    "_token": token,
-                    "gminy": gmina_id,
-                    "rodzaj": self._rodzaj,
-                    "regiony": region_id,
-                },
-                timeout=30,
-            )
-            resp.raise_for_status()
-            tbody_match = re.search(
-                r'<table id="harmonogramy".*?<tbody>(.*?)</tbody>', resp.text, re.S
-            )
-            if not tbody_match:
-                continue
-            for cell, harmonogram_id in re.findall(
-                r"<tr>\s*<td>(.*?)</td>\s*<td>.*?</td>\s*<td>.*?</td>\s*"
-                r'<td>.*?/Harmonogramy/(\d+)".*?</tr>',
-                tbody_match.group(1),
-                re.S,
-            ):
-                rows.append((harmonogram_id, _strip_tags(cell)))
 
-        if not rows:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "rodzaj", self._rodzaj, sorted(RODZAJ_CHOICES)
-            )
+def _harmonogram(response, region_id, form, ulica=None, **_) -> str | None:
+    """The schedule id of one town record, told apart by street where needed."""
+    table = re.search(
+        r'<table id="harmonogramy".*?<tbody>(.*?)</tbody>', response.text, re.S
+    )
+    rows = [
+        (harmonogram_id, _strip_tags(cell))
+        for cell, harmonogram_id in re.findall(
+            r"<tr>\s*<td>(.*?)</td>\s*<td>.*?</td>\s*<td>.*?</td>\s*"
+            r'<td>.*?/Harmonogramy/(\d+)".*?</tr>',
+            table.group(1) if table else "",
+            re.S,
+        )
+    ]
+    if not rows:
+        return None
+    if len(rows) == 1 and len(form.region_ids) == 1:
+        return rows[0][0]
+    street_name = (ulica or "").strip()
+    if street_name:
+        matches = [r for r in rows if street_name.casefold() in r[1].casefold()]
+        if len(matches) == 1:
+            return matches[0][0]
+        if not matches and len(form.region_ids) > 1:
+            return None  # another record of the same town names the street
+        rows = matches or rows
+    raise SourceArgAmbiguousWithSuggestions("ulica", street_name, [r[1] for r in rows])
 
-        if len(rows) > 1 and self._ulica:
-            filtered_rows = [
-                (harmonogram_id, description)
-                for harmonogram_id, description in rows
-                if self._ulica.casefold() in description.casefold()
-            ]
-            if filtered_rows:
-                rows = filtered_rows
 
-        if len(rows) > 1:
-            raise SourceArgAmbiguousWithSuggestions(
-                "ulica",
-                self._ulica,
-                [description for _, description in rows],
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Czysty Region"
+    DESCRIPTION = "Source for Związek Międzygminny Czysty Region waste collection (Opole/Silesia region, Poland)."
+    URL = "https://www.czystyregion.pl"
+    COUNTRY = "pl"
+    RAISE_ON_EMPTY = True
 
-        harmonogram_id = rows[0][0]
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Open https://www.czystyregion.pl/Harmonogramy and step through the "
+            "dropdowns (Wybierz gminę -> Wybierz rodzaj -> Wybierz miejscowość) "
+            "to find the exact spelling of your commune (gmina) and town/village "
+            "(miejscowość). If the result table lists more than one row for your "
+            "town (e.g. large towns split into several 'Rejon' street groups), "
+            "also note a distinctive street name from the 'Rejon' description "
+            "shown for your area and pass it as 'ulica'."
+        ),
+    }
 
-        detail = session.get(f"{HARMONOGRAMY_URL}/{harmonogram_id}", timeout=30)
-        detail.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "Cisek (jednorodzinna)": {
+            "gmina": "Cisek",
+            "miejscowosc": "Cisek",
+            "rodzaj": "jednorodzinna",
+        },
+        "Cisek (firma)": {
+            "gmina": "Cisek",
+            "miejscowosc": "Cisek",
+            "rodzaj": "firma",
+        },
+        "Kędzierzyn-Koźle, ul. Piastów (wielorodzinna)": {
+            "gmina": "Kędzierzyn-Koźle",
+            "miejscowosc": "Kędzierzyn-Koźle",
+            "rodzaj": "wielorodzinna",
+            "ulica": "Piastów",
+        },
+        "Polska Cerekiew, ul. Kozielska (jednorodzinna)": {
+            "gmina": "Polska Cerekiew",
+            "miejscowosc": "Polska Cerekiew",
+            "rodzaj": "jednorodzinna",
+            "ulica": "Kozielska",
+        },
+    }
 
-        events_match = re.search(r"events:\s*JSON\.parse\(`(.*?)`\)", detail.text, re.S)
-        if not events_match:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "miejscowosc", self._miejscowosc, []
-            )
-        events = json.loads(events_match.group(1))
+    PARAMS: ClassVar[list] = [
+        municipality("gmina"),
+        city("miejscowosc"),
+        dropdown("rodzaj", RODZAJ_CHOICES),
+        street("ulica", optional=True),
+    ]
 
-        entries = []
-        for event in events:
-            try:
-                date = datetime.strptime(event["start"], "%Y-%m-%d").date()
-            except (KeyError, ValueError):
-                continue
-            waste_type = event.get("title", "")
-            entries.append(Collection(date, waste_type, icon=ICON_MAP.get(waste_type)))
-        return entries
+    WASTE_TYPES: ClassVar[list] = [
+        wt.BULKY_WASTE,
+        wt.GENERAL_WASTE,
+        wt.GLASS,
+        wt.ORGANIC,
+        wt.OTHER,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
+
+    retrieve = FanOutRetriever(
+        prepare=Lookup(HARMONOGRAMY_URL, pick=_form),
+        targets=lambda source, form: form.region_ids,
+        fetch=Request(
+            lambda region_id, form, harmonogram, **_: (
+                f"{HARMONOGRAMY_URL}/{harmonogram}"
+            ),
+            before=[
+                Lookup(
+                    HARMONOGRAMY_URL,
+                    method="POST",
+                    data=lambda region_id, form, rodzaj, **_: {
+                        "_token": form.token,
+                        "gminy": form.gmina_id,
+                        "rodzaj": rodzaj,
+                        "regiony": region_id,
+                    },
+                    pick=_harmonogram,
+                )
+            ],
+            when=lambda region_id, form, harmonogram, **_: harmonogram is not None,
+        ),
+    )
+    parse = parsers.EachResponse(parsers.JsVarParser("events", json_parse=True))
+    preprocess = preprocessors.FlattenGroups()
+    transform = JsonTransformer(
+        date_key="start",
+        type_key="title",
+        type_value_map={
+            "Odpady zmieszane": wt.GENERAL_WASTE,
+            "Tworzywa sztuczne/ Metale": wt.RECYCLABLES,
+            "Papier": wt.PAPER,
+            "Szkło": wt.GLASS,
+            "Odpady BIO": wt.ORGANIC,
+            "Popiół": wt.OTHER,
+            "Zbiórka Akcyjna": wt.BULKY_WASTE,
+        },
+    )

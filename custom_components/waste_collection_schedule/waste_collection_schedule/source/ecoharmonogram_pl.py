@@ -19,7 +19,7 @@ from waste_collection_schedule.service.EcoHarmonogramPL import (
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
-# Ecoharmonogram.pl serves ~16 Polish municipalities/operators (see REGIONS
+# Ecoharmonogram.pl serves multiple Polish municipalities/operators (see REGIONS
 # below), each free to phrase its bin categories differently, so the label
 # arriving in a schedule's ScheduleDescription.name commonly carries a
 # trailing frequency descriptor and/or a footnote marker, e.g.
@@ -50,6 +50,7 @@ def _strip_frequency_suffix(label: str) -> str:
 
 
 TYPE_VALUE_MAP = {
+    "płatność": None,  # Payment reminder, not a waste collection.
     "zmieszane": wt.GENERAL_WASTE,
     "odpady zmieszane": wt.GENERAL_WASTE,
     "odpady komunalne zmieszane": wt.GENERAL_WASTE,
@@ -93,8 +94,8 @@ TYPE_VALUE_MAP = {
 # Apps/deployments Ecoharmonogram.pl runs under a `customApp` value (the
 # `app` parameter). One structure (this pipeline) covers all of them, so each
 # becomes a Region; the default (no `app`) deployment is listed too, so the
-# region count matches the source's supported-apps list exactly (16: the
-# generic deployment + 15 named apps).
+# region count matches the source's supported-apps list exactly (the generic
+# deployment plus the named apps).
 _APP_LABELS: dict[str, str] = {
     "eco-przyszlosc": "Eco-Przyszłość",
     "ogrodzieniec": "Ogrodzieniec",
@@ -111,6 +112,7 @@ _APP_LABELS: dict[str, str] = {
     "trzebownisko": "Trzebownisko",
     "zory": "Żory",
     "opole": "Opole",
+    "legnica": "Legnica",
 }
 
 
@@ -136,11 +138,18 @@ class Source(BaseSource):
             "If any other field is required, the error will list the available "
             "options as suggestions. If your Town is not found, you might need "
             "to provide the App argument (see the linked documentation below for "
-            "a list of towns with their corresponding App argument)."
+            "a list of towns with their corresponding App argument). "
+            "For Legnica, select the Legnica provider or set App to legnica."
         ),
     }
 
     TEST_CASES: ClassVar[dict] = {
+        "Legnica, Bieszczadzka 27": {
+            "app": "legnica",
+            "town": "Legnica",
+            "street": "Bieszczadzka",
+            "house_number": "27",
+        },
         "Częstochowa Częstochowa Bartnicza 9": {
             "town": "Częstochowa",
             "street": "Bartnicza",

@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-10-14",
+  "interactions": [
+    {
+      "key": "GET https://gis1.cockburn.wa.gov.au/webapiv2/PropertyInfoSearch/PropertyNo?q=6025742&search_method=property_no ",
+      "method": "GET",
+      "url": "https://gis1.cockburn.wa.gov.au/webapiv2/PropertyInfoSearch/PropertyNo?q=6025742&search_method=property_no",
+      "final_url": "https://gis1.cockburn.wa.gov.au/webapiv2/PropertyInfoSearch/PropertyNo?q=6025742&search_method=property_no",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Wed, 14 Oct 2026 16:41:20 GMT",
+        "content-type": "text/json; charset=utf-8",
+        "content-length": "610",
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "content-encoding": "gzip",
+        "expires": "-1",
+        "vary": "Accept-Encoding",
+        "server": "envoy",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET, ARR/3.0",
+        "access-control-allow-origin": "*",
+        "cf-cache-status": "DYNAMIC",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=GiOqlNTzSoRV1IgoTHWPLZ6TS%2BvZKjLtYWwDHMfhfEIlfVP1SLFNxjvhBtqeRR8wkj2r9x%2FzxTKAHBmCmTMDm8entpoqFCfspsngT5oJHkhGDy5d24faZSAnttVhwx6d2xj2fvgf8aoG\"}]}",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "cf-ray": "a4a807e77fb370ba-WAW",
+        "x-envoy-upstream-service-time": "841"
+      },
+      "content_b64": "W3siQWRkcmVzcyI6IjYgUmV0dXNhIFN0cmVldCBCRUVMSUFSIFdBIDYxNjQiLCJQcm9wZXJ0eU5vIjo2MDI1NzQyLCJTdWJ1cmIiOiJCZWVsaWFyIiwiV2FyZCI6IkNlbnRyYWwiLCJDb3VuY2lsbG9yc0xpbmsiOiJodHRwczovL3d3dy5jb2NrYnVybi53YS5nb3YuYXUvQ2l0eS1hbmQtQ291bmNpbC9BYm91dC1Db3VuY2lsLU1lZXRpbmdzLWFuZC1FbGVjdGlvbnMvRWxlY3RlZC1NZW1iZXJzIzUiLCJCaW5EYXkiOiJUdWVzZGF5IiwiQXJlYSI6Ni4wLCJKdW5rV2hpdGUxIjoiMjQtQXVnLTIwMjYiLCJHcmVlbldhc3RlMSI6IjgtSnVuLTIwMjYiLCJKdW5rV2hpdGUyIjoiMS1NYXItMjAyNyIsIkdyZWVuV2FzdGUyIjoiMTYtTm92LTIwMjYiLCJHYXJkZW5XYXN0ZSI6IlR1ZXNkYXkgRm9ydG5pZ2h0bHkgKDI3LU9jdC0yMDI2KSAoaWYgYXBwbGljYWJsZSkiLCJQSU4iOiIxMjIyMTYxMSIsIkNvb3JkV0dTODQiOiItMzIuMTM2NTczOTEsMTE1LjgxMDcyMjI0IiwiUG9pbnRzQ29vcmRzIjoiPHB0PjM4NzgxNS42NzU4MDAwMDo2NDQzODAwLjMwODYwMDAwPC9wdD48cHQ+Mzg3ODQzLjc5MjcwMDAwOjY0NDM4MDAuNjE5MTAwMDA8L3B0PjxwdD4zODc4NDMuNjU2MjAwMDA6NjQ0MzgxMi45ODAyMDAwMDwvcHQ+PHB0PjM4NzgxNS41MzkzMDAwMDo2NDQzODEyLjY2OTcwMDAwPC9wdD48cHQ+Mzg3ODE1LjYxNzYwMDAwOjY0NDM4MDUuNTc3MDAwMDA8L3B0PjxwdD4zODc4MTUuNjc1ODAwMDA6NjQ0MzgwMC4zMDg2MDAwMDwvcHQ+In1d"
+    }
+  ]
+}

@@ -335,6 +335,7 @@ def parse_month_name_table(
         raise Exception("Schedule table not found in HTML response")
 
     entries: list[tuple[datetime.date, str]] = []
+    seen_month = False
     tbody = table.find("tbody")
     rows = tbody.find_all("tr") if tbody else table.find_all("tr")
     for row in rows:
@@ -354,8 +355,13 @@ def parse_month_name_table(
             row_year = int(parts[-1])
         elif year is not None:
             row_year = year
+            # Some deployments (sepan_remondis_pl) open the table with the
+            # previous year's December ahead of January.
+            if month == 12 and not seen_month:
+                row_year = year - 1
         else:
             continue
+        seen_month = True
 
         for i, cell in enumerate(cells[1:]):
             if i >= len(headers):

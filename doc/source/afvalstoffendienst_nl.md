@@ -1,51 +1,43 @@
 # Afvalstoffendienst.nl
 
-Support for schedules provided by [Afvallstoffendienst.nl](https://www.afvalstoffendienst.nl/), serving 's Hertogenbosch, Heusden, Vught, Oisterwijk, Altena, Bernheze. Netherlands. The source now talks directly to the afvalstoffendienst API using postcode and house number (with optional addition); the `region` parameter is no longer used.
+Support for schedules provided by [Afvalstoffendienst.nl](https://www.afvalstoffendienst.nl/).
+
+Source for 's Hertogenbosch, Heusden, Vught, Oisterwijk, Altena, Bernheze
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: afvalstoffendienst_nl
       args:
         postcode: POSTCODE
-        house_number: "HOUSE NUMBER (huisnummer)"
-        addition: "ADDITION (toevoeging/huisletter)"
+        house_number: HOUSE_NUMBER
+        addition: ADDITION
 ```
 
 ### Configuration Variables
 
-**postcode**
-*(String) (required)*
+**postcode**  
+*(string) (required)*
 
-**house_number**
-*(String | Integer) (required)*
+**house_number**  
+*(string) (required)*
 
 **addition**  
-*(String) (optional)*
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: afvalstoffendienst_nl
       args:
-        postcode: 5151MS
-        house_number: "37"
+        postcode: 5061AA
+        house_number: '1'
 ```
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: afvalstoffendienst_nl
-      args:
-        postcode: 5256EJ
-        house_number: 44
-        addition: "C"
-```
+## How to get the source arguments
 
-## How to get the source argument
-
-You can check weather your parameter return a valid result using the website <https://www.afvalstoffendienst.nl>
+Enter the postcode, house number and (optional) addition of your home address.

@@ -39,6 +39,12 @@ TEST_CASES = {
         "auto_suffix": True,
         "ignored_containers": [35895, 35901, 35918],
     },
+    "Václavská - containers without pick_days": {
+        "lat": 50.075300751919826,
+        "lon": 14.417262641827529,
+        "radius": 1,
+        "api_key": "!secret api_golemio_api_key",
+    },
 }
 
 API_URL = "https://api.golemio.cz/"
@@ -64,6 +70,7 @@ _CZ_DAY_TO_WEEKDAY = {
     "So": 5,
     "Ne": 6,
 }
+_WEEKDAY_TO_CZ_DAY = {v: k for k, v in _CZ_DAY_TO_WEEKDAY.items()}
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -184,9 +191,24 @@ class Source:
                 if self._suffix:
                     t = f"{t}{self._suffix}"
 
-                for d in _generate_next_picks(
-                    next_pick, frequency["pick_days"], frequency["id"]
-                ):
+                pick_days = frequency.get("pick_days")
+                frequency_id = frequency.get("id")
+                if not pick_days and frequency_id and frequency_id % 10 == 1:
+                    # once per period: the pick day is the next pick's weekday
+                    pick_days = _WEEKDAY_TO_CZ_DAY[next_pick.weekday()]
+                if pick_days and frequency_id:
+                    dates = _generate_next_picks(next_pick, pick_days, frequency_id)
+                else:
+                    # the API omits pick_days/id for some containers; without
+                    # them only the next pick date is known
+                    _LOGGER.info(
+                        "No pick days for container ID %s (%s), using next pick date only.",
+                        container["container_id"],
+                        trash_type["description"],
+                    )
+                    dates = [next_pick]
+
+                for d in dates:
                     entries.append(
                         Collection(
                             date=d,

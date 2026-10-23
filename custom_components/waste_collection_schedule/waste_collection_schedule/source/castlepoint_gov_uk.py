@@ -1,71 +1,18 @@
 import re
-from datetime import date, datetime
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import alternatives, street, text_field
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
-    SourceArgumentExceptionMultiple,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Castle Point Borough Council"
-DESCRIPTION = "Source for Castle Point Borough Council waste collections."
-URL = "https://www.castlepoint.gov.uk"
-COUNTRY = "uk"
-
-TEST_CASES = {
-    "ABBOTSWOOD": {"roadID": "4448"},
-    "Ash Road": {"street_name": "Ash Road"},
-    "St Marys Road": {"street_name": "St Marys Road"},
-    # "Ash Road" also matches "ASH ROAD - HADLEIGH" once the district suffix is
-    # dropped; naming the suffixed street picks that one instead.
-    "Ash Road, Hadleigh": {"street_name": "ASH ROAD - HADLEIGH"},
-    # HIGH STREET exists in both Benfleet and Canvey Island, on different
-    # rounds, so bare "High Street" is genuinely ambiguous. This covers the
-    # town-qualified form the ambiguity error hands back.
-    "High Street (Canvey Island)": {"street_name": "HIGH STREET (CANVEY ISLAND)"},
-    # A house number in front of the street is what a resident naturally types;
-    # the council's own search returns nothing at all for it.
-    "12 Ash Road": {"street_name": "12 Ash Road"},
-}
-
-API_URLS = {
-    "fetch_schedule": "https://apps.castlepoint.gov.uk/cpapps/index.cfm?fa=myStreet.displayDetails&roadID=",
-    "find_road": "https://apps.castlepoint.gov.uk/cpapps/index.cfm?fa=myStreet.search",
-}
-
-ICON_MAP = {
-    "Organic and Residual (Food/Garden/non-recyclable (black sack))": Icons.GENERAL_WASTE,
-    "Recycling (Food/Garden/Pink sack/Glass)": Icons.RECYCLING,
-}
-
-NAME_MAP = {
-    "normal": "Organic and Residual (Food/Garden/non-recyclable (black sack))",
-    "pink": "Recycling (Food/Garden/Pink sack/Glass)",
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Go to https://apps.castlepoint.gov.uk/cpapps/index.cfm?fa=myStreet&f=homepage1 "
-        "either enter your street name in the search box or select the first letter of your street. "
-        "Click on the street name and look for the roadID in the URL."
-    ),
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "roadID": "Your roadID retrieved from the URL after selecting your street.",
-        "street_name": (
-            "The name of your street (only needed if you don't provide roadID). "
-            "If two towns in the borough share a street name, add the town in "
-            "brackets, e.g. 'HIGH STREET (CANVEY ISLAND)'."
-        ),
-    }
-}
-
-PARAM_TRANSLATIONS = {"en": {"roadID": "Road ID", "street_name": "Street Name"}}
+_BASE = "https://apps.castlepoint.gov.uk/cpapps/index.cfm"
 
 # "12 Ash Road", "12a Ash Road", "12-14 High Street" -> "Ash Road".
 # The council's street search matches street names only and returns no results
@@ -76,227 +23,193 @@ _LEADING_HOUSE_NUMBER = re.compile(r"^\s*\d+[A-Za-z]?\s*(?:[-/,]\s*\d*[A-Za-z]?\
 # taken from an ambiguity error can be handed straight back.
 _TRAILING_TOWN = re.compile(r"\s*\(([^)]*)\)\s*$")
 
+_DAY_DATE = re.compile(r"\{ts '(\d{4}-\d{2}-\d{2})")
+
 
 def _normalise(value: str) -> str:
     """Upper-case and strip punctuation/extra spaces for comparison only."""
     return re.sub(r"\s+", " ", re.sub(r"[^A-Z0-9 ]", " ", value.upper())).strip()
 
 
-class Source:
-    def __init__(self, roadID=None, street_name=None):
-        if roadID is None and street_name is None:
-            raise SourceArgumentExceptionMultiple(
-                ["roadID", "street_name"],
-                "Either roadID or street_name is required to fetch waste collection schedule.",
-            )
+def _search_term(*_, street_name=None, **__) -> str:
+    """The bare street name the council's search recognises.
 
-        self._roadID = roadID if roadID is not None else self._get_road_id(street_name)
-        self._street_name = street_name
+    The search returns nothing for a house number in front, for the
+    town-qualified form this source suggests, or for the council's own
+    "STREET - DISTRICT" label. Matching is done on the original value later.
+    """
+    term = _LEADING_HOUSE_NUMBER.sub("", street_name or "", count=1)
+    term = _TRAILING_TOWN.sub("", term)
+    return term.split(" - ")[0].strip()
 
-    def _search(self, searchterm):
-        """Return [(town, street_label, road_id)] for one search term."""
-        session = requests.Session()
-        response = session.post(
-            API_URLS["find_road"], data={"searchterm": searchterm}, timeout=10
-        )
-        response.raise_for_status()
 
-        soup = BeautifulSoup(response.text, "html.parser")
+def _display(town: str, label: str) -> str:
+    return f"{label} ({town})" if town else label
 
-        # Results are grouped per town:
-        #   <div class="flex-item-town"><h3>BENFLEET</h3>
-        #     <ol><li><a href="...roadID=4907">HIGH STREET</a></li>...
-        # The town is the only thing distinguishing two identically named
-        # streets (HIGH STREET exists in both Benfleet and Canvey Island), so it
-        # has to be carried alongside the label rather than discarded.
-        candidates = []
-        for group in soup.find_all("div", class_="flex-item-town"):
-            heading = group.find("h3")
-            town = heading.text.strip() if heading else ""
-            for link in group.find_all("a", href=True):
-                match = re.search(r"roadID=(\d+)", link["href"])
-                if match:
-                    candidates.append((town, link.text.strip(), match.group(1)))
-        return candidates
 
-    @staticmethod
-    def _display(town, street_label):
-        """How a candidate is offered back to the user."""
-        return f"{street_label} ({town})" if town else street_label
+def _match_tiers(town: str, label: str) -> list[str]:
+    """The names a candidate answers to, most specific first.
 
-    @staticmethod
-    def _match_tiers(town, street_label):
-        """The names this candidate answers to, most specific first.
+    0. Town-qualified, the way this source suggests it: the only form that
+       separates two streets of the same name in different towns.
+    1. Town-qualified without the district suffix ("ASH ROAD (BENFLEET)" for
+       "ASH ROAD - HADLEIGH" in Benfleet).
+    2. The label exactly as the council writes it.
+    3. The label without the council's district suffix, which is how a
+       resident names the street.
+    """
+    bare = label.split(" - ")[0]
+    return [
+        _normalise(_display(town, label)),
+        _normalise(_display(town, bare)),
+        _normalise(label),
+        _normalise(bare),
+    ]
 
-        Tried in order so that a more exact reading wins before a looser one:
 
-        0. Town-qualified, the way this source suggests it. The only form that
-           separates two streets of the same name in different towns.
-        1. Town-qualified but without the district suffix, e.g.
-           "ASH ROAD (BENFLEET)" for "ASH ROAD - HADLEIGH" in Benfleet. The
-           bracketed town is what the parameter description tells people to add,
-           so it has to win over an un-qualified match on a different town.
-        2. The label exactly as the council writes it.
-        3. The label without the council's district suffix, which is how a
-           resident names the street: "GIFFORD ROAD", not
-           "GIFFORD ROAD - SOUTH BENFLEET".
+def _road_id(response, *_, street_name=None, **__) -> str:
+    # Results are grouped per town:
+    #   <div class="flex-item-town"><h3>BENFLEET</h3>
+    #     <ol><li><a href="...roadID=4907">HIGH STREET</a></li>...
+    soup = BeautifulSoup(response.text, "html.parser")
+    candidates = []
+    for group in soup.find_all("div", class_="flex-item-town"):
+        heading = group.find("h3")
+        town = heading.text.strip() if heading else ""
+        for link in group.find_all("a", href=True):
+            match = re.search(r"roadID=(\d+)", link["href"])
+            if match:
+                candidates.append((town, link.text.strip(), match.group(1)))
 
-        The ordering matters. "Ash Road" is both the full name of a street in
-        Canvey Island and the un-suffixed form of "ASH ROAD - HADLEIGH" in
-        Benfleet; tier 2 settles it on the one actually called Ash Road rather
-        than declaring the borough ambiguous.
-        """
-        bare_label = street_label.split(" - ")[0]
-        return [
-            _normalise(Source._display(town, street_label)),
-            _normalise(Source._display(town, bare_label)),
-            _normalise(street_label),
-            _normalise(bare_label),
-        ]
+    # Try the value as typed first, then without a house number, then without
+    # the town, taking the most specific form that identifies something.
+    wanted_forms = []
+    without_number = _LEADING_HOUSE_NUMBER.sub("", street_name, count=1)
+    without_town = _TRAILING_TOWN.sub("", without_number)
+    for form in (
+        street_name,
+        without_number,
+        without_town,
+        without_town.split(" - ")[0],
+    ):
+        if form.strip() and form not in wanted_forms:
+            wanted_forms.append(form)
 
-    @staticmethod
-    def _search_terms(street_name):
-        """Search terms to try, most specific first.
-
-        The council's search matches bare street names and returns nothing at
-        all for anything else — not for a house number in front, not for the
-        town-qualified form this source suggests, and not even for the
-        council's own "STREET - DISTRICT" label. So the term is progressively
-        simplified until the register recognises it, while the original value
-        is kept for matching.
-        """
-        terms = []
-
-        def add(term):
-            term = term.strip()
-            if term and term not in terms:
-                terms.append(term)
-
-        add(street_name)
-        without_number = _LEADING_HOUSE_NUMBER.sub("", street_name, count=1)
-        add(without_number)
-        without_town = _TRAILING_TOWN.sub("", without_number)
-        add(without_town)
-        add(without_town.split(" - ")[0])
-        return terms
-
-    def _get_road_id(self, street_name):
-        terms = self._search_terms(street_name)
-
-        candidates = []
-        for term in terms:
-            candidates = self._search(term)
-            if candidates:
-                break
-
-        # Match on the most specific form that identifies something, so a
-        # town-qualified value picks one of several same-named streets while a
-        # bare one still resolves.
-        matches = []
-        for term in terms:
-            wanted = _normalise(term)
-            for tier in range(len(self._match_tiers("", ""))):
-                matches = [
-                    c
-                    for c in candidates
-                    if self._match_tiers(c[0], c[1])[tier] == wanted
-                ]
-                if matches:
-                    break
+    matches: list = []
+    for form in wanted_forms:
+        wanted = _normalise(form)
+        for tier in range(4):
+            matches = [
+                c for c in candidates if _match_tiers(c[0], c[1])[tier] == wanted
+            ]
             if matches:
                 break
+        if matches:
+            break
 
-        if len(matches) == 1:
-            return matches[0][2]
-
-        # More than one street answers to this name, and they are on different
-        # collection rounds. Returning any one of them is a coin toss, so ask.
-        if len(matches) > 1:
-            raise SourceArgAmbiguousWithSuggestions(
-                "street_name",
-                street_name,
-                [self._display(town, label) for town, label, _ in matches],
-            )
-
-        raise SourceArgumentNotFoundWithSuggestions(
-            "street_name",
-            street_name,
-            [self._display(town, label) for town, label, _ in candidates],
+    if len(matches) == 1:
+        return matches[0][2]
+    # More than one street answers to this name, on different collection
+    # rounds. Returning any one of them is a coin toss, so ask.
+    if len(matches) > 1:
+        raise SourceArgAmbiguousWithSuggestions(
+            "street_name", street_name, [_display(t, label) for t, label, _ in matches]
         )
+    raise SourceArgumentNotFoundWithSuggestions(
+        "street_name", street_name, [_display(t, label) for t, label, _ in candidates]
+    )
 
-    def fetch(self):
-        url = f"{API_URLS['fetch_schedule']}{self._roadID}"
-        session = requests.Session()
-        response = session.get(url, timeout=10)
-        response.raise_for_status()
 
-        soup = BeautifulSoup(response.text, "html.parser")
+def _day_date(cell) -> str:
+    """The cell's date as ISO text.
 
-        entries = []
-        now = datetime.now()
+    Most day cells carry it in their class (``{ts '2026-10-02 00:00:00'}``), but
+    the textiles days carry none. Every cell of one month table shares the same
+    year and month, so the dateless ones borrow it from a dated sibling and add
+    their own day number.
+    """
+    own = _DAY_DATE.search(" ".join(cell.get("class", [])))
+    if own is not None:
+        return own.group(1)
+    day = re.search(r"\d{1,2}", cell.get_text())
+    table = cell.find_parent("table")
+    if day is not None and table is not None:
+        for other in table.find_all("td"):
+            sibling = _DAY_DATE.search(" ".join(other.get("class", [])))
+            if sibling is not None:
+                return f"{sibling.group(1)[:8]}{int(day.group(0)):02d}"
+    raise ValueError("calendar day without a date")
 
-        # Find all tables or calendar container blocks on the page
-        calendar_tables = soup.find_all("table", class_="calendar")
 
-        for table in calendar_tables:
-            # 1. Look for the header block specifically within this table container
-            header = table.find("th")
-            if not header:
-                continue
+@final
+class Source(BaseSource):
+    TITLE = "Castle Point Borough Council"
+    DESCRIPTION = "Source for Castle Point Borough Council waste collections."
+    URL = "https://www.castlepoint.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-            header_text = header.text.strip().lower()
+    TEST_CASES: ClassVar[dict] = {
+        "ABBOTSWOOD": {"roadID": "4448"},
+        "Ash Road": {"street_name": "Ash Road"},
+        "St Marys Road": {"street_name": "St Marys Road"},
+        # "Ash Road" also matches "ASH ROAD - HADLEIGH" once the district
+        # suffix is dropped; naming the suffixed street picks that one instead.
+        "Ash Road, Hadleigh": {"street_name": "ASH ROAD - HADLEIGH"},
+        # HIGH STREET exists in both Benfleet and Canvey Island, on different
+        # rounds, so bare "High Street" is genuinely ambiguous. This covers the
+        # town-qualified form the ambiguity error hands back.
+        "High Street (Canvey Island)": {"street_name": "HIGH STREET (CANVEY ISLAND)"},
+        # A house number in front of the street is what a resident naturally
+        # types; the council's own search returns nothing at all for it.
+        "12 Ash Road": {"street_name": "12 Ash Road"},
+    }
 
-            # Extract the month name
-            month_match = re.search(
-                r"(january|february|march|april|may|june|july|august|september|october|november|december)",
-                header_text,
-            )
-            if not month_match:
-                continue  # Skip tables that aren't calendar months (e.g., layout tables)
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
 
-            month_name = month_match.group(1)
-            month = datetime.strptime(month_name.capitalize(), "%B").month
+    PARAMS = (
+        alternatives(
+            [text_field("roadID", label="Road ID")],
+            [street(field="street_name")],
+        ),
+    )
 
-            # The council's headers carry the month but no year ("August",
-            # "September"), so the year has to be inferred. The page shows the
-            # current month and the next one, which means that in December the
-            # second table is January of the *following* year — dating it to the
-            # current one put those collections eleven months in the past.
-            year_match = re.search(r"\b(\d{4})\b", header_text)
-            if year_match:
-                year = int(year_match.group(1))
-            elif month < now.month - 6:
-                year = now.year + 1
-            else:
-                year = now.year
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Go to https://apps.castlepoint.gov.uk/cpapps/index.cfm?fa=myStreet&f=homepage1 "
+            "and either enter your street name in the search box or select the first "
+            "letter of your street. Click on the street name and look for the roadID in "
+            "the URL, or enter the street name (only needed if you don't provide roadID). "
+            "If two towns in the borough share a street name, add the town in brackets, "
+            "e.g. 'HIGH STREET (CANVEY ISLAND)'."
+        ),
+    }
 
-            # 2. Now scope your search for days ONLY inside this specific month's table
-            day_elements = table.select(".pink, .normal")
+    retrieve = retrievers.Request(
+        _BASE,
+        params=lambda *keys, **_: {"fa": "myStreet.displayDetails", "roadID": keys[0]},
+        before=(
+            retrievers.Lookup(
+                _BASE,
+                method="POST",
+                params={"fa": "myStreet.search"},
+                data=lambda **p: {"searchterm": _search_term(**p)},
+                given=lambda roadID=None, **_: roadID,
+                pick=_road_id,
+            ),
+        ),
+    )
 
-            for element in day_elements:
-                try:
-                    day_text = re.search(r"\b(\d{1,2})\b", element.text)
-                    if not day_text:
-                        continue
-                    day = int(day_text.group(1))
+    parse = parsers.HtmlParser("table.calendar td.pink, table.calendar td.normal")
 
-                    bin_type = (
-                        NAME_MAP.get("pink")
-                        if "pink" in element.get("class", [])
-                        else NAME_MAP.get("normal")
-                    )
-                    date_obj = date(year, month, day)
-
-                    entries.append(
-                        Collection(
-                            date=date_obj, t=bin_type, icon=ICON_MAP.get(bin_type)
-                        )
-                    )
-                except ValueError:
-                    continue
-        if not entries:
-            raise ValueError(
-                "Could not get collections for the specified road. The page structure may have changed."
-            )
-
-        return entries
+    transform = HtmlTransformer(
+        date_getter=_day_date,
+        type_getter=lambda cell: (
+            "pink" if "pink" in cell.get("class", []) else "normal"
+        ),
+        parse_date=date_parsers.for_format("%Y-%m-%d"),
+        type_value_map={
+            "normal": wt.GENERAL_WASTE,
+            "pink": wt.RECYCLABLES,
+        },
+    )

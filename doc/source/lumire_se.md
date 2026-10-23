@@ -1,34 +1,34 @@
 # Luleå
 
-Support for schedules provided by [Luleå](https://www.lumire.se/), serving Luleå, Sweden.
+Support for schedules provided by [Luleå](https://www.lumire.se/).
+
+Source for Luleå.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: lumire_se
       args:
         address: ADDRESS
-        
 ```
 
 ### Configuration Variables
 
 **address**  
-*(String) (required)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: lumire_se
       args:
-        address: Storgatan 2
-        
+        address: Ringgatan 20
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-You can test your address parameter at [https://www.lumire.se/#anch-sokmodul](https://www.lumire.se/#anch-sokmodul).
+Enter the street address and house number as found by the address search at https://www.lumire.se/ (for example, Ringgatan 20).

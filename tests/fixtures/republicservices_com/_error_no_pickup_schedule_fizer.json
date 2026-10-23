@@ -1,0 +1,71 @@
+{
+  "recorded_at": "2026-10-14",
+  "interactions": [
+    {
+      "key": "GET https://www.republicservices.com/api/v1/addresses 6de9a136f0",
+      "method": "GET",
+      "url": "https://www.republicservices.com/api/v1/addresses",
+      "final_url": "https://www.republicservices.com/api/v1/addresses?addressLine1=104+Fizer+Dr%2C+Georgetown%2C+KY+40324",
+      "body": "{\"params\":[[\"addressLine1\",\"104 Fizer Dr, Georgetown, KY 40324\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "envoy",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Wed, 14 Oct 2026 16:48:28 GMT",
+        "content-security-policy": "frame-ancestors 'self';",
+        "content-encoding": "gzip",
+        "edge-cache-tag": "apis,addresses",
+        "etag": "W/\"249-56CQ1krg6JF30C7fUR3119uMFKk\"",
+        "x-frame-options": "SAMEORIGIN",
+        "vary": "Accept-Encoding,Origin",
+        "via": "1.1 795296520f6c881b9bc43c02feb87e9a.cloudfront.net (CloudFront)",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "x-xss-protection": "1; mode=block",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-content-type-options": "nosniff",
+        "strict-transport-security": "max-age=31536000",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "x-cache": "Miss from cloudfront",
+        "x-amz-cf-pop": "WAW51-P3",
+        "x-amz-cf-id": "ibqW64xQXxTQMOIU5R3ltYGmanmHZOLVchxQ88dp-C_EnQ73vhiI0g==",
+        "x-envoy-upstream-service-time": "523"
+      },
+      "content_b64": "eyJzdGF0dXNDb2RlIjoyMDAsImRhdGEiOlt7ImFkZHJlc3NIYXNoIjoiRTgxQ0QwQUNCQTc3QjBBMTEyNkIyMTQyREM2RDBGNTIiLCJhZGRyZXNzTGluZTEiOiIxMDQgRklaRVIgRFIiLCJhZGRyZXNzTGluZTIiOiIiLCJjaXR5IjoiR0VPUkdFVE9XTiIsImNvdW50cnlDb2RlIjoiVVNBIiwiY291bnRyeSI6IlVOSVRFRCBTVEFURVMiLCJjb3VudHkiOiJTQ09UVCBDT1VOVFkiLCJkaXNwbGF5IjoiMTA0IEZJWkVSIERSLCBHRU9SR0VUT1dOLCBLWSwgNDAzMjQiLCJpc0Nsb3NlTWF0Y2giOiJOIiwibGF0aXR1ZGUiOjM4LjIxNDg3OCwibG9jYXRpb25Db2RlIjoiWkM1WCIsImxvY2F0aW9uQ29uZmlkZW5jZVNjb3JlIjoiMTYiLCJsb2NhdGlvblR5cGUiOiJQb3N0YWwiLCJsb25naXR1ZGUiOi04NC41NTMzNiwibWF0Y2hDb25maWRlbmNlU2NvcmUiOiI4NSIsIm1hdGNoVHlwZSI6IlBvc3RhbCIsInBvc3RhbENvZGUiOiI0MDMyNCIsInBvc3RhbENvZGVTdWZmaXgiOiIiLCJzdGF0ZUNvZGUiOiJLWSIsInRpbWVab25lQ29kZSI6LTQsInRpbWVab25lTmFtZSI6IkVhc3Rlcm4gRGF5bGlnaHQgVGltZSIsInJlY29yZFR5cGUiOiIifV19"
+    },
+    {
+      "key": "GET https://www.republicservices.com/api/v1/publicPickup cae0dea70c",
+      "method": "GET",
+      "url": "https://www.republicservices.com/api/v1/publicPickup",
+      "final_url": "https://www.republicservices.com/api/v1/publicPickup?siteAddressHash=E81CD0ACBA77B0A1126B2142DC6D0F52",
+      "body": "{\"params\":[[\"siteAddressHash\",\"E81CD0ACBA77B0A1126B2142DC6D0F52\"]]}",
+      "status": 404,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "18",
+        "date": "Wed, 14 Oct 2026 16:48:28 GMT",
+        "etag": "W/\"12-+1Jn+A9j+ZFjP1DDq6k73ebJ14E\"",
+        "server": "envoy",
+        "edge-cache-tag": "apis,publicPickup",
+        "x-cache": "Error from cloudfront",
+        "via": "1.1 795296520f6c881b9bc43c02feb87e9a.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "WAW51-P3",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "x-amz-cf-id": "RIOPsrLNb_VBKEP4YMjre-s4yRnBdpMNhGYlejuYFjuuf66zgbDEDg==",
+        "x-xss-protection": "1; mode=block",
+        "x-frame-options": "SAMEORIGIN",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-content-type-options": "nosniff",
+        "strict-transport-security": "max-age=31536000",
+        "vary": "Origin",
+        "x-envoy-upstream-service-time": "457"
+      },
+      "content_b64": "eyJzdGF0dXNDb2RlIjo0MDR9"
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'street_address' with the value '104 Fizer Dr, Georgetown, KY 40324', Republic Services returned no pickup schedule for this address (HTTP 404)."
+  }
+}

@@ -1,8 +1,8 @@
 # Grenchen (CH)
 
-> **Deprecated:** This source is deprecated. Please use [localcities.ch](/doc/source/localcities_ch.md) instead with `municipality: grenchen` and `municipality_id: 3533`.
+Support for schedules provided by [Grenchen (CH)](https://www.grenchen.ch).
 
-Support for waste collection schedules in Grenchen, Switzerland, via [localcities.ch](https://www.localcities.ch/de/entsorgung/grenchen/3533).
+Source for waste collection in Grenchen, Switzerland. Deprecated: use localcities_ch instead.
 
 ## Configuration via configuration.yaml
 
@@ -17,7 +17,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **zone**  
-*(string) (required)* Collection zone: `Zone Ost` or `Zone West`
+*(string) (required)*
 
 ## Example
 
@@ -26,17 +26,9 @@ waste_collection_schedule:
   sources:
     - name: grenchen_ch
       args:
-        zone: "Zone Ost"
+        zone: Zone Ost
 ```
 
 ## How to get the source arguments
 
-Visit the [Grenchen waste calendar](https://www.localcities.ch/de/entsorgung/grenchen/3533) to find your collection zone.
-
-Collection types:
-
-- **Grünabfälle** (green waste)
-- **Karton** (cardboard)
-- **Altpapier** (waste paper)
-- **Altglas** (glass)
-- **Altmetall** (scrap metal)
+This source is deprecated. Please use 'localcities.ch' instead with municipality='grenchen' and municipality_id='3533'.

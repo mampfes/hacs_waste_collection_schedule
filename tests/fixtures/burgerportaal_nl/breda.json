@@ -1,0 +1,84 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser d1d1898410",
+      "method": "POST",
+      "url": "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser",
+      "final_url": "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyA6NkRqJypTfP-cjWzrZNFJzPUbBaGjOdk",
+      "body": "{\"params\":[[\"key\",\"AIzaSyA6NkRqJypTfP-cjWzrZNFJzPUbBaGjOdk\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "expires": "Mon, 01 Jan 1990 00:00:00 GMT",
+        "date": "Tue, 13 Oct 2026 18:16:40 GMT",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=UTF-8",
+        "vary": "Origin, X-Origin, Referer",
+        "content-encoding": "gzip",
+        "server": "ESF",
+        "content-length": "950",
+        "x-xss-protection": "0",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+      },
+      "content_b64": "ewogICJraW5kIjogImlkZW50aXR5dG9vbGtpdCNTaWdudXBOZXdVc2VyUmVzcG9uc2UiLAogICJpZFRva2VuIjogImV5SmhiR2NpT2lKU1V6STFOaUlzSW10cFpDSTZJamt3TkdJd1pqa3hZbVUyWldJd09EWTNaR0ZpWW1GaFlqVTROMlJtWXpKbE16Tm1NREJoTWpRaUxDSjBlWEFpT2lKS1YxUWlmUS5leUp3Y205MmFXUmxjbDlwWkNJNkltRnViMjU1Ylc5MWN5SXNJbWx6Y3lJNkltaDBkSEJ6T2k4dmMyVmpkWEpsZEc5clpXNHVaMjl2WjJ4bExtTnZiUzlpZFhKblpYSndiM0owWVdGc0xYQnliMlIxWTNScGIyNGlMQ0poZFdRaU9pSmlkWEpuWlhKd2IzSjBZV0ZzTFhCeWIyUjFZM1JwYjI0aUxDSmhkWFJvWDNScGJXVWlPakUzT1RFNU1UVTBNREFzSW5WelpYSmZhV1FpT2lKbWJXbFZTMWsxU0RoNlkyRkpNbXh4T1RCRFoybE9TbE40Vm5ZeElpd2ljM1ZpSWpvaVptMXBWVXRaTlVnNGVtTmhTVEpzY1Rrd1EyZHBUa3BUZUZaMk1TSXNJbWxoZENJNk1UYzVNVGt4TlRRd01Dd2laWGh3SWpveE56a3hPVEU1TURBd0xDSm1hWEpsWW1GelpTSTZleUpwWkdWdWRHbDBhV1Z6SWpwN2ZTd2ljMmxuYmw5cGJsOXdjbTkyYVdSbGNpSTZJbUZ1YjI1NWJXOTFjeUo5ZlEuV2FzdUR6QUJIZ0ZQSTJXdnNZNE1OT1B5aGFWOUFyYldZd1d4d3ZXRmNvdmhXdUZDNDY5NVFVSmNMQTBUNm9Wb0xLT2ZIWEFoaFVMaFcyMExOR1l2a19TYUxHNEI0aTRmSzRpdkYwMG11RXFLSHRWMmVWaVl2YWVxX2NPTmgxdDBrSzJuZEpXSmFZTGlNZ05tYmlYenUxU2NBOGNZVloyVC1zYlh6M1E0UmVVN2lzaHhmU2FmMXcwTXZjMjBVVHlzYl9CV3RSWUQ0M05OeXprMTU0cTdVOHBaWk5zRUlQQzdGOTIwVGg5VV9NSlVtR1ZZRjEzMHI5M2g3dHJfTmp1blVfc052VWh6TGhNaExIaEp3Tk1IWW01ekx5QmQtQXo5b2lsMG5TSU5famF1MmJXeXNBUjBTX1RJbjNaV1A4bkZSNzZRejlUVjlGZjlrX1VPTDBIbTJnIiwKICAicmVmcmVzaFRva2VuIjogIkFNZi12QnhBMldSaFA1M0FuYmpuNHkxcUx2S0dqRmZWZ25DYXhsX040SlZxQWxIWHZUa0o4aXJiNkw3QW1wZEhiVTRrSC1QN256aC03WXB4SWZZSC12MUxMN1VqVW8td1lTbjFMLVZiRzJfd245QnhiV1d1dW8tUHVJbkczWFJ5b0U4UFZuTkpyQ1loa2o3ZkV4b0RSbGd4QzAzNm1PVnFkZS1ZRmRYQmUzTmtjbFhhbGRwMlVQYVQ0RFVHT0JHUWtPWnQwSHNJMlVhaUtZQXRTVFdfNGN6SXVVa2w4Q252V0EiLAogICJleHBpcmVzSW4iOiAiMzYwMCIsCiAgImxvY2FsSWQiOiAiZm1pVUtZNUg4emNhSTJscTkwQ2dpTkpTeFZ2MSIKfQo="
+    },
+    {
+      "key": "GET https://europe-west3-burgerportaal-production.cloudfunctions.net/exposed/organisations/452048812597352613/address 6bf467ec18",
+      "method": "GET",
+      "url": "https://europe-west3-burgerportaal-production.cloudfunctions.net/exposed/organisations/452048812597352613/address",
+      "final_url": "https://europe-west3-burgerportaal-production.cloudfunctions.net/exposed/organisations/452048812597352613/address?zipcode=4762BD&housenumber=21",
+      "body": "{\"params\":[[\"housenumber\",\"21\"],[\"zipcode\",\"4762BD\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "x-powered-by": "Express",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, POST, DELETE, OPTIONS",
+        "access-control-allow-headers": "Authorization, Content-Type",
+        "access-control-max-age": "3600",
+        "cache-control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "pragma": "no-cache",
+        "expires": "0",
+        "content-type": "application/json; charset=utf-8",
+        "etag": "W/\"c6-AOrpA/+c95O3aE/yJeEI/GD8Grw\"",
+        "x-cloud-trace-context": "716e94d7d99647aabbd76cd3d856f499",
+        "date": "Tue, 13 Oct 2026 18:16:41 GMT",
+        "server": "Google Frontend",
+        "content-length": "198",
+        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+      },
+      "content_b64": "W3siYWRkcmVzc0lkIjoiMjM4MTI3ODMwNDE0MjgyMjc1IiwiYWRkaXRpb24iOiIiLCJ6aXBjb2RlIjoiNDc2MkJEIiwic3RyZWV0IjoiQXF1YW1hcmlqbiIsImNpdHkiOiJaZXZlbmJlcmdlbiIsImhvdXNlbnVtYmVyIjoyMSwibXVuaWNpcGFsaXR5SWQiOiIxNzA5IiwibGF0aXR1ZGUiOjUxLjYzNzM5NTksImxvbmdpdHVkZSI6NC41OTg3NjQ4N31d"
+    },
+    {
+      "key": "GET https://europe-west3-burgerportaal-production.cloudfunctions.net/exposed/organisations/452048812597352613/address/238127830414282275/calendar ",
+      "method": "GET",
+      "url": "https://europe-west3-burgerportaal-production.cloudfunctions.net/exposed/organisations/452048812597352613/address/238127830414282275/calendar",
+      "final_url": "https://europe-west3-burgerportaal-production.cloudfunctions.net/exposed/organisations/452048812597352613/address/238127830414282275/calendar",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "x-powered-by": "Express",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, POST, DELETE, OPTIONS",
+        "access-control-allow-headers": "Authorization, Content-Type",
+        "access-control-max-age": "3600",
+        "cache-control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "pragma": "no-cache",
+        "expires": "0",
+        "content-type": "application/json; charset=utf-8",
+        "etag": "W/\"e70-vTipGcXLaVnxjl4GisLqZs8XLBQ\"",
+        "x-cloud-trace-context": "34bb841a32089d46bbd76cd3d856fbec",
+        "date": "Tue, 13 Oct 2026 18:16:41 GMT",
+        "server": "Google Frontend",
+        "content-length": "3696",
+        "alt-svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000"
+      },
+      "content_b64": "W3sieWVhciI6MjAyNiwibW9udGgiOjEwLCJkYXkiOjIyLCJjb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMjJUMDA6MDA6MDAuMDAwWiIsImZyYWN0aW9uIjoiR0ZUK0UiLCJwbGFjZW1lbnRQZXJpb2QiOiIiLCJwbGFjZW1lbnREZXNjcmlwdGlvbiI6IiIsInV1aWQiOiIyMzgxMjc4MzA0MTQyODIyNzUyMi0xMC0yMDI2R0ZUK0UiLCJtdW5pY2lwYWxpdHlJZCI6IjE3MDkiLCJvcmdhbmlzYXRpb25JZCI6IjQ1MjA0ODgxMjU5NzM1MjYxMyJ9LHsieWVhciI6MjAyNiwibW9udGgiOjExLCJkYXkiOjUsImNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMS0wNVQwMDowMDowMC4wMDBaIiwiZnJhY3Rpb24iOiJHRlQrRSIsInBsYWNlbWVudFBlcmlvZCI6IiIsInBsYWNlbWVudERlc2NyaXB0aW9uIjoiIiwidXVpZCI6IjIzODEyNzgzMDQxNDI4MjI3NTA1LTExLTIwMjZHRlQrRSIsIm11bmljaXBhbGl0eUlkIjoiMTcwOSIsIm9yZ2FuaXNhdGlvbklkIjoiNDUyMDQ4ODEyNTk3MzUyNjEzIn0seyJ5ZWFyIjoyMDI2LCJtb250aCI6MTEsImRheSI6MTksImNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMS0xOVQwMDowMDowMC4wMDBaIiwiZnJhY3Rpb24iOiJHRlQrRSIsInBsYWNlbWVudFBlcmlvZCI6IiIsInBsYWNlbWVudERlc2NyaXB0aW9uIjoiIiwidXVpZCI6IjIzODEyNzgzMDQxNDI4MjI3NTE5LTExLTIwMjZHRlQrRSIsIm11bmljaXBhbGl0eUlkIjoiMTcwOSIsIm9yZ2FuaXNhdGlvbklkIjoiNDUyMDQ4ODEyNTk3MzUyNjEzIn0seyJ5ZWFyIjoyMDI2LCJtb250aCI6MTIsImRheSI6MywiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTEyLTAzVDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbiI6IkdGVCtFIiwicGxhY2VtZW50UGVyaW9kIjoiIiwicGxhY2VtZW50RGVzY3JpcHRpb24iOiIiLCJ1dWlkIjoiMjM4MTI3ODMwNDE0MjgyMjc1MDMtMTItMjAyNkdGVCtFIiwibXVuaWNpcGFsaXR5SWQiOiIxNzA5Iiwib3JnYW5pc2F0aW9uSWQiOiI0NTIwNDg4MTI1OTczNTI2MTMifSx7InllYXIiOjIwMjYsIm1vbnRoIjoxMiwiZGF5IjoxNywiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTEyLTE3VDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbiI6IkdGVCtFIiwicGxhY2VtZW50UGVyaW9kIjoiIiwicGxhY2VtZW50RGVzY3JpcHRpb24iOiIiLCJ1dWlkIjoiMjM4MTI3ODMwNDE0MjgyMjc1MTctMTItMjAyNkdGVCtFIiwibXVuaWNpcGFsaXR5SWQiOiIxNzA5Iiwib3JnYW5pc2F0aW9uSWQiOiI0NTIwNDg4MTI1OTczNTI2MTMifSx7InllYXIiOjIwMjYsIm1vbnRoIjoxMiwiZGF5IjozMSwiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTEyLTMxVDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbiI6IkdGVCtFIiwicGxhY2VtZW50UGVyaW9kIjoiIiwicGxhY2VtZW50RGVzY3JpcHRpb24iOiIiLCJ1dWlkIjoiMjM4MTI3ODMwNDE0MjgyMjc1MzEtMTItMjAyNkdGVCtFIiwibXVuaWNpcGFsaXR5SWQiOiIxNzA5Iiwib3JnYW5pc2F0aW9uSWQiOiI0NTIwNDg4MTI1OTczNTI2MTMifSx7InllYXIiOjIwMjYsIm1vbnRoIjoxMCwiZGF5IjoxNCwiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTE0VDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbiI6Ik9QSyIsInBsYWNlbWVudFBlcmlvZCI6IiIsInBsYWNlbWVudERlc2NyaXB0aW9uIjoiIiwidXVpZCI6IjIzODEyNzgzMDQxNDI4MjI3NTE0LTEwLTIwMjZPUEsiLCJtdW5pY2lwYWxpdHlJZCI6IjE3MDkiLCJvcmdhbmlzYXRpb25JZCI6IjQ1MjA0ODgxMjU5NzM1MjYxMyJ9LHsieWVhciI6MjAyNiwibW9udGgiOjExLCJkYXkiOjExLCJjb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTEtMTFUMDA6MDA6MDAuMDAwWiIsImZyYWN0aW9uIjoiT1BLIiwicGxhY2VtZW50UGVyaW9kIjoiIiwicGxhY2VtZW50RGVzY3JpcHRpb24iOiIiLCJ1dWlkIjoiMjM4MTI3ODMwNDE0MjgyMjc1MTEtMTEtMjAyNk9QSyIsIm11bmljaXBhbGl0eUlkIjoiMTcwOSIsIm9yZ2FuaXNhdGlvbklkIjoiNDUyMDQ4ODEyNTk3MzUyNjEzIn0seyJ5ZWFyIjoyMDI2LCJtb250aCI6MTIsImRheSI6OSwiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTEyLTA5VDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbiI6Ik9QSyIsInBsYWNlbWVudFBlcmlvZCI6IiIsInBsYWNlbWVudERlc2NyaXB0aW9uIjoiIiwidXVpZCI6IjIzODEyNzgzMDQxNDI4MjI3NTA5LTEyLTIwMjZPUEsiLCJtdW5pY2lwYWxpdHlJZCI6IjE3MDkiLCJvcmdhbmlzYXRpb25JZCI6IjQ1MjA0ODgxMjU5NzM1MjYxMyJ9LHsieWVhciI6MjAyNiwibW9udGgiOjEwLCJkYXkiOjEzLCJjb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMTNUMDA6MDA6MDAuMDAwWiIsImZyYWN0aW9uIjoiUEJEIiwicGxhY2VtZW50UGVyaW9kIjoiIiwicGxhY2VtZW50RGVzY3JpcHRpb24iOiIiLCJ1dWlkIjoiMjM4MTI3ODMwNDE0MjgyMjc1MTMtMTAtMjAyNlBCRCIsIm11bmljaXBhbGl0eUlkIjoiMTcwOSIsIm9yZ2FuaXNhdGlvbklkIjoiNDUyMDQ4ODEyNTk3MzUyNjEzIn0seyJ5ZWFyIjoyMDI2LCJtb250aCI6MTAsImRheSI6MjcsImNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0yN1QwMDowMDowMC4wMDBaIiwiZnJhY3Rpb24iOiJQQkQiLCJwbGFjZW1lbnRQZXJpb2QiOiIiLCJwbGFjZW1lbnREZXNjcmlwdGlvbiI6IiIsInV1aWQiOiIyMzgxMjc4MzA0MTQyODIyNzUyNy0xMC0yMDI2UEJEIiwibXVuaWNpcGFsaXR5SWQiOiIxNzA5Iiwib3JnYW5pc2F0aW9uSWQiOiI0NTIwNDg4MTI1OTczNTI2MTMifSx7InllYXIiOjIwMjYsIm1vbnRoIjoxMSwiZGF5IjoxMCwiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTExLTEwVDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbiI6IlBCRCIsInBsYWNlbWVudFBlcmlvZCI6IiIsInBsYWNlbWVudERlc2NyaXB0aW9uIjoiIiwidXVpZCI6IjIzODEyNzgzMDQxNDI4MjI3NTEwLTExLTIwMjZQQkQiLCJtdW5pY2lwYWxpdHlJZCI6IjE3MDkiLCJvcmdhbmlzYXRpb25JZCI6IjQ1MjA0ODgxMjU5NzM1MjYxMyJ9LHsieWVhciI6MjAyNiwibW9udGgiOjExLCJkYXkiOjI0LCJjb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTEtMjRUMDA6MDA6MDAuMDAwWiIsImZyYWN0aW9uIjoiUEJEIiwicGxhY2VtZW50UGVyaW9kIjoiIiwicGxhY2VtZW50RGVzY3JpcHRpb24iOiIiLCJ1dWlkIjoiMjM4MTI3ODMwNDE0MjgyMjc1MjQtMTEtMjAyNlBCRCIsIm11bmljaXBhbGl0eUlkIjoiMTcwOSIsIm9yZ2FuaXNhdGlvbklkIjoiNDUyMDQ4ODEyNTk3MzUyNjEzIn0seyJ5ZWFyIjoyMDI2LCJtb250aCI6MTIsImRheSI6OCwiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTEyLTA4VDAwOjAwOjAwLjAwMFoiLCJmcmFjdGlvbiI6IlBCRCIsInBsYWNlbWVudFBlcmlvZCI6IiIsInBsYWNlbWVudERlc2NyaXB0aW9uIjoiIiwidXVpZCI6IjIzODEyNzgzMDQxNDI4MjI3NTA4LTEyLTIwMjZQQkQiLCJtdW5pY2lwYWxpdHlJZCI6IjE3MDkiLCJvcmdhbmlzYXRpb25JZCI6IjQ1MjA0ODgxMjU5NzM1MjYxMyJ9LHsieWVhciI6MjAyNiwibW9udGgiOjEyLCJkYXkiOjIyLCJjb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTItMjJUMDA6MDA6MDAuMDAwWiIsImZyYWN0aW9uIjoiUEJEIiwicGxhY2VtZW50UGVyaW9kIjoiIiwicGxhY2VtZW50RGVzY3JpcHRpb24iOiIiLCJ1dWlkIjoiMjM4MTI3ODMwNDE0MjgyMjc1MjItMTItMjAyNlBCRCIsIm11bmljaXBhbGl0eUlkIjoiMTcwOSIsIm9yZ2FuaXNhdGlvbklkIjoiNDUyMDQ4ODEyNTk3MzUyNjEzIn1d"
+    }
+  ]
+}

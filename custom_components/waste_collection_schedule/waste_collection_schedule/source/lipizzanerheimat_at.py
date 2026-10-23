@@ -1,382 +1,202 @@
-import base64
-import hashlib
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentExceptionMultiple,
-    SourceArgumentNotFoundWithSuggestions,
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    alternatives,
+    city,
+    street,
+    text_field,
 )
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.retrievers import Lookup
+from waste_collection_schedule.service.Jolioo import CalendarParser, call
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "APP Lipizzanerheimat"
-DESCRIPTION = "Source for Lipizzanerheimat App"
-COUNTRY = "at"
-URL = "https://www.lipizzanerheimat.at"
+# The app's key and secret ship inside the Lipizzanerheimat app.
+_KEY = "bd75bdbc46162e4995a9"
+_SECRET = "2c811f6c8f97eef2ed40"
+# Every community of the app, for the calendars-by-name listing.
+_ALL_COMMUNITIES = "234|110|110|111|112|241|238|119|113|236|114|237|115|116|117|235"
 
-APIKEY = "bd75bdbc46162e4995a9"
-APISECRET = "2c811f6c8f97eef2ed40"
-USERNAME = "mopedshop"
-PASSWORD = "T4P4qSur"
-
-SERVICE_MAP = [
-    {
-        "title": "Bärnbach",
-        "url": "https://baernbach.gv.at",
-        "country": "at",
-    },
-    {
-        "title": "Edelschrott",
-        "url": "https://www.edelschrott.gv.at",
-        "country": "at",
-    },
-    {
-        "title": "Geistthal-Södingberg",
-        "url": "https://geistthal-soedingberg.at",
-        "country": "at",
-    },
-    {
-        "title": "Hirschegg-Pack",
-        "url": "https://www.hirschegg-pack.gv.at",
-        "country": "at",
-    },
-    {
-        "title": "Kainach",
-        "url": "https://www.kainach.at",
-        "country": "at",
-    },
-    {
-        "title": "Köflach",
-        "url": "https://www.koeflach.at",
-        "country": "at",
-    },
-    {
-        "title": "Krottendorf-Gaisfeld",
-        "url": "https://www.krottendorf-gaisfeld.gv.at",
-        "country": "at",
-    },
-    {
-        "title": "Ligist",
-        "url": "https://www.ligist.gv.at",
-        "country": "at",
-    },
-    {
-        "title": "Maria Lankowitz",
-        "url": "https://www.maria-lankowitz.at",
-        "country": "at",
-    },
-    {
-        "title": "Mooskirchen",
-        "url": "https://www.mooskirchen.at",
-        "country": "at",
-    },
-    {
-        "title": "Rosental a.d Kainach",
-        "url": "https://www.rosental-kainach.at",
-        "country": "at",
-    },
-    {
-        "title": "Sankt Martin am Wöllmißberg",
-        "url": "https://st-martin-woellmissberg.gv.at",
-        "country": "at",
-    },
-    {
-        "title": "Söding-Sankt Johann",
-        "url": "https://www.soeding-st-johann.gv.at",
-        "country": "at",
-    },
-    {
-        "title": "Stallhofen",
-        "url": "https://www.stallhofen.gv.at",
-        "country": "at",
-    },
-    {
-        "title": "Voitsberg",
-        "url": "https://voitsberg.gv.at",
-        "country": "at",
-    },
-]
-
-TEST_CASES = {
-    # "Köflach - Debug": {"debug": True},
-    "Köflach - Endgasse": {"town": "Köflach", "street": "Endgasse"},
-    "Voitsberg - Bahnweg": {"town": "Voitsberg", "street": "Bahnweg"},
-    "Köflach - 8580 Köflach 1/7/9/13/30": {
-        "map_name": "8580 Köflach 1/7/9/13/30",
-    },
-    "Voitsberg - Am Hügel": {"town": "Voitsberg", "street": "Am Hügel"},
-    "8580 Köflach 1/13/14/30": {"map_name": "8580 Köflach 1/13/14/30"},
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "Open the Lipizzanerheimat app, login or use guest mode, select your town, go to the garbage calendar view and select the street you want to get the garbage collection dates for. You can either provide the calendar name in the lower center, the street name and town as written in the dropdown or provide the garbage_calendar_id directly.",
-    "de": "Öffnen Sie die Lipizzanerheimat-App, melden Sie sich an oder nutzen Sie den Gastmodus, wählen Sie Ihre Stadt aus, gehen Sie zur Ansicht des Müllkalenders und wählen Sie die Straße aus, für die Sie die Müllabfuhrtermine erhalten möchten. Sie können entweder den Kalendernamen in der unteren Mitte, den Straßennamen und die Stadt, wie sie im Dropdown-Menü geschrieben sind, oder direkt die garbage_calendar_id angeben.",
-    "it": "Apri l'app Lipizzanerheimat, accedi o usa la modalità ospite, seleziona la tua città, vai alla vista del calendario dei rifiuti e seleziona la strada per cui desideri ottenere le date di raccolta dei rifiuti. Puoi fornire il nome del calendario nella parte inferiore centrale, il nome della strada e la città come scritto nel menu a discesa oppure fornire direttamente l'ID garbage_calendar_id.",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "garbage_calendar_id": "The ID of the garbage calendar to retrieve data for.",
-        "street": "The street name to get garbage collection dates for.",
-        "town": "The town corresponding to the selected street.",
-        "map_name": "The name of the calendar map displayed in the app.",
-    },
-    "de": {
-        "garbage_calendar_id": "Die ID des Müllkalenders, für den Daten abgerufen werden sollen.",
-        "street": "Der Straßenname, für den die Müllabfuhrtermine abgerufen werden sollen.",
-        "town": "Die Stadt, die zur ausgewählten Straße gehört.",
-        "map_name": "Der Name der Kalenderkarte, die in der App angezeigt wird.",
-    },
-    "it": {
-        "garbage_calendar_id": "L'ID del calendario dei rifiuti da cui recuperare i dati.",
-        "street": "Il nome della strada per ottenere le date di raccolta dei rifiuti.",
-        "town": "La città corrispondente alla strada selezionata.",
-        "map_name": "Il nome della mappa del calendario mostrata nell'app.",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "garbage_calendar_id": "Garbage Calendar ID",
-        "street": "Street Name",
-        "town": "Town",
-        "map_name": "Calendar Map Name",
-    },
-    "de": {
-        "garbage_calendar_id": "Müllkalender-ID",
-        "street": "Straßenname",
-        "town": "Stadt",
-        "map_name": "Kalenderkartenname",
-    },
-    "it": {
-        "garbage_calendar_id": "ID Calendario Rifiuti",
-        "street": "Nome della Strada",
-        "town": "Città",
-        "map_name": "Nome della Mappa del Calendario",
-    },
-}
-ICON_MAP = {
-    "Müll": Icons.GENERAL_WASTE,
-    "Restmüll": Icons.GENERAL_WASTE,
-    "Restmüll - 8-wöchentlich": Icons.GENERAL_WASTE,
-    "Restmüll - 4-wöchentlich": Icons.GENERAL_WASTE,
-    "Restmüll - 2-wöchentlich": Icons.GENERAL_WASTE,
-    "Bioabfall": Icons.BIO_KITCHEN,
-    "Biomüll - wöchentlich": Icons.BIO_KITCHEN,
-    "Biomüll": Icons.BIO_KITCHEN,
-    "Biotonne": Icons.BIO_KITCHEN,
-    "Gefäßreinigung Bioabfall": Icons.BIO_KITCHEN,
-    "Behälterreinigung Bioabfall": Icons.BIO_KITCHEN,
-    "Sperrmüll": Icons.BULKY,
-    "Glas": Icons.GLASS,
-    "Spermüll - Alteisenabfuhr": Icons.BULKY,
-    "Altpapier": Icons.PAPER,
-    "Zwischenabfuhr Altpapier": Icons.PAPER,
-    "Problemstoffe": Icons.HAZARDOUS,
-    "Problemstoffübernahme": Icons.HAZARDOUS,
-    "Metallverpackung": Icons.METAL,
-    "Metall": Icons.METAL,
-    "Wirtschaftshof": Icons.GENERAL_WASTE,
-    "Kunststoffverpackung": Icons.RECYCLING,
-    "Leichtverpackung": Icons.PLASTIC_PACKAGING,
-    "Kunststoff": Icons.PLASTIC_PACKAGING,
-    "Gelber Sack": Icons.PLASTIC_PACKAGING,
-    "Gelber Sack - 6-wöchentlich": Icons.PLASTIC_PACKAGING,
-    "Silofoliensammlung": Icons.PLASTIC_PACKAGING,
-    "MET KKG": Icons.ELECTRONICS,
-    "ASZ": Icons.RECYCLING,
+_TYPE_MAP = {
+    "Müll": wt.GENERAL_WASTE,
+    "Restmüll": wt.GENERAL_WASTE,
+    "Restmüll - 8-wöchentlich": wt.GENERAL_WASTE,
+    "Restmüll - 4-wöchentlich": wt.GENERAL_WASTE,
+    "Restmüll - 2-wöchentlich": wt.GENERAL_WASTE,
+    "Bioabfall": wt.ORGANIC,
+    "Biomüll - wöchentlich": wt.ORGANIC,
+    "Biomüll": wt.ORGANIC,
+    "Biotonne": wt.ORGANIC,
+    "Gefäßreinigung Bioabfall": wt.OTHER,
+    "Behälterreinigung Bioabfall": wt.OTHER,
+    "Sperrmüll": wt.BULKY_WASTE,
+    "Spermüll - Alteisenabfuhr": wt.BULKY_WASTE,
+    "Glas": wt.GLASS,
+    "Altpapier": wt.PAPER,
+    "Zwischenabfuhr Altpapier": wt.PAPER,
+    "Problemstoffe": wt.HAZARDOUS,
+    "Problemstoffübernahme": wt.HAZARDOUS,
+    "Metallverpackung": wt.METAL,
+    "Metall": wt.METAL,
+    "Kunststoffverpackung": wt.PLASTIC,
+    "Kunststoff": wt.PLASTIC,
+    "Leichtverpackung": wt.PLASTIC,
+    "Leicht- und Metallverpackung": wt.RECYCLABLES,
+    "Gelber Sack": wt.PLASTIC,
+    "Gelber Sack - 6-wöchentlich": wt.PLASTIC,
+    "Silofoliensammlung": wt.PLASTIC,
+    "Wirtschaftshof": wt.OTHER,
+    "MET KKG": wt.OTHER,
+    "ASZ": wt.OTHER,
 }
 
 
-def EXTRA_INFO():
-    return [{"title": s["title"], "url": s["url"]} for s in SERVICE_MAP]
+def _community_id(response, *_, town, **__) -> str:
+    communities = response.json()["data"]
+    for community in communities:
+        if community["community_title"] == town:
+            return community["community_id"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "town", town, [c["community_title"] for c in communities]
+    )
 
 
-API_URL = "https://app.jolioo.com"
-
-
-class Source:
-    def __init__(
-        self,
-        garbage_calendar_id: int | None = None,
-        street: str | None = None,
-        town: str | None = None,
-        map_name: str | None = None,
-    ):
-
-        self.items: list[dict] = []
-        self.icons: dict[int, str] = {}
-
-        self.garbage_calendar_id = garbage_calendar_id
-        self.street = street
-        self.town = town
-        self.map_name = map_name
-
-        self.default_headers = {
-            "Host": "app.jolioo.com",
-            "User-Agent": "okhttp/3.12.12",
-            "Authorization": self.get_basic_auth_header(USERNAME, PASSWORD),
-            "apikey": APIKEY,
-            "Content-Type": "application/x-www-form-urlencoded",
-        }
-
-    @staticmethod
-    def sha1(input_str):
-        return hashlib.sha1(input_str.encode("utf-8")).hexdigest()
-
-    def api_hash(self, endpoint, payload):
-        return self.sha1(f"{APISECRET}@{endpoint}@{payload}")
-
-    @staticmethod
-    def get_basic_auth_header(user, password):
-        credentials = f"{user}:{password}"
-        base64_credentials = base64.b64encode(credentials.encode("utf-8")).decode(
-            "utf-8"
+def _calendar_id(response, *_, street=None, town=None, map_name=None, **__):
+    """The calendar of the street in the town, or the one called ``map_name``."""
+    data = response.json()["data"]
+    if street and town:
+        streets = data["street_structure"]
+        for item in streets:
+            if item["garbage_calendar_street"] == street:
+                return item["garbage_calendars_available"][0]
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street", street, [s["garbage_calendar_street"] for s in streets]
         )
-        return f"Basic {base64_credentials}"
+    calendars = data["garbage_calendars"]
+    for item in calendars:
+        if item["garbage_calendar_title"] == map_name:
+            return item["garbage_calendar_id"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        "map_name", map_name, [c["garbage_calendar_title"] for c in calendars]
+    )
 
-    def build_header(self, url, payload):
-        apihash = self.api_hash(url, payload)
-        headers = self.default_headers
-        headers["apihash"] = apihash
-        return headers
 
-    def fetch_communities(self):
+@final
+class Source(BaseSource):
+    TITLE = "APP Lipizzanerheimat"
+    DESCRIPTION = "Source for Lipizzanerheimat App"
+    URL = "https://www.lipizzanerheimat.at"
+    COUNTRY = "at"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.OTHER,
+    ]
 
-        url = "api/mobile-app/getcommunities"
-        payload = "language=de"
+    REGIONS = (
+        region("Bärnbach", url="https://baernbach.gv.at"),
+        region("Edelschrott", url="https://www.edelschrott.gv.at"),
+        region("Geistthal-Södingberg", url="https://geistthal-soedingberg.at"),
+        region("Hirschegg-Pack", url="https://www.hirschegg-pack.gv.at"),
+        region("Kainach", url="https://www.kainach.at"),
+        region("Köflach", url="https://www.koeflach.at"),
+        region("Krottendorf-Gaisfeld", url="https://www.krottendorf-gaisfeld.gv.at"),
+        region("Ligist", url="https://www.ligist.gv.at"),
+        region("Maria Lankowitz", url="https://www.maria-lankowitz.at"),
+        region("Mooskirchen", url="https://www.mooskirchen.at"),
+        region("Rosental a.d Kainach", url="https://www.rosental-kainach.at"),
+        region(
+            "Sankt Martin am Wöllmißberg", url="https://st-martin-woellmissberg.gv.at"
+        ),
+        region("Söding-Sankt Johann", url="https://www.soeding-st-johann.gv.at"),
+        region("Stallhofen", url="https://www.stallhofen.gv.at"),
+        region("Voitsberg", url="https://voitsberg.gv.at"),
+    )
 
-        headers = self.build_header(url, payload)
+    TEST_CASES: ClassVar[dict] = {
+        "Köflach - Endgasse": {"town": "Köflach", "street": "Endgasse"},
+        "Voitsberg - Bahnweg": {"town": "Voitsberg", "street": "Bahnweg"},
+        "Köflach - 8580 Köflach 1/7/9/13/30": {
+            "map_name": "8580 Köflach 1/7/9/13/30",
+        },
+        "Voitsberg - Am Hügel": {"town": "Voitsberg", "street": "Am Hügel"},
+        "8580 Köflach 1/13/14/30": {"map_name": "8580 Köflach 1/13/14/30"},
+    }
 
-        communities = requests.request(
-            "POST", f"{API_URL}/{url}", headers=headers, data=payload
-        ).json()["data"]
+    PARAMS = (
+        alternatives(
+            [city("town"), street()],
+            [text_field("map_name", "Calendar Map Name")],
+            [text_field("garbage_calendar_id", "Garbage Calendar ID")],
+        ),
+    )
 
-        community_id = next(
-            (
-                c["community_id"]
-                for c in communities
-                if c["community_title"] == self.town
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Open the Lipizzanerheimat app, login or use guest mode, select your "
+            "town, go to the garbage calendar view and select the street you want "
+            "to get the garbage collection dates for. You can either provide the "
+            "calendar name in the lower center, the street name and town as "
+            "written in the dropdown or provide the garbage_calendar_id directly."
+        ),
+        "de": (
+            "Öffnen Sie die Lipizzanerheimat-App, melden Sie sich an oder nutzen "
+            "Sie den Gastmodus, wählen Sie Ihre Stadt aus, gehen Sie zur Ansicht "
+            "des Müllkalenders und wählen Sie die Straße aus, für die Sie die "
+            "Müllabfuhrtermine erhalten möchten. Sie können entweder den "
+            "Kalendernamen in der unteren Mitte, den Straßennamen und die Stadt, "
+            "wie sie im Dropdown-Menü geschrieben sind, oder direkt die "
+            "garbage_calendar_id angeben."
+        ),
+    }
+
+    # 1. the town's community id (only for a street in a town), 2. the calendar
+    # id: the street's calendar in that community, the calendar called map_name,
+    # or the garbage_calendar_id as given, 3. the calendar.
+    retrieve = call(
+        _KEY,
+        _SECRET,
+        "garbagecalendar",
+        lambda community_id, calendar_id, **_: {
+            "garbage_calendar_id": calendar_id,
+            "language": "de",
+        },
+        before=(
+            Lookup(
+                call(
+                    _KEY,
+                    _SECRET,
+                    "getcommunities",
+                    {"language": "de"},
+                ),
+                when=lambda *keys, street=None, town=None, **_: bool(street and town),
+                pick=_community_id,
             ),
-            None,
-        )
-        if community_id is None:
-            suggestions = [c["community_title"] for c in communities]
-            raise SourceArgumentNotFoundWithSuggestions("town", self.town, suggestions)
-        return community_id
-
-    def fetch_calendar_id_by_name(self):
-
-        url = "api/mobile-app/garbagecalendarindexwithstreets"
-        payload = "language=de&communities=234|110|110|111|112|241|238|119|113|236|114|237|115|116|117|235&garbage_calendar_id=1"
-
-        headers = self.build_header(url, payload)
-
-        calendarData = requests.request(
-            "POST", f"{API_URL}/{url}", headers=headers, data=payload
-        ).json()["data"]
-
-        cal_id = next(
-            (
-                c["garbage_calendar_id"]
-                for c in calendarData["garbage_calendars"]
-                if c["garbage_calendar_title"] == self.map_name
+            Lookup(
+                call(
+                    _KEY,
+                    _SECRET,
+                    "garbagecalendarindexwithstreets",
+                    lambda community_id, **_: {
+                        "language": "de",
+                        "communities": community_id or _ALL_COMMUNITIES,
+                        "garbage_calendar_id": 1,
+                    },
+                ),
+                given=lambda *keys, garbage_calendar_id=None, street=None, town=None, map_name=None, **_: (
+                    garbage_calendar_id
+                    if garbage_calendar_id and not (street and town) and not map_name
+                    else None
+                ),
+                pick=_calendar_id,
             ),
-            None,
-        )
-        if cal_id is None:
-            suggestions = [
-                c["garbage_calendar_title"] for c in calendarData["garbage_calendars"]
-            ]
-            raise SourceArgumentNotFoundWithSuggestions(
-                "map_name", self.map_name, suggestions
-            )
-        return cal_id
-
-    def fetch_calendar_id(self):
-
-        community_id = self.fetch_communities()
-
-        url = "api/mobile-app/garbagecalendarindexwithstreets"
-        payload = f"language=de&communities={community_id}&garbage_calendar_id=1"
-
-        headers = self.build_header(url, payload)
-
-        response = requests.request(
-            "POST", f"{API_URL}/{url}", headers=headers, data=payload
-        )
-
-        calendarData = response.json()["data"]
-
-        cal_id = next(
-            (
-                c["garbage_calendars_available"][0]
-                for c in calendarData["street_structure"]
-                if c["garbage_calendar_street"] == self.street
-            ),
-            None,
-        )
-        if cal_id is None:
-            suggestions = [
-                c["garbage_calendar_street"] for c in calendarData["street_structure"]
-            ]
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street", self.street, suggestions
-            )
-        return cal_id
-
-    def _first_setup(self):
-        if self.street and self.town:
-            garbage_calendar_id = self.fetch_calendar_id()
-        elif self.map_name:
-            garbage_calendar_id = self.fetch_calendar_id_by_name()
-        elif self.garbage_calendar_id:
-            garbage_calendar_id = self.garbage_calendar_id
-        else:
-            raise Exception(
-                "Please provide either `garbage_calendar_id`, `street` and `town`, or `map_name`."
-            )
-
-        payload = f"garbage_calendar_id={garbage_calendar_id}&language=de"
-        url = "api/mobile-app/garbagecalendar"
-
-        headers = self.build_header(url, payload)
-
-        data = requests.request(
-            "POST", f"{API_URL}/{url}", headers=headers, data=payload
-        ).json()["data"]
-
-        if len(data) == 0:
-            raise SourceArgumentExceptionMultiple(
-                ["garbage_calendar_id", "street", "town", "map_name"],
-                "No data found for the provided arguments.",
-            )
-
-        self.icons = {
-            label["garbage_label_id"]: label["garbage_label_title"]
-            for label in data["labels"]
-        }
-
-        self.items = data["items"]
-
-    def fetch(self) -> list[Collection]:
-
-        self._first_setup()
-
-        collections = []
-
-        for item in self.items:
-            garbageName = self.icons.get(item["garbage_label_id"])
-            icon = ICON_MAP.get(garbageName) if garbageName else None
-
-            collections.append(
-                Collection(
-                    date=datetime.strptime(
-                        item["garbage_calendar_item_date"], "%d.%m.%Y"
-                    ).date(),
-                    t=garbageName,  # Collection type
-                    icon=icon,  # Collection icon
-                )
-            )
-
-        return collections
+        ),
+    )
+    parse = CalendarParser()
+    transform = RowTransformer(type_value_map=_TYPE_MAP)

@@ -602,6 +602,12 @@ class TestCollectionGroup:
 class TestDateParsers:
     """date_parsers.auto and date_parsers.for_format."""
 
+    def test_iso_week_ignores_month_name(self):
+        from waste_collection_schedule.date_parsers import iso_week
+
+        assert iso_week()("v41 2027") == datetime.date(2027, 10, 11)
+        assert iso_week()("v41 Okt 2027") == datetime.date(2027, 10, 11)
+
     def test_auto_iso(self):
         from waste_collection_schedule.date_parsers import auto
 
@@ -1024,6 +1030,16 @@ class TestJsVarParser:
 
         with pytest.raises(ValueError):
             JsVarParser()
+
+    def test_json_parse_reads_a_json_string_property(self):
+        from waste_collection_schedule.parsers import JsVarParser
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        page = '<script>calendar({ events: JSON.parse(`[{"start": "2026-01-02"}]`) })</script>'
+        parser = JsVarParser("events", json_parse=True)
+        assert parser(self._mock_response(page)) == [{"start": "2026-01-02"}]
+        with pytest.raises(ResponseShapeError, match="'other' not found"):
+            JsVarParser("other", json_parse=True)(self._mock_response(page))
 
 
 class TestBartecPublicDashboard:
@@ -2910,6 +2926,24 @@ class TestToolkitParsers:
         assert len(elements) == 1
         assert elements[0].h3.string == "Rubbish"
 
+    @pytest.mark.parametrize(
+        "payload, key",
+        [
+            ({"html": "<article>Unexpected calendar</article>"}, "html"),
+            ([{"html": "<article>Unexpected calendar</article>"}], (0, "html")),
+        ],
+    )
+    def test_html_parser_checks_required_shape_in_json_markup(
+        self, payload, key, caplog
+    ):
+        from waste_collection_schedule import parsers
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        parser = parsers.HtmlParser("article", from_json_key=key, require=("h3",))
+        with pytest.raises(ResponseShapeError, match="required element 'h3' not found"):
+            parser(payload)
+        assert "<article>Unexpected calendar</article>" in caplog.text
+
     def test_html_labelled_dates_all_labels_from_json_key(self):
         import datetime
 
@@ -2959,6 +2993,24 @@ class TestToolkitParsers:
         assert date_parsers.from_epoch(unit="ms")(epoch_s * 1000) == expected
         # Accepts a numeric string too (JSON APIs vary).
         assert date_parsers.from_epoch()(str(epoch_s)) == expected
+        # A zone puts local midnight (22:00Z the day before) on its own day.
+        import zoneinfo
+
+        rome = date_parsers.from_epoch(unit="ms", tz=zoneinfo.ZoneInfo("Europe/Rome"))
+        assert rome(1791842400000) == datetime.date(2026, 10, 13)
+
+    def test_date_parser_in_timezone(self):
+        import datetime
+
+        from waste_collection_schedule import date_parsers
+
+        parse = date_parsers.in_timezone("Europe/Copenhagen")
+        # 22:00Z is already the next day in summer time (+02:00)...
+        assert parse("2026-10-14T22:00:00Z") == datetime.date(2026, 10, 15)
+        # ...and 23:00Z in winter time (+01:00).
+        assert parse("2026-10-28T23:00:00Z") == datetime.date(2026, 10, 29)
+        # No offset: already local.
+        assert parse("2026-10-15T00:30:00") == datetime.date(2026, 10, 15)
 
     @freeze_time("2026-09-26")
     def test_date_parser_in_current_year(self):
@@ -3119,6 +3171,29 @@ class TestHtmlLabelledDatesLabelSeparator:
         ]
 
 
+class TestHtmlColumnDates:
+    """HtmlColumnDates: a round per column, one date per cell."""
+
+    def test_reads_dates_under_each_header_and_skips_blank_cells(self):
+        import datetime
+
+        from waste_collection_schedule.parsers import HtmlColumnDates
+
+        payload = {
+            "html": (
+                "<table><thead><tr><th>BIO</th><th>papier</th></tr></thead>"
+                "<tbody><tr><td>2026-10-16</td><td>2026-10-15</td></tr>"
+                "<tr><td>2026-10-23</td><td></td></tr></tbody></table>"
+            )
+        }
+        rows = HtmlColumnDates(from_json_key="html")(payload)
+        assert rows == [
+            (datetime.date(2026, 10, 16), "BIO"),
+            (datetime.date(2026, 10, 15), "papier"),
+            (datetime.date(2026, 10, 23), "BIO"),
+        ]
+
+
 class TestHtmlLabelledDatesAllDates:
     """HtmlLabelledDates(all_dates=True): several dates for one round."""
 
@@ -3268,6 +3343,40 @@ class TestFlattenGroups:
         assert JsonParser(0, "a")(reply([{"a": [1]}, {"a": [2]}])) == [1]
         assert JsonParser(0)(reply([])) == []
         assert JsonParser(0)(reply(None)) == []
+
+
+class TestNestedDateGroups:
+    """NestedDateGroups: a year/month/day key tree flattened into dated rows."""
+
+    def test_flattens_year_month_day_keys_into_rows(self):
+        import datetime
+
+        from waste_collection_schedule.preprocessors import NestedDateGroups
+
+        rows = list(
+            NestedDateGroups()(
+                {"2026": {"1": {"3": ["HML", "LVP"], "5": ["BIO"]}, "2": {"2": []}}}
+            )
+        )
+        assert rows == [
+            (datetime.date(2026, 1, 3), "HML"),
+            (datetime.date(2026, 1, 3), "LVP"),
+            (datetime.date(2026, 1, 5), "BIO"),
+        ]
+
+    def test_order_and_empty_payload(self):
+        import datetime
+
+        import pytest
+        from waste_collection_schedule.preprocessors import NestedDateGroups
+
+        rows = list(
+            NestedDateGroups(("day", "month", "year"))({"3": {"1": {"2026": ["X"]}}})
+        )
+        assert rows == [(datetime.date(2026, 1, 3), "X")]
+        assert list(NestedDateGroups()(None)) == []
+        with pytest.raises(ValueError):
+            NestedDateGroups(("year", "month"))
 
 
 class TestIWebAbfalldatenRows:
@@ -6272,6 +6381,79 @@ class TestPdfLayoutParser:
             self._run(min_vectors=2)
 
 
+class TestPdfWordLayoutParser:
+    """Exercise shared word coordinates and colour handling with a tiny PDF."""
+
+    @staticmethod
+    def response():
+        from io import BytesIO
+
+        from pypdf import PdfWriter
+        from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
+
+        writer = PdfWriter()
+        page = writer.add_blank_page(width=200, height=100)
+        font = DictionaryObject(
+            {
+                NameObject("/Type"): NameObject("/Font"),
+                NameObject("/Subtype"): NameObject("/Type1"),
+                NameObject("/BaseFont"): NameObject("/Helvetica"),
+            }
+        )
+        page[NameObject("/Resources")] = DictionaryObject(
+            {
+                NameObject("/Font"): DictionaryObject({NameObject("/F1"): font}),
+            }
+        )
+        stream = DecodedStreamObject()
+        stream.set_data(b"0.5 g 10 10 60 30 re f\nBT /F1 12 Tf 20 20 Td (12 13) Tj ET")
+        page[NameObject("/Contents")] = writer._add_object(stream)
+        output = BytesIO()
+        writer.write(output)
+        return SimpleNamespace(content=output.getvalue(), status_code=200)
+
+    def test_words_keep_individual_positions_and_greyscale_fill(self):
+        from waste_collection_schedule.parsers import EachResponse, PdfWordLayoutParser
+
+        layouts = EachResponse(PdfWordLayoutParser(min_words=2, min_vectors=1))(
+            [self.response(), self.response()]
+        )
+        assert len(layouts) == 2
+        layout = layouts[0]
+        assert [line.text for line in layout.lines] == ["12 13"]
+        assert [word.text for word in layout.words] == ["12", "13"]
+        assert 20 < layout.words[0].x < layout.words[1].x < 70
+        assert layout.words[0].y == layout.words[1].y
+        assert layout.vectors[0].fill_color == (0.5, 0.5, 0.5)
+
+    def test_minimum_counts_reject_incomplete_layout(self):
+        from waste_collection_schedule.parsers import PdfWordLayoutParser
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        for kwargs in ({"min_words": 3}, {"min_vectors": 2}):
+            with pytest.raises(ResponseShapeError, match="too few positioned words"):
+                PdfWordLayoutParser(**kwargs)(self.response())
+
+    @pytest.mark.parametrize(
+        "value,expected",
+        [
+            (0.5, (0.5, 0.5, 0.5)),
+            ([0.5], (0.5, 0.5, 0.5)),
+            ((0.1, 0.2, 0.3), (0.1, 0.2, 0.3)),
+            ((0.1, 0.2, 0.3, 0.4), (0.1, 0.2, 0.3, 0.4)),
+            ((0.5, "Pattern1"), None),
+            ("Pattern1", None),
+            (None, None),
+        ],
+    )
+    def test_shared_colour_validation(self, value, expected):
+        from waste_collection_schedule.parsers import _pdf_color
+
+        assert _pdf_color(value, grayscale_to_rgb=True) == expected
+        # Existing callers retain the original greyscale representation.
+        assert _pdf_color(0.5) == (0.5,)
+
+
 class TestIcsRepairs:
     """Unconditional repairs applied to every feed before it is converted."""
 
@@ -7486,15 +7668,7 @@ def test_the_hand_rolled_retrieval_backlog_is_not_stale() -> None:
 # added deliberately.
 # --------------------------------------------------------------------------- #
 
-SOURCES_AWAITING_CASSETTE = {
-    "alba_com_pl",
-    "allerdale_gov_uk",
-    "chesapeake_va_us",
-    "fuquay_varina_nc_us",
-    "plano_gov",
-    "sepan_remondis_pl",
-    "shawinigan_ca",
-}
+SOURCES_AWAITING_CASSETTE: set[str] = set()
 
 
 @pytest.mark.skipif(
@@ -7700,6 +7874,40 @@ def test_pipeline_sources_do_not_use_extra_info(stem: str) -> None:
         "regions.region(title, url=..., **params) entries, whose params are "
         "validated against PARAMS rather than being free-form. EXTRA_INFO support "
         "is retired with the last legacy source (doc/legacy_deprecation_plan.md)."
+    )
+
+
+@pytest.mark.skipif(
+    len(_NEW_STYLE_SOURCES) == 0,
+    reason="No new-style sources discoverable (likely missing dependencies)",
+)
+@pytest.mark.parametrize(
+    "stem", [s[0] for s in _NEW_STYLE_SOURCES], ids=[s[0] for s in _NEW_STYLE_SOURCES]
+)
+def test_regions_do_not_repeat_the_source_listing(stem: str) -> None:
+    """REGIONS adds entries; it must not relist the source itself.
+
+    The generated README emits the source entry plus one entry per region, so a
+    parameterless region titled like the source shows up as a duplicate row. A
+    region that carries parameters (even under the source's title) pre-fills the
+    form and is a real entry.
+    """
+    cls = dict(_NEW_STYLE_SOURCES)[stem]
+    regions = cls.REGIONS() if callable(cls.REGIONS) else cls.REGIONS
+
+    def norm(title: str) -> str:
+        return " ".join(title.casefold().split())
+
+    repeated = [
+        reg.title
+        for reg in regions
+        if not reg.params and norm(reg.title) == norm(cls.TITLE)
+    ]
+    assert not repeated, (
+        f"{stem} lists {repeated} twice in the README: a region without params "
+        "repeats the source's TITLE. REGIONS is for additional entries only. If "
+        "this source subclasses a source that declares REGIONS, set "
+        "`REGIONS = ()` rather than redeclaring the source itself."
     )
 
 
@@ -8384,3 +8592,330 @@ def test_the_source_cassette_backlog_is_not_stale() -> None:
         f"{recorded} now ship a cassette. Delete them from "
         "SOURCES_AWAITING_CASSETTE so the backlog reflects real debt."
     )
+
+
+class TestGlobalCalendarMigrations:
+    def test_iren_published_iso_dates_are_not_dropped(self):
+        """The live Roccavione feed publishes three dates separated by semicolons."""
+        from freezegun import freeze_time
+        from waste_collection_schedule.service.IrenAmbienteCalendar import (
+            CalendarParser,
+        )
+        from waste_collection_schedule.source.irenambiente_it import Source
+
+        response = MagicMock()
+        response.json.return_value = [
+            {
+                "Materiale": "Alluminio",
+                "ICalRRule": "RDATE:2026-10-30;2026-11-27;2026-12-11",
+                "IdFrequenza": "",
+                "FlagFreq": "",
+                "FestivitaCalendario": [],
+                "NonVisibile": False,
+            }
+        ]
+        source = Source(city="Roccavione", street="FRAZIONE BRIGNOLA", house_number=1)
+        with freeze_time("2026-10-13"):
+            records = CalendarParser()(response, source)
+        assert [record["date"] for record in records] == [
+            datetime.date(2026, 10, 30),
+            datetime.date(2026, 11, 27),
+            datetime.date(2026, 12, 11),
+        ]
+
+    def test_waikato_missing_published_date_is_an_error(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+        from waste_collection_schedule.service.WaikatoCollectionCalendar import (
+            CalendarParser,
+        )
+        from waste_collection_schedule.source.waikato_district_council_govt_nz import (
+            Source,
+        )
+
+        response = MagicMock()
+        response.json.return_value = [
+            {
+                "address": "11 Gordon Paul Place TUAKAU",
+                "collections": [
+                    {"collectionDay": "Tuesday", "collectionArea": "WstStdTua"}
+                ],
+            }
+        ]
+        source = Source(address="11 Gordon Paul Place TUAKAU")
+        with pytest.raises(SourceArgumentNotFound):
+            CalendarParser()(response, source)
+
+
+class TestSharedGlobalCalendarComponents:
+    """Keep provider boundaries while delegating transport and date projection."""
+
+    @pytest.mark.parametrize(
+        "page,message",
+        [
+            ("<html></html>", "address results table"),
+            (
+                '<table><tr></tr><tr><td>Garden Cottage<a href="invalid">Home</a></td></tr></table>',
+                "property identifier",
+            ),
+        ],
+    )
+    def test_environmentfirst_rejects_missing_address_form_data(self, page, message):
+        from waste_collection_schedule.service.EnvironmentFirstCalendar import (
+            _CalendarClient,
+        )
+
+        client = _CalendarClient(post_code="BN73LG", name="Garden Cottage")
+        client._session = MagicMock()
+        client._session.post.return_value.text = page
+        with pytest.raises(ValueError, match=message):
+            client.retrieve()
+        client._session.get.assert_not_called()
+
+    def test_wigan_shared_parser_reads_compact_ordinal_dates(self):
+        from waste_collection_schedule.source.wigan_gov_uk import Source
+
+        response = SimpleNamespace(
+            text="""
+            <div class="BinsRecycling"><h2>BLACK BIN</h2>
+                <div class="dateWrapper-next">Tuesday13thOct2026</div>
+            </div>
+        """
+        )
+        rows = Source.parse(response)
+        assert len(rows) == 1
+        assert Source.transform(rows[0]).date == datetime.date(2026, 10, 13)
+
+    @pytest.mark.parametrize("page", ["<html></html>", '<input name="__VIEWSTATE">'])
+    def test_wigan_missing_postback_state_prevents_submission(self, page):
+        from waste_collection_schedule.service.WiganNeighbourhoodCalendar import (
+            _CalendarClient,
+        )
+
+        client = _CalendarClient(postcode="WN5 9BH", uprn="100011821616")
+        client._session = MagicMock()
+        client._session.get.return_value.text = page
+        with pytest.raises(ValueError, match="form field"):
+            client.retrieve()
+        client._session.post.assert_not_called()
+
+    def test_palm_coast_multiple_weekdays_include_today(self):
+        from waste_collection_schedule.source.palmcoast_fl_gov import Source
+
+        with freeze_time("2026-10-13"):
+            rows = list(
+                Source.preprocess(
+                    [{"solidWasteDays": "Tuesday/Friday", "recycleDays": "Friday"}]
+                )
+            )
+        assert len(rows) == 78
+        assert (datetime.date(2026, 10, 13), "Garbage") in rows
+        assert (datetime.date(2026, 10, 16), "Garbage") in rows
+        assert (datetime.date(2026, 10, 16), "Recycling") in rows
+
+    def test_waikato_uses_the_published_anchor_and_deduplicates_dates(self):
+        from waste_collection_schedule.source.waikato_district_council_govt_nz import (
+            Source,
+        )
+
+        collection = {
+            "collectionDay": "Tuesday",
+            "collectionArea": "WstStdTua",
+            "nextDate": "2026-10-23",
+        }
+        response = MagicMock()
+        response.json.return_value = [
+            {
+                "address": "11 Gordon Paul Place TUAKAU",
+                "collections": [collection, dict(collection)],
+            }
+        ]
+        source = Source(address="11 Gordon Paul Place TUAKAU")
+        with freeze_time("2026-10-13"):
+            rows = list(source.preprocess(source.parse(response, source), source))
+        assert len(rows) == 26
+        assert rows[0] == (datetime.date(2026, 10, 23), "Rubbish and Recycling")
+        assert (datetime.date(2026, 10, 20), "Rubbish and Recycling") not in rows
+
+    def test_armadale_recycling_flips_when_the_next_collection_is_next_week(self):
+        from waste_collection_schedule.source.armadale_wa_gov_au import Source
+
+        response = MagicMock()
+        response.json.return_value = [
+            {"bin_day": "Monday", "recycle_area": "This week"}
+        ]
+        source = Source(address="Test address")
+        with freeze_time("2026-10-18"):
+            rows = list(source.preprocess(source.parse(response, source), source))
+        assert (datetime.date(2026, 10, 19), "rubbish") in rows
+        assert (datetime.date(2026, 10, 19), "recycling") not in rows
+        assert (datetime.date(2026, 10, 26), "recycling") in rows
+        assert len(rows) == 78
+
+    def test_armadale_good_friday_is_shifted_for_both_rounds(self):
+        from waste_collection_schedule.source.armadale_wa_gov_au import Source
+
+        response = MagicMock()
+        response.json.return_value = [
+            {"bin_day": "Friday", "recycle_area": "This week"}
+        ]
+        source = Source(address="Test address")
+        with freeze_time("2027-03-26"):
+            rows = list(source.preprocess(source.parse(response, source), source))
+        assert (datetime.date(2027, 3, 27), "rubbish") in rows
+        assert (datetime.date(2027, 3, 27), "recycling") in rows
+        assert (datetime.date(2027, 3, 26), "rubbish") not in rows
+
+
+class TestSharedCalendarRefactoring:
+    """Provider adapters keep their boundaries when using shared pipeline steps."""
+
+    def test_rir_ignores_fraction_labels_that_only_contain_separators(self):
+        from waste_collection_schedule.source.rir_no import Source
+
+        response = SimpleNamespace(
+            status_code=200,
+            text="""
+                <div class="collectionCalendar__date-wrapper">
+                    <span class="collectionCalendar__date-text">14.10.26</span>
+                    <span class="collectionCalendar__fraction-text">, </span>
+                    <span class="collectionCalendar__fraction-text">, Restavfall</span>
+                </div>
+            """,
+        )
+        rows = Source.parse(response)
+        entries = [collection for row in rows if (collection := Source.transform(row))]
+        assert len(entries) == 1
+        assert entries[0].date == datetime.date(2026, 10, 14)
+
+    def test_form_state_handles_uppercase_hidden_inputs_and_empty_values(self):
+        from waste_collection_schedule.retrievers import form_inputs
+
+        page = """
+            <input type="HIDDEN" name="__VIEWSTATE" value="current-state">
+            <input type="hidden" name="__EVENTARGUMENT" value="">
+            <input name="postcode" value="BT9 6DG">
+            <input type="hidden" value="unnamed">
+        """
+        assert form_inputs(page, hidden_only=True) == {
+            "__VIEWSTATE": "current-state",
+            "__EVENTARGUMENT": "",
+        }
+        assert form_inputs(page, required=("__EVENTARGUMENT",))["postcode"] == "BT9 6DG"
+
+    @pytest.mark.parametrize(
+        "page,message",
+        [
+            ("<html></html>", "Could not find form field"),
+            ('<input name="__VIEWSTATE">', "Could not find value for form field"),
+        ],
+    )
+    def test_missing_form_state_fails_before_a_postback(self, page, message):
+        from waste_collection_schedule.retrievers import form_inputs
+
+        with pytest.raises(ValueError, match=message):
+            form_inputs(page, required=("__VIEWSTATE",))
+
+    def test_sivom_odd_weeks_keep_both_iso_week_53_and_week_1(self):
+        from waste_collection_schedule.service.SivomCalendar import _parse_schedule
+        from waste_collection_schedule.source.sivom_com import Source
+
+        schedules = _parse_schedule(
+            "lundi des semaines impaires",
+            datetime.date(2020, 12, 28),
+            "Bac vert (Résiduels)",
+            days_ahead=14,
+        )
+        assert list(Source.preprocess(schedules)) == [
+            (datetime.date(2020, 12, 28), "Bac vert (Résiduels)"),
+            (datetime.date(2021, 1, 4), "Bac vert (Résiduels)"),
+        ]
+
+    def test_sivom_garden_season_includes_march_15_and_excludes_december_15(self):
+        from waste_collection_schedule.preprocessors import Schedule
+        from waste_collection_schedule.source.sivom_com import Source
+
+        garden = "Bac marron (Végétaux)"
+        dates = [
+            datetime.date(2024, 3, 14),
+            datetime.date(2024, 3, 15),
+            datetime.date(2024, 12, 14),
+            datetime.date(2024, 12, 15),
+        ]
+        schedules = [Schedule(garden, day) for day in dates]
+        schedules.append(Schedule("Bac vert (Résiduels)", dates[0]))
+        assert list(Source.preprocess(schedules)) == [
+            (dates[1], garden),
+            (dates[2], garden),
+            (dates[0], "Bac vert (Résiduels)"),
+        ]
+
+    def test_aksd_odd_weeks_do_not_drift_at_the_new_year(self):
+        from waste_collection_schedule.source.aksd_hu import Source
+
+        response = SimpleNamespace(
+            text="const wasteCalendarStreets = "
+            + json.dumps(
+                [
+                    {
+                        "label": "Test street",
+                        "options": {
+                            "black": ["Minden páratlan héten csütörtök"],
+                            "brown": ["Csütörtök"],
+                        },
+                    },
+                ]
+            )
+            + ";\n"
+        )
+        source = Source(street="Test street")
+        with freeze_time("2020-12-31"):
+            rows = list(source.preprocess(source.parse(response, source), source))
+        assert (datetime.date(2020, 12, 31), "General waste") in rows
+        assert (datetime.date(2021, 1, 7), "General waste") in rows
+        assert (datetime.date(2021, 1, 14), "General waste") not in rows
+        assert (datetime.date(2020, 12, 31), "Garden waste (bin)") in rows
+        assert (datetime.date(2021, 1, 7), "Garden waste (bin)") not in rows
+        assert (datetime.date(2021, 3, 4), "Garden waste (bin)") in rows
+
+    def test_montpellier_starts_after_today_and_deduplicates_overlapping_rows(self):
+        from waste_collection_schedule.source.data_montpellier3m_fr import Source
+
+        source = Source(street_name="Rue Test", house_number=3, commune="MONTPELLIER")
+        row = {
+            "nom_voie": "R TEST",
+            "numero": "3",
+            "commune": "MONTPELLIER",
+            "om_jour": "W",
+            "om_typ_col": "PAP",
+        }
+        with freeze_time("2026-10-14"):
+            rows = list(source.preprocess([row, dict(row)], source))
+        assert len(rows) == 8
+        assert rows[0] == (datetime.date(2026, 10, 21), "Ordures ménagères")
+        assert rows[-1] == (datetime.date(2026, 12, 9), "Ordures ménagères")
+
+
+@pytest.mark.parametrize(
+    "markup, marker, attribute, expected_label",
+    [
+        ('<img alt="Recyclage">', "img", ("title", "alt"), "Recyclage"),
+        ('<img title="" alt="Recyclage">', "img", ("title", "alt"), None),
+        ('<span class="RECYCLING"></span>', "span", "class", "RECYCLING"),
+    ],
+)
+def test_html_calendar_grid_marker_attributes(
+    markup, marker, attribute, expected_label
+):
+    from waste_collection_schedule.parsers import HtmlCalendarGrid
+
+    response = MagicMock()
+    response.text = (
+        "<table><caption>Octobre 2026</caption><tr><td>2"
+        + markup
+        + "</td></tr></table>"
+    )
+    parser = HtmlCalendarGrid(
+        table="table", header="caption", marker=marker, attribute=attribute
+    )
+    expected = [(datetime.date(2026, 10, 2), expected_label)] if expected_label else []
+    assert parser(response) == expected

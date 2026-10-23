@@ -1,0 +1,41 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://new-sictomlons.letri.com/graphql a8b9ebdf9f",
+      "method": "POST",
+      "url": "https://new-sictomlons.letri.com/graphql",
+      "final_url": "https://new-sictomlons.letri.com/graphql",
+      "body": "{\"body\":{\"query\":\"\\nquery GetCommune($slug: ID!) {\\n    commune(id: $slug, idType: SLUG) {\\n        title\\n        slug\\n        collecte_bac_bleu {\\n            frequenceBleu\\n            jourCollecteBleu\\n        }\\n        collecte_bac_gris {\\n            frequenceGris\\n            jourCollecteGris\\n        }\\n    }\\n}\\n\",\"variables\":{\"slug\":\"courbouzon\"}}}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 17:00:39 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "content-length": "226",
+        "server": "envoy",
+        "edge-cache-engine": "varnish",
+        "edge-request-id": "440ce8a8520b837407aedb8c168f1fc7",
+        "access-control-allow-origin": "https://peaceful-davinci-847b10.netlify.app",
+        "access-control-allow-headers": "Authorization, Content-Type",
+        "access-control-max-age": "600",
+        "x-robots-tag": "noindex",
+        "x-content-type-options": "nosniff",
+        "x-graphql-url": "https://new-sictomlons.letri.com/graphql",
+        "x-graphql-query-id": "a745895e54d3fa9dcb975a14279077b5",
+        "x-graphql-keys": "a745895e54d3fa9dcb975a14279077b5 graphql:Query cG9zdDoxOTc=",
+        "access-control-allow-credentials": "true",
+        "access-control-allow-methods": "GET, POST, OPTIONS",
+        "vary": "Accept-Encoding",
+        "content-encoding": "br",
+        "edge-cache-engine-mode": "ACTIVE",
+        "age": "0",
+        "alt-svc": "h3=\":443\";ma=86400",
+        "x-request-id": "440ce8a8520b837407aedb8c168f1fc7",
+        "edge-cache-engine-hit": "MISS",
+        "x-envoy-upstream-service-time": "4367"
+      },
+      "content_b64": "eyJkYXRhIjp7ImNvbW11bmUiOnsidGl0bGUiOiJDb3VyYm91em9uIiwic2x1ZyI6ImNvdXJib3V6b24iLCJjb2xsZWN0ZV9iYWNfYmxldSI6eyJmcmVxdWVuY2VCbGV1IjoiUGFpcmUiLCJqb3VyQ29sbGVjdGVCbGV1IjpbIkx1bmRpIl19LCJjb2xsZWN0ZV9iYWNfZ3JpcyI6eyJmcmVxdWVuY2VHcmlzIjoiUGFpcmUiLCJqb3VyQ29sbGVjdGVHcmlzIjpbIkx1bmRpIl19fX0sImV4dGVuc2lvbnMiOnsiZGVidWciOlt7InR5cGUiOiJERUJVR19MT0dTX0lOQUNUSVZFIiwibWVzc2FnZSI6IkdyYXBoUUwgRGVidWcgbG9nZ2luZyBpcyBub3QgYWN0aXZlLiBUbyBzZWUgZGVidWcgbG9ncywgR1JBUEhRTF9ERUJVRyBtdXN0IGJlIGVuYWJsZWQuIn1dfX0="
+    }
+  ]
+}

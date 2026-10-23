@@ -17,8 +17,8 @@ from waste_collection_schedule.transformers import ICSTransformer
 # "next date" value, keyed by column (IntraMapsRetriever + IntraMapsPanelParser
 # handle the stateful session handshake and field extraction). The only
 # source-specific code is _describe, which parses the free-text date out of
-# each column's value; a non-date placeholder (e.g. a future FOGO rollout
-# notice) simply fails to parse and is skipped, matching the live provider.
+# each column's value. FOGO is weekly and reported as "Every Tuesday" rather
+# than a date; any other non-date placeholder is skipped.
 
 INTRAMAPS_CONFIG = MapsClientConfig(
     base_url="https://swan.spatial.t1cloud.com",
@@ -42,6 +42,7 @@ _TYPE_MAP = {
 # rather than parsing the whole string, so incidental wording (or a
 # non-date placeholder, e.g. a future FOGO rollout notice) can't derail it.
 _DATE_RE = re.compile(r"(\d{1,2}\s+\w+\s+\d{4})")
+_EVERY_RE = re.compile(r"every\s+(\w+)", re.IGNORECASE)
 
 
 def _describe(record, source):
@@ -49,7 +50,17 @@ def _describe(record, source):
     if column not in _TYPE_MAP:
         return
 
-    match = _DATE_RE.search(record.get("value", ""))
+    value = record.get("value", "")
+    every = _EVERY_RE.fullmatch(value.strip())
+    if every:
+        weekday = recurrence.weekday(every.group(1))
+        if weekday is not None:
+            yield Schedule(
+                column, recurrence.next_weekday(weekday), recurrence.WEEKLY, 26
+            )
+        return
+
+    match = _DATE_RE.search(value)
     if not match:
         return
 

@@ -1,6 +1,8 @@
-# HVCGroep
+# HVC Groep
 
-Support for schedules provided by [hvcgroep.nl](https://www.hvcgroep.nl/) and other Dutch municipalities.
+Support for schedules provided by [HVC Groep](https://www.hvcgroep.nl).
+
+Source for the Dutch HVCGroep waste management.
 
 ## Configuration via configuration.yaml
 
@@ -11,6 +13,8 @@ waste_collection_schedule:
       args:
         postal_code: POSTAL_CODE
         house_number: HOUSE_NUMBER
+        house_letter: HOUSE_LETTER
+        suffix: SUFFIX
         service: SERVICE
 ```
 
@@ -29,66 +33,16 @@ waste_collection_schedule:
 *(string) (optional)*
 
 **service**  
-*(string) (optional, default="hvcgroep")*
-
-Use one of the following codes as service code:
-
-- alphenaandenrijn
-- cranendonck
-- cyclusnv
-- dar
-- denhaag
-- gad
-- gemeenteberkelland
-- hvcgroep
-- lingewaard
-- middelburgvlissingen
-- mijnafvalzaken
-- peelenmaas
-- prezero
-- purmerend
-- schouwen-duiveland
-- sliedrecht
-- spaarnelanden
-- sudwestfryslan
-- venray
-- voorschoten
-- waalre
-- zrd
+*(string) (optional)*
 
 ## Example
 
 ```yaml
-# hvcgroep
 waste_collection_schedule:
   sources:
     - name: hvcgroep_nl
       args:
-        postal_code: 1713VM
-        house_number: 1
-        service: hvcgroep
-```
-
-```yaml
-# cyclusnv
-waste_collection_schedule:
-  sources:
-    - name: hvcgroep_nl
-      args:
-        postal_code: 2841ML
-        house_number: 1090
-        service: cyclusnv
-```
-
-```yaml
-# apartment address with house_letter and suffix (30 A100)
-waste_collection_schedule:
-  sources:
-    - name: hvcgroep_nl
-      args:
-        postal_code: 6531ED
-        house_number: 30
-        house_letter: A
-        suffix: 100
-        service: dar
+        postal_code: 2404EN
+        house_number: '7'
+        service: alphenaandenrijn
 ```

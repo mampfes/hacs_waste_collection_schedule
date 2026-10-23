@@ -1,16 +1,18 @@
 # Adur & Worthing Councils
 
-Support for schedules provided by [Adur & Worthing Councils](https://www.adur-worthing.gov.uk/bin-day/), UK.
+Support for schedules provided by [Adur & Worthing Councils](https://adur-worthing.gov.uk).
+
+Source for adur-worthing.gov.uk services for Adur & Worthing, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: adur_worthing_gov_uk
       args:
         postcode: POSTCODE
-        address: FIRST LINE OF ADDRESS (X, STREET NAME)
+        address: ADDRESS
         uprn: UPRN
 ```
 
@@ -25,27 +27,17 @@ waste_collection_schedule:
 **uprn**  
 *(string) (optional)*
 
-Supply both `postcode` and `address` args, or just the `uprn` arg
-
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: adur_worthing_gov_uk
       args:
         postcode: BN15 9UX
-        address: 1 Western Road
-```
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: adur_worthing_gov_uk
-      args:
-        uprn: 100062209109
-        
+        address: 1 Western Road North
 ```
 
-## How to get the uprn argument
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering in your address details

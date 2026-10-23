@@ -1,55 +1,43 @@
 # Joint Waste Solutions
 
-Manages Waste and Recycling services for Woking Borough Council and Surrey Heath Borough Council, in Surrey, UK.
+Support for schedules provided by [Joint Waste Solutions](https://www.jointwastesolutions.org/).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Surrey, please continue to use the source for your current area as long as it's still working. New sources for the new West Surrey Council are not expected to be live until at least April 2027, when the council itself officially comes into being.
+Manages Waste and Recycling services for Elmbridge, Mole Valley, Surrey Heath & Woking
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: jointwastesolutions_org
       args:
-        house: HOUSE_NAME_OR_NUMBER
+        house: HOUSE
         postcode: POSTCODE
+        borough: BOROUGH
 ```
 
 ### Configuration Variables
 
-**postcode**  
-*(string) (required)*
-
-Ensure a space character is included between the two parts of the postcode, For example "GU21 4PQ" rather than "GU214PQ"
-
 **house**  
 *(string) (required)*
 
-The name or number of the house. When used in combination with the postcode it should uniquely identify the property. If using the house name, it should match the spelling and format used on the website. House numbers seem to be more reliable than house names.
+**postcode**  
+*(string) (required)*
 
 **borough**  
-*(string) (optional) (default: `woking`)*
-
-`woking` or `surreyheath`
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: jointwastesolutions_org
       args:
-        house: "4"
-        postcode: "GU21 4PQ"
+        house: '4'
+        postcode: GU21 4PQ
 ```
 
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: jointwastesolutions_org
-      args:
-        house: "1"
-        postcode: "GU15 1JT"
-        borough: "surreyheath",
-```
+## How to get the source arguments
+
+Provide the house name or number and the postcode as shown on the council's bin-day lookup, and choose your borough: `woking` or `surreyheath`.

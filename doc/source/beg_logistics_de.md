@@ -1,54 +1,39 @@
 # Bremerhavener Entsorgungsgesellschaft mbH
 
-Support for schedules provided by [Bremerhavener Entsorgungsgesellschaft mbH](https://beg-bhv.de), serving Bremerhaven, Germany.
+Support for schedules provided by [Bremerhavener Entsorgungsgesellschaft mbH](https://beg-bhv.de).
+
+Source for Bremerhavener Entsorgungsgesellschaft mbH.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: beg_logistics_de
       args:
         street: STREET
-        hnr: "HOUSE NUMBER"
+        hnr: HNR
         two_weeks: TWO_WEEKS
 ```
 
 ### Configuration Variables
 
 **street**  
-*(String) (required)*
+*(string) (required)*
 
 **hnr**  
-*(String | Integer) (required)*
+*(string) (required)*
 
-**two_weeks**
-*(Boolean) (optional|default=False)* 
-
-weather to use 14 day collection schedule
-
+**two_weeks**  
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: beg_logistics_de
       args:
-        street: Hafenstraße, Bremerhaven
-        hnr: "22"
+        street: "Hafenstra\xDFe, Bremerhaven"
+        hnr: 2
 ```
-
-```yaml
-waste_collection_schedule:
-    sources:
-    - name: beg_logistics_de
-      args:
-        street: Hadeler Heide, Cuxhaven
-        hnr: "22"
-        two_weeks: True
-```
-
-## How to get the source argument
-
-Find the parameter of your address using [https://kalender.beg-logistics.de/schedules/public](https://kalender.beg-logistics.de/schedules/public) and write them exactly like on the web page.

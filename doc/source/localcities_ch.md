@@ -1,6 +1,8 @@
 # localcities.ch
 
-Generic source for waste collection schedules from [localcities.ch](https://www.localcities.ch) (Switzerland). Supports any Swiss municipality that publishes its waste calendar on the localcities.ch platform.
+Support for schedules provided by [localcities.ch](https://www.localcities.ch).
+
+Source for waste collection schedules from localcities.ch (Switzerland).
 
 ## Configuration via configuration.yaml
 
@@ -16,30 +18,16 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**municipality**
+**municipality**  
 *(string) (required)*
 
-The municipality name as it appears in the localcities.ch URL.
-
-**municipality_id**
+**municipality_id**  
 *(string) (required)*
 
-The numeric ID from the localcities.ch URL.
-
-**zone**
+**zone**  
 *(string) (optional)*
 
-Your collection zone or locality name, as shown on the calendar page. Omit it for municipalities without zones.
-
-## How to find your arguments
-
-1. Go to [localcities.ch](https://www.localcities.ch) and search for your municipality's waste calendar.
-2. The URL will be in the format: `https://www.localcities.ch/de/entsorgung/{municipality}/{municipality_id}`
-3. On the calendar page, note the zone/locality name shown next to each collection entry.
-
-## Examples
-
-### Volketswil - Hegnau
+## Example
 
 ```yaml
 waste_collection_schedule:
@@ -47,29 +35,10 @@ waste_collection_schedule:
     - name: localcities_ch
       args:
         municipality: volketswil
-        municipality_id: 529
-        zone: "Hegnau"
+        municipality_id: '529'
+        zone: Hegnau
 ```
 
-### Grenchen - Zone Ost
+## How to get the source arguments
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: localcities_ch
-      args:
-        municipality: grenchen
-        municipality_id: 3533
-        zone: "Zone Ost"
-```
-
-### Monthey (no zones)
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: localcities_ch
-      args:
-        municipality: monthey
-        municipality_id: 8085
-```
+Visit your municipality's page on localcities.ch. The municipality name and ID are in the URL (e.g. /de/entsorgung/volketswil/529). The zone is shown next to each waste collection entry on the calendar. If your municipality does not use zones, omit the zone parameter.

@@ -1,209 +1,43 @@
-import re
-from datetime import date, datetime, timedelta
-from typing import TypedDict
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgAmbiguousWithSuggestions,
-    SourceArgumentNotFound,
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address, text_field
+from waste_collection_schedule.service.CockburnCalendar import (
+    CalendarParser,
+    CalendarRetriever,
 )
-
-TITLE = "City of Cockburn"  # Title will show up in README.md and info.md
-DESCRIPTION = "Source script for cockburn.wa.gov.au"  # Describe your source
-# Insert url to service homepage. URL will show up in README.md and info.md
-URL = "https://www.cockburn.wa.gov.au"
-
-API_URL = "https://gis1.cockburn.wa.gov.au/webapiv2/PropertyInfoSearch/PropertyNo"
-
-TEST_CASES = {
-    "Thursday": {
-        "address": "23 Snowden St, Hammond Park WA 6164",
-    },
-    "Friday": {"address": "1 Eucalyptus Dr Hammond Park"},
-    # A postcode with no state, which is what most people type.
-    "Postcode without state": {"address": "23 Snowden Street HAMMOND PARK 6164"},
-    "Tuesday int": {"property_no": 6025742},
-    "Tuesday str": {"property_no": "6025742"},
-}
-
-ICON_MAP = {
-    "Rubbish": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Junk Waste": Icons.BULKY,
-    "Green Waste": Icons.GARDEN,
-    "Green Bin": Icons.ORGANIC,
-}
-
-HEADERS = {
-    "User-Agent": "Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0",
-    "Accept": "application/xhtml+xml,text/json,application/xml",
-}
+from waste_collection_schedule.transformers import JsonTransformer
 
 
-class Collections(TypedDict):
-    type: str
-    dates: list[date]
+@final
+class Source(BaseSource):
+    TITLE = "City of Cockburn"
+    DESCRIPTION = "Source script for cockburn.wa.gov.au"
+    URL = "https://www.cockburn.wa.gov.au"
+    TEST_CASES: ClassVar[dict] = {
+        "Thursday": {"address": "23 Snowden St, Hammond Park WA 6164"},
+        "Friday": {"address": "1 Eucalyptus Dr Hammond Park"},
+        "Postcode without state": {"address": "23 Snowden Street HAMMOND PARK 6164"},
+        "Tuesday int": {"property_no": 6025742},
+        "Tuesday str": {"property_no": "6025742"},
+    }
+    COUNTRY = "au"
+    PARAMS = (
+        street_address(optional=True),
+        text_field("property_no", "Property number", optional=True),
+    )
 
-
-class Source:
-    def __init__(
-        self, address: str | None = None, property_no: str | int | None = None
-    ):
-        self.address: str | None = None
-        self.property_no: str | None = None
-
-        if not address and not property_no:
-            raise ValueError("Either address or property_no must be provided")
-
-        if address:
-            address = address.strip()
-            address = re.sub(" +", " ", address)
-            address = re.sub(",", "", address)
-            address = re.sub(" st ", " street ", address, flags=re.IGNORECASE)
-            address = re.sub(" hwy ", " highway ", address, flags=re.IGNORECASE)
-            address = re.sub(" ave ", " avenue ", address, flags=re.IGNORECASE)
-            address = re.sub(" rd ", " road ", address, flags=re.IGNORECASE)
-            address = re.sub(" ch ", " chase ", address, flags=re.IGNORECASE)
-            address = re.sub(" lp ", " loop ", address, flags=re.IGNORECASE)
-            address = re.sub(" dr ", " drive ", address, flags=re.IGNORECASE)
-            address = re.sub(
-                r"western australia (\d{4})", "WA \\1", address, flags=re.IGNORECASE
-            )
-            address = re.sub(r" wa (\d{4})", "  WA  \\1", address, flags=re.IGNORECASE)
-            # The search wants the state spelled between suburb and postcode
-            # ("HAMMOND PARK WA 6164"); a trailing postcode with no state at
-            # all matches nothing, so put the state in.
-            if not re.search(r"\bwa\b", address, flags=re.IGNORECASE):
-                address = re.sub(r"\s+(\d{4})\s*$", "  WA  \\1", address)
-            self.address = address
-            self.search_method = "address"
-
-        if property_no:
-            self.property_no = str(property_no)
-            self.search_method = "property_no"
-
-    def collect_dates(self, start_date, weeks):
-        dates = []
-        dates.append(start_date)
-        for _ in range(1, 4 // weeks):
-            start_date = start_date + timedelta(days=(weeks * 7))
-            dates.append(start_date)
-        return dates
-
-    def _search(self, query: str, search_method: str) -> list[dict]:
-        search_value = re.sub(r"\s+", "+", query.strip())
-        r = requests.get(
-            f"{API_URL}?q={search_value}&search_method={search_method}",
-            headers=HEADERS,
-        )
-        r.raise_for_status()
-        payload = r.json()
-        return payload if isinstance(payload, list) else []
-
-    def _search_address(self) -> list[dict]:
-        """Find the property, retrying without the state and postcode.
-
-        The search is stricter about what follows the street than about the
-        street itself, and resolves fine without a state and postcode, so a
-        trailing "WA 6164" is better dropped than sent when it matches nothing.
-        """
-        address = self.address or ""
-        attempts = [address]
-        without_state = re.sub(
-            r"\s+wa\s+\d{4}\s*$", "", address, flags=re.IGNORECASE
-        ).strip()
-        if without_state and without_state != address:
-            attempts.append(without_state)
-
-        for attempt in attempts:
-            results = self._search(attempt, "address")
-            if results:
-                return results
-
-        raise SourceArgumentNotFound(
-            "address",
-            address,
-            "Cockburn did not recognise that address. Check the street number "
-            "and name, and write the street type out in full (Street, not St).",
-        )
-
-    def extract_date(self, text: str) -> datetime | None:
-        # Define the pattern for the date format DD-MMM-YYYY
-        pattern = r"\d{1,2}-\w{3}-\d{4}"
-        # Search for the pattern in the text
-        match = re.search(pattern, text)
-
-        # If a match is found, return the matched string (the date)
-        if match:
-            original_date = match.group()
-            # Convert the matched string to a datetime object
-            formatted_date = datetime.strptime(original_date, "%d-%b-%Y")
-            return formatted_date
-        return None
-
-    def fetch(self) -> list[Collection]:
-        entries: list[Collection] = []
-
-        # property_no identifies the property exactly, so prefer it when both
-        # arguments are given, as the source did before.
-        if self.property_no:
-            results = self._search(self.property_no, "property_no")
-            if not results:
-                raise SourceArgumentNotFound("property_no", self.property_no)
-            data = results[0]
-        else:
-            results = self._search_address()
-            if len(results) > 1:
-                suggestions = [
-                    match["Address"] for match in results if match.get("Address")
-                ]
-                raise SourceArgAmbiguousWithSuggestions(
-                    "address", self.address, suggestions[:10]
-                )
-            data = results[0]
-
-        if data:
-            # Convert the bin day to a date
-            date_rubbish = datetime.today()
-            while date_rubbish.strftime("%A") != data["BinDay"]:
-                date_rubbish += timedelta(days=1)
-
-            # Create bin collection date object
-            bin_dates = [date_rubbish.date()]
-
-            # Create green bin collection date object removing the unneeded text
-            grn_bin_datetime = self.extract_date(data["GardenWaste"])
-            grn_bin_dates = [grn_bin_datetime.date()] if grn_bin_datetime else []
-
-            # Format the Junk Waste collection dates
-            jnk_dates = [
-                datetime.strptime(data["JunkWhite1"], "%d-%b-%Y").date(),
-                datetime.strptime(data["JunkWhite2"], "%d-%b-%Y").date(),
-            ]
-
-            # Format the Green Waste collection dates
-            grn_waste_dates = [
-                datetime.strptime(data["GreenWaste1"], "%d-%b-%Y").date(),
-                datetime.strptime(data["GreenWaste2"], "%d-%b-%Y").date(),
-            ]
-
-            collections: list[Collections] = []
-            collections.append({"type": "Rubbish", "dates": bin_dates})
-            collections.append({"type": "Recycling", "dates": bin_dates})
-            collections.append({"type": "Junk Waste", "dates": jnk_dates})
-            collections.append({"type": "Green Waste", "dates": grn_waste_dates})
-            collections.append({"type": "Green Bin", "dates": grn_bin_dates})
-
-            for collection in collections:
-                icon = ICON_MAP.get(collection["type"])
-                for d in collection["dates"]:
-                    entries.append(
-                        Collection(
-                            date=d,
-                            t=collection["type"],
-                            icon=icon,
-                        )
-                    )
-
-        return entries
+    retrieve = CalendarRetriever()
+    parse = CalendarParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map={
+            "Rubbish": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Junk Waste": wt.BULKY_WASTE,
+            "Green Waste": wt.GARDEN_WASTE,
+            "Green Bin": wt.ORGANIC,
+        },
+    )

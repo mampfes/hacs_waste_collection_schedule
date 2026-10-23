@@ -1,12 +1,14 @@
 # Mémotri - Agglomération Pau Béarn Pyrénées
 
-Support for schedules provided by [Mémotri - Agglomération Pau Béarn Pyrénées](https://memotri.agglo-pau.fr/), serving the Pau agglomeration area in France.
+Support for schedules provided by [Mémotri - Agglomération Pau Béarn Pyrénées](https://memotri.agglo-pau.fr/).
+
+Source script for memotri.agglo-pau.fr
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: memotri_agglo_pau_fr
       args:
         address: ADDRESS
@@ -14,21 +16,19 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
-
-Full address including street number, street name, postal code, and city.
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: memotri_agglo_pau_fr
       args:
-        address: "39 avenue larribau 64000 Pau"
+        address: 39 avenue larribau 64000 Pau
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Visit [https://memotri.agglo-pau.fr/](https://memotri.agglo-pau.fr/) and enter your address in the search field. Use the same address format in the configuration.
+Enter your full address as you would on the memotri.agglo-pau.fr website, including street number, street name, postal code, and city.

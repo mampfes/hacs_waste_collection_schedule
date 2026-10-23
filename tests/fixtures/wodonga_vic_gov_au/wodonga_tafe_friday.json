@@ -1,0 +1,68 @@
+{
+  "recorded_at": "2026-10-10",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates ef963f8de3",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=87+McKoy+St%2C+West+Wodonga%2C+Victoria%2C+Australia&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"87 McKoy St, West Wodonga, Victoria, Australia\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Sat, 10 Oct 2026 15:53:02 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "226",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"4ccb427f\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "HIT",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiODcgTWNrb3kgU3RyZWV0LCBXZXN0IFdvZG9uZ2EsIFdvZG9uZ2EsIFZpY3RvcmlhLCAzNjkwIiwibG9jYXRpb24iOnsieCI6MTQ2Ljg1NDE2NTEzNDQxOCwieSI6LTM2LjEwOTUwMDk4MTkxOH0sInNjb3JlIjoxMDAsImF0dHJpYnV0ZXMiOnt9LCJleHRlbnQiOnsieG1pbiI6MTQ2Ljg1MzE2NTEzNDQxOCwieW1pbiI6LTM2LjExMDUwMDk4MTkxOCwieG1heCI6MTQ2Ljg1NTE2NTEzNDQxOCwieW1heCI6LTM2LjEwODUwMDk4MTkxOH19XX0="
+    },
+    {
+      "key": "GET https://services-ap1.arcgis.com/w6r4LlwgJu8O0neQ/arcgis/rest/services/waste_collection_view/FeatureServer/0/query 40d49af5ef",
+      "method": "GET",
+      "url": "https://services-ap1.arcgis.com/w6r4LlwgJu8O0neQ/arcgis/rest/services/waste_collection_view/FeatureServer/0/query",
+      "final_url": "https://services-ap1.arcgis.com/w6r4LlwgJu8O0neQ/arcgis/rest/services/waste_collection_view/FeatureServer/0/query?outFields=type&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+146.854165134418%2C+%22y%22%3A+-36.109500981918%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": 146.854165134418, \\\"y\\\": -36.109500981918}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"type\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Date": "Sat, 10 Oct 2026 15:53:03 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "269",
+        "Connection": "keep-alive",
+        "Cache-Control": "private, max-age=30, s-maxage=30",
+        "Content-Encoding": "gzip",
+        "Last-Modified": "Mon, 23 Sep 2024 01:30:16 GMT",
+        "ETag": "sd773_1336906927",
+        "Vary": "X-Esri-Authorization",
+        "x-arcgis-upstream": "ap1h00c00-services",
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-ArcGIS-Trace-Id": "20261010T155302Z-15ddb4f657dlpffghC1CO1v9gn0000001fcg000000004z4x",
+        "x-esri-query-request-units": "2",
+        "x-esri-tiles-basic-query-mode": "true",
+        "x-esri-tiles-basic-query-type": "Basic",
+        "x-esri-org-request-units-per-min": "usage=4;max=6000",
+        "x-esri-query-geometry-field-name": "SHAPE",
+        "X-ArcGIS-Correlation-Id": "23675d1a53f1f809",
+        "X-ArcGIS-Instance": "bgoltp7zl000008",
+        "Request-Context": "appId=cid-v1:4a8d16e5-1b6c-4bd9-9c96-226ef71497e7",
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Esri-Authorization",
+        "Access-Control-Allow-Credentials": "true",
+        "x-azure-ref": "20261010T155302Z-15ddb4f657dlpffghC1CO1v9gn0000001fcg000000004z4x",
+        "X-Cache": "CONFIG_NOCACHE",
+        "Accept-Ranges": "bytes"
+      },
+      "content_b64": "eyJvYmplY3RJZEZpZWxkTmFtZSI6Ik9CSkVDVElEIiwidW5pcXVlSWRGaWVsZCI6eyJuYW1lIjoiT0JKRUNUSUQiLCJpc1N5c3RlbU1haW50YWluZWQiOnRydWV9LCJnbG9iYWxJZEZpZWxkTmFtZSI6IiIsImdlb21ldHJ5VHlwZSI6ImVzcmlHZW9tZXRyeVBvbHlnb24iLCJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjc4NTUsImxhdGVzdFdraWQiOjc4NTV9LCJmaWVsZHMiOlt7Im5hbWUiOiJ0eXBlIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6InR5cGUiLCJzcWxUeXBlIjoic3FsVHlwZU90aGVyIiwibGVuZ3RoIjozMCwiZG9tYWluIjpudWxsLCJkZWZhdWx0VmFsdWUiOm51bGx9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsidHlwZSI6IkNvbGxlY3Rpb24gRnJpZGF5In19XX0="
+    }
+  ]
+}

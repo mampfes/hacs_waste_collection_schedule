@@ -1,7 +1,6 @@
 import logging
 from inspect import Parameter, Signature
 
-from waste_collection_schedule.source.kaw_mainz_bingen_de import URL as KAW_URL
 from waste_collection_schedule.source.kaw_mainz_bingen_de import Source as KawSource
 
 _LOGGER = logging.getLogger(__name__)
@@ -12,7 +11,7 @@ DESCRIPTION = (
     "Deprecated source for Abfallwirtschaftsbetrieb LK Mainz-Bingen. "
     "Please use KAW Mainz und Mainz-Bingen AöR instead."
 )
-URL = KAW_URL
+URL = KawSource.URL
 TEST_CASES = {
     "Stadt Ingelheim Ingelheim Süd": {
         "bezirk": "Stadt Ingelheim",
@@ -29,16 +28,19 @@ TEST_CASES = {
 }
 
 
-class Source(KawSource):
+class Source:
     def __init__(self, bezirk: str, ort: str, strasse: str | None = None):
         global _DEPRECATION_WARNING_LOGGED
 
-        super().__init__(bezirk, ort, strasse)
+        self._source = KawSource(bezirk=bezirk, ort=ort, strasse=strasse)
         if not _DEPRECATION_WARNING_LOGGED:
             _LOGGER.warning(
                 "awb_mainz_bingen_de is deprecated, please use kaw_mainz_bingen_de instead"
             )
             _DEPRECATION_WARNING_LOGGED = True
+
+    def fetch(self):
+        return self._source.fetch()
 
 
 Source.__init__.__signature__ = Signature(

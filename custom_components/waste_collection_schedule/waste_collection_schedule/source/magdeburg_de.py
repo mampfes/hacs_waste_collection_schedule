@@ -15,7 +15,6 @@ from waste_collection_schedule import parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
-from waste_collection_schedule.regions import region
 from waste_collection_schedule.retrievers import HttpGetRetriever, Suggestions
 from waste_collection_schedule.service.ICS import IcsFeedsParser
 from waste_collection_schedule.transformers import ICSTransformer
@@ -44,13 +43,7 @@ class Source(BaseSource):
         "Agnetenstraße 10": {"street": "Agnetenstraße 10"},
     }
 
-    REGIONS = (
-        region(
-            "SAB Magdeburg Abfuhrkalender",
-            url="https://sab.ssl.metageneric.de/app/sab_i_tp/index.php",
-            country="de",
-        ),
-    )
+    REGIONS = ()
 
     PARAMS = (text_field("street", label="Street and house number"),)
 

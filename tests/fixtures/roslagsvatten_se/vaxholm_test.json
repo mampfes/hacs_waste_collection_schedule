@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://roslagsvatten.se/schedule/search 46dc7e65ac",
+      "method": "POST",
+      "url": "https://roslagsvatten.se/schedule/search",
+      "final_url": "https://roslagsvatten.se/schedule/search",
+      "body": "{\"body\":{\"municipality\":\"vaxholm\",\"searchText\":\"Hamngatan 1, Vaxholm\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Tue, 13 Oct 2026 18:42:40 GMT",
+        "content-type": "application/json",
+        "vary": "Accept-Encoding",
+        "cache-control": "must-revalidate, no-cache, private",
+        "content-language": "sv",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "expires": "Sun, 19 Nov 1978 05:00:00 GMT",
+        "x-generator": "Drupal 11 (https://www.drupal.org)",
+        "x-drupal-ajax-token": "1",
+        "age": "0",
+        "x-cache": "MISS",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "W3siY29tbWFuZCI6Imluc2VydCIsIm1ldGhvZCI6InJlcGxhY2VXaXRoIiwic2VsZWN0b3IiOiIjd2FzdGUtc2NoZWR1bGUtYnVpbGRpbmctbGlzdCIsImRhdGEiOiJcdTAwM0N1bCBpZD1cdTAwMjJ3YXN0ZS1zY2hlZHVsZS1idWlsZGluZy1saXN0XHUwMDIyXHUwMDNFXG5cbiAgICAgIFxuICBcbiAgICAgICAgICBcdTAwM0NsaSBpZD1cdTAwMjJ3YXN0ZS1zY2hlZHVsZS1hZGRyZXNzLWl0ZW0tMVx1MDAyMiBhcmlhLXNlbGVjdGVkPVx1MDAyMnRydWVcdTAwMjIgcm9sZT1cdTAwMjJvcHRpb25cdTAwMjIgZGF0YS1iaWQ9XHUwMDIyMTY4NjUxMDAxXHUwMDIyIGNsYXNzPVx1MDAyMndhc3RlLXNjaGVkdWxlLWFkZHJlc3MtaXRlbVx1MDAyMlx1MDAzRUhhbW5nYXRhbiAxLCBWYXhob2xtXHUwMDNDXC9saVx1MDAzRVxuICAgICAgXG5cblxuXG5cblx1MDAzQ1wvdWxcdTAwM0VcbiIsInNldHRpbmdzIjpudWxsfV0="
+    },
+    {
+      "key": "POST https://roslagsvatten.se/schedule/fetch 61db714409",
+      "method": "POST",
+      "url": "https://roslagsvatten.se/schedule/fetch",
+      "final_url": "https://roslagsvatten.se/schedule/fetch",
+      "body": "{\"body\":{\"buildingId\":\"168651001\",\"municipality\":\"vaxholm\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "server": "nginx",
+        "date": "Tue, 13 Oct 2026 18:42:41 GMT",
+        "content-type": "application/json",
+        "vary": "Accept-Encoding",
+        "cache-control": "must-revalidate, no-cache, private",
+        "content-language": "sv",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "expires": "Sun, 19 Nov 1978 05:00:00 GMT",
+        "x-generator": "Drupal 11 (https://www.drupal.org)",
+        "x-drupal-ajax-token": "1",
+        "age": "0",
+        "x-cache": "MISS",
+        "content-encoding": "gzip"
+      },
+      "content_b64": "W3siY29tbWFuZCI6Imluc2VydCIsIm1ldGhvZCI6InJlcGxhY2VXaXRoIiwic2VsZWN0b3IiOiIjd2FzdGUtc2NoZWR1bGUtaXRlbSIsImRhdGEiOiJcdTAwM0NkaXYgaWQ9XHUwMDIyd2FzdGUtc2NoZWR1bGUtaXRlbVx1MDAyMlx1MDAzRVxuXG4gICAgICBcbiAgXHUwMDNDZGl2IGNsYXNzPVx1MDAyMndhc3RlLXNjaGVkdWxlLXJlc3VsdHNcdTAwMjJcdTAwM0VcbiAgICAgICAgICAgICAgXHUwMDNDZGl2IGNsYXNzPVx1MDAyMndhc3RlLXNjaGVkdWxlLWlubmVyXHUwMDIyXHUwMDNFXG4gICAgICAgIFx1MDAzQ2gzXHUwMDNFUmVzdGF2ZmFsbFx1MDAzQ1wvaDNcdTAwM0VcbiAgICAgICAgXHUwMDNDcFx1MDAzRUZyZWt2ZW5zOiAqIDEwNCBnZ3JcL1x1MDBlNXIuIDIgZ2dyIHBlciB2ZWNrYS4gSGVsXHUwMGU1clx1MDAzQ1wvcFx1MDAzRVxuICAgICAgICBcdTAwM0NwXHUwMDNFTlx1MDBlNHN0YSBoXHUwMGU0bXRuaW5nOiAyMDI2LTEwLTE1XHUwMDNDXC9wXHUwMDNFXG4gICAgICBcdTAwM0NcL2Rpdlx1MDAzRVxuICAgICAgICAgIFx1MDAzQ2RpdiBjbGFzcz1cdTAwMjJ3YXN0ZS1zY2hlZHVsZS1pbm5lclx1MDAyMlx1MDAzRVxuICAgICAgICBcdTAwM0NoM1x1MDAzRU1hdGF2ZmFsbFx1MDAzQ1wvaDNcdTAwM0VcbiAgICAgICAgXHUwMDNDcFx1MDAzRUZyZWt2ZW5zOiAqIDEwNCBnZ3JcL1x1MDBlNXIuIDIgZ2dyIHBlciB2ZWNrYS4gSGVsXHUwMGU1clx1MDAzQ1wvcFx1MDAzRVxuICAgICAgICBcdTAwM0NwXHUwMDNFTlx1MDBlNHN0YSBoXHUwMGU0bXRuaW5nOiAyMDI2LTEwLTE1XHUwMDNDXC9wXHUwMDNFXG4gICAgICBcdTAwM0NcL2Rpdlx1MDAzRVxuICAgICAgICAgIFx1MDAzQ1wvZGl2XHUwMDNFXG5cdTAwM0NcL2Rpdlx1MDAzRVxuIiwic2V0dGluZ3MiOm51bGx9XQ=="
+    }
+  ]
+}

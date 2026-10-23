@@ -121,7 +121,9 @@ class FirmstepAddressFormRetriever(RetrieverFunc):
         form_url: The ``renderform`` GET URL to scrape hidden fields/token from.
         render_url: The ``RenderForm`` POST URL.
         address_lookup_url: The ``core/addresslookup`` POST URL used for the
-            fallback retry.
+            fallback retry, or ``None`` to always return the first render.
+        value_prefix: Text prepended to the property value before posting
+            (e.g. ``"U"`` for portals whose field wants ``U<uprn>``).
         value_field: The form field name the property value is posted under
             (Firmstep auto-generates a per-council/per-form field id, e.g.
             ``"FF2924"``).
@@ -140,28 +142,36 @@ class FirmstepAddressFormRetriever(RetrieverFunc):
         *,
         form_url: str,
         render_url: str,
-        address_lookup_url: str,
+        address_lookup_url: "str | None",
         value_field: str,
-        static_fields: "dict[str, str]",
-        row_selector: str,
+        static_fields: "dict[str, str] | None" = None,
+        row_selector: str = "",
         address_param: str = "address_id",
         search_nlpg: str = "False",
+        value_prefix: str = "",
         timeout: int = 30,
     ):
         self.form_url = form_url
         self.render_url = render_url
         self.address_lookup_url = address_lookup_url
         self.value_field = value_field
-        self.static_fields = static_fields
+        self.static_fields = static_fields or {}
         self.row_selector = row_selector
         self.address_param = address_param
         self.search_nlpg = search_nlpg
+        self.value_prefix = value_prefix
         self.timeout = timeout
 
     def __call__(self, source: "BaseSource") -> Any:
-        address_value = str(source.params[self.address_param])
+        address_value = (
+            self.value_prefix + str(source.params[self.address_param]).strip()
+        )
         response = self._render(source, address_value)
-        if address_value.startswith("U") or self._has_rows(response):
+        if (
+            self.address_lookup_url is None
+            or address_value.startswith("U")
+            or self._has_rows(response)
+        ):
             return response
 
         addresses = _lookup_addresses(

@@ -1,49 +1,44 @@
 # SUIBR
 
-SUIBR (Stanser Umweltdienste Interkommunale Betriebsgemeinschaft) is the waste management service for the canton of Nidwalden, Switzerland. It serves 11 municipalities with waste collection schedules available through the kvvnw.sammelkalender.ch platform.
+Support for schedules provided by [SUIBR](https://www.suibr.ch).
 
-## Supported Municipalities
+Source for SUIBR (Nidwalden) waste collection.
 
-All 11 municipalities in the canton of Nidwalden:
+## Configuration via configuration.yaml
 
-- Beckenried
-- Buochs
-- Dallenwil
-- Emmetten
-- Ennetbürgen
-- Ennetmoos
-- Hergiswil
-- Oberdorf
-- Stans
-- Stansstad
-- Wolfenschiessen
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: suibr_ch
+      args:
+        municipality: MUNICIPALITY
+        street: STREET
+        hnr: HNR
+```
 
-## Configuration
+### Configuration Variables
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `municipality` | Yes | Name of the municipality (one of the 11 listed above) |
-| `street` | No | Street name for more precise scheduling |
-| `hnr` | No | House number |
+**municipality**  
+*(string) (required)*
 
-## API
+**street**  
+*(string) (optional)*
 
-The source uses the kvvnw.sammelkalender.ch API:
-- Municipality list: `https://www.kvvnw.sammelkalender.ch/kunden_WANN_auswahl_form.php?optGem=GEM`
-- Street list: `https://www.kvvnw.sammelkalender.ch/kunden_WANN_auswahl_form.php?optGem=<id>&Jahr=`
-- Collection data: `https://www.kvvnw.sammelkalender.ch/kunden_sammlung_ausw_cont.php`
+**hnr**  
+*(string) (optional)*
 
-## Waste Types
+## Example
 
-Common waste types returned by this source:
-- `Kehricht` - General waste
-- `Grüngut` - Organic waste
-- `Karton` - Cardboard
-- `Papier` - Paper
-- `Alteisen/Metall` - Metal
-- `Christbaum` - Christmas trees
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: suibr_ch
+      args:
+        municipality: Beckenried
+        street: Acheri
+        hnr: 1
+```
 
-## Links
+## How to get the source arguments
 
-- [SUIBR Website](https://www.suibr.ch)
-- [Sammelkalender (Collection Calendar)](https://www.suibr.ch/online-services/sammelkalender/)
+Choose your municipality and enter your street and house number as the calendar at https://www.kvvnw.sammelkalender.ch writes them. The error message lists the valid values.

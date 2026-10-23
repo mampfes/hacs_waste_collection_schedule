@@ -72,6 +72,8 @@ TYPE_VALUE_MAP: dict[str, wt.WasteType | list[wt.WasteType]] = {
     # Danderyd's combined containers: two streams in one label.
     "Glas/Glas/Metal": [wt.GLASS, wt.RECYCLABLES],
     "Papper/Plast": [wt.PAPER, wt.RECYCLABLES],
+    # Värmdö's two-compartment bin: food waste and residual waste together.
+    "Mat/rest": [wt.FOOD_WASTE, wt.GENERAL_WASTE],
     "Batterier": wt.HAZARDOUS,
     # Emptying a septic tank or a grease trap: a real visit, but no bin.
     "Slam": wt.OTHER,

@@ -1,38 +1,44 @@
 # Aprica S.p.A.
 
-Support for schedules provided by [Aprica S.p.A.](https://www.apricaspa.it), part of Gruppo A2A. Aprica serves municipalities in the provinces of Brescia, Bergamo, Como, Cremona, Crema, Lodi and others.
+Support for schedules provided by [Aprica S.p.A.](https://www.apricaspa.it).
+
+Source for Aprica S.p.A. (Gruppo A2A) waste collection.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: apricaspa_it
       args:
-        address: HOUSE_ADDRESS
+        address: ADDRESS
         house_number: HOUSE_NUMBER
         city: CITY
 ```
 
-## Configuration variables
+### Configuration Variables
 
-**address**
-*(string) (required)* : The street name of your address (e.g., `Via Triumplina`).
+**address**  
+*(string) (required)*
 
-**house_number**
-*(string) (required)* : The house number of your address (e.g., `90`).
+**house_number**  
+*(string) (required)*
 
-**city**
-*(string) (required)* : The city of your address (e.g., `Brescia`).
+**city**  
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: apricaspa_it
       args:
-        address: "Via Triumplina"
-        house_number: "90"
-        city: "Brescia"
+        address: Via Giovanni Pascoli
+        house_number: '18'
+        city: Borgo San Giacomo
 ```
+
+## How to get the source arguments
+
+You need to provide the street name, house number, and city of your address. Aprica serves cities like Brescia, Bergamo, Como, Cremona, Crema, Lodi and their provinces.

@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://my.mundaring.wa.gov.au/BinLocationInfo/Info? 667b325f22",
+      "method": "GET",
+      "url": "https://my.mundaring.wa.gov.au/BinLocationInfo/Info?",
+      "final_url": "https://my.mundaring.wa.gov.au/BinLocationInfo/Info?parcelNumber=1119284&suburb=GLEN+FORREST",
+      "body": "{\"params\":[[\"parcelNumber\",\"1119284\"],[\"suburb\",\"GLEN FORREST\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:22 GMT",
+        "server": "envoy",
+        "cache-control": "private",
+        "content-type": "text/html; charset=utf-8",
+        "x-aspnet-version": "4.0.30319",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-xss-protection": "1; mode=block",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "x-permitted-cross-domain-policies": "none",
+        "content-security-policy": "frame-ancestors *;",
+        "vary": "Accept-Encoding",
+        "content-encoding": "gzip",
+        "x-envoy-upstream-service-time": "2760"
+      },
+      "content_b64": "DQoNCg0KICAgIDxoZWFkZXIgY2xhc3M9Im10LTMiPg0KICAgICAgICA8aDMgY2xhc3M9InRleHQtYm9sZCI+WW91ciBXYXN0ZSBDb2xsZWN0aW9uIERheXM8L2gzPg0KICAgICAgICA8aHIgY2xhc3M9ImhyLXByaW1hcnkgbXQtMCIgLz4NCiAgICA8L2hlYWRlcj4gIA0KICAgIDxzZWN0aW9uPg0KICAgICAgICA8ZGl2IGNsYXNzPSJmb3JtLWdyb3VwIG1iLTMiPg0KICAgICAgICAgICAgPGxhYmVsIGNsYXNzPSJjb250cm9sLWxhYmVsIHRleHQtZGFyayB0ZXh0LWJvbGQiPkNvbGxlY3Rpb24gQXJlYSA6PC9sYWJlbD4NCiAgICAgICAgICAgIEFyZWEgMg0KICAgICAgICA8L2Rpdj4NCiAgICAgICAgPGRpdiBjbGFzcz0iZm9ybS1ncm91cCBtYi0zIj4NCiAgICAgICAgICAgIDxsYWJlbCBjbGFzcz0iY29udHJvbC1sYWJlbCB0ZXh0LWRhcmsgdGV4dC1ib2xkIj5GT0dPIEJpbiAoPGIgY2xhc3M9InRleHQtc3VjY2VzcyIgc3R5bGU9ImNvbG9yOiMzMkNEMzIhaW1wb3J0YW50Ij5MaW1lIEdyZWVuIExpZDwvYj4pOjwvbGFiZWw+DQogICAgICAgICAgICBXZWRuZXNkYXkNCiAgICAgICAgPC9kaXY+DQogICAgICAgIDxkaXYgY2xhc3M9ImZvcm0tZ3JvdXAgbWItMyI+DQogICAgICAgICAgICA8bGFiZWwgY2xhc3M9ImNvbnRyb2wtbGFiZWwgdGV4dC1kYXJrIHRleHQtYm9sZCI+TmV4dCBSZWN5Y2xlIEJpbiBEYXRlICg8YiBjbGFzcz0idGV4dC13YXJuaW5nIj5ZZWxsb3cgTGlkPC9iPik6PC9sYWJlbD4NCiAgICAgICAgICAgIDE0LzEwLzIwMjYNCiAgICAgICAgPC9kaXY+DQogICAgICAgIDxkaXYgY2xhc3M9ImZvcm0tZ3JvdXAgbWItMyI+DQogICAgICAgICAgICA8bGFiZWwgY2xhc3M9ImNvbnRyb2wtbGFiZWwgdGV4dC1kYXJrIHRleHQtYm9sZCI+TmV4dCBHZW5lcmFsIFdhc3RlIERhdGUgKDxiIGNsYXNzPSJ0ZXh0LWRhbmdlciI+UmVkIExpZDwvYj4vPGIgY2xhc3M9InRleHQtc3VjY2VzcyIgc3R5bGU9ImNvbG9yOiMxMDY3MTAhaW1wb3J0YW50Ij5EYXJrIEdyZWVuIExpZDwvYj4pOjwvbGFiZWw+DQogICAgICAgICAgICAyMS8xMC8yMDI2DQogICAgICAgIDwvZGl2Pg0KICAgICAgICA8ZGl2IGNsYXNzPSJmb3JtLWdyb3VwIG1iLTMiPg0KICAgICAgICAgICAgPGxhYmVsIGNsYXNzPSJjb250cm9sLWxhYmVsIHRleHQtZGFyayB0ZXh0LWJvbGQiPkJ1bGsgVmVyZ2UgQ29sbGVjdGlvbiBEYXRlcyAoR3JlZW4gV2FzdGUgT25seSk6PC9sYWJlbD4NCiAgICAgICAgICAgIDEyIE9jdG9iZXIgMjAyNg0KICAgICAgICA8L2Rpdj4NCiAgICAgICAgPGRpdiBjbGFzcz0iZm9ybS1ncm91cCBtYi0zIj4NCiAgICAgICAgICAgIDxsYWJlbCBjbGFzcz0iY29udHJvbC1sYWJlbCB0ZXh0LWRhcmsgdGV4dC1ib2xkIj5CdWxrIFZlcmdlIENvbGxlY3Rpb24gRGF0ZXMgKEhhcmQgV2FzdGUgT25seSk6PC9sYWJlbD4NCiAgICAgICAgICAgIDEwIE1heSAyMDI3DQogICAgICAgIDwvZGl2Pg0KICAgIDwvc2VjdGlvbj4NCg=="
+    }
+  ]
+}

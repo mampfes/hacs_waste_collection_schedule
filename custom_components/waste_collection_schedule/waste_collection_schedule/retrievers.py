@@ -311,6 +311,8 @@ class LookupChainRetriever(_BaseRetriever):
         method: ``"GET"`` (default) or ``"POST"`` for the schedule request.
         data: optional ``callable(*keys, **source.params) -> data`` form body,
             for ``method="POST"``.
+        json: optional ``callable(*keys, **source.params) -> object`` JSON
+            body, for ``method="POST"``.
         headers: optional headers for the schedule request.
         encoding: response encoding forced on the schedule response before its
             ``.text`` is read. ``None`` (default) leaves the transport's
@@ -334,6 +336,7 @@ class LookupChainRetriever(_BaseRetriever):
         encoding: str | None = None,
         raise_for_status: bool = False,
         timeout: int = 30,
+        json: Callable[..., Any] | None = None,
     ):
         if not steps:
             raise ValueError("LookupChainRetriever requires at least one step")
@@ -341,8 +344,9 @@ class LookupChainRetriever(_BaseRetriever):
             raise ValueError(
                 f"unknown LookupChainRetriever method {method!r}: expected GET or POST"
             )
-        if data is not None and method.upper() != "POST":
-            raise ValueError("LookupChainRetriever data requires method='POST'")
+        if (data is not None or json is not None) and method.upper() != "POST":
+            raise ValueError("LookupChainRetriever data/json requires method='POST'")
+        self.json = json
         self.steps = steps
         self.url = url
         self.params = params
@@ -370,6 +374,9 @@ class LookupChainRetriever(_BaseRetriever):
                 params=params,
                 data=(
                     self.data(*keys, **source.params) if self.data is not None else None
+                ),
+                json=(
+                    self.json(*keys, **source.params) if self.json is not None else None
                 ),
                 headers=headers,
                 timeout=self.timeout,
@@ -427,6 +434,11 @@ class FanOutRetriever(_BaseRetriever):
             household, which is dropped rather than reaching the parser: a
             platform publishing one calendar per year tends to have gaps around
             a boundary year, and a missing year is not a failed fetch.
+        include_prepared: return the response ``prepare`` produced as the first
+            of the list, before the fetched ones. For a lookup whose own reply
+            holds dates and also points at a further document (a garden-waste
+            calendar PDF), so both are read by one ``parse``. ``prepare`` must
+            then return a response.
     """
 
     def __init__(
@@ -435,10 +447,14 @@ class FanOutRetriever(_BaseRetriever):
         targets: Callable[[BaseSource, Any], Sequence[Any]],
         prepare: Callable[[BaseSource], Any] | None = None,
         fetch: Callable[[BaseSource, Any, Any], Response | None] | None = None,
+        include_prepared: bool = False,
     ):
+        if include_prepared and prepare is None:
+            raise ValueError("FanOutRetriever include_prepared requires prepare")
         self.targets = targets
         self.prepare = prepare
         self.fetch = fetch
+        self.include_prepared = include_prepared
 
     def __call__(self, source: BaseSource) -> list[Response]:
         context = self.prepare(source) if self.prepare is not None else None
@@ -450,7 +466,12 @@ class FanOutRetriever(_BaseRetriever):
             )
             for target in self.targets(source, context)
         )
-        return [response for response in responses if response is not None]
+        fetched: list[Response] = [
+            response for response in responses if response is not None
+        ]
+        if self.include_prepared:
+            fetched.insert(0, cast("Response", context))
+        return fetched
 
 
 class FirstMatchRetriever(_BaseRetriever):
@@ -1051,6 +1072,110 @@ class PdfLinkRetriever(_BaseRetriever):
         return pdf
 
 
+def yearly_links(
+    pattern: str | Callable[..., str],
+    *,
+    argument: str | None = None,
+    link_name: Callable[[str], str] | None = None,
+    lookback: int = 0,
+) -> Callable[..., list[str]]:
+    """A :class:`Lookup` ``pick`` listing an index page's calendars from this year on.
+
+    The many-documents sibling of :class:`PdfLinkRetriever`, for a provider that
+    links next year's calendar months before this year's runs out (an Austrian
+    municipality posting its 2027 PDF in October 2026). Picking only the newest
+    link would drop the rest of this year, so this returns every link whose
+    year is the current year or later (one per year, the first in page order),
+    oldest first, and a :class:`FanOutRetriever` fetches each::
+
+        retrieve = retrievers.FanOutRetriever(
+            prepare=retrievers.Lookup(INDEX_URL, pick=retrievers.yearly_links(
+                r"Abfuhrkalender[^/]*?(20\\d\\d)\\.pdf"
+            )),
+            targets=lambda source, urls: urls,
+            fetch=retrievers.Request(lambda url, urls, **_: url),
+        )
+        parse = parsers.EachResponse(...)
+
+    When no link is current (the provider has not published this year's yet),
+    the newest one is returned on its own, so the source still reports the last
+    dates it knows. No matching link at all raises ``ValueError``: the page
+    layout changed.
+
+    Args:
+        pattern: regex searched (case-insensitively) against each ``<a href>``;
+            its first group that matched is the four-digit year (so a provider
+            that moved the year within its file names can be matched with two
+            alternative groups). Links are resolved against the index page's
+            URL and de-duplicated. Or ``callable(**source.params) -> str`` for
+            a pattern naming the configured calendar.
+        argument: for an index listing one calendar per area, the
+            ``source.params`` field naming the area as the page's link text
+            prints it. Only links whose text matches (ignoring case, accents,
+            hyphens and punctuation) are kept; no match raises
+            ``SourceArgumentNotFoundWithSuggestions`` listing the link texts.
+        link_name: optional ``callable(link_text) -> name`` applied before
+            matching ``argument``, for link texts that carry the year
+            ("Ameno 2026 (UFF.)" -> "Ameno"), so the configured name keeps
+            matching next year's link.
+        lookback: how many years before the current one to keep as well, for
+            calendars that run into the next year (March to February): in
+            January the previous year's document still holds the dates.
+    """
+
+    def pick(response: Response, *_keys: Any, **params: Any) -> list[str]:
+        from waste_collection_schedule import lookups
+
+        compiled = re.compile(
+            pattern(**params) if callable(pattern) else pattern, re.IGNORECASE
+        )
+        if not compiled.groups:
+            raise ValueError(
+                f"yearly_links pattern {compiled.pattern!r} has no group for the year"
+            )
+        base = getattr(response, "url", "") or ""
+        by_text: dict[str, dict[str, int]] = {}
+        for tag in BeautifulSoup(response.text, "html.parser").find_all("a", href=True):
+            href = str(tag["href"])
+            match = compiled.search(href)
+            year = (
+                next((group for group in match.groups() if group), None)
+                if match
+                else None
+            )
+            if year is not None:
+                text = tag.get_text(" ", strip=True) if argument else ""
+                if text and link_name is not None:
+                    text = link_name(text)
+                by_text.setdefault(text, {}).setdefault(urljoin(base, href), int(year))
+        if not by_text:
+            raise ValueError(
+                f"no link matching {compiled.pattern!r} found on {base}; "
+                "the page layout may have changed."
+            )
+        if argument:
+            found = lookups.resolve(
+                {text: links for text, links in by_text.items() if text},
+                params.get(argument),
+                argument=argument,
+                normalize=lookups.normalize_loose,
+            )
+        else:
+            found = by_text[""]
+        # One document per year: the first link in page order wins, so a
+        # corrected re-upload linked next to the original is not read twice.
+        per_year: dict[int, str] = {}
+        for url, year in found.items():
+            per_year.setdefault(year, url)
+        this_year = datetime.date.today().year
+        current = [
+            per_year[year] for year in sorted(per_year) if year >= this_year - lookback
+        ]
+        return current or [per_year[max(per_year)]]
+
+    return pick
+
+
 # One step of an AthosWasteManagementRetriever wizard: a dict with keys
 #
 #   submit_action -- (required) the ``SubmitAction`` form value posted for
@@ -1075,23 +1200,39 @@ class PdfLinkRetriever(_BaseRetriever):
 type AthosStep = "dict[str, Any]"
 
 
-def _scrape_hidden_inputs(html: str) -> dict[str, str]:
-    """Return ``{name: value}`` for every ``<input type=hidden>`` in ``html``.
+def form_inputs(
+    page: str | BeautifulSoup,
+    *,
+    hidden_only: bool = False,
+    required: Sequence[str] = (),
+) -> dict[str, str]:
+    """Read named form inputs for a subsequent request in the same session.
 
-    Shared by every Athos "WasteManagementServlet" deployment to seed the
-    wizard's form state from the initial GET. Matches ``type`` case-
-    insensitively: most deployments emit lowercase ``hidden``, at least one
-    (bmv_at) emits uppercase ``HIDDEN``.
+    WebForms postbacks and servlet wizards both carry server-generated state
+    in their page's inputs. ``hidden_only`` matches input types without regard
+    to case. ``required`` rejects missing fields or values, while an explicitly
+    empty value remains valid (for example an initial event argument).
     """
-    soup = BeautifulSoup(html, "html.parser")
+    soup = BeautifulSoup(page, "html.parser") if isinstance(page, str) else page
     fields: dict[str, str] = {}
     for tag in soup.find_all("input"):
-        if str(tag.get("type", "")).lower() != "hidden":
+        if hidden_only and str(tag.get("type", "")).lower() != "hidden":
             continue
         name = tag.get("name")
         if name:
-            fields[str(name)] = str(tag.get("value", ""))
+            value = tag.get("value", "")
+            if name in required and not isinstance(tag.get("value"), str):
+                raise ValueError(f"Could not find value for form field: {name}")
+            fields[str(name)] = str(value)
+    for name in required:
+        if name not in fields:
+            raise ValueError(f"Could not find form field: {name}")
     return fields
+
+
+def _scrape_hidden_inputs(html: str) -> dict[str, str]:
+    """Read Athos wizard state, including uppercase ``HIDDEN`` inputs."""
+    return form_inputs(html, hidden_only=True)
 
 
 def _scrape_input_values(html: str, name: str) -> list[str]:

@@ -1,57 +1,39 @@
-# OpenData Bordeaux Métropole — provider for waste management schedules
+# Bordeaux Métropole
 
 Support for schedules provided by [Bordeaux Métropole](https://opendata.bordeaux-metropole.fr/).
 
-They operate the schedules of at least these cities:
-
-- Bordeaux
-- Mérignac
-- Gradignan
-- Talence
-- Saint-Médard-en-Jalles
-- Villenave-d'Ornon
-- Bruges
-- Bègles
-- Le Bouscat
-- Pessac
-- Ambarès-et-Lagrave
-- Ambès
-- Blanquefort
-- Eysines
-- Le Haillan
-- Le Taillan-Médoc
-- Martignas-sur-Jalle
-- Parempuyre
-- Saint-Aubin-de-Médoc
-- Saint-Louis-de-Montferrand
-- Saint-Vincent-de-Paul
-
-You only have to provide your address.
+Source script for opendata.bordeaux-metropole.fr
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: opendata_bordeauxmetropole_fr
       args:
-        address: "ADDRESS"
-        city: "CITY_NAME"
+        address: ADDRESS
+        city: CITY
 ```
 
 ### Configuration Variables
 
-## Examples
+**address**  
+*(string) (required)*
+
+**city**  
+*(string) (required)*
+
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: opendata_bordeauxmetropole_fr
       args:
-        address: "11 rue Jean Moulin"
-        city: "Bordeaux"
+        address: 20 Cr Pasteur
+        city: Bordeaux
 ```
 
-## How to ensure your address is valid
+## How to get the source arguments
 
-Go on [OpenData BordeauxMetropole’s website](https://opendata.bordeaux-metropole.fr/explore/dataset/en_frcol_s/map/?disjunctive.jour_col&basemap=jawg.streets) and try to search your address.
+Choose your commune and enter your street address without the city (e.g. '20 Cours Pasteur'). The collection days are those of the zone the address lies in.

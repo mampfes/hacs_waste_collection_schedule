@@ -1,108 +1,102 @@
 import json
-import re
-from datetime import date
+from typing import ClassVar, final
 
-import requests
-from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import recurrence
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district
+from waste_collection_schedule.parsers import JsVarParser
+from waste_collection_schedule.preprocessors import (
+    ArgumentLookup,
+    Compose,
+    RecurrenceExpander,
+    Schedule,
+)
+from waste_collection_schedule.retrievers import HttpGetRetriever
+from waste_collection_schedule.transformers import ICSTransformer
 
-FRENSH_WEEKDAYS = {
-    "lundi": MO,
-    "mardi": TU,
-    "mercredi": WE,
-    "jeudi": TH,
-    "vendredi": FR,
-    "samedi": SA,
-    "dimanche": SU,
+# The collection rounds are the placemarks of a public Google My Maps embed. The
+# page ships the whole map as a JSON document held in a JavaScript string; each
+# placemark carries a "nom" (district) and a "description" such as
+#   "Collecte des Ordures Ménagères => Mardi, Vendredi | Matin\n
+#    Collecte des déchets Recyclables => Jeudi | Après midi".
+
+_MAP_URL = "https://www.google.com/maps/d/embed?mid=192kaU1tycR1QLrQuF_1hhIdtwghc1GDg"
+
+_TYPE_MAP = {
+    "Collecte des Ordures Ménagères": wt.GENERAL_WASTE,
+    "Collecte des déchets Recyclables": wt.RECYCLABLES,
 }
 
-TITLE = "Sivom Rive Droite - Bassens"
-DESCRIPTION = "Source for Sivom Rive Droite."
-URL = "https://www.sivom-rivedroite.fr/"
-TEST_CASES = {
-    "BASSENS 3": {"district": "BASSENS 3"},
-    "BASSENS 1": {"district": "BASSENS 1 et BASSENS 2"},
-}
+
+def _placemarks(node, found: dict[str, str]) -> None:
+    """Collect ``{district: description}`` from the nested map document."""
+    if not isinstance(node, list):
+        return
+    if (
+        len(node) > 1
+        and isinstance(node[0], list)
+        and isinstance(node[1], list)
+        and node[0]
+        and node[1]
+        and node[0][0] == "nom"
+        and node[1][0] == "description"
+    ):
+        description = node[1][1][0]
+        # "BASSENS 1 et BASSENS 2" is one placemark serving both districts.
+        for name in node[0][1][0].split(" et "):
+            found[name.strip()] = description
+        found[node[0][1][0].strip()] = description
+    for child in node:
+        _placemarks(child, found)
 
 
-ICON_MAP = {
-    "Ménagères": Icons.GENERAL_WASTE,
-    "Recyclables": Icons.RECYCLING,
-}
+def _districts(page_data: str, source) -> dict[str, str]:
+    found: dict[str, str] = {}
+    _placemarks(json.loads(page_data), found)
+    return found
 
 
-API_URL = "https://www.google.com/maps/d/embed?mid=192kaU1tycR1QLrQuF_1hhIdtwghc1GDg&ll=44.90521499253571,-0.5239428999999873&z=13"
-PAGE_DATA_REGEX = r'var _pageData\s+=\s*"(\[.*?\])";'
+def _describe(description: str, source):
+    for line in description.split("\n"):
+        label, _, days = line.partition("=>")
+        label = label.strip()
+        for day in days.split("|")[0].split(","):
+            weekday = recurrence.weekday(day)
+            if label and weekday is not None:
+                yield Schedule(
+                    label, recurrence.next_weekday(weekday), recurrence.WEEKLY, 20
+                )
 
 
-class Source:
-    def __init__(self, district: str):
-        self._district: str = district
+@final
+class Source(BaseSource):
+    TITLE = "Sivom Rive Droite - Bassens"
+    DESCRIPTION = "Source for Sivom Rive Droite."
+    URL = "https://www.sivom-rivedroite.fr/"
+    COUNTRY = "fr"
+    RAISE_ON_EMPTY = True
 
-    def get_descriptions(self, data) -> dict[str, str]:
-        to_return: dict[str, str] = {}
-        if isinstance(data, list):
-            if len(data) == 0:
-                return to_return
-            if (
-                len(data) > 1
-                and isinstance(data[0], list)
-                and isinstance(data[1], list)
-                and len(data[0]) != 0
-                and len(data[1]) != 0
-                and data[0][0] == "nom"
-                and data[1][0] == "description"
-            ):
-                to_return = {data[0][1][0].lower(): data[1][1][0]}
-                for _nom in data[0][1][0].lower().split(" et "):
-                    to_return.update(
-                        dict.fromkeys(
-                            data[0][1][0].lower().split(" et "), data[1][1][0]
-                        )
-                    )
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES]
 
-            for d in data:
-                to_return.update(self.get_descriptions(d))
-        return to_return
+    TEST_CASES: ClassVar[dict] = {
+        "BASSENS 3": {"district": "BASSENS 3"},
+        "BASSENS 1": {"district": "BASSENS 1 et BASSENS 2"},
+    }
 
-    def fetch(self) -> list[Collection]:
-        r = requests.get(API_URL)
+    PARAMS = (district(),)
 
-        r.raise_for_status()
-        r.encoding = "utf-8"
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your district exactly as named on the collection map at "
+            "https://www.sivom-rivedroite.fr/ (e.g. 'BASSENS 3')."
+        ),
+    }
 
-        data_match = re.search(PAGE_DATA_REGEX, r.text)
-        if not data_match:
-            raise Exception("Invalid Request response")
-
-        data_str = data_match.group(1).encode("latin1").decode("unicode_escape")
-        data = json.loads(data_str)
-
-        descriptions = self.get_descriptions(data)
-        if self._district.lower() not in descriptions:
-            raise Exception(
-                f"District {self._district} not found, use one of {list(descriptions.keys())}"
-            )
-
-        entries = []
-        description = descriptions[self._district.lower()]
-        for collection in description.split("\n"):
-            bin_type, days = collection.split("=>")
-            days = days.split("|")[0].strip()
-            for day in days.split(","):
-                collection_day = FRENSH_WEEKDAYS[day.strip().lower()]
-                for dt in rrule(
-                    freq=WEEKLY,
-                    dtstart=date.today(),
-                    count=20,
-                    byweekday=collection_day,
-                ):
-                    entries.append(
-                        Collection(
-                            date=dt.date(),
-                            t=bin_type,
-                            icon=ICON_MAP.get(bin_type.split()[-1]),
-                        )
-                    )
-
-        return entries
+    retrieve = HttpGetRetriever(_MAP_URL)
+    parse = JsVarParser("_pageData")
+    preprocess = Compose(
+        ArgumentLookup(_districts, argument="district"),
+        RecurrenceExpander(_describe),
+    )
+    transform = ICSTransformer(type_value_map=_TYPE_MAP)

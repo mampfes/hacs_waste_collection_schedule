@@ -1,6 +1,8 @@
 # Grand Besançon Métropole
 
-Support for waste collection schedules in [Grand Besançon Métropole](https://www.grandbesancon.fr) (68 communes), France, via the open data API.
+Support for schedules provided by [Grand Besançon Métropole](https://www.grandbesancon.fr).
+
+Source for waste collection schedules in Grand Besançon Métropole, France.
 
 ## Configuration via configuration.yaml
 
@@ -16,36 +18,27 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**insee_code**
+**insee_code**  
 *(string) (required)*
 
-The 5-digit INSEE code of your commune (e.g. `25014` for Amagney, `25056` for Besançon).
-
-**street**
+**street**  
 *(string) (required)*
 
-Your street name as shown in the Grand Besançon system.
-
-**house_number**
+**house_number**  
 *(string) (optional)*
 
-Your house number. Helps filter results for large communes.
-
-## How to get the source arguments
-
-1. Find your commune's INSEE code at [insee.fr](https://www.insee.fr/fr/recherche/recherche-geographique).
-2. Check your street name on the [Grand Besançon waste data page](https://data.grandbesancon.fr/opendata/dataset/joursDeCollecteDechets).
-
-## Examples
-
-### Amagney, Rue de Besancon 1
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: grandbesancon_fr
       args:
-        insee_code: "25014"
-        street: "Rue de Besancon"
-        house_number: "1"
+        insee_code: '25014'
+        street: Rue de Besancon
+        house_number: '1'
 ```
+
+## How to get the source arguments
+
+Find your commune's INSEE code at https://www.insee.fr. Enter your street name as shown on the Grand Besançon waste calendar at https://data.grandbesancon.fr/opendata/dataset/joursDeCollecteDechets.

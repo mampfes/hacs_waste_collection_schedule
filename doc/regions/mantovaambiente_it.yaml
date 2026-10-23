@@ -1,0 +1,101 @@
+---
+# Municipalities served by Mantova Ambiente that publish a collection calendar.
+#
+# Each entry becomes its own listing in README.md / sources.json, with the
+# `comune` param pre-filled from its title, via regions.from_yaml() in
+# source/mantovaambiente_it.py. Moglia and Pomponesco are served by Mantova
+# Ambiente but publish no calendar, so they are not listed.
+  - title: Acquanegra sul Chiese
+    url: https://www.mantovaambiente.it/comuni/acquanegra-sul-chiese
+  - title: Asola
+    url: https://www.mantovaambiente.it/comuni/asola
+  - title: Bagnolo San Vito
+    url: https://www.mantovaambiente.it/comuni/bagnolo-san-vito
+  - title: Borgocarbonara
+    url: https://www.mantovaambiente.it/comuni/borgocarbonara
+  - title: Borgo Mantovano
+    url: https://www.mantovaambiente.it/comuni/borgo-mantovano-1
+  - title: Bozzolo
+    url: https://www.mantovaambiente.it/comuni/bozzolo
+  - title: Casalmoro
+    url: https://www.mantovaambiente.it/comuni/casalmoro
+  - title: Casaloldo
+    url: https://www.mantovaambiente.it/comuni/casaloldo
+  - title: Casalromano
+    url: https://www.mantovaambiente.it/comuni/casalromano
+  - title: Castelbelforte
+    url: https://www.mantovaambiente.it/comuni/castelbelforte-1
+  - title: Castel d'Ario
+    url: https://www.mantovaambiente.it/comuni/casteldario
+  - title: Castel Goffredo
+    url: https://www.mantovaambiente.it/comuni/castel-goffredo
+  - title: Castellucchio
+    url: https://www.mantovaambiente.it/comuni/castellucchio
+  - title: Ceresara
+    url: https://www.mantovaambiente.it/comuni/ceresara
+  - title: Gazzuolo
+    url: https://www.mantovaambiente.it/comuni/gazzuolo
+  - title: Goito
+    url: https://www.mantovaambiente.it/comuni/goito
+  - title: Gonzaga
+    url: https://www.mantovaambiente.it/comuni/gonzaga
+  - title: Magnacavallo
+    url: https://www.mantovaambiente.it/comuni/magnacavallo
+  - title: Mantova
+    url: https://www.mantovaambiente.it/comuni/mantova
+  - title: Marcaria
+    url: https://www.mantovaambiente.it/comuni/marcaria
+  - title: Mariana Mantovana
+    url: https://www.mantovaambiente.it/comuni/mariana
+  - title: Marmirolo
+    url: https://www.mantovaambiente.it/comuni/marmirolo
+  - title: Medole
+    url: https://www.mantovaambiente.it/comuni/medole
+  - title: Monzambano
+    url: https://www.mantovaambiente.it/comuni/monzambano
+  - title: Motteggiana
+    url: https://www.mantovaambiente.it/comuni/motteggiana
+  - title: Pegognaga
+    url: https://www.mantovaambiente.it/comuni/pegognaga
+  - title: Poggio Rusco
+    url: https://www.mantovaambiente.it/comuni/poggio-rusco
+  - title: Ponti sul Mincio
+    url: https://www.mantovaambiente.it/comuni/ponti-sul-mincio
+  - title: Porto Mantovano
+    url: https://www.mantovaambiente.it/comuni/porto-mantovano
+  - title: Quingentole
+    url: https://www.mantovaambiente.it/comuni/quingentole
+  - title: Quistello
+    url: https://www.mantovaambiente.it/comuni/quistello
+  - title: Redondesco
+    url: https://www.mantovaambiente.it/comuni/redondesco
+  - title: Rivarolo Mantovano
+    url: https://www.mantovaambiente.it/comuni/rivarolo-mantovano
+  - title: Rodigo
+    url: https://www.mantovaambiente.it/comuni/rodigo
+  - title: Roncoferraro
+    url: https://www.mantovaambiente.it/comuni/roncoferraro
+  - title: Roverbella
+    url: https://www.mantovaambiente.it/comuni/roverbella
+  - title: Sabbioneta
+    url: https://www.mantovaambiente.it/comuni/sabbioneta
+  - title: San Giacomo delle Segnate
+    url: https://www.mantovaambiente.it/comuni/san-giacomo-delle-segnate
+  - title: San Giorgio Bigarello
+    url: https://www.mantovaambiente.it/comuni/san-giorgio-e-bigarello
+  - title: San Giovanni del Dosso
+    url: https://www.mantovaambiente.it/comuni/san-giovanni-del-dosso
+  - title: San Martino dall'Argine
+    url: https://www.mantovaambiente.it/comuni/san-martino-dall-argine
+  - title: Schivenoglia
+    url: https://www.mantovaambiente.it/comuni/schivenoglia
+  - title: Sermide e Felonica
+    url: https://www.mantovaambiente.it/comuni/sermide-e-felonica-1
+  - title: Settimo Milanese
+    url: https://www.mantovaambiente.it/comuni/settimo-milanese
+  - title: Solferino
+    url: https://www.mantovaambiente.it/comuni/solferino
+  - title: Suzzara
+    url: https://www.mantovaambiente.it/comuni/suzzara
+  - title: Volta Mantovana
+    url: https://www.mantovaambiente.it/comuni/volta-mantovana

@@ -1,0 +1,72 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "GET https://www.fenland.gov.uk/find c9f2792b2d",
+      "method": "GET",
+      "url": "https://www.fenland.gov.uk/find",
+      "final_url": "https://www.fenland.gov.uk/find?type=postcodesearch&postcode=PE15+0SD",
+      "body": "{\"params\":[[\"postcode\",\"PE15 0SD\"],[\"type\",\"postcodesearch\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 15:47:01 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "422",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "content-encoding": "gzip",
+        "expires": "-1",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000",
+        "x-ua-compatible": "IE=Edge",
+        "x-frame-options": "DENY",
+        "report-to": "{\"group\":\"csp-endpoint\",\"max_age\":10886400,\"endpoints\":[{\"url\":\"csp-reports\"}]}",
+        "content-security-policy": "frame-ancestors 'self'; report-uri csp-reports; report-to csp-endpoint;",
+        "link": "<https://www.fenland.gov.uk/article/13114/Find>; rel=\"canonical\"",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "cloudflare",
+        "x-powered-by": "",
+        "cf-cache-status": "DYNAMIC",
+        "vary": "accept-encoding",
+        "set-cookie": "__cf_bm=n9nkNgRAGzJ1zxNsIdkCDTkl_.0EFfjNpY5eoftKCws-1791906421.2152853-1.0.1.1-iDcQ4zJmSVTSICKw27CWsuw9vRZDRtpI8D2DoV2rptvOYAfEJD_HXO64uYsfntwf9hgUJMrvVni1yNFG8agTnXr4Hdc1sg0VWKAymOWGcKvzZC2khKoxb2cPEXcE7YW5; HttpOnly; SameSite=None; Secure; Path=/; Domain=www.fenland.gov.uk; Expires=Tue, 13 Oct 2026 16:17:01 GMT",
+        "cf-ray": "a49f7afc9fd460f9-LHR"
+      },
+      "content_b64": "W3sidWRwcm4iOjEwMDA5MDA2ODI0OSwiY29tcGFueSI6IiIsImRlcGFydG1lbnQiOiIiLCJsaW5lMSI6IjEgS25pZ2h0cyBDbG9zZSIsImxpbmUyIjoiRG9kZGluZ3RvbiIsImxpbmUzIjoiIiwibGluZTQiOiIiLCJsaW5lNSI6IiIsInRvd24iOiJNYXJjaCIsImNvdW50eSI6IiIsInBvc3Rjb2RlIjoiUEUxNSAwU0QiLCJ3YXJkIjpudWxsLCJsb2NhdGlvbiI6bnVsbCwiZWFzdGluZyI6NTQwMzM5LjY3LCJub3J0aGluZyI6MjkwOTI2LjQ5LCJsYXRpdHVkZSI6NTIuNDk4MTkxOTA1MDgyLCJsb25naXR1ZGUiOjAuMDY1OTI4NzEyMjM2fSx7InVkcHJuIjoxMDAwOTAwNjgyNTAsImNvbXBhbnkiOiIiLCJkZXBhcnRtZW50IjoiIiwibGluZTEiOiIyIEtuaWdodHMgQ2xvc2UiLCJsaW5lMiI6IkRvZGRpbmd0b24iLCJsaW5lMyI6IiIsImxpbmU0IjoiIiwibGluZTUiOiIiLCJ0b3duIjoiTWFyY2giLCJjb3VudHkiOiIiLCJwb3N0Y29kZSI6IlBFMTUgMFNEIiwid2FyZCI6bnVsbCwibG9jYXRpb24iOm51bGwsImVhc3RpbmciOjU0MDM0OC4wLCJub3J0aGluZyI6MjkwOTIzLjAsImxhdGl0dWRlIjo1Mi40OTgxNTg0MDg5NzUsImxvbmdpdHVkZSI6MC4wNjYwNDk4NjQ2NDF9LHsidWRwcm4iOjEwMDA5MDA2ODI1MSwiY29tcGFueSI6IiIsImRlcGFydG1lbnQiOiIiLCJsaW5lMSI6IjMgS25pZ2h0cyBDbG9zZSIsImxpbmUyIjoiRG9kZGluZ3RvbiIsImxpbmUzIjoiIiwibGluZTQiOiIiLCJsaW5lNSI6IiIsInRvd24iOiJNYXJjaCIsImNvdW50eSI6IiIsInBvc3Rjb2RlIjoiUEUxNSAwU0QiLCJ3YXJkIjpudWxsLCJsb2NhdGlvbiI6bnVsbCwiZWFzdGluZyI6NTQwMzY1LjAsIm5vcnRoaW5nIjoyOTA5MjcuMCwibGF0aXR1ZGUiOjUyLjQ5ODE4OTk3NDE1OSwibG9uZ2l0dWRlIjowLjA2NjMwMTc5OTY1fSx7InVkcHJuIjoxMDAwOTAwNjgyNTIsImNvbXBhbnkiOiIiLCJkZXBhcnRtZW50IjoiIiwibGluZTEiOiI0IEtuaWdodHMgQ2xvc2UiLCJsaW5lMiI6IkRvZGRpbmd0b24iLCJsaW5lMyI6IiIsImxpbmU0IjoiIiwibGluZTUiOiIiLCJ0b3duIjoiTWFyY2giLCJjb3VudHkiOiIiLCJwb3N0Y29kZSI6IlBFMTUgMFNEIiwid2FyZCI6bnVsbCwibG9jYXRpb24iOm51bGwsImVhc3RpbmciOjU0MDM2OS4wLCJub3J0aGluZyI6MjkwOTI1LjAsImxhdGl0dWRlIjo1Mi40OTgxNzA5Nzc0MiwibG9uZ2l0dWRlIjowLjA2NjM1OTgzOTM5OH0seyJ1ZHBybiI6MTAwMDkwMDY4MjUzLCJjb21wYW55IjoiIiwiZGVwYXJ0bWVudCI6IiIsImxpbmUxIjoiNSBLbmlnaHRzIENsb3NlIiwibGluZTIiOiJEb2RkaW5ndG9uIiwibGluZTMiOiIiLCJsaW5lNCI6IiIsImxpbmU1IjoiIiwidG93biI6Ik1hcmNoIiwiY291bnR5IjoiIiwicG9zdGNvZGUiOiJQRTE1IDBTRCIsIndhcmQiOm51bGwsImxvY2F0aW9uIjpudWxsLCJlYXN0aW5nIjo1NDAzODMuMCwibm9ydGhpbmciOjI5MDkzNC4wLCJsYXRpdHVkZSI6NTIuNDk4MjQ4MjMzODYzLCJsb25naXR1ZGUiOjAuMDY2NTY5NzE5NjQ2fSx7InVkcHJuIjoxMDAwOTAwNjgyNTQsImNvbXBhbnkiOiIiLCJkZXBhcnRtZW50IjoiIiwibGluZTEiOiI2IEtuaWdodHMgQ2xvc2UiLCJsaW5lMiI6IkRvZGRpbmd0b24iLCJsaW5lMyI6IiIsImxpbmU0IjoiIiwibGluZTUiOiIiLCJ0b3duIjoiTWFyY2giLCJjb3VudHkiOiIiLCJwb3N0Y29kZSI6IlBFMTUgMFNEIiwid2FyZCI6bnVsbCwibG9jYXRpb24iOm51bGwsImVhc3RpbmciOjU0MDM4OC4wLCJub3J0aGluZyI6MjkwOTM0LjAsImxhdGl0dWRlIjo1Mi40OTgyNDY5NDc5NjYsImxvbmdpdHVkZSI6MC4wNjY2NDMzMjI2NzR9LHsidWRwcm4iOjEwMDA5MDA2ODI1NSwiY29tcGFueSI6IiIsImRlcGFydG1lbnQiOiIiLCJsaW5lMSI6IjcgS25pZ2h0cyBDbG9zZSIsImxpbmUyIjoiRG9kZGluZ3RvbiIsImxpbmUzIjoiIiwibGluZTQiOiIiLCJsaW5lNSI6IiIsInRvd24iOiJNYXJjaCIsImNvdW50eSI6IiIsInBvc3Rjb2RlIjoiUEUxNSAwU0QiLCJ3YXJkIjpudWxsLCJsb2NhdGlvbiI6bnVsbCwiZWFzdGluZyI6NTQwNDAxLjAsIm5vcnRoaW5nIjoyOTA5MjIuMCwibGF0aXR1ZGUiOjUyLjQ5ODEzNTc5NTQ5OSwibG9uZ2l0dWRlIjowLjA2NjgyOTYzMzcxOH0seyJ1ZHBybiI6MTAwMDkwMDY4MjU2LCJjb21wYW55IjoiIiwiZGVwYXJ0bWVudCI6IiIsImxpbmUxIjoiOCBLbmlnaHRzIENsb3NlIiwibGluZTIiOiJEb2RkaW5ndG9uIiwibGluZTMiOiIiLCJsaW5lNCI6IiIsImxpbmU1IjoiIiwidG93biI6Ik1hcmNoIiwiY291bnR5IjoiIiwicG9zdGNvZGUiOiJQRTE1IDBTRCIsIndhcmQiOm51bGwsImxvY2F0aW9uIjpudWxsLCJlYXN0aW5nIjo1NDA0MDQuMCwibm9ydGhpbmciOjI5MDkxNC4wLCJsYXRpdHVkZSI6NTIuNDk4MDYzMTUxMjU5LCJsb25naXR1ZGUiOjAuMDY2ODcwNDI0MTYxfV0="
+    },
+    {
+      "key": "GET https://www.fenland.gov.uk/find 1f136e3dbf",
+      "method": "GET",
+      "url": "https://www.fenland.gov.uk/find",
+      "final_url": "https://www.fenland.gov.uk/find?type=loadlayer&layerId=2&uprn=100090068249&lat=52.498191905082&lng=0.065928712236",
+      "body": "{\"params\":[[\"lat\",\"52.498191905082\"],[\"layerId\",\"2\"],[\"lng\",\"0.065928712236\"],[\"type\",\"loadlayer\"],[\"uprn\",\"100090068249\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 15:47:04 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "394",
+        "cache-control": "no-cache, no-store",
+        "pragma": "no-cache",
+        "content-encoding": "gzip",
+        "expires": "-1",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000",
+        "x-ua-compatible": "IE=Edge",
+        "x-frame-options": "DENY",
+        "report-to": "{\"group\":\"csp-endpoint\",\"max_age\":10886400,\"endpoints\":[{\"url\":\"csp-reports\"}]}",
+        "content-security-policy": "frame-ancestors 'self'; report-uri csp-reports; report-to csp-endpoint;",
+        "link": "<https://www.fenland.gov.uk/article/13114/Find>; rel=\"canonical\"",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "server": "cloudflare",
+        "x-powered-by": "",
+        "cf-cache-status": "DYNAMIC",
+        "vary": "accept-encoding",
+        "cf-ray": "a49f7b046e8d60f9-LHR"
+      },
+      "content_b64": "eyJmZWF0dXJlcyI6W3siZ2VvbWV0cnkiOnsiY29vcmRpbmF0ZXMiOlswLjA2NTkyODcxMjIzNiw1Mi40OTgxOTE5MDUwODJdLCJ0eXBlIjoiUG9pbnQifSwicHJvcGVydGllcyI6eyJ1cGNvbWluZyI6W3siZGF0ZSI6IjIwMjYtMTAtMTNUMjM6MDA6MDBaIiwiY29sbGVjdGlvbnMiOlt7ImlkIjo0ODQ2NDQ2MiwibmFtZSI6IkVtcHR5IEJpbiBGT09EIENBRERZIiwiZGVzYyI6IkVtcHR5IEJpbiBGT09EIENBRERZIiwiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTEzVDIzOjAwOjAwWiJ9XX0seyJkYXRlIjoiMjAyNi0xMC0xNFQwNjowMDowMFoiLCJjb2xsZWN0aW9ucyI6W3siaWQiOjQ2NDM5NzkyLCJuYW1lIjoiRW1wdHkgQmluIEJMVUUgMjQwIiwiZGVzYyI6IlJlY3ljbGluZyBiaW4gKGJsdWUpIiwiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTE0VDA2OjAwOjAwWiJ9XX0seyJkYXRlIjoiMjAyNi0xMC0yMFQyMzowMDowMFoiLCJjb2xsZWN0aW9ucyI6W3siaWQiOjQ4NDc0NjQ0LCJuYW1lIjoiRW1wdHkgQmluIEZPT0QgQ0FERFkiLCJkZXNjIjoiRW1wdHkgQmluIEZPT0QgQ0FERFkiLCJjb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTAtMjBUMjM6MDA6MDBaIn1dfSx7ImRhdGUiOiIyMDI2LTEwLTIxVDA2OjAwOjAwWiIsImNvbGxlY3Rpb25zIjpbeyJpZCI6NDY1MTU0MjAsIm5hbWUiOiJFbXB0eSBCaW4gR1JFRU4gMjQwIiwiZGVzYyI6IkhvdXNlaG9sZCB3YXN0ZSBiaW4gKGdyZWVuKSIsImNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMC0yMVQwNjowMDowMFoifV19LHsiZGF0ZSI6IjIwMjYtMTAtMjhUMDA6MDA6MDBaIiwiY29sbGVjdGlvbnMiOlt7ImlkIjo0ODM1MTMwMiwibmFtZSI6IkVtcHR5IEJpbiBGT09EIENBRERZIiwiZGVzYyI6IkVtcHR5IEJpbiBGT09EIENBRERZIiwiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTI4VDAwOjAwOjAwWiJ9XX0seyJkYXRlIjoiMjAyNi0xMC0yOFQwNzowMDowMFoiLCJjb2xsZWN0aW9ucyI6W3siaWQiOjQ2NzczMjAwLCJuYW1lIjoiRW1wdHkgQmluIEJMVUUgMjQwIiwiZGVzYyI6IlJlY3ljbGluZyBiaW4gKGJsdWUpIiwiY29sbGVjdGlvbkRhdGUiOiIyMDI2LTEwLTI4VDA3OjAwOjAwWiJ9XX0seyJkYXRlIjoiMjAyNi0xMS0wNFQwMDowMDowMFoiLCJjb2xsZWN0aW9ucyI6W3siaWQiOjQ4MzY1NDQ1LCJuYW1lIjoiRW1wdHkgQmluIEZPT0QgQ0FERFkiLCJkZXNjIjoiRW1wdHkgQmluIEZPT0QgQ0FERFkiLCJjb2xsZWN0aW9uRGF0ZSI6IjIwMjYtMTEtMDRUMDA6MDA6MDBaIn1dfSx7ImRhdGUiOiIyMDI2LTExLTA0VDA3OjAwOjAwWiIsImNvbGxlY3Rpb25zIjpbeyJpZCI6NDY4MDAzOTUsIm5hbWUiOiJFbXB0eSBCaW4gR1JFRU4gMjQwIiwiZGVzYyI6IkhvdXNlaG9sZCB3YXN0ZSBiaW4gKGdyZWVuKSIsImNvbGxlY3Rpb25EYXRlIjoiMjAyNi0xMS0wNFQwNzowMDowMFoifV19XX0sInR5cGUiOiJGZWF0dXJlIn1dLCJ0eXBlIjoiRmVhdHVyZUNvbGxlY3Rpb24ifQ=="
+    }
+  ]
+}

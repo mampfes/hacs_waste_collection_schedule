@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://olo-strapi.bratislava.sk/graphql 510328109a",
+      "method": "POST",
+      "url": "https://olo-strapi.bratislava.sk/graphql",
+      "final_url": "https://olo-strapi.bratislava.sk/graphql",
+      "body": "{\"body\":{\"operationName\":\"PickupDaysByRegistrationNumber\",\"query\":\"\\nquery PickupDaysByRegistrationNumber($registrationNumber: String!) {\\n  pickupDays(filters: {registrationNumber: {eq: $registrationNumber}}) {\\n    data {\\n      attributes {\\n        registrationNumber\\n        address\\n        frequency\\n        wasteType\\n        frequencySeason\\n      }\\n    }\\n  }\\n}\\n\",\"variables\":{\"registrationNumber\":\"1353013\"}}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Tue, 13 Oct 2026 21:08:50 GMT",
+        "content-type": "application/json",
+        "server": "envoy",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "content-security-policy": "connect-src 'self' https:;img-src 'self' data: blob: cdn-api.bratislava.sk olo.s3.bratislava.sk;media-src 'self' data: blob: cdn-api.bratislava.sk olo.s3.bratislava.sk;default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline'",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "x-content-type-options": "nosniff",
+        "x-dns-prefetch-control": "off",
+        "x-download-options": "noopen",
+        "x-frame-options": "SAMEORIGIN",
+        "x-permitted-cross-domain-policies": "none",
+        "vary": "Origin",
+        "access-control-allow-origin": "",
+        "access-control-allow-credentials": "true",
+        "x-powered-by": "Strapi <strapi.io>",
+        "cf-cache-status": "DYNAMIC",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=qfKod0AgxsUPdygzZcJXFV6HyX66WD5t8k2A8sAlQ7tkzdn8qxk3t%2BDWbe0uudUISg4cxwl1nGiKLCSr45zVp6dhq5nCAy%2ByBAxbWkzLZX6BjJAEpUVASPK9TyHSc6TJ%2FM3LuorwrvhjyQ%3D%3D\"}]}",
+        "content-encoding": "br",
+        "cf-ray": "a4a15263c9c534b0-WAW",
+        "x-envoy-upstream-service-time": "176"
+      },
+      "content_b64": "eyJkYXRhIjp7InBpY2t1cERheXMiOnsiZGF0YSI6W3siYXR0cmlidXRlcyI6eyJyZWdpc3RyYXRpb25OdW1iZXIiOiIxMzUzMDEzIiwiYWRkcmVzcyI6Ikphc292c2vDoSA4IiwiZnJlcXVlbmN5IjoiWzMsM10iLCJ3YXN0ZVR5cGUiOiJabWllxaFhbsO9IG9kcGFkIiwiZnJlcXVlbmN5U2Vhc29uIjpudWxsfX1dfX19Cg=="
+    }
+  ]
+}

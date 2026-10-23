@@ -1,16 +1,18 @@
 # South Tyneside Council
 
-Support for schedules provided by [South Tyneside Council](https://www.southtyneside.gov.uk/article/1023/Bin-collection-dates), serving South Tyneside, UK.
+Support for schedules provided by [South Tyneside Council](https://southtyneside.gov.uk).
+
+Source for southtyneside.gov.uk services for South Tyneside Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: southtyneside_gov_uk
       args:
         postcode: POSTCODE
-        uprn: UPRN_CODE
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -25,13 +27,13 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: southtyneside_gov_uk
       args:
-        postcode: "NE34 8RY"
-        uprn: "100000342955"
+        postcode: NE34 8RY
+        uprn: '100000342955'
 ```
 
-## How to get the uprn argument above
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering in your address details.
+Find your UPRN at https://www.findmyaddress.co.uk/.

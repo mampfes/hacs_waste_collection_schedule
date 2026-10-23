@@ -1,8 +1,8 @@
 # Samverkan Återvinning Miljö (SÅM)
 
-Support for schedules provided by [Samverkan Återvinning Miljö (SÅM)](https://samiljo.se/avfallshamtning/hamtningskalender/), serving the municipality of Gislaved, Gnosjö, Vaggeryd and Värnamo, Sweden. 
+Support for schedules provided by [Samverkan Återvinning Miljö (SÅM)](https://www.samiljo.se).
 
-Helgvecka means that the pickup day might deviate from the scheduled day due to a public holiday during the week.
+Source for Samverkan Återvinning Miljö (SÅM) waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -11,16 +11,16 @@ waste_collection_schedule:
   sources:
     - name: samiljo_se
       args:
-        street: STREET_NAME
-        city: CITY_NAME
+        street: STREET
+        city: CITY
 ```
 
 ### Configuration Variables
 
-**street**
+**street**  
 *(string) (required)*
 
-**city**
+**city**  
 *(string) (required)*
 
 ## Example
@@ -30,27 +30,10 @@ waste_collection_schedule:
   sources:
     - name: samiljo_se
       args:
-        street: Storgatan 1
-        city: Burseryd
+        city: Reftele
+        street: Storgatan 6
 ```
 
+## How to get the source arguments
 
-## How to get the source argument
-
-The source argument is the street including number and the city to the house with waste collection.
-The address can be tested [here](https://samiljo.se/avfallshamtning/hamtningskalender/).
-
-## How to add new waste types
-
-If your address are missing any waste types that shows in the [Hämtningskalender](https://samiljo.se/avfallshamtning/hamtningskalender/). Then there might be missing mappings in the NAME_MAP. 
-1. Run Samiljo_se_wastetype_searcher.py for the specific address or without arguments to scan all addresses in the database.  <br />
-Examples of valid command below.
-```shell
-> samiljo_se_wastetype_searcher.py --street "Storgatan 1" --city "Burseryd"
-> samiljo_se_wastetype_searcher.py --city "Burseryd"
-> samiljo_se_wastetype_searcher.py --street "Storgatan 1"
-> samiljo_se_wastetype_searcher.py
-```
-2. Missing mappings will be returned together with an address.
-3. Use the [Hämtningskalender](https://samiljo.se/avfallshamtning/hamtningskalender/) to extract the corresponding common name to the new wastetype.
-4. Add the new types to the NAME_MAP and optionally to the ICON_MAP in samiljo_se.py and samiljo_se_wastetype_searcher.py.
+Enter the street name with number and the city as they appear in the calendar search on https://www.samiljo.se. Collections in a holiday week are marked 'Helgvecka' in the description.

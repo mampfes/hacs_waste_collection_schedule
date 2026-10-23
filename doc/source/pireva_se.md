@@ -1,6 +1,8 @@
-# Pireva - Piteå Renhållning & Vatten 
+# Pireva
 
-Support for schedules provided by [Pireva](https://www.pireva.se/tomningsschema/), serving the municipality of Piteå, Sweden.
+Support for schedules provided by [Pireva](https://www.pireva.se).
+
+Source for Pireva that serves Piteå kommun, Sweden.
 
 ## Configuration via configuration.yaml
 
@@ -15,7 +17,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **street_address**  
-*(string) (required)* The address of the property to get the waste collection schedule for.
+*(string) (required)*
 
 ## Example
 
@@ -24,10 +26,9 @@ waste_collection_schedule:
   sources:
     - name: pireva_se
       args:
-        street_address: Kolugnsvägen 1 Räddningstjänsten Mf
+        street_address: "Kolugnsv\xE4gen 1 R\xE4ddningstj\xE4nsten Mf"
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The source argument is the address to the house with waste collection. The address can be tested 
-[here](https://www.pireva.se/tomningsschema/) and should perfectly match the autocompletion/suggestion of the website.
+Enter your address exactly as it is written in the address search on https://www.pireva.se/tomningsschema/ (street, number and, for some properties, a name, e.g. 'Kolugnsvägen 1 Räddningstjänsten Mf').

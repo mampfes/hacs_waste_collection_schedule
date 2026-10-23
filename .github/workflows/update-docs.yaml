@@ -32,7 +32,9 @@ jobs:
         run: python update_docu_links.py
       - name: Commit changes if any
         run: |
-          git diff --quiet && exit 0
+          # git diff ignores untracked files; a newly generated file (e.g. a new
+          # translations/<lang>.json) must still be committed.
+          [ -z "$(git status --porcelain)" ] && exit 0
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A

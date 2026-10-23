@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-13",
+  "interactions": [
+    {
+      "key": "POST https://sjalvservice.nvaa.se/api/v1/integration/findAddress 7bd69740c4",
+      "method": "POST",
+      "url": "https://sjalvservice.nvaa.se/api/v1/integration/findAddress",
+      "final_url": "https://sjalvservice.nvaa.se/api/v1/integration/findAddress",
+      "body": "{\"body\":[[\"address\",\"Hamndalsv\u00e4gen 2, Norrt\u00e4lje\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "no-cache, private",
+        "date": "Tue, 13 Oct 2026 09:35:40 GMT",
+        "content-language": "en-US",
+        "access-control-expose-headers": "Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, x-session-refreshed",
+        "x-ratelimit-limit": "20",
+        "x-ratelimit-remaining": "12",
+        "vary": "Origin",
+        "set-cookie": "nvaa_dina_sidor_new_session=eyJpdiI6InRkRm1rYkRrSFdDb1VvRkIrWTR1UGc9PSIsInZhbHVlIjoiNmtQZ0l2TmsvTjI2dWNiVi9EWnhzZ1hoQ2U3OFZCaWhyT1FzUzczNHVnaDNDVkVNZWY0ajkxd3NaVDBYTEdXTkMvUm9maTBxeDhBR2JTbS9NR2RpTm9INnltM1BFTjN4TjJPT040WVg3cWhkYjFCUm9adjdUZHBtbXh1VTMyWWUiLCJtYWMiOiJmNTVlZDJlNTY3MmVjNzM0YjI3NjFkMzQ1YzExZDQ5ZDU3NGQwMzdmNjdmN2ZhYTdiNjFjODZjZTIzNWY5MmExIiwidGFnIjoiIn0%3D; expires=Tue, 13 Oct 2026 11:35:40 GMT; Max-Age=7200; path=/; secure; httponly; samesite=none",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJyZXN1bHRzIjpbeyJhZGRyZXNzIjoiSGFtbmRhbHN2XHUwMGU0Z2VuIDIsIE5vcnJ0XHUwMGU0bGplIiwiaWQiOiJleUpwZGlJNklrRkdha2RtY1dsQkwzQm9NMUFyUzJ4bmFtYzJia0U5UFNJc0luWmhiSFZsSWpvaVdIRndibm8yU21kMWNVcDROVlY0VVhoaFpVVnJRVE5JV0V0NFVHdE5ORWxUWW1ZclFqWk5VMll6UVQwaUxDSnRZV01pT2lKbU5EY3dNV05sTWpjNU4yWmxaakkxTkdabU1qUXpZbUptTXpSaFpXSXlZelkwWW1Zek5qUmpPV0ZtWlRBNVlXWTBPRE5tTkdRd1pqWXpOV1V6TURBMElpd2lkR0ZuSWpvaUluMD0ifV19"
+    },
+    {
+      "key": "POST https://sjalvservice.nvaa.se/api/v1/integration/getNextGarbageCollection 916e470897",
+      "method": "POST",
+      "url": "https://sjalvservice.nvaa.se/api/v1/integration/getNextGarbageCollection",
+      "final_url": "https://sjalvservice.nvaa.se/api/v1/integration/getNextGarbageCollection",
+      "body": "{\"body\":[[\"buildingId\",\"eyJpdiI6IkFGakdmcWlBL3BoM1ArS2xnamc2bkE9PSIsInZhbHVlIjoiWHFwbno2Smd1cUp4NVV4UXhhZUVrQTNIWEt4UGtNNElTYmYrQjZNU2YzQT0iLCJtYWMiOiJmNDcwMWNlMjc5N2ZlZjI1NGZmMjQzYmJmMzRhZWIyYzY0YmYzNjRjOWFmZTA5YWY0ODNmNGQwZjYzNWUzMDA0IiwidGFnIjoiIn0=\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "no-cache, private",
+        "date": "Tue, 13 Oct 2026 09:35:41 GMT",
+        "content-language": "en-US",
+        "access-control-expose-headers": "Retry-After, X-RateLimit-Limit, X-RateLimit-Remaining, x-session-refreshed",
+        "x-ratelimit-limit": "20",
+        "x-ratelimit-remaining": "11",
+        "vary": "Origin",
+        "set-cookie": "nvaa_dina_sidor_new_session=eyJpdiI6IndQenpoeTNKdERGb1RBVVozVGhDUmc9PSIsInZhbHVlIjoiRTNsYmZSMFZxMlN4VkNaL2J0N0pTU2pVak53S0J1NnFEVFRZaEdOa0VXajdhMGtSSzNhUlpZYVl6b2ZhYU9JMjJ4K0NLWjRWb2k2b054MXBpNjRIY1c5dW1qVzYraG1XL2hzWGx2NmxVNmJqS3pTZ2ZSRWNZV1ZzTElybWh2TisiLCJtYWMiOiJjMGE1YjYxZDFjNDg5YmM4NjdlODg2ZmE1MTk4M2QxNTM4MWI2ZmEyZGNjNjNkNGY5NGVkMjU5MmFlYWUxOWI5IiwidGFnIjoiIn0%3D; expires=Tue, 13 Oct 2026 11:35:41 GMT; Max-Age=7200; path=/; secure; httponly; samesite=none",
+        "x-frame-options": "SAMEORIGIN",
+        "x-xss-protection": "1; mode=block",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "W3siZGVzY3JpcHRpb24iOiJSZXN0YXZmYWxsLCAxOTAtbGl0ZXJza1x1MDBlNHJsIDE5IGdnclwvXHUwMGU1ciIsInByb2R1Y3QiOiJSZXN0YXZmYWxsIiwibmV4dF9jb2xsZWN0aW9uIjoiVGlzZGFnIDMgbm92ZW1iZXIgMjAyNiJ9LHsiZGVzY3JpcHRpb24iOiJNYXRhdmZhbGwsIDE0MC1saXRlcnNrXHUwMGU0cmwgMTkgZ2dyXC9cdTAwZTVyIiwicHJvZHVjdCI6Ik1hdGF2ZmFsbCIsIm5leHRfY29sbGVjdGlvbiI6IlRpc2RhZyAzIG5vdmVtYmVyIDIwMjYifSx7ImRlc2NyaXB0aW9uIjoiU2x1dGVuIHRhbmssIDIsNS00LDQ5bVx1MDBiMyIsInByb2R1Y3QiOiJTbGFtIiwibmV4dF9jb2xsZWN0aW9uIjoidjIyIC0gdjIzIDIwMjcifSx7ImRlc2NyaXB0aW9uIjoiQkRULCAwLTIsNDltXHUwMGIzIiwicHJvZHVjdCI6IlNsYW0iLCJuZXh0X2NvbGxlY3Rpb24iOiJ2MjIgLSB2MjMgMjAyOCJ9XQ=="
+    }
+  ]
+}

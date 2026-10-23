@@ -1,6 +1,8 @@
-# EGN - Abfallkalender
+# EGN Abfallkalender
 
-Support for schedules provided by [egn-abfallkalender.de](https://www.egn-abfallkalender.de/).
+Support for schedules provided by [EGN Abfallkalender](https://www.egn-abfallkalender.de).
+
+Source for EGN Abfallkalender
 
 ## Configuration via configuration.yaml
 
@@ -9,58 +11,39 @@ waste_collection_schedule:
   sources:
     - name: egn_abfallkalender_de
       args:
-        city: CITY_NAME
-        district: DISTRICT_NAME
-        street: STREET_NAME
-        housenumber: HOUSE_NUMBER
+        city: CITY
+        district: DISTRICT
+        street: STREET
+        housenumber: HOUSENUMBER
 ```
-
-The arguments can be found above the calendar after generating one [here](https://www.egn-abfallkalender.de/kalender#skill-setup-form). Select your city, street and enter your housenumber to show the schedule for your address. The complete information you need are displayed above the calendar view in the format `für <street> <housenumber>, <city> (<district>)`. See also examples below.
 
 ### Configuration Variables
 
 **city**  
 *(string) (required)*
-City, extracted from the displayed address.
 
 **district**  
 *(string) (required)*
-District, extracted from the displayed address.
 
 **street**  
 *(string) (required)*
-Street, extracted from the displayed address.
 
 **housenumber**  
 *(string) (required)*
-Housenumber, extracted from the displayed address.
 
-## Examples
-
-```yaml
-# Displayed address: 
-# für Albert-Schweitzer-Weg 27, Grevenbroich (Stadtmitte)
-
-waste_collection_schedule:
-  sources:
-    - name: egn_abfallkalender_de
-      args:
-        city: Grevenbroich
-        district: Stadtmitte
-        street: Albert-Schweitzer-Weg
-        housenumber: 27
-```
+## Example
 
 ```yaml
-# Displayed address:
-# für Am Damschenpfad 81, Dormagen (Nievenheim)
-
 waste_collection_schedule:
   sources:
     - name: egn_abfallkalender_de
       args:
         city: Dormagen
-        district: Nievenheim
-        street: "Am Damschenpfad"
-        housenumber: 81
+        district: Hackenbroich
+        street: "Aggerstra\xDFe"
+        housenumber: 2
 ```
+
+## How to get the source arguments
+
+Wähle Ort, Ortsteil und Straße wie im EGN-Abfallkalender auf egn-abfallkalender.de und gib die Hausnummer an.

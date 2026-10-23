@@ -1,60 +1,21 @@
-"""Waste collection schedule source for Omrin."""
-
 import uuid
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
-from waste_collection_schedule.exceptions import SourceArgumentException
-
-TITLE = "Omrin"
-DESCRIPTION = "Source for Omrin waste collection schedules."
-URL = "https://www.omrin.nl"
-COUNTRY = "nl"
-MUNICIPALITIES = (
-    "Achtkarspelen",
-    "Ameland",
-    "Eemsdelta",
-    "Elburg",
-    "Ermelo",
-    "Harderwijk",
-    "Harlingen",
-    "Heerenveen",
-    "Het Hogeland",
-    "Leeuwarden",
-    "Nunspeet",
-    "Oldebroek",
-    "Ooststellingwerf",
-    "Opsterland",
-    "Pekela",
-    "Schiermonnikoog",
-    "Terschelling",
-    "Tytsjerksteradiel",
-    "Waadhoeke",
-    "Westerwolde",
-    "Weststellingwerf",
+from waste_collection_schedule import parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, text_field
+from waste_collection_schedule.exceptions import (
+    SourceArgumentException,
+    SourceArgumentNotFound,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-EXTRA_INFO = [
-    {"title": municipality, "url": URL, "country": COUNTRY}
-    for municipality in MUNICIPALITIES
-]
-TEST_CASES = {
-    "Weme 3, Ermelo": {
-        "postal_code": "3851MA",
-        "house_number": "3",
-        "suffix": "",
-    },
-}
+# The Omrin Afvalapp backend: an anonymous login by address answers an access
+# token, which the GraphQL endpoint takes as a bearer token.
+_API = "https://api.omrinafvalapp.nl"
 
-BASE_URL = "https://api.omrinafvalapp.nl"
-LOGIN_URL = f"{BASE_URL}/api/auth/login"
-GRAPHQL_URL = f"{BASE_URL}/graphql"
-
-LOGIN_USER_AGENT = "Omrin.Afvalapp.Client/1.0"
-GRAPHQL_USER_AGENT = "GraphQL.Client/6.1.0.0"
-
-FETCH_CALENDAR_QUERY = """
+_CALENDAR_QUERY = """
 query FetchCalendar {
   fetchCalendar {
     id
@@ -68,174 +29,126 @@ query FetchCalendar {
 }
 """
 
-ICON_MAP = {
-    "GFT": Icons.ORGANIC,
-    "PAPIER": Icons.PAPER,
-    "PMD": Icons.RECYCLING,
-    "RESTAFVAL": Icons.GENERAL_WASTE,
-    "Sortibak": Icons.GENERAL_WASTE,
-}
-DEFAULT_ICON = Icons.GENERAL_WASTE
-SENTINEL_DATE = "0001-01-01T00:00:00"
-REQUEST_TIMEOUT = 30
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postal_code": "Postcode",
-        "house_number": "House number",
-        "suffix": "House number suffix",
-    },
-    "nl": {
-        "postal_code": "Postcode",
-        "house_number": "Huisnummer",
-        "suffix": "Huisnummertoevoeging",
-    },
-}
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postal_code": "Dutch postcode, for example 3851MA.",
-        "house_number": "Numeric house number.",
-        "suffix": "House number suffix, if applicable.",
-    },
-    "nl": {
-        "postal_code": "Nederlandse postcode, bijvoorbeeld 3851MA.",
-        "house_number": "Numeriek huisnummer.",
-        "suffix": "Huisnummertoevoeging, indien van toepassing.",  # codespell:ignore indien
-    },
-}
+# Dates the backend leaves unset carry this value.
+_SENTINEL_DATE = "0001-01-01T00:00:00"
 
 
-class Source:
-    """Fetch Omrin collections using a fresh anonymous app session."""
+def _postal_code(postal_code: str) -> str:
+    return postal_code.replace(" ", "").upper()
 
-    def __init__(
-        self, postal_code: str, house_number: str | int, suffix: str = ""
-    ) -> None:
-        self._postal_code = postal_code.replace(" ", "").upper()
-        try:
-            self._house_number = int(house_number)
-        except (TypeError, ValueError) as exc:
-            raise SourceArgumentException(
-                "house_number", "House number must be numeric."
-            ) from exc
-        self._suffix = suffix.strip()
 
-    def fetch(self) -> list[Collection]:
-        """Log in anonymously and fetch the collection calendar."""
-        device_id = str(uuid.uuid4())
-        session = requests.Session()
-        session.headers.update(
-            {
-                "User-Agent": LOGIN_USER_AGENT,
-                "Accept": "application/json",
-            }
+def _house_number(house_number) -> int:
+    try:
+        return int(house_number)
+    except (TypeError, ValueError) as exc:
+        raise SourceArgumentException(
+            "house_number", "House number must be numeric."
+        ) from exc
+
+
+def _suffix(suffix) -> str:
+    return (suffix or "").strip()
+
+
+def _login_body(*_keys, postal_code, house_number, suffix=None, **_) -> dict:
+    postal = _postal_code(postal_code)
+    number = _house_number(house_number)
+    extension = _suffix(suffix)
+    return {
+        "Email": None,
+        "Password": None,
+        "PostalCode": postal,
+        "HouseNumber": number,
+        "HouseNumberExtension": extension,
+        # The app registers a device per install; one id per address keeps the
+        # request reproducible.
+        "DeviceId": str(uuid.uuid5(uuid.NAMESPACE_URL, f"omrin:{postal}{number}")),
+        "Platform": "iOS",
+        "AppVersion": "4.0.3.273",
+        "OsVersion": "iPhone15,3 26.2.1",
+    }
+
+
+def _access_token(response, *_keys, **_) -> str:
+    payload = response.json()
+    if not payload.get("success"):
+        raise SourceArgumentNotFound(
+            "postal_code",
+            f"Omrin could not find this address: {payload.get('errors') or 'unknown error'}",
         )
+    return payload["data"]["accessToken"]
 
-        login_response = session.post(
-            LOGIN_URL,
-            json={
-                "Email": None,
-                "Password": None,
-                "PostalCode": self._postal_code,
-                "HouseNumber": self._house_number,
-                "HouseNumberExtension": self._suffix,
-                "DeviceId": device_id,
-                "Platform": "iOS",
-                "AppVersion": "4.0.3.273",
-                "OsVersion": "iPhone15,3 26.2.1",
-            },
-            timeout=REQUEST_TIMEOUT,
-        )
-        login_response.raise_for_status()
 
-        try:
-            login_payload = login_response.json()
-        except ValueError as exc:
-            raise RuntimeError("Omrin login returned malformed JSON") from exc
+def _is_dated(record, _source=None) -> bool:
+    return bool(record.get("date")) and record["date"] != _SENTINEL_DATE
 
-        if not isinstance(login_payload, dict):
-            raise RuntimeError("Omrin login response was malformed")
 
-        if not login_payload.get("success"):
-            errors = login_payload.get("errors", "unknown error")
-            raise SourceArgumentException(
-                "postal_code", f"Omrin could not find this address: {errors}"
-            )
+@final
+class Source(BaseSource):
+    TITLE = "Omrin"
+    DESCRIPTION = "Source for Omrin waste collection schedules."
+    URL = "https://www.omrin.nl"
+    COUNTRY = "nl"
+    RAISE_ON_EMPTY = True
 
-        login_data = login_payload.get("data")
-        access_token = (
-            login_data.get("accessToken") if isinstance(login_data, dict) else None
-        )
-        if not isinstance(access_token, str) or not access_token:
-            raise RuntimeError("Omrin login response did not contain an access token")
+    TEST_CASES: ClassVar[dict] = {
+        "Weme 3, Ermelo": {
+            "postal_code": "3851MA",
+            "house_number": "3",
+            "suffix": "",
+        },
+    }
 
-        calendar_response = session.post(
-            GRAPHQL_URL,
-            headers={
-                "Content-Type": "application/json",
-                "User-Agent": GRAPHQL_USER_AGENT,
-                "Authorization": f"Bearer {access_token}",
-            },
-            json={"query": FETCH_CALENDAR_QUERY},
-            timeout=REQUEST_TIMEOUT,
-        )
-        calendar_response.raise_for_status()
+    PARAMS = (
+        postcode(postcode_field="postal_code", house_field="house_number"),
+        text_field("suffix", "House number suffix", optional=True),
+    )
 
-        try:
-            calendar_payload = calendar_response.json()
-        except ValueError as exc:
-            raise RuntimeError("Omrin calendar returned malformed JSON") from exc
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the postcode, house number and, if you have one, the house "
+            "number suffix of your address, as in the Omrin Afvalapp."
+        ),
+    }
 
-        if not isinstance(calendar_payload, dict):
-            raise RuntimeError("Omrin calendar response was malformed")
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.ORGANIC, wt.PAPER]
 
-        graphql_errors = calendar_payload.get("errors")
-        if graphql_errors:
-            if isinstance(graphql_errors, list):
-                messages = [
-                    error.get("message", str(error))
-                    if isinstance(error, dict)
-                    else str(error)
-                    for error in graphql_errors
-                ]
-                error_detail = ", ".join(messages)
-            else:
-                error_detail = str(graphql_errors)
-            raise RuntimeError(f"Omrin GraphQL error: {error_detail}")
+    retrieve = retrievers.Request(
+        f"{_API}/graphql",
+        method="POST",
+        json={"query": _CALENDAR_QUERY},
+        headers=lambda token, **_: {
+            "Content-Type": "application/json",
+            "User-Agent": "GraphQL.Client/6.1.0.0",
+            "Authorization": f"Bearer {token}",
+        },
+        before=(
+            retrievers.Lookup(
+                f"{_API}/api/auth/login",
+                method="POST",
+                json=_login_body,
+                headers={
+                    "User-Agent": "Omrin.Afvalapp.Client/1.0",
+                    "Accept": "application/json",
+                },
+                pick=_access_token,
+            ),
+        ),
+    )
 
-        data = calendar_payload.get("data")
-        calendar = data.get("fetchCalendar") if isinstance(data, dict) else None
-        if not isinstance(calendar, list):
-            raise RuntimeError("Omrin calendar response was malformed")
-
-        entries: list[Collection] = []
-        for item in calendar:
-            if not isinstance(item, dict):
-                raise RuntimeError(
-                    "Omrin calendar response contained a malformed entry"
-                )
-
-            raw_date = item.get("date")
-            if not raw_date or raw_date == SENTINEL_DATE:
-                continue
-
-            waste_type = item.get("type")
-            if not isinstance(waste_type, str) or not waste_type:
-                continue
-
-            try:
-                collection_date = datetime.fromisoformat(
-                    str(raw_date).replace("Z", "+00:00")
-                ).date()
-            except (TypeError, ValueError):
-                continue
-
-            collection = Collection(
-                date=collection_date,
-                t=waste_type,
-                icon=ICON_MAP.get(waste_type, DEFAULT_ICON),
-            )
-            if collection not in entries:
-                entries.append(collection)
-
-        return entries
+    parse = parsers.JsonParser("data", "fetchCalendar")
+    preprocess = preprocessors.Compose(
+        preprocessors.RowFilter(_is_dated),
+        preprocessors.Deduplicate(key=lambda record: (record["date"], record["type"])),
+    )
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map={
+            "GFT": wt.ORGANIC,
+            "PAPIER": wt.PAPER,
+            "PMD": wt.RECYCLABLES,
+            "RESTAFVAL": wt.GENERAL_WASTE,
+            "Sortibak": wt.GENERAL_WASTE,
+        },
+    )

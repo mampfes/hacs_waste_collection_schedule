@@ -1,230 +1,166 @@
-import datetime
-import logging
-from typing import Literal
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection
+from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    dropdown,
+    house_number,
+    postcode,
+    text_field,
+)
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.regions import region
+from waste_collection_schedule.transformers import JsonTransformer
 
-_LOGGER = logging.getLogger(__name__)
+_API_KEY = "AIzaSyA6NkRqJypTfP-cjWzrZNFJzPUbBaGjOdk"
+_API = "https://europe-west3-burgerportaal-production.cloudfunctions.net/exposed"
 
-TITLE = "BurgerPortaal"
-DESCRIPTION = "Source for BurgerPortaal."
-URL = "https://21burgerportaal.mendixcloud.com/"
-
-
-def EXTRA_INFO():
-    return [
-        {
-            "title": s["title"],
-            "url": s["url"],
-            "default_params": {"organization": s["organization"]},
-        }
-        for s in SERVICE_MAP
-    ]
-
-
-TEST_CASES = {
-    "Assen": {"organization": "assen", "post_code": "9401LN", "house_number": 6},
-    "RMN": {
-        "organization": "rmn",
-        "post_code": "3437GS",
-        "house_number": 2,
-        "addition": "A",
-    },
-    "Barendrecht Albrandswaard Ridderkerk": {
-        "organization": "afvalbeheer",
-        "post_code": "2991AA",
-        "house_number": 1,
-    },
-    "BAT Tilburg": {
-        "organization": "bat",
-        "post_code": "5071EN",
-        "house_number": 122,
-    },
-    "Breda": {
-        "organization": "breda",
-        "post_code": "4762BD",
-        "house_number": 21,
-    },
-    "Groningen": {
-        "organization": "groningen",
-        "post_code": "9733AH",
-        "house_number": 66,
-    },
-    "Utrecht": {
-        "organization": "utrecht",
-        "post_code": "3581GG",
-        "house_number": 7,
-    },
+# organization -> (title, url, BurgerPortaal organisation id)
+_ORGANIZATIONS = {
+    "assen": ("Gemeente Assen", "https://www.assen.nl/", "138204213565303512"),
+    "afvalbeheer": (
+        "Barendrecht Albrandswaard Ridderkerk",
+        "https://www.bar-afvalbeheer.nl/",
+        "138204213564933497",
+    ),
+    "bat": ("BAT Tilburg", "https://www.batafvalbeheer.nl/", "452048812597339353"),
+    "breda": ("Gemeente Breda", "https://www.breda.nl/", "452048812597352613"),
+    "groningen": (
+        "Gemeente Groningen",
+        "https://gemeente.groningen.nl/",
+        "452048812597326549",
+    ),
+    "rmn": (
+        "Reinigingsdienst Midden Nederland",
+        "https://www.rmn.nl/",
+        "138204213564933597",
+    ),
+    "utrecht": ("Gemeente Utrecht", "https://www.utrecht.nl/", "452048812597339479"),
 }
 
-Organization = Literal[
-    "assen",
-    "afvalbeheer",
-    "bat",
-    "breda",
-    "groningen",
-    "rmn",
-    "utrecht",
-]
 
-SERVICE_MAP = [
-    {
-        "title": "Gemeente Assen",
-        "url": "https://www.assen.nl/",
-        "uuid": "138204213565303512",
-        "organization": "assen",
-    },
-    {
-        "title": "Barendrecht Albrandswaard Ridderkerk",
-        "url": "https://www.bar-afvalbeheer.nl/",
-        "uuid": "138204213564933497",
-        "organization": "afvalbeheer",
-    },
-    {
-        "title": "BAT Tilburg",
-        "url": "https://www.batafvalbeheer.nl/",
-        "uuid": "452048812597339353",
-        "organization": "bat",
-    },
-    {
-        "title": "Gemeente Breda",
-        "url": "https://www.breda.nl/",
-        "uuid": "452048812597352613",
-        "organization": "breda",
-    },
-    {
-        "title": "Gemeente Groningen",
-        "url": "https://gemeente.groningen.nl/",
-        "uuid": "452048812597326549",
-        "organization": "groningen",
-    },
-    {
-        "title": "Reinigingsdienst Midden Nederland",
-        "url": "https://www.rmn.nl/",
-        "uuid": "138204213564933597",
-        "organization": "rmn",
-    },
-    {
-        "title": "Gemeente Utrecht",
-        "url": "https://www.utrecht.nl/",
-        "uuid": "452048812597339479",
-        "organization": "utrecht",
-    },
-]
+def _id_token(response, **_):
+    token = response.json().get("idToken")
+    if not token:
+        raise ValueError("Authentication token could not be retrieved")
+    return token
 
 
-def get_service_name_map():
-    return {s["organization"]: s["uuid"] for s in SERVICE_MAP}
+def _address_id(response, token, *, addition="", **params):
+    addresses = response.json()
+    if not addresses:
+        raise SourceArgumentNotFound("post_code", params["post_code"])
+    for address in addresses:
+        if address.get("addition") == str(addition or "").upper():
+            return address["addressId"]
+    return addresses[-1]["addressId"]
 
 
-class Source:
-    def __init__(
-        self,
-        organization: Organization,
-        post_code: str,
-        house_number: str,
-        addition: str = "",
-    ):
-        self._api_key: str = "AIzaSyA6NkRqJypTfP-cjWzrZNFJzPUbBaGjOdk"
-        self._addition: str = addition
-        self._post_code: str = post_code
-        self._house_number: str = house_number
-        self._url: str = (
-            "https://europe-west3-burgerportaal-production.cloudfunctions.net"
-        )
-        self._organization_code: str = get_service_name_map()[organization]
-        self._refresh_token: str = ""
-        self._id_token: str = ""
-        self._address_id: str = ""
+@final
+class Source(BaseSource):
+    TITLE = "BurgerPortaal"
+    DESCRIPTION = "Source for BurgerPortaal."
+    URL = "https://21burgerportaal.mendixcloud.com/"
+    COUNTRY = "nl"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.HAZARDOUS,
+        wt.OTHER,
+    ]
 
-    def _set_refresh_token(self):
-        res = requests.post(
-            f"https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key={self._api_key}"
-        )
-        payload = res.json()
-        if not payload or "refreshToken" not in payload:
-            _LOGGER.error(f"Unable to fetch refresh token: {payload}")
-            return
+    TEST_CASES: ClassVar[dict] = {
+        "Assen": {"organization": "assen", "post_code": "9401LN", "house_number": 6},
+        "RMN": {
+            "organization": "rmn",
+            "post_code": "3437GS",
+            "house_number": 2,
+            "addition": "A",
+        },
+        "Barendrecht Albrandswaard Ridderkerk": {
+            "organization": "afvalbeheer",
+            "post_code": "2991AA",
+            "house_number": 1,
+        },
+        "BAT Tilburg": {
+            "organization": "bat",
+            "post_code": "5071EN",
+            "house_number": 122,
+        },
+        "Breda": {
+            "organization": "breda",
+            "post_code": "4762BD",
+            "house_number": 21,
+        },
+        "Groningen": {
+            "organization": "groningen",
+            "post_code": "9733AH",
+            "house_number": 66,
+        },
+        "Utrecht": {
+            "organization": "utrecht",
+            "post_code": "3581GG",
+            "house_number": 7,
+        },
+    }
 
-        self._refresh_token = payload["refreshToken"]
-        self._id_token = payload["idToken"]
+    PARAMS = (
+        dropdown("organization", list(_ORGANIZATIONS)),
+        postcode("post_code"),
+        house_number(),
+        text_field("addition", optional=True),
+    )
 
-    def _set_id_token(self) -> None:
-        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+    REGIONS = tuple(
+        region(title, url=url, organization=key)
+        for key, (title, url, _) in _ORGANIZATIONS.items()
+    )
 
-        data = {"grant_type": "refresh_token", "refresh_token": self._refresh_token}
+    retrieve = retrievers.Request(
+        lambda token, addr_id, organization, **_: (
+            f"{_API}/organisations/{_ORGANIZATIONS[organization][2]}"
+            f"/address/{addr_id}/calendar"
+        ),
+        headers=lambda token, addr_id, **_: {"authorization": token},
+        before=[
+            retrievers.Lookup(
+                "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser",
+                method="POST",
+                params={"key": _API_KEY},
+                pick=_id_token,
+            ),
+            retrievers.Lookup(
+                lambda token, organization, **_: (
+                    f"{_API}/organisations/{_ORGANIZATIONS[organization][2]}/address"
+                ),
+                params=lambda token, post_code, house_number, **_: {
+                    "zipcode": post_code,
+                    "housenumber": house_number,
+                },
+                headers=lambda token, **_: {"authorization": token},
+                pick=_address_id,
+            ),
+        ],
+    )
 
-        res = requests.post(
-            f"https://securetoken.googleapis.com/v1/token?key={self._api_key}",
-            headers=headers,
-            data=data,
-        )
-        payload = res.json()
-        if not payload:
-            _LOGGER.error("Unable to fetch ID token!")
-            return
-        self._id_token = payload["id_token"]
+    parse = parsers.JsonParser()
 
-    def _set_address_id(self) -> None:
-        headers = {"authorization": self._id_token}
-
-        res = requests.get(
-            f"{self._url}/exposed/organisations/{self._organization_code}/address?zipcode={self._post_code}&housenumber={self._house_number}",
-            headers=headers,
-        )
-        payload = res.json()
-        if not payload:
-            _LOGGER.error("Unable to fetch address!")
-            return
-
-        for address in payload:
-            if "addition" in address and address["addition"] == self._addition.upper():
-                self._address_id = address["addressId"]
-
-        if not self._address_id:
-            self._address_id = payload[-1]["addressId"]
-
-    def fetch(self) -> list[Collection]:
-        # get refresh token and id token
-        if not self._refresh_token:
-            self._set_refresh_token()
-            if not self._refresh_token:
-                raise ValueError("Authentication token could not be retrieved")
-        else:
-            self._set_id_token()
-
-        # get address id
-        if not self._address_id:
-            self._set_address_id()
-            if not self._address_id:
-                raise ValueError("Address ID could not be retrieved")
-
-        headers = {"authorization": self._id_token}
-        res = requests.get(
-            f"{self._url}/exposed/organisations/{self._organization_code}/address/{self._address_id}/calendar",
-            headers=headers,
-        )
-        payload = res.json()
-
-        entries: list[Collection] = []
-
-        for item in payload:
-            if not item["collectionDate"]:
-                continue
-
-            waste_type = item["fraction"].lower()
-            if not waste_type:
-                continue
-
-            collection = Collection(
-                date=datetime.datetime.strptime(
-                    item["collectionDate"].split("T")[0], "%Y-%m-%d"
-                ).date(),
-                t=waste_type,
-                icon=item["fraction"].lower(),
-            )
-            if collection not in entries:
-                entries.append(collection)
-
-        return entries
+    transform = JsonTransformer(
+        date_key="collectionDate",
+        type_key=lambda item: str(item.get("fraction") or "").lower(),
+        skip_unparseable_dates=True,
+        type_value_map={
+            "opk": wt.PAPER,
+            "pbd": wt.RECYCLABLES,
+            "groen": wt.GARDEN_WASTE,
+            "gft+e": wt.ORGANIC,
+            "papier-pmd": [wt.PAPER, wt.RECYCLABLES],
+            "rest-gfte": [wt.GENERAL_WASTE, wt.ORGANIC],
+            "maas": wt.OTHER,
+        },
+    )

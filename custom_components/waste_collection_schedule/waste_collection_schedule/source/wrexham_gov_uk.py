@@ -26,7 +26,9 @@ def _row_date(li: Tag) -> "str | None":
     """The collection date from the first cell of this <li>'s own table row."""
     row = li.find_parent("tr")
     cell = row.find("td") if row is not None else None
-    return cell.get_text(strip=True) if isinstance(cell, Tag) else None
+    if cell is None or not isinstance(cell, Tag):
+        return None
+    return cell.get_text(strip=True)
 
 
 @final
