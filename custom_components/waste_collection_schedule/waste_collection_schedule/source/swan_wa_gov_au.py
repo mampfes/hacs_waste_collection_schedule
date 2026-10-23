@@ -1,3 +1,6 @@
+import re
+from datetime import date
+
 from dateutil.parser import parse as dateparse
 from dateutil.rrule import WEEKLY, rrule
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -18,6 +21,16 @@ TEST_CASES = {
     "Stratton": {"address": "34 Oldenburg Pass Stratton"},
     "Midland": {"address": "307 Great Eastern Highway Midland"},
 }
+
+WEEKDAYS = [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
+]
 
 ICON_MAP = {
     "FOGO": Icons.BIO_KITCHEN,
@@ -79,9 +92,25 @@ class Source:
         self._add_fortnightly(
             entries, fields.get("Next Recycling Collection", ""), "Recycling"
         )
-        self._add_fortnightly(entries, fields.get("Next FOGO Collection", ""), "FOGO")
+        # FOGO is collected weekly and reported as "Every Tuesday" instead of a date
+        fogo = fields.get("Next FOGO Collection", "")
+        if not self._add_weekly(entries, fogo, "FOGO"):
+            self._add_fortnightly(entries, fogo, "FOGO")
 
         return entries
+
+    @staticmethod
+    def _add_weekly(entries: list[Collection], value: str, waste_type: str) -> bool:
+        match = re.fullmatch(r"every\s+(\w+day)", value.strip(), re.IGNORECASE)
+        if not match or match.group(1).lower() not in WEEKDAYS:
+            return False
+
+        weekday = WEEKDAYS.index(match.group(1).lower())
+        for d in rrule(WEEKLY, byweekday=weekday, dtstart=date.today(), count=26):
+            entries.append(
+                Collection(date=d.date(), t=waste_type, icon=ICON_MAP.get(waste_type))
+            )
+        return True
 
     @staticmethod
     def _add_fortnightly(
