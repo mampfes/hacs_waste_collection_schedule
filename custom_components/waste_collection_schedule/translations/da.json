@@ -22410,6 +22410,28 @@
         },
         "data_description": {}
       },
+      "args_komunala_slb_si": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "bio_region": "Bio Region",
+          "main_region": "Main Region"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_komunala_slb_si": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "bio_region": "Bio Region",
+          "main_region": "Main Region"
+        },
+        "data_description": {}
+      },
       "args_kostak_si": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",

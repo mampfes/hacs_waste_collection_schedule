@@ -31675,6 +31675,12 @@
       "id": "komunala_kranj_si"
     },
     {
+      "title": "Komunala Slovenska Bistrica",
+      "module": "komunala_slb_si",
+      "default_params": {},
+      "id": "komunala_slb_si"
+    },
+    {
       "title": "Kostak Kr\u0161ko",
       "module": "kostak_si",
       "default_params": {},

@@ -5007,6 +5007,15 @@
     },
     "urls": {}
   },
+  "komunala_slb_si": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/komunala_slb_si.md",
+    "howto": {
+      "de": "Wählen Sie Ihre Gemeinde/Ihr Gebiet aus der unter https://www.komunala-slb.si/google-koledar.html veröffentlichten Liste. Wenn Ihr Gebiet keine separate Biomüllabfuhr hat (oder diese bereits in den Plänen 16, 17 oder 18 enthalten ist), wählen Sie 'Brez odvoza bioloških odpadkov'.",
+      "en": "Select your municipality/area from the schedule list published at https://www.komunala-slb.si/google-koledar.html. If your area does not have a separate organic waste collection (or if it is already included in schedules 16, 17, or 18), select 'Brez odvoza bioloških odpadkov'.",
+      "sl": "Izberite svoje območje iz seznama urnikov, objavljenih na https://www.komunala-slb.si/google-koledar.html. Če vaša lokacija nima ločenega odvoza bioloških odpadkov (ali pa je ta že vključen v urnikih 16, 17 ali 18), izberite 'Brez odvoza bioloških odpadkov'."
+    },
+    "urls": {}
+  },
   "kostak_si": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kostak_si.md",
     "howto": {

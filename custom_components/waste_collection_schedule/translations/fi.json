@@ -22415,6 +22415,28 @@
         },
         "data_description": {}
       },
+      "args_komunala_slb_si": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "bio_region": "Bio Region",
+          "main_region": "Main Region"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_komunala_slb_si": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "bio_region": "Bio Region",
+          "main_region": "Main Region"
+        },
+        "data_description": {}
+      },
       "args_kostak_si": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",

@@ -4361,6 +4361,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Kamnik](/doc/ics/publicus_si.md) / kamnik.si
 - [Komenda](/doc/ics/publicus_si.md) / komenda.si
 - [Komunala Kranj](/doc/source/komunala_kranj_si.md) / komunala-kranj.si
+- [Komunala Slovenska Bistrica](/doc/source/komunala_slb_si.md) / komunala-slb.si
 - [Kostak Krško](/doc/source/kostak_si.md) / kostak.si
 - [KSP Ljutomer](/doc/source/ksp_ljutomer_si.md) / ksp-ljutomer.si
 - [Moji odpadki, Ljubljana](/doc/source/mojiodpadki_si.md) / mojiodpadki.si
