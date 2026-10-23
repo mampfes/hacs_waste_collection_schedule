@@ -9999,12 +9999,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "By",
-          "street": "Gade"
+          "street": "Gade",
+          "waste_types": "Affaldstyper"
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
           "city": "Din by",
-          "street": "Dit gadenavn"
+          "street": "Dit gadenavn",
+          "waste_types": "Valgfrit filter: affaldstyperne du vil inkludere."
         }
       },
       "reconfigure_awr_de": {
@@ -10013,11 +10015,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "By",
-          "street": "Gade"
+          "street": "Gade",
+          "waste_types": "Affaldstyper"
         },
         "data_description": {
           "city": "Din by",
-          "street": "Dit gadenavn"
+          "street": "Dit gadenavn",
+          "waste_types": "Valgfrit filter: affaldstyperne du vil inkludere."
         }
       },
       "args_c_trace_de": {
@@ -10156,12 +10160,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "By",
-          "street": "Gade"
+          "street": "Gade",
+          "waste_types": "Affaldstyper"
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
           "city": "Din by",
-          "street": "Dit gadenavn"
+          "street": "Dit gadenavn",
+          "waste_types": "Valgfrit filter: affaldstyperne du vil inkludere."
         }
       },
       "reconfigure_awsh_de": {
@@ -10170,11 +10176,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "By",
-          "street": "Gade"
+          "street": "Gade",
+          "waste_types": "Affaldstyper"
         },
         "data_description": {
           "city": "Din by",
-          "street": "Dit gadenavn"
+          "street": "Dit gadenavn",
+          "waste_types": "Valgfrit filter: affaldstyperne du vil inkludere."
         }
       },
       "args_zva_wmk_de": {

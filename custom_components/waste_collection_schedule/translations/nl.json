@@ -9999,12 +9999,14 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "city": "Plaats",
-          "street": "Straat"
+          "street": "Straat",
+          "waste_types": "Afvalsoorten"
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
           "city": "Uw stad of dorp.",
-          "street": "Uw straatnaam."
+          "street": "Uw straatnaam.",
+          "waste_types": "Optioneel filter: de op te nemen afvalsoorten."
         }
       },
       "reconfigure_awr_de": {
@@ -10013,11 +10015,13 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "city": "Plaats",
-          "street": "Straat"
+          "street": "Straat",
+          "waste_types": "Afvalsoorten"
         },
         "data_description": {
           "city": "Uw stad of dorp.",
-          "street": "Uw straatnaam."
+          "street": "Uw straatnaam.",
+          "waste_types": "Optioneel filter: de op te nemen afvalsoorten."
         }
       },
       "args_c_trace_de": {
@@ -10156,12 +10160,14 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "city": "Plaats",
-          "street": "Straat"
+          "street": "Straat",
+          "waste_types": "Afvalsoorten"
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
           "city": "Uw stad of dorp.",
-          "street": "Uw straatnaam."
+          "street": "Uw straatnaam.",
+          "waste_types": "Optioneel filter: de op te nemen afvalsoorten."
         }
       },
       "reconfigure_awsh_de": {
@@ -10170,11 +10176,13 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "city": "Plaats",
-          "street": "Straat"
+          "street": "Straat",
+          "waste_types": "Afvalsoorten"
         },
         "data_description": {
           "city": "Uw stad of dorp.",
-          "street": "Uw straatnaam."
+          "street": "Uw straatnaam.",
+          "waste_types": "Optioneel filter: de op te nemen afvalsoorten."
         }
       },
       "args_zva_wmk_de": {

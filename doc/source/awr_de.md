@@ -13,6 +13,7 @@ waste_collection_schedule:
       args:
         city: CITY
         street: STREET
+        waste_types: WASTE_TYPES
 ```
 
 ### Configuration Variables
@@ -22,6 +23,9 @@ waste_collection_schedule:
 
 **street**  
 *(string) (required)*
+
+**waste_types**  
+*(string) (optional)*
 
 ## Example
 
@@ -33,3 +37,7 @@ waste_collection_schedule:
         city: Rendsburg
         street: "Hindenburgstra\xDFe"
 ```
+
+## How to get the source arguments
+
+Enter city and street exactly as on https://www.awr.de/service/abfuhrtermine/. A street lists every container variant the city collects (e.g. Restabfall 2-weekly and 4-weekly). To get only your own bins, select them on the website and copy the ids from the calendar link, e.g. .../abfallarten/R02-B02-D04-P04/kalender.ics, into waste_types as R02,B02,D04,P04. Leave it empty to get every variant.

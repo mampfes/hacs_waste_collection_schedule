@@ -10028,12 +10028,14 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
-          "street": "Rue"
+          "street": "Rue",
+          "waste_types": "Types de déchets"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
           "city": "Votre ville ou village.",
-          "street": "Le nom de votre rue."
+          "street": "Le nom de votre rue.",
+          "waste_types": "Filtre facultatif : les types de déchets à inclure."
         }
       },
       "reconfigure_awr_de": {
@@ -10042,11 +10044,13 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
-          "street": "Rue"
+          "street": "Rue",
+          "waste_types": "Types de déchets"
         },
         "data_description": {
           "city": "Votre ville ou village.",
-          "street": "Le nom de votre rue."
+          "street": "Le nom de votre rue.",
+          "waste_types": "Filtre facultatif : les types de déchets à inclure."
         }
       },
       "args_c_trace_de": {
@@ -10185,12 +10189,14 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
-          "street": "Rue"
+          "street": "Rue",
+          "waste_types": "Types de déchets"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
           "city": "Votre ville ou village.",
-          "street": "Le nom de votre rue."
+          "street": "Le nom de votre rue.",
+          "waste_types": "Filtre facultatif : les types de déchets à inclure."
         }
       },
       "reconfigure_awsh_de": {
@@ -10199,11 +10205,13 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
-          "street": "Rue"
+          "street": "Rue",
+          "waste_types": "Types de déchets"
         },
         "data_description": {
           "city": "Votre ville ou village.",
-          "street": "Le nom de votre rue."
+          "street": "Le nom de votre rue.",
+          "waste_types": "Filtre facultatif : les types de déchets à inclure."
         }
       },
       "args_zva_wmk_de": {

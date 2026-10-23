@@ -9997,12 +9997,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "street": "Ulica"
+          "street": "Ulica",
+          "waste_types": "Tipi odpadkov"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "city": "Vaše mesto ali kraj.",
-          "street": "Ime vaše ulice."
+          "street": "Ime vaše ulice.",
+          "waste_types": "Opcijski filter: tipi odpadkov, ki naj bodo vključeni."
         }
       },
       "reconfigure_awr_de": {
@@ -10011,11 +10013,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "street": "Ulica"
+          "street": "Ulica",
+          "waste_types": "Tipi odpadkov"
         },
         "data_description": {
           "city": "Vaše mesto ali kraj.",
-          "street": "Ime vaše ulice."
+          "street": "Ime vaše ulice.",
+          "waste_types": "Opcijski filter: tipi odpadkov, ki naj bodo vključeni."
         }
       },
       "args_c_trace_de": {
@@ -10154,12 +10158,14 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "street": "Ulica"
+          "street": "Ulica",
+          "waste_types": "Tipi odpadkov"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "city": "Vaše mesto ali kraj.",
-          "street": "Ime vaše ulice."
+          "street": "Ime vaše ulice.",
+          "waste_types": "Opcijski filter: tipi odpadkov, ki naj bodo vključeni."
         }
       },
       "reconfigure_awsh_de": {
@@ -10168,11 +10174,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "street": "Ulica"
+          "street": "Ulica",
+          "waste_types": "Tipi odpadkov"
         },
         "data_description": {
           "city": "Vaše mesto ali kraj.",
-          "street": "Ime vaše ulice."
+          "street": "Ime vaše ulice.",
+          "waste_types": "Opcijski filter: tipi odpadkov, ki naj bodo vključeni."
         }
       },
       "args_zva_wmk_de": {

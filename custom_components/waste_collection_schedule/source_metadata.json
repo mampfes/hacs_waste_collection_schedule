@@ -2374,7 +2374,10 @@
   },
   "awr_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awr_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Ort und Straße genau wie auf https://www.awr.de/service/abfuhrtermine/ eingeben. Eine Straße liefert alle Behältervarianten des Ortes (z. B. Restabfall 2- und 4-wöchentlich). Um nur die eigenen Tonnen zu erhalten, diese auf der Website auswählen und die Kennungen aus dem Kalender-Link, z. B. .../abfallarten/R02-B02-D04-P04/kalender.ics, als R02,B02,D04,P04 in waste_types eintragen. Leer lassen für alle Varianten.",
+      "en": "Enter city and street exactly as on https://www.awr.de/service/abfuhrtermine/. A street lists every container variant the city collects (e.g. Restabfall 2-weekly and 4-weekly). To get only your own bins, select them on the website and copy the ids from the calendar link, e.g. .../abfallarten/R02-B02-D04-P04/kalender.ics, into waste_types as R02,B02,D04,P04. Leave it empty to get every variant."
+    },
     "urls": {}
   },
   "c_trace_de": {
@@ -2407,7 +2410,10 @@
   },
   "awsh_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awsh_de.md",
-    "howto": {},
+    "howto": {
+      "de": "Ort und Straße genau wie auf https://www.awsh.de/service/abfuhrtermine/ eingeben. Eine Straße liefert alle Behältervarianten des Ortes (z. B. Restabfall 2- und 4-wöchentlich). Um nur die eigenen Tonnen zu erhalten, diese auf der Website auswählen und die Kennungen aus dem Kalender-Link, z. B. .../abfallarten/R02-B02-D02-P04/kalender.ics, als R02,B02,D02,P04 in waste_types eintragen. Leer lassen für alle Varianten.",
+      "en": "Enter city and street exactly as on https://www.awsh.de/service/abfuhrtermine/. A street lists every container variant the city collects (e.g. Restabfall 2-weekly and 4-weekly). To get only your own bins, select them on the website and copy the ids from the calendar link, e.g. .../abfallarten/R02-B02-D02-P04/kalender.ics, into waste_types as R02,B02,D02,P04. Leave it empty to get every variant."
+    },
     "urls": {}
   },
   "zva_wmk_de": {

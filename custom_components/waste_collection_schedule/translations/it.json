@@ -10016,12 +10016,14 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "street": "Via"
+          "street": "Via",
+          "waste_types": "Tipi di rifiuto"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
           "city": "La vostra città o paese.",
-          "street": "Il nome della vostra via."
+          "street": "Il nome della vostra via.",
+          "waste_types": "Filtro facoltativo: i tipi di rifiuto da includere."
         }
       },
       "reconfigure_awr_de": {
@@ -10030,11 +10032,13 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "street": "Via"
+          "street": "Via",
+          "waste_types": "Tipi di rifiuto"
         },
         "data_description": {
           "city": "La vostra città o paese.",
-          "street": "Il nome della vostra via."
+          "street": "Il nome della vostra via.",
+          "waste_types": "Filtro facoltativo: i tipi di rifiuto da includere."
         }
       },
       "args_c_trace_de": {
@@ -10173,12 +10177,14 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "street": "Via"
+          "street": "Via",
+          "waste_types": "Tipi di rifiuto"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
           "city": "La vostra città o paese.",
-          "street": "Il nome della vostra via."
+          "street": "Il nome della vostra via.",
+          "waste_types": "Filtro facoltativo: i tipi di rifiuto da includere."
         }
       },
       "reconfigure_awsh_de": {
@@ -10187,11 +10193,13 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "street": "Via"
+          "street": "Via",
+          "waste_types": "Tipi di rifiuto"
         },
         "data_description": {
           "city": "La vostra città o paese.",
-          "street": "Il nome della vostra via."
+          "street": "Il nome della vostra via.",
+          "waste_types": "Filtro facoltativo: i tipi di rifiuto da includere."
         }
       },
       "args_zva_wmk_de": {

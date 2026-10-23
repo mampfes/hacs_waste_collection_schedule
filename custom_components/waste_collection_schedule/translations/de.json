@@ -10023,12 +10023,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
-          "street": "Straße"
+          "street": "Straße",
+          "waste_types": "Abfallarten"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "city": "Ihre Stadt oder Gemeinde.",
-          "street": "Ihr Straßenname."
+          "street": "Ihr Straßenname.",
+          "waste_types": "Optionaler Filter: die einzuschließenden Abfallarten."
         }
       },
       "reconfigure_awr_de": {
@@ -10037,11 +10039,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
-          "street": "Straße"
+          "street": "Straße",
+          "waste_types": "Abfallarten"
         },
         "data_description": {
           "city": "Ihre Stadt oder Gemeinde.",
-          "street": "Ihr Straßenname."
+          "street": "Ihr Straßenname.",
+          "waste_types": "Optionaler Filter: die einzuschließenden Abfallarten."
         }
       },
       "args_c_trace_de": {
@@ -10180,12 +10184,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
-          "street": "Straße"
+          "street": "Straße",
+          "waste_types": "Abfallarten"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
           "city": "Ihre Stadt oder Gemeinde.",
-          "street": "Ihr Straßenname."
+          "street": "Ihr Straßenname.",
+          "waste_types": "Optionaler Filter: die einzuschließenden Abfallarten."
         }
       },
       "reconfigure_awsh_de": {
@@ -10194,11 +10200,13 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
-          "street": "Straße"
+          "street": "Straße",
+          "waste_types": "Abfallarten"
         },
         "data_description": {
           "city": "Ihre Stadt oder Gemeinde.",
-          "street": "Ihr Straßenname."
+          "street": "Ihr Straßenname.",
+          "waste_types": "Optionaler Filter: die einzuschließenden Abfallarten."
         }
       },
       "args_zva_wmk_de": {

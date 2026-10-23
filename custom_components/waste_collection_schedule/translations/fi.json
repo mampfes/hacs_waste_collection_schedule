@@ -10004,12 +10004,14 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "street": "Katu"
+          "street": "Katu",
+          "waste_types": "Jätelajit"
         },
         "data_description": {
           "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
           "city": "Kaupunkisi tai paikkakuntasi.",
-          "street": "Kadun nimi."
+          "street": "Kadun nimi.",
+          "waste_types": "Valinnainen suodatin: sisällytettävät jätelajit."
         }
       },
       "reconfigure_awr_de": {
@@ -10018,11 +10020,13 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "street": "Katu"
+          "street": "Katu",
+          "waste_types": "Jätelajit"
         },
         "data_description": {
           "city": "Kaupunkisi tai paikkakuntasi.",
-          "street": "Kadun nimi."
+          "street": "Kadun nimi.",
+          "waste_types": "Valinnainen suodatin: sisällytettävät jätelajit."
         }
       },
       "args_c_trace_de": {
@@ -10161,12 +10165,14 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "street": "Katu"
+          "street": "Katu",
+          "waste_types": "Jätelajit"
         },
         "data_description": {
           "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
           "city": "Kaupunkisi tai paikkakuntasi.",
-          "street": "Kadun nimi."
+          "street": "Kadun nimi.",
+          "waste_types": "Valinnainen suodatin: sisällytettävät jätelajit."
         }
       },
       "reconfigure_awsh_de": {
@@ -10175,11 +10181,13 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "street": "Katu"
+          "street": "Katu",
+          "waste_types": "Jätelajit"
         },
         "data_description": {
           "city": "Kaupunkisi tai paikkakuntasi.",
-          "street": "Kadun nimi."
+          "street": "Kadun nimi.",
+          "waste_types": "Valinnainen suodatin: sisällytettävät jätelajit."
         }
       },
       "args_zva_wmk_de": {
