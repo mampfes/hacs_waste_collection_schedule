@@ -55,6 +55,9 @@ class Source(BaseSource):
     DESCRIPTION = "Source for Stadt Mönchengladbach"
     URL = "https://mags.de"
     COUNTRY = "de"
+    # mags.de answers HTTP 200 with an empty VCALENDAR for unknown addresses
+    # and during backend hiccups; raise instead of wiping the schedule.
+    RAISE_ON_EMPTY = True
 
     TEST_CASES: ClassVar[dict] = {
         "Schlossacker 43": {"street": "Schlossacker", "number": 43, "turnus": 2},
