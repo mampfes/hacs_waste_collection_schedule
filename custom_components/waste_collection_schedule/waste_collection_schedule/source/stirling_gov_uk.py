@@ -14,6 +14,7 @@ COUNTRY = "uk"
 TEST_CASES = {
     "Kildean Road 38": {"address": "38 Kildean Road"},
     "Merlo Buchanan Castle Estate": {"address": "Merlo"},
+    "Picked suggestion": {"address": "8 Main Street, Stirling, FK7 8BS"},
 }
 
 # Stirling Council uses Routeware's ReCollect platform (area "StirlingUK").
@@ -47,24 +48,47 @@ PARAM_TRANSLATIONS = {
 SOURCE_CODEOWNERS = ["@nagug"]
 
 
+def _normalise_address(address: str) -> str:
+    return " ".join(str(address).split()).casefold()
+
+
 class Source:
     def __init__(self, address: str):
         self._address = address
 
-    def _resolve_place_id(self) -> str:
-        """Resolve the configured address to a ReCollect place ID."""
+    @staticmethod
+    def _suggest(query: str) -> list[dict]:
         response = requests.get(
             f"{AREA_URL}/address-suggest",
-            params={"q": self._address, "locale": "en-GB"},
+            params={"q": query, "locale": "en-GB"},
             timeout=30,
         )
         response.raise_for_status()
-        suggestions = response.json()
+        return response.json()
+
+    def _resolve_place_id(self) -> str:
+        """Resolve the configured address to a ReCollect place ID."""
+        suggestions = self._suggest(self._address)
+
+        # The search finds nothing for its own full labels, such as
+        # "8 Main Street, Stirling, FK7 8BS", so drop trailing parts until it does.
+        parts = [part.strip() for part in self._address.split(",")]
+        shortened = False
+        while not suggestions and len(parts) > 1:
+            parts.pop()
+            shortened = True
+            suggestions = self._suggest(", ".join(parts))
 
         if not suggestions:
             raise SourceArgumentNotFound("address", self._address)
 
-        if len(suggestions) > 1:
+        wanted = _normalise_address(self._address)
+        exact = [s for s in suggestions if _normalise_address(s["name"]) == wanted]
+        if len(exact) == 1:
+            suggestions = exact
+        elif len(suggestions) > 1 or shortened:
+            # A shortened search ignored part of the input, so even a single
+            # result is offered for confirmation rather than used.
             raise SourceArgAmbiguousWithSuggestions(
                 "address", self._address, [s["name"] for s in suggestions]
             )
