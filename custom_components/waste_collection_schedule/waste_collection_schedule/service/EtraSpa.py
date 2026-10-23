@@ -15,7 +15,11 @@ rather than any text extraction. Pair it with
 year's PDF on the municipality's page, and ``ICSTransformer`` to map the
 Italian labels onto canonical WasteTypes.
 
-Currently used by one provider (San Martino di Lupari), but kept here rather
+Some municipalities (e.g. Bassano del Grappa) instead get one PDF per zone
+without the "Zona A" / "Zona B" sub-columns; the parser handles that
+single-zone layout too (``zone_param=None``).
+
+Currently used by San Martino di Lupari and Bassano del Grappa, kept here rather
 than in the source module because ETRA publishes the identical template --
 same icon colours, same grid layout -- for every municipality in its
 consortium; only the PDF URL and the municipality name differ.
@@ -68,6 +72,10 @@ COLOUR_MAP: dict[tuple[float, float, float], str] = {
 _COLOUR_TOLERANCE = 0.01
 _MAX_ZONE_DISTANCE = 32
 _MAX_DAY_DISTANCE = 7
+# Single-zone calendars (one PDF per zone, e.g. Bassano del Grappa) have no
+# "ZONA A / ZONA B" sub-headings; the symbols sit in one strip right of the
+# day numbers, roughly this far from the date column's right edge.
+_SINGLE_ZONE_OFFSET = 22
 
 
 def _iter_elements(container: Any) -> Any:
@@ -122,11 +130,11 @@ def _zone_centres(page: LTPage) -> list[tuple[float, float]]:
 
 def _calendar_columns(
     page: LTPage, base_year: int
-) -> list[tuple[int, int, list[tuple[int, float]], tuple[float, float]]]:
+) -> list[tuple[int, int, list[tuple[int, float]], tuple[float, ...]]]:
     from pdfminer.layout import LTTextBoxHorizontal, LTTextLineHorizontal
 
     headings: list[tuple[float, int]] = []
-    date_columns: list[tuple[float, list[tuple[int, float]]]] = []
+    date_columns: list[tuple[float, float, list[tuple[int, float]]]] = []
 
     for element in page:
         if not isinstance(element, LTTextBoxHorizontal):
@@ -143,11 +151,14 @@ def _calendar_columns(
             if day_match := _DAY_RE.fullmatch(" ".join(line.get_text().split())):
                 days.append((int(day_match.group(1)), (line.y0 + line.y1) / 2))
         if len(days) >= 28:
-            date_columns.append((element.x0, days))
+            date_columns.append((element.x0, element.x1, days))
 
     headings.sort()
     date_columns.sort()
-    zones = _zone_centres(page)
+    zones: list[tuple[float, ...]] = list(_zone_centres(page))
+    if not zones:
+        # Single-zone layout: one symbol strip per month column.
+        zones = [(x1 + _SINGLE_ZONE_OFFSET,) for _, x1, _ in date_columns]
     if not headings or not (len(headings) == len(date_columns) == len(zones)):
         raise ValueError(
             "Could not identify all month, date, and zone columns in the ETRA PDF. "
@@ -157,7 +168,7 @@ def _calendar_columns(
     result = []
     year = base_year
     previous_month: int | None = None
-    for (_, month), (_, days), zone_centres in zip(
+    for (_, month), (_, _, days), zone_centres in zip(
         headings, date_columns, zones, strict=True
     ):
         if previous_month is not None and month < previous_month:
@@ -229,10 +240,12 @@ class EtraCalendarParser(Parser["list[tuple[date, str]]"]):
     Consumes the PDF response from ``retrievers.PdfLinkRetriever`` and emits
     ``(date, label)`` records for an ``ICSTransformer``. ``zone_param`` names
     the ``source.params`` field holding the user's chosen zone ("A" or "B",
-    case-insensitive).
+    case-insensitive). Pass ``zone_param=None`` for single-zone calendars,
+    where ETRA publishes a separate PDF per zone and the page has no
+    "ZONA A / ZONA B" sub-columns.
     """
 
-    def __init__(self, *, zone_param: str = "zone"):
+    def __init__(self, *, zone_param: str | None = "zone"):
         self.zone_param = zone_param
 
     def __call__(
@@ -240,13 +253,15 @@ class EtraCalendarParser(Parser["list[tuple[date, str]]"]):
     ) -> list[tuple[date, str]]:
         from pdfminer.high_level import extract_pages
 
-        zone_raw = source.params[self.zone_param] if source is not None else "A"
-        zone = str(zone_raw).strip().upper()
-        if zone not in ("A", "B"):
-            raise SourceArgumentNotFoundWithSuggestions(
-                self.zone_param, zone_raw, ["A", "B"]
-            )
-        zone_index = 0 if zone == "A" else 1
+        zone_index = 0
+        if self.zone_param is not None:
+            zone_raw = source.params[self.zone_param] if source is not None else "A"
+            zone = str(zone_raw).strip().upper()
+            if zone not in ("A", "B"):
+                raise SourceArgumentNotFoundWithSuggestions(
+                    self.zone_param, zone_raw, ["A", "B"]
+                )
+            zone_index = 0 if zone == "A" else 1
 
         pages = list(extract_pages(BytesIO(response.content)))
         if not pages:
