@@ -14,7 +14,12 @@ TEST_CASES = {
     "PETstock Belmont": {"address": "196 Abernethy Road Belmont 6104"},
     "Belgravia Medical Centre": {"address": "374 Belgravia Street Cloverdale 6105"},
     "IGA Rivervale": {"address": "126 Kooyong Road Rivervale 6103"},
+    "Number contained in other addresses": {"address": "8 Kooyong Road Rivervale 6103"},
 }
+
+
+def _normalise_address(address: str) -> str:
+    return " ".join(str(address).split()).casefold()
 
 
 class Source:
@@ -32,7 +37,13 @@ class Source:
         if len(j) == 0:
             raise SourceArgumentNotFound("address", self._address)
 
-        if len(j) > 1:
+        # The search matches substrings, so "8 Kooyong Road ..." also returns
+        # 18, 28, 38 and more. Without this, picking the right suggestion loops.
+        wanted = _normalise_address(self._address)
+        exact = [x for x in j if _normalise_address(x.get("Address", "")) == wanted]
+        if len(exact) == 1:
+            j = exact
+        elif len(j) > 1:
             raise SourceArgAmbiguousWithSuggestions(
                 "address", self._address, [x.get("Address") for x in j]
             )
