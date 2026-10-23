@@ -1050,6 +1050,11 @@ class PdfCalendarColumns(Preprocessor["list[PdfRow]", PdfColumn]):
             the grid. pdfminer's y grows upwards, so this is the baseline of the
             lowest heading line.
         day_range: the numbers accepted as a day anchor (default 1 to 31).
+        day_pattern: for a grid that prints the day number and the rest of the
+            cell in one run (``"02 Fr R"``), a regex matched (case-insensitively)
+            at the start of a run inside the day band, its first group the day
+            number. The text after the match stays in the cell. Unset, a day
+            anchor is a run that is only digits.
     """
 
     def __init__(
@@ -1059,11 +1064,13 @@ class PdfCalendarColumns(Preprocessor["list[PdfRow]", PdfColumn]):
         day_bands: Mapping[int, tuple[float, float]],
         header_y: float,
         day_range: tuple[int, int] = (1, 31),
+        day_pattern: "str | None" = None,
     ):
         self._column_bounds = list(column_bounds)
         self._day_bands = dict(day_bands)
         self._header_y = header_y
         self._day_range = day_range
+        self._day_re = re.compile(day_pattern, re.IGNORECASE) if day_pattern else None
 
     def _column_of(self, x0: float) -> int:
         return bisect.bisect_right(self._column_bounds, x0)
@@ -1104,6 +1111,14 @@ class PdfCalendarColumns(Preprocessor["list[PdfRow]", PdfColumn]):
             for word in row.words:
                 if self._column_of(word.x0) != index:
                     continue
+                if low <= word.x0 <= high and self._day_re is not None:
+                    match = self._day_re.match(word.text)
+                    if match and first_day <= int(match.group(1)) <= last_day:
+                        anchors.append((row.y, int(match.group(1))))
+                        rest = word.text[match.end() :].strip()
+                        if rest:
+                            notes.append((row.y, rest))
+                        continue
                 if (
                     low <= word.x0 <= high
                     and word.text.isdigit()
