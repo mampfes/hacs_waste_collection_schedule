@@ -1,7 +1,7 @@
 from typing import ClassVar, final
 from urllib.parse import urlencode
 
-from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import date_parsers, lookups, parsers, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
@@ -28,7 +28,15 @@ def _pick_property(lookup, source) -> dict:
     address = source.params["address"]
     if len(matches) == 0:
         raise SourceArgumentNotFound("address", address)
-    if len(matches) > 1:
+    # The search matches substrings, so "8 Kooyong Road ..." also returns 18,
+    # 28, 38 and more; an exact match wins, or picking a suggestion loops.
+    wanted = lookups.normalize_text(address)
+    exact = [
+        m for m in matches if lookups.normalize_text(m.get("Address", "")) == wanted
+    ]
+    if len(exact) == 1:
+        matches = exact
+    elif len(matches) > 1:
         raise SourceArgAmbiguousWithSuggestions(
             "address", address, [m.get("Address") for m in matches]
         )
@@ -48,6 +56,9 @@ class Source(BaseSource):
         "PETstock Belmont": {"address": "196 Abernethy Road Belmont 6104"},
         "Belgravia Medical Centre": {"address": "374 Belgravia Street Cloverdale 6105"},
         "IGA Rivervale": {"address": "126 Kooyong Road Rivervale 6103"},
+        "Number contained in other addresses": {
+            "address": "8 Kooyong Road Rivervale 6103"
+        },
     }
 
     ERROR_TEST_CASES: ClassVar[dict] = {
