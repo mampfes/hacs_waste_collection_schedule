@@ -37,12 +37,6 @@ _AREAS = {
 # start to the right of it.
 _DAYS_X0 = 350.0
 
-_PL_TRANS = str.maketrans("ąćęłńóśźżĄĆĘŁŃÓŚŹŻ", "acelnoszzACELNOSZZ")
-
-
-def _fold(value: object) -> str:
-    return lookups.normalize_text(str(value).translate(_PL_TRANS))
-
 
 def _month_days(text: str) -> list[list[int]]:
     """Split a row's day numbers into months.
@@ -62,7 +56,7 @@ def _month_days(text: str) -> list[list[int]]:
 
 
 def _section_type(text: str) -> str | None:
-    folded = _fold(text)
+    folded = lookups.normalize_loose(text)
     if "niesegregowane" in folded:
         return MIXED
     if "selektywnie" in folded:
@@ -79,7 +73,7 @@ def _rows(
         _AREAS,
         source.params["area"] if source else "",
         argument="area",
-        normalize=_fold,
+        normalize=lookups.normalize_loose,
     )
     year = datetime.date.today().year
     for row in rows:

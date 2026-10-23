@@ -56,12 +56,6 @@ _MONTHS = ("I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "X
 # Row labels sit between the village names and the first month column.
 _LABEL_X = (120.0, 235.0)
 
-_PL_TRANS = str.maketrans("ąćęłńóśźżĄĆĘŁŃÓŚŹŻ", "acelnoszzACELNOSZZ")
-
-
-def _fold(value: object) -> str:
-    return lookups.normalize_text(str(value).translate(_PL_TRANS))
-
 
 def _rows(
     pages: list[PdfWordLayout], source: BaseSource | None = None
@@ -70,7 +64,7 @@ def _rows(
         _TOWNS,
         source.params["town"] if source else "",
         argument="town",
-        normalize=_fold,
+        normalize=lookups.normalize_loose,
     )
     words = list(pages[0].words) if pages else []
     text = " ".join(w.text for w in words)
@@ -91,12 +85,14 @@ def _rows(
     col_x = [columns[m] for m in _MONTHS]
 
     # Bulky waste table below the yearly table is not parsed.
-    bulky = next((w.y for w in words if _fold(w.text) == "zbiorka"), 0.0)
+    bulky = next(
+        (w.y for w in words if lookups.normalize_loose(w.text) == "zbiorka"), 0.0
+    )
 
     labels: list[tuple[float, str]] = []
     for w in words:
         if _LABEL_X[0] <= w.x <= _LABEL_X[1] and bulky < w.y < header.y:
-            kind = _ROW_LABELS.get(_fold(w.text).rstrip(","))
+            kind = _ROW_LABELS.get(lookups.normalize_loose(w.text).rstrip(","))
             if kind:
                 labels.append((w.y, kind))
     labels.sort(key=lambda lab: -lab[0])

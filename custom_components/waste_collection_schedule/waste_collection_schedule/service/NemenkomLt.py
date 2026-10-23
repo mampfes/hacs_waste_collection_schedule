@@ -9,6 +9,7 @@ from urllib.parse import urljoin
 
 import lxml.etree as ET
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import Parser
@@ -19,20 +20,6 @@ HEADERS = {"user-agent": "Mozilla/5.0"}
 MAX_FILE_BYTES = 5 * 1024 * 1024
 NS = {"s": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 XML_PARSER = ET.XMLParser(resolve_entities=False, no_network=True)
-MONTHS = {
-    "sausis": 1,
-    "vasaris": 2,
-    "kovas": 3,
-    "balandis": 4,
-    "gegužė": 5,
-    "birželis": 6,
-    "liepa": 7,
-    "rugpjūtis": 8,
-    "rugsėjis": 9,
-    "spalis": 10,
-    "lapkritis": 11,
-    "gruodis": 12,
-}
 GENERAL_WASTE = "Buitinės atliekos"
 
 
@@ -128,7 +115,7 @@ def parse_schedule(
         raise ValueError("Weekday column not found in XLSX header")
     village_col = weekday_col - 1
     month_cols = {
-        i: MONTHS[_norm(c)] for i, c in enumerate(header) if _norm(c) in MONTHS
+        i: month for i, c in enumerate(header) if (month := recurrence.month(c))
     }
     entries: list[dict[str, Any]] = []
     known: list[str] = []

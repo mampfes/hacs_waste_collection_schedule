@@ -18,7 +18,7 @@ import itertools
 import re
 from typing import Any, ClassVar, final
 
-from waste_collection_schedule import lookups, parsers, retrievers
+from waste_collection_schedule import lookups, parsers, recurrence, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import municipality, street
@@ -38,21 +38,6 @@ _MUNICIPALITIES = {
     "Gościeradów": "goscieradow",
     "Trzydnik Duży": "trzydnik-duzy",
     "Wilkołaz": "wilkolaz",
-}
-
-_MONTHS = {
-    "styczeń": 1,
-    "luty": 2,
-    "marzec": 3,
-    "kwiecień": 4,
-    "maj": 5,
-    "czerwiec": 6,
-    "lipiec": 7,
-    "sierpień": 8,
-    "wrzesień": 9,
-    "październik": 10,
-    "listopad": 11,
-    "grudzień": 12,
 }
 
 _TYPES = {
@@ -131,14 +116,17 @@ def _blocks(
         if not year_match:
             raise ValueError("Ekoland: schedule year not found")
         year = int(year_match.group(1))
-        months = [
-            (w.x, _MONTHS[w.text.lower()])
+        named = [
+            (w, month)
             for w in layout.words
-            if w.text.lower() in _MONTHS
+            if (month := recurrence.month(w.text)) is not None
         ]
+        # The header is the topmost row of month names; a street such as
+        # "3 Maja" (genitive of May) further down must not count.
+        header_y = max((w.y for w, _ in named), default=0.0)
+        months = [(w.x, month) for w, month in named if abs(w.y - header_y) < 2]
         if len(months) != 12:
             raise ValueError("Ekoland: month header not found")
-        header_y = max(w.y for w in layout.words if w.text.lower() in _MONTHS)
         first_month_x = min(x for x, _ in months)
         labels = sorted(
             (
