@@ -15,7 +15,7 @@ when the count reaches zero.
 |---|---|---:|---|
 | 1 | Special / not a provider | 4 | Not a provider. Decide per module whether it stays a utility or gets a pipeline form. |
 | 2 | Retire (deprecated shim or broken stub) | 8 | Delete, or reduce to an alias, in the major release following the deprecation lifecycle in `versioning.md`. Migrating them is wasted work. |
-| 3 | Login required (policy conflict) | 10 | `CLAUDE.md` forbids login-required endpoints. Decide: keep as is, move out of the default set, or remove. |
+| 3 | Login required | 10 | `CLAUDE.md` allows login-required endpoints only when the account holder is a code owner or provides a test account. Decide per source: keep (owner or test account available), or remove. |
 | 4 | Migrate onto an existing platform component | 2 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
 | 5 | Shared backend, build one component for the cluster | 1 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 1 left (of 14) | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
@@ -42,7 +42,7 @@ when the count reaches zero.
 - `wieliczka_kiedyodpady_pl`: TITLE "(Deprecated)", runtime warning
 - `wuerzburg_de`: TITLE "(deprecated)", points to the ICS source
 
-## 3. Login required (policy conflict)
+## 3. Login required
 
 - `aen_minasidor_se`: needs account credentials
 - `berlin_recycling_de`: needs account credentials

@@ -29,7 +29,7 @@ Present the recommendation to the user.
 
 If the recommendation is **"already supported via shared platform"**: explain how to add the location to the shared config (the recommendation will name the exact file). Either guide them through the one-line edit, or invoke `source-implementer` with the location-add task.
 
-If the recommendation is **"not feasible"** (login wall, no public feed): explain why, and suggest alternatives: encourage them to ask the provider for a public feed, or look for a third-party aggregator. A **scanned/OCR-only or unstructured** PDF also lands here: defer it (leave the source request open under a status label) rather than hardcoding a schedule.
+If the source needs a login: it is only feasible if the account holder maintains it as a code owner or provides a test account (we never create accounts; BankID/MitID/2FA is not feasible). If the recommendation is **"not feasible"** (login wall without owner or test account, no public feed): explain why, and suggest alternatives: encourage them to ask the provider for a public feed, or look for a third-party aggregator. A **scanned/OCR-only or unstructured** PDF also lands here: defer it (leave the source request open under a status label) rather than hardcoding a schedule.
 
 A **PDF-only** provider is otherwise a normal new source, not a blocker: the pipeline has reusable PDF components (`PdfTextParser` for a text list, `PdfTableParser` for a columnar/grid calendar, `PdfImageCalendar` for a colour-coded raster calendar, and `PdfLinkRetriever` for a rotating per-year URL). Treat it as a new source and continue to Step 2. See `doc/contributing_source.md` "PDF sources".
 

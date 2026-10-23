@@ -58,7 +58,7 @@ Required metadata (class attrs for pipeline, module-level for legacy): `TITLE`, 
 
 **Never:**
 - hardcoded dates or schedules (fetch live);
-- login-required endpoints;
+- login-required endpoints, unless the account holder maintains the source as a code owner (`SOURCE_CODEOWNERS`) or provides a test account; maintainers never create accounts themselves, and BankID/MitID/2FA flows stay out;
 - `if __name__ == "__main__":` blocks or dummy params like `_`;
 - a new source for a provider already on a shared platform (ICS YAML incl. `recollect.yaml` and `mein_abfallkalender_online.yaml`, `recyclecoach_com`, `c_trace_de`, and every platform in the guide's "Reusable service platforms" table): check first;
 - a dedicated `tests/test_<source>.py`. `TEST_CASES` plus cassettes plus a live `test_sources.py` run is the expected coverage; add one only for logic cases cannot exercise, with network mocked.
