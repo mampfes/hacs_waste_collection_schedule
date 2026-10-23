@@ -1,9 +1,13 @@
 import logging
-from datetime import datetime
+from datetime import date, timedelta
 
 import requests
-from bs4 import BeautifulSoup
+from dateutil.easter import easter
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "Wyndham City Council, Melbourne"
 DESCRIPTION = "Source for Wyndham City Council rubbish collection."
@@ -21,72 +25,115 @@ TEST_CASES = {
     },
 }
 
-API_URL = "https://digital.wyndham.vic.gov.au/myWyndham/"
+# Public ArcGIS layer behind the council's bin day lookup.
+API_URL = "https://services3.arcgis.com/lfHi3I35DWultHqw/arcgis/rest/services/BinCollectionData/FeatureServer/0/query"
+
 ICON_MAP = {
     "Green Waste": Icons.GARDEN,
     "Garbage": Icons.GENERAL_WASTE,
     "Recycling": Icons.RECYCLING,
 }
 
+WEEKDAYS = [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
+]
+
+# The layer only provides the collection day and the collection area ("Week" 1
+# or 2). Recycling and green waste alternate weekly, with the two areas in
+# opposite phase. Per the council's 2026/27 Waste and Recycling Calendar, the
+# week starting Monday 19 October 2026 is a recycling week for area 1 and a
+# green waste week for area 2.
+RECYCLING_WEEK_AREA_1 = date(2026, 10, 19)
+
+WEEKS = 26
+
 _LOGGER = logging.getLogger(__name__)
+
+
+def _is_holiday(d: date) -> bool:
+    """Christmas Day, New Year's Day and Good Friday collections move one day later."""
+    return (d.month, d.day) in ((12, 25), (1, 1)) or d == easter(d.year) - timedelta(
+        days=2
+    )
 
 
 class Source:
     def __init__(self, street_address):
         self._street_address = street_address
 
-    def fetch(self):
-        session = requests.Session()
-        response = session.get(API_URL)
-        response.raise_for_status()
-        response = session.get(
-            "https://digital.wyndham.vic.gov.au/myWyndham/ajax/address-search-suggestions.asp?",
-            params={"ASEARCH": self._street_address},
-        )
-        response.raise_for_status()
-        html = response.content
-        property_address = BeautifulSoup(html, "html.parser").find("li").get_text()
-        _LOGGER.debug("Fetched Property Address: %s", property_address)
-        if (
-            property_address == "No match found."
-            or property_address.upper() != self._street_address.upper()
-        ):
-            raise Exception(
-                f"Address search for '{self._street_address}' returned no results. Check your address on "
-                f"https://digital.wyndham.vic.gov.au/myWyndham/ "
+    def _query(self, where: str, count: int | None = None) -> list[dict]:
+        params = {
+            "where": where,
+            "outFields": "EZI_ADD,Day,NewDay,Week",
+            "returnGeometry": "false",
+            "f": "json",
+        }
+        if count:
+            params["resultRecordCount"] = count
+        r = requests.get(API_URL, params=params)
+        r.raise_for_status()
+        data = r.json()
+        if "error" in data:
+            raise Exception(f"ArcGIS query failed: {data['error']}")
+        return [f["attributes"] for f in data.get("features", [])]
+
+    def _lookup(self) -> dict:
+        address = " ".join(self._street_address.upper().split())
+        if not address:
+            raise SourceArgumentNotFound("street_address", self._street_address)
+        quoted = address.replace("'", "''")
+
+        rows = self._query(f"EZI_ADD = '{quoted}'")
+        if rows:
+            return rows[0]
+
+        # no exact match: suggest addresses with the same number and street name
+        prefix = " ".join(quoted.split()[:2])
+        suggestions = [
+            row["EZI_ADD"] for row in self._query(f"EZI_ADD LIKE '{prefix}%'", count=20)
+        ]
+        if suggestions:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street_address", self._street_address, suggestions
             )
+        raise SourceArgumentNotFound("street_address", self._street_address)
 
-        property_number = BeautifulSoup(html, "html.parser").find("span").get_text()
-        _LOGGER.debug("Fetched Property Number: %s", property_number)
-        response = session.get(
-            "https://digital.wyndham.vic.gov.au/myWyndham/init-map-data.asp",
-            params={
-                "propnum": property_number,
-                "radius": "1000",
-                "mapfeatures": "23,37,22,33,35",
-            },
-        )
-        response.raise_for_status()
-        wasteApiResult = response.content
-        soup = BeautifulSoup(wasteApiResult, "html.parser")
+    def fetch(self):
+        row = self._lookup()
+        _LOGGER.debug("Fetched property: %s", row)
+
+        day = (row.get("NewDay") or row.get("Day") or "").strip().lower()
+        if day not in WEEKDAYS:
+            raise Exception(f"Unknown collection day '{day}' for {row['EZI_ADD']}")
+        area = row.get("Week")
+        if area not in (1, 2):
+            raise Exception(f"Unknown collection week '{area}' for {row['EZI_ADD']}")
+
+        today = date.today()
+        week_start = today - timedelta(days=today.weekday())
+
         entries = []
+        for i in range(WEEKS):
+            monday = week_start + timedelta(weeks=i)
+            pickup = monday + timedelta(days=WEEKDAYS.index(day))
+            if _is_holiday(pickup):
+                pickup += timedelta(days=1)
 
-        for article in soup.findAll("div", {"class": "waste"}):
-            if article.get_text().startswith("Next"):
-                waste_type = (
-                    article.get_text()
-                    .strip()
-                    .split(":")[0][5:]
-                    .replace(" Collection", "")
-                )
-                _LOGGER.debug("Waste Type: %s", waste_type)
-                icon = ICON_MAP.get(waste_type)
-                _LOGGER.debug("Icon: %s", icon)
-                next_pickup_date = datetime.strptime(
-                    article.get_text().split(":")[1].strip(), "%A, %d %B %Y"
-                ).date()
-                _LOGGER.debug("Next Pickup Date: %s", next_pickup_date)
+            recycling_week = (monday - RECYCLING_WEEK_AREA_1).days // 7 % 2 == 0
+            if area == 2:
+                recycling_week = not recycling_week
+
+            for waste_type in (
+                "Garbage",
+                "Recycling" if recycling_week else "Green Waste",
+            ):
                 entries.append(
-                    Collection(date=next_pickup_date, t=waste_type, icon=icon)
+                    Collection(date=pickup, t=waste_type, icon=ICON_MAP[waste_type])
                 )
         return entries
