@@ -31557,7 +31557,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "post_code": "Poštna številka",
-          "street_name": "Ime ulice"
+          "street_name": "Ime ulice",
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -31569,7 +31570,8 @@
         "data": {
           "calendar_title": "Calendar Title",
           "post_code": "Poštna številka",
-          "street_name": "Ime ulice"
+          "street_name": "Ime ulice",
+          "uprn": "UPRN"
         },
         "data_description": {}
       },

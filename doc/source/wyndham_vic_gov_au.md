@@ -31,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Enter your address exactly as the council's [myWyndham](https://digital.wyndham.vic.gov.au/myWyndham/) search suggests it, e.g. '3-19 Parkvista Drive TRUGANINA 3029'.
+Enter your address as the council's bin day lookup on https://www.wyndham.vic.gov.au shows it, e.g. '3-19 Parkvista Drive TRUGANINA 3029'. An unknown address lists similar ones.

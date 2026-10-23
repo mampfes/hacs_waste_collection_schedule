@@ -26,9 +26,9 @@ waste_collection_schedule:
   sources:
     - name: sidec_lu
       args:
-        commune: Parc Hosingen (36777)
+        commune: Parc Hosingen
 ```
 
 ## How to get the source arguments
 
-Enter your commune as listed on the SIDEC calendar page, with its number, e.g. 'Mersch (2611)'. Leaving out the number lists the valid communes.
+Enter your commune as listed on the SIDEC website, e.g. 'Mersch'. An unknown commune lists the valid ones.

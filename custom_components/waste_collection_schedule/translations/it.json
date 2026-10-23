@@ -31589,7 +31589,8 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "post_code": "Codice Postale CAP",
-          "street_name": "Nome Strada"
+          "street_name": "Nome Strada",
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -31601,7 +31602,8 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "post_code": "Codice Postale CAP",
-          "street_name": "Nome Strada"
+          "street_name": "Nome Strada",
+          "uprn": "UPRN"
         },
         "data_description": {}
       },
