@@ -9,9 +9,10 @@ from typing import ClassVar, final
 
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import city, street
+from waste_collection_schedule.config_params import city, street, waste_types
 from waste_collection_schedule.parsers import IcsParser
 from waste_collection_schedule.service.AwrCollectionDates import (
+    TYPE_VALUE_MAP,
     CollectionDatesRetriever,
     clean_waste_type,
 )
@@ -39,9 +40,31 @@ class Source(BaseSource):
         "Rendsburg": {"city": "Rendsburg", "street": "Hindenburgstraße"},
     }
 
-    PARAMS = (city(), street())
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter city and street exactly as on https://www.awr.de/service/abfuhrtermine/. A street "
+            "lists every container variant the city collects (e.g. Restabfall "
+            "2-weekly and 4-weekly). To get only your own bins, select them on "
+            "the website and copy the ids from the calendar link, e.g. "
+            ".../abfallarten/R02-B02-D04-P04/kalender.ics, into waste_types "
+            "as R02,B02,D04,P04. Leave it empty to get every variant."
+        ),
+        "de": (
+            "Ort und Straße genau wie auf https://www.awr.de/service/abfuhrtermine/ eingeben. Eine "
+            "Straße liefert alle Behältervarianten des Ortes (z. B. Restabfall "
+            "2- und 4-wöchentlich). Um nur die eigenen Tonnen zu erhalten, diese "
+            "auf der Website auswählen und die Kennungen aus dem Kalender-Link, "
+            "z. B. .../abfallarten/R02-B02-D04-P04/kalender.ics, als "
+            "R02,B02,D04,P04 in waste_types eintragen. Leer lassen für alle "
+            "Varianten."
+        ),
+    }
+
+    PARAMS = (city(), street(), waste_types())
     RAISE_ON_EMPTY = True
 
     retrieve = CollectionDatesRetriever(base_url=BASE_URL)
     parse = IcsParser()
-    transform = ICSTransformer(clean=clean_waste_type)
+    transform = ICSTransformer(
+        type_value_map=TYPE_VALUE_MAP, clean=clean_waste_type, carry_raw_label=True
+    )

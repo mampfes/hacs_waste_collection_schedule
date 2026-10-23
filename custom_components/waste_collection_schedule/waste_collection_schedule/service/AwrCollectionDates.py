@@ -21,11 +21,18 @@ so a source on this platform declares only its base URL.
 The ``1`` in the path is the tenant id, and the trailing ``hausnummern/0`` asks
 for the whole street rather than one house. Both deployments use those values,
 so they are fixed here rather than exposed as options nobody would vary.
+
+The waste-type ids are different: a city lists every container variant it
+collects (``R02`` Restabfall 40L-240L 2-weekly, ``R04`` the same bin 4-weekly,
+``R11`` Restabfall ab 770L weekly, ...) and a household has only some of them.
+The provider's own form asks which ones; the optional ``waste_types`` argument
+is that selection (#7839). Without it every variant is requested, as before.
 """
 
 import re
 from typing import TYPE_CHECKING
 
+from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.retrievers import Response, RetrieverFunc
 
@@ -37,7 +44,17 @@ if TYPE_CHECKING:
 # exposes the plain waste-type name so the shared multilingual vocabulary can
 # resolve it; a label that does not fit this shape passes through untouched.
 _TRAILING_PARENTHETICAL = re.compile(r"\s*\([^)]*\)\s*$")
-_TRAILING_BIN_SIZE = re.compile(r"\s+ab\s+\d+\s*l\b.*$", re.IGNORECASE)
+# Container sizes: "ab 770L", "40L", "40L-240L", "1.100L".
+_TRAILING_BIN_SIZE = re.compile(
+    r"\s+(?:ab\s+)?\d[\d.,]*\s*l(?:\s*-\s*\d[\d.,]*\s*l)?\b.*$", re.IGNORECASE
+)
+_ID_SEPARATOR = re.compile(r"[\s,;\-]+")
+
+# Platform-local names the shared vocabulary has no alias for.
+TYPE_VALUE_MAP = {
+    "Wertstoff/LVP": wt.RECYCLABLES,
+    "Restabfallcontainer": wt.GENERAL_WASTE,
+}
 
 
 def clean_waste_type(label: str) -> str:
@@ -84,6 +101,30 @@ class CollectionDatesRetriever(RetrieverFunc):
             )
         return by_label[wanted]
 
+    @staticmethod
+    def _select(wanted: str | list | None, available: list[str]) -> list[str]:
+        """Return the requested waste-type ids, or every id when none is given.
+
+        ``wanted`` arrives as a list (the config layer splits a comma-separated
+        value) or as the raw string; ``-`` also separates, so the id segment of
+        the provider's calendar link can be pasted as is.
+        """
+        if not wanted:
+            return available
+        values = wanted if isinstance(wanted, list | tuple) else [wanted]
+        tokens = [t for v in values for t in _ID_SEPARATOR.split(str(v).strip())]
+        by_upper = {wt_id.upper(): wt_id for wt_id in available}
+        selected = []
+        for token in tokens:
+            if not token:
+                continue
+            if token.upper() not in by_upper:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "waste_types", token, available
+                )
+            selected.append(by_upper[token.upper()])
+        return selected or available
+
     def __call__(self, source: "BaseSource") -> Response:
         city_id = self._resolve(
             source, "orte", "orte", "ortsbezeichnung", "ortsnummer", "city"
@@ -97,12 +138,13 @@ class CollectionDatesRetriever(RetrieverFunc):
             "street",
         )
 
-        # Not a lookup against a user argument: the calendar URL wants every
-        # waste-type id this city collects, so the whole list is requested.
+        # The calendar URL wants waste-type ids of this city: the household's
+        # selection when given (the provider's own form asks for it), else all.
         waste_types = source.session.get(f"{self._api}/ort/{city_id}/abfallarten")
         waste_types.raise_for_status()
+        available = [entry["id"] for entry in waste_types.json()["abfallarten"]]
         waste_type_ids = "-".join(
-            entry["id"] for entry in waste_types.json()["abfallarten"]
+            self._select(source.params.get("waste_types"), available)
         )
 
         calendar = source.session.get(
