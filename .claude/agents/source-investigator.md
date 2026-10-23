@@ -30,7 +30,7 @@ Inspect the lookup page (`WebFetch` / `curl`, or ask the contributor for the bro
 
 Name the pipeline pieces that fit (see the guide's "Building blocks"): JSON → `JsonParser` + `JsonTransformer`/`KeyValueTransformer`; ICS → `IcsParser`/`IcsEventsParser` + `ICSTransformer`; HTML → `HtmlParser` + `HtmlTransformer`; weekday cadence → `RecurrenceExpander`; PDF → `PdfTextParser` / `PdfTableParser` / `PdfImageCalendar`, rotating URL → `PdfLinkRetriever`; service platform → its retriever/parser.
 
-Flag, don't refuse: Cloudflare 403 (`curl_cffi`, the default retriever), bot/cookie walls (what defeats them in a browser). **Login required is a blocker.**
+Flag, don't refuse: Cloudflare 403 (`curl_cffi`, the default retriever), bot/cookie walls (what defeats them in a browser). **Login required is a blocker** unless the account holder becomes a code owner or provides a test account (maintainers never create accounts; BankID/MitID/2FA stays a blocker).
 
 Pick `COUNTRY` per `CLAUDE.md` and verify it is in `COUNTRYCODES`. Mention that contributors are encouraged to add `SOURCE_CODEOWNERS` (ICS YAML: `codeowners:`).
 
