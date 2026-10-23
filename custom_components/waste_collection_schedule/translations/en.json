@@ -18534,6 +18534,33 @@
           "comune": "The name of your municipality, as shown on the provider's website."
         }
       },
+      "args_mantovaambiente_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "comune": "Municipality",
+          "zona": "District"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "comune": "The name of your municipality, as shown on the provider's website.",
+          "zona": "Your district or part of the municipality."
+        }
+      },
+      "reconfigure_mantovaambiente_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "comune": "Municipality",
+          "zona": "District"
+        },
+        "data_description": {
+          "comune": "The name of your municipality, as shown on the provider's website.",
+          "zona": "Your district or part of the municipality."
+        }
+      },
       "args_aliaserviziambientali_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

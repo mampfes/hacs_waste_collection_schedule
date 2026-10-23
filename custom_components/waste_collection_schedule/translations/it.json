@@ -18460,6 +18460,33 @@
           "comune": "Il nome del vostro comune, come indicato sul sito del fornitore."
         }
       },
+      "args_mantovaambiente_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "comune": "Comune",
+          "zona": "Quartiere"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "comune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "zona": "Il vostro quartiere o parte del comune."
+        }
+      },
+      "reconfigure_mantovaambiente_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "comune": "Comune",
+          "zona": "Quartiere"
+        },
+        "data_description": {
+          "comune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "zona": "Il vostro quartiere o parte del comune."
+        }
+      },
       "args_aliaserviziambientali_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",

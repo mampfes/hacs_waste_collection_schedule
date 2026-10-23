@@ -4047,6 +4047,14 @@
     },
     "urls": {}
   },
+  "mantovaambiente_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mantovaambiente_it.md",
+    "howto": {
+      "en": "Enter your municipality as it is named on https://www.mantovaambiente.it (e.g. Gonzaga). If the municipality is split into several collection zones, also enter your zone (e.g. Zona 1): on the municipality's page, the link \"Non conosci la zona?\" lists the streets and hamlets of each zone. Leave the zone empty for a municipality with a single zone; if it has several, the form then lists them.",
+      "it": "Inserisci il comune come è indicato su https://www.mantovaambiente.it (es. Gonzaga). Se il comune è suddiviso in più zone di raccolta, inserisci anche la zona (es. Zona 1): nella pagina del comune, il link \"Non conosci la zona?\" elenca le vie e le frazioni di ogni zona. Lascia la zona vuota per un comune con una sola zona; se ne ha più di una, il modulo le elenca."
+    },
+    "urls": {}
+  },
   "aliaserviziambientali_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aliaserviziambientali_it.md",
     "howto": {

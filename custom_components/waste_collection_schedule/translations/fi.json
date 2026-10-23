@@ -18448,6 +18448,33 @@
           "comune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
       },
+      "args_mantovaambiente_it": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "comune": "Kunta",
+          "zona": "Kaupunginosa"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "comune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "zona": "Kaupunginosasi tai kunnan osa."
+        }
+      },
+      "reconfigure_mantovaambiente_it": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "comune": "Kunta",
+          "zona": "Kaupunginosa"
+        },
+        "data_description": {
+          "comune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "zona": "Kaupunginosasi tai kunnan osa."
+        }
+      },
       "args_aliaserviziambientali_it": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",

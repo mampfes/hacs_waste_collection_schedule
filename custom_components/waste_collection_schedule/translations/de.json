@@ -18467,6 +18467,33 @@
           "comune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
+      "args_mantovaambiente_it": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "comune": "Gemeinde",
+          "zona": "Ortsteil"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "comune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "zona": "Ihr Ortsteil oder Stadtteil."
+        }
+      },
+      "reconfigure_mantovaambiente_it": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "comune": "Gemeinde",
+          "zona": "Ortsteil"
+        },
+        "data_description": {
+          "comune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "zona": "Ihr Ortsteil oder Stadtteil."
+        }
+      },
       "args_aliaserviziambientali_it": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

@@ -22380,6 +22380,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Acquanegra sul Chiese",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Acquanegra sul Chiese"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "AET Ambiente Energia Territorio S.p.A.",
       "module": "junker_app",
       "default_params": {},
@@ -22758,6 +22766,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Asola",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Asola"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Assago - San Germano - Gruppo Iren",
       "module": "junker_app",
       "default_params": {},
@@ -22818,6 +22834,14 @@
         "municipality": "Bagno a Ripoli"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Bagnolo San Vito",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Bagnolo San Vito"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Ballabio",
@@ -23084,6 +23108,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Borgo Mantovano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Borgo Mantovano"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Borgo San Giovanni",
       "module": "cem_ambiente_it",
       "default_params": {
@@ -23114,6 +23146,14 @@
         "municipality": "Borgo Ticino"
       },
       "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Borgocarbonara",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Borgocarbonara"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Borgomanero (zona A)",
@@ -23174,6 +23214,14 @@
         "comune": "BOVOLONE"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Bozzolo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Bozzolo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Brandizzo",
@@ -23712,6 +23760,30 @@
       "id": "siunet_it"
     },
     {
+      "title": "Casalmoro",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Casalmoro"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Casaloldo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Casaloldo"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Casalromano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Casalromano"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Casargo",
       "module": "siunet_it",
       "default_params": {
@@ -23822,10 +23894,26 @@
       "id": "siunet_it"
     },
     {
+      "title": "Castel d'Ario",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castel d'Ario"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Castel Gandolfo - Coop 134",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Castel Goffredo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castel Goffredo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Castel Maggiore",
@@ -23840,6 +23928,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Castelbelforte",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castelbelforte"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Castelbuono - Castelbuono Ambiente srl",
@@ -23898,6 +23994,14 @@
         "comune": "CASTELLO DI BRIANZA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Castellucchio",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castellucchio"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Castelnuovo di Porto",
@@ -23968,6 +24072,14 @@
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Ceresara",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Ceresara"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Ceriano Laghetto",
@@ -25002,6 +25114,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Gazzuolo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Gazzuolo"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "GEA Srl",
       "module": "junker_app",
       "default_params": {},
@@ -25090,10 +25210,26 @@
       "id": "siunet_it"
     },
     {
+      "title": "Goito",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Goito"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Gonnesa - De Vizia Transfer Spa",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Gonzaga",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Gonzaga"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Gorgonzola",
@@ -25800,6 +25936,14 @@
       "id": "consorziomedionovarese_it"
     },
     {
+      "title": "Magnacavallo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Magnacavallo"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Magnago",
       "module": "siunet_it",
       "default_params": {
@@ -25838,6 +25982,20 @@
       "id": "siunet_it"
     },
     {
+      "title": "Mantova",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Mantova"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Mantova Ambiente",
+      "module": "mantovaambiente_it",
+      "default_params": {},
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Maracalagonis - Formula Ambiente Spa",
       "module": "junker_app",
       "default_params": {},
@@ -25856,6 +26014,14 @@
         "comune": "MARCALLO CON CASONE"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Marcaria",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Marcaria"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Marche Multiservizi Falconara",
@@ -25880,12 +26046,28 @@
       "id": "siunet_it"
     },
     {
+      "title": "Mariana Mantovana",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Mariana Mantovana"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Marliana",
       "module": "aliaserviziambientali_it",
       "default_params": {
         "municipality": "Marliana"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Marmirolo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Marmirolo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Marsala, Trapani e Misiliscemi- Formula Ambiente Spa",
@@ -25984,6 +26166,14 @@
         "comune": "MEDIGLIA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Medole",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Medole"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Meina",
@@ -26384,6 +26574,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Monzambano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Monzambano"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Morciano Di Leuca",
       "module": "siunet_it",
       "default_params": {
@@ -26404,6 +26602,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Motteggiana",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Motteggiana"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Mottola e Laterza - Meridionale Servizi Ambientali Srl",
@@ -26770,6 +26976,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Pegognaga",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Pegognaga"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Pella",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -26904,6 +27118,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Poggio Rusco",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Poggio Rusco"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Pogno",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -26940,6 +27162,22 @@
         "municipality": "Ponte Buggianese"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Ponti sul Mincio",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Ponti sul Mincio"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Porto Mantovano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Porto Mantovano"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Posada - Formula Ambiente Spa",
@@ -27064,12 +27302,28 @@
       "id": "junker_app"
     },
     {
+      "title": "Quingentole",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Quingentole"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Quinto Vicentino",
       "module": "siunet_it",
       "default_params": {
         "comune": "QUINTO VICENTINO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Quistello",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Quistello"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Racale",
@@ -27092,6 +27346,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Redondesco",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Redondesco"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Renate (1)",
@@ -27180,6 +27442,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Rivarolo Mantovano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Rivarolo Mantovano"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Rivolta D'Adda",
       "module": "siunet_it",
       "default_params": {
@@ -27236,6 +27506,14 @@
         "comune": "RODANO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Rodigo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Rodigo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Rogeno",
@@ -27302,6 +27580,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Roncoferraro",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Roncoferraro"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Rosate",
       "module": "siunet_it",
       "default_params": {
@@ -27330,6 +27616,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Roverbella",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Roverbella"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Roverchiara",
       "module": "siunet_it",
       "default_params": {
@@ -27348,6 +27642,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Sabbioneta",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Sabbioneta"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Sala Bolognese",
@@ -27452,12 +27754,36 @@
       "id": "siunet_it"
     },
     {
+      "title": "San Giacomo delle Segnate",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Giacomo delle Segnate"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "San Giorgio Bigarello",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Giorgio Bigarello"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "San Giorgio Su Legnano",
       "module": "siunet_it",
       "default_params": {
         "comune": "SAN GIORGIO SU LEGNANO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "San Giovanni del Dosso",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Giovanni del Dosso"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "San Giovanni in Persiceto",
@@ -27488,6 +27814,14 @@
         "municipality": "San Marcello Piteglio"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "San Martino dall'Argine",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Martino dall'Argine"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "San Maurizio d'Opaglio",
@@ -27652,6 +27986,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Schivenoglia",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Schivenoglia"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "SEAB Biella",
       "module": "seab_biella_it",
       "default_params": {},
@@ -27676,6 +28018,14 @@
         "comune": "SEREGNO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Sermide e Felonica",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Sermide e Felonica"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Sermoneta - Del Prete Srl",
@@ -27720,6 +28070,14 @@
         "comune": "SETTALA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Settimo Milanese",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Settimo Milanese"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Seveso",
@@ -27810,6 +28168,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Solferino",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Solferino"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Solza",
@@ -27942,6 +28308,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Suzzara",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Suzzara"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Taceno",
@@ -28670,6 +29044,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Volta Mantovana",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Volta Mantovana"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Volterra",
