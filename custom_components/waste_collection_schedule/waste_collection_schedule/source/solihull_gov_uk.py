@@ -1,4 +1,5 @@
 import logging
+import re
 from datetime import datetime, timedelta
 
 import requests
@@ -17,6 +18,7 @@ TEST_CASES = {
 }
 
 ICON_MAP = {
+    "food waste": Icons.BIO_KITCHEN,
     "garden waste": Icons.GARDEN,
     "garden waste - subscribed": Icons.GARDEN,
     "household waste": Icons.GENERAL_WASTE,
@@ -24,6 +26,11 @@ ICON_MAP = {
 }
 
 API_URL = "https://digital.solihull.gov.uk/BinCollectionCalendar/Calendar.aspx"
+
+# The site answers requests without a browser user agent with 404.
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+}
 
 
 class Source:
@@ -33,7 +40,7 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         params = {"UPRN": self._uprn}
-        r = requests.get(API_URL, params=params)
+        r = requests.get(API_URL, params=params, headers=HEADERS)
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
@@ -65,16 +72,23 @@ class Source:
                     try:
                         # card sibling with no class
                         freq_str = card.find_next_sibling()
-                        if not (
-                            "every other week" in freq_str.text.lower()
-                            or "every week" in freq_str.text.lower()
+                        freq_text = freq_str.text.strip().lower()
+                        # "Collected on a Monday fortnightly." / "Collected on a Monday."
+                        if (
+                            "every other week" in freq_text
+                            or "fortnightly" in freq_text
                         ):
+                            freq = 2
+                        elif "every week" in freq_text or re.fullmatch(
+                            r"collected on an? \w+day\.?", freq_text
+                        ):
+                            freq = 1
+                        else:
                             _LOGGER.info(
                                 f"Skipping predict (unknown frequency) for {freq_str.text}"
                             )
                             continue
 
-                        freq = 2 if "every other week" in freq_str.text.lower() else 1
                         for i in range(1, 10 // freq):
                             entries.append(
                                 Collection(
