@@ -42,6 +42,7 @@ _TYPE_MAP: dict[str, Any] = {
             "Green Can",
             "Organics",
             "Green Organic Waste Cart",
+            "Organics Collection",
         ),
         wt.ORGANIC,
     ),
@@ -84,6 +85,7 @@ _TYPE_MAP: dict[str, Any] = {
         ("Large Item Collection", "Brush and Bulky Collection"), wt.BULKY_WASTE
     ),
     "Curbside Battery Collection": wt.HAZARDOUS,
+    "Newmarket Electronics Recycling Event": wt.ELECTRONICS,
     **dict.fromkeys(
         (
             "Treecycle",
@@ -139,6 +141,7 @@ class Source(BaseSource):
         wt.GARDEN_WASTE,
         wt.BULKY_WASTE,
         wt.HAZARDOUS,
+        wt.ELECTRONICS,
         wt.OTHER,
     ]
 
@@ -451,6 +454,13 @@ class Source(BaseSource):
             project_id="621",
             district_id="BLO",
         ),
+        region(
+            "Newmarket (ON)",
+            url="https://www.newmarket.ca/",
+            country="ca",
+            project_id="530",
+            district_id="NEW",
+        ),
     )
 
     TEST_CASES: ClassVar[dict] = {
@@ -601,6 +611,11 @@ class Source(BaseSource):
             "district_id": "PB",
             "project_id": "633",
             "zone_id": "zone-z21670-z21652-z21659-z21666",
+        },
+        "Newmarket, ON, Canada (with district_id, project_id & zone_id)": {
+            "district_id": "NEW",
+            "project_id": "530",
+            "zone_id": "zone-z12563",
         },
     }
 
