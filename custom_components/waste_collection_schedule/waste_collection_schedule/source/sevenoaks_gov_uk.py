@@ -12,18 +12,20 @@ from waste_collection_schedule.transformers import RowTransformer
 BASE_URL = "https://sevenoaks-dc-host01.oncreate.app"
 LANDING_URL = f"{BASE_URL}/w/webpage/waste-collection-day"
 # Public identifiers of the "waste collection day" page and its address widget.
-WEBPAGE_TOKEN = "978e3e1fd8936f98a424235001d93f261cc2458668d650a18f3a1155494d063d"
-SUBPAGE_ID = "PAG0000639GBDJR1"
-CELL_ID = "PCL0004972GBDJR1"
+WEBPAGE_TOKEN = "88266323c140b874b4e1f9b194d935d2d0dedf8a2d34d1e0ea44356deaf1bb04"
+SUBPAGE_ID = "PAG0001509GBDJR1"
+CELL_ID = "PCL0012033GBDJR1"
 
 _AJAX = {"X-Requested-With": "XMLHttpRequest"}
 
 _DATE = re.compile(r"\d{1,2} [A-Z][a-z]+ \d{4}")
 
+# Card headings (h2) since the October 2026 service change.
 _TYPE_MAP = {
-    "Fortnightly garden waste collection": wt.GARDEN_WASTE,
-    "Weekly recycling and general waste collection": wt.GENERAL_WASTE,
-    "Weekly food waste collection": wt.FOOD_WASTE,
+    "Recycling": wt.RECYCLABLES,
+    "General waste": wt.GENERAL_WASTE,
+    "Food": wt.FOOD_WASTE,
+    "Garden waste": wt.GARDEN_WASTE,
 }
 
 
@@ -43,14 +45,14 @@ def _schedule_url(response, *keys, property_id, **_) -> str:
 def _next_dates(tags, source) -> list[tuple[str, str]]:
     """Pair each section heading with the first date printed beneath it.
 
-    The page lists, per round, its heading (h4) and then "Your next collection
-    date is" followed by a date such as "Thursday 08 October 2026".
+    The page shows one card per round: its heading (h2) and then "Your next
+    collection date is" followed by a date such as "Thursday, 29 October 2026".
     """
     rows = []
     heading = None
     for tag in tags:
         text = tag.get_text(" ", strip=True)
-        if tag.name == "h4":
+        if tag.name == "h2":
             heading = text if text in _TYPE_MAP else None
         elif heading is not None:
             match = _DATE.search(text)
@@ -69,9 +71,10 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
 
     WASTE_TYPES: ClassVar[list] = [
-        wt.GARDEN_WASTE,
+        wt.RECYCLABLES,
         wt.GENERAL_WASTE,
         wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -119,7 +122,7 @@ class Source(BaseSource):
         headers=_AJAX,
         raise_for_status=True,
     )
-    parse = parsers.HtmlParser("h4, span.value-as-text", from_json_key="data")
+    parse = parsers.HtmlParser("h2, span.value-as-text", from_json_key="data")
     preprocess = staticmethod(_next_dates)
     transform = RowTransformer(
         parse_date=date_parsers.for_format("%d %B %Y"),
