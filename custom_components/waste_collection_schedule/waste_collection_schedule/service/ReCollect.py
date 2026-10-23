@@ -19,7 +19,7 @@ import datetime
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urlencode
 
-from waste_collection_schedule import response_shape
+from waste_collection_schedule import lookups, response_shape
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
@@ -90,14 +90,20 @@ def events_retriever(
     )
 
 
-def pick_suggested_place(lookup: Any, address: str, param: str = "address") -> str:
+def pick_suggested_place(
+    lookup: Any, address: str, param: str = "address", *, shortened: bool = False
+) -> str:
     """The place id an ``address-suggest`` reply resolves ``address`` to.
 
-    The search answers with a list of suggestions. Exactly one ``parcel``
-    carrying a ``place_id`` is a single property. A ``place_qualifier`` is a
-    multi-dwelling postcode, which needs a house number or property name
-    before it resolves to one. ``param`` names the source param the errors
-    point the user at.
+    The search answers with a list of suggestions. A suggestion whose name is
+    exactly ``address`` wins, so a picked suggestion resolves even when the
+    search also returns others ("8 Main Street" matches "18 Main Street").
+    Otherwise exactly one ``parcel`` carrying a ``place_id`` is a single
+    property. A ``place_qualifier`` is a multi-dwelling postcode, which needs a
+    house number or property name before it resolves to one. ``shortened``
+    marks a reply to a search that left part of ``address`` out; a single
+    non-exact result of such a search is offered for confirmation, not used.
+    ``param`` names the source param the errors point the user at.
     """
     lookup.raise_for_status()
     suggestions = lookup.json()
@@ -105,7 +111,11 @@ def pick_suggested_place(lookup: Any, address: str, param: str = "address") -> s
     if not suggestions:
         raise SourceArgumentNotFound(param, address)
 
-    if len(suggestions) > 1:
+    wanted = lookups.normalize_text(address)
+    exact = [s for s in suggestions if lookups.normalize_text(s["name"]) == wanted]
+    if len(exact) == 1:
+        suggestions = exact
+    elif len(suggestions) > 1 or shortened:
         raise SourceArgAmbiguousWithSuggestions(
             param, address, [s["name"] for s in suggestions]
         )
@@ -141,13 +151,25 @@ def address_suggest_retriever(
         path = EVENTS_PATH.format(place_id=place_id, service_id=service_id)
         return f"{host}{path}?{urlencode(_events_query(locale))}"
 
+    def _suggest_url(query: str) -> str:
+        return f"{suggest_url}?" + urlencode({"q": query, "locale": locale})
+
+    def _extract(lookup: Any, source: "BaseSource") -> str:
+        # The search finds nothing for its own full labels, such as
+        # "8 Main Street, Stirling, FK7 8BS", so a picked suggestion is
+        # searched again with trailing parts dropped until it answers.
+        value = source.params[address]
+        parts = [part.strip() for part in str(value).split(",")]
+        shortened = False
+        while len(parts) > 1 and lookup.ok and not lookup.json():
+            parts.pop()
+            shortened = True
+            lookup = source.session.get(_suggest_url(", ".join(parts)))
+        return pick_suggested_place(lookup, value, address, shortened=shortened)
+
     return TwoStepRetriever(
-        lookup_url=lambda **params: (
-            f"{suggest_url}?" + urlencode({"q": params[address], "locale": locale})
-        ),
-        extract=lambda lookup, source: pick_suggested_place(
-            lookup, source.params[address], address
-        ),
+        lookup_url=lambda **params: _suggest_url(params[address]),
+        extract=_extract,
         schedule_url=_events_url,
     )
 
