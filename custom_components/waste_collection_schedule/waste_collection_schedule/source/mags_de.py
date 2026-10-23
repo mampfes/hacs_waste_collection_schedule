@@ -2,6 +2,7 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "mags Mönchengladbacher Abfall-, Grün- und Straßenbetriebe AöR"
@@ -70,6 +71,18 @@ class Source:
             ics += "\n"
 
         dates = self._ics.convert(ics)
+        if not dates:
+            # mags.de answers HTTP 200 with an empty VCALENDAR both for unknown
+            # addresses and during backend hiccups. Raise instead of returning
+            # an empty list, so the error is logged and the previously fetched
+            # schedule is kept.
+            raise SourceArgumentNotFound(
+                "street",
+                f"{self._street} {self._number}",
+                "mags.de returned no collections for this address. Check street "
+                "and house number; if this address worked before, the mags.de "
+                "service may be temporarily unavailable.",
+            )
 
         entries = []
 
