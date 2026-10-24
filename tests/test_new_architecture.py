@@ -2961,6 +2961,19 @@ class TestToolkitParsers:
         assert parsers.XlsxParser(dates=False)(resp)[2][0] == 46029
         assert parsers.XlsxParser("Plan")(resp)[0][0] == "Restmüll"
 
+    def test_xlsx_parser_read_returns_the_sheet_name_and_takes_bytes(self):
+        from waste_collection_schedule import parsers
+
+        content = self._xlsx('<row r="1"><c r="B1"><v>7</v></c></row>')
+        resp = self._Resp("")
+        resp.content = content
+        sheet = parsers.XlsxParser().read(resp)
+        assert sheet == parsers.XlsxSheet("Plan", [[None, 7]])
+        assert sheet.name == "Plan"
+        assert parsers.XlsxParser().read(content) == sheet
+        assert parsers.XlsxParser()(resp) == sheet.rows
+        assert parsers.XlsxParser().read(self._xlsx("")) == ("Plan", [])
+
     def test_xlsx_parser_honours_the_1904_date_system(self):
         import datetime
 

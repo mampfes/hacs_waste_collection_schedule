@@ -1,27 +1,21 @@
 """BohdanecXlsxCalendar retrieval and parsing, using the pipeline HTTP session."""
 
 import datetime as dt
-import io
-import logging
 import re
-import zipfile
 from pathlib import Path
 from typing import Any
 from urllib.parse import urljoin
 
-import lxml.etree as ET
 from curl_cffi import requests
 
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.parsers import Parser, XlsxParser
 from waste_collection_schedule.retrievers import RetrieverFunc
 
-_LOGGER = logging.getLogger(__name__)
 OFFICIAL_PAGE_URL = "https://lazne.bohdanec.cz/svozovy%2Dkalendar/ms-2523"
 
 HEADERS = {"user-agent": "Mozilla/5.0"}
 MAX_FILE_BYTES = 1 * 1024 * 1024
-NS = {"s": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 MONTHS = {
     "Leden": 1,
     "Únor": 2,
@@ -38,84 +32,38 @@ MONTHS = {
 }
 
 
-def _read_shared_strings(zf: zipfile.ZipFile) -> list[str]:
-    try:
-        sst_xml = zf.read("xl/sharedStrings.xml")
-    except KeyError:
-        return []
-    sst = ET.fromstring(
-        sst_xml, parser=ET.XMLParser(resolve_entities=False, no_network=True)
-    )
-    strings: list[str] = []
-    for si in sst.findall("s:si", NS):
-        parts = []
-        for t in si.findall(".//s:t", NS):
-            parts.append(t.text or "")
-        strings.append("".join(parts))
-    return strings
-
-
-def _collect_rows(sheet: ET.Element, strings: list[str]) -> dict[int, dict[str, str]]:
-    rows: dict[int, dict[str, str]] = {}
-    for c in sheet.findall(".//s:c", NS):
-        ref = c.attrib.get("r")
-        if not ref:
-            continue
-        col, row = _split_cell_ref(ref)
-        text = None
-        cell_type = c.attrib.get("t")
-        if cell_type == "s":
-            v = c.find("s:v", NS)
-            if v is not None and v.text is not None:
-                try:
-                    text = strings[int(v.text)]
-                except (IndexError, ValueError):
-                    _LOGGER.warning(
-                        "Invalid sharedStrings index '%s' at cell %s", v.text, ref
-                    )
-                    text = None
-        elif cell_type == "inlineStr":
-            t = c.find(".//s:t", NS)
-            if t is not None:
-                text = t.text
-        else:
-            v = c.find("s:v", NS)
-            if v is not None:
-                text = v.text
-        if text is None:
-            continue
-        text = text.strip()
-        if not text:
-            continue
-        rows.setdefault(row, {})[col] = text
+def _collect_rows(grid: list[list[Any]]) -> dict[int, dict[int, str]]:
+    """Non-empty, stripped cell texts by row and zero-based column (A = 0)."""
+    rows: dict[int, dict[int, str]] = {}
+    for row_idx, row in enumerate(grid, start=1):
+        for col_idx, value in enumerate(row):
+            if value is None:
+                continue
+            text = str(value).strip()
+            if text:
+                rows.setdefault(row_idx, {})[col_idx] = text
     return rows
 
 
-def _collect_month_rows(rows: dict[int, dict[str, str]]) -> list[tuple[int, int]]:
+def _collect_month_rows(rows: dict[int, dict[int, str]]) -> list[tuple[int, int]]:
     month_rows: list[tuple[int, int]] = []
     for row_idx, row in rows.items():
-        text = row.get("A")
+        text = row.get(0)
         if text in MONTHS:
             month_rows.append((row_idx, MONTHS[text]))
     return month_rows
 
 
-def _extract_year(strings: list[str]) -> int:
-    for s in strings:
-        m = re.search("\\b(20\\d{2})\\b", s)
-        if m:
-            return int(m.group(1))
-    raise ValueError("Year not found in XLSX shared strings.")
+def _extract_year(rows: dict[int, dict[int, str]]) -> int:
+    for row in rows.values():
+        for text in row.values():
+            m = re.search("\\b(20\\d{2})\\b", text)
+            if m:
+                return int(m.group(1))
+    raise ValueError("Year not found in XLSX.")
 
 
-def _split_cell_ref(ref: str) -> tuple[str, int]:
-    m = re.match("^([A-Z]+)(\\d+)$", ref)
-    if not m:
-        raise ValueError(f"Invalid cell ref: {ref}")
-    return (m.group(1), int(m.group(2)))
-
-
-def _open_zip_from_url(url: str, session: requests.Session) -> zipfile.ZipFile:
+def _download_xlsx(url: str, session: requests.Session) -> bytes:
     r = session.get(url, timeout=30, headers=HEADERS)
     r.raise_for_status()
     content_length = r.headers.get("Content-Length")
@@ -123,10 +71,7 @@ def _open_zip_from_url(url: str, session: requests.Session) -> zipfile.ZipFile:
         raise ValueError(f"XLSX file is too large (> {MAX_FILE_BYTES} bytes): {url}")
     if len(r.content) > MAX_FILE_BYTES:
         raise ValueError(f"XLSX file is too large (> {MAX_FILE_BYTES} bytes): {url}")
-    try:
-        return zipfile.ZipFile(io.BytesIO(r.content))
-    except zipfile.BadZipFile as exc:
-        raise ValueError(f"URL does not point to a valid XLSX file: {url}") from exc
+    return r.content
 
 
 def _discover_xlsx_url(page_url: str, session: requests.Session) -> str:
@@ -178,13 +123,12 @@ class _CalendarClient:
         self._file = file
         self._official_url = OFFICIAL_PAGE_URL
 
-    def retrieve(self):
-        zf = None
+    def retrieve(self) -> bytes:
         session = self._session
         try:
             if self._url:
-                zf = _open_zip_from_url(self._url, session)
-            elif self._file:
+                return _download_xlsx(self._url, session)
+            if self._file:
                 path = Path(self._file)
                 if not path.exists():
                     raise FileNotFoundError(f"File '{path.resolve()}' not found")
@@ -192,30 +136,19 @@ class _CalendarClient:
                     raise ValueError(
                         f"XLSX file is too large (> {MAX_FILE_BYTES} bytes): {path.resolve()}"
                     )
-                try:
-                    zf = zipfile.ZipFile(path)
-                except zipfile.BadZipFile as exc:
-                    raise ValueError(
-                        f"File is not a valid XLSX file: {path.resolve()}"
-                    ) from exc
-            else:
-                url = _discover_xlsx_url(self._official_url, session)
-                zf = _open_zip_from_url(url, session)
+                return path.read_bytes()
+            url = _discover_xlsx_url(self._official_url, session)
+            return _download_xlsx(url, session)
         except requests.RequestsError as exc:
             raise ValueError(
                 "Failed to download XLSX. Please check if the city webpage or XLSX link is still available."
             ) from exc
-        return zf
 
-    def parse(self, zf):
-        with zf:
-            strings = _read_shared_strings(zf)
-            sheet_xml = zf.read("xl/worksheets/sheet1.xml")
-        year = _extract_year(strings)
-        sheet = ET.fromstring(
-            sheet_xml, parser=ET.XMLParser(resolve_entities=False, no_network=True)
-        )
-        rows = _collect_rows(sheet, strings)
+    def parse(self, content: bytes, source: BaseSource | None = None):
+        # Raw numbers (dates=False): the day cells are text such as "2. PLAST".
+        grid = XlsxParser(dates=False, max_bytes=MAX_FILE_BYTES).read(content, source)
+        rows = _collect_rows(grid.rows)
+        year = _extract_year(rows)
         month_rows = _collect_month_rows(rows)
         if not month_rows:
             raise ValueError(
@@ -235,8 +168,8 @@ class _CalendarClient:
             if not last_month:
                 continue
             row = rows[row_idx]
-            text_e = row.get("E")
-            text_f = row.get("F")
+            text_e = row.get(4)
+            text_f = row.get(5)
             if not text_e and (not text_f):
                 continue
             day = None
@@ -279,4 +212,4 @@ class CalendarParser(Parser[list[dict[str, Any]]]):
             raise ValueError("Calendar parser requires a source")
         client = _CalendarClient(**source.params)
         client._session = source.session
-        return client.parse(response)
+        return client.parse(response, source)

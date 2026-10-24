@@ -1,22 +1,16 @@
 """Nemenčinės komunalininkas (nemenkom.lt) XLSX schedule retrieval and parsing."""
 
 import datetime as dt
-import io
 import re
-import zipfile
 from typing import Any
-
-import lxml.etree as ET
 
 from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-from waste_collection_schedule.parsers import Parser
+from waste_collection_schedule.parsers import Parser, XlsxParser
 
 PAGE_URL = "https://www.nemenkom.lt/buitiniu-ir-pakuociu-atlieku-surinkimo-grafikas/"
 MAX_FILE_BYTES = 5 * 1024 * 1024
-NS = {"s": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
-XML_PARSER = ET.XMLParser(resolve_entities=False, no_network=True)
 GENERAL_WASTE = "Buitinės atliekos"
 
 
@@ -24,51 +18,18 @@ def _norm(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip().casefold()
 
 
-def _col_index(ref: str) -> tuple[int, int]:
-    m = re.match(r"^([A-Z]+)(\d+)$", ref)
-    if not m:
-        raise ValueError(f"Invalid cell ref: {ref}")
-    col = 0
-    for ch in m.group(1):
-        col = col * 26 + ord(ch) - 64
-    return int(m.group(2)), col - 1
-
-
-def _read_rows(content: bytes) -> tuple[str, list[list[str]]]:
-    with zipfile.ZipFile(io.BytesIO(content)) as zf:
-        try:
-            sst = ET.fromstring(zf.read("xl/sharedStrings.xml"), parser=XML_PARSER)
-            strings = [
-                "".join(t.text or "" for t in si.findall(".//s:t", NS))
-                for si in sst.findall("s:si", NS)
-            ]
-        except KeyError:
-            strings = []
-        wb = ET.fromstring(zf.read("xl/workbook.xml"), parser=XML_PARSER)
-        sheet_el = wb.find(".//s:sheet", NS)
-        title = sheet_el.attrib.get("name", "") if sheet_el is not None else ""
-        sheet = ET.fromstring(zf.read("xl/worksheets/sheet1.xml"), parser=XML_PARSER)
-    cells: dict[int, dict[int, str]] = {}
-    for c in sheet.findall(".//s:c", NS):
-        ref = c.attrib.get("r")
-        if not ref:
-            continue
-        row, col = _col_index(ref)
-        if c.attrib.get("t") == "s":
-            v = c.find("s:v", NS)
-            text = strings[int(v.text)] if v is not None and v.text else ""
-        elif c.attrib.get("t") == "inlineStr":
-            text = "".join(t.text or "" for t in c.findall(".//s:t", NS))
-        else:
-            v = c.find("s:v", NS)
-            text = v.text if v is not None and v.text else ""
-        if text.strip():
-            cells.setdefault(row, {})[col] = text.strip()
+def _read_rows(response: Any, source: BaseSource | None) -> tuple[str, list[list[str]]]:
+    """The first sheet's name and its rows as stripped texts, empty rows dropped."""
+    # Raw numbers (dates=False), as the cells were read before the shared parser.
+    sheet = XlsxParser(dates=False, max_bytes=MAX_FILE_BYTES).read(response, source)
     rows = []
-    for r in sorted(cells):
-        width = max(cells[r]) + 1
-        rows.append([cells[r].get(i, "") for i in range(width)])
-    return title, rows
+    for row in sheet.rows:
+        texts = ["" if value is None else str(value).strip() for value in row]
+        while texts and not texts[-1]:
+            texts.pop()
+        if texts:
+            rows.append(texts)
+    return sheet.name, rows
 
 
 def _village_matches(cell: str, village: str, street: str | None) -> bool:
@@ -81,9 +42,12 @@ def _village_matches(cell: str, village: str, street: str | None) -> bool:
 
 
 def parse_schedule(
-    content: bytes, village: str, street: str | None = None
+    response: Any,
+    village: str,
+    street: str | None = None,
+    source: BaseSource | None = None,
 ) -> list[dict[str, Any]]:
-    title, rows = _read_rows(content)
+    title, rows = _read_rows(response, source)
     year_match = re.search(r"\b(20\d{2})\b", title)
     if not year_match:
         raise ValueError("Year not found in XLSX sheet name")
@@ -137,9 +101,6 @@ class NemenkomParser(Parser[list[dict[str, Any]]]):
     ) -> list[dict[str, Any]]:
         if source is None:
             raise ValueError("Nemenkom parser requires a source")
-        content = getattr(response, "content", response)
-        if len(content) > MAX_FILE_BYTES:
-            raise ValueError("XLSX file is too large")
         return parse_schedule(
-            content, source.params["village"], source.params.get("street")
+            response, source.params["village"], source.params.get("street"), source
         )

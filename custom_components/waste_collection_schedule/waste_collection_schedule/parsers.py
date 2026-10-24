@@ -2707,6 +2707,13 @@ def _xlsx_column_index(ref: str) -> int:
     return index - 1
 
 
+class XlsxSheet(NamedTuple):
+    """One worksheet read by :meth:`XlsxParser.read`: its tab name and grid."""
+
+    name: str
+    rows: "list[list[Any]]"
+
+
 class XlsxParser(Parser["list[list[Any]]"]):
     """Read one worksheet of an XLSX workbook into a grid of cell values.
 
@@ -2725,6 +2732,11 @@ class XlsxParser(Parser["list[list[Any]]"]):
     when it carries a time of day), honouring the workbook's 1904 date system;
     pass ``dates=False`` to get the raw serial numbers. Merged cells keep their
     value in the top-left cell only, as in the file.
+
+    A source that also needs the worksheet's tab name (some providers print the
+    year only there) calls ``XlsxParser().read(response, source)`` from its
+    parser instead, which returns an :class:`XlsxSheet` ``(name, rows)``. The
+    response may also be the raw workbook ``bytes`` (a file the user supplies).
 
     Args:
         sheet: the worksheet to read, by zero-based position in the workbook
@@ -2747,13 +2759,19 @@ class XlsxParser(Parser["list[list[Any]]"]):
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> "list[list[Any]]":
+        return self.read(response, source).rows
+
+    def read(
+        self, response: "Response | bytes", source: "BaseSource | None" = None
+    ) -> XlsxSheet:
+        """Read the configured worksheet as an :class:`XlsxSheet` (name and grid)."""
         import io
         import posixpath
         import zipfile
 
         import lxml.etree as ET
 
-        content = response.content
+        content = response if isinstance(response, bytes) else response.content
         name = response_shape.source_name(source)
         response_shape.expect(
             len(content) <= self.max_bytes,
@@ -2877,10 +2895,14 @@ class XlsxParser(Parser["list[list[Any]]"]):
                     else:
                         value = int(number) if number.is_integer() else number
                 cells.setdefault(r, {})[c] = value
+        sheet_name = str(chosen[0] or "")  # type: ignore[index]
         if not cells:
-            return []
+            return XlsxSheet(sheet_name, [])
         width = max(max(row) for row in cells.values()) + 1
-        return [
-            [cells.get(r, {}).get(c) for c in range(width)]
-            for r in range(max(cells) + 1)
-        ]
+        return XlsxSheet(
+            sheet_name,
+            [
+                [cells.get(r, {}).get(c) for c in range(width)]
+                for r in range(max(cells) + 1)
+            ],
+        )
