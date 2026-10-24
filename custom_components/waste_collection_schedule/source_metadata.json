@@ -4880,6 +4880,13 @@
     },
     "urls": {}
   },
+  "segreguj_gliwice_eu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/segreguj_gliwice_eu.md",
+    "howto": {
+      "en": "Enter your street exactly as listed in the single-family housing schedule (Harmonogram_Gliwice_Zabudowa_Jednorodzina) on https://segreguj.gliwice.eu/harmonogram-wywozu-pliki-do-pobrania/. Streets split by house number are listed once per range, e.g. 'Rolników od nr 237 nieparzyste'; enter the whole entry."
+    },
+    "urls": {}
+  },
   "jaktorow_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jaktorow_pl.md",
     "howto": {

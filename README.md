@@ -4211,6 +4211,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gdańsk](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Gdynia](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Gierczyce](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Gliwice](/doc/source/segreguj_gliwice_eu.md) / segreguj.gliwice.eu
 - [Gmina Bardo](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Bartniczka](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Bochnia](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl

@@ -30642,6 +30642,12 @@
       "id": "bochnia_gmina_pl"
     },
     {
+      "title": "Gliwice",
+      "module": "segreguj_gliwice_eu",
+      "default_params": {},
+      "id": "segreguj_gliwice_eu"
+    },
+    {
       "title": "Gmina Bardo",
       "module": "sims_pl",
       "default_params": {
