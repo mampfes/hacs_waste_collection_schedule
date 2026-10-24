@@ -22378,6 +22378,39 @@
           "street": "Uw straatnaam."
         }
       },
+      "args_pisz_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "building": "Building",
+          "city": "Plaats",
+          "house_number": "Huisnummer",
+          "street": "Straat"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "city": "Uw stad of dorp.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
+      },
+      "reconfigure_pisz_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "building": "Building",
+          "city": "Plaats",
+          "house_number": "Huisnummer",
+          "street": "Straat"
+        },
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
+      },
       "args_gmina_radlow_pl": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",

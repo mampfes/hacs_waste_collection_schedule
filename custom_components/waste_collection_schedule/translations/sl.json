@@ -22376,6 +22376,39 @@
           "street": "Ime vaše ulice."
         }
       },
+      "args_pisz_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "building": "Building",
+          "city": "Mesto",
+          "house_number": "Hišna številka",
+          "street": "Ulica"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "house_number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
+        }
+      },
+      "reconfigure_pisz_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "building": "Building",
+          "city": "Mesto",
+          "house_number": "Hišna številka",
+          "street": "Ulica"
+        },
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "house_number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
+        }
+      },
       "args_gmina_radlow_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

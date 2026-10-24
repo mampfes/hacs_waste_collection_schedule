@@ -4405,6 +4405,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Paczków](/doc/source/paczkow_pl.md) / paczkow.pl
 - [Gmina Pajęczno](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Pawłowice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Pisz](/doc/source/pisz_pl.md) / pisz.pl
 - [Gmina Polanica-Zdrój](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Porąbka](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Pruszcz](/doc/source/sims_pl.md) / sisms.pl

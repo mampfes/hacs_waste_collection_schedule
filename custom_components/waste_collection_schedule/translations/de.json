@@ -22404,6 +22404,39 @@
           "street": "Ihr Straßenname."
         }
       },
+      "args_pisz_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "building": "Building",
+          "city": "Stadt",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
+      },
+      "reconfigure_pisz_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "building": "Building",
+          "city": "Stadt",
+          "house_number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
+      },
       "args_gmina_radlow_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

@@ -22378,6 +22378,39 @@
           "street": "Dit gadenavn"
         }
       },
+      "args_pisz_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "building": "Building",
+          "city": "By",
+          "house_number": "Husnummer",
+          "street": "Gade"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by",
+          "house_number": "Dit husnummer",
+          "street": "Dit gadenavn"
+        }
+      },
+      "reconfigure_pisz_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "building": "Building",
+          "city": "By",
+          "house_number": "Husnummer",
+          "street": "Gade"
+        },
+        "data_description": {
+          "city": "Din by",
+          "house_number": "Dit husnummer",
+          "street": "Dit gadenavn"
+        }
+      },
       "args_gmina_radlow_pl": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",

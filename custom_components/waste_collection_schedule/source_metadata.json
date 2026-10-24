@@ -5068,6 +5068,13 @@
     },
     "urls": {}
   },
+  "pisz_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pisz_pl.md",
+    "howto": {
+      "en": "In the town enter `Pisz`, your street as printed in the schedule (for example `Wileńska` or `Dr. Władysława Klementowskiego`) and whether you live in a house (`jednorodzinna`) or a block of flats (`wielorodzinna`); blocks of flats also need the house number. In a village enter only the village, for example `Rakowo Piskie`. The schedules are attached to the yearly announcement on https://www.pisz.pl/pl/szczegoly-kategorii/69."
+    },
+    "urls": {}
+  },
   "gmina_radlow_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_radlow_pl.md",
     "howto": {

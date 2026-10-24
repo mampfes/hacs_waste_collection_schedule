@@ -32142,6 +32142,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Pisz",
+      "module": "pisz_pl",
+      "default_params": {},
+      "id": "pisz_pl"
+    },
+    {
       "title": "Gmina Polanica-Zdr\u00f3j",
       "module": "sims_pl",
       "default_params": {

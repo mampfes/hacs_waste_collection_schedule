@@ -22409,6 +22409,39 @@
           "street": "Le nom de votre rue."
         }
       },
+      "args_pisz_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "building": "Building",
+          "city": "Ville",
+          "house_number": "Numéro",
+          "street": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village.",
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
+        }
+      },
+      "reconfigure_pisz_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "building": "Building",
+          "city": "Ville",
+          "house_number": "Numéro",
+          "street": "Rue"
+        },
+        "data_description": {
+          "city": "Votre ville ou village.",
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
+        }
+      },
       "args_gmina_radlow_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

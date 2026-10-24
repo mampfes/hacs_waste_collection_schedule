@@ -22397,6 +22397,39 @@
           "street": "Il nome della vostra via."
         }
       },
+      "args_pisz_pl": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "building": "Building",
+          "city": "Città",
+          "house_number": "Numero civico",
+          "street": "Via"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "La vostra città o paese.",
+          "house_number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
+        }
+      },
+      "reconfigure_pisz_pl": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "building": "Building",
+          "city": "Città",
+          "house_number": "Numero civico",
+          "street": "Via"
+        },
+        "data_description": {
+          "city": "La vostra città o paese.",
+          "house_number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
+        }
+      },
       "args_gmina_radlow_pl": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",

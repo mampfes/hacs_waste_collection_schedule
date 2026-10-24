@@ -22383,6 +22383,39 @@
           "street": "Kadun nimi."
         }
       },
+      "args_pisz_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "building": "Building",
+          "city": "Kaupunki",
+          "house_number": "Talon numero",
+          "street": "Katu"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "house_number": "Talon numero.",
+          "street": "Kadun nimi."
+        }
+      },
+      "reconfigure_pisz_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "building": "Building",
+          "city": "Kaupunki",
+          "house_number": "Talon numero",
+          "street": "Katu"
+        },
+        "data_description": {
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "house_number": "Talon numero.",
+          "street": "Kadun nimi."
+        }
+      },
       "args_gmina_radlow_pl": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
