@@ -411,8 +411,73 @@ def _awb_bad_kreuznach_de(
             _set_json(interaction, payload)
 
 
+def _segreguj_gliwice_eu(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep the download page's file links and the configured street's rows.
+
+    The page is ~120 KB of site chrome around the links ``yearly_links`` reads;
+    the workbook has a row per street (~600) on each of its sheets. Each sheet
+    keeps its header row and the rows of the configured street, or of the
+    streets it is the bare name of ("Rolników" for "Rolników od nr 237 ...").
+    """
+    import io
+    import zipfile
+
+    from lxml import etree
+
+    ns = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+    wanted = " ".join(str(args.get("street", "")).split()).casefold()
+
+    def keep(name: str) -> bool:
+        name = " ".join(name.split()).casefold()
+        return name == wanted or name.startswith(wanted + " ")
+
+    for interaction in interactions:
+        content = base64.b64decode(interaction["content_b64"])
+        if not zipfile.is_zipfile(io.BytesIO(content)):
+            links = re.findall(
+                r"<a\b[^>]*\.(?:xlsx|pdf)\"[^>]*>.*?</a>", content.decode("utf-8"), re.S
+            )
+            raw = ("<html><body>" + "\n".join(links) + "</body></html>").encode("utf-8")
+        else:
+            out = io.BytesIO()
+            with (
+                zipfile.ZipFile(io.BytesIO(content)) as src,
+                zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as dst,
+            ):
+                shared = [
+                    "".join(t.text or "" for t in si.iter(f"{ns}t"))
+                    for si in etree.fromstring(src.read("xl/sharedStrings.xml"))
+                ]
+                for info in src.infolist():
+                    data = src.read(info)
+                    if info.filename.startswith("xl/worksheets/sheet"):
+                        sheet = etree.fromstring(data)
+                        for row in list(sheet.iter(f"{ns}row")):
+                            first = row.find(f"{ns}c")
+                            value = first.find(f"{ns}v") if first is not None else None
+                            name = (
+                                shared[int(value.text)]
+                                if value is not None and first.get("t") == "s"
+                                else ""
+                            )
+                            if row.get("r") != "1" and not keep(name):
+                                row.getparent().remove(row)
+                        data = etree.tostring(
+                            sheet,
+                            xml_declaration=True,
+                            encoding="UTF-8",
+                            standalone=True,
+                        )
+                    dst.writestr(info, data)
+            raw = out.getvalue()
+        interaction["content_b64"] = base64.b64encode(raw).decode("ascii")
+
+
 SCRUBBERS: dict[str, Scrubber] = {
     "awb_bad_kreuznach_de": _awb_bad_kreuznach_de,
+    "segreguj_gliwice_eu": _segreguj_gliwice_eu,
     "eth_erd_hu": _eth_erd_hu,
     "aksd_hu": _aksd_hu,
     "vattenmiljoresurs_se": _vattenmiljoresurs_se,
