@@ -24,6 +24,9 @@ _MUNICIPALITIES = (
     ("Monthey", "https://www.monthey.ch", "monthey", "8085"),
     ("Zofingen", "https://www.zofingen.ch", "zofingen", "5741"),
     ("Nidau", "https://www.nidau.ch", "nidau", "1561"),
+    ("Rupperswil", "https://www.rupperswil.ch", "rupperswil", "5525"),
+    ("Seegräben", "https://www.seegraeben.ch", "seegraeben", "349"),
+    ("Solothurn", "https://www.stadt-solothurn.ch", "solothurn", "3625"),
 )
 
 
@@ -102,6 +105,19 @@ class Source(BaseSource):
             "municipality": "nidau",
             "municipality_id": "1561",
             "zone": "Römerstrasse",
+        },
+        "Rupperswil": {
+            "municipality": "rupperswil",
+            "municipality_id": "5525",
+        },
+        "Seegräben": {
+            "municipality": "seegraeben",
+            "municipality_id": "349",
+        },
+        "Solothurn - Tour 1": {
+            "municipality": "solothurn",
+            "municipality_id": "3625",
+            "zone": "Tour 1",
         },
     }
 
