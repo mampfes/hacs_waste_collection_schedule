@@ -308,6 +308,28 @@
           "street_address": "Your full address."
         }
       },
+      "args_basscoast_vic_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collection_day": "Collection day",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_basscoast_vic_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collection_day": "Collection day",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_bathurst_nsw_gov_au": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -1219,6 +1241,28 @@
         "data_description": {
           "street_address": "Your full address."
         }
+      },
+      "args_marion_sa_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "calendar": "Calendar",
+          "collection_day": "Collection day"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_marion_sa_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "calendar": "Calendar",
+          "collection_day": "Collection day"
+        },
+        "data_description": {}
       },
       "args_melbourne_vic_gov_au": {
         "title": "Configure Source",
@@ -6832,6 +6876,29 @@
           "sector": "This is the default sector."
         }
       },
+      "args_mrcvr_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipalite": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipalite": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_mrcvr_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipalite": "Municipality"
+        },
+        "data_description": {
+          "municipalite": "The name of your municipality, as shown on the provider's website."
+        }
+      },
       "args_info_collectes_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -7276,6 +7343,46 @@
           "verify_ssl": "Verify SSL",
           "version": "(Deprecated) Version, has no effect anymore",
           "year_field": "Year field"
+        },
+        "data_description": {}
+      },
+      "args_blainville_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "secteur": "Secteur"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_blainville_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "secteur": "Secteur"
+        },
+        "data_description": {}
+      },
+      "args_chambly_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "secteur": "Secteur"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_chambly_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "secteur": "Secteur"
         },
         "data_description": {}
       },
@@ -8321,6 +8428,54 @@
           "address": "Your street name."
         }
       },
+      "args_valesdunes_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_valesdunes_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "args_cc_paysdemormal_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality",
+          "semaine": "Semaine"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_cc_paysdemormal_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality",
+          "semaine": "Semaine"
+        },
+        "data_description": {
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
       "args_coeur_yvelines_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -8393,6 +8548,26 @@
           "commune": "The name of your municipality, as shown on the provider's website.",
           "quartier": "Your district or part of the municipality."
         }
+      },
+      "args_sivom_louhannais_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "jour": "Jour de collecte"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_sivom_louhannais_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "jour": "Jour de collecte"
+        },
+        "data_description": {}
       },
       "args_opendata_bordeauxmetropole_fr": {
         "title": "Configure Source",
@@ -8492,6 +8667,29 @@
           "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
+      "args_cc_pays_sources_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_cc_pays_sources_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
       "args_cyclad_org": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -8505,6 +8703,75 @@
         }
       },
       "reconfigure_cyclad_org": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "args_douaisis_agglo_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_douaisis_agglo_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "args_gmvagglo_bzh": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_gmvagglo_bzh": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "args_grandbelfort_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_grandbelfort_fr": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
@@ -8542,6 +8809,29 @@
         "data_description": {
           "house_number": "Your house number.",
           "street": "Your street name."
+        }
+      },
+      "args_grandbourg_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_grandbourg_fr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "commune": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_mamirolle_info": {
@@ -8740,6 +9030,29 @@
           "lon": "Select your location on the map."
         }
       },
+      "args_select_om_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_select_om_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
       "args_sictom_lons_le_saunier_fr": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -8776,6 +9089,29 @@
         }
       },
       "reconfigure_sictomvds_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "args_sirtom_courville_fr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_sirtom_courville_fr": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
@@ -19042,6 +19378,29 @@
           "street_number": "Your house number."
         }
       },
+      "args_coabser_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "comune": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "comune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_coabser_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "comune": "Municipality"
+        },
+        "data_description": {
+          "comune": "The name of your municipality, as shown on the provider's website."
+        }
+      },
       "args_comune_digital_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -19428,9 +19787,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "area_name": "Area from the app, e.g. `Aizumi-cho`. Where the app asks for several levels, give every level, e.g. `Okubo / 1 chome`.",
-          "language_code": "Language for municipality, area, and waste type labels from the API.",
-          "municipality": "Municipality name or ID from the ThreeR app, e.g. `Shinjuku City` or `shinjukuku`."
+          "municipality": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_delight_system_com": {
@@ -19443,9 +19800,7 @@
           "municipality": "Municipality"
         },
         "data_description": {
-          "area_name": "Area from the app, e.g. `Aizumi-cho`. Where the app asks for several levels, give every level, e.g. `Okubo / 1 chome`.",
-          "language_code": "Language for municipality, area, and waste type labels from the API.",
-          "municipality": "Municipality name or ID from the ThreeR app, e.g. `Shinjuku City` or `shinjukuku`."
+          "municipality": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_abfalltransport_li": {
@@ -20548,6 +20903,28 @@
         "data": {
           "calendar_title": "Calendar Title",
           "area_number": "Area Number"
+        },
+        "data_description": {}
+      },
+      "args_cdc_govt_nz": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collection_day": "Collection day",
+          "sticker": "Sticker"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_cdc_govt_nz": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collection_day": "Collection day",
+          "sticker": "Sticker"
         },
         "data_description": {}
       },
@@ -22595,6 +22972,29 @@
         "data_description": {
           "house_number": "Your house number.",
           "street": "Your street name."
+        }
+      },
+      "args_prowod_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "rejon": "District"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "rejon": "Your district or part of the municipality."
+        }
+      },
+      "reconfigure_prowod_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "rejon": "District"
+        },
+        "data_description": {
+          "rejon": "Your district or part of the municipality."
         }
       },
       "args_res_remondis_pl": {
@@ -26833,6 +27233,28 @@
         "data_description": {
           "street_name": "Your street name."
         }
+      },
+      "args_causewaycoastandglens_gov_uk": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Area",
+          "collection_day": "Collection day"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_causewaycoastandglens_gov_uk": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Area",
+          "collection_day": "Collection day"
+        },
+        "data_description": {}
       },
       "args_centralbedfordshire_gov_uk": {
         "title": "Configure Source",
@@ -34316,6 +34738,30 @@
           "address": "Your full address."
         }
       },
+      "args_lrsrecycles_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "calendar_url": "Calendar PDF URL",
+          "recycling_service": "Recycling service",
+          "service_day": "Service day"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_lrsrecycles_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "calendar_url": "Calendar PDF URL",
+          "recycling_service": "Recycling service",
+          "service_day": "Service day"
+        },
+        "data_description": {}
+      },
       "args_lincoln_ca_us": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -34361,6 +34807,28 @@
         "data_description": {
           "street_address": "Your full address."
         }
+      },
+      "args_mcwaste_com": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collection_day": "Collection day",
+          "recycling_week": "Recycling week"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_mcwaste_com": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "collection_day": "Collection day",
+          "recycling_week": "Recycling week"
+        },
+        "data_description": {}
       },
       "args_miamidade_gov": {
         "title": "Configure Source",

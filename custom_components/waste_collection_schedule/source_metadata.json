@@ -50,6 +50,13 @@
     },
     "urls": {}
   },
+  "basscoast_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/basscoast_vic_gov_au.md",
+    "howto": {
+      "en": "Open the bin calendar of your zone on https://www.basscoast.vic.gov.au/services/waste-rubbish/kerbside-bin-collection; the foot of the calendar lists the collection day of every suburb of the zone. Choose the zone and that day."
+    },
+    "urls": {}
+  },
   "bathurst_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bathurst_nsw_gov_au.md",
     "howto": {
@@ -275,6 +282,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/manningham_vic_gov_au.md",
     "howto": {
       "en": "Enter your street address within the City of Manningham, e.g. '10 Harold Street'. It must match exactly one property; if several match, the error lists the candidates."
+    },
+    "urls": {}
+  },
+  "marion_sa_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/marion_sa_gov_au.md",
+    "howto": {
+      "en": "Open the kerbside bin collection calendar linked from https://www.marion.sa.gov.au/services-we-offer/waste-and-recycling/bin-collection-and-calendar. Calendar A and calendar B each list their suburbs under the collection weekday; choose the calendar and weekday listing your suburb. In Hallett Cove the map on calendar B shows your area."
     },
     "urls": {}
   },
@@ -1632,6 +1646,14 @@
     },
     "urls": {}
   },
+  "mrcvr_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mrcvr_ca.md",
+    "howto": {
+      "en": "Enter your municipality as listed on https://www.mrcvr.ca/services/matieres-residuelles/calendriers-des-collectes/, for example `Otterburn Park`.",
+      "fr": "Indiquez votre municipalité telle qu'elle figure sur https://www.mrcvr.ca/services/matieres-residuelles/calendriers-des-collectes/, par exemple `Otterburn Park`."
+    },
+    "urls": {}
+  },
   "info_collectes_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/info_collectes_ca.md",
     "howto": {
@@ -1748,6 +1770,22 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/valleyfiled_qc_ca.md",
     "howto": {
       "en": "- Visit <https://www.ville.valleyfield.qc.ca/calendrier-electronique-collecte> and open the IOS tab.  \n- Copy the google calendar ICS link of your sector.\n- Use this link as the `url` parameter.\n- You can use the regex `Collecte (?:du|des) (.*)` to shorten the event titles (will remove the `Collecte du `/`Collecte des ` prefix).\n"
+    },
+    "urls": {}
+  },
+  "blainville_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blainville_ca.md",
+    "howto": {
+      "en": "Choose your sector (Nord or Sud) as shown on the map of the collection calendar on https://blainville.ca/services/environnement-et-voirie/collectes-et-matieres-residuelles: the north sector is collected on Wednesdays, the south sector on Tuesdays. The calendar covers homes and buildings of nine units or fewer.",
+      "fr": "Choisissez votre secteur (Nord ou Sud) selon la carte du calendrier des collectes sur https://blainville.ca/services/environnement-et-voirie/collectes-et-matieres-residuelles : le secteur nord est collecté le mercredi, le secteur sud le mardi. Le calendrier concerne les résidences de neuf logements et moins."
+    },
+    "urls": {}
+  },
+  "chambly_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chambly_ca.md",
+    "howto": {
+      "en": "Find your collection sector (1 to 4) on the sector map linked from https://espacechambly.ca/info-collecte and choose it.",
+      "fr": "Trouvez votre secteur de collecte (1 à 4) sur la carte des secteurs accessible depuis https://espacechambly.ca/info-collecte et choisissez-le."
     },
     "urls": {}
   },
@@ -2013,6 +2051,22 @@
     },
     "urls": {}
   },
+  "valesdunes_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/valesdunes_fr.md",
+    "howto": {
+      "en": "Enter your commune as listed on https://www.valesdunes.fr/calendriers-de-collecte/, for example `Bellengreville`.",
+      "fr": "Indiquez votre commune telle qu'elle figure sur https://www.valesdunes.fr/calendriers-de-collecte/, par exemple `Bellengreville`."
+    },
+    "urls": {}
+  },
+  "cc_paysdemormal_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc_paysdemormal_fr.md",
+    "howto": {
+      "en": "Enter your commune as listed on https://www.cc-paysdemormal.fr/calendriers-de-collecte/. In Bavay, La Longueville, Landrecies, Le Quesnoy and Poix-du-Nord the packaging (bac de tri) week depends on your street: look it up on the map of the calendar and set `semaine` to `paire` (even weeks) or `impaire` (odd weeks). Leave it empty elsewhere.",
+      "fr": "Indiquez votre commune telle qu'elle figure sur https://www.cc-paysdemormal.fr/calendriers-de-collecte/. À Bavay, La Longueville, Landrecies, Le Quesnoy et Poix-du-Nord, la semaine du bac de tri dépend de votre rue : consultez le plan au verso du calendrier et choisissez `semaine` `paire` ou `impaire`. Laissez le champ vide ailleurs."
+    },
+    "urls": {}
+  },
   "coeur_yvelines_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/coeur_yvelines_fr.md",
     "howto": {},
@@ -2031,6 +2085,14 @@
     "howto": {
       "en": "Provide your municipality; for Mulhouse also provide the district.",
       "fr": "Indiquez votre commune; pour Mulhouse précisez aussi le quartier."
+    },
+    "urls": {}
+  },
+  "sivom_louhannais_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_louhannais_fr.md",
+    "howto": {
+      "en": "Choose your commune's collection weekday as listed on https://sivom-louhannais.fr/collecte-des-omr/les-calendriers-de-collecte.html (for example Beaurepaire-en-Bresse: `Vendredi`).",
+      "fr": "Choisissez le jour de collecte de votre commune tel qu'indiqué sur https://sivom-louhannais.fr/collecte-des-omr/les-calendriers-de-collecte.html (par exemple Beaurepaire-en-Bresse : `Vendredi`)."
     },
     "urls": {}
   },
@@ -2066,6 +2128,14 @@
     },
     "urls": {}
   },
+  "cc_pays_sources_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cc_pays_sources_fr.md",
+    "howto": {
+      "en": "Enter your commune as listed in the drop-down on https://www.cc-pays-sources.fr/environnement/gestion-des-dechets/votre-calendrier-de-tri/, for example `Ressons-sur-Matz`.",
+      "fr": "Indiquez votre commune telle qu'elle figure dans la liste sur https://www.cc-pays-sources.fr/environnement/gestion-des-dechets/votre-calendrier-de-tri/, par exemple `Ressons-sur-Matz`."
+    },
+    "urls": {}
+  },
   "cyclad_org": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cyclad_org.md",
     "howto": {
@@ -2074,11 +2144,43 @@
     },
     "urls": {}
   },
+  "douaisis_agglo_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/douaisis_agglo_com.md",
+    "howto": {
+      "en": "Enter your commune as listed on https://www.douaisis-agglo.com/services/dechets/calendriers-de-collecte-de-votre-commune, for example `Flines-lez-Râches`. In Douai use the sector, for example `Douai - Dorignies`.",
+      "fr": "Indiquez votre commune telle qu'elle figure sur https://www.douaisis-agglo.com/services/dechets/calendriers-de-collecte-de-votre-commune, par exemple `Flines-lez-Râches`. À Douai, indiquez le secteur, par exemple `Douai - Dorignies`."
+    },
+    "urls": {}
+  },
+  "gmvagglo_bzh": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmvagglo_bzh.md",
+    "howto": {
+      "en": "Enter your commune (or sector) as listed under 'Calendriers de collecte' on https://www.golfedumorbihan-vannesagglomeration.bzh/mon-quotidien/dechets/collecte/, for example `Ploeren` or `Vannes secteur 3`.",
+      "fr": "Indiquez votre commune (ou secteur) telle qu'elle figure sous « Calendriers de collecte » sur https://www.golfedumorbihan-vannesagglomeration.bzh/mon-quotidien/dechets/collecte/, par exemple `Ploeren` ou `Vannes secteur 3`."
+    },
+    "urls": {}
+  },
+  "grandbelfort_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grandbelfort_fr.md",
+    "howto": {
+      "en": "Enter your commune as listed on https://www.grandbelfort.fr/prevention-et-valorisation-des-dechets/calendriers-de-collecte.html, for example `Cravanche`. In Belfort use `Belfort - ` followed by your sector, for example `Belfort - La Pépinière`.",
+      "fr": "Indiquez votre commune telle qu'elle figure sur https://www.grandbelfort.fr/prevention-et-valorisation-des-dechets/calendriers-de-collecte.html, par exemple `Cravanche`. À Belfort, indiquez `Belfort - ` suivi de votre secteur, par exemple `Belfort - La Pépinière`."
+    },
+    "urls": {}
+  },
   "grandbesancon_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grandbesancon_fr.md",
     "howto": {
       "en": "Find your commune's INSEE code at https://www.insee.fr. Enter your street name as shown on the Grand Besançon waste calendar at https://data.grandbesancon.fr/opendata/dataset/joursDeCollecteDechets.",
       "fr": "Trouvez le code INSEE de votre commune sur https://www.insee.fr. Entrez le nom de votre rue tel qu'affiché sur le calendrier des déchets de Grand Besançon à https://data.grandbesancon.fr/opendata/dataset/joursDeCollecteDechets."
+    },
+    "urls": {}
+  },
+  "grandbourg_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grandbourg_fr.md",
+    "howto": {
+      "en": "Enter your commune (or commune sector) as listed under the collection calendars on https://www.grandbourg.fr/26-collecte-des-ordures-menageres.htm, for example `Courtes` or `Attignat Est Crangeat`.",
+      "fr": "Indiquez votre commune (ou secteur) telle qu'elle figure dans la liste des calendriers de collecte sur https://www.grandbourg.fr/26-collecte-des-ordures-menageres.htm, par exemple `Courtes` ou `Attignat Est Crangeat`."
     },
     "urls": {}
   },
@@ -2137,6 +2239,14 @@
     },
     "urls": {}
   },
+  "select_om_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/select_om_com.md",
+    "howto": {
+      "en": "Enter your commune as listed on https://www.select-om.com/le-selectom-vous/calendrier-des-collectes/, for example `Molsheim`.",
+      "fr": "Indiquez votre commune telle qu'elle figure sur https://www.select-om.com/le-selectom-vous/calendrier-des-collectes/, par exemple `Molsheim`."
+    },
+    "urls": {}
+  },
   "sictom_lons_le_saunier_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sictom_lons_le_saunier_fr.md",
     "howto": {
@@ -2150,6 +2260,14 @@
     "howto": {
       "en": "Enter your commune as it is named on the map at https://www.sictomvds.com (for example 'Velleminfroy').",
       "fr": "Saisissez votre commune telle qu'elle apparaît sur la carte de https://www.sictomvds.com (par exemple « Velleminfroy »)."
+    },
+    "urls": {}
+  },
+  "sirtom_courville_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sirtom_courville_fr.md",
+    "howto": {
+      "en": "Open https://www.sirtom-courville.fr/mes-dechets/jours-de-collecte/ and enter the name of your calendar as printed after 'Téléchargez le calendrier des collectes :', without the year, for example `Fontaine-la-Guyon`. Hamlets with their own calendar include it, for example `Digny – Les Hauts Cornets, La Gatine`.",
+      "fr": "Ouvrez https://www.sirtom-courville.fr/mes-dechets/jours-de-collecte/ et indiquez le nom de votre calendrier tel qu'il figure après « Téléchargez le calendrier des collectes : », sans l'année, par exemple `Fontaine-la-Guyon`. Les hameaux ayant leur propre calendrier l'ajoutent, par exemple `Digny – Les Hauts Cornets, La Gatine`."
     },
     "urls": {}
   },
@@ -4193,6 +4311,14 @@
     },
     "urls": {}
   },
+  "coabser_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/coabser_it.md",
+    "howto": {
+      "en": "Enter your comune as listed on https://coabser.it/servizi/calendari-utenze-domestiche/, for example `Sommariva Perno`. Alba (no text layer) and Bra (one calendar per zone in a single PDF) are not supported.",
+      "it": "Inserisci il tuo comune come indicato su https://coabser.it/servizi/calendari-utenze-domestiche/, ad esempio `Sommariva Perno`. Alba e Bra non sono supportati."
+    },
+    "urls": {}
+  },
   "comune_digital_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/comune_digital_it.md",
     "howto": {
@@ -4550,6 +4676,13 @@
   "aucklandcouncil_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aucklandcouncil_govt_nz.md",
     "howto": {},
+    "urls": {}
+  },
+  "cdc_govt_nz": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cdc_govt_nz.md",
+    "howto": {
+      "en": "The sticker on your recycling wheelie bin shows a 1 or a 2 and your collection day. Choose both. Week 1 and week 2 are the red and blue weeks of the calendar on https://cdc.govt.nz/services/sustainability/recycling/."
+    },
     "urls": {}
   },
   "codc_govt_nz": {
@@ -5051,6 +5184,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_bielsko_pl.md",
     "howto": {
       "en": "Enter your street and house number in Bielsko-Biała as they appear on https://prezero-bielsko.pl/harmonogram-odbioru-odpadow/."
+    },
+    "urls": {}
+  },
+  "prowod_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prowod_pl.md",
+    "howto": {
+      "en": "Enter your rejon as named in the calendar links of the yearly announcement on https://prowod.pl/556/harmonogramy-wywozu-odpadow.html: `Dobrzeń Wielki`, `Dobrzeń Mały DW II`, `Chróścice`, `Kup`, `os Energetyk` or `Firmy niezamieszkałe`. Each calendar lists the streets of its rejon at the top."
     },
     "urls": {}
   },
@@ -6214,6 +6354,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/castlepoint_gov_uk.md",
     "howto": {
       "en": "Go to https://apps.castlepoint.gov.uk/cpapps/index.cfm?fa=myStreet&f=homepage1 and either enter your street name in the search box or select the first letter of your street. Click on the street name and look for the roadID in the URL, or enter the street name (only needed if you don't provide roadID). If two towns in the borough share a street name, add the town in brackets, e.g. 'HIGH STREET (CANVEY ISLAND)'."
+    },
+    "urls": {}
+  },
+  "causewaycoastandglens_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/causewaycoastandglens_gov_uk.md",
+    "howto": {
+      "en": "Choose your former council area (Ballymoney, Coleraine, Limavady or Moyle) as on https://causewaycoastandglens.gov.uk/live/bins-and-recycling/bin-collections/collection-calendars, and your normal bin collection day. Collection changes for bank holidays are announced by the council separately and are not part of the calendar."
     },
     "urls": {}
   },
@@ -8467,6 +8614,13 @@
     },
     "urls": {}
   },
+  "lrsrecycles_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lrsrecycles_com.md",
+    "howto": {
+      "en": "Copy the link of your municipality's 'Waste & Recycling Service' calendar PDF from LRS (lrsrecycles.com or your village's website) into `calendar_url`; LRS publishes a new link every year. The map on the calendar shows your service day and whether your recycling service is A or B."
+    },
+    "urls": {}
+  },
   "lincoln_ca_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lincoln_ca_us.md",
     "howto": {
@@ -8478,6 +8632,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/marysville_wa_us.md",
     "howto": {
       "en": "Enter the house number and street name (e.g. '501 Delta Ave' or '6400 88th St NE'), without city or ZIP code."
+    },
+    "urls": {}
+  },
+  "mcwaste_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mcwaste_com.md",
+    "howto": {
+      "en": "Choose your trash day and your recycling week (A or B). The town lists linked from https://www.mcwaste.com/ (Hampden, Wilbraham) give both for every street; elsewhere ask McNamara (413-566-8322)."
     },
     "urls": {}
   },

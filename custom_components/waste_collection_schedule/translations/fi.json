@@ -308,6 +308,28 @@
           "street_address": "Koko osoitteesi."
         }
       },
+      "args_basscoast_vic_gov_au": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "collection_day": "Collection Day",
+          "zone": "Vyöhyke"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_basscoast_vic_gov_au": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "collection_day": "Collection Day",
+          "zone": "Vyöhyke"
+        },
+        "data_description": {}
+      },
       "args_bathurst_nsw_gov_au": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -1210,6 +1232,28 @@
         "data_description": {
           "street_address": "Koko osoitteesi."
         }
+      },
+      "args_marion_sa_gov_au": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "calendar": "Calendar",
+          "collection_day": "Collection Day"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_marion_sa_gov_au": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "calendar": "Calendar",
+          "collection_day": "Collection Day"
+        },
+        "data_description": {}
       },
       "args_melbourne_vic_gov_au": {
         "title": "Määritä lähde",
@@ -6786,6 +6830,29 @@
           "sector": "Tämä on oletusalue."
         }
       },
+      "args_mrcvr_ca": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipalite": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "municipalite": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_mrcvr_ca": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipalite": "Kunta"
+        },
+        "data_description": {
+          "municipalite": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
       "args_info_collectes_ca": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -7225,6 +7292,46 @@
           "verify_ssl": "Verify Ssl",
           "version": "Version",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_blainville_ca": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "secteur": "Secteur"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_blainville_ca": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "secteur": "Secteur"
+        },
+        "data_description": {}
+      },
+      "args_chambly_ca": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "secteur": "Secteur"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_chambly_ca": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "secteur": "Secteur"
         },
         "data_description": {}
       },
@@ -8256,6 +8363,54 @@
           "address": "Kadun nimi."
         }
       },
+      "args_valesdunes_fr": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_valesdunes_fr": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "args_cc_paysdemormal_fr": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta",
+          "semaine": "Semaine"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_cc_paysdemormal_fr": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta",
+          "semaine": "Semaine"
+        },
+        "data_description": {
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
       "args_coeur_yvelines_fr": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -8328,6 +8483,26 @@
           "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
           "quartier": "Kaupunginosasi tai kunnan osa."
         }
+      },
+      "args_sivom_louhannais_fr": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "jour": "Jour"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_sivom_louhannais_fr": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "jour": "Jour"
+        },
+        "data_description": {}
       },
       "args_opendata_bordeauxmetropole_fr": {
         "title": "Määritä lähde",
@@ -8427,6 +8602,29 @@
           "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
       },
+      "args_cc_pays_sources_fr": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_cc_pays_sources_fr": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
       "args_cyclad_org": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -8440,6 +8638,75 @@
         }
       },
       "reconfigure_cyclad_org": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "args_douaisis_agglo_com": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_douaisis_agglo_com": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "args_gmvagglo_bzh": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_gmvagglo_bzh": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "args_grandbelfort_fr": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_grandbelfort_fr": {
         "title": "Määritä lähde uudelleen",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
@@ -8477,6 +8744,29 @@
         "data_description": {
           "house_number": "Talon numero.",
           "street": "Kadun nimi."
+        }
+      },
+      "args_grandbourg_fr": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_grandbourg_fr": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
       },
       "args_mamirolle_info": {
@@ -8675,6 +8965,29 @@
           "lon": "Valitse sijaintisi kartalta."
         }
       },
+      "args_select_om_com": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_select_om_com": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
       "args_sictom_lons_le_saunier_fr": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -8711,6 +9024,29 @@
         }
       },
       "reconfigure_sictomvds_com": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "args_sirtom_courville_fr": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_sirtom_courville_fr": {
         "title": "Määritä lähde uudelleen",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
@@ -18954,6 +19290,29 @@
           "street_number": "Talon numero."
         }
       },
+      "args_coabser_it": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "comune": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "comune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_coabser_it": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "comune": "Kunta"
+        },
+        "data_description": {
+          "comune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
       "args_comune_digital_it": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -19339,7 +19698,8 @@
           "municipality": "Kunta"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
       },
       "reconfigure_delight_system_com": {
@@ -19351,7 +19711,9 @@
           "language_code": "Language Code",
           "municipality": "Kunta"
         },
-        "data_description": {}
+        "data_description": {
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
       },
       "args_abfalltransport_li": {
         "title": "Määritä lähde",
@@ -20450,6 +20812,28 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "area_number": "Area Number"
+        },
+        "data_description": {}
+      },
+      "args_cdc_govt_nz": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "collection_day": "Collection Day",
+          "sticker": "Sticker"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_cdc_govt_nz": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "collection_day": "Collection Day",
+          "sticker": "Sticker"
         },
         "data_description": {}
       },
@@ -22494,6 +22878,29 @@
         "data_description": {
           "house_number": "Talon numero.",
           "street": "Kadun nimi."
+        }
+      },
+      "args_prowod_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "rejon": "Kaupunginosa"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "rejon": "Kaupunginosasi tai kunnan osa."
+        }
+      },
+      "reconfigure_prowod_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "rejon": "Kaupunginosa"
+        },
+        "data_description": {
+          "rejon": "Kaupunginosasi tai kunnan osa."
         }
       },
       "args_res_remondis_pl": {
@@ -26692,6 +27099,28 @@
         "data_description": {
           "street_name": "Kadun nimi."
         }
+      },
+      "args_causewaycoastandglens_gov_uk": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area",
+          "collection_day": "Collection Day"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_causewaycoastandglens_gov_uk": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area",
+          "collection_day": "Collection Day"
+        },
+        "data_description": {}
       },
       "args_centralbedfordshire_gov_uk": {
         "title": "Määritä lähde",
@@ -34067,6 +34496,30 @@
           "address": "Koko osoitteesi."
         }
       },
+      "args_lrsrecycles_com": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "calendar_url": "Calendar Url",
+          "recycling_service": "Recycling Service",
+          "service_day": "Service Day"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_lrsrecycles_com": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "calendar_url": "Calendar Url",
+          "recycling_service": "Recycling Service",
+          "service_day": "Service Day"
+        },
+        "data_description": {}
+      },
       "args_lincoln_ca_us": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -34112,6 +34565,28 @@
         "data_description": {
           "street_address": "Koko osoitteesi."
         }
+      },
+      "args_mcwaste_com": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "collection_day": "Collection Day",
+          "recycling_week": "Recycling Week"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_mcwaste_com": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "collection_day": "Collection Day",
+          "recycling_week": "Recycling Week"
+        },
+        "data_description": {}
       },
       "args_miamidade_gov": {
         "title": "Määritä lähde",

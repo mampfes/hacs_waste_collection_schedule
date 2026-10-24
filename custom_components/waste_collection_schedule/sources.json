@@ -75,6 +75,12 @@
       "id": "banyule_vic_gov_au"
     },
     {
+      "title": "Bass Coast Shire Council",
+      "module": "basscoast_vic_gov_au",
+      "default_params": {},
+      "id": "basscoast_vic_gov_au"
+    },
+    {
       "title": "Bathurst Regional Council",
       "module": "bathurst_nsw_gov_au",
       "default_params": {},
@@ -396,6 +402,12 @@
       "module": "manningham_vic_gov_au",
       "default_params": {},
       "id": "manningham_vic_gov_au"
+    },
+    {
+      "title": "City of Marion",
+      "module": "marion_sa_gov_au",
+      "default_params": {},
+      "id": "marion_sa_gov_au"
     },
     {
       "title": "City of Melbourne",
@@ -5558,6 +5570,12 @@
       "id": "montreal_ca"
     },
     {
+      "title": "MRC de La Vall\u00e9e-du-Richelieu",
+      "module": "mrcvr_ca",
+      "default_params": {},
+      "id": "mrcvr_ca"
+    },
+    {
       "title": "MRC de Roussillon (QC)",
       "module": "info_collectes_ca",
       "default_params": {},
@@ -5858,6 +5876,18 @@
         "state": "Ontario"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Ville de Blainville",
+      "module": "blainville_ca",
+      "default_params": {},
+      "id": "blainville_ca"
+    },
+    {
+      "title": "Ville de Chambly",
+      "module": "chambly_ca",
+      "default_params": {},
+      "id": "chambly_ca"
     },
     {
       "title": "Ville de Saguenay",
@@ -6560,6 +6590,22 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Argences",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Argences"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Audignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Audignies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Auteuil-le-Roi",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -6608,6 +6654,22 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Banneville-la-Campagne",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Banneville-la-Campagne"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Bantanges",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Bantzenheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -6632,12 +6694,36 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Bavay",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Bavay"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Bazoches-sur-Guyonne",
       "module": "coeur_yvelines_fr",
       "default_params": {
         "commune": "Bazoches-sur-Guyonne"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Beaudignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Beaudignies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Beaurepaire-en-Bresse",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Beautiran",
@@ -6654,6 +6740,22 @@
         "commune": "Behoust"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Bellengreville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Bellengreville"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Bellignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Bellignies"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Berch\u00e8res-les-Pierres",
@@ -6686,6 +6788,14 @@
         "commune": "Betton"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Bettrechies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Bettrechies"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Beynes",
@@ -6790,6 +6900,14 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "Bousies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Bousies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Boussay",
       "module": "clissonsevremaine_fr",
       "default_params": {
@@ -6806,12 +6924,36 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Branges",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Briconville",
       "module": "chartres_metropole_fr",
       "default_params": {
         "commune": "Briconville"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Brienne",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Bruailles",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Bruebach",
@@ -6844,6 +6986,14 @@
         "commune": "Bruz"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Bry",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Bry"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Br\u00e9c\u00e9",
@@ -6894,12 +7044,36 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "Cagny",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Cagny"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Canteloup",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Canteloup"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
       "title": "Castres-Gironde",
       "module": "cc-montesquieu_fr",
       "default_params": {
         "commune": "Castres-Gironde"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Cesny-aux-Vignes",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Cesny-aux-Vignes"
+      },
+      "id": "valesdunes_fr"
     },
     {
       "title": "Cesson-S\u00e9vign\u00e9",
@@ -6924,6 +7098,14 @@
         "commune": "Challet"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Champagnat",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Champhol",
@@ -7120,6 +7302,14 @@
       "id": "clissonsevremaine_fr"
     },
     {
+      "title": "Cl\u00e9ville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Cl\u00e9ville"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
       "title": "Cl\u00e9villiers",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -7160,12 +7350,40 @@
       "id": "paysdecraon_fr"
     },
     {
+      "title": "Communaut\u00e9 de Communes du Pays de Mormal",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {},
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Communaut\u00e9 de Communes du Pays des Sources",
+      "module": "cc_pays_sources_fr",
+      "default_params": {},
+      "id": "cc_pays_sources_fr"
+    },
+    {
       "title": "Communaut\u00e9 de Communes P\u00e9v\u00e8le Carembault",
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 1141
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Condal",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Cond\u00e9-sur-Ifs",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Cond\u00e9-sur-Ifs"
+      },
+      "id": "valesdunes_fr"
     },
     {
       "title": "Corancez",
@@ -7184,12 +7402,36 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "Croix-Caluyau",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Croix-Caluyau"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Cr\u00e9teil",
       "module": "sudestavenir_fr",
       "default_params": {
         "commune": "Cr\u00e9teil"
       },
       "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Cuiseaux",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Cuisery",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Cyclad",
@@ -7238,6 +7480,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Dommartin-l\u00e8s-Cuiseaux",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Dommartin-l\u00e8s-Toul",
       "module": "terrestouloises_com",
       "default_params": {
@@ -7252,6 +7502,12 @@
         "commune": "Dom\u00e8vre-en-Haye"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Douaisis Agglo",
+      "module": "douaisis_agglo_com",
+      "default_params": {},
+      "id": "douaisis_agglo_com"
     },
     {
       "title": "Dreux Agglom\u00e9ration",
@@ -7270,6 +7526,22 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Emi\u00e9ville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Emi\u00e9ville"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Englefontaine",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Englefontaine"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Ermenonville-la-Grande",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -7286,12 +7558,28 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Eth",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Eth"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Feldkirch",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Feldkirch"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Flacey-en-Bresse",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Flaxlanden",
@@ -7310,6 +7598,14 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Fontaine-au-Bois",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Fontaine-au-Bois"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Fontenay-sur-Eure",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -7324,6 +7620,14 @@
         "commune": "Fontenoy-sur-Moselle"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Forest-en-Cambr\u00e9sis",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Forest-en-Cambr\u00e9sis"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Foug",
@@ -7350,6 +7654,14 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Frasnoy",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Frasnoy"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Fresnay-le-Comte",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -7364,6 +7676,22 @@
         "commune": "Fresnay-le-Gilmert"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Frontenaud",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Fr\u00e9nouville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Fr\u00e9nouville"
+      },
+      "id": "valesdunes_fr"
     },
     {
       "title": "Galfingue",
@@ -7414,6 +7742,28 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Ghissignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Ghissignies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Golfe du Morbihan - Vannes agglom\u00e9ration",
+      "module": "gmvagglo_bzh",
+      "default_params": {},
+      "id": "gmvagglo_bzh"
+    },
+    {
+      "title": "Gommegnies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Gommegnies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Gondreville",
       "module": "terrestouloises_com",
       "default_params": {
@@ -7438,10 +7788,22 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Grand Belfort",
+      "module": "grandbelfort_fr",
+      "default_params": {},
+      "id": "grandbelfort_fr"
+    },
+    {
       "title": "Grand Besan\u00e7on M\u00e9tropole",
       "module": "grandbesancon_fr",
       "default_params": {},
       "id": "grandbesancon_fr"
+    },
+    {
+      "title": "Grand Bourg Agglom\u00e9ration",
+      "module": "grandbourg_fr",
+      "default_params": {},
+      "id": "grandbourg_fr"
     },
     {
       "title": "Grand Calais Terres et Mers",
@@ -7490,6 +7852,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Gussignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Gussignies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Gye",
       "module": "terrestouloises_com",
       "default_params": {
@@ -7530,12 +7900,28 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Hargnies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Hargnies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Haute-Goulaine",
       "module": "clissonsevremaine_fr",
       "default_params": {
         "commune": "Haute-Goulaine"
       },
       "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Hecq",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Hecq"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Heimsbrunn",
@@ -7554,6 +7940,22 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Hon-Hergies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Hon-Hergies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Houdain-lez-Bavay",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Houdain-lez-Bavay"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Houville-la-Branche",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -7568,6 +7970,14 @@
         "commune": "Houx"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Huilly-sur-Seille",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Illzach",
@@ -7594,12 +8004,52 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Janville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Janville"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Jenlain",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Jenlain"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Jolimetz",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Jolimetz"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Jouars-Pontchartrain",
       "module": "coeur_yvelines_fr",
       "default_params": {
         "commune": "Jouars-Pontchartrain"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Joudes",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Jouven\u00e7on",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Jouy",
@@ -7618,12 +8068,36 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "L'Abergement-de-Cuisery",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "L'Hermitage",
       "module": "metropole_rennes_fr",
       "default_params": {
         "commune": "L'Hermitage"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "L'Or\u00e9e de Mormal (ex Amfroipret)",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "L'Or\u00e9e de Mormal (ex Amfroipret)"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "L'Or\u00e9e de Mormal (ex Bermeries)",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "L'Or\u00e9e de Mormal (ex Bermeries)"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "La Bourdini\u00e8re-Saint-Loup",
@@ -7658,12 +8132,52 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "La Chapelle-Naude",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "La Chapelle-Thouarault",
       "module": "metropole_rennes_fr",
       "default_params": {
         "commune": "La Chapelle-Thouarault"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "La Chapelle-Th\u00e8cle",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "La Flamengrie",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "La Flamengrie"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "La Frette",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "La Gen\u00eate",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "La Haye-Fouassi\u00e8re - Zone A",
@@ -7680,6 +8194,14 @@
         "commune": "La Haye-Fouassi\u00e8re - Zone B"
       },
       "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "La Longueville",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "La Longueville"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "La Planche",
@@ -7722,6 +8244,14 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "Landrecies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Landrecies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Laneuveville-derri\u00e8re-Foug",
       "module": "terrestouloises_com",
       "default_params": {
@@ -7762,6 +8292,22 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Le Favril",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Le Favril"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Le Fay",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Le Havre Seine M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
@@ -7770,12 +8316,28 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Le Miroir",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Le Plessis-Tr\u00e9vise",
       "module": "sudestavenir_fr",
       "default_params": {
         "commune": "Le Plessis-Tr\u00e9vise"
       },
       "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Le Quesnoy",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Le Quesnoy"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Le Rheu",
@@ -7816,6 +8378,30 @@
         "commune": "Limeil-Br\u00e9vannes"
       },
       "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Locquignol",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Locquignol"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Loisy",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Louvignies-Quesnoy",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Louvignies-Quesnoy"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Lucey",
@@ -7952,12 +8538,36 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Maresches",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Maresches"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Maroilles",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Maroilles"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Martillac",
       "module": "cc-montesquieu_fr",
       "default_params": {
         "commune": "Martillac"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Mecquignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Mecquignies"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Meslay-le-Grenet",
@@ -8032,6 +8642,22 @@
       "id": "clissonsevremaine_fr"
     },
     {
+      "title": "Montagny-pr\u00e8s-Louhans",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Montcony",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Montfort-l'Amaury",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -8052,6 +8678,22 @@
       "module": "data_montpellier3m_fr",
       "default_params": {},
       "id": "data_montpellier3m_fr"
+    },
+    {
+      "title": "Montpont-en-Bresse",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Montret",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Montri",
@@ -8084,6 +8726,14 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Moult-Chicheboville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Moult-Chicheboville"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
       "title": "Mulhouse",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -8103,6 +8753,14 @@
       "module": "memotri_agglo_pau_fr",
       "default_params": {},
       "id": "memotri_agglo_pau_fr"
+    },
+    {
+      "title": "M\u00e9netreuil",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "M\u00e9nil-la-Tour",
@@ -8171,6 +8829,14 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Neuville-en-Avesnois",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Neuville-en-Avesnois"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Niffer",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -8227,6 +8893,14 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "Obies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Obies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Oinville-sous-Auneau",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -8259,6 +8933,14 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Ormes",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Ormesson-sur-Marne",
       "module": "sudestavenir_fr",
       "default_params": {
@@ -8267,12 +8949,28 @@
       "id": "sudestavenir_fr"
     },
     {
+      "title": "Orsinval",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Orsinval"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Ottmarsheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Ottmarsheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Ou\u00e9zy",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Ou\u00e9zy"
+      },
+      "id": "valesdunes_fr"
     },
     {
       "title": "Pac\u00e9",
@@ -8331,12 +9029,44 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Poix-du-Nord",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Poix-du-Nord"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Pont-P\u00e9an",
       "module": "metropole_rennes_fr",
       "default_params": {
         "commune": "Pont-P\u00e9an"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Potelle",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Potelle"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Preux-au-Bois",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Preux-au-Bois"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Preux-au-Sart",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Preux-au-Sart"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Prunay-le-Gillon",
@@ -8359,6 +9089,38 @@
         "commune": "Pulversheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Rancy",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Ratenelle",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Ratte",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Raucourt-au-Bois",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Raucourt-au-Bois"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Reiningue",
@@ -8495,12 +9257,28 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Robersart",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Robersart"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Roinville-sous-Auneau",
       "module": "chartres_metropole_fr",
       "default_params": {
         "commune": "Roinville-sous-Auneau"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Romenay",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Romill\u00e9",
@@ -8533,12 +9311,44 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Ruesnes",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Ruesnes"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Sagy",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Saillenard",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Saint Quentin en Yvelines",
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 701
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Saint-Andr\u00e9",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Saint-Armel",
@@ -8645,6 +9455,14 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Saint-Martin-du-Mont",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Saint-Michel-de-la-Ro\u00eb",
       "module": "paysdecraon_fr",
       "default_params": {
@@ -8668,6 +9486,30 @@
         "commune": "Saint-M\u00e9dard-d'Eyrans"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Saint-Ouen-du-Mesnil-Oger",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Saint-Ouen-du-Mesnil-Oger"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Saint-Pair",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Saint-Pair"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Saint-Pierre-du-Jonquet",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Saint-Pierre-du-Jonquet"
+      },
+      "id": "valesdunes_fr"
     },
     {
       "title": "Saint-Prest",
@@ -8700,6 +9542,54 @@
         "commune": "Saint-Sulpice-la-For\u00eat"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Saint-Sylvain",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Saint-Sylvain"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Saint-Usuge",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Saint-Vincent-en-Bresse",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Saint-Waast-la-Vall\u00e9e",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Saint-Waast-la-Vall\u00e9e"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Sainte-Croix",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Salesches",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Salesches"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Sandarville",
@@ -8758,6 +9648,36 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Savigny-en-Revermont",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Savigny-sur-Seille",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Select'om",
+      "module": "select_om_com",
+      "default_params": {},
+      "id": "select_om_com"
+    },
+    {
+      "title": "Sepmeries",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Sepmeries"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "SIAVED (Valenciennes M\u00e9tropole)",
       "module": "publidata_fr",
       "default_params": {
@@ -8786,10 +9706,30 @@
       "id": "sictomvds_com"
     },
     {
+      "title": "Simandre",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "SIRTOM de Courville-sur-Eure",
+      "module": "sirtom_courville_fr",
+      "default_params": {},
+      "id": "sirtom_courville_fr"
+    },
+    {
       "title": "SIVOM de la Vall\u00e9e de l'Yerres et des S\u00e9narts",
       "module": "sivom_com",
       "default_params": {},
       "id": "sivom_com"
+    },
+    {
+      "title": "SIVOM du Louhannais",
+      "module": "sivom_louhannais_fr",
+      "default_params": {},
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "SIVOM Rive Droite",
@@ -8804,6 +9744,14 @@
       "module": "sivom_rivedroite_fr",
       "default_params": {},
       "id": "sivom_rivedroite_fr"
+    },
+    {
+      "title": "Sornay",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Sours",
@@ -8860,6 +9808,14 @@
         "customer": "emeraude"
       },
       "id": "circularcity_world"
+    },
+    {
+      "title": "Taisni\u00e8res-sur-Hon",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Taisni\u00e8res-sur-Hon"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Terres Touloises",
@@ -8954,6 +9910,20 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Val \u00e8s Dunes",
+      "module": "valesdunes_fr",
+      "default_params": {},
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Valambray",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Valambray"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
       "title": "Valcobreizh",
       "module": "publidata_fr",
       "default_params": {
@@ -8984,6 +9954,22 @@
         "instance_id": 1619
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Varennes-Saint-Sauveur",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Vendegies-au-Bois",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Vendegies-au-Bois"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Ver-l\u00e8s-Chartres",
@@ -9034,6 +10020,22 @@
       "id": "clissonsevremaine_fr"
     },
     {
+      "title": "Villereau",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Villereau"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Villers-Pol",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Villers-Pol"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Villey-le-Sec",
       "module": "terrestouloises_com",
       "default_params": {
@@ -9066,6 +10068,22 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Vimont",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Vimont"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Vincelles",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Vitray-en-Beauce",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -9080,6 +10098,22 @@
         "commune": "Voise"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Wargnies-le-Grand",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Wargnies-le-Grand"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Wargnies-le-Petit",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Wargnies-le-Petit"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Wittelsheim",
@@ -24661,6 +25695,12 @@
       "id": "junker_app"
     },
     {
+      "title": "CoABSeR",
+      "module": "coabser_it",
+      "default_params": {},
+      "id": "coabser_it"
+    },
+    {
       "title": "Cogliate",
       "module": "siunet_it",
       "default_params": {
@@ -30183,6 +31223,12 @@
       "id": "aucklandcouncil_govt_nz"
     },
     {
+      "title": "Carterton District Council",
+      "module": "cdc_govt_nz",
+      "default_params": {},
+      "id": "cdc_govt_nz"
+    },
+    {
       "title": "Central Otago District Council",
       "module": "codc_govt_nz",
       "default_params": {},
@@ -31826,6 +32872,12 @@
         "town": "Prosz\u00f3wki"
       },
       "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "PROWOD",
+      "module": "prowod_pl",
+      "default_params": {},
+      "id": "prowod_pl"
     },
     {
       "title": "Przedsi\u0119biorstwo Gospodarki Komunalnej w Wo\u0142owie Sp. z o.o.",
@@ -34774,6 +35826,12 @@
       "id": "castlepoint_gov_uk"
     },
     {
+      "title": "Causeway Coast and Glens Borough Council",
+      "module": "causewaycoastandglens_gov_uk",
+      "default_params": {},
+      "id": "causewaycoastandglens_gov_uk"
+    },
+    {
       "title": "Central Bedfordshire Council",
       "module": "centralbedfordshire_gov_uk",
       "default_params": {},
@@ -37045,6 +38103,12 @@
       "id": "kansas_city_mo_us"
     },
     {
+      "title": "Lakeshore Recycling Systems (LRS)",
+      "module": "lrsrecycles_com",
+      "default_params": {},
+      "id": "lrsrecycles_com"
+    },
+    {
       "title": "Lincoln, CA",
       "module": "lincoln_ca_us",
       "default_params": {},
@@ -37064,6 +38128,12 @@
       "module": "marysville_wa_us",
       "default_params": {},
       "id": "marysville_wa_us"
+    },
+    {
+      "title": "McNamara Waste Services",
+      "module": "mcwaste_com",
+      "default_params": {},
+      "id": "mcwaste_com"
     },
     {
       "title": "Miami-Dade County",
