@@ -36,4 +36,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Enter your municipality ('Miasto Kraśnik', 'Gmina Kraśnik', 'Dzierzkowice', 'Gościeradów', 'Trzydnik Duży' or 'Wilkołaz') and your street or village as printed in the schedule PDF linked on https://www.ekolandpolska.com.pl/dla-mieszkancow/odbior-odpadow-gminy (e.g. 'Lubelska' or 'Lasy'). Accents and case are ignored. Only detached houses (zabudowa jednorodzinna) are supported.
+Enter your municipality ('Miasto Kraśnik', 'Gmina Kraśnik', 'Dzierzkowice', 'Gościeradów', 'Trzydnik Duży', 'Wilkołaz', 'Strzyżewice' or 'Urzędów') and your street or village as printed in the schedule PDF linked on https://www.ekolandpolska.com.pl/dla-mieszkancow/odbior-odpadow-gminy (e.g. 'Lubelska' or 'Lasy'). Accents and case are ignored. Only detached houses (zabudowa jednorodzinna) are supported.

@@ -9206,12 +9206,15 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "customer": "Stranka",
+          "customer": "ID storitve",
           "housenumber": "Hišna številka",
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "housenumber": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_awido_de": {
@@ -9220,11 +9223,15 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "customer": "Stranka",
+          "customer": "ID storitve",
           "housenumber": "Hišna številka",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "housenumber": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_abfall_io": {
         "title": "Configure Source",
@@ -11538,13 +11545,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "nummer": "Nummer",
+          "nummer": "Hišna številka",
           "ort": "Mesto",
-          "stadtteil": "Mestna četrt",
+          "stadtteil": "Naselje",
           "strasse": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "nummer": "Vaša hišna številka.",
+          "ort": "Vaše mesto ali kraj.",
+          "stadtteil": "Vaše naselje ali del občine.",
+          "strasse": "Ime vaše ulice."
         }
       },
       "reconfigure_awb_bad_kreuznach_de": {
@@ -11552,12 +11563,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "nummer": "Nummer",
+          "nummer": "Hišna številka",
           "ort": "Mesto",
-          "stadtteil": "Mestna četrt",
+          "stadtteil": "Naselje",
           "strasse": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "nummer": "Vaša hišna številka.",
+          "ort": "Vaše mesto ali kraj.",
+          "stadtteil": "Vaše naselje ali del občine.",
+          "strasse": "Ime vaše ulice."
+        }
       },
       "args_awb_bir_de": {
         "title": "Configure Source",
@@ -18867,6 +18883,28 @@
           "street": "Ime vaše ulice."
         }
       },
+      "args_etraspa_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Občina",
+          "zone": "Cona"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_etraspa_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Občina",
+          "zone": "Cona"
+        },
+        "data_description": {}
+      },
       "args_cidiu_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -19003,46 +19041,6 @@
           "verify_ssl": "Preveri SSL",
           "version": "Verzija",
           "year_field": "Year Field"
-        },
-        "data_description": {}
-      },
-      "args_etraspa_it": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "zone": "Cona"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_etraspa_it": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "zone": "Cona"
-        },
-        "data_description": {}
-      },
-      "args_etraspa_bassano_it": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "zone": "Cona"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_etraspa_bassano_it": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "zone": "Cona"
         },
         "data_description": {}
       },

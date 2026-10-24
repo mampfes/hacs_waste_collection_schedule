@@ -9213,12 +9213,15 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "customer": "Customer",
-          "housenumber": "Housenumber",
+          "customer": "Palvelun tunnus",
+          "housenumber": "Talon numero",
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "housenumber": "Talon numero.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_awido_de": {
@@ -9227,11 +9230,15 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "customer": "Customer",
-          "housenumber": "Housenumber",
+          "customer": "Palvelun tunnus",
+          "housenumber": "Talon numero",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "housenumber": "Talon numero.",
+          "street": "Kadun nimi."
+        }
       },
       "args_abfall_io": {
         "title": "Määritä lähde",
@@ -11545,13 +11552,17 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "nummer": "Nummer",
-          "ort": "Ort",
-          "stadtteil": "Stadtteil",
-          "strasse": "Strasse"
+          "nummer": "Talon numero",
+          "ort": "Kaupunki",
+          "stadtteil": "Kaupunginosa",
+          "strasse": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "nummer": "Talon numero.",
+          "ort": "Kaupunkisi tai paikkakuntasi.",
+          "stadtteil": "Kaupunginosasi tai kunnan osa.",
+          "strasse": "Kadun nimi."
         }
       },
       "reconfigure_awb_bad_kreuznach_de": {
@@ -11559,12 +11570,17 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "nummer": "Nummer",
-          "ort": "Ort",
-          "stadtteil": "Stadtteil",
-          "strasse": "Strasse"
+          "nummer": "Talon numero",
+          "ort": "Kaupunki",
+          "stadtteil": "Kaupunginosa",
+          "strasse": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "nummer": "Talon numero.",
+          "ort": "Kaupunkisi tai paikkakuntasi.",
+          "stadtteil": "Kaupunginosasi tai kunnan osa.",
+          "strasse": "Kadun nimi."
+        }
       },
       "args_awb_bir_de": {
         "title": "Määritä lähde",
@@ -18874,6 +18890,28 @@
           "street": "Kadun nimi."
         }
       },
+      "args_etraspa_it": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Kunta",
+          "zone": "Vyöhyke"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_etraspa_it": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Kunta",
+          "zone": "Vyöhyke"
+        },
+        "data_description": {}
+      },
       "args_cidiu_it": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -19010,46 +19048,6 @@
           "verify_ssl": "Verify Ssl",
           "version": "Version",
           "year_field": "Year Field"
-        },
-        "data_description": {}
-      },
-      "args_etraspa_it": {
-        "title": "Määritä lähde",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "zone": "Vyöhyke"
-        },
-        "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
-        }
-      },
-      "reconfigure_etraspa_it": {
-        "title": "Määritä lähde uudelleen",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "zone": "Vyöhyke"
-        },
-        "data_description": {}
-      },
-      "args_etraspa_bassano_it": {
-        "title": "Määritä lähde",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "zone": "Vyöhyke"
-        },
-        "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
-        }
-      },
-      "reconfigure_etraspa_bassano_it": {
-        "title": "Määritä lähde uudelleen",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "zone": "Vyöhyke"
         },
         "data_description": {}
       },
