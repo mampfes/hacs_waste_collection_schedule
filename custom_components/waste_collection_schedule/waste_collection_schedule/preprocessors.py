@@ -21,6 +21,7 @@ import calendar
 import datetime
 import itertools
 import re
+import unicodedata
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Literal, NamedTuple, Protocol, TypeVar
@@ -2317,6 +2318,237 @@ class TextDatedBlocks(Preprocessor[str, "tuple[datetime.date, str]"]):
             if match:
                 return int(match.group(1))
         return datetime.date.today().year
+
+
+_TNB_DATE = re.compile(r"(?<![\d.])(\d{1,2})\.(\d{1,2})(?:\.(20\d{2}))?(?![\d])")
+_TNB_NUMBERS = re.compile(r"[ \t:]*(\d+[a-z]?(?:\s*,\s*\d+[a-z]?)*)")
+
+
+def _fold_text(text: str) -> str:
+    """Casefold and drop accents, keeping punctuation and line breaks."""
+    text = unicodedata.normalize("NFKD", text.replace("ł", "l").replace("Ł", "L"))
+    text = "".join(char for char in text if not unicodedata.combining(char)).casefold()
+    # A Polish ordinal: "1-go Maja" is "1 Maja".
+    return re.sub(r"(?<=\d)-?go\b", "", text)
+
+
+def _name_word(word: str) -> str:
+    """A first name, also matching its initial ("J." for "Józefa")."""
+    if len(word) == 1:
+        return re.escape(word) + r"\w*"
+    return f"(?:{re.escape(word)}|{re.escape(word[0])}(?=\\.))"
+
+
+@dataclass
+class _NamedBlock:
+    keys: tuple[str, ...]
+    names: list[str] = field(default_factory=list)
+    dates: list[tuple[int, int, int | None]] = field(default_factory=list)
+    weekdays: set[int] = field(default_factory=set)
+
+
+class TextNamedBlocks(Preprocessor[str, "tuple[datetime.date, str]"]):
+    """Read a plain-text schedule of "these streets (or villages): these dates".
+
+    For the municipal PDF that lists, per waste fraction, blocks of place
+    names (comma separated, or one per line) each followed by its collection
+    dates ("STYCZEŃ 02.01., 16.01.", "16.03.2026") or by a weekday
+    ("PONIEDZIAŁEK", collected every week)::
+
+        parse = parsers.PdfTextParser(min_chars=500)
+        preprocess = preprocessors.TextNamedBlocks(
+            sections={r"ODPADY ZMIESZANE": "Mixed", r"WIELKOGABARYTOWYCH": "Bulky"},
+            name="street",
+            holidays=lambda year: holidays.country_holidays("PL", years=year),
+        )
+
+    ``sections`` maps a heading regex to the key (or keys) of the rows the text
+    after it yields, up to the next heading; text before the first heading is
+    ignored, and a heading found inside a longer one already matched there is
+    not a heading of its own. A block is the run of name lines up to its
+    schedule lines; a line ending in a weekday carries both. A block whose
+    dates pick up the months where the block before it stopped is that block's
+    table row continued on the next page, and is read as one.
+
+    The user's name matches a whole entry of a block, case and accents
+    ignored. An entry followed by house numbers ("LIPOWA: 1, 5, 7", "SŁUBICKA
+    60") matches only an address whose ``number`` param is one of them.
+
+    Dates without a year take the first ``20xx`` in the document (or
+    ``year_pattern``'s first group). A weekday yields that weekday of every
+    week of that year; ``holidays`` (``callable(year) -> dates``) moves one
+    falling on a holiday to the next working day.
+
+    Args:
+        sections: heading regex (case-insensitive) -> key or keys.
+        name: the source param holding the street or place name, or a
+            ``callable(**params) -> str``.
+        number: the source param holding the house number, or a callable.
+        year_pattern: regex whose first group is the schedule's year.
+        holidays: ``callable(year) -> container of dates`` for weekday blocks.
+    """
+
+    def __init__(
+        self,
+        *,
+        sections: Mapping[str, "str | Sequence[str]"],
+        name: "str | Callable[..., str]",
+        number: "str | Callable[..., str | None] | None" = None,
+        year_pattern: "str | None" = None,
+        holidays: "Callable[[int], Any] | None" = None,
+    ):
+        self._sections = [
+            (
+                re.compile(pattern, re.IGNORECASE),
+                (keys,) if isinstance(keys, str) else tuple(keys),
+            )
+            for pattern, keys in sections.items()
+        ]
+        self._name = name
+        self._number = number
+        self._year_re = (
+            re.compile(year_pattern)
+            if year_pattern
+            else re.compile(r"(?<!\d)(20\d{2})(?!\d)")
+        )
+        self._holidays = holidays
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        text = str(records)
+        params = source.params if source else {}
+        name = self._param(self._name, params)
+        number = self._param(self._number, params) if self._number else None
+        match = self._year_re.search(text)
+        year = int(match.group(1)) if match else datetime.date.today().year
+
+        rows: set[tuple[datetime.date, str]] = set()
+        for block in self._blocks(text):
+            if not name or not self._lists(block, name, number):
+                continue
+            for day, month, block_year in block.dates:
+                try:
+                    collection = datetime.date(block_year or year, month, day)
+                except ValueError:
+                    continue
+                rows.update((collection, key) for key in block.keys)
+            for weekday in block.weekdays:
+                for collection in self._weekly(year, weekday):
+                    rows.update((collection, key) for key in block.keys)
+        return sorted(rows)
+
+    @staticmethod
+    def _param(value: Any, params: Mapping[str, Any]) -> "str | None":
+        result = value(**params) if callable(value) else params.get(value)
+        return str(result).strip() if result not in (None, "") else None
+
+    def _headings(self, text: str) -> list[tuple[int, int, tuple[str, ...]]]:
+        found = sorted(
+            (m.start(), -m.end(), keys)
+            for pattern, keys in self._sections
+            for m in pattern.finditer(text)
+        )
+        headings: list[tuple[int, int, tuple[str, ...]]] = []
+        for start, neg_end, keys in found:
+            if headings and start < headings[-1][1]:
+                continue
+            headings.append((start, -neg_end, keys))
+        return headings
+
+    def _blocks(self, text: str) -> list[_NamedBlock]:
+        headings = self._headings(text)
+        blocks: list[_NamedBlock] = []
+        for index, (_, end, keys) in enumerate(headings):
+            stop = headings[index + 1][0] if index + 1 < len(headings) else len(text)
+            section: list[_NamedBlock] = []
+            block = _NamedBlock(keys)
+            for line in text[end:stop].split("\n"):
+                dates = [
+                    (int(d), int(m), int(y) if y else None)
+                    for d, m, y in _TNB_DATE.findall(line)
+                ]
+                words = line.split()
+                weekday = recurrence.weekday(words[-1].strip(".,")) if words else None
+                schedule_only = bool(words) and all(
+                    recurrence.month(w.strip(".,")) or _TNB_DATE.fullmatch(w.strip(","))
+                    for w in words
+                )
+                if dates or weekday is not None or schedule_only:
+                    if weekday is not None and len(words) > 1:
+                        # "BABROSTY, ŁUPKI. CZWARTEK": a block on one line.
+                        if block.dates or block.weekdays:
+                            section.append(block)
+                            block = _NamedBlock(keys)
+                        block.names.append(" ".join(words[:-1]))
+                    block.dates.extend(dates)
+                    if weekday is not None:
+                        block.weekdays.add(weekday)
+                elif line.strip():
+                    if block.dates or block.weekdays:
+                        section.append(block)
+                        block = _NamedBlock(keys)
+                    block.names.append(line)
+            section.append(block)
+            blocks.extend(self._joined(section))
+        return blocks
+
+    @staticmethod
+    def _joined(section: list[_NamedBlock]) -> list[_NamedBlock]:
+        """Join a table row split over two pages back into one block."""
+        joined: list[_NamedBlock] = []
+        for block in section:
+            if not (block.dates or block.weekdays):
+                continue
+            previous = joined[-1] if joined else None
+            if (
+                previous is not None
+                and previous.dates
+                and block.dates
+                and not previous.weekdays
+                and block.dates[0][1] > max(m for _, m, _ in previous.dates)
+            ):
+                previous.names.extend([";", *block.names])
+                previous.dates.extend(block.dates)
+                continue
+            joined.append(block)
+        return joined
+
+    @staticmethod
+    def _lists(block: _NamedBlock, name: str, number: "str | None") -> bool:
+        """Whether the block lists the name (at that house number)."""
+        words = re.findall(r"\w+", _fold_text(name))
+        if not words:
+            return False
+        names = _fold_text("\n".join(block.names))
+        # Entries one per line ("LIPOWA", "SŁUBICKA 60") rather than in a
+        # comma-separated list wrapped across lines.
+        per_line = not re.search(r",\s*[^\W\d_]", names)
+        after = r"[ \t]*(?:$|[,;:.(\n]|\d)" if per_line else r"\s*(?:$|[,;:.(]|\d)"
+        pattern = re.compile(
+            r"(?:^|[,;:\n]|\.\s)\s*"
+            + r"[\s.\-]+".join([*map(_name_word, words[:-1]), re.escape(words[-1])])
+            + f"(?={after})"
+        )
+        for match in pattern.finditer(names):
+            listed = _TNB_NUMBERS.match(names, match.end())
+            if listed is None:
+                return True
+            numbers = {n.strip() for n in listed.group(1).split(",")}
+            if number is not None and _fold_text(number).replace(" ", "") in numbers:
+                return True
+        return False
+
+    def _weekly(self, year: int, weekday: int) -> Iterable[datetime.date]:
+        holidays = self._holidays(year) if self._holidays else ()
+        day = datetime.date(year, 1, 1)
+        day += datetime.timedelta(days=(weekday - day.weekday()) % 7)
+        while day.year == year:
+            collection = day
+            while collection in holidays or collection.weekday() > 4:
+                collection += datetime.timedelta(days=1)
+            yield collection
+            day += datetime.timedelta(days=7)
 
 
 # A calendar grid's own furniture, in any language: a row of nothing but day

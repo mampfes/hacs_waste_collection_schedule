@@ -560,6 +560,39 @@ def test_ekoland_asks_again_after_the_one_moment_interstitial(
     assert slept == [5] * (attempts - 1)
 
 
+@pytest.mark.parametrize(
+    ("args", "argument"),
+    [
+        ({"city": "Pisz"}, "street"),
+        ({"city": "Pisz", "street": "  "}, "street"),
+        (
+            {"city": "Pisz", "street": "Lipowa", "building": "wielorodzinna"},
+            "house_number",
+        ),
+    ],
+)
+def test_pisz_requires_the_address_fields_for_the_selected_building(args, argument):
+    from waste_collection_schedule.exceptions import SourceArgumentRequired
+    from waste_collection_schedule.source.pisz_pl import Source
+
+    source = Source(**args)
+    with pytest.raises(SourceArgumentRequired, match=argument):
+        list(source.preprocess("", source))
+
+
+def test_pisz_missing_flat_number_must_not_return_a_partial_calendar():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.exceptions import SourceArgumentRequired
+    from waste_collection_schedule.source.pisz_pl import Source
+
+    case = "Pisz, Lipowa 12 (flats)"
+    args = {k: v for k, v in Source.TEST_CASES[case].items() if k != "house_number"}
+    with cassette.replaying(fixture_path("pisz_pl", case)):
+        with pytest.raises(SourceArgumentRequired, match="house_number"):
+            Source(**args).fetch()
+
+
 class TestPdfRoundMonthGrid:
     """One row per round, one column per month, blocks per area."""
 
