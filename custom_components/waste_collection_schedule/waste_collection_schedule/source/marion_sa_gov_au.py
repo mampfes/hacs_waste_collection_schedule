@@ -51,8 +51,10 @@ def _schedule(
         source_name=response_shape.source_name(source),
         detail=f"only {len(votes)} weeks found in the calendar",
     )
-    first = min(day for day, _ in rows)
-    last = max(day for day, _ in rows)
+    # Holiday cells show the shifted dates, so the first painted day can be
+    # January 2. Bound the normal collection dates by the calendar year.
+    first = min(day for day, _ in rows).replace(month=1, day=1)
+    last = max(day for day, _ in rows).replace(month=12, day=31)
     for monday, count in sorted(votes.items()):
         day = monday + datetime.timedelta(days=weekday)
         if not first <= day <= last:

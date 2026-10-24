@@ -180,6 +180,28 @@ class TestPdfMonthRows:
             list(pre([self.rows()[0], self.rows()[3]], None))  # no headings
 
 
+def test_marion_new_year_thursday_is_collected_on_january_second():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.marion_sa_gov_au import (
+        ORGANICS,
+        WASTE,
+        Source,
+    )
+
+    case = "Marion (A, Thursday)"
+    source = Source(**Source.TEST_CASES[case])
+    with cassette.replaying(fixture_path("marion_sa_gov_au", case)):
+        rows = list(
+            source.preprocess(source.parse(source.retrieve(source), source), source)
+        )
+
+    assert (D(2026, 1, 2), WASTE) in rows
+    assert (D(2026, 1, 2), ORGANICS) in rows
+    assert sum(label == WASTE for _, label in rows) == 53
+    assert not any(day == D(2026, 1, 1) for day, _ in rows)
+
+
 class TestTextGroupedDatesEnd:
     TEXT = (
         "Wola 2026 Odpady segregowane 5.01 3.02 Popiół 16.01 "
