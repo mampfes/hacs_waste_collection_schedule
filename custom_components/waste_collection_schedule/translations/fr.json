@@ -11576,13 +11576,17 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "nummer": "Nummer",
+          "nummer": "Numéro",
           "ort": "Ville",
-          "stadtteil": "District",
+          "stadtteil": "Quartier",
           "strasse": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "nummer": "Votre numéro de rue.",
+          "ort": "Votre ville ou village.",
+          "stadtteil": "Votre quartier ou partie de la commune.",
+          "strasse": "Le nom de votre rue."
         }
       },
       "reconfigure_awb_bad_kreuznach_de": {
@@ -11590,12 +11594,17 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "nummer": "Nummer",
+          "nummer": "Numéro",
           "ort": "Ville",
-          "stadtteil": "District",
+          "stadtteil": "Quartier",
           "strasse": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "nummer": "Votre numéro de rue.",
+          "ort": "Votre ville ou village.",
+          "stadtteil": "Votre quartier ou partie de la commune.",
+          "strasse": "Le nom de votre rue."
+        }
       },
       "args_awb_bir_de": {
         "title": "Configurer la Source",

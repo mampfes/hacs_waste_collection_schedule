@@ -11552,13 +11552,17 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "nummer": "Nummer",
-          "ort": "Ort",
-          "stadtteil": "Stadtteil",
-          "strasse": "Strasse"
+          "nummer": "Talon numero",
+          "ort": "Kaupunki",
+          "stadtteil": "Kaupunginosa",
+          "strasse": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "nummer": "Talon numero.",
+          "ort": "Kaupunkisi tai paikkakuntasi.",
+          "stadtteil": "Kaupunginosasi tai kunnan osa.",
+          "strasse": "Kadun nimi."
         }
       },
       "reconfigure_awb_bad_kreuznach_de": {
@@ -11566,12 +11570,17 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "nummer": "Nummer",
-          "ort": "Ort",
-          "stadtteil": "Stadtteil",
-          "strasse": "Strasse"
+          "nummer": "Talon numero",
+          "ort": "Kaupunki",
+          "stadtteil": "Kaupunginosa",
+          "strasse": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "nummer": "Talon numero.",
+          "ort": "Kaupunkisi tai paikkakuntasi.",
+          "stadtteil": "Kaupunginosasi tai kunnan osa.",
+          "strasse": "Kadun nimi."
+        }
       },
       "args_awb_bir_de": {
         "title": "Määritä lähde",
