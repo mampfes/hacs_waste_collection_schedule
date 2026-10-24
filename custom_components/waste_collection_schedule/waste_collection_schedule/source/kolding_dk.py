@@ -8,7 +8,7 @@ DESCRIPTION = "Source for Kolding Kommune waste collection schedule"
 URL = "https://kolding.dk"
 TEST_CASES = {
     "TestCase1": {
-        "id": "00007b8d-0002-0001-4164-647265737320",
+        "id": "00007b8c-0002-0001-4164-647265737320",
     },
 }
 
@@ -23,7 +23,7 @@ ICON_MAP = {
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Go to https://kolding.infovision.dk/public/selectaddress and search for your address. Your ID is in the URL, e.g. `00007b8d-0002-0001-4164-647265737320`.",
+    "en": "Go to https://kolding.infovision.dk/public/selectaddress and search for your address. Your ID is in the URL, e.g. `00007b8c-0002-0001-4164-647265737320`.",
 }
 
 
@@ -41,15 +41,32 @@ class Source:
 
         response = requests.get(self._api_url, headers=headers)
         response.raise_for_status()
-        containers = response.json()
+        data = response.json()
+
+        # The API now returns an object with chain lists (chainDetailsOwn,
+        # chainDetailsZero, chainDetailsUse), each holding "containerDetails".
+        # Older responses were a flat list of containers.
+        containers = []
+        if isinstance(data, dict):
+            for chains in data.values():
+                if not isinstance(chains, list):
+                    continue
+                for chain in chains:
+                    containers.extend(chain.get("containerDetails") or [])
+        else:
+            containers = data
 
         entries = []
 
         for container in containers:
-            name = container.get("containerType", {}).get(
+            name = (container.get("containerType") or {}).get(
                 "description", "Ukendt beholder"
             )
-            collect_dates = container.get("collectDates", [])
+            collect_dates = container.get("collectDates") or [
+                item["collectDate"]
+                for item in container.get("collectCalendar") or []
+                if item.get("collectDate")
+            ]
 
             # Renodjurs-style matching logic - most specific first
             lower_name = name.lower()
