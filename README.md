@@ -3141,6 +3141,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Basiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Basiano](/doc/source/siunet_it.md) / siunet.it
 - [Basiglio](/doc/source/siunet_it.md) / siunet.it
+- [Bassano del Grappa](/doc/source/etraspa_it.md) / comune.bassano.vi.it
 - [Bassano Romano](/doc/source/junker_app.md) / junker.app
 - [Belfiore](/doc/source/siunet_it.md) / siunet.it
 - [Belforte del Chienti](/doc/source/junker_app.md) / junker.app
@@ -3407,7 +3408,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Erve](/doc/source/siunet_it.md) / siunet.it
 - [Esino Lario](/doc/source/siunet_it.md) / siunet.it
 - [ETRA S.p.A.](/doc/source/etraspa_it.md) / etraspa.it
-- [ETRA S.p.A. - Bassano del Grappa](/doc/source/etraspa_bassano_it.md) / etraspa.it
 - [Faleria](/doc/source/junker_app.md) / junker.app
 - [Fara Novarese](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Fasano](/doc/source/siunet_it.md) / siunet.it
@@ -3818,6 +3818,7 @@ If you already have enough information for your municipality/region, you are ver
 - [San Giovanni Teatino](/doc/source/junker_app.md) / junker.app
 - [San Marcello Piteglio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [San Martino dall'Argine](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/san-martino-dall-argine
+- [San Martino di Lupari](/doc/source/etraspa_it.md) / comune.sanmartinodilupari.pd.it
 - [San Maurizio d'Opaglio](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [San Pietro Di Morubio](/doc/source/siunet_it.md) / siunet.it
 - [San Zenone Al Lambro](/doc/source/cem_ambiente_it.md) / cemambiente.it

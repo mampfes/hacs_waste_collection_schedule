@@ -23267,6 +23267,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Bassano del Grappa",
+      "module": "etraspa_it",
+      "default_params": {
+        "municipality": "Bassano del Grappa"
+      },
+      "id": "etraspa_it"
+    },
+    {
       "title": "Bassano Romano",
       "module": "junker_app",
       "default_params": {},
@@ -25219,12 +25227,6 @@
       "module": "etraspa_it",
       "default_params": {},
       "id": "etraspa_it"
-    },
-    {
-      "title": "ETRA S.p.A. - Bassano del Grappa",
-      "module": "etraspa_bassano_it",
-      "default_params": {},
-      "id": "etraspa_bassano_it"
     },
     {
       "title": "Faleria",
@@ -28165,6 +28167,14 @@
         "comune": "San Martino dall'Argine"
       },
       "id": "mantovaambiente_it"
+    },
+    {
+      "title": "San Martino di Lupari",
+      "module": "etraspa_it",
+      "default_params": {
+        "municipality": "San Martino di Lupari"
+      },
+      "id": "etraspa_it"
     },
     {
       "title": "San Maurizio d'Opaglio",

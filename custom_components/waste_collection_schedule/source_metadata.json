@@ -4177,6 +4177,14 @@
     },
     "urls": {}
   },
+  "etraspa_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/etraspa_it.md",
+    "howto": {
+      "en": "Choose your municipality and its collection zone as printed on the ETRA calendar: A or B in San Martino di Lupari, C or D in Bassano del Grappa.",
+      "it": "Scegli il comune e la zona di raccolta indicata sul calendario ETRA: A o B a San Martino di Lupari, C o D a Bassano del Grappa."
+    },
+    "urls": {}
+  },
   "cidiu_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cidiu_it.md",
     "howto": {
@@ -4205,16 +4213,6 @@
     "howto": {
       "en": "Use the Google Calendar ICS feed URL below. This calendar covers the Lanciano area served by Ecolan.\n"
     },
-    "urls": {}
-  },
-  "etraspa_it": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/etraspa_it.md",
-    "howto": {},
-    "urls": {}
-  },
-  "etraspa_bassano_it": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/etraspa_bassano_it.md",
-    "howto": {},
     "urls": {}
   },
   "gruppoveritas_it": {
@@ -4871,7 +4869,7 @@
   "ekolandpolska_com_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ekolandpolska_com_pl.md",
     "howto": {
-      "en": "Enter your municipality ('Miasto Kraśnik', 'Gmina Kraśnik', 'Dzierzkowice', 'Gościeradów', 'Trzydnik Duży' or 'Wilkołaz') and your street or village as printed in the schedule PDF linked on https://www.ekolandpolska.com.pl/dla-mieszkancow/odbior-odpadow-gminy (e.g. 'Lubelska' or 'Lasy'). Accents and case are ignored. Only detached houses (zabudowa jednorodzinna) are supported."
+      "en": "Enter your municipality ('Miasto Kraśnik', 'Gmina Kraśnik', 'Dzierzkowice', 'Gościeradów', 'Trzydnik Duży', 'Wilkołaz', 'Strzyżewice' or 'Urzędów') and your street or village as printed in the schedule PDF linked on https://www.ekolandpolska.com.pl/dla-mieszkancow/odbior-odpadow-gminy (e.g. 'Lubelska' or 'Lasy'). Accents and case are ignored. Only detached houses (zabudowa jednorodzinna) are supported."
     },
     "urls": {}
   },
