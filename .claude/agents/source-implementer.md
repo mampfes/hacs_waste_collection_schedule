@@ -22,7 +22,7 @@ A recommendation from `source-investigator`: provider, country code, module name
 ## Components at a glance
 
 - **Retrievers** (`retrievers`): none declared = default curl_cffi GET on `API_URL`; `HttpGetRetriever`/`HttpPostRetriever`, `TwoStepRetriever` (lookup then schedule), `AthosWasteManagementRetriever`, `PollingIcsRetriever`, `PdfLinkRetriever`; `Legacy*` only when curl_cffi is the documented cause of a failure.
-- **Parsers** (`parsers`): `JsonParser`, `HtmlParser`, `IcsParser`/`IcsEventsParser`, `TextParser`, `XmlParser`, `CsvParser`, `PdfTextParser`, `PdfTableParser`; colour raster PDF via `service.PdfImageCalendar`.
+- **Parsers** (`parsers`): `JsonParser`, `HtmlParser`, `IcsParser`/`IcsEventsParser`, `TextParser`, `XmlParser`, `CsvParser`, `XlsxParser`, `PdfTextParser`, `PdfTableParser`; colour raster PDF via `service.PdfImageCalendar`.
 - **Preprocessors**: default, `RecurrenceExpander` + `Schedule`, `Compose`, `HolidayShift`.
 - **Transformers**: `JsonTransformer`, `KeyValueTransformer`, `ICSTransformer`, `HtmlTransformer` (optional `type_value_map`, `parse_date`), or `classify(self, record)`. If `preprocess` already resolved date and type, yield `(date, key)` and use `ICSTransformer`.
 - **Service platforms** (`service/`): check the guide's table first; a provider on one is a declarative source.

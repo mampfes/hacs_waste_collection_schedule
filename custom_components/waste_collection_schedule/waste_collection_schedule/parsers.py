@@ -2643,3 +2643,212 @@ class CsvParser(Parser["list[dict[str, str]]"]):
                 raw=response.text[:500],
             )
         return rows
+
+
+# Built-in SpreadsheetML number formats that display a date (ECMA-376 18.8.30,
+# plus the East Asian date ids Excel also ships).
+_XLSX_BUILTIN_DATE_FORMATS = frozenset(
+    {*range(14, 18), 22, *range(27, 37), *range(50, 59)}
+)
+_XLSX_NS = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+_XLSX_REL_NS = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
+
+
+def _xlsx_is_date_format(code: str) -> bool:
+    """Whether a custom number format code renders a date.
+
+    Quoted literals, ``\\``-escaped characters and ``[...]`` sections (locale,
+    colour, elapsed-time) are removed first, so ``[$-C07]ddd\\, dd/mm`` counts
+    and ``"days" 0`` does not.
+    """
+    stripped = re.sub(r'"[^"]*"|\\.|\[[^\]]*\]', "", code.split(";")[0])
+    return bool(re.search(r"[dy]|m(?!m?:)", stripped, re.IGNORECASE)) and not (
+        re.fullmatch(r"[hms:.\s0#,]*", stripped, re.IGNORECASE)
+    )
+
+
+def _xlsx_column_index(ref: str) -> int:
+    """Zero-based column of an ``A1``-style cell reference (``"C7"`` -> 2)."""
+    index = 0
+    for char in re.match(r"[A-Z]+", ref.upper()).group(0):  # type: ignore[union-attr]
+        index = index * 26 + ord(char) - 64
+    return index - 1
+
+
+class XlsxParser(Parser["list[list[Any]]"]):
+    """Read one worksheet of an XLSX workbook into a grid of cell values.
+
+    For a provider that publishes its calendar as an Excel file. Needs no
+    third-party library: an ``.xlsx`` is a zip of XML parts, read here with the
+    standard library and ``lxml``. Returns the sheet as a list of rows, row 1 of
+    the sheet at index 0, each row a list of cell values padded with ``None`` to
+    the widest row, so ``grid[1][0]`` is cell ``A2``::
+
+        parse = parsers.XlsxParser()
+
+    A cell value is a ``str`` for text (shared or inline strings, formula
+    results typed as strings), a ``bool`` for a boolean, and a number otherwise
+    (``int`` when integral). With ``dates=True`` (default) a number whose cell
+    style is a date format becomes a ``datetime.date`` (``datetime.datetime``
+    when it carries a time of day), honouring the workbook's 1904 date system;
+    pass ``dates=False`` to get the raw serial numbers. Merged cells keep their
+    value in the top-left cell only, as in the file.
+
+    Args:
+        sheet: the worksheet to read, by zero-based position in the workbook
+            or by name. Default: the first sheet.
+        max_bytes: refuse a download larger than this (default 5 MB), so a
+            changed link that now serves something else fails loudly.
+    """
+
+    def __init__(
+        self,
+        sheet: "int | str" = 0,
+        *,
+        dates: bool = True,
+        max_bytes: int = 5 * 1024 * 1024,
+    ):
+        self.sheet = sheet
+        self.dates = dates
+        self.max_bytes = max_bytes
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[list[Any]]":
+        import io
+        import posixpath
+        import zipfile
+
+        import lxml.etree as ET
+
+        content = response.content
+        name = response_shape.source_name(source)
+        response_shape.expect(
+            len(content) <= self.max_bytes,
+            source_name=name,
+            detail=f"XLSX larger than {self.max_bytes} bytes",
+        )
+        try:
+            archive = zipfile.ZipFile(io.BytesIO(content))
+        except zipfile.BadZipFile:
+            response_shape.expect(
+                False,
+                source_name=name,
+                detail="response is not an XLSX (zip) file",
+                raw=content[:200].decode("utf-8", errors="replace"),
+            )
+            raise  # unreachable: expect(False) raises
+
+        xml_parser = ET.XMLParser(resolve_entities=False, no_network=True)
+
+        def read(part: str) -> "Any | None":
+            try:
+                return ET.fromstring(archive.read(part), parser=xml_parser)
+            except KeyError:
+                return None
+
+        with archive:
+            workbook = read("xl/workbook.xml")
+            rels = read("xl/_rels/workbook.xml.rels")
+            response_shape.expect(
+                workbook is not None and rels is not None,
+                source_name=name,
+                detail="XLSX has no workbook part",
+            )
+            targets = {
+                rel.get("Id"): rel.get("Target", "")
+                for rel in rels.iter("{*}Relationship")  # type: ignore[union-attr]
+            }
+            sheets = [
+                (s.get("name"), targets.get(s.get(f"{_XLSX_REL_NS}id")))
+                for s in workbook.iter(f"{_XLSX_NS}sheet")  # type: ignore[union-attr]
+            ]
+            if isinstance(self.sheet, int):
+                chosen = sheets[self.sheet] if self.sheet < len(sheets) else None
+            else:
+                chosen = next((s for s in sheets if s[0] == self.sheet), None)
+            response_shape.expect(
+                chosen is not None and bool(chosen[1]),
+                source_name=name,
+                detail=f"XLSX has no sheet {self.sheet!r} "
+                f"(sheets: {[s[0] for s in sheets]})",
+            )
+            target = str(chosen[1])  # type: ignore[index]
+            part = (
+                target.lstrip("/")
+                if target.startswith("/")
+                else posixpath.normpath(posixpath.join("xl", target))
+            )
+            worksheet = read(part)
+            strings_xml = read("xl/sharedStrings.xml")
+            styles = read("xl/styles.xml") if self.dates else None
+
+        strings = (
+            [
+                "".join(t.text or "" for t in si.iter(f"{_XLSX_NS}t"))
+                for si in strings_xml.iter(f"{_XLSX_NS}si")
+            ]
+            if strings_xml is not None
+            else []
+        )
+        date_styles: set[int] = set()
+        if styles is not None:
+            custom = {
+                int(fmt.get("numFmtId", "0")): fmt.get("formatCode", "")
+                for fmt in styles.iter(f"{_XLSX_NS}numFmt")
+            }
+            cell_xfs = styles.find(f"{_XLSX_NS}cellXfs")
+            for index, xf in enumerate(
+                cell_xfs.iter(f"{_XLSX_NS}xf") if cell_xfs is not None else []
+            ):
+                fmt_id = int(xf.get("numFmtId", "0"))
+                if fmt_id in _XLSX_BUILTIN_DATE_FORMATS or (
+                    fmt_id in custom and _xlsx_is_date_format(custom[fmt_id])
+                ):
+                    date_styles.add(index)
+        pr = workbook.find(f"{_XLSX_NS}workbookPr")  # type: ignore[union-attr]
+        epoch = (
+            datetime.datetime(1904, 1, 1)
+            if pr is not None and pr.get("date1904") in ("1", "true")
+            else datetime.datetime(1899, 12, 30)
+        )
+
+        cells: dict[int, dict[int, Any]] = {}
+        for row_index, row in enumerate(worksheet.iter(f"{_XLSX_NS}row")):  # type: ignore[union-attr]
+            r = int(row.get("r", row_index + 1)) - 1
+            for col_index, cell in enumerate(row.iter(f"{_XLSX_NS}c")):
+                ref = cell.get("r")
+                c = _xlsx_column_index(ref) if ref else col_index
+                kind = cell.get("t", "n")
+                value_el = cell.find(f"{_XLSX_NS}v")
+                raw = value_el.text if value_el is not None else None
+                value: Any
+                if kind == "inlineStr":
+                    value = "".join(t.text or "" for t in cell.iter(f"{_XLSX_NS}t"))
+                elif raw is None:
+                    continue
+                elif kind == "s":
+                    value = strings[int(raw)]
+                elif kind in ("str", "e"):
+                    value = raw
+                elif kind == "b":
+                    value = raw == "1"
+                else:
+                    number = float(raw)
+                    if int(cell.get("s", "0")) in date_styles:
+                        moment = epoch + datetime.timedelta(days=number)
+                        value = (
+                            moment.date()
+                            if moment.time() == datetime.time()
+                            else moment
+                        )
+                    else:
+                        value = int(number) if number.is_integer() else number
+                cells.setdefault(r, {})[c] = value
+        if not cells:
+            return []
+        width = max(max(row) for row in cells.values()) + 1
+        return [
+            [cells.get(r, {}).get(c) for c in range(width)]
+            for r in range(max(cells) + 1)
+        ]
