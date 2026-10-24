@@ -32470,6 +32470,12 @@
       "id": "avfallsapp_se"
     },
     {
+      "title": "Nordmaling",
+      "module": "vakin_se",
+      "default_params": {},
+      "id": "vakin_se"
+    },
+    {
       "title": "Norrt\u00e4lje Vatten & Avfall",
       "module": "nvaa_se",
       "default_params": {},
@@ -32650,6 +32656,12 @@
       "id": "uddevallaenergi_se"
     },
     {
+      "title": "Ume\u00e5",
+      "module": "vakin_se",
+      "default_params": {},
+      "id": "vakin_se"
+    },
+    {
       "title": "Upplands-Bro",
       "module": "avfallsapp_se",
       "default_params": {
@@ -32694,6 +32706,12 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Vakin",
+      "module": "vakin_se",
+      "default_params": {},
+      "id": "vakin_se"
+    },
+    {
       "title": "Vallentuna",
       "module": "avfallsapp_se",
       "default_params": {
@@ -32706,6 +32724,12 @@
       "module": "vattenmiljoresurs_se",
       "default_params": {},
       "id": "vattenmiljoresurs_se"
+    },
+    {
+      "title": "Vindeln",
+      "module": "vakin_se",
+      "default_params": {},
+      "id": "vakin_se"
     },
     {
       "title": "VIVAB Soph\u00e4mtning",

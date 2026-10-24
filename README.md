@@ -4483,6 +4483,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Motala](/doc/source/avfallsapp_se.md) / motala.se
 - [Mölndal](/doc/source/molndal_se.md) / molndal.se
 - [Nodra (Norrköping)](/doc/source/avfallsapp_se.md) / nodra.se
+- [Nordmaling](/doc/source/vakin_se.md) / vakin.se
 - [Norrtälje Vatten & Avfall](/doc/source/nvaa_se.md) / sjalvservice.nvaa.se
 - [North / Middle Bohuslän - Rambo AB](/doc/source/rambo_se.md) / rambo.se
 - [NSR - Nordvästra Skånes Renhållnings AB](/doc/source/nsr_se.md) / nsr.se
@@ -4510,14 +4511,17 @@ If you already have enough information for your municipality/region, you are ver
 - [Timrå kommun](/doc/source/timra_se.md) / timra.se
 - [Trollhättan Energi](/doc/source/trollhattanenergi_se.md) / trollhattanenergi.se
 - [Uddevalla Energi](/doc/source/uddevallaenergi_se.md) / uddevallaenergi.se/privat/sophamtning.html
+- [Umeå](/doc/source/vakin_se.md) / vakin.se
 - [Upplands-Bro](/doc/source/avfallsapp_se.md) / upplands-bro.se
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
 - [Uppsala Vatten och Avfall AB (Deprecated)](/doc/source/uppsalavatten_se.md) / uppsalavatten.se
 - [VA Syd Sophämntning](/doc/source/vasyd_se.md) / vasyd.se
 - [Vafab Miljö](/doc/source/avfallsapp_se.md) / vafabmiljo.se
 - [Vafab Miljö](/doc/source/edpevent_se.md) / vafabmiljo.se
+- [Vakin](/doc/source/vakin_se.md) / vakin.se
 - [Vallentuna](/doc/source/avfallsapp_se.md) / vallentuna.se
 - [Vatten och Miljöresurs](/doc/source/vattenmiljoresurs_se.md) / vattenmiljoresurs.se
+- [Vindeln](/doc/source/vakin_se.md) / vakin.se
 - [VIVAB Sophämtning](/doc/source/vivab_se.md) / vivab.se
 - [VMAB](/doc/source/vmab_se.md) / vmab.se
 - [Vänersborg](/doc/source/avfallsapp_se.md) / vanersborg.se

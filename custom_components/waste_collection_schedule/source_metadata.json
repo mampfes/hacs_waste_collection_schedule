@@ -5364,6 +5364,13 @@
     },
     "urls": {}
   },
+  "vakin_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vakin_se.md",
+    "howto": {
+      "en": "Enter your street name and house number, followed by the town if needed (e.g. `Kajakvägen 3, Täfteå` or `Storgatan 101, Umeå`), as shown in the address search on the [Vakin waste page](https://www.vakin.se/kundserviceochetjanster/sophamtning/narkommersopbilen.4.6252338c1a0c6bd088ed01f.html)."
+    },
+    "urls": {}
+  },
   "nvaa_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nvaa_se.md",
     "howto": {
