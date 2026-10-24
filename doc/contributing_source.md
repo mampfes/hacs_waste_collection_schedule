@@ -143,7 +143,7 @@ def retrieve(self, source):
 | `PdfTableParser()` | positioned text runs from a PDF, grouped into rows (`PdfRow(page, y, words)`) for a columnar/grid calendar |
 | `XmlParser(namespaces=...)` | parsed XML (ElementTree), namespaces optional |
 | `CsvParser()` | CSV rows (handles a `utf-8-sig` BOM); `CsvParser(columns=[...])` names the columns of an export without a header row |
-| `XlsxParser()` | One worksheet of an Excel `.xlsx` as a grid of cell values (`grid[1][0]` is `A2`), date-formatted cells as `datetime.date`; stdlib zip + lxml, no extra dependency. `XlsxParser(sheet="Name")` picks a sheet, `dates=False` keeps raw serials |
+| `XlsxParser()` | One worksheet of an Excel `.xlsx` as a grid of cell values (`grid[1][0]` is `A2`), date-formatted cells as `datetime.date`; stdlib zip + lxml, no extra dependency. `XlsxParser(sheet="Name")` picks a sheet, `dates=False` keeps raw serials; `XlsxParser().read(response)` (from a service parser) returns `XlsxSheet(name, rows)` when the tab name carries data such as the year, and also takes raw `bytes` |
 
 A parser may also be a method (`def parse(self, response, source)`), for example to detect an error body or to fetch a supplementary page via `source.session`.
 
