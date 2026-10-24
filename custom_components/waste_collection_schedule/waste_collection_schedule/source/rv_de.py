@@ -38,7 +38,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://athos-onlinedienste.rv.de/WasteManagementRavensburgPrivat/WasteManagementServlet"
+API_URL = "http://athos-onlinedienste.rv.de:8080/WasteManagementRavensburgPrivat/WasteManagementServlet"
 
 
 class HiddenInputParser(HTMLParser):
