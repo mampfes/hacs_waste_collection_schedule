@@ -3,10 +3,8 @@ from typing import ClassVar, final
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import city, street
-from waste_collection_schedule.service.NemenkomLt import (
-    NemenkomParser,
-    NemenkomRetriever,
-)
+from waste_collection_schedule.retrievers import PdfLinkRetriever
+from waste_collection_schedule.service.NemenkomLt import PAGE_URL, NemenkomParser
 from waste_collection_schedule.transformers import JsonTransformer
 
 
@@ -28,7 +26,14 @@ class Source(BaseSource):
         street(optional=True),
     )
 
-    retrieve = NemenkomRetriever()
+    # The page links the current XLSX schedule; PdfLinkRetriever fetches any
+    # linked document, not only PDFs.
+    retrieve = PdfLinkRetriever(
+        index_url=PAGE_URL,
+        pattern=r"\.xlsx$",
+        select="first",
+        headers={"user-agent": "Mozilla/5.0"},
+    )
     parse = NemenkomParser()
     transform = JsonTransformer(
         date_key="date",
