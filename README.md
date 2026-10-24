@@ -174,6 +174,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ku-ring-gai Council](/doc/source/impactapps_com_au.md) / krg.nsw.gov.au
 - [Lake Macquarie City Council](/doc/source/lakemac_nsw_gov_au.md) / lakemac.com.au
 - [Lane Cove Council](/doc/source/lanecove_nsw_gov_au.md) / lanecove.nsw.gov.au
+- [Latrobe City Council](/doc/source/latrobe_vic_gov_au.md) / latrobe.vic.gov.au
 - [Launceston City Council](/doc/source/launceston_tas_gov_au.md) / launceston.tas.gov.au
 - [Light Regional Council](/doc/source/app_my_local_services_au.md) / light.sa.gov.au
 - [Lismore City Council](/doc/source/lismore_city_nsw_gov_au.md) / lismore.nsw.gov.au/Households/Waste-and-recycling/Whats-My-Bin-Day1

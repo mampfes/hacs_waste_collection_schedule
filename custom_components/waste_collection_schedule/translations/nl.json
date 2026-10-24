@@ -2168,6 +2168,33 @@
           "address": "Uw volledige adres."
         }
       },
+      "args_latrobe_vic_gov_au": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "suburb": "Plaats"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres.",
+          "suburb": "Uw stad of dorp."
+        }
+      },
+      "reconfigure_latrobe_vic_gov_au": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "suburb": "Plaats"
+        },
+        "data_description": {
+          "address": "Uw volledige adres.",
+          "suburb": "Uw stad of dorp."
+        }
+      },
       "args_launceston_tas_gov_au": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",

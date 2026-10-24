@@ -915,6 +915,12 @@
       "id": "lanecove_nsw_gov_au"
     },
     {
+      "title": "Latrobe City Council",
+      "module": "latrobe_vic_gov_au",
+      "default_params": {},
+      "id": "latrobe_vic_gov_au"
+    },
+    {
       "title": "Launceston City Council",
       "module": "launceston_tas_gov_au",
       "default_params": {},

@@ -540,6 +540,14 @@
     },
     "urls": {}
   },
+  "latrobe_vic_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/latrobe_vic_gov_au.md",
+    "howto": {
+      "de": "Gib die Adresse wie auf dem Grundsteuerbescheid ein, mit ausgeschriebenem Straßentyp (z. B. 23-25 Ann Street), und den Ort (z. B. Morwell). Abholtag und Bereich (A oder B) stammen aus den Grundstücksdaten der Stadt, die Termine aus ihrem Abfallkalender (PDF). Die Website der Stadt antwortet nur aus australischen Netzen.",
+      "en": "Enter the property address as on your rates notice, with the street type written out (e.g. 23-25 Ann Street), and the suburb (e.g. Morwell). The collection day and area (A or B) come from the council's property records and the dates from the council's recycling and green waste calendar PDF. The council's website only answers from Australian internet connections, so the source does not work through a VPN or proxy outside Australia."
+    },
+    "urls": {}
+  },
   "launceston_tas_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/launceston_tas_gov_au.md",
     "howto": {

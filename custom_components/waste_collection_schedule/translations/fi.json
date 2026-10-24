@@ -2168,6 +2168,33 @@
           "address": "Koko osoitteesi."
         }
       },
+      "args_latrobe_vic_gov_au": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite",
+          "suburb": "Kaupunki"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi.",
+          "suburb": "Kaupunkisi tai paikkakuntasi."
+        }
+      },
+      "reconfigure_latrobe_vic_gov_au": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite",
+          "suburb": "Kaupunki"
+        },
+        "data_description": {
+          "address": "Koko osoitteesi.",
+          "suburb": "Kaupunkisi tai paikkakuntasi."
+        }
+      },
       "args_launceston_tas_gov_au": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
