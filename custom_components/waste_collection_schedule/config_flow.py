@@ -78,6 +78,7 @@ from .const import (
     CONF_SOURCE_CALENDAR_TITLE,
     CONF_SOURCE_NAME,
     CONF_TYPE,
+    CONF_UNIQUE_TYPES,
     CONF_USE_DEDICATED_CALENDAR,
     CONFIG_MINOR_VERSION,
     CONFIG_VERSION,
@@ -241,6 +242,9 @@ def get_sensor_schema(fetched_types, add_delete=False, defaults: dict | None = N
             vol.Optional(
                 CONF_EVENT_INDEX, default=defaults.get(CONF_EVENT_INDEX, UNDEFINED)
             ): int,
+            vol.Optional(
+                CONF_UNIQUE_TYPES, default=defaults.get(CONF_UNIQUE_TYPES, False)
+            ): cv.boolean,
             vol.Optional(
                 CONF_COLLECTION_TYPES,
                 default=defaults.get(CONF_COLLECTION_TYPES, UNDEFINED),

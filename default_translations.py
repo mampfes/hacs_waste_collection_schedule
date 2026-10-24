@@ -1,6 +1,21 @@
 import json
 from collections.abc import Iterable
 
+SENSOR_TRANSLATIONS = {
+    "en": {
+        "unique_types": (
+            "Show each waste type once",
+            "Use only the next collection of each waste type for the sensor state and upcoming lists.",
+        ),
+    },
+    "de": {
+        "unique_types": (
+            "Jede Abfallart nur einmal anzeigen",
+            "Nur den nächsten Termin jeder Abfallart für den Sensorwert und kommende Terminlisten verwenden.",
+        ),
+    },
+}
+
 DEFAULT_PARAM_TRANSLATIONS = {
     "en": {
         "abf_hausnr": "House Number",

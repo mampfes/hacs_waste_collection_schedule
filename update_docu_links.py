@@ -20,7 +20,11 @@ else:
 
 import yaml
 
-from default_translations import default_descriptions, default_translations
+from default_translations import (
+    SENSOR_TRANSLATIONS,
+    default_descriptions,
+    default_translations,
+)
 
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
@@ -804,6 +808,15 @@ def get_custom_translations(
     return param_translations, param_descriptions, source_howto, source_doc_url
 
 
+def add_sensor_translations(translations: dict, language: str) -> None:
+    """Add sensor labels to creation and options flows during JSON generation."""
+    for field, (label, description) in SENSOR_TRANSLATIONS.get(language, {}).items():
+        for flow in ("config", "options"):
+            sensor = translations[flow]["step"]["sensor"]
+            sensor.setdefault("data", {})[field] = label
+            sensor.setdefault("data_description", {})[field] = description
+
+
 def update_json(
     countries: dict[str, list[SourceInfo]], generics: list[SourceInfo] | None = None
 ):
@@ -832,6 +845,8 @@ def update_json(
             encoding="utf-8",
         ) as f:
             translations = json.load(f)
+
+        add_sensor_translations(translations, lang)
 
         translation_for_all = {}
         description_for_all_args = {}
