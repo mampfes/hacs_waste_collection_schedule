@@ -1,0 +1,244 @@
+---
+# Provider registry for the awido_de platform (Cubefour AWIDO).
+#
+# Each entry becomes its own listing in README.md / sources.json, with its
+# params pre-filled, via regions.from_yaml() in source/awido_de.py. Adding a
+# provider is a change to this file alone. `customer` is the AWIDO client id;
+# `city` pre-fills the place for a client serving one municipality per entry.
+  - title: Abfallwirtschaft Rems-Murr (AWRM) - AWIDO Version
+    url: https://www.abfallwirtschaft-rems-murr.de/
+    customer: rmk
+  - title: Landkreis Schweinfurt
+    url: https://www.landkreis-schweinfurt.de
+    customer: lra-schweinfurt
+  - title: Landkreis Gotha
+    url: https://www.landkreis-gotha.de/
+    customer: gotha
+  - title: Zweckverband Abfallwirtschaft Saale-Orla
+    url: https://www.zaso-online.de/
+    customer: zaso
+  - title: Gemeinde Unterhaching
+    url: https://www.unterhaching.de/
+    customer: unterhaching
+  - title: Stadt Kaufbeuren
+    url: https://www.kaufbeuren.de/
+    customer: kaufbeuren
+  - title: Landkreis Berchtesgadener Land
+    url: https://www.lra-bgl.de/
+    customer: bgl
+  - title: Pullach im Isartal
+    url: https://www.pullach.de/
+    customer: pullach
+  - title: AWB Landkreis Fürstenfeldbruck
+    url: https://www.awb-ffb.de/
+    customer: ffb
+  - title: Stadt Unterschleißheim
+    url: https://www.unterschleissheim.de/
+    customer: unterschleissheim
+  - title: Landkreis Tirschenreuth
+    url: https://www.kreis-tir.de/
+    customer: kreis-tir
+  - title: Landkreis Rosenheim
+    url: https://www.abfall.landkreis-rosenheim.de/
+    customer: rosenheim
+  - title: Landkreis Tübingen
+    url: https://www.abfall-kreis-tuebingen.de/
+    customer: tuebingen
+  - title: Landkreis Kronach
+    url: https://www.landkreis-kronach.de/
+    customer: kronach
+  - title: Landkreis Kulmbach
+    url: https://www.landkreis-kulmbach.de/
+    customer: kulmbach
+  - title: Landkreis Lichtenfels
+    url: https://www.lkr-lif.de/
+    customer: lichtenfels
+  - title: Landkreis Erding
+    url: https://www.landkreis-erding.de/
+    customer: erding
+  - title: Zweckverband München-Südost
+    url: https://www.zvmso.de/
+    customer: zv-muc-so
+  - title: Landkreis Coburg
+    url: https://www.landkreis-coburg.de/
+    customer: coburg
+  - title: Landkreis Ansbach
+    url: https://www.landkreis-ansbach.de/
+    customer: ansbach
+  - title: AWB Landkreis Bad Dürkheim
+    url: http://awb.kreis-bad-duerkheim.de/
+    customer: awb-duerkheim
+  - title: Landratsamt Aichach-Friedberg
+    url: https://lra-aic-fdb.de/
+    customer: aic-fdb
+  - title: WGV Recycling GmbH
+    url: https://wgv-quarzbichl.de/
+    customer: wgv
+  - title: Neustadt a.d. Waldnaab
+    url: https://www.neustadt.de/
+    customer: neustadt
+  - title: Landkreis Kelheim
+    url: https://www.landkreis-kelheim.de/
+    customer: kelheim
+  - title: Landkreis Günzburg
+    url: https://kaw.landkreis-guenzburg.de/
+    customer: kaw-guenzburg
+  - title: Stadt Memmingen
+    url: https://umwelt.memmingen.de/
+    customer: memmingen
+  - title: Landkreis Südliche Weinstraße
+    url: https://www.suedliche-weinstrasse.de/
+    customer: eww-suew
+  - title: Landratsamt Dachau
+    url: https://www.landratsamt-dachau.de/
+    customer: lra-dah
+  - title: Landkreisbetriebe Neuburg-Schrobenhausen
+    url: https://www.landkreisbetriebe.de/
+    customer: landkreisbetriebe
+  - title: Abfallwirtschaftsbetrieb Landkreis Altenkirchen
+    url: https://www.awb-ak.de/
+    customer: awb-ak
+  - title: Abfallwirtschaft Lahn-Dill-Kreises
+    url: https://www.awld.de/
+    customer: awld
+  - title: Abfallwirtschafts-Zweckverband des Landkreises Hersfeld-Rotenburg
+    url: https://www.azv-hef-rof.de/
+    customer: azv-hef-rof
+  - title: Abfall-Wirtschafts-Verband Nordschwaben
+    url: https://www.awv-nordschwaben.de/
+    customer: awv-nordschwaben
+  - title: Stadt Regensburg
+    url: https://www.regensburg.de/
+    customer: regensburg
+  - title: Abfallwirtschaft Isar-Inn
+    url: https://www.awv-isar-inn.de/
+    customer: awv-isar-inn
+  - title: Landkreis Fulda
+    url: https://www.landkreis-fulda.de/
+    customer: fulda
+  - title: Stadt Fulda
+    url: https://www.fulda.de/
+    customer: fulda-stadt
+  - title: Landkreis Aschaffenburg
+    url: https://www.landkreis-aschaffenburg.de/
+    customer: lra-ab
+  - title: Landkreis Mühldorf a. Inn
+    url: https://www.lra-mue.de/
+    customer: lra-mue
+  - title: Landkreis Roth
+    url: https://www.landratsamt-roth.de/
+    customer: roth
+  - title: Landratsamt Regensburg
+    url: https://www.landkreis-regensburg.de/
+    customer: lra-regensburg
+  - title: Landkreis Gießen
+    url: https://www.lkgi.de/
+    customer: lkgi
+  - title: Landkreis Gifhorn
+    url: https://www.gifhorn.de/
+    customer: gifhorn
+  - title: Stadt Königstein im Taunus
+    url: https://www.koenigstein.de/
+    customer: koenigstein
+  - title: EBU Ulm
+    url: https://www.ebu-ulm.de/
+    customer: ebu
+  - title: Anzing
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Anzing
+  - title: Aßling
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Aßling
+  - title: Baiern
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Baiern
+  - title: Bruck
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Bruck
+  - title: Ebersberg
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Ebersberg
+  - title: Egmating
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Egmating
+  - title: Emmering
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Emmering
+  - title: Forstinning
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Forstinning
+  - title: Frauenneuharting
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Frauenneuharting
+  - title: Glonn
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Glonn
+  - title: Grafing
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Grafing
+  - title: Hohenlinden
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Hohenlinden
+  - title: Kirchseeon
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Kirchseeon
+  - title: Moosach
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Moosach
+  - title: Oberpframmern
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Oberpframmern
+  - title: Pliening
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Pliening
+  - title: Poing
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Poing
+  - title: Steinhöring
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Steinhöring
+  - title: Vaterstetten
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Vaterstetten
+  - title: Zorneding
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Zorneding
+  - title: Ingelsberg (Zorneding)
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Zorneding
+  - title: Markt Schwaben
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Markt Schwaben
+  - title: Pöring (Zorneding)
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Zorneding
+  - title: Wolfesing (Zorneding)
+    url: https://www.lra-ebe.de/
+    customer: ebe
+    city: Zorneding
+  - title: Abfallwirtschaft Altenburger Land
+    url: https://www.awb-altenburg.de/
+    customer: awb-altenburg
