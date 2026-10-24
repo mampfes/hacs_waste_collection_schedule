@@ -33845,6 +33845,15 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Rupperswil",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "rupperswil",
+        "municipality_id": "5525"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Salenstein",
       "module": "kvatg_ch",
       "default_params": {
@@ -33907,6 +33916,15 @@
       "id": "kvatg_ch"
     },
     {
+      "title": "Seegr\u00e4ben",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "seegraeben",
+        "municipality_id": "349"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Seon",
       "module": "ics",
       "default_params": {},
@@ -33919,6 +33937,15 @@
         "municipality": "Sirnach"
       },
       "id": "zab_ch"
+    },
+    {
+      "title": "Solothurn",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "solothurn",
+        "municipality_id": "3625"
+      },
+      "id": "localcities_ch"
     },
     {
       "title": "Sommeri",

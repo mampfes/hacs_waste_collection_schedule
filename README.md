@@ -4672,6 +4672,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Romanshorn](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Rorschach](/doc/source/a_region_ch.md) / a-region.ch
 - [Rorschacherberg](/doc/source/a_region_ch.md) / a-region.ch
+- [Rupperswil](/doc/source/localcities_ch.md) / rupperswil.ch
 - [Salenstein](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Salmsach](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Sammelkalender.ch](/doc/source/sammelkalender_ch.md) / info.sammelkalender.ch
@@ -4680,8 +4681,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Schwellbrunn](/doc/source/a_region_ch.md) / a-region.ch
 - [Schönengrund](/doc/source/a_region_ch.md) / a-region.ch
 - [Schönholzerswilen](/doc/source/kvatg_ch.md) / kvatg.ch
+- [Seegräben](/doc/source/localcities_ch.md) / seegraeben.ch
 - [Seon](/doc/ics/seon_ch.md) / seon.ch
 - [Sirnach](/doc/source/zab_ch.md) / zab.citymobile.ch
+- [Solothurn](/doc/source/localcities_ch.md) / stadt-solothurn.ch
 - [Sommeri](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Speicher](/doc/source/a_region_ch.md) / a-region.ch
 - [Spiegel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
