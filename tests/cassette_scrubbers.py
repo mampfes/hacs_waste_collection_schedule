@@ -14,6 +14,7 @@ invents one. Register one only for a feed that cannot be filtered server side.
 from __future__ import annotations
 
 import base64
+import datetime
 import json
 import re
 from collections.abc import Callable
@@ -354,7 +355,64 @@ def _nwrrr_com_au(interactions: list[dict], args: dict[str, Any], today: str) ->
             _set_json(interaction, payload)
 
 
+def _awb_bad_kreuznach_de(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep the configured address's options and the calendars' rules, not the lists.
+
+    Every ``filterRegion`` answer lists all 121 cities; the calendar answer
+    carries the stations and holidays lists besides the rules the source reads.
+    """
+
+    def same(name: Any, wanted: Any) -> bool:
+        def norm(value: Any) -> str:
+            return str(value).lower().replace(" ", "").replace("-", "")
+
+        return norm(name) == norm(wanted)
+
+    levels = {
+        "citys": "ort",
+        "partOfCitys": "stadtteil",
+        "streets": "strasse",
+        "houseNumbers": "nummer",
+    }
+    for interaction in interactions:
+        if "filterRegion" in interaction["url"]:
+            payload = _json(interaction)
+            for key, argument in levels.items():
+                options = payload["data"].get(key)
+                if not options:
+                    continue
+                # An unset level is not read at that step (the city answer
+                # also lists up to 1000 streets and house numbers).
+                payload["data"][key] = [
+                    option
+                    for option in options
+                    if args.get(argument) is not None
+                    and same(option["name"], args[argument])
+                ]
+            _set_json(interaction, payload)
+        elif "getAllGarbageCalendar" in interaction["url"]:
+            payload = _json(interaction)
+            for key in ("stations", "holidays"):
+                payload["data"].pop(key, None)
+            # The source reads moves within its one-year window; the list repeats
+            # each holiday once per tour (the shift is the same for every tour).
+            first = datetime.date.fromisoformat(today) - datetime.timedelta(days=3)
+            last = first + datetime.timedelta(days=370)
+            kept: dict[tuple, dict] = {}
+            for view in payload["data"].get("holidayViews", []):
+                day = datetime.datetime.fromtimestamp(
+                    view["holiday"] / 1000, datetime.UTC
+                ).date()
+                if first <= day <= last:
+                    kept.setdefault((view["holiday"], view["shiftTo"]), view)
+            payload["data"]["holidayViews"] = list(kept.values())
+            _set_json(interaction, payload)
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "awb_bad_kreuznach_de": _awb_bad_kreuznach_de,
     "eth_erd_hu": _eth_erd_hu,
     "aksd_hu": _aksd_hu,
     "vattenmiljoresurs_se": _vattenmiljoresurs_se,
