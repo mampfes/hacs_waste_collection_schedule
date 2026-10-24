@@ -2557,6 +2557,122 @@ _DAY_ROW_PATTERN = r"^(?:\d{1,2})(?:\s+\d{1,2})*$"
 _WEEKDAY_ROW_PATTERN = r"^[^\W\d_]{2,3}(?:\s+[^\W\d_]{2,3}){2,}$"
 
 
+def _trailing_month(word: str) -> "int | None":
+    """The month a word names, also when glued to the text before it."""
+    for start in range(len(word) - 2):
+        number = recurrence.month(word[start:])
+        if number is not None:
+            return number
+    return None
+
+
+class TextMonthColumns(Preprocessor[str, "tuple[datetime.date, str]"]):
+    """Read months printed side by side, one text line per day number.
+
+    For a text PDF whose page shows several months as columns of day rows
+    ("4 Mer RSU"), which a plain text extractor emits as one line per day
+    number running across the months under a heading line of month names::
+
+        GENNAIO FEBBRAIO MARZO APRILE MAGGIO GIUGNO
+        4 Dom 4 Mer RSU 4 Mer RSU 4 Sab ORG PLA 4 Lun 4 Gio CAR
+
+    Each cell is a day number, its printed weekday and the round codes after
+    it. A short month leaves its cell out of the lines for 29 to 31, so a cell
+    is dated by its weekday: it belongs to the next month of the heading line,
+    left to right, on which that day falls on that weekday. A cell fitting none
+    of them fails loudly (a wrong year or a changed layout), and so does a
+    second heading line naming months already read (a PDF holding one calendar
+    per zone)::
+
+        parse = parsers.PdfTextParser(min_chars=500)
+        preprocess = preprocessors.TextMonthColumns(
+            keys=TYPE_MAP,
+            weekdays=("Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"),
+            year_pattern=r"raccolta rifiuti (\\d{4})",
+        )
+
+    Args:
+        keys: the round codes printed in the cells, matched case-insensitively
+            as whole words. Pass the transformer's ``type_value_map``.
+        weekdays: the printed weekday abbreviations, Monday first.
+        year_pattern: regex searched in the text, its first group the year.
+            Falls back to the current year.
+    """
+
+    def __init__(
+        self,
+        *,
+        keys: Iterable[str],
+        weekdays: Sequence[str],
+        year_pattern: "str | None" = None,
+    ):
+        if len(weekdays) != 7:
+            raise ValueError("TextMonthColumns needs seven weekdays, Monday first")
+        self._keys = {str(key).upper(): key for key in keys}
+        self._weekdays = [w.lower() for w in weekdays]
+        names = "|".join(re.escape(w) for w in weekdays)
+        self._cell_re = re.compile(
+            rf"(?<!\S)(\d{{1,2}})\s+({names})\b((?:\s+(?!\d{{1,2}}\s+(?:{names})\b)\S+)*)",
+            re.IGNORECASE,
+        )
+        self._year_re = (
+            re.compile(year_pattern, re.IGNORECASE) if year_pattern else None
+        )
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        text = str(records)
+        year = datetime.date.today().year
+        if self._year_re is not None and (match := self._year_re.search(text)):
+            year = int(match.group(1))
+        months: list[int] = []
+        seen: set[int] = set()
+        for line in text.splitlines():
+            names = [_trailing_month(word) for word in line.split()]
+            # A legend may run into the heading ("PILE PILEGENNAIO FEBBRAIO").
+            while names and names[0] is None:
+                names.pop(0)
+            if len(names) >= 2 and all(number is not None for number in names):
+                months = [number for number in names if number is not None]
+                if seen & set(months):
+                    from waste_collection_schedule import response_shape
+
+                    raise response_shape.ResponseShapeError(
+                        response_shape.source_name(source),
+                        "the PDF holds more than one calendar for the same months",
+                    )
+                seen.update(months)
+                continue
+            if not months:
+                continue
+            position = 0
+            for match in self._cell_re.finditer(line):
+                day = int(match.group(1))
+                weekday = self._weekdays.index(match.group(2).lower())
+                while position < len(months):
+                    month = months[position]
+                    position += 1
+                    try:
+                        dated = datetime.date(year, month, day)
+                    except ValueError:
+                        continue
+                    if dated.weekday() == weekday:
+                        break
+                else:
+                    from waste_collection_schedule import response_shape
+
+                    raise response_shape.ResponseShapeError(
+                        response_shape.source_name(source),
+                        f"day {day} {match.group(2)} fits none of the months "
+                        f"{months} of {year}",
+                    )
+                for token in match.group(3).split():
+                    key = self._keys.get(token.upper())
+                    if key is not None:
+                        yield dated, key
+
+
 class TextCalendarGrid(Preprocessor[str, "tuple[datetime.date, str]"]):
     """Read a printed month-grid calendar out of a plain-text layer.
 

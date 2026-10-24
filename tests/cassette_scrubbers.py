@@ -475,7 +475,29 @@ def _segreguj_gliwice_eu(
         interaction["content_b64"] = base64.b64encode(raw).decode("ascii")
 
 
+def _montreal_ca(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep the configured sectors' features, without their geometry.
+
+    The five city-wide GeoJSON files hold every sector with its map polygon.
+    """
+    sectors = {
+        args[field]
+        for field in ("sector", "recycling", "bulky", "food", "green")
+        if args.get(field)
+    }
+    for interaction in interactions:
+        if interaction["url"].endswith(".geojson"):
+            payload = _json(interaction)
+            payload["features"] = [
+                {key: value for key, value in feature.items() if key != "geometry"}
+                for feature in payload["features"]
+                if feature["properties"]["SECTEUR"] in sectors
+            ]
+            _set_json(interaction, payload)
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "montreal_ca": _montreal_ca,
     "awb_bad_kreuznach_de": _awb_bad_kreuznach_de,
     "segreguj_gliwice_eu": _segreguj_gliwice_eu,
     "eth_erd_hu": _eth_erd_hu,
