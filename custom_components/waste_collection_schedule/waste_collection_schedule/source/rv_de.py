@@ -23,7 +23,7 @@ from waste_collection_schedule.config_params import (
 from waste_collection_schedule.retrievers import AthosWasteManagementRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
-_SERVLET = "https://athos-onlinedienste.rv.de/WasteManagementRavensburgPrivat/WasteManagementServlet"
+_SERVLET = "http://athos-onlinedienste.rv.de:8080/WasteManagementRavensburgPrivat/WasteManagementServlet"
 
 
 @final
