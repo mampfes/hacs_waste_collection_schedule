@@ -364,12 +364,14 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
             if max(width, height) > 2 * min(width, height):
                 # A bar painted over the same weekday of several weeks (or
                 # several days of one week) marks every day number inside it.
+                # A half-cell fill can end just above the text's centre;
+                # tolerate that offset without reaching a neighbouring row.
                 return [
                     a
                     for a in anchors
                     if a.page == vector.page
-                    and vector.x0 <= a.x <= vector.x1
-                    and vector.y0 <= a.y <= vector.y1
+                    and vector.x0 - 2 <= a.x <= vector.x1 + 2
+                    and vector.y0 - 2 <= a.y <= vector.y1 + 2
                 ]
             # The symbol is painted behind its day number; a small one partly
             # hidden behind another symbol may no longer cover the number, so
