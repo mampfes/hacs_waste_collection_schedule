@@ -24,6 +24,7 @@ from waste_collection_schedule import (
 )
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.exceptions import SourceArgumentRequired
 from waste_collection_schedule.transformers import ICSTransformer
 
 _URL = "https://www.pisz.pl"
@@ -110,9 +111,25 @@ def _calendar_pdf(response, *_, city: str, building: str | None = None, **__) ->
     return links[0]
 
 
-def _place(city: str, street: str | None = None, **_) -> str:
+def _place(
+    city: str,
+    street: str | None = None,
+    house_number: str | None = None,
+    building: str | None = None,
+    **_,
+) -> str:
     """The name the schedule lists: the street in Pisz, else the village."""
-    return (street or "") if _in_town(city) else city
+    if not _in_town(city):
+        return city
+    if not street or not street.strip():
+        raise SourceArgumentRequired(
+            "street", "the town's schedule is listed by street"
+        )
+    if building == FLATS and (not house_number or not str(house_number).strip()):
+        raise SourceArgumentRequired(
+            "house_number", "mixed waste in blocks of flats is listed by house number"
+        )
+    return street
 
 
 @final
