@@ -23,6 +23,73 @@ SOURCES_TO_EXCLUDE = ["__init__.py", "example.py"]
 SOURCES_EXCLUDE_TEST_CASE_CHECK = ["multiple"]
 
 
+@pytest.mark.parametrize("area_name", [None, ""])
+def test_threer_empty_area_offers_the_top_level(area_name):
+    from waste_collection_schedule.exceptions import (
+        SourceArgumentRequiredWithSuggestions,
+    )
+    from waste_collection_schedule.service import ThreeR
+    from waste_collection_schedule.source.delight_system_com import Source
+
+    args = {"language_code": "en", "municipality": "Shinjuku City"}
+    if area_name is not None:
+        args["area_name"] = area_name
+    with (
+        patch.object(ThreeR, "_resolve_municipality", return_value="shinjukuku"),
+        patch.object(
+            ThreeR,
+            "_fetch_area_list",
+            return_value=[{"area_name": "Aizumi-cho", "area_id": "42"}],
+        ),
+        pytest.raises(SourceArgumentRequiredWithSuggestions) as error,
+    ):
+        Source(**args).fetch()
+    assert error.value.argument == "area_name"
+    assert list(error.value.suggestions) == ["Aizumi-cho"]
+
+
+@pytest.mark.parametrize("failure", ["timeout", "http", "json"])
+def test_threer_registration_failure_is_not_an_address_error(failure):
+    from curl_cffi.requests.exceptions import HTTPError, Timeout
+    from waste_collection_schedule.service import ThreeR
+    from waste_collection_schedule.source.delight_system_com import Source
+
+    error = {
+        "timeout": Timeout("upstream timed out"),
+        "http": HTTPError("503 Service Unavailable"),
+        "json": ValueError("invalid JSON response"),
+    }[failure]
+    with (
+        patch.object(ThreeR, "_resolve_municipality", return_value="shinjukuku"),
+        patch.object(ThreeR, "_resolve_area_id", return_value="42"),
+        patch.object(ThreeR, "_api_get", side_effect=error),
+        pytest.raises(type(error)) as raised,
+    ):
+        Source(
+            language_code="en", municipality="Shinjuku City", area_name="Aizumi-cho"
+        ).fetch()
+    assert raised.value is error
+
+
+def test_threer_registration_area_rejection_still_names_the_argument():
+    from waste_collection_schedule.exceptions import SourceArgumentNotFound
+    from waste_collection_schedule.service import ThreeR
+    from waste_collection_schedule.source.delight_system_com import Source
+
+    with (
+        patch.object(ThreeR, "_resolve_municipality", return_value="shinjukuku"),
+        patch.object(ThreeR, "_resolve_area_id", return_value="42"),
+        patch.object(
+            ThreeR, "_api_get", side_effect=ThreeR.ThreeRError("invalid area")
+        ),
+        pytest.raises(SourceArgumentNotFound) as error,
+    ):
+        Source(
+            language_code="en", municipality="Shinjuku City", area_name="Aizumi-cho"
+        ).fetch()
+    assert error.value.argument == "area_name"
+
+
 def _uses_base_source_init(source_cls: type) -> bool:
     """Return True for new-style sources relying on BaseSource.__init__(**kwargs).
 
