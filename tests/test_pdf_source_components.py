@@ -469,3 +469,45 @@ def test_east_lindsey_changed_calendar_layout_fails_loudly(monkeypatch, change):
     monkeypatch.setattr(parsers.PdfWordLayoutParser, "__call__", lambda *args: [layout])
     with pytest.raises(ResponseShapeError):
         GardenCalendarParser()(_east_lindsey_pdf())
+
+
+@pytest.mark.parametrize("interstitials", [0, 1, 3, 4])
+def test_ekoland_asks_again_after_the_one_moment_interstitial(
+    monkeypatch, interstitials
+):
+    """The index page sometimes answers with a self-reloading interstitial.
+
+    It is asked again up to three times, 5 s apart; a fourth interstitial is
+    given up on and reported as a changed page.
+    """
+    from waste_collection_schedule.source import ekolandpolska_com_pl
+
+    page = (
+        '<a href="/assets/media/harmonogram-wilkolaz-2026.pdf">Wilkołaz</a>'
+        '<a href="/assets/media/harmonogram-wilkolaz-2026-wielorodzinne.pdf">x</a>'
+    )
+    answers = iter(["<title>One moment, please...</title>"] * interstitials + [page])
+    requested, slept = [], []
+
+    def get(url, **_):
+        requested.append(url)
+        return SimpleNamespace(
+            text=next(answers), url=url, status_code=200, raise_for_status=lambda: None
+        )
+
+    monkeypatch.setattr(retrievers.time, "sleep", slept.append)
+    source = SimpleNamespace(
+        session=SimpleNamespace(get=get),
+        params={"municipality": "Wilkolaz", "street": "Ostrów"},
+    )
+    prepare = ekolandpolska_com_pl.Source.retrieve.prepare
+    pdf = "https://www.ekolandpolska.com.pl/assets/media/harmonogram-wilkolaz-2026.pdf"
+    with freeze_time("2026-10-24"):
+        if interstitials > 3:
+            with pytest.raises(ValueError, match="no link matching"):
+                prepare(source)
+        else:
+            assert prepare(source) == [pdf]
+    attempts = min(interstitials, 3) + 1
+    assert len(requested) == attempts
+    assert slept == [5] * (attempts - 1)

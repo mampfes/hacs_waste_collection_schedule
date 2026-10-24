@@ -1805,6 +1805,12 @@ class Request(_BaseRetriever):
             flags is requested once more, in the same session: for a page that
             answers the first hit with an interstitial or consent overlay and
             the real content on the second.
+        retries: how many times a flagged response is requested again
+            (default 1). The last response is returned whether or not it is
+            still flagged, so the ``pick`` or parser reports what came back.
+        retry_delay: seconds to wait before each repeat (default 0), for an
+            interstitial that only lets the client through after a pause
+            ("One moment, please...", reloading itself after 5 s).
         encoding: forced on the response before its ``.text`` is read.
         raise_for_status: raise on an error status (default). Off for a
             provider whose error status is itself the answer a ``pick`` reads.
@@ -1827,12 +1833,16 @@ class Request(_BaseRetriever):
         before: Sequence[Callable[[BaseSource, tuple], Any]] = (),
         when: Callable[..., bool] | None = None,
         retry_if: Callable[[Response], bool] | None = None,
+        retries: int = 1,
+        retry_delay: float = 0,
         encoding: str | None = None,
         raise_for_status: bool = True,
         timeout: int = 30,
     ):
         if method.upper() not in ("GET", "POST"):
             raise ValueError(f"unknown Request method {method!r}: expected GET or POST")
+        if retries < 0:
+            raise ValueError("Request retries must not be negative")
         if (data is not None or json is not None) and method.upper() != "POST":
             raise ValueError("Request data/json requires method='POST'")
         self.url = url
@@ -1846,6 +1856,8 @@ class Request(_BaseRetriever):
         self.before = tuple(before)
         self.when = when
         self.retry_if = retry_if
+        self.retries = retries
+        self.retry_delay = retry_delay
         self.encoding = encoding
         self.raise_for_status = raise_for_status
         self.timeout = timeout
@@ -1857,8 +1869,13 @@ class Request(_BaseRetriever):
         if self.when is not None and not self.when(*args, **source.params):
             return None
         response = self._send(source, args)
-        if self.retry_if is not None and self.retry_if(response):
-            response = self._send(source, args)
+        if self.retry_if is not None:
+            for _ in range(self.retries):
+                if not self.retry_if(response):
+                    break
+                if self.retry_delay:
+                    time.sleep(self.retry_delay)
+                response = self._send(source, args)
         if self.encoding is not None:
             response.encoding = self.encoding
         return response
@@ -1957,8 +1974,8 @@ class Lookup:
             optional level the user left out.
         **request: the remaining :class:`Request` arguments (``method``,
             ``params``, ``data``, ``json``, ``headers``, ``cookies``,
-            ``allow_redirects``, ``encoding``, ``raise_for_status``,
-            ``timeout``).
+            ``allow_redirects``, ``retry_if``, ``retries``, ``retry_delay``,
+            ``encoding``, ``raise_for_status``, ``timeout``).
     """
 
     def __init__(

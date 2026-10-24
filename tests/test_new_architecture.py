@@ -1455,6 +1455,21 @@ class TestDeclaredRequests:
         assert request(source) is second
         assert source.session.get.call_count == 2
 
+    def test_request_retries_repeats_a_flagged_response_up_to_n_times(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source()
+        pages = [MagicMock(text="interstitial") for _ in range(3)]
+        source.session.get.side_effect = [*pages, MagicMock(text="page")]
+        request = retrievers.Request(
+            "https://x",
+            retry_if=lambda response: response.text == "interstitial",
+            retries=2,
+        )
+        # Asked twice more, then the last (still flagged) response is returned.
+        assert request(source) is pages[2]
+        assert source.session.get.call_count == 3
+
     def test_lookup_picks_from_the_response_with_keys_and_params(self):
         from waste_collection_schedule import retrievers
 
