@@ -56,6 +56,30 @@ def test_normalize_loose_drops_accents_case_and_punctuation():
     assert lookups.normalize_loose(" Pérouges  hors cité ") == "perouges hors cite"
 
 
+@pytest.mark.parametrize("case", ["Bannockburn, Monday A", "Bannockburn, Tuesday B"])
+def test_lrs_shared_event_cells_keep_both_collections(case):
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.lrsrecycles_com import (
+        E_WASTE,
+        RECYCLING,
+        WASTE,
+        Source,
+    )
+
+    source = Source(**Source.TEST_CASES[case])
+    with cassette.replaying(fixture_path("lrsrecycles_com", case)):
+        rows = list(
+            source.preprocess(source.parse(source.retrieve(source), source), source)
+        )
+
+    assert sum(label == RECYCLING for _, label in rows) == 26
+    assert sum(label == WASTE for _, label in rows) == 52
+    assert sum(label == E_WASTE for _, label in rows) == 20
+    assert (D(2026, 2, 23), E_WASTE) in rows
+    assert (D(2026, 2, 24), E_WASTE) in rows
+
+
 class TestYearlyLinks:
     HTML = """
         <a href="/files/cal_2025.pdf">2025</a>
@@ -178,6 +202,28 @@ class TestPdfMonthRows:
             list(pre(self.rows()[1:], None))  # no year
         with pytest.raises(ResponseShapeError):
             list(pre([self.rows()[0], self.rows()[3]], None))  # no headings
+
+
+def test_marion_new_year_thursday_is_collected_on_january_second():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.marion_sa_gov_au import (
+        ORGANICS,
+        WASTE,
+        Source,
+    )
+
+    case = "Marion (A, Thursday)"
+    source = Source(**Source.TEST_CASES[case])
+    with cassette.replaying(fixture_path("marion_sa_gov_au", case)):
+        rows = list(
+            source.preprocess(source.parse(source.retrieve(source), source), source)
+        )
+
+    assert (D(2026, 1, 2), WASTE) in rows
+    assert (D(2026, 1, 2), ORGANICS) in rows
+    assert sum(label == WASTE for _, label in rows) == 53
+    assert not any(day == D(2026, 1, 1) for day, _ in rows)
 
 
 class TestTextGroupedDatesEnd:

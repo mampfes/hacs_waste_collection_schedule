@@ -6752,14 +6752,19 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "bulky": "Bulky",
-          "food": "Food",
-          "green": "Green",
-          "recycling": "Recycling",
-          "sector": "Sector"
+          "bulky": "Grofvuilsector",
+          "food": "Voedselafvalsector",
+          "green": "Sector voor tuinafval en bladeren",
+          "recycling": "Recyclingsector",
+          "sector": "Afvalsector"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "bulky": "Alleen als deze afwijkt van de afvalsector.",
+          "food": "Alleen als deze afwijkt van de afvalsector.",
+          "green": "Alleen als deze afwijkt van de afvalsector.",
+          "recycling": "Alleen als deze afwijkt van de afvalsector.",
+          "sector": "Dit is de standaardsector."
         }
       },
       "reconfigure_montreal_ca": {
@@ -6767,13 +6772,19 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "bulky": "Bulky",
-          "food": "Food",
-          "green": "Green",
-          "recycling": "Recycling",
-          "sector": "Sector"
+          "bulky": "Grofvuilsector",
+          "food": "Voedselafvalsector",
+          "green": "Sector voor tuinafval en bladeren",
+          "recycling": "Recyclingsector",
+          "sector": "Afvalsector"
         },
-        "data_description": {}
+        "data_description": {
+          "bulky": "Alleen als deze afwijkt van de afvalsector.",
+          "food": "Alleen als deze afwijkt van de afvalsector.",
+          "green": "Alleen als deze afwijkt van de afvalsector.",
+          "recycling": "Alleen als deze afwijkt van de afvalsector.",
+          "sector": "Dit is de standaardsector."
+        }
       },
       "args_info_collectes_ca": {
         "title": "Bron configureren",
@@ -26295,6 +26306,33 @@
           "uprn": "UPRN"
         },
         "data_description": {
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "args_brighton_hove_gov_uk": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "reconfigure_brighton_hove_gov_uk": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
+        },
+        "data_description": {
+          "postcode": "Uw postcode.",
           "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
