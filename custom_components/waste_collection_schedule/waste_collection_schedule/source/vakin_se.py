@@ -33,7 +33,11 @@ _PORTLET_ID_PATTERN = re.compile(
 )
 _PAGE_ID_PATTERN = re.compile(r"pageId:\s*['\"]([^'\"]+)['\"]")
 _HOUSE_LETTER = re.compile(r"(\d+)\s+([A-Za-zÅÄÖåäö])\b")
+# Swedish postcode ("903 33" / "90333") at the end ("Storgatan 101, Umeå 903 33")
+# or directly after the comma, before the town ("Storgatan 101, 903 33 Umeå").
+# Both need the full 5 digits, so a house number ("101", "10 A", "5-7") is kept.
 _POSTCODE = re.compile(r",?\s*\b\d{3}\s?\d{2}\b$")
+_POSTCODE_BEFORE_TOWN = re.compile(r"(,\s*)\d{3}\s?\d{2}\s+(?=\D)")
 
 
 class _WidgetEndpoints(NamedTuple):
@@ -58,7 +62,8 @@ def _pick_widget_endpoints(response, **_) -> _WidgetEndpoints:
 
 def _clean_address_query(address: str) -> str:
     """Clean the input address for search by collapsing house letters and stripping postal codes."""
-    stripped = _POSTCODE.sub("", address).strip()
+    stripped = _POSTCODE_BEFORE_TOWN.sub(r"\1", address)
+    stripped = _POSTCODE.sub("", stripped).strip()
     return _HOUSE_LETTER.sub(r"\1\2", stripped)
 
 
@@ -130,6 +135,7 @@ class Source(BaseSource):
         "Kajakvägen 3, Täfteå": {"address": "Kajakvägen 3, Täfteå"},
         "Storgatan 1 A, Umeå": {"address": "Storgatan 1 A, Umeå"},
         "Storgatan 101, Umeå": {"address": "Storgatan 101, Umeå"},
+        "Storgatan 101, 903 33 Umeå": {"address": "Storgatan 101, 903 33 Umeå"},
         "Vindelvägen 1, Hällnäs": {"address": "Vindelvägen 1, Hällnäs"},
     }
 
