@@ -4719,6 +4719,35 @@
           "region": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
       },
+      "args_gvatulln_at": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "building": "Building",
+          "district": "Kaupunginosa",
+          "municipality": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "district": "Kaupunginosasi tai kunnan osa.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_gvatulln_at": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "building": "Building",
+          "district": "Kaupunginosa",
+          "municipality": "Kunta"
+        },
+        "data_description": {
+          "district": "Kaupunginosasi tai kunnan osa.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
       "args_scheibbs_umweltverbaende_at": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -5412,6 +5441,24 @@
           "address": "Koko osoitteesi.",
           "street": "Kadun nimi."
         }
+      },
+      "args_nestelbach_graz_gv_at": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_nestelbach_graz_gv_at": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi"
+        },
+        "data_description": {}
       },
       "args_oberndorf_schwanenstadt_at": {
         "title": "Määritä lähde",
@@ -7563,6 +7610,54 @@
           "values": "Talon numero."
         }
       },
+      "args_perfectwaste_dk": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
+        }
+      },
+      "reconfigure_perfectwaste_dk": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
+      },
+      "args_forsyningen_dk": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
+        }
+      },
+      "reconfigure_forsyningen_dk": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite"
+        },
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
+      },
       "args_kalundborg_dk": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -8216,6 +8311,31 @@
           "calendar_title": "Kalenterin nimi",
           "address": "Osoite",
           "city": "City"
+        },
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
+      },
+      "args_circularcity_world": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite",
+          "customer": "Customer"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
+        }
+      },
+      "reconfigure_circularcity_world": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite",
+          "customer": "Customer"
         },
         "data_description": {
           "address": "Koko osoitteesi."
@@ -23870,6 +23990,29 @@
           "address": "Koko osoitteesi."
         }
       },
+      "args_trollhattanenergi_se": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
+        }
+      },
+      "reconfigure_trollhattanenergi_se": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite"
+        },
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
+      },
       "args_uddevallaenergi_se": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -24994,6 +25137,24 @@
           "verify_ssl": "Verify Ssl",
           "version": "Version",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_staffelbach_ch": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_staffelbach_ch": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi"
         },
         "data_description": {}
       },
@@ -30819,6 +30980,33 @@
           "uprn": "Uprn"
         },
         "data_description": {
+          "postcode": "Postinumerosi."
+        }
+      },
+      "args_rossendale_gov_uk": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "house_number": "Talon numero",
+          "postcode": "Postinumero"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "house_number": "Talon numero.",
+          "postcode": "Postinumerosi."
+        }
+      },
+      "reconfigure_rossendale_gov_uk": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "house_number": "Talon numero",
+          "postcode": "Postinumero"
+        },
+        "data_description": {
+          "house_number": "Talon numero.",
           "postcode": "Postinumerosi."
         }
       },

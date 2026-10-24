@@ -445,6 +445,7 @@ If you already have enough information for your municipality/region, you are ver
 - [GVA Baden](/doc/source/umweltverbaende_at.md) / baden.umweltverbaende.at
 - [GVA Lilienfeld](/doc/source/umweltverbaende_at.md) / lilienfeld.umweltverbaende.at
 - [GVA Mödling](/doc/source/umweltverbaende_at.md) / moedling.umweltverbaende.at
+- [GVA Tulln](/doc/source/gvatulln_at.md) / gvatulln.at
 - [GVA Waidhofen/Thaya](/doc/source/umweltverbaende_at.md) / waidhofen.umweltverbaende.at
 - [GVU Bezirk Gänserndorf](/doc/source/umweltverbaende_at.md) / gaenserndorf.umweltverbaende.at
 - [GVU Melk](/doc/source/umweltverbaende_at.md) / melk.umweltverbaende.at
@@ -609,6 +610,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mühldorf](/doc/ics/muellapp_com.md) / muellapp.com
 - [Müll App](/doc/ics/muellapp_com.md) / muellapp.com
 - [Münster](/doc/ics/muellapp_com.md) / muellapp.com
+- [Nestelbach bei Graz](/doc/source/nestelbach_graz_gv_at.md) / nestelbach-graz.gv.at
 - [Neudau](/doc/source/citiesapps_com.md) / neudau.gv.at
 - [Neudorf bei Parndorf](/doc/source/citiesapps_com.md) / neudorfbeiparndorf.at
 - [Neudörfl](/doc/source/citiesapps_com.md) / neudoerfl.gv.at
@@ -996,31 +998,66 @@ If you already have enough information for your municipality/region, you are ver
 <summary>Denmark</summary>
 
 - [Affaldonline](/doc/source/affaldonline_dk.md) / affaldonline.dk
+- [Albertslund Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Allerød Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Assens Forsyning](/doc/source/affaldonline_dk.md) / assensforsyning.dk
+- [Ballerup Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Faaborg Forsynings Virksomhed](/doc/source/affaldonline_dk.md) / ffv.dk
 - [Fanø Kommune](/doc/source/affaldonline_dk.md) / fanoe.dk
 - [Favrskov Forsyning](/doc/source/affaldonline_dk.md) / favrskovforsyning.dk
+- [Faxe Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Fors (Holbæk)](/doc/source/affaldonline_dk.md) / fors.dk
 - [Fredericia Kommune Affald & Genbrug](/doc/source/affaldonline_dk.md) / affaldgenbrug-fredericia.dk
+- [Frederiksberg Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Frederikshavn Forsyning](/doc/source/forsyningen_dk.md) / forsyningen.dk
+- [Frederikssund Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Gladsaxe Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Greve Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Gribskov Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Guldborgsund Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Halsnæs Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Helsingør Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Hillerød Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Horsens Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Hvidovre Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Høje-Taastrup Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Hørsholm Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Kalundborg Kommune](/doc/source/kalundborg_dk.md) / kalundborg.dk
+- [Kalundborg Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Kolding Kommune](/doc/source/kolding_dk.md) / kolding.dk
 - [Kredsløb](/doc/ics/kredslob_dk.md) / kredslob.dk
+- [Køge Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Langeland Forsyning](/doc/source/affaldonline_dk.md) / langeland-forsyning.dk
+- [Lejre Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Lolland Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Middelfart Kommune](/doc/source/affaldonline_dk.md) / middelfart.dk
 - [Morsø Kommune](/doc/source/affaldonline_dk.md) / mors.dk
 - [Nem Affaldsservice (Københavns Kommune)](/doc/source/nemaffaldsservice_kk_dk.md) / nemaffaldsservice.kk.dk
 - [Nyborg Forsyning & Service A/S](/doc/source/affaldonline_dk.md) / nfs.as
+- [Næstved Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Odense Renovation](/doc/source/odenserenovation_dk.md) / odenserenovation.dk
 - [Odense Renovation (iCal)](/doc/ics/odense_renovation_dk.md) / odenserenovation.dk
+- [Odsherred Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Perfect Waste](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Rebild Kommune](/doc/source/affaldonline_dk.md) / rebild.dk
 - [Reno Djurs](/doc/source/renodjurs_dk.md) / renodjurs.dk
 - [Renosyd](/doc/source/renosyd_dk.md) / renosyd.dk
 - [RenoWeb](/doc/source/renoweb_dk.md) / renoweb.dk
 - [RessourceIndsamling.dk](/doc/source/ressourceindsamling_dk.md) / ressourceindsamling.dk
 - [Revas (Viborg Kommune)](/doc/source/affaldonline_dk.md) / revas.dk
+- [Ringkøbing-Skjern Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Roskilde Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Rudersdal Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Silkeborg Forsyning](/doc/source/affaldonline_dk.md) / silkeborgforsyning.dk
+- [Slagelse Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Solrød Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Stevns Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Tårnby Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Varde Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
+- [Vejen Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Vejle Kommune](/doc/source/affaldonline_dk.md) / vejle.dk
 - [Vestforbrænding](/doc/source/vestfor_dk.md) / selvbetjening.vestfor.dk
+- [Vordingborg Kommune](/doc/source/perfectwaste_dk.md) / perfectwaste.dk
 - [Ærø Kommune](/doc/source/affaldonline_dk.md) / aeroekommune.dk
 </details>
 
@@ -1113,6 +1150,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Châteauroux Métropole](/doc/source/publidata_fr.md) / chateauroux-metropole.fr
 - [Cintray](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Cintré](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
+- [Circular City](/doc/source/circularcity_world.md) / circularcity.world
 - [Clayes](/doc/source/metropole_rennes_fr.md) / dechets.metropole.rennes.fr
 - [Clisson](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
 - [Clisson Sèvre et Maine Agglo](/doc/source/clissonsevremaine_fr.md) / environnement.clissonsevremaine.fr
@@ -1209,6 +1247,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Lucey](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Lucé](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Luisant](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
+- [Lunel Agglo](/doc/source/circularcity_world.md) / dechets.lunelagglo.fr
 - [Lutterbach](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Lèves](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Léognan](/doc/source/cc-montesquieu_fr.md) / cc-montesquieu.fr
@@ -1338,6 +1377,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Steinbrunn-le-Bas](/doc/source/mulhouse_alsace_fr.md) / data.mulhouse-alsace.fr
 - [Sucy-en-Brie](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
 - [Sud Sainte Baume](/doc/source/publidata_fr.md) / agglo-sudsaintebaume.fr
+- [Syndicat Émeraude](/doc/source/circularcity_world.md) / emeraude.circularcity.world
 - [Terres Touloises](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Theuville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
 - [Thivars](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes
@@ -4467,6 +4507,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Teknik i Väst (Arvika/Eda)](/doc/source/avfallsapp_se.md) / teknikivast.se
 - [Telge Återvinning](/doc/source/telge_se.md) / telge.se
 - [Timrå kommun](/doc/source/timra_se.md) / timra.se
+- [Trollhättan Energi](/doc/source/trollhattanenergi_se.md) / trollhattanenergi.se
 - [Uddevalla Energi](/doc/source/uddevallaenergi_se.md) / uddevallaenergi.se/privat/sophamtning.html
 - [Upplands-Bro](/doc/source/avfallsapp_se.md) / upplands-bro.se
 - [Uppsala Vatten](/doc/source/edpevent_se.md) / uppsalavatten.se
@@ -4644,6 +4685,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Speicher](/doc/source/a_region_ch.md) / a-region.ch
 - [Spiegel](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
 - [Stadt Bülach](/doc/ics/buelach_ch.md) / buelach.ch
+- [Staffelbach](/doc/source/staffelbach_ch.md) / staffelbach.ch
 - [Steckborn](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Stein](/doc/source/a_region_ch.md) / a-region.ch
 - [Stein am Rhein](/doc/source/kvatg_ch.md) / kvatg.ch
@@ -4953,6 +4995,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Rhondda Cynon Taf County Borough Council](/doc/source/rctcbc_gov_uk.md) / rctcbc.gov.uk
 - [Rochdale Borough Council](/doc/source/rochdale_gov_uk.md) / rochdale.gov.uk
 - [Rochford District Council](/doc/source/rochford_gov_uk.md) / rochford.gov.uk
+- [Rossendale Borough Council](/doc/source/rossendale_gov_uk.md) / rossendale.gov.uk
 - [Rother District Council](/doc/source/rother_gov_uk.md) / rother.gov.uk
 - [Rotherham](/doc/source/apps_imactivate_com.md) / rotherham.gov.uk
 - [Royal Borough Of Greenwich](/doc/source/royalgreenwich_gov_uk.md) / royalgreenwich.gov.uk

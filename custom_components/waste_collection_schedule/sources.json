@@ -2567,6 +2567,12 @@
       "id": "umweltverbaende_at"
     },
     {
+      "title": "GVA Tulln",
+      "module": "gvatulln_at",
+      "default_params": {},
+      "id": "gvatulln_at"
+    },
+    {
       "title": "GVA Waidhofen/Thaya",
       "module": "umweltverbaende_at",
       "default_params": {
@@ -3561,6 +3567,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Nestelbach bei Graz",
+      "module": "nestelbach_graz_gv_at",
+      "default_params": {},
+      "id": "nestelbach_graz_gv_at"
     },
     {
       "title": "Neudau",
@@ -5963,12 +5975,36 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "Albertslund Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Albertslund"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Aller\u00f8d Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Aller\u00f8d"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Assens Forsyning",
       "module": "affaldonline_dk",
       "default_params": {
         "municipality": "assens"
       },
       "id": "affaldonline_dk"
+    },
+    {
+      "title": "Ballerup Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Ballerup"
+      },
+      "id": "perfectwaste_dk"
     },
     {
       "title": "Faaborg Forsynings Virksomhed",
@@ -5995,6 +6031,14 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "Faxe Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Faxe"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Fors (Holb\u00e6k)",
       "module": "affaldonline_dk",
       "default_params": {
@@ -6011,10 +6055,128 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "Frederiksberg Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Frederiksberg"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Frederikshavn Forsyning",
+      "module": "forsyningen_dk",
+      "default_params": {},
+      "id": "forsyningen_dk"
+    },
+    {
+      "title": "Frederikssund Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Frederikssund"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Gladsaxe Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Gladsaxe"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Greve Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Greve"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Gribskov Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Gribskov"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Guldborgsund Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Guldborgsund"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Halsn\u00e6s Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Halsn\u00e6s"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Helsing\u00f8r Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Helsing\u00f8r"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Hiller\u00f8d Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Hiller\u00f8d"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Horsens Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Horsens"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Hvidovre Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Hvidovre"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "H\u00f8je-Taastrup Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "H\u00f8je-Taastrup"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "H\u00f8rsholm Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "H\u00f8rsholm"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Kalundborg Kommune",
       "module": "kalundborg_dk",
       "default_params": {},
       "id": "kalundborg_dk"
+    },
+    {
+      "title": "Kalundborg Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Kalundborg"
+      },
+      "id": "perfectwaste_dk"
     },
     {
       "title": "Kolding Kommune",
@@ -6029,12 +6191,36 @@
       "id": "ics_kredslob_dk"
     },
     {
+      "title": "K\u00f8ge Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "K\u00f8ge"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Langeland Forsyning",
       "module": "affaldonline_dk",
       "default_params": {
         "municipality": "langeland"
       },
       "id": "affaldonline_dk"
+    },
+    {
+      "title": "Lejre Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Lejre"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Lolland Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Lolland"
+      },
+      "id": "perfectwaste_dk"
     },
     {
       "title": "Middelfart Kommune",
@@ -6067,6 +6253,14 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "N\u00e6stved Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "N\u00e6stved"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Odense Renovation",
       "module": "odenserenovation_dk",
       "default_params": {},
@@ -6080,6 +6274,20 @@
         "split_at": ",\\s*"
       },
       "id": "ics_odense_renovation_dk"
+    },
+    {
+      "title": "Odsherred Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Odsherred"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Perfect Waste",
+      "module": "perfectwaste_dk",
+      "default_params": {},
+      "id": "perfectwaste_dk"
     },
     {
       "title": "Rebild Kommune",
@@ -6122,12 +6330,84 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "Ringk\u00f8bing-Skjern Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Ringk\u00f8bing-Skjern"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Roskilde Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Roskilde"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Rudersdal Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Rudersdal"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Silkeborg Forsyning",
       "module": "affaldonline_dk",
       "default_params": {
         "municipality": "silkeborg"
       },
       "id": "affaldonline_dk"
+    },
+    {
+      "title": "Slagelse Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Slagelse"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Solr\u00f8d Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Solr\u00f8d"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Stevns Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Stevns"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "T\u00e5rnby Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "T\u00e5rnby"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Varde Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Varde"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Vejen Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Vejen"
+      },
+      "id": "perfectwaste_dk"
     },
     {
       "title": "Vejle Kommune",
@@ -6142,6 +6422,14 @@
       "module": "vestfor_dk",
       "default_params": {},
       "id": "vestfor_dk"
+    },
+    {
+      "title": "Vordingborg Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Vordingborg"
+      },
+      "id": "perfectwaste_dk"
     },
     {
       "title": "\u00c6r\u00f8 Kommune",
@@ -6788,6 +7076,12 @@
         "commune": "Cintr\u00e9"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Circular City",
+      "module": "circularcity_world",
+      "default_params": {},
+      "id": "circularcity_world"
     },
     {
       "title": "Clayes",
@@ -7540,6 +7834,14 @@
         "commune": "Luisant"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Lunel Agglo",
+      "module": "circularcity_world",
+      "default_params": {
+        "customer": "lunel"
+      },
+      "id": "circularcity_world"
     },
     {
       "title": "Lutterbach",
@@ -8544,6 +8846,14 @@
         "instance_id": 1483
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Syndicat \u00c9meraude",
+      "module": "circularcity_world",
+      "default_params": {
+        "customer": "emeraude"
+      },
+      "id": "circularcity_world"
     },
     {
       "title": "Terres Touloises",
@@ -32322,6 +32632,12 @@
       "id": "timra_se"
     },
     {
+      "title": "Trollh\u00e4ttan Energi",
+      "module": "trollhattanenergi_se",
+      "default_params": {},
+      "id": "trollhattanenergi_se"
+    },
+    {
       "title": "Uddevalla Energi",
       "module": "uddevallaenergi_se",
       "default_params": {},
@@ -33627,6 +33943,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_buelach_ch"
+    },
+    {
+      "title": "Staffelbach",
+      "module": "staffelbach_ch",
+      "default_params": {},
+      "id": "staffelbach_ch"
     },
     {
       "title": "Steckborn",
@@ -35587,6 +35909,12 @@
       "module": "rochford_gov_uk",
       "default_params": {},
       "id": "rochford_gov_uk"
+    },
+    {
+      "title": "Rossendale Borough Council",
+      "module": "rossendale_gov_uk",
+      "default_params": {},
+      "id": "rossendale_gov_uk"
     },
     {
       "title": "Rother District Council",

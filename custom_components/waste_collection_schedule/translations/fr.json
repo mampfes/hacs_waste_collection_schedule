@@ -4725,6 +4725,35 @@
           "region": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
+      "args_gvatulln_at": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "building": "Building",
+          "district": "Quartier",
+          "municipality": "Commune"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "district": "Votre quartier ou partie de la commune.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
+      },
+      "reconfigure_gvatulln_at": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "building": "Building",
+          "district": "Quartier",
+          "municipality": "Commune"
+        },
+        "data_description": {
+          "district": "Votre quartier ou partie de la commune.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
+      },
       "args_scheibbs_umweltverbaende_at": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -5418,6 +5447,24 @@
           "address": "Votre adresse complète.",
           "street": "Le nom de votre rue."
         }
+      },
+      "args_nestelbach_graz_gv_at": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_nestelbach_graz_gv_at": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier"
+        },
+        "data_description": {}
       },
       "args_oberndorf_schwanenstadt_at": {
         "title": "Configurer la Source",
@@ -7585,6 +7632,54 @@
           "values": "Votre numéro de rue."
         }
       },
+      "args_perfectwaste_dk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
+        }
+      },
+      "reconfigure_perfectwaste_dk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
+      },
+      "args_forsyningen_dk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
+        }
+      },
+      "reconfigure_forsyningen_dk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
+      },
       "args_kalundborg_dk": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -8240,6 +8335,31 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
           "city": "City"
+        },
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
+      },
+      "args_circularcity_world": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "customer": "Customer"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
+        }
+      },
+      "reconfigure_circularcity_world": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse",
+          "customer": "Customer"
         },
         "data_description": {
           "address": "Votre adresse complète."
@@ -23907,6 +24027,29 @@
           "address": "Votre adresse complète."
         }
       },
+      "args_trollhattanenergi_se": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
+        }
+      },
+      "reconfigure_trollhattanenergi_se": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
+      },
       "args_uddevallaenergi_se": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -25031,6 +25174,24 @@
           "verify_ssl": "Verify Ssl",
           "version": "Version",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_staffelbach_ch": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_staffelbach_ch": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier"
         },
         "data_description": {}
       },
@@ -30889,6 +31050,33 @@
           "uprn": "Uprn"
         },
         "data_description": {
+          "postcode": "Votre code postal."
+        }
+      },
+      "args_rossendale_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro",
+          "postcode": "Code postal"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Votre numéro de rue.",
+          "postcode": "Votre code postal."
+        }
+      },
+      "reconfigure_rossendale_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro",
+          "postcode": "Code postal"
+        },
+        "data_description": {
+          "house_number": "Votre numéro de rue.",
           "postcode": "Votre code postal."
         }
       },

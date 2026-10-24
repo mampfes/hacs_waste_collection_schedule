@@ -4719,6 +4719,35 @@
           "region": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
       },
+      "args_gvatulln_at": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "building": "Building",
+          "district": "Wijk",
+          "municipality": "Gemeente"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "district": "Uw wijk of deel van de gemeente.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
+      },
+      "reconfigure_gvatulln_at": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "building": "Building",
+          "district": "Wijk",
+          "municipality": "Gemeente"
+        },
+        "data_description": {
+          "district": "Uw wijk of deel van de gemeente.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
+      },
       "args_scheibbs_umweltverbaende_at": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -5412,6 +5441,24 @@
           "address": "Uw volledige adres.",
           "street": "Uw straatnaam."
         }
+      },
+      "args_nestelbach_graz_gv_at": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_nestelbach_graz_gv_at": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel"
+        },
+        "data_description": {}
       },
       "args_oberndorf_schwanenstadt_at": {
         "title": "Bron configureren",
@@ -7563,6 +7610,54 @@
           "values": "Uw huisnummer."
         }
       },
+      "args_perfectwaste_dk": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
+        }
+      },
+      "reconfigure_perfectwaste_dk": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
+      },
+      "args_forsyningen_dk": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
+        }
+      },
+      "reconfigure_forsyningen_dk": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres"
+        },
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
+      },
       "args_kalundborg_dk": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -8211,6 +8306,31 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres",
           "city": "City"
+        },
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
+      },
+      "args_circularcity_world": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "customer": "Customer"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
+        }
+      },
+      "reconfigure_circularcity_world": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "customer": "Customer"
         },
         "data_description": {
           "address": "Uw volledige adres."
@@ -23865,6 +23985,29 @@
           "address": "Uw volledige adres."
         }
       },
+      "args_trollhattanenergi_se": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
+        }
+      },
+      "reconfigure_trollhattanenergi_se": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres"
+        },
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
+      },
       "args_uddevallaenergi_se": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -24989,6 +25132,24 @@
           "verify_ssl": "SSL verifiëren",
           "version": "Versie",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_staffelbach_ch": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_staffelbach_ch": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel"
         },
         "data_description": {}
       },
@@ -30847,6 +31008,33 @@
           "uprn": "Uprn"
         },
         "data_description": {
+          "postcode": "Uw postcode."
+        }
+      },
+      "args_rossendale_gov_uk": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "house_number": "Huisnummer",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "house_number": "Uw huisnummer.",
+          "postcode": "Uw postcode."
+        }
+      },
+      "reconfigure_rossendale_gov_uk": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "house_number": "Huisnummer",
+          "postcode": "Postcode"
+        },
+        "data_description": {
+          "house_number": "Uw huisnummer.",
           "postcode": "Uw postcode."
         }
       },

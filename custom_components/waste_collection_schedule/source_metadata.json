@@ -1160,6 +1160,14 @@
     },
     "urls": {}
   },
+  "gvatulln_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gvatulln_at.md",
+    "howto": {
+      "de": "Geben Sie Ihre Gemeinde so ein, wie sie auf https://gvatulln.at/fuer-die-bevoelkerung/abholtermine/ heißt (z. B. 'Tulln', 'St. Andrä-Wördern', 'Sitzenberg'). Gemeinden mit mehreren Sprengeln brauchen zusätzlich den Sprengel: die Nummer aus dem Abfuhrplan (z. B. '2') bzw. 'Zeiselmauer' / 'Wolfpassing'. Gebäudetyp 'commercial' gilt für Gewerbe und Wohnhausanlagen.",
+      "en": "Enter your municipality as it is named on https://gvatulln.at/fuer-die-bevoelkerung/abholtermine/ (e.g. 'Tulln', 'St. Andrä-Wördern', 'Sitzenberg'). Municipalities split into collection districts also need the district: the 'Sprengel' number from the plan (e.g. '2'), or 'Zeiselmauer' / 'Wolfpassing'. Choose building type 'commercial' for businesses and apartment complexes (Gewerbe und Wohnhausanlagen)."
+    },
+    "urls": {}
+  },
   "scheibbs_umweltverbaende_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scheibbs_umweltverbaende_at.md",
     "howto": {},
@@ -1324,6 +1332,11 @@
       "de": "Wählen Sie Ihre Gemeinde, dann Ihre Adresse und, falls die Adresse mehrere Straßen hat, die Straße. Alternativ können Sie die Adressen-ID direkt angeben: das ist die Zahl in der Anfrage https://wsz-moosburg.at/api/trash/<ID>, die der Kalender auf wsz-moosburg.at für Ihre Adresse stellt.",
       "en": "Pick your municipality, then your address and, where the address has several streets, the street. Alternatively enter the address ID directly: it is the number in the request https://wsz-moosburg.at/api/trash/<ID> that the calendar on wsz-moosburg.at makes for your address."
     },
+    "urls": {}
+  },
+  "nestelbach_graz_gv_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nestelbach_graz_gv_at.md",
+    "howto": {},
     "urls": {}
   },
   "oberndorf_schwanenstadt_at": {
@@ -1829,6 +1842,22 @@
     "howto": {},
     "urls": {}
   },
+  "perfectwaste_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/perfectwaste_dk.md",
+    "howto": {
+      "da": "Vælg din kommune og indtast adressen, som Perfect Waste-appen skriver den, f.eks. \"Søndermarken 10, 8752 Østbirk\". Hvis adressen ikke er entydig, viser fejlbeskeden de mulige adresser. Vigtigt: Perfect Waste returnerer kun tømmedage for adresser, som systemet allerede kender. Får du en fejl om, at der ikke er gemt tømmedage for din adresse, så tilføj adressen én gang i Perfect Waste-appen (eller din kommunes egen Perfect Waste-app) og genindlæs derefter denne kilde.",
+      "en": "Select your municipality and enter your address the way the Perfect Waste app writes it, e.g. \"Søndermarken 10, 8752 Østbirk\". If the address is ambiguous, the error message lists the matching addresses. Important: Perfect Waste only returns collection dates for addresses it already knows. If you get an error saying there are no collection dates stored for your address, add the address once in the Perfect Waste app (or your municipality's own Perfect Waste app) and then reload this source."
+    },
+    "urls": {}
+  },
+  "forsyningen_dk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/forsyningen_dk.md",
+    "howto": {
+      "da": "Indtast adressen, som adressesøgningen på https://renovation.forsyningen.dk/minside/Tomningsinfo foreslår den, f.eks. 'Hjørringvej 10' eller 'Knivholtvej 15, 1 (9900)'.",
+      "en": "Enter your address as the address search on https://renovation.forsyningen.dk/minside/Tomningsinfo suggests it, e.g. 'Hjørringvej 10' or 'Knivholtvej 15, 1 (9900)'."
+    },
+    "urls": {}
+  },
   "kalundborg_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kalundborg_dk.md",
     "howto": {
@@ -2002,6 +2031,14 @@
     "howto": {
       "en": "Choose your commune and enter your street address without the city (e.g. '20 Cours Pasteur'). The collection days are those of the zone the address lies in.",
       "fr": "Choisissez votre commune et saisissez votre adresse sans la commune (ex : '20 Cours Pasteur'). Les jours de collecte sont ceux de la zone où se trouve l'adresse."
+    },
+    "urls": {}
+  },
+  "circularcity_world": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/circularcity_world.md",
+    "howto": {
+      "en": "Pick your authority's Circular City app as the customer and enter your address exactly as the app's address search suggests it, including postcode and town (e.g. '41 Place de la Mairie 34160 Saussines').",
+      "fr": "Choisissez l'application Circular City de votre collectivité et saisissez votre adresse telle que la recherche d'adresse de l'application la propose, avec code postal et commune (par ex. « 41 Place de la Mairie 34160 Saussines »)."
     },
     "urls": {}
   },
@@ -5423,6 +5460,13 @@
     },
     "urls": {}
   },
+  "trollhattanenergi_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/trollhattanenergi_se.md",
+    "howto": {
+      "en": "Enter your street and house number exactly as the address search in Trollhättan Energi's Återvinningsappen shows it, including å, ä and ö (for example 'Albertsvägen 11'). Collections are projected about a year ahead from the next date and interval the app lists for each bin; garden waste only within this year's season."
+    },
+    "urls": {}
+  },
   "uddevallaenergi_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/uddevallaenergi_se.md",
     "howto": {
@@ -5720,6 +5764,11 @@
     "howto": {
       "en": "- Visit <https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender>.  \n- Right-click -> copy link address on the \"Entsorgungskalender\" link to get the link to the ICS file.\n- Use this url as the `url` argument.\n"
     },
+    "urls": {}
+  },
+  "staffelbach_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/staffelbach_ch.md",
+    "howto": {},
     "urls": {}
   },
   "suibr_ch": {
@@ -7508,6 +7557,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rochford_gov_uk.md",
     "howto": {
       "en": "Go to https://www.rochford.gov.uk/bins-and-collections and enter your postcode, then press 'Find'. Open the address dropdown that appears and select your address. The 'uprn' is the value of the selected option in that dropdown: a composite of the ward code and UPRN separated by a hyphen, e.g. 'E05010853-10014203194'. You can read it from the page's HTML source (the <option value> attribute)."
+    },
+    "urls": {}
+  },
+  "rossendale_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rossendale_gov_uk.md",
+    "howto": {
+      "en": "Enter your postcode and your house number (or house name, as listed at https://www.rossendale.gov.uk/directory/10094/bin-collection-days)."
     },
     "urls": {}
   },

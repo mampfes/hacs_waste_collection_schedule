@@ -4719,6 +4719,35 @@
           "region": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
         }
       },
+      "args_gvatulln_at": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "building": "Building",
+          "district": "Distrikt",
+          "municipality": "Kommune"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "district": "Dit distrikt eller del af kommunen",
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
+      "reconfigure_gvatulln_at": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "building": "Building",
+          "district": "Distrikt",
+          "municipality": "Kommune"
+        },
+        "data_description": {
+          "district": "Dit distrikt eller del af kommunen",
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
       "args_scheibbs_umweltverbaende_at": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -5412,6 +5441,24 @@
           "address": "Din fulde adresse",
           "street": "Dit gadenavn"
         }
+      },
+      "args_nestelbach_graz_gv_at": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_nestelbach_graz_gv_at": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel"
+        },
+        "data_description": {}
       },
       "args_oberndorf_schwanenstadt_at": {
         "title": "Konfigurer Kilde",
@@ -7563,6 +7610,54 @@
           "values": "Dit husnummer"
         }
       },
+      "args_perfectwaste_dk": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
+        }
+      },
+      "reconfigure_perfectwaste_dk": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
+      },
+      "args_forsyningen_dk": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
+        }
+      },
+      "reconfigure_forsyningen_dk": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
+      },
       "args_kalundborg_dk": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -8211,6 +8306,31 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
           "city": "City"
+        },
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
+      },
+      "args_circularcity_world": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "customer": "Customer"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
+        }
+      },
+      "reconfigure_circularcity_world": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse",
+          "customer": "Customer"
         },
         "data_description": {
           "address": "Din fulde adresse"
@@ -23865,6 +23985,29 @@
           "address": "Din fulde adresse"
         }
       },
+      "args_trollhattanenergi_se": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
+        }
+      },
+      "reconfigure_trollhattanenergi_se": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
+      },
       "args_uddevallaenergi_se": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -24989,6 +25132,24 @@
           "verify_ssl": "Verify Ssl",
           "version": "Version",
           "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
+      "args_staffelbach_ch": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_staffelbach_ch": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel"
         },
         "data_description": {}
       },
@@ -30847,6 +31008,33 @@
           "uprn": "Uprn"
         },
         "data_description": {
+          "postcode": "Dit postnummer"
+        }
+      },
+      "args_rossendale_gov_uk": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Husnummer",
+          "postcode": "Postnummer"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "house_number": "Dit husnummer",
+          "postcode": "Dit postnummer"
+        }
+      },
+      "reconfigure_rossendale_gov_uk": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Husnummer",
+          "postcode": "Postnummer"
+        },
+        "data_description": {
+          "house_number": "Dit husnummer",
           "postcode": "Dit postnummer"
         }
       },
