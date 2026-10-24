@@ -6557,6 +6557,32 @@ class TestPdfWordLayoutParser:
         assert layout.words[0].y == layout.words[1].y
         assert layout.vectors[0].fill_color == (0.5, 0.5, 0.5)
 
+    def test_include_strokes_keeps_painted_area_of_stroked_lines(self):
+        from io import BytesIO
+
+        from pypdf import PdfWriter
+        from pypdf.generic import DecodedStreamObject, NameObject
+        from waste_collection_schedule.parsers import PdfWordLayoutParser
+
+        writer = PdfWriter()
+        page = writer.add_blank_page(width=200, height=100)
+        stream = DecodedStreamObject()
+        # A calendar cell painted as a 12 pt wide horizontal stroke, as Latrobe's.
+        stream.set_data(b"0.2 0.4 0.6 RG 12 w 10 50 m 40 50 l S")
+        page[NameObject("/Contents")] = writer._add_object(stream)
+        output = BytesIO()
+        writer.write(output)
+        response = SimpleNamespace(content=output.getvalue(), status_code=200)
+
+        assert PdfWordLayoutParser(min_words=0)(response)[0].vectors == []
+        (vector,) = PdfWordLayoutParser(min_words=0, include_strokes=True)(response)[
+            0
+        ].vectors
+        assert (vector.x0, vector.x1) == pytest.approx((10, 40))
+        assert (vector.y0, vector.y1) == pytest.approx((44, 56))
+        assert vector.stroke_color == pytest.approx((0.2, 0.4, 0.6))
+        assert vector.fill_color is None
+
     def test_minimum_counts_reject_incomplete_layout(self):
         from waste_collection_schedule.parsers import PdfWordLayoutParser
         from waste_collection_schedule.response_shape import ResponseShapeError

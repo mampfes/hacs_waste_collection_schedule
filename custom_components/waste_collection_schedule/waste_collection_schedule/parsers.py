@@ -2296,7 +2296,10 @@ class PdfWordLayout(NamedTuple):
 
 
 def _pdf_word_layout(
-    response: Response, *, include_form_text: bool = False
+    response: Response,
+    *,
+    include_form_text: bool = False,
+    include_strokes: bool = False,
 ) -> PdfWordLayout:
     """Retain individual word centres even when lines span several grid cells."""
     from io import BytesIO
@@ -2357,6 +2360,25 @@ def _pdf_word_layout(
                     _pdf_color(item.non_stroking_color, grayscale_to_rgb=True),
                 )
             )
+        elif isinstance(item, LTCurve) and item.stroke and include_strokes:
+            # A stroke-only path paints a band around its geometry: report the
+            # painted area and only its stroke colour (the fill colour is just
+            # whatever was last set). A straight horizontal or vertical line is
+            # widened across its direction only, as its butt ends add nothing.
+            half = max(float(getattr(item, "linewidth", 0) or 0), 0.0) / 2
+            dx = 0.0 if item.y1 - item.y0 < 0.01 < item.x1 - item.x0 else half
+            dy = 0.0 if item.x1 - item.x0 < 0.01 < item.y1 - item.y0 else half
+            vectors.append(
+                PdfVector(
+                    page,
+                    item.x0 - dx,
+                    item.y0 - dy,
+                    item.x1 + dx,
+                    item.y1 + dy,
+                    _pdf_color(item.stroking_color, grayscale_to_rgb=True),
+                    None,
+                )
+            )
 
     for page, layout in enumerate(
         extract_pages(
@@ -2375,6 +2397,10 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
     legends. An optional minimum word/vector count detects empty or changed
     documents. Set ``include_form_text`` for text inside Form XObjects, which
     needs pdfminer's ``all_texts`` grouping to become positioned words.
+    Set ``include_strokes`` for a calendar that paints its cells as thick
+    stroked lines rather than filled rectangles: stroke-only paths are then
+    kept too, as the area they paint (widened by half the line width), with
+    ``fill_color`` None and the paint in ``stroke_color``.
     The one-item list composes with ``parsers.EachResponse``.
     """
 
@@ -2384,15 +2410,21 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
         min_words: int = 1,
         min_vectors: int = 0,
         include_form_text: bool = False,
+        include_strokes: bool = False,
     ):
         self.min_words = min_words
         self.min_vectors = min_vectors
         self.include_form_text = include_form_text
+        self.include_strokes = include_strokes
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> list[PdfWordLayout]:
-        layout = _pdf_word_layout(response, include_form_text=self.include_form_text)
+        layout = _pdf_word_layout(
+            response,
+            include_form_text=self.include_form_text,
+            include_strokes=self.include_strokes,
+        )
         response_shape.expect(
             len(layout.words) >= self.min_words
             and len(layout.vectors) >= self.min_vectors,
