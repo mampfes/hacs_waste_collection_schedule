@@ -617,3 +617,23 @@ class TestPdfRoundMonthGrid:
         impossible = [("31", 241, 680)]  # 31 February
         with pytest.raises(ResponseShapeError):
             self.grid()([self.table(self.MONTHS, extra_words=impossible)])
+
+
+def test_marker_calendar_half_cell_bar_reaches_its_day_numbers():
+    from waste_collection_schedule.parsers import PdfVector
+    from waste_collection_schedule.service.PdfMarkerCalendar import (
+        MarkerCalendarParser,
+        _Anchor,
+    )
+
+    parser = MarkerCalendarParser([], placement="cell")
+    bar = PdfVector(0, 172, 530, 206, 539, None, (0.4, 0.7, 0.3))
+    days = [
+        _Anchor(0, 16, 180, 547),
+        _Anchor(0, 17, 197, 547),
+        _Anchor(0, 23, 180, 528.7),
+        _Anchor(0, 24, 197, 528.7),
+        _Anchor(0, 25, 214, 528.7),
+        _Anchor(1, 23, 180, 528.7),
+    ]
+    assert parser._anchors_of(bar, days) == days[2:4]
