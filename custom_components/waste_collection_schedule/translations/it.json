@@ -9225,12 +9225,15 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "customer": "Cliente",
-          "housenumber": "Civico",
-          "street": "Strada"
+          "customer": "ID servizio",
+          "housenumber": "Numero civico",
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "La vostra città o paese.",
+          "housenumber": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_awido_de": {
@@ -9239,11 +9242,15 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "customer": "Cliente",
-          "housenumber": "Civico",
-          "street": "Strada"
+          "customer": "ID servizio",
+          "housenumber": "Numero civico",
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "La vostra città o paese.",
+          "housenumber": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_abfall_io": {
         "title": "Configurazione Sorgente",

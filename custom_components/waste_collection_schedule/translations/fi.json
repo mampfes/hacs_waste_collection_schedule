@@ -9213,12 +9213,15 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "customer": "Customer",
-          "housenumber": "Housenumber",
+          "customer": "Palvelun tunnus",
+          "housenumber": "Talon numero",
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "housenumber": "Talon numero.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_awido_de": {
@@ -9227,11 +9230,15 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "customer": "Customer",
-          "housenumber": "Housenumber",
+          "customer": "Palvelun tunnus",
+          "housenumber": "Talon numero",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "housenumber": "Talon numero.",
+          "street": "Kadun nimi."
+        }
       },
       "args_abfall_io": {
         "title": "Määritä lähde",

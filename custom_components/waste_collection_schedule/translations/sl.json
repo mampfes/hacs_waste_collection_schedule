@@ -9206,12 +9206,15 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "customer": "Stranka",
+          "customer": "ID storitve",
           "housenumber": "Hišna številka",
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "housenumber": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_awido_de": {
@@ -9220,11 +9223,15 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "customer": "Stranka",
+          "customer": "ID storitve",
           "housenumber": "Hišna številka",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "housenumber": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_abfall_io": {
         "title": "Configure Source",

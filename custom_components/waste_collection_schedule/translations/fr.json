@@ -9237,12 +9237,15 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
-          "customer": "Client",
-          "housenumber": "Numéro civique",
+          "customer": "ID de service",
+          "housenumber": "Numéro",
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village.",
+          "housenumber": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_awido_de": {
@@ -9251,11 +9254,15 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
-          "customer": "Client",
-          "housenumber": "Numéro civique",
+          "customer": "ID de service",
+          "housenumber": "Numéro",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Votre ville ou village.",
+          "housenumber": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_abfall_io": {
         "title": "Configurer la Source",
