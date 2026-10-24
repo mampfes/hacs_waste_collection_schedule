@@ -1,251 +1,73 @@
-import logging
-from datetime import date, datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from dateutil.rrule import DAILY, rrule
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
-    SourceArgumentRequired,
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import (
+    city,
+    district,
+    house_number,
+    street,
+)
+from waste_collection_schedule.retrievers import LookupChainRetriever
+from waste_collection_schedule.service.Blupassion import (
+    BlupassionApp,
+    BlupassionParser,
+)
+from waste_collection_schedule.transformers import RowTransformer
+
+# The AWB Bad Kreuznach app runs on the blupassion City App backend (appId 44);
+# the address walk and the day-frequency calendars are the platform's, in
+# ``service/Blupassion.py``.
+_APP = BlupassionApp(
+    44,
+    city="ort",
+    part_of_city="stadtteil",
+    street="strasse",
+    house_number="nummer",
 )
 
-TITLE = "AWB Bad Kreuznach"
-DESCRIPTION = "Source for AWB Bad Kreuznach."
-URL = "https://blupassionsystem.de/city/rest/garbageregion/filterRegion"
-TEST_CASES = {
-    "Hargesheim": {"ort": "Hargesheim"},
-    "Bad Kreuznach": {
-        "ort": "Bad Kreuznach",
-        "strasse": "adalbert-stifter-straße",
-        "nummer": "3",
-    },
-    "Bad Kreuznach OT Bad Münster-Ebernburg": {
-        "ort": "Bad Kreuznach OT Bad Münster-Ebernburg",
-        "strasse": "am Götzenfels",
-    },
-    "Stromberg": {"ort": "Stromberg", "stadtteil": "Schindeldorf"},
-    "Altenbamberg": {"ort": "Altenbamberg"},
-}
 
-TYPES = ("restmuell", "bio", "wert", "papier")
+@final
+class Source(BaseSource):
+    TITLE = "AWB Bad Kreuznach"
+    DESCRIPTION = "Source for AWB Bad Kreuznach."
+    URL = "https://www.awb-kh.de"
+    COUNTRY = "de"
+    RAISE_ON_EMPTY = True
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-ICON_MAP = {
-    "Restabfall": Icons.GENERAL_WASTE,
-    "Bioabfall": Icons.BIO_KITCHEN,
-    "Gelber Sack/Gelbe Tonne": Icons.PLASTIC_PACKAGING,
-    "Papiertonne": Icons.PAPER,
-    "Bildschirm-/Kühlgeräte": Icons.ELECTRONICS,
-    "Schadstoffsammlung": Icons.HAZARDOUS,
-    "altmetalle": Icons.METAL,
-}
+    TEST_CASES: ClassVar[dict] = {
+        "Hargesheim": {"ort": "Hargesheim"},
+        "Bad Kreuznach": {
+            "ort": "Bad Kreuznach",
+            "strasse": "adalbert-stifter-straße",
+            "nummer": "3",
+        },
+        "Bad Kreuznach OT Bad Münster-Ebernburg": {
+            "ort": "Bad Kreuznach OT Bad Münster-Ebernburg",
+            "strasse": "am Götzenfels",
+        },
+        "Stromberg": {"ort": "Stromberg", "stadtteil": "Schindeldorf"},
+        "Altenbamberg": {"ort": "Altenbamberg"},
+    }
 
-LOGGER = logging.getLogger(__name__)
+    PARAMS = (
+        city(field="ort"),
+        district(field="stadtteil", optional=True),
+        street(field="strasse", optional=True),
+        house_number(field="nummer", optional=True),
+    )
 
-
-def compare_str(a: str, b: str):
-    return a.lower().replace(" ", "").replace("-", "") == b.lower().replace(
-        "-", ""
-    ).replace(" ", "")
-
-
-class Source:
-    def __init__(self, ort, strasse=None, nummer=None, stadtteil=None):
-        self._stadtteil = stadtteil if stadtteil else None
-        self._ort = ort
-        self._strasse = strasse if strasse else None
-        self._nummer = str(nummer) if nummer else None
-
-    def fetch(self):
-        params = {
-            "active": True,
-            "appId": 44,
-            "hugeDataInfo": "",
-            "regionId": None,
-            "cityId": None,
-            "streetId": None,
-            "partOfCityId": None,
-            "districtId": None,
-        }
-
-        r = requests.post(URL, json=params)
-        r.raise_for_status()
-        data = r.json()
-
-        if not ("data" in data and "citys" in data["data"]):
-            raise ValueError("Unexpected response")
-        if "regions" in data["data"]:
-            params["regionId"] = data["data"]["regions"][0]["id"]
-
-        r = requests.post(URL, json=params)
-        r.raise_for_status()
-        data = r.json()
-
-        found = False
-        for city in data["data"]["citys"]:
-            if compare_str(city["name"], self._ort):
-                params["cityId"] = city["id"]
-                found = True
-                break
-
-        if not found:
-            SourceArgumentNotFoundWithSuggestions(
-                "ort", self._ort, [city["name"] for city in data["data"]["citys"]]
-            )
-
-        r = requests.post(URL, json=params)
-        r.raise_for_status()
-        data = r.json()
-
-        if data["data"]["partOfCitys"] != []:
-            if self._stadtteil is None:
-                raise SourceArgumentRequired(
-                    "stadtteil",
-                    "A district (Stadtteil) must be selected from the available options",
-                )
-        elif self._stadtteil is not None:
-            LOGGER.warning("stadtteil provided but not needed")
-
-        if data["data"]["partOfCitys"]:
-            found = False
-
-            for part_of_city in data["data"]["partOfCitys"]:
-                if compare_str(part_of_city["name"], self._stadtteil):
-                    params["partOfCityId"] = part_of_city["id"]
-                    found = True
-                    break
-
-            if not found:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "stadtteil",
-                    self._stadtteil,
-                    [
-                        part_of_city["name"]
-                        for part_of_city in data["data"]["partOfCitys"]
-                    ],
-                )
-
-        r = requests.post(URL, json=params)
-        r.raise_for_status()
-        data = r.json()
-
-        if data["data"]["streets"] != []:
-            if self._strasse is None:
-                raise SourceArgumentRequired(
-                    "strasse",
-                    "A street (Strasse) must be selected from the available options",
-                )
-        elif self._strasse is not None:
-            LOGGER.warning("strasse provided but not needed")
-
-        if data["data"]["streets"]:
-            found = False
-            for street in data["data"]["streets"]:
-                if compare_str(street["name"], self._strasse):
-                    params["streetId"] = street["id"]
-                    found = True
-                    break
-            if not found:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "strasse",
-                    self._strasse,
-                    [street["name"] for street in data["data"]["streets"]],
-                )
-
-        r = requests.post(URL, json=params)
-        r.raise_for_status()
-        data = r.json()
-
-        if data["data"]["houseNumbers"] != []:
-            if self._nummer is None:
-                raise SourceArgumentRequired(
-                    "nummer",
-                    "A house number (Nummer) must be selected from the available options",
-                )
-        elif self._nummer is not None:
-            LOGGER.warning("nummer provided but not needed")
-
-        if data["data"]["houseNumbers"]:
-            found = False
-            for house_number in data["data"]["houseNumbers"]:
-                if compare_str(str(house_number["name"]), str(self._nummer)):
-                    params["streetId"] = house_number["id"]
-                    found = True
-                    break
-            if not found:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "nummer",
-                    self._nummer,
-                    [
-                        house_number["name"]
-                        for house_number in data["data"]["houseNumbers"]
-                    ],
-                )
-
-        from_time = datetime.now()
-        from_time = from_time.replace(hour=0, minute=0, second=0, microsecond=0)
-        from_time = from_time - timedelta(days=1)
-
-        to_time = from_time + timedelta(days=365)
-
-        params["fromTime"] = int(from_time.timestamp() * 1000)
-        params["toTime"] = int(to_time.timestamp() * 1000)
-
-        header = {"Accept": "application/json, text/plain, */*"}
-
-        r = requests.get(
-            "https://blupassionsystem.de/city/rest/garbageorte/getAllGarbageCalendar",
-            params=params,
-            headers=header,
-        )
-        r.raise_for_status()
-        data = r.json()
-
-        if "data" not in data or "calendars" not in data["data"]:
-            raise ValueError("Unexpected response")
-
-        collection_dates: dict[str, list[date]] = {}
-
-        entries = []
-        for cal_entry in data["data"]["calendars"]:
-            collection_dates[cal_entry["name"]] = [
-                d.date()
-                for d in rrule(
-                    freq=DAILY,
-                    interval=cal_entry["frequency"],
-                    dtstart=datetime.fromtimestamp(cal_entry["fromDate"] / 1000),
-                    until=(
-                        datetime.fromtimestamp(cal_entry["toDate"] / 1000)
-                        if cal_entry["toDate"]
-                        else to_time
-                    ),
-                )
-            ]
-
-        moved: list[(str, date)] = []
-
-        for holiday in data["data"]["holidayViews"]:
-            holiday_date = datetime.fromtimestamp(holiday["holiday"] / 1000).date()
-            for collection_name, collections in collection_dates.items():
-                for collection in collections:
-                    if (
-                        collection == holiday_date
-                        and (collection_name, collection) not in moved
-                    ):
-                        new_date = datetime.fromtimestamp(
-                            holiday["shiftTo"] / 1000
-                        ).date()
-                        moved.append((collection_name, new_date))
-                        collections[collections.index(collection)] = new_date
-                        break
-
-        for name, collections in collection_dates.items():
-            for collection_date in collections:
-                entries.append(
-                    Collection(
-                        collection_date,
-                        name,
-                        ICON_MAP.get(name),
-                    )
-                )
-
-        return entries
+    retrieve = LookupChainRetriever(
+        steps=_APP.steps(),
+        url=_APP.calendar_url,
+        params=_APP.calendar_params,
+        headers={"Accept": "application/json, text/plain, */*"},
+    )
+    parse = BlupassionParser()
+    transform = RowTransformer()
