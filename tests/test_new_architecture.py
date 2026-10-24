@@ -2696,6 +2696,67 @@ class TestRecurrence:
         # Unknown input is still a clean miss.
         assert recurrence.month("not-a-month") is None
 
+    def test_locale_scoped_abbreviations(self):
+        from waste_collection_schedule import recurrence
+
+        # Abbreviations resolve only inside one language...
+        assert recurrence.month("Mär", "de", abbreviated=True) == 3
+        assert recurrence.month("Okt.", "de", abbreviated=True) == 10
+        assert recurrence.month("SEPT", "de", abbreviated=True) == 9
+        assert recurrence.month("Juni", "de", abbreviated=True) == 6  # wide too
+        assert recurrence.weekday("Mo", "de", abbreviated=True) == 0
+        assert recurrence.weekday("So.", "de", abbreviated=True) == 6
+        assert recurrence.weekday("mar", "fr", abbreviated=True) == 1
+        assert recurrence.month("mar", "pl", abbreviated=True) == 3
+        # ...never globally, where "mar" would be both Tuesday and March.
+        assert recurrence.month("mär") is None and recurrence.weekday("mo") is None
+        with pytest.raises(ValueError):
+            recurrence.month("Mär", abbreviated=True)
+        # A locale alone scopes the wide names to that language.
+        assert recurrence.month("März", "de") == 3
+        assert recurrence.month("Mär", "de") is None
+        assert recurrence.month("enero", "de") is None
+        assert recurrence.month("januarja", "sl") == 1  # extra inflected form
+
+    def test_month_and_weekday_names(self):
+        from waste_collection_schedule import recurrence
+
+        assert recurrence.month_names("de", abbreviated=True) == (
+            "Jan", "Feb", "Mär", "Apr", "Mai", "Jun",
+            "Jul", "Aug", "Sep", "Okt", "Nov", "Dez",
+        )  # fmt: skip
+        assert recurrence.month_names("de")[2] == "März"
+        assert recurrence.weekday_names("de") == (
+            "Montag", "Dienstag", "Mittwoch", "Donnerstag",
+            "Freitag", "Samstag", "Sonntag",
+        )  # fmt: skip
+        assert recurrence.weekday_names("de", abbreviated=True) == (
+            "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So",
+        )  # fmt: skip
+        assert recurrence.weekday_names("fr", abbreviated=True) == (
+            "lun", "mar", "mer", "jeu", "ven", "sam", "dim",
+        )  # fmt: skip
+
+    def test_roman_numerals_are_opt_in(self):
+        from waste_collection_schedule import recurrence
+
+        assert [recurrence.roman(t) for t in ("I", "iv", " XII ", "XIX", "MMXXVI")] == [
+            1, 4, 12, 19, 2026,
+        ]  # fmt: skip
+        for text in ("", "IIII", "IIV", "VX", "IC", "12", "Rejon I"):
+            assert recurrence.roman(text) is None, text
+        assert [recurrence.to_roman(n) for n in (1, 4, 9, 14, 20, 1994)] == [
+            "I", "IV", "IX", "XIV", "XX", "MCMXCIV",
+        ]  # fmt: skip
+        assert all(recurrence.roman(recurrence.to_roman(n)) == n for n in range(1, 400))
+        with pytest.raises(ValueError):
+            recurrence.to_roman(0)
+        # month() never reads a Roman numeral unless asked to.
+        assert recurrence.month("I") is None and recurrence.month("V") is None
+        assert recurrence.month("XII", roman=True) == 12
+        assert recurrence.month("xiii", roman=True) is None
+        assert recurrence.month("maj", "pl", roman=True) == 5  # names still work
+
     def test_recurring_within_empty_window(self):
         from waste_collection_schedule import recurrence
 

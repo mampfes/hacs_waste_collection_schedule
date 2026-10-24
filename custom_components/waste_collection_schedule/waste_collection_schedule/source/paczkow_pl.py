@@ -33,7 +33,6 @@ _INDEX_URL = (
 _LINK_PATTERN = re.compile(
     r"/kwartal-(i{1,3}|iv)-(20\d\d)-(?:paczkow|solectwa)[^/]*\.pdf", re.I
 )
-_QUARTERS = {"i": 1, "ii": 2, "iii": 3, "iv": 4}
 
 _HEADER = re.compile(
     r"RODZAJ ODEBRANEGO ODPADU\s+((?:[A-ZĄĆĘŁŃÓŚŹŻ]+\s+20\d\d\s*){1,3})", re.I
@@ -60,7 +59,7 @@ def _quarter_pdfs(response: Any, **_: Any) -> list[str]:
         if match:
             url = retrievers.urljoin(response.url, href.replace("&amp;", "&"))
             links.setdefault(
-                url, (int(match.group(2)), _QUARTERS[match.group(1).lower()])
+                url, (int(match.group(2)), recurrence.roman(match.group(1)))
             )
     if not links:
         raise ValueError("Paczków: no quarterly schedule PDF linked")

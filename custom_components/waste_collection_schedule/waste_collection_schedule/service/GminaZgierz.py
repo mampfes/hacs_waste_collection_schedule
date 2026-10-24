@@ -29,7 +29,6 @@ if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
 
 _REGION_PARAGRAPH = re.compile(r"^(Rejon [IV]+)\s*:\s*(.*)$", re.DOTALL)
-_ROMAN = {"I": 1, "II": 2, "III": 3, "IV": 4}
 _BRACKETS = re.compile(r"\([^)]*\)")
 _DAY_MONTH = re.compile(r"(\d{1,2})\s+([^\W\d_]+)")
 
@@ -105,7 +104,7 @@ class ZgierzParser(Parser["list[tuple[datetime.date, str]]"]):
             if pattern.match(text)
         }
         # Bulky waste is one cell per pair of regions: Rejon I/III, then II/IV.
-        bulky_cell = 1 if _ROMAN[region.split()[1]] % 2 else 2
+        bulky_cell = 1 if (recurrence.roman(region.split()[1]) or 0) % 2 else 2
 
         rows: list[tuple[datetime.date, str]] = []
         for row in table.find_all("tr")[1:]:

@@ -18,8 +18,6 @@ from __future__ import annotations
 import datetime
 from typing import TYPE_CHECKING, Any, Literal
 
-from babel.dates import get_day_names
-
 from waste_collection_schedule import date_parsers, recurrence
 from waste_collection_schedule.preprocessors import (
     Preprocessor,
@@ -42,16 +40,12 @@ _PARITY: dict[str, Literal["even", "odd"]] = {"G": "even", "U": "odd"}
 
 _parse_date = date_parsers.auto
 
-# The API abbreviates weekdays the German way ("Mo", "Di", ...), which the
-# shared multilingual weekday lookup deliberately does not register.
-_WEEKDAY_ABBREVIATIONS = {
-    name.rstrip(".").lower(): number
-    for number, name in get_day_names("abbreviated", locale="de").items()
-}
-
 
 def _weekday(name: str) -> int | None:
-    return _WEEKDAY_ABBREVIATIONS.get(name.strip().lower(), recurrence.weekday(name))
+    # The API abbreviates weekdays the German way ("Mo", "Di", ...), which the
+    # multilingual lookup only resolves when scoped to German.
+    number = recurrence.weekday(name, "de", abbreviated=True)
+    return recurrence.weekday(name) if number is None else number
 
 
 def street_names(response: Any, **_: Any) -> list[str]:

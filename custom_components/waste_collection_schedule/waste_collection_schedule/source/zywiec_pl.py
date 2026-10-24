@@ -33,10 +33,7 @@ ASH = "Popiół"
 
 _ROW_LABELS = {"S": SELECTIVE, "Z": MIXED, "B": BIO, "P": ASH}
 
-_ROMAN = (
-    "I II III IV V VI VII VIII IX X XI XII XIII XIV XV XVI XVII XVIII XIX XX"
-).split()
-_REGIONS = {f"Rejon {roman}": roman for roman in _ROMAN}
+_REGIONS = {f"Rejon {roman}": roman for roman in map(recurrence.to_roman, range(1, 21))}
 
 _REGION_RE = re.compile(r"REJON\s+([IVXL]+)\b", re.IGNORECASE)
 _DAYS_RE = re.compile(r"\d{1,2}(?:,\d{0,2})*")

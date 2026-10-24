@@ -49,7 +49,7 @@ import re
 from datetime import date
 from typing import TYPE_CHECKING, Any, NamedTuple
 
-from waste_collection_schedule import response_shape
+from waste_collection_schedule import recurrence, response_shape
 from waste_collection_schedule.parsers import Parser
 
 if TYPE_CHECKING:
@@ -63,12 +63,17 @@ DEFAULT_LINE_PATTERN = r"^(\d{1,2})([A-Za-z]{2,3})\s*(.*)"
 # A full date in an info-text section, e.g. "17.02.2026".
 DEFAULT_DATE_PATTERN = r"(\d{2})\.(\d{2})\.(\d{4})"
 
-# German weekday abbreviations, the usual set for a DE/LU/AT printed calendar.
-GERMAN_WEEKDAYS = frozenset({"MO", "DI", "MI", "DO", "FR", "SA", "SO"})
+# Weekday abbreviations Monday first, upper-cased, for ``weekday_order``:
+# ("MO", "DI", ..., "SO") and ("LUN", "MAR", ..., "DIM").
+GERMAN_WEEKDAY_ORDER = tuple(
+    name.upper() for name in recurrence.weekday_names("de", abbreviated=True)
+)
+FRENCH_WEEKDAY_ORDER = tuple(
+    name.upper() for name in recurrence.weekday_names("fr", abbreviated=True)
+)
 
-# The same abbreviations Monday first, for ``weekday_order``.
-GERMAN_WEEKDAY_ORDER = ("MO", "DI", "MI", "DO", "FR", "SA", "SO")
-FRENCH_WEEKDAY_ORDER = ("LUN", "MAR", "MER", "JEU", "VEN", "SAM", "DIM")
+# The German set, the usual one for a DE/LU/AT printed calendar.
+GERMAN_WEEKDAYS = frozenset(GERMAN_WEEKDAY_ORDER)
 
 # A cell token that looks like a code (upper-case letters, digits after the
 # first) but is not made of known codes is preserved verbatim, so a code the

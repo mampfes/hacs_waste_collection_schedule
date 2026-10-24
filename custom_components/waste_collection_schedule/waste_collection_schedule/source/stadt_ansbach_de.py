@@ -16,6 +16,7 @@ from collections.abc import Iterable
 from typing import ClassVar, final
 from urllib.parse import quote
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street
@@ -54,7 +55,6 @@ _CODE_LABELS = {
     "P": "Papierabfall",
     "B": "Bioabfall",
 }
-_WEEKDAYS = ("mo", "di", "mi", "do", "fr", "sa", "so")
 
 
 def _column_year(month: int, cells: "tuple[PdfDayCell, ...]") -> "int | None":
@@ -62,12 +62,12 @@ def _column_year(month: int, cells: "tuple[PdfDayCell, ...]") -> "int | None":
     first = next((cell for cell in cells if cell.day == 1), None)
     if first is None or not first.text:
         return None
-    printed = first.text.split()[0].lower()
-    if printed not in _WEEKDAYS:
+    printed = recurrence.weekday(first.text.split()[0], "de", abbreviated=True)
+    if printed is None:
         return None
     this_year = datetime.date.today().year
     for year in (this_year, this_year + 1, this_year - 1):
-        if datetime.date(year, month, 1).weekday() == _WEEKDAYS.index(printed):
+        if datetime.date(year, month, 1).weekday() == printed:
             return year
     return None
 

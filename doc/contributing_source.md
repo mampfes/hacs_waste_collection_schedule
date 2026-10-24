@@ -310,6 +310,9 @@ For schedules published as a weekday plus a cadence rather than explicit dates:
 
 - `WEEKDAYS` / `MONTHS`: name-to-number maps sourced from Babel's CLDR data across many locales (including inflected forms such as Polish genitive months), so worded dates resolve in any of those languages without hand-maintained tables. To cover a new language, add its code to `_LOCALES` in `recurrence.py`; do not carry a private dict in the source.
 - `weekday(name)` / `month(name)`: tolerant lookups returning `int` or `None`.
+- `weekday(name, "de", abbreviated=True)` / `month(name, "de", abbreviated=True)`: abbreviations ("Mo", "Mär", "Okt.") resolve only scoped to one language, because across languages they collide ("mar" is Tuesday in French, March elsewhere). A `locale` alone restricts the lookup to that language's full names.
+- `weekday_names(locale, abbreviated=False)` / `month_names(...)`: one language's names in order (Monday / January first, trailing period dropped), for a source that needs the list itself, e.g. to build a regex or an ordered `weekday_order`.
+- `roman(text)` / `to_roman(n)`: Roman numerals (month headers, quarters, district numbers). `month(name, roman=True)` also accepts I..XII; it is opt-in, `month()` never reads "I" or "V" as a month on its own.
 - `recurring(start, step, count)`, `recurring_from_anchor(anchor, step, count)`, `next_weekday(weekday)`, `most_recent_weekday(weekday)`.
 - `monthly_nth_weekday(weekday, n)` / `monthly_nth_weekdays(weekday, n, count)`: the Nth weekday of the month (`n=-1` is the last), for "2nd Tuesday of the month" schedules.
 - `us_federal_holidays(years, subdiv=None, observed=True)`: US federal holidays (via the `holidays` library), for holiday-shift rules. Returns a `{date: name}` dict, so `date in holidays` still reads as a membership test while a rule that only applies to one holiday (Thanksgiving, say) can check the name.
@@ -561,7 +564,7 @@ These are the old-style habits the pipeline exists to remove. A new or converted
 | a pass-through `classify()` over already-resolved records | yield `(date, key)` and use a transformer |
 | `EXTRA_INFO` on a pipeline source (gated) | `REGIONS = [region(title, **params), ...]` |
 | `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS` / `HOW_TO_GET_ARGUMENTS_DESCRIPTION` | typed `PARAMS` (labels) + `HOWTO` |
-| a private weekday/month name dict | `recurrence.weekday()` / `recurrence.month()` |
+| a private weekday/month name dict (also abbreviations or Roman numerals) | `recurrence.weekday()` / `recurrence.month()` (with `locale=`, `abbreviated=`, `roman=`), `recurrence.weekday_names()` / `month_names()`, `recurrence.roman()` |
 | hand-rolled ArcGIS geocode + query | `ArcGisFeatureRetriever` / `ArcGisMultiFeatureRetriever` + the matching parser; route any custom lookup through `ArcGisFeatureParser` |
 | dead module-level `TITLE = ...` re-aliased as `TITLE = TITLE` in the class | put the literal metadata on the class only |
 | a `Retriever` or `Parser` subclass defined inside a source module | put it in the shared component under `waste_collection_schedule/service/` and declare it, so the next provider on that platform reuses it |
