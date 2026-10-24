@@ -72,7 +72,7 @@ def _join_path(path: tuple[str, ...]) -> str:
 
 
 class ThreeRError(Exception):
-    """The API answered with an error or an HTTP failure."""
+    """The API returned an application-level error."""
 
 
 def _api_get(session: Any, path: str, params: dict) -> dict:
@@ -358,7 +358,7 @@ class ThreeRRetriever:
                     "language_code": language_code,
                 },
             )
-        except Exception:
+        except ThreeRError:
             raise SourceArgumentNotFound(
                 "area_name",
                 area_name,

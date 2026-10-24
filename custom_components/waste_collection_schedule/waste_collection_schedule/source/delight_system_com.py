@@ -53,7 +53,8 @@ class Source(BaseSource):
     PARAMS = (
         dropdown("language_code", LANGUAGE_CODES, "Language"),
         municipality(),
-        text_field("area_name", "Area name"),
+        # Let the retriever offer the top-level areas when this is empty.
+        text_field("area_name", "Area name", optional=True),
     )
 
     HOWTO: ClassVar[dict] = {
