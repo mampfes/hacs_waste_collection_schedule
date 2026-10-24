@@ -1176,9 +1176,12 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
     A page with fewer than two month names in any one row is skipped, since its
     columns cannot be located that way; use :class:`PdfCalendarColumns` for a
     calendar whose blocks are not headed by their month. Everything printed level
-    with or above that header row is the sheet's own furniture -- its title, and
-    often a tail of the previous December carried over -- so it is ignored rather
-    than binned into a column it does not belong to.
+    with or above the first header row is the sheet's own furniture -- its title,
+    and often a tail of the previous December carried over -- so it is ignored
+    rather than binned into a column it does not belong to. A sheet printing a
+    whole year as two bands (January to June above, July to December below, each
+    headed by its month names) reads each row against the nearest header row
+    above it.
 
     Args:
         labels: the round labels printed in the day cells, matched
@@ -1224,19 +1227,22 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
 
         for page in sorted({row.page for row in rows}):
             page_rows = [row for row in rows if row.page == page]
-            header = self._month_columns(page_rows)
-            if header is None:
+            headers = self._month_columns(page_rows)
+            if not headers:
                 continue
-            header_y, columns = header
-            xs = [x for x, _ in columns]
-            months = [month for _, month in columns]
-            # A column owns everything up to the midpoint of the gap to the next.
-            mids = [(xs[i] + xs[i + 1]) / 2 for i in range(len(xs) - 1)]
 
             for row in page_rows:
-                # The header row and anything above it is the sheet's heading.
-                if row.y >= header_y:
+                # Each row belongs to the nearest header row above it; the first
+                # header row and anything above it is the sheet's heading.
+                above = [header for header in headers if header[0] > row.y]
+                if not above:
                     continue
+                _, columns = min(above, key=lambda header: header[0])
+                xs = [x for x, _ in columns]
+                months = [month for _, month in columns]
+                # A column owns everything up to the midpoint of the gap to the
+                # next.
+                mids = [(xs[i] + xs[i + 1]) / 2 for i in range(len(xs) - 1)]
                 cells: dict[int, list[str]] = {}
                 for word in row.words:
                     column = sum(1 for mid in mids if word.x0 >= mid)
@@ -1264,8 +1270,9 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
     @staticmethod
     def _month_columns(
         page_rows: "list[PdfRow]",
-    ) -> "tuple[float, list[tuple[float, int]]] | None":
-        """The header row's y, and the (x, month) of each column it names."""
+    ) -> "list[tuple[float, list[tuple[float, int]]]]":
+        """Every header row's y, and the (x, month) of each column it names."""
+        headers = []
         for row in page_rows:
             found = [
                 (word.x0, number)
@@ -1273,8 +1280,8 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
                 if (number := recurrence.month(word.text)) is not None
             ]
             if len(found) >= 2:
-                return row.y, sorted(found)
-        return None
+                headers.append((row.y, sorted(found)))
+        return headers
 
     def _document_year(self, rows: "list[PdfRow]") -> int:
         if self._year_re is not None:
