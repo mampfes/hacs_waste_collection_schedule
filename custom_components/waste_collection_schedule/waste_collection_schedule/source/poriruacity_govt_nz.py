@@ -28,7 +28,13 @@ ICON_MAP = {
     "mixed": Icons.RECYCLING,
 }
 
-JS_URL = "https://storage.googleapis.com/pcc-static-v6/pccapp/dist/assets/index.js?v=fd27232ae8d640d2a7ab8eb0a8658fe9"
+CALENDAR_PAGE_URL = (
+    "https://poriruacity.govt.nz/services/rubbish-and-recycling/recycling-calendar/"
+)
+JS_URL = "https://storage.googleapis.com/pcc-static-v6/ALLJS/recycle-calendar/index.js"
+JS_URL_REGEX = re.compile(
+    r'src="(https://storage\.googleapis\.com/pcc-static-v6/[^"]*recycle-calendar/index\.js[^"]*)"'
+)
 
 ZONES_REGEX = re.compile(r"const\s?Xs\s?=\s?\{.*?\};", re.DOTALL)
 COLLECTIONS_MAP_REGEX = re.compile(r"collections:\s?\{(\w+:\s?\[.*?\],?)+\}", re.DOTALL)
@@ -44,7 +50,16 @@ class Source:
 
     @staticmethod
     def get_js_infos() -> tuple[dict[str, list[str]], dict[str, list[str]]]:
-        r = requests.get(JS_URL)
+        js_url = JS_URL
+        try:
+            page = requests.get(CALENDAR_PAGE_URL, timeout=30)
+            m = JS_URL_REGEX.search(page.text)
+            if m:
+                js_url = m.group(1)
+        except requests.RequestException:
+            pass
+        r = requests.get(js_url, timeout=30)
+        r.raise_for_status()
         zones_js_match = ZONES_REGEX.search(r.text)
         if not zones_js_match:
             raise Exception(
