@@ -29,6 +29,7 @@ from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import Parser
 
@@ -68,43 +69,18 @@ def city_plan_link(response: Any, *_keys: Any, **_params: Any) -> str:
     raise ValueError("no Kehricht Abfuhrplan link found on kreuzlingen.ch")
 
 
+# Month headers print upper-case abbreviations ("JAN", "MÄR"); running text
+# uses the full German names, which also key the weekday rules.
 _MONTH_ABBR = {
-    "JAN": 1,
-    "FEB": 2,
-    "MÄR": 3,
-    "APR": 4,
-    "MAI": 5,
-    "JUN": 6,
-    "JUL": 7,
-    "AUG": 8,
-    "SEP": 9,
-    "OKT": 10,
-    "NOV": 11,
-    "DEZ": 12,
+    name.upper(): number
+    for number, name in enumerate(
+        recurrence.month_names("de", abbreviated=True), start=1
+    )
 }
 _MONTH_FULL = {
-    "Januar": 1,
-    "Februar": 2,
-    "März": 3,
-    "April": 4,
-    "Mai": 5,
-    "Juni": 6,
-    "Juli": 7,
-    "August": 8,
-    "September": 9,
-    "Oktober": 10,
-    "November": 11,
-    "Dezember": 12,
+    name: number for number, name in enumerate(recurrence.month_names("de"), start=1)
 }
-_WEEKDAYS = {
-    "Montag": 0,
-    "Dienstag": 1,
-    "Mittwoch": 2,
-    "Donnerstag": 3,
-    "Freitag": 4,
-    "Samstag": 5,
-    "Sonntag": 6,
-}
+_WEEKDAYS = {name: number for number, name in enumerate(recurrence.weekday_names("de"))}
 _WD_RE = "|".join(_WEEKDAYS)
 
 # Holiday-shift lines ("Auffahrt: Freitag, 15.5.2026") must not be mistaken

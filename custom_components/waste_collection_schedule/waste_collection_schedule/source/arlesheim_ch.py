@@ -15,7 +15,7 @@ from collections.abc import Iterable
 from datetime import date
 from typing import ClassVar, final
 
-from waste_collection_schedule import parsers, response_shape, retrievers
+from waste_collection_schedule import parsers, recurrence, response_shape, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import dropdown
@@ -29,8 +29,6 @@ ALTPAPIER = "Altpapier"
 GRUEN = "Grünabfuhr"
 HAECKSEL = "Häcksel"
 
-_MONTHS = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun",
-           "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]  # fmt: skip
 _ROW_TITLES = (KEHRICHT, KARTON, ALTPAPIER, GRUEN, HAECKSEL)
 _DAY_RE = re.compile(r"^(\d{1,2})[*+]?$")
 _YEAR_RE = re.compile(r"Abfuhrdaten\s+(20\d\d)")
@@ -94,9 +92,10 @@ def collection_rows(
     )
     header_y = max(w.y for w in jan)
     headers = sorted(
-        (w.x, _MONTHS.index(_norm(w.text)) + 1)
+        (w.x, month)
         for w in words
-        if _norm(w.text) in _MONTHS and abs(w.y - header_y) < 2
+        if abs(w.y - header_y) < 2
+        and (month := recurrence.month(_norm(w.text), "de", abbreviated=True))
     )
     response_shape.expect(
         len(headers) == 12,

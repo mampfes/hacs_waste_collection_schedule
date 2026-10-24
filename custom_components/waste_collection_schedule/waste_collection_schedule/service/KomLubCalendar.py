@@ -10,6 +10,7 @@ from typing import Any
 
 from bs4 import BeautifulSoup, Tag
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import (
     SourceArgumentException,
@@ -30,33 +31,10 @@ QuarterKey = tuple[str, int]
 QuarterData = dict[str, DistrictRows]
 AllData = dict[QuarterKey, QuarterData]
 COL_NAMES = ["Mixed", "Glass", "Plastics", "Paper", "Bulky", "Bio"]
-_DISTRICT_ROMAN: dict[int, str] = {
-    1: "I",
-    2: "II",
-    3: "III",
-    4: "IV",
-    5: "V",
-    6: "VI",
-    7: "VII",
-}
 _REGION_RE = re.compile("^R\\s*[IVX]+$", re.IGNORECASE)
 _QUARTER_IN_TEXT_RE = re.compile(
     "\\b(I|II|III|IV)\\s+kwartał\\s+(20\\d{2})\\b", re.IGNORECASE
 )
-_ROMAN_MONTH = {
-    "I": 1,
-    "II": 2,
-    "III": 3,
-    "IV": 4,
-    "V": 5,
-    "VI": 6,
-    "VII": 7,
-    "VIII": 8,
-    "IX": 9,
-    "X": 10,
-    "XI": 11,
-    "XII": 12,
-}
 
 
 @dataclass(frozen=True)
@@ -95,11 +73,11 @@ def normalize_district(district: int | str | None) -> str:
             "district",
             f"Nieprawidłowa wartość district={district!r}. Podaj liczbę 1–7.",
         ) from None
-    if n not in _DISTRICT_ROMAN:
+    if not 1 <= n <= 7:
         raise SourceArgumentException(
             "district", f"Nieprawidłowy district={n}. Dozwolone wartości: 1–7."
         )
-    return f"R {_DISTRICT_ROMAN[n]}"
+    return f"R {recurrence.to_roman(n)}"
 
 
 def extract_tables(soup: BeautifulSoup) -> dict[str, Tag]:
@@ -137,12 +115,11 @@ def extract_tables(soup: BeautifulSoup) -> dict[str, Tag]:
 
 def parse_quarter_key(title: str) -> QuarterKey:
     """Find quarter roman + 4-digit year anywhere in the title."""
-    q_map = {"I": 1, "II": 2, "III": 3, "IV": 4}
     m_q = re.search("\\b(I|II|III|IV)\\b", title)
     m_y = re.search("\\b(20\\d{2})\\b", title)
     if not m_q or not m_y:
         raise ValueError(f"Cannot parse quarter/year from title: {title!r}")
-    return (m_y.group(1), q_map[m_q.group(1)])
+    return (m_y.group(1), recurrence.roman(m_q.group(1)) or 0)
 
 
 def extract_month_row(tr: Tag) -> MonthRow:
@@ -156,7 +133,7 @@ def extract_month_row(tr: Tag) -> MonthRow:
     if not th:
         raise ValueError("Unexpected row without <th> month header")
     month_token = th.get_text(strip=True).upper()
-    month = _ROMAN_MONTH.get(month_token)
+    month = recurrence.month(month_token, "pl", roman=True)
     if not month:
         raise ValueError(f"Unexpected month token: {month_token!r}")
     tds = tr.find_all("td")
