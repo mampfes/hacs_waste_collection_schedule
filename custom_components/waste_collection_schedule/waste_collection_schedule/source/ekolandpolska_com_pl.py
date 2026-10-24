@@ -3,8 +3,10 @@
 Ekoland publishes one yearly schedule PDF per municipality on
 https://www.ekolandpolska.com.pl/dla-mieszkancow/odbior-odpadow-gminy
 ("harmonogram-miasto-krasnik-2026.pdf"). The source reads the index page and
-keeps the newest year's detached-house (zabudowa jednorodzinna) PDF of the
-configured municipality.
+fetches the configured municipality's detached-house (zabudowa jednorodzinna)
+PDFs from this year on (``retrievers.yearly_links``), so once next year's PDF
+is linked the rest of this year is still read; the street's rows are merged
+across them.
 
 Each PDF is one Excel-exported table: a header row of month names, then one
 block per area (numbered "lp."), whose left cell lists the area's streets and
@@ -23,7 +25,6 @@ from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import municipality, street
 from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
 from waste_collection_schedule.transformers import ICSTransformer
@@ -74,34 +75,15 @@ def _label(text: str) -> str | None:
     return None
 
 
-def _municipality_slug(municipality: str) -> str:
-    wanted = lookups.normalize_loose(municipality)
-    for name, slug in _MUNICIPALITIES.items():
-        if lookups.normalize_loose(name) == wanted:
-            return slug
-    raise SourceArgumentNotFoundWithSuggestions(
-        "municipality", municipality, list(_MUNICIPALITIES)
+def _schedule_pattern(municipality: str = "", **_: Any) -> str:
+    """The configured municipality's detached-house PDFs, year in group 1."""
+    slug = lookups.resolve(
+        _MUNICIPALITIES,
+        municipality,
+        argument="municipality",
+        normalize=lookups.normalize_loose,
     )
-
-
-def _schedule_pdf(response: Any, municipality: str = "", **_: Any) -> list[str]:
-    """The newest year's detached-house PDF of the configured municipality."""
-    slug = _municipality_slug(municipality)
-    pattern = re.compile(rf"harmonogram-{re.escape(slug)}-(20\d\d)\.pdf$", re.I)
-    links: dict[str, int] = {}
-    for href in re.findall(r'href="([^"]+)"', response.text):
-        match = pattern.search(href.strip())
-        if match:
-            links[retrievers.urljoin(response.url, href.strip())] = int(match.group(1))
-    if not links and not re.search(r"harmonogram-[\w-]+\.pdf", response.text):
-        # The index page is occasionally served without its download list.
-        raise ValueError("Ekoland: index page lists no schedule PDFs")
-    if not links:
-        raise SourceArgumentNotFound(
-            "municipality", municipality, "no schedule PDF linked"
-        )
-    newest = max(links.values())
-    return [url for url, year in links.items() if year == newest]
+    return rf"harmonogram-{re.escape(slug)}-(20\d\d)\.pdf$"
 
 
 def _blocks(
@@ -149,6 +131,7 @@ def _blocks(
             )
             blocks.append(
                 {
+                    "year": year,
                     "streets": [
                         re.sub(r"^\d+\s+", "", re.sub(r"\s+", " ", name).strip())
                         for name in streets.split(",")
@@ -177,15 +160,25 @@ def _blocks(
 def _select(
     blocks: list[dict[str, Any]], source: Any = None
 ) -> list[tuple[datetime.date, str]]:
+    """The configured street's rows, merged across the yearly PDFs.
+
+    Once next year's PDF is linked both are read, so the rest of this year is
+    not lost; within one PDF the first block listing the street wins.
+    """
     wanted = lookups.normalize_loose(source.params["street"])
     names: set[str] = set()
+    rows: dict[int, list[tuple[datetime.date, str]]] = {}
     for block in blocks:
         names.update(block["streets"])
-        if any(lookups.normalize_loose(name) == wanted for name in block["streets"]):
-            return block["rows"]
-    raise SourceArgumentNotFoundWithSuggestions(
-        "street", source.params["street"], sorted(names)
-    )
+        if block["year"] not in rows and any(
+            lookups.normalize_loose(name) == wanted for name in block["streets"]
+        ):
+            rows[block["year"]] = block["rows"]
+    if not rows:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street", source.params["street"], sorted(names)
+        )
+    return [row for year in sorted(rows) for row in rows[year]]
 
 
 @final
@@ -242,7 +235,9 @@ class Source(BaseSource):
     }
 
     retrieve = retrievers.FanOutRetriever(
-        prepare=retrievers.Lookup(_INDEX_URL, pick=_schedule_pdf),
+        prepare=retrievers.Lookup(
+            _INDEX_URL, pick=retrievers.yearly_links(_schedule_pattern)
+        ),
         targets=lambda source, urls: urls,
         fetch=retrievers.Request(lambda url, urls, **_: url),
     )
