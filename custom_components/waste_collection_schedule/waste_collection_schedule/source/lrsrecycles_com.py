@@ -126,6 +126,11 @@ class Source(BaseSource):
             Marker(SERVICE_A, (0.42, 0.76, 0.29), width=_CELL, height=_CELL),
             Marker(SERVICE_B, (0.47, 0.53, 0.63), width=_CELL, height=_CELL),
             Marker(E_WASTE, (1.0, 0.83, 0.23), width=_CELL, height=_CELL),
+            # Shared days paint the upper and lower halves of two adjacent
+            # cells as one bar (recycling above the e-waste/cleanup event).
+            Marker(SERVICE_A, (0.42, 0.76, 0.29), width=(30, 40), height=(8, 11)),
+            Marker(SERVICE_B, (0.47, 0.53, 0.63), width=(30, 40), height=(8, 11)),
+            Marker(E_WASTE, (1.0, 0.83, 0.23), width=(30, 40), height=(8, 11)),
             Marker(HOLIDAY, (0.91, 0.33, 0.14), width=_CELL, height=_CELL),
         ],
         placement="cell",
