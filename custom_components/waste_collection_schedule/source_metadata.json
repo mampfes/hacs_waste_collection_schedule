@@ -4394,6 +4394,14 @@
     },
     "urls": {}
   },
+  "savnoservizi_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/savnoservizi_it.md",
+    "howto": {
+      "en": "Enter your comune as listed on https://www.savnoservizi.it/it/avvisi-e-download/download/calendari after 'per il comune di', including the zone where there is one, for example `Oderzo – zona 3`.",
+      "it": "Inserisci il tuo comune come indicato su https://www.savnoservizi.it/it/avvisi-e-download/download/calendari dopo 'per il comune di', con la zona se presente, ad esempio `Oderzo – zona 3`."
+    },
+    "urls": {}
+  },
   "seab_biella_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/seab_biella_it.md",
     "howto": {

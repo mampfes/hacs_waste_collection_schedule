@@ -29351,6 +29351,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Savno Servizi",
+      "module": "savnoservizi_it",
+      "default_params": {},
+      "id": "savnoservizi_it"
+    },
+    {
       "title": "Scalea",
       "module": "junker_app",
       "default_params": {},
