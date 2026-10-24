@@ -56,6 +56,30 @@ def test_normalize_loose_drops_accents_case_and_punctuation():
     assert lookups.normalize_loose(" Pérouges  hors cité ") == "perouges hors cite"
 
 
+@pytest.mark.parametrize("case", ["Bannockburn, Monday A", "Bannockburn, Tuesday B"])
+def test_lrs_shared_event_cells_keep_both_collections(case):
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.lrsrecycles_com import (
+        E_WASTE,
+        RECYCLING,
+        WASTE,
+        Source,
+    )
+
+    source = Source(**Source.TEST_CASES[case])
+    with cassette.replaying(fixture_path("lrsrecycles_com", case)):
+        rows = list(
+            source.preprocess(source.parse(source.retrieve(source), source), source)
+        )
+
+    assert sum(label == RECYCLING for _, label in rows) == 26
+    assert sum(label == WASTE for _, label in rows) == 52
+    assert sum(label == E_WASTE for _, label in rows) == 20
+    assert (D(2026, 2, 23), E_WASTE) in rows
+    assert (D(2026, 2, 24), E_WASTE) in rows
+
+
 class TestYearlyLinks:
     HTML = """
         <a href="/files/cal_2025.pdf">2025</a>
