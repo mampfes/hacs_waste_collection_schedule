@@ -11547,13 +11547,17 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "nummer": "Nummer",
+          "nummer": "Husnummer",
           "ort": "By",
           "stadtteil": "Distrikt",
           "strasse": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "nummer": "Dit husnummer",
+          "ort": "Din by",
+          "stadtteil": "Dit distrikt eller del af kommunen",
+          "strasse": "Dit gadenavn"
         }
       },
       "reconfigure_awb_bad_kreuznach_de": {
@@ -11561,12 +11565,17 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "nummer": "Nummer",
+          "nummer": "Husnummer",
           "ort": "By",
           "stadtteil": "Distrikt",
           "strasse": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "nummer": "Dit husnummer",
+          "ort": "Din by",
+          "stadtteil": "Dit distrikt eller del af kommunen",
+          "strasse": "Dit gadenavn"
+        }
       },
       "args_awb_bir_de": {
         "title": "Konfigurer Kilde",

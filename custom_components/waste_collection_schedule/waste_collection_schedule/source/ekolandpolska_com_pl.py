@@ -10,17 +10,17 @@ across them.
 
 Each PDF is one Excel-exported table: a header row of month names, then one
 block per area (numbered "lp."), whose left cell lists the area's streets and
-whose rows name a waste type followed by that month's days ("5, 19"). Empty
-cells (seasonal rounds) are simply missing, so days are assigned to a month by
-the x position of their word, not by their order in the row.
+whose rows name a waste type followed by that month's days ("5, 19"). The
+shared ``preprocessors.PdfRoundMonthGrid`` reads it into blocks (page by page,
+as long lists continue on a second page); the source only picks the block
+listing the configured street.
 """
 
 import datetime
-import itertools
 import re
 from typing import Any, ClassVar, final
 
-from waste_collection_schedule import lookups, parsers, recurrence, retrievers
+from waste_collection_schedule import lookups, parsers, preprocessors, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import municipality, street
@@ -88,8 +88,9 @@ def _schedule_pattern(municipality: str = "", **_: Any) -> str:
     return rf"harmonogram-{re.escape(slug)}-(20\d\d)\.pdf$"
 
 
-def _streets(lines: list[str]) -> list[str]:
+def _streets(side_text: str) -> list[str]:
     """The area's places: a comma-separated list, or one place per line."""
+    lines = side_text.splitlines()
     if any("," in line for line in lines):
         names = " ".join(lines).split(",")
     else:
@@ -101,87 +102,8 @@ def _streets(lines: list[str]) -> list[str]:
     ]
 
 
-def _blocks(
-    layouts: list[parsers.PdfWordLayout], _source: Any = None
-) -> list[dict[str, Any]]:
-    """Split the PDF into area blocks: their streets and dated rows."""
-    blocks: list[dict[str, Any]] = []
-    for layout in layouts:
-        # "od 01.01.2026" or "OD 2026.01.01"
-        year_match = re.search(
-            r"OD\s*(?:01\.01\.)?(20\d\d)",
-            " ".join(f.text for f in layout.lines),
-            re.I,
-        )
-        if not year_match:
-            raise ValueError("Ekoland: schedule year not found")
-        year = int(year_match.group(1))
-        # A long list continues on a second page with its own header row.
-        for page in sorted({w.page for w in layout.words}):
-            blocks.extend(
-                _page_blocks(
-                    [f for f in layout.lines if f.page == page],
-                    [w for w in layout.words if w.page == page],
-                    year,
-                )
-            )
-    return blocks
-
-
-def _page_blocks(
-    lines: list[parsers.PdfTextFragment],
-    words: list[parsers.PdfTextFragment],
-    year: int,
-) -> list[dict[str, Any]]:
-    named = [
-        (w, month) for w in words if (month := recurrence.month(w.text)) is not None
-    ]
-    # The header is the topmost row of month names; a street such as
-    # "3 Maja" (genitive of May) further down must not count.
-    header_y = max((w.y for w, _ in named), default=0.0)
-    months = [(w.x, month) for w, month in named if abs(w.y - header_y) < 2]
-    if len(months) != 12:
-        raise ValueError("Ekoland: month header not found")
-    first_month_x = min(x for x, _ in months)
-    labels = sorted(
-        (
-            (line.y, label)
-            for line in lines
-            if line.y < header_y and (label := _label(line.text))
-        ),
-        reverse=True,
-    )
-    starts = [y for y, label in labels if label == "ZMIESZANE"]
-    bounds = [*starts, float("-inf")]
-    blocks: list[dict[str, Any]] = []
-    for top, bottom in itertools.pairwise(bounds):
-        streets = [
-            line.text
-            for line in sorted(lines, key=lambda f: -f.y)
-            if bottom + 8 < line.y <= min(top + 15, header_y - 5)
-            and line.x < first_month_x - 150
-            and not re.fullmatch(r"\d+", line.text)
-        ]
-        blocks.append({"year": year, "streets": _streets(streets), "rows": []})
-    # Each day belongs to the nearest label row (the recyclables label
-    # wraps around its days), and that row's block.
-    for word in words:
-        day = word.text.strip(",")
-        if not (
-            day.isdigit() and word.x > first_month_x - 25 and word.y < header_y - 5
-        ):
-            continue
-        label_y, label = min(labels, key=lambda item: abs(item[0] - word.y))
-        if abs(label_y - word.y) > 12:
-            continue
-        index = sum(1 for y in starts if y >= label_y - 1) - 1
-        _, month = min(months, key=lambda item: abs(item[0] - word.x))
-        blocks[index]["rows"].append((datetime.date(year, month, int(day)), label))
-    return blocks
-
-
 def _select(
-    blocks: list[dict[str, Any]], source: Any = None
+    blocks: list[preprocessors.GridBlock], source: Any = None
 ) -> list[tuple[datetime.date, str]]:
     """The configured street's rows, merged across the yearly PDFs.
 
@@ -192,11 +114,12 @@ def _select(
     names: set[str] = set()
     rows: dict[int, list[tuple[datetime.date, str]]] = {}
     for block in blocks:
-        names.update(block["streets"])
-        if block["year"] not in rows and any(
-            lookups.normalize_loose(name) == wanted for name in block["streets"]
+        streets = _streets(block.side_text)
+        names.update(streets)
+        if block.year not in rows and any(
+            lookups.normalize_loose(name) == wanted for name in streets
         ):
-            rows[block["year"]] = block["rows"]
+            rows[block.year] = block.rows
     if not rows:
         raise SourceArgumentNotFoundWithSuggestions(
             "street", source.params["street"], sorted(names)
@@ -279,7 +202,14 @@ class Source(BaseSource):
         fetch=retrievers.Request(lambda url, urls, **_: url),
     )
     parse = parsers.EachResponse(
-        parsers.PdfWordLayoutParser(min_words=200), then=_blocks
+        parsers.PdfWordLayoutParser(min_words=200),
+        then=preprocessors.PdfRoundMonthGrid(
+            labels=_label,
+            block_start="ZMIESZANE",
+            # "od 01.01.2026" or "OD 2026.01.01"
+            year_pattern=r"(?i)OD\s*(?:01\.01\.)?(20\d\d)",
+            side_margin=150,
+        ),
     )
     preprocess = staticmethod(_select)
     transform = ICSTransformer(type_value_map=_TYPES)

@@ -11628,13 +11628,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "nummer": "Nummer",
+          "nummer": "House Number",
           "ort": "City",
           "stadtteil": "District",
           "strasse": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "nummer": "Your house number.",
+          "ort": "Your city or town.",
+          "stadtteil": "Your district or part of the municipality.",
+          "strasse": "Your street name."
         }
       },
       "reconfigure_awb_bad_kreuznach_de": {
@@ -11642,12 +11646,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "nummer": "Nummer",
+          "nummer": "House Number",
           "ort": "City",
           "stadtteil": "District",
           "strasse": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "nummer": "Your house number.",
+          "ort": "Your city or town.",
+          "stadtteil": "Your district or part of the municipality.",
+          "strasse": "Your street name."
+        }
       },
       "args_awb_bir_de": {
         "title": "Configure Source",

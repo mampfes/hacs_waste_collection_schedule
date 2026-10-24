@@ -11545,13 +11545,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "nummer": "Nummer",
+          "nummer": "Hišna številka",
           "ort": "Mesto",
-          "stadtteil": "Mestna četrt",
+          "stadtteil": "Naselje",
           "strasse": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "nummer": "Vaša hišna številka.",
+          "ort": "Vaše mesto ali kraj.",
+          "stadtteil": "Vaše naselje ali del občine.",
+          "strasse": "Ime vaše ulice."
         }
       },
       "reconfigure_awb_bad_kreuznach_de": {
@@ -11559,12 +11563,17 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "nummer": "Nummer",
+          "nummer": "Hišna številka",
           "ort": "Mesto",
-          "stadtteil": "Mestna četrt",
+          "stadtteil": "Naselje",
           "strasse": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "nummer": "Vaša hišna številka.",
+          "ort": "Vaše mesto ali kraj.",
+          "stadtteil": "Vaše naselje ali del občine.",
+          "strasse": "Ime vaše ulice."
+        }
       },
       "args_awb_bir_de": {
         "title": "Configure Source",
