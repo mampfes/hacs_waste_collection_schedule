@@ -6422,6 +6422,42 @@ class TestPdfTableParser:
             self._run(pages, min_words=5)
 
 
+class TestPdfMonthColumns:
+    """PdfMonthColumns bins day rows into the month columns named above them."""
+
+    @staticmethod
+    def _row(y, *words):
+        from waste_collection_schedule.parsers import PdfRow, PdfWord
+
+        return PdfRow(page=0, y=y, words=tuple(PdfWord(t, x, x + 20) for t, x in words))
+
+    def test_two_header_bands_on_one_page(self):
+        import datetime
+
+        from waste_collection_schedule.preprocessors import PdfMonthColumns
+
+        rows = [
+            self._row(800, ("Kalender 2026", 10)),
+            self._row(780, ("Januar", 20), ("Februar", 120)),
+            self._row(770, ("5 Mo", 10), ("Kehricht", 40), ("2 Mo", 110)),
+            self._row(400, ("Juli", 20), ("August", 120)),
+            self._row(390, ("6 Mo", 10), ("Kehricht", 40), ("4 Di", 110)),
+            self._row(380, ("7 Di", 10), ("4 Di", 110), ("Grüngut", 140)),
+        ]
+        records = list(
+            PdfMonthColumns(
+                labels=["Kehricht", "Grüngut"],
+                day_pattern=r"(\d{1,2})\s+[a-z]{2}\b",
+                year_pattern=r"Kalender (\d{4})",
+            )(rows)
+        )
+        assert records == [
+            (datetime.date(2026, 1, 5), "Kehricht"),
+            (datetime.date(2026, 7, 6), "Kehricht"),
+            (datetime.date(2026, 8, 4), "Grüngut"),
+        ]
+
+
 class TestPdfLayoutParser:
     """PdfLayoutParser exposes positioned pypdf text and pdfminer vectors."""
 
