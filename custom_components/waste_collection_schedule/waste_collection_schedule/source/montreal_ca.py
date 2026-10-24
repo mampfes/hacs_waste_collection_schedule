@@ -1,5 +1,6 @@
 from typing import ClassVar, final
 
+from waste_collection_schedule import field_terms as ft
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
@@ -50,11 +51,11 @@ class Source(BaseSource):
     }
 
     PARAMS = (
-        text_field("sector", "Waste sector"),
-        text_field("recycling", "Recycling sector", optional=True),
-        text_field("bulky", "Bulky items sector", optional=True),
-        text_field("food", "Food waste sector", optional=True),
-        text_field("green", "Greens and leafs sector", optional=True),
+        text_field("sector", term=ft.WASTE_SECTOR),
+        text_field("recycling", term=ft.RECYCLING_SECTOR, optional=True),
+        text_field("bulky", term=ft.BULKY_ITEMS_SECTOR, optional=True),
+        text_field("food", term=ft.FOOD_WASTE_SECTOR, optional=True),
+        text_field("green", term=ft.GREEN_WASTE_SECTOR, optional=True),
     )
 
     HOWTO: ClassVar[dict] = {
@@ -64,6 +65,29 @@ class Source(BaseSource):
             "open it on https://geojson.io/ and find your sector on the map. "
             "Recycling, bulky items, food waste and greens use the waste sector "
             "unless you give a different one."
+        ),
+        "fr": (
+            "Téléchargez le fichier GeoJSON de Montréal "
+            "(https://donnees.montreal.ca/dataset/collecte-des-ordures-menageres), "
+            "ouvrez-le sur https://geojson.io/ et trouvez votre secteur sur la carte. "
+            "Le recyclage, les encombrants, les déchets alimentaires et les résidus "
+            "verts utilisent le secteur des ordures ménagères, sauf si vous en "
+            "indiquez un autre."
+        ),
+        "de": (
+            "Laden Sie die Montreal-GeoJSON-Datei herunter "
+            "(https://donnees.montreal.ca/dataset/collecte-des-ordures-menageres), "
+            "öffnen Sie sie auf https://geojson.io/ und suchen Sie Ihren Sektor "
+            "auf der Karte. Für Recycling, Sperrmüll, Lebensmittelabfälle und "
+            "Grünabfälle wird der Abfallsektor verwendet, sofern Sie keinen "
+            "anderen angeben."
+        ),
+        "it": (
+            "Scarica il file GeoJSON di Montréal "
+            "(https://donnees.montreal.ca/dataset/collecte-des-ordures-menageres), "
+            "aprilo su https://geojson.io/ e trova il tuo settore sulla mappa. "
+            "Riciclaggio, rifiuti ingombranti, rifiuti alimentari e rifiuti verdi "
+            "utilizzano il settore dei rifiuti, salvo diversa indicazione."
         ),
     }
 

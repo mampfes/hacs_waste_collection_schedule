@@ -463,7 +463,127 @@ WASTE_TYPES = _term(
     coerce=as_list,
 )
 
+WASTE_SECTOR = _term(
+    "waste_sector",
+    "Waste sector",
+    "Abfallsektor",
+    "Secteur ordure ménagère",
+    "Settore rifiuti",
+    "Afvalsector",
+    "Sektor za odpadke",
+    "Restaffaldssektor",
+    "Sekajätealue",
+    desc=(
+        "This is the default sector.",
+        "Dies ist der Standardsektor.",
+        "Ce secteur est utilisé par défault",
+        "Questo è il settore predefinito.",
+        "Dit is de standaardsector.",
+        "To je privzeti sektor.",
+        "Dette er standardsektoren.",
+        "Tämä on oletusalue.",
+    ),
+)
+
+
+RECYCLING_SECTOR = _term(
+    "recycling_sector",
+    "Recycling sector",
+    "Recyclingsektor",
+    "Secteur recyclage",
+    "Settore riciclaggio",
+    "Recyclingsector",
+    "Sektor za recikliranje",
+    "Genbrugssektor",
+    "Kierrätysalue",
+    desc=(
+        "If value is different from waste sector.",
+        "Wenn der Wert vom Abfallsektor abweicht.",
+        "Si différent du secteur des ordures ménagères.",
+        "Se il valore è diverso dal settore dei rifiuti.",
+        "Alleen als deze afwijkt van de afvalsector.",
+        "Če se razlikuje od sektorja za odpadke.",
+        "Hvis den er forskellig fra restaffaldssektoren.",
+        "Jos alue eroaa sekajätealueesta.",  # codespell:ignore alue
+    ),
+)
+
+
+BULKY_ITEMS_SECTOR = _term(
+    "bulky_sector",
+    "Bulky items sector",
+    "Sperrmüllsektor",
+    "Secteur item encombrants",
+    "Settore rifiuti ingombranti",
+    "Grofvuilsector",
+    "Sektor za kosovne odpadke",
+    "Storskraldssektor",
+    "Suurjätealue",
+    desc=(
+        "If value is different from waste sector.",
+        "Wenn der Wert vom Abfallsektor abweicht.",
+        "Si différent du secteur des ordures ménagères.",
+        "Se il valore è diverso dal settore dei rifiuti.",
+        "Alleen als deze afwijkt van de afvalsector.",
+        "Če se razlikuje od sektorja za odpadke.",
+        "Hvis den er forskellig fra restaffaldssektoren.",
+        "Jos alue eroaa sekajätealueesta.",  # codespell:ignore alue
+    ),
+)
+
+
+FOOD_WASTE_SECTOR = _term(
+    "food_sector",
+    "Food waste sector",
+    "Biomüllsektor",
+    "Secteur compost",
+    "Settore rifiuti organici",
+    "Voedselafvalsector",
+    "Sektor za živilske odpadke",
+    "Madaffaldssektor",
+    "Ruokajätealue",
+    desc=(
+        "If value is different from waste sector.",
+        "Wenn der Wert vom Abfallsektor abweicht.",
+        "Si différent du secteur des ordures ménagères.",
+        "Se il valore è diverso dal settore dei rifiuti.",
+        "Alleen als deze afwijkt van de afvalsector.",
+        "Če se razlikuje od sektorja za odpadke.",
+        "Hvis den er forskellig fra restaffaldssektoren.",
+        "Jos alue eroaa sekajätealueesta.",  # codespell:ignore alue
+    ),
+)
+
+
+GREEN_WASTE_SECTOR = _term(
+    "green_sector",
+    "Greens and leafs sector",
+    "Grünabfallsektor",
+    "Secteur résiduts verts et feuilles mortes",
+    "Settore rifiuti verdi",
+    "Sector voor tuinafval en bladeren",
+    "Sektor za zeleni odpad in listje",
+    "Haveaffalds- og løvsektor",
+    "Puutarhajätteen ja lehtien alue",  # codespell:ignore alue
+    desc=(
+        "If value is different from waste sector.",
+        "Wenn der Wert vom Abfallsektor abweicht.",
+        "Si différent du secteur des ordures ménagères.",
+        "Se il valore è diverso dal settore dei rifiuti.",
+        "Alleen als deze afwijkt van de afvalsector.",
+        "Če se razlikuje od sektorja za odpadke.",
+        "Hvis den er forskellig fra restaffaldssektoren.",
+        "Jos alue eroaa sekajätealueesta.",  # codespell:ignore alue
+    ),
+)
+
+
 ALL_TERMS = [
+    WASTE_SECTOR,
+    RECYCLING_SECTOR,
+    BULKY_ITEMS_SECTOR,
+    FOOD_WASTE_SECTOR,
+    GREEN_WASTE_SECTOR,
     MUNICIPALITY,
     CITY,
     DISTRICT,
