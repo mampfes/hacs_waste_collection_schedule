@@ -2,7 +2,8 @@
 
 ``PdfMonthRows``, ``retrievers.yearly_links``, ``lookups.normalize_loose``,
 ``TextGroupedDates(end_pattern=...)``, ``EachResponse(then=...)`` and the
-``codes`` / ``weekday_order`` options of ``DayGridCalendarParser``.
+``codes`` / ``weekday_order`` options of ``DayGridCalendarParser`` and
+``PdfRoundMonthGrid``.
 """
 
 import base64
@@ -511,3 +512,108 @@ def test_ekoland_asks_again_after_the_one_moment_interstitial(
     attempts = min(interstitials, 3) + 1
     assert len(requested) == attempts
     assert slept == [5] * (attempts - 1)
+
+
+class TestPdfRoundMonthGrid:
+    """One row per round, one column per month, blocks per area."""
+
+    MONTHS = (
+        "Styczeń Luty Marzec Kwiecień Maj Czerwiec Lipiec Sierpień Wrzesień "
+        "Październik Listopad Grudzień"
+    ).split()
+    ROMAN = "I II III IV V VI VII VIII IX X XI XII".split()
+
+    @staticmethod
+    def layout(lines, words, page=0):
+        frag = parsers.PdfTextFragment
+        return parsers.PdfWordLayout(
+            [frag(page, text, x, y) for text, x, y in lines],
+            [frag(page, text, x, y) for text, x, y in words],
+            [],
+        )
+
+    def table(self, header, *, extra_words=(), extra_lines=()):
+        """Two blocks (Mixed + Paper rows each); month i's column at x=200+40i."""
+        lines = [
+            ("Harmonogram od 01.01.2026", 300, 800),
+            ("Mixed", 150, 700),
+            ("Paper", 150, 680),
+            ("Mixed", 150, 600),
+            ("Paper", 150, 580),
+            ("Lipowa, Polna", 40, 705),
+            ("1", 40, 690),
+            ("3 Maja", 40, 605),
+            *extra_lines,
+        ]
+        words = [(name, 200 + 40 * i, 750) for i, name in enumerate(header)]
+        words += [
+            ("5,", 200, 700),  # January, Mixed, block 0
+            ("19", 212, 701),  # January, Mixed (second day in the cell)
+            ("7", 241, 679),  # February, Paper, block 0
+            ("3", 640, 603),  # December, Mixed, block 1
+            ("9", 280, 645),  # 35pt from the nearest row label: dropped
+            ("4", 100, 700),  # left of the table: not a day
+            *extra_words,
+        ]
+        words += [(text, x, y) for text, x, y in lines if text == "3 Maja"]
+        return self.layout(lines, words)
+
+    def grid(self, **kwargs):
+        options = {
+            "labels": {"Mixed": "Mixed", "Paper": "Paper"},
+            "block_start": "Mixed",
+            "year_pattern": r"od 01\.01\.(20\d\d)",
+        }
+        options.update(kwargs)
+        return preprocessors.PdfRoundMonthGrid(**options)
+
+    def test_bins_days_into_blocks_rows_and_months(self):
+        blocks = self.grid(side_margin=100)([self.table(self.MONTHS)])
+        assert [(b.year, b.page, b.top) for b in blocks] == [
+            (2026, 0, 700),
+            (2026, 0, 600),
+        ]
+        assert blocks[0].rows == [
+            (D(2026, 1, 5), "Mixed"),
+            (D(2026, 1, 19), "Mixed"),
+            (D(2026, 2, 7), "Paper"),
+        ]
+        assert blocks[1].rows == [(D(2026, 12, 3), "Mixed")]
+        # Side text: the block's street cell, without the "lp." number; the
+        # "3 Maja" street (a month name) is neither a header nor block 0's.
+        assert blocks[0].side_text == "Lipowa, Polna"
+        assert blocks[1].side_text == "3 Maja"
+
+    def test_header_is_the_topmost_complete_row_of_months(self):
+        stray = [("Maj", 300, 790)]  # a month name in the title, above the table
+        blocks = self.grid()([self.table(self.MONTHS, extra_words=stray)])
+        assert blocks[0].rows[0] == (D(2026, 1, 5), "Mixed")
+        assert blocks[0].side_text == ""  # side_margin not set
+
+    def test_roman_header_callable_labels_and_stop_pattern(self):
+        layout = self.table(
+            self.ROMAN,
+            extra_lines=[("Zbiórka", 300, 640)],
+            extra_words=[("Zbiórka", 300, 640)],
+        )
+        grid = self.grid(
+            labels=lambda text: text if text in ("Mixed", "Paper") else None,
+            roman_months=True,
+            stop_pattern=r"^zbiorka$",
+        )
+        blocks = grid([layout])
+        assert len(blocks) == 1  # the second block is below the stop word
+        assert blocks[0].rows[-1] == (D(2026, 2, 7), "Paper")
+
+    def test_row_tolerance_none_keeps_far_days(self):
+        blocks = self.grid(row_tolerance=None)([self.table(self.MONTHS)])
+        assert (D(2026, 3, 9), "Paper") in blocks[0].rows
+
+    def test_changed_layout_raises(self):
+        with pytest.raises(ResponseShapeError):
+            self.grid()([self.table(self.MONTHS[:11])])
+        with pytest.raises(ResponseShapeError):
+            self.grid(year_pattern=r"rok (20\d\d)")([self.table(self.MONTHS)])
+        impossible = [("31", 241, 680)]  # 31 February
+        with pytest.raises(ResponseShapeError):
+            self.grid()([self.table(self.MONTHS, extra_words=impossible)])
