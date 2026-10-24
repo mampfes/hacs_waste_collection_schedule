@@ -2897,6 +2897,101 @@ class TestToolkitParsers:
         with pytest.raises(ResponseShapeError):
             parsers.CsvParser(require=["date", "bin"])(self._Resp("date,type\nx,y\n"))
 
+    @staticmethod
+    def _xlsx(sheet_rows: str, *, date1904: bool = False) -> bytes:
+        """A minimal one-sheet workbook; style 1 is a custom date format."""
+        import io
+        import zipfile
+
+        ns = 'xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'
+        rel_ns = (
+            'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/'
+            'relationships"'
+        )
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as archive:
+            archive.writestr(
+                "xl/workbook.xml",
+                f"<workbook {ns} {rel_ns}>"
+                f'<workbookPr date1904="{int(date1904)}"/>'
+                '<sheets><sheet name="Plan" sheetId="1" r:id="rId1"/></sheets>'
+                "</workbook>",
+            )
+            archive.writestr(
+                "xl/_rels/workbook.xml.rels",
+                '<Relationships xmlns="http://schemas.openxmlformats.org/package/'
+                '2006/relationships"><Relationship Id="rId1" '
+                'Target="worksheets/sheet1.xml"/></Relationships>',
+            )
+            archive.writestr(
+                "xl/sharedStrings.xml",
+                f"<sst {ns}><si><t>Restmüll</t></si>"
+                "<si><r><t>Gelber </t></r><r><t>Sack</t></r></si></sst>",
+            )
+            archive.writestr(
+                "xl/styles.xml",
+                f"<styleSheet {ns}><numFmts>"
+                '<numFmt numFmtId="164" formatCode="[$-C07]ddd\\,\\ dd/\\ mm;@"/>'
+                '</numFmts><cellXfs><xf numFmtId="0"/><xf numFmtId="164"/>'
+                "</cellXfs></styleSheet>",
+            )
+            archive.writestr(
+                "xl/worksheets/sheet1.xml",
+                f"<worksheet {ns}><sheetData>{sheet_rows}</sheetData></worksheet>",
+            )
+        return buffer.getvalue()
+
+    def test_xlsx_parser_reads_a_grid_with_dates(self):
+        import datetime
+
+        from waste_collection_schedule import parsers
+
+        resp = self._Resp("")
+        resp.content = self._xlsx(
+            '<row r="1"><c r="A1" t="s"><v>0</v></c><c r="C1" t="s"><v>1</v></c>'
+            "</row>"
+            '<row r="3"><c r="A3" s="1"><v>46029</v></c><c r="B3"><v>7</v></c>'
+            '<c r="C3" t="inlineStr"><is><t>Mo, 13.04.</t></is></c></row>'
+        )
+        assert parsers.XlsxParser()(resp) == [
+            ["Restmüll", None, "Gelber Sack"],
+            [None, None, None],
+            [datetime.date(2026, 1, 7), 7, "Mo, 13.04."],
+        ]
+        assert parsers.XlsxParser(dates=False)(resp)[2][0] == 46029
+        assert parsers.XlsxParser("Plan")(resp)[0][0] == "Restmüll"
+
+    def test_xlsx_parser_honours_the_1904_date_system(self):
+        import datetime
+
+        from waste_collection_schedule import parsers
+
+        resp = self._Resp("")
+        resp.content = self._xlsx(
+            '<row r="1"><c r="A1" s="1"><v>44567</v></c></row>', date1904=True
+        )
+        assert parsers.XlsxParser()(resp) == [[datetime.date(2026, 1, 7)]]
+
+    def test_xlsx_parser_rejects_a_non_workbook(self):
+        from waste_collection_schedule import parsers
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        with pytest.raises(ResponseShapeError):
+            parsers.XlsxParser()(self._Resp("<html>moved</html>"))
+        resp = self._Resp("")
+        resp.content = self._xlsx("")
+        with pytest.raises(ResponseShapeError):
+            parsers.XlsxParser(sheet=3)(resp)
+
+    def test_xlsx_date_format_detection(self):
+        from waste_collection_schedule.parsers import _xlsx_is_date_format
+
+        assert _xlsx_is_date_format("dd/mm/yyyy")
+        assert _xlsx_is_date_format("[$-C07]ddd\\,\\ dd/\\ mm;@")
+        assert not _xlsx_is_date_format("0.00")
+        assert not _xlsx_is_date_format('"days" 0')
+        assert not _xlsx_is_date_format("[h]:mm:ss")
+
     def test_xml_parser_selects_and_shape(self):
         from waste_collection_schedule import parsers
         from waste_collection_schedule.response_shape import ResponseShapeError
