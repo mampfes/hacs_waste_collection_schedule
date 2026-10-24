@@ -19,7 +19,7 @@ import datetime
 import re
 from typing import Any, ClassVar, final
 
-from waste_collection_schedule import lookups, parsers, retrievers
+from waste_collection_schedule import lookups, parsers, recurrence, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import boolean, street
@@ -35,20 +35,6 @@ _LINK_PATTERN = re.compile(
 )
 _QUARTERS = {"i": 1, "ii": 2, "iii": 3, "iv": 4}
 
-_MONTHS = {
-    "STYCZEŃ": 1,
-    "LUTY": 2,
-    "MARZEC": 3,
-    "KWIECIEŃ": 4,
-    "MAJ": 5,
-    "CZERWIEC": 6,
-    "LIPIEC": 7,
-    "SIERPIEŃ": 8,
-    "WRZESIEŃ": 9,
-    "PAŹDZIERNIK": 10,
-    "LISTOPAD": 11,
-    "GRUDZIEŃ": 12,
-}
 _HEADER = re.compile(
     r"RODZAJ ODEBRANEGO ODPADU\s+((?:[A-ZĄĆĘŁŃÓŚŹŻ]+\s+20\d\d\s*){1,3})", re.I
 )
@@ -107,7 +93,7 @@ def _tables(text: str, _source: Any = None) -> list[dict[str, Any]]:
             for name in re.split(r"[;,]", area_text.replace("-\n", "-"))
         ]
         months = [
-            (int(year), _MONTHS[name.upper()])
+            (int(year), recurrence.month(name))
             for name, year in _MONTH_YEAR.findall(header.group(1))
         ]
         footer = _FOOTER.search(text, header.end())

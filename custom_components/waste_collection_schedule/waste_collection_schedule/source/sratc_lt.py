@@ -3,7 +3,7 @@ import re
 from collections.abc import Iterator
 from typing import ClassVar, final
 
-from waste_collection_schedule import config_params, lookups
+from waste_collection_schedule import config_params, lookups, recurrence
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import (
@@ -24,27 +24,6 @@ BULKY = "Didžiosios atliekos"
 _INDEX_URL = "https://www.sratc.lt/grafikai-siauliu-miestas/"
 _PDF_PATTERN = r"(20\d{2})[^/]*individuali[^/]*\.pdf$"
 
-_MONTHS = {
-    name: number
-    for number, name in enumerate(
-        (
-            "sausis",
-            "vasaris",
-            "kovas",
-            "balandis",
-            "geguze",
-            "birzelis",
-            "liepa",
-            "rugpjutis",
-            "rugsejis",
-            "spalis",
-            "lapkritis",
-            "gruodis",
-        ),
-        1,
-    )
-}
-
 # Column headers ("Buitinių atliekų grafikas", ...), matched by their first word.
 _COLUMNS = {
     "buitiniu": GENERAL,
@@ -53,10 +32,6 @@ _COLUMNS = {
     "zaliuju": GREEN,
     "didziuju": BULKY,
 }
-
-
-def _fold(value: object) -> str:
-    return lookups.normalize_loose(value)
 
 
 def _entries(name: str) -> list[str]:
@@ -78,7 +53,7 @@ def _entries(name: str) -> list[str]:
     entries: list[str] = []
     for part in parts:
         part = re.sub(r"\)\.$", ")", re.sub(r"\s+", " ", part).strip())
-        if not _fold(part):
+        if not lookups.normalize_loose(part):
             continue
         if part.startswith("(") and entries:
             entries[-1] = f"{entries[-1]} {part}"
@@ -104,7 +79,7 @@ def _blocks(
     days: list[tuple[str, int, int]] = []
     started = False
     for row in rows:
-        folded = [_fold(w.text) for w in row.words]
+        folded = [lookups.normalize_loose(w.text) for w in row.words]
         header = [
             _COLUMNS[f.split()[0]]
             for f in folded
@@ -117,14 +92,14 @@ def _blocks(
             continue
         if not started:
             continue
-        positions = [i for i, f in enumerate(folded) if f in _MONTHS]
+        positions = [i for i, f in enumerate(folded) if recurrence.month(f)]
         first = positions[0] if positions else len(row.words)
         name.extend(w.text for w in row.words[:first])
         for column, start in enumerate(positions):
             end = positions[column + 1] if column + 1 < len(positions) else None
             text = " ".join(w.text for w in row.words[start + 1 : end])
             for day in re.findall(r"\d{1,2}", text):
-                days.append((labels[column], _MONTHS[folded[start]], int(day)))
+                days.append((labels[column], recurrence.month(folded[start]), int(day)))
     if started:
         yield " ".join(name), days
 
@@ -133,12 +108,12 @@ def _select(
     blocks: list[tuple[str, list[tuple[str, int, int]]]], street: str
 ) -> list[tuple[str, int, int]]:
     """Pick the block of ``street``: a full entry, a bare street name or text."""
-    wanted = _fold(street)
+    wanted = lookups.normalize_loose(street)
     entries = [(entry, days) for name, days in blocks for entry in _entries(name)]
     for match in (
-        lambda entry: _fold(entry) == wanted,
-        lambda entry: _fold(entry.split("(")[0]) == wanted,
-        lambda entry: f" {wanted} " in f" {_fold(entry)} ",
+        lambda entry: lookups.normalize_loose(entry) == wanted,
+        lambda entry: lookups.normalize_loose(entry.split("(")[0]) == wanted,
+        lambda entry: f" {wanted} " in f" {lookups.normalize_loose(entry)} ",
     ):
         found = [(entry, days) for entry, days in entries if match(entry)]
         schedules = {tuple(days) for _, days in found}

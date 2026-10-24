@@ -46,10 +46,6 @@ _STREET_SUFFIXES = (
 )
 
 
-def _fold(value: object) -> str:
-    return lookups.normalize_loose(value)
-
-
 def _text(row: PdfRow) -> str:
     return " ".join(w.text for w in row.words)
 
@@ -91,7 +87,7 @@ def _table(rows: list[PdfRow]) -> dict[tuple[str, int], list[datetime.date]]:
     for row in rows:
         if row.page != 0:
             continue
-        first = _fold(row.words[0].text)
+        first = lookups.normalize_loose(row.words[0].text)
         if len(row.words) == 1 and (day := recurrence.weekday(first)) is not None:
             weekdays.append((row.y, day))
         elif first in _ROW_TYPES:
@@ -133,7 +129,7 @@ def _tree_weeks(rows: list[PdfRow]) -> list[tuple[datetime.date, datetime.date]]
     """Christmas-tree weeks: "Fenyőfa gyűjtés: 2026. január 12 - 16. és ..."."""
     for row in rows:
         text = _text(row)
-        if not _fold(text).startswith("fenyofa gyujtes"):
+        if not lookups.normalize_loose(text).startswith("fenyofa gyujtes"):
             continue
         weeks = []
         for year, month, start, end in re.findall(
@@ -172,7 +168,7 @@ def _street_entries(rows: list[PdfRow]) -> list[tuple[str, int]]:
         if not text:
             text = line
             continue
-        last = _fold(text).rsplit(" ", 1)[-1]
+        last = lookups.normalize_loose(text).rsplit(" ", 1)[-1]
         ends_entry = last in _STREET_SUFFIXES or last[-1:].isdigit()
         separator = ", " if ends_entry and not text.endswith(",") else " "
         text = f"{text}{separator}{line}"
@@ -185,7 +181,7 @@ def _street_entries(rows: list[PdfRow]) -> list[tuple[str, int]]:
             continue
         for part in body.split(","):
             part = re.sub(r"\s+", " ", part).strip(" .")
-            if not _fold(part):
+            if not lookups.normalize_loose(part):
                 continue
             if part[0].isdigit() and entries and entries[-1][1] == weekday:
                 entries[-1] = (f"{entries[-1][0]}, {part}", weekday)
@@ -196,13 +192,13 @@ def _street_entries(rows: list[PdfRow]) -> list[tuple[str, int]]:
 
 def _street_name(entry: str) -> str:
     """The entry without house numbers: "Nádasdy utca 1-5, 2-10" -> "nadasdy utca"."""
-    return re.sub(r"(\s\d.*)$", "", _fold(entry))
+    return re.sub(r"(\s\d.*)$", "", lookups.normalize_loose(entry))
 
 
 def _green_weekday(entries: list[tuple[str, int]], street: str) -> int:
-    wanted = _fold(street)
+    wanted = lookups.normalize_loose(street)
     for match in (
-        lambda entry: _fold(entry) == wanted,
+        lambda entry: lookups.normalize_loose(entry) == wanted,
         lambda entry: _street_name(entry) == wanted,
         lambda entry: _street_name(entry).rsplit(" ", 1)[0] == wanted,
     ):

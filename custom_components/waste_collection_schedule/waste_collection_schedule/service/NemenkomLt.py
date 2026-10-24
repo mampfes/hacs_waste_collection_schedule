@@ -5,46 +5,23 @@ import io
 import re
 import zipfile
 from typing import Any
-from urllib.parse import urljoin
 
 import lxml.etree as ET
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import Parser
-from waste_collection_schedule.retrievers import RetrieverFunc
 
 PAGE_URL = "https://www.nemenkom.lt/buitiniu-ir-pakuociu-atlieku-surinkimo-grafikas/"
-HEADERS = {"user-agent": "Mozilla/5.0"}
 MAX_FILE_BYTES = 5 * 1024 * 1024
 NS = {"s": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 XML_PARSER = ET.XMLParser(resolve_entities=False, no_network=True)
-MONTHS = {
-    "sausis": 1,
-    "vasaris": 2,
-    "kovas": 3,
-    "balandis": 4,
-    "gegužė": 5,
-    "birželis": 6,
-    "liepa": 7,
-    "rugpjūtis": 8,
-    "rugsėjis": 9,
-    "spalis": 10,
-    "lapkritis": 11,
-    "gruodis": 12,
-}
 GENERAL_WASTE = "Buitinės atliekos"
 
 
 def _norm(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip().casefold()
-
-
-def _discover_xlsx_url(html: str) -> str:
-    hrefs = re.findall(r"href=[\"']([^\"']+\.xlsx)[\"']", html, flags=re.IGNORECASE)
-    if not hrefs:
-        raise ValueError("No XLSX schedule link found on the nemenkom.lt page")
-    return urljoin(PAGE_URL, hrefs[0])
 
 
 def _col_index(ref: str) -> tuple[int, int]:
@@ -128,7 +105,7 @@ def parse_schedule(
         raise ValueError("Weekday column not found in XLSX header")
     village_col = weekday_col - 1
     month_cols = {
-        i: MONTHS[_norm(c)] for i, c in enumerate(header) if _norm(c) in MONTHS
+        i: month for i, c in enumerate(header) if (month := recurrence.month(c))
     }
     entries: list[dict[str, Any]] = []
     known: list[str] = []
@@ -154,24 +131,15 @@ def parse_schedule(
     return entries
 
 
-class NemenkomRetriever(RetrieverFunc):
-    def __call__(self, source: BaseSource) -> Any:
-        session = source.session
-        page = session.get(PAGE_URL, timeout=30, headers=HEADERS)
-        page.raise_for_status()
-        r = session.get(_discover_xlsx_url(page.text), timeout=30, headers=HEADERS)
-        r.raise_for_status()
-        if len(r.content) > MAX_FILE_BYTES:
-            raise ValueError("XLSX file is too large")
-        return r.content
-
-
 class NemenkomParser(Parser[list[dict[str, Any]]]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
     ) -> list[dict[str, Any]]:
         if source is None:
             raise ValueError("Nemenkom parser requires a source")
+        content = getattr(response, "content", response)
+        if len(content) > MAX_FILE_BYTES:
+            raise ValueError("XLSX file is too large")
         return parse_schedule(
-            response, source.params["village"], source.params.get("street")
+            content, source.params["village"], source.params.get("street")
         )
