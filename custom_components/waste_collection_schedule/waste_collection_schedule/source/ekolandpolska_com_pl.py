@@ -267,10 +267,12 @@ class Source(BaseSource):
         prepare=retrievers.Lookup(
             _INDEX_URL,
             pick=retrievers.yearly_links(_schedule_pattern),
-            # About one first request in six gets a "One moment, please..."
+            # About one request in six gets a "One moment, please..."
             # interstitial without the download list, which reloads itself
-            # after 5 s; asking again after that pause gets the page.
+            # after 5 s. An immediate repeat gets it again; one after 5 s gets
+            # the page about half the time, so ask up to three times.
             retry_if=lambda response: "harmonogram-" not in response.text,
+            retries=3,
             retry_delay=5,
         ),
         targets=lambda source, urls: urls,
