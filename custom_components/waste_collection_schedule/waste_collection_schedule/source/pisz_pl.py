@@ -72,8 +72,8 @@ def _announcement(response, *_, **__) -> str:
         # other news item.
         box = link
         while (parent := box.find_parent(["article", "li", "div"])) is not None and {
-            a["href"] for a in parent.select("a[href*='/aktualnosc/']")
-        } == {link["href"]}:
+            str(a["href"]) for a in parent.select("a[href*='/aktualnosc/']")
+        } == {str(link["href"])}:
             box = parent
         if match := _ANNOUNCEMENT.search(box.get_text(" ")):
             found.setdefault(
