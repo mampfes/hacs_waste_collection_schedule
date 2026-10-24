@@ -39,6 +39,8 @@ _MUNICIPALITIES = {
     "Gościeradów": "goscieradow",
     "Trzydnik Duży": "trzydnik-duzy",
     "Wilkołaz": "wilkolaz",
+    "Strzyżewice": "strzyzewice",
+    "Urzędów": "urzedow",
 }
 
 _TYPES = {
@@ -86,74 +88,95 @@ def _schedule_pattern(municipality: str = "", **_: Any) -> str:
     return rf"harmonogram-{re.escape(slug)}-(20\d\d)\.pdf$"
 
 
+def _streets(lines: list[str]) -> list[str]:
+    """The area's places: a comma-separated list, or one place per line."""
+    if any("," in line for line in lines):
+        names = " ".join(lines).split(",")
+    else:
+        names = lines
+    return [
+        re.sub(r"^\d+\s+", "", re.sub(r"\s+", " ", name).strip())
+        for name in names
+        if name.strip()
+    ]
+
+
 def _blocks(
     layouts: list[parsers.PdfWordLayout], _source: Any = None
 ) -> list[dict[str, Any]]:
     """Split the PDF into area blocks: their streets and dated rows."""
     blocks: list[dict[str, Any]] = []
     for layout in layouts:
+        # "od 01.01.2026" or "OD 2026.01.01"
         year_match = re.search(
-            r"OD\s*01\.01\.(20\d\d)", " ".join(f.text for f in layout.lines), re.I
+            r"OD\s*(?:01\.01\.)?(20\d\d)",
+            " ".join(f.text for f in layout.lines),
+            re.I,
         )
         if not year_match:
             raise ValueError("Ekoland: schedule year not found")
         year = int(year_match.group(1))
-        named = [
-            (w, month)
-            for w in layout.words
-            if (month := recurrence.month(w.text)) is not None
+        # A long list continues on a second page with its own header row.
+        for page in sorted({w.page for w in layout.words}):
+            blocks.extend(
+                _page_blocks(
+                    [f for f in layout.lines if f.page == page],
+                    [w for w in layout.words if w.page == page],
+                    year,
+                )
+            )
+    return blocks
+
+
+def _page_blocks(
+    lines: list[parsers.PdfTextFragment],
+    words: list[parsers.PdfTextFragment],
+    year: int,
+) -> list[dict[str, Any]]:
+    named = [
+        (w, month) for w in words if (month := recurrence.month(w.text)) is not None
+    ]
+    # The header is the topmost row of month names; a street such as
+    # "3 Maja" (genitive of May) further down must not count.
+    header_y = max((w.y for w, _ in named), default=0.0)
+    months = [(w.x, month) for w, month in named if abs(w.y - header_y) < 2]
+    if len(months) != 12:
+        raise ValueError("Ekoland: month header not found")
+    first_month_x = min(x for x, _ in months)
+    labels = sorted(
+        (
+            (line.y, label)
+            for line in lines
+            if line.y < header_y and (label := _label(line.text))
+        ),
+        reverse=True,
+    )
+    starts = [y for y, label in labels if label == "ZMIESZANE"]
+    bounds = [*starts, float("-inf")]
+    blocks: list[dict[str, Any]] = []
+    for top, bottom in itertools.pairwise(bounds):
+        streets = [
+            line.text
+            for line in sorted(lines, key=lambda f: -f.y)
+            if bottom + 8 < line.y <= min(top + 15, header_y - 5)
+            and line.x < first_month_x - 150
+            and not re.fullmatch(r"\d+", line.text)
         ]
-        # The header is the topmost row of month names; a street such as
-        # "3 Maja" (genitive of May) further down must not count.
-        header_y = max((w.y for w, _ in named), default=0.0)
-        months = [(w.x, month) for w, month in named if abs(w.y - header_y) < 2]
-        if len(months) != 12:
-            raise ValueError("Ekoland: month header not found")
-        first_month_x = min(x for x, _ in months)
-        labels = sorted(
-            (
-                (line.y, label)
-                for line in layout.lines
-                if line.y < header_y and (label := _label(line.text))
-            ),
-            reverse=True,
-        )
-        starts = [y for y, label in labels if label == "ZMIESZANE"]
-        bounds = [*starts, float("-inf")]
-        first = len(blocks)
-        for top, bottom in itertools.pairwise(bounds):
-            streets = " ".join(
-                line.text
-                for line in sorted(layout.lines, key=lambda f: -f.y)
-                if bottom + 8 < line.y <= min(top + 15, header_y - 5)
-                and line.x < first_month_x - 150
-                and not re.fullmatch(r"\d+", line.text)
-            )
-            blocks.append(
-                {
-                    "year": year,
-                    "streets": [
-                        re.sub(r"^\d+\s+", "", re.sub(r"\s+", " ", name).strip())
-                        for name in streets.split(",")
-                        if name.strip()
-                    ],
-                    "rows": [],
-                }
-            )
-        # Each day belongs to the nearest label row (the recyclables label
-        # wraps around its days), and that row's block.
-        for word in layout.words:
-            day = word.text.strip(",")
-            if not (
-                day.isdigit() and word.x > first_month_x - 25 and word.y < header_y - 5
-            ):
-                continue
-            label_y, label = min(labels, key=lambda item: abs(item[0] - word.y))
-            if abs(label_y - word.y) > 12:
-                continue
-            index = first + sum(1 for y in starts if y >= label_y - 1) - 1
-            _, month = min(months, key=lambda item: abs(item[0] - word.x))
-            blocks[index]["rows"].append((datetime.date(year, month, int(day)), label))
+        blocks.append({"year": year, "streets": _streets(streets), "rows": []})
+    # Each day belongs to the nearest label row (the recyclables label
+    # wraps around its days), and that row's block.
+    for word in words:
+        day = word.text.strip(",")
+        if not (
+            day.isdigit() and word.x > first_month_x - 25 and word.y < header_y - 5
+        ):
+            continue
+        label_y, label = min(labels, key=lambda item: abs(item[0] - word.y))
+        if abs(label_y - word.y) > 12:
+            continue
+        index = sum(1 for y in starts if y >= label_y - 1) - 1
+        _, month = min(months, key=lambda item: abs(item[0] - word.x))
+        blocks[index]["rows"].append((datetime.date(year, month, int(day)), label))
     return blocks
 
 
@@ -216,6 +239,11 @@ class Source(BaseSource):
         "Gmina Kraśnik, Lasy": {"municipality": "Gmina Kraśnik", "street": "Lasy"},
         "Dzierzkowice, Dębina": {"municipality": "Dzierzkowice", "street": "Dębina"},
         "Wilkołaz, Ostrów": {"municipality": "Wilkołaz", "street": "Ostrów"},
+        "Strzyżewice, Bystrzyca Stara": {
+            "municipality": "Strzyżewice",
+            "street": "Bystrzyca Stara",
+        },
+        "Urzędów, Bęczyn": {"municipality": "Urzędów", "street": "Bęczyn"},
     }
 
     PARAMS = (
@@ -226,7 +254,8 @@ class Source(BaseSource):
     HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your municipality ('Miasto Kraśnik', 'Gmina Kraśnik', "
-            "'Dzierzkowice', 'Gościeradów', 'Trzydnik Duży' or 'Wilkołaz') and "
+            "'Dzierzkowice', 'Gościeradów', 'Trzydnik Duży', 'Wilkołaz', "
+            "'Strzyżewice' or 'Urzędów') and "
             "your street or village as printed in the schedule PDF linked on "
             "https://www.ekolandpolska.com.pl/dla-mieszkancow/odbior-odpadow-gminy "
             "(e.g. 'Lubelska' or 'Lasy'). Accents and case are ignored. Only detached "
