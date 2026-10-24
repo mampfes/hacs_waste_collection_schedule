@@ -6,8 +6,14 @@ address picker of the portal ends on a page whose URL carries the address id
 (``/public/address/<id>``), and one public call answers everything for it::
 
     GET /api/publiccitizen/container/address/active/<id>
-    [{"containerType": {"description": "240 L 2-delt beholder til rest og madaffald"},
-      "collectDates": [20260914, 20260928, ...]}, ...]
+    {"chainDetailsOwn": [{"containerDetails": [
+        {"containerType": {"description": "240 L 2-delt beholder til rest og madaffald"},
+         "collectCalendar": [{"collectDate": 20260914}, {"collectDate": 20260928}, ...]},
+        ...]}],
+     "chainDetailsZero": [...], "chainDetailsUse": [...]}
+
+The portal used to answer with a flat list of containers carrying ``collectDates``;
+the parser still accepts that shape.
 
 The call is "public" by the fixed header ``publicaccesstoken:
 __NetDialogCitizenPublicAccessToken__``, which the portal's own script sends.
@@ -55,12 +61,27 @@ class ContainerParser(Parser["list[tuple[datetime.date, str]]"]):
     def __call__(
         self, response: Any, source: BaseSource | None = None
     ) -> list[tuple[datetime.date, str]]:
+        data = response.json()
+        containers: list[dict[str, Any]] = []
+        if isinstance(data, dict):
+            for chains in data.values():
+                if isinstance(chains, list):
+                    for chain in chains:
+                        containers.extend(chain.get("containerDetails") or [])
+        else:
+            containers = data
+
         rows: list[tuple[datetime.date, str]] = []
-        for container in response.json():
+        for container in containers:
             description = str(
                 (container.get("containerType") or {}).get("description") or ""
             ).strip()
-            for stamp in container.get("collectDates") or []:
+            stamps = container.get("collectDates") or [
+                item["collectDate"]
+                for item in container.get("collectCalendar") or []
+                if item.get("collectDate")
+            ]
+            for stamp in stamps:
                 rows.append(
                     (
                         datetime.datetime.strptime(str(stamp), "%Y%m%d").date(),
