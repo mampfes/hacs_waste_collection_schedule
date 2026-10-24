@@ -6750,14 +6750,19 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "bulky": "Bulky",
-          "food": "Food",
-          "green": "Green",
-          "recycling": "Recycling",
-          "sector": "Sektor"
+          "bulky": "Sektor za kosovne odpadke",
+          "food": "Sektor za živilske odpadke",
+          "green": "Sektor za zeleni odpad in listje",
+          "recycling": "Sektor za recikliranje",
+          "sector": "Sektor za odpadke"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "bulky": "Če se razlikuje od sektorja za odpadke.",
+          "food": "Če se razlikuje od sektorja za odpadke.",
+          "green": "Če se razlikuje od sektorja za odpadke.",
+          "recycling": "Če se razlikuje od sektorja za odpadke.",
+          "sector": "To je privzeti sektor."
         }
       },
       "reconfigure_montreal_ca": {
@@ -6765,13 +6770,19 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "bulky": "Bulky",
-          "food": "Food",
-          "green": "Green",
-          "recycling": "Recycling",
-          "sector": "Sektor"
+          "bulky": "Sektor za kosovne odpadke",
+          "food": "Sektor za živilske odpadke",
+          "green": "Sektor za zeleni odpad in listje",
+          "recycling": "Sektor za recikliranje",
+          "sector": "Sektor za odpadke"
         },
-        "data_description": {}
+        "data_description": {
+          "bulky": "Če se razlikuje od sektorja za odpadke.",
+          "food": "Če se razlikuje od sektorja za odpadke.",
+          "green": "Če se razlikuje od sektorja za odpadke.",
+          "recycling": "Če se razlikuje od sektorja za odpadke.",
+          "sector": "To je privzeti sektor."
+        }
       },
       "args_info_collectes_ca": {
         "title": "Configure Source",
