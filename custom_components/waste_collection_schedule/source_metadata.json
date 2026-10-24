@@ -1914,7 +1914,7 @@
   "kolding_dk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kolding_dk.md",
     "howto": {
-      "en": "Go to https://kolding.infovision.dk/public/selectaddress and search for your address. Your ID is in the URL, e.g. `00007b8d-0002-0001-4164-647265737320`."
+      "en": "Go to https://kolding.infovision.dk/public/selectaddress and search for your address. Your ID is in the URL, e.g. `00007b8c-0002-0001-4164-647265737320`."
     },
     "urls": {}
   },
@@ -4274,8 +4274,7 @@
   "geovest_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/geovest_it.md",
     "howto": {
-      "en": "Choose your town from the Geovest source menu, then search your street name. `numbers` is optional and defaults to 1 when not provided. A random `device_id` is generated automatically; enter `authorization` only if the default token stops working.",
-      "it": "Scegli il tuo comune dal menu di Geovest, poi cerca il nome della strada. `numbers` è opzionale e assume il valore 1 se non fornito. Un `device_id` casuale viene generato automaticamente; inserisci `authorization` solo se il token predefinito smette di funzionare."
+      "en": "Choose your town id from the Geovest list, then search your street name. The house number defaults to 1 and is only used when several streets match. A device id is generated when you leave it empty. Replace the authorization token only if the built-in one stops working. Calendar type 1 is a private address and 2 is a business."
     },
     "urls": {}
   },
@@ -6062,7 +6061,9 @@
   },
   "iapp_itouchvision_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/iapp_itouchvision_com.md",
-    "howto": {},
+    "howto": {
+      "en": "Select your council, then enter the property UPRN. Buckinghamshire and Aylesbury Vale are read from the My Council Services portal. The former Chiltern source is this one with municipality BUCKINGHAMSHIRE."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6439,7 +6440,9 @@
   },
   "chichester_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chichester_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Open https://www.chichester.gov.uk/checkyourbinday, search your address, and copy the UPRN."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6573,7 +6576,9 @@
   },
   "chiltern_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/chiltern_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Deprecated. Add iTouchVision instead and choose municipality BUCKINGHAMSHIRE. This entry still accepts a UPRN and reads the Buckinghamshire bin-day form."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -8107,9 +8112,11 @@
   "teignbridge_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/teignbridge_gov_uk.md",
     "howto": {
-      "en": "Visit <a href='https://www.teignbridge.gov.uk/recycling-and-waste/forms/download-your-collection-calendar/'>Download your collection calendar</a>, enter your postcode and note the UPRN from the address dropdown."
+      "en": "Visit https://www.teignbridge.gov.uk/recycling-and-waste/forms/download-your-collection-calendar/, enter your postcode and note the UPRN from the address dropdown."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "telford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/telford_gov_uk.md",

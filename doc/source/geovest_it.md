@@ -1,6 +1,8 @@
 # Geovest
 
-Support for waste collection schedules provided by [Geovest](https://geovest.bluemilk.dev), Italy.
+Support for schedules provided by [Geovest](https://geovest.bluemilk.dev).
+
+Source for Geovest, Italy.
 
 ## Configuration via configuration.yaml
 
@@ -9,43 +11,37 @@ waste_collection_schedule:
   sources:
     - name: geovest_it
       args:
-        town_id: "7"
-        address_name: "via antonio gramsci"
-        numbers: "228"
+        address_name: ADDRESS_NAME
+        town_id: TOWN_ID
+        numbers: NUMBERS
+        calendar_type_id: CALENDAR_TYPE_ID
+        days: DAYS
+        device_id: DEVICE_ID
+        authorization: AUTHORIZATION
 ```
 
 ### Configuration Variables
 
-**town_id**
+**address_name**  
 *(string) (required)*
 
-Identifier of the town. When configuring via the UI, this is set automatically by choosing your town from the source menu. For YAML, use the `town_id` listed for your town (see the Geovest source menu).
-
-**address_name**
+**town_id**  
 *(string) (required)*
 
-Street name or address.
-
-**numbers**
+**numbers**  
 *(string) (optional)*
 
-Street number or house number. Defaults to `1` when omitted.
-
-**calendar_type_id**
+**calendar_type_id**  
 *(string) (optional)*
 
-Use `1` for private addresses or `2` for businesses. Defaults to `1`.
+**days**  
+*(string) (optional)*
 
-**days**
-*(integer) (optional)*
+**device_id**  
+*(string) (optional)*
 
-Number of days ahead to fetch. Defaults to `30`.
-
-## How to find your address
-
-1. Choose your town from the Geovest source menu.
-2. Search your street name.
-3. Leave `numbers` empty to use the default value `1`, or enter a house number if multiple addresses are returned.
+**authorization**  
+*(string) (optional)*
 
 ## Example
 
@@ -54,25 +50,12 @@ waste_collection_schedule:
   sources:
     - name: geovest_it
       args:
-        town_id: "7"
-        address_name: "via oreste vancini"
-        numbers: "3"
-        days: 30
+        town_id: '7'
+        numbers: '228'
+        address_name: via gramsci
+        device_id: '1111111111111111'
 ```
 
-## Bin types returned
+## How to get the source arguments
 
-| Provider description | Returned type | Icon |
-|---------------------|---------------|------|
-| Verde leggero | Verde leggero | `Icons.GARDEN` |
-| Verde | Verde | `Icons.GARDEN` |
-| Organico | Organico | `Icons.BIO_KITCHEN` |
-| Umido | Umido | `Icons.BIO_KITCHEN` |
-| Indifferenziato | Indifferenziato | `Icons.GENERAL_WASTE` |
-| Rifiuti indifferenziati | Rifiuti indifferenziati | `Icons.GENERAL_WASTE` |
-| Carta | Carta | `Icons.PAPER` |
-| Cartone | Cartone | `Icons.PAPER` |
-| Imballaggi in plastica | Imballaggi in plastica | `Icons.PLASTIC_PACKAGING` |
-| Plastica | Plastica | `Icons.PLASTIC_PACKAGING` |
-| Metalli | Metalli | `Icons.METAL` |
-| Vetro | Vetro | `Icons.GLASS` |
+Choose your town id from the Geovest list, then search your street name. The house number defaults to 1 and is only used when several streets match. A device id is generated when you leave it empty. Replace the authorization token only if the built-in one stops working. Calendar type 1 is a private address and 2 is a business.

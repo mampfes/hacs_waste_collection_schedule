@@ -19153,22 +19153,19 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address_name": "Nome Strada",
-          "authorization": "Token di autorizzazione (opzionale)",
-          "calendar_type_id": "Tipo di calendario",
-          "days": "Giorni da recuperare",
-          "device_id": "ID dispositivo (opzionale)",
-          "numbers": "Numero Civico",
-          "town_id": "Town Id"
+          "address_name": "Via",
+          "authorization": "Chiave API",
+          "calendar_type_id": "Calendar Type Id",
+          "days": "Days",
+          "device_id": "Device Id",
+          "numbers": "Numero civico",
+          "town_id": "Comune"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "address_name": "Nome della strada.",
-          "authorization": "Token Bearer opzionale. Usalo se il token predefinito smette di funzionare.",
-          "calendar_type_id": "1 per privati, 2 per aziende.",
-          "days": "Numero di giorni da recuperare. Il valore predefinito è 30.",
-          "device_id": "Identificatore dispositivo opzionale. Se omesso, viene generato un ID dispositivo casuale.",
-          "numbers": "Numero civico. Impostato su 1 per default."
+          "address_name": "Il nome della vostra via.",
+          "numbers": "Il vostro numero civico.",
+          "town_id": "Il nome del vostro comune, come indicato sul sito del fornitore."
         }
       },
       "reconfigure_geovest_it": {
@@ -19176,21 +19173,18 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "address_name": "Nome Strada",
-          "authorization": "Token di autorizzazione (opzionale)",
-          "calendar_type_id": "Tipo di calendario",
-          "days": "Giorni da recuperare",
-          "device_id": "ID dispositivo (opzionale)",
-          "numbers": "Numero Civico",
-          "town_id": "Town Id"
+          "address_name": "Via",
+          "authorization": "Chiave API",
+          "calendar_type_id": "Calendar Type Id",
+          "days": "Days",
+          "device_id": "Device Id",
+          "numbers": "Numero civico",
+          "town_id": "Comune"
         },
         "data_description": {
-          "address_name": "Nome della strada.",
-          "authorization": "Token Bearer opzionale. Usalo se il token predefinito smette di funzionare.",
-          "calendar_type_id": "1 per privati, 2 per aziende.",
-          "days": "Numero di giorni da recuperare. Il valore predefinito è 30.",
-          "device_id": "Identificatore dispositivo opzionale. Se omesso, viene generato un ID dispositivo casuale.",
-          "numbers": "Numero civico. Impostato su 1 per default."
+          "address_name": "Il nome della vostra via.",
+          "numbers": "Il vostro numero civico.",
+          "town_id": "Il nome del vostro comune, come indicato sul sito del fornitore."
         }
       },
       "args_apricaspa_it": {
@@ -26146,7 +26140,7 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_iapp_itouchvision_com": {
@@ -26158,7 +26152,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "args_babergh_midsuffolk_gov_uk": {
@@ -27398,7 +27392,7 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_chichester_gov_uk": {
@@ -27409,7 +27403,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "args_chorley_gov_uk": {
@@ -27851,7 +27845,7 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_chiltern_gov_uk": {
@@ -27862,7 +27856,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "args_derby_gov_uk": {
@@ -32790,11 +32784,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "postcode": "Codice Postale CAP",
+          "postcode": "CAP",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "postcode": "Il vostro codice postale (CAP).",
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_teignbridge_gov_uk": {
@@ -32802,10 +32798,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "postcode": "Codice Postale CAP",
+          "postcode": "CAP",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Il vostro codice postale (CAP).",
+          "uprn": "Il vostro Unique Property Reference Number (UPRN). Lo trovate su {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_telford_gov_uk": {
         "title": "Configurazione Sorgente",

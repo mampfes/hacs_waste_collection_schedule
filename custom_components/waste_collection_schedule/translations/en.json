@@ -19227,22 +19227,19 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_name": "Street Name",
-          "authorization": "Authorization token (optional)",
+          "address_name": "Street",
+          "authorization": "API Key",
           "calendar_type_id": "Calendar Type",
           "days": "Days to fetch",
-          "device_id": "Device ID (optional)",
-          "numbers": "Street Number",
-          "town_id": "Town Id"
+          "device_id": "Device ID",
+          "numbers": "House Number",
+          "town_id": "Municipality"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address_name": "Street name or address.",
-          "authorization": "Optional Bearer token. Use this if the default token stops working.",
-          "calendar_type_id": "1 for private addresses, 2 for businesses.",
-          "days": "Number of days ahead to fetch. Defaults to 30.",
-          "device_id": "Optional device identifier. If omitted, a random device id is generated.",
-          "numbers": "Street number or house number. Defaults to 1."
+          "address_name": "Your street name.",
+          "numbers": "Your house number.",
+          "town_id": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_geovest_it": {
@@ -19250,21 +19247,18 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address_name": "Street Name",
-          "authorization": "Authorization token (optional)",
+          "address_name": "Street",
+          "authorization": "API Key",
           "calendar_type_id": "Calendar Type",
           "days": "Days to fetch",
-          "device_id": "Device ID (optional)",
-          "numbers": "Street Number",
-          "town_id": "Town Id"
+          "device_id": "Device ID",
+          "numbers": "House Number",
+          "town_id": "Municipality"
         },
         "data_description": {
-          "address_name": "Street name or address.",
-          "authorization": "Optional Bearer token. Use this if the default token stops working.",
-          "calendar_type_id": "1 for private addresses, 2 for businesses.",
-          "days": "Number of days ahead to fetch. Defaults to 30.",
-          "device_id": "Optional device identifier. If omitted, a random device id is generated.",
-          "numbers": "Street number or house number. Defaults to 1."
+          "address_name": "Your street name.",
+          "numbers": "Your house number.",
+          "town_id": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_apricaspa_it": {
@@ -26257,7 +26251,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_iapp_itouchvision_com": {
@@ -26269,7 +26263,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_babergh_midsuffolk_gov_uk": {
@@ -27509,7 +27503,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_chichester_gov_uk": {
@@ -27520,7 +27514,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_chorley_gov_uk": {
@@ -27962,7 +27956,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_chiltern_gov_uk": {
@@ -27973,7 +27967,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_derby_gov_uk": {
@@ -32965,8 +32959,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "postcode": "Postcode (e.g. EX4 2JR)",
-          "uprn": "Unique Property Reference Number"
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_teignbridge_gov_uk": {
@@ -32978,8 +32972,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "postcode": "Postcode (e.g. EX4 2JR)",
-          "uprn": "Unique Property Reference Number"
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_telford_gov_uk": {

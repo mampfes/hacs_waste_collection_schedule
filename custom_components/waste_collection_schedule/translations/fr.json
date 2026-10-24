@@ -19165,22 +19165,19 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address_name": "Nom de la rue",
-          "authorization": "Jeton d'autorisation (optionnel)",
-          "calendar_type_id": "Type de calendrier",
-          "days": "Jours à récupérer",
-          "device_id": "ID du dispositif (optionnel)",
-          "numbers": "Numéro de rue",
-          "town_id": "Town Id"
+          "address_name": "Rue",
+          "authorization": "Clé API",
+          "calendar_type_id": "Calendar Type Id",
+          "days": "Days",
+          "device_id": "Device Id",
+          "numbers": "Numéro",
+          "town_id": "Commune"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "address_name": "Nom de la rue.",
-          "authorization": "Jeton Bearer optionnel. Utilisez-le si le jeton par défaut cesse de fonctionner.",
-          "calendar_type_id": "1 pour privé, 2 pour entreprise.",
-          "days": "Nombre de jours à récupérer. La valeur par défaut est 30.",
-          "device_id": "Identifiant d'appareil optionnel. Si omis, un identifiant aléatoire est généré.",
-          "numbers": "Numéro civique. Par défaut 1."
+          "address_name": "Le nom de votre rue.",
+          "numbers": "Votre numéro de rue.",
+          "town_id": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "reconfigure_geovest_it": {
@@ -19188,21 +19185,18 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "address_name": "Nom de la rue",
-          "authorization": "Jeton d'autorisation (optionnel)",
-          "calendar_type_id": "Type de calendrier",
-          "days": "Jours à récupérer",
-          "device_id": "ID du dispositif (optionnel)",
-          "numbers": "Numéro de rue",
-          "town_id": "Town Id"
+          "address_name": "Rue",
+          "authorization": "Clé API",
+          "calendar_type_id": "Calendar Type Id",
+          "days": "Days",
+          "device_id": "Device Id",
+          "numbers": "Numéro",
+          "town_id": "Commune"
         },
         "data_description": {
-          "address_name": "Nom de la rue.",
-          "authorization": "Jeton Bearer optionnel. Utilisez-le si le jeton par défaut cesse de fonctionner.",
-          "calendar_type_id": "1 pour privé, 2 pour entreprise.",
-          "days": "Nombre de jours à récupérer. La valeur par défaut est 30.",
-          "device_id": "Identifiant d'appareil optionnel. Si omis, un identifiant aléatoire est généré.",
-          "numbers": "Numéro civique. Par défaut 1."
+          "address_name": "Le nom de votre rue.",
+          "numbers": "Votre numéro de rue.",
+          "town_id": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "args_apricaspa_it": {
@@ -26153,12 +26147,12 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "municipality": "Municipalité",
+          "municipality": "Municipality",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_iapp_itouchvision_com": {
@@ -26166,11 +26160,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "municipality": "Municipalité",
+          "municipality": "Municipality",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_babergh_midsuffolk_gov_uk": {
@@ -27410,7 +27404,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_chichester_gov_uk": {
@@ -27421,7 +27415,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_chorley_gov_uk": {
@@ -27863,7 +27857,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_chiltern_gov_uk": {
@@ -27874,7 +27868,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_derby_gov_uk": {
@@ -32806,7 +32800,9 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_teignbridge_gov_uk": {
@@ -32817,7 +32813,10 @@
           "postcode": "Code postal",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_telford_gov_uk": {
         "title": "Configurer la Source",
