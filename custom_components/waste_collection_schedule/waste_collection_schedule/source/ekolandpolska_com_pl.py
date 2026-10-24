@@ -236,7 +236,13 @@ class Source(BaseSource):
 
     retrieve = retrievers.FanOutRetriever(
         prepare=retrievers.Lookup(
-            _INDEX_URL, pick=retrievers.yearly_links(_schedule_pattern)
+            _INDEX_URL,
+            pick=retrievers.yearly_links(_schedule_pattern),
+            # About one first request in six gets a "One moment, please..."
+            # interstitial without the download list, which reloads itself
+            # after 5 s; asking again after that pause gets the page.
+            retry_if=lambda response: "harmonogram-" not in response.text,
+            retry_delay=5,
         ),
         targets=lambda source, urls: urls,
         fetch=retrievers.Request(lambda url, urls, **_: url),

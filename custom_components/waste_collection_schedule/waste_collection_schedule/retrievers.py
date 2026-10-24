@@ -1805,6 +1805,9 @@ class Request(_BaseRetriever):
             flags is requested once more, in the same session: for a page that
             answers the first hit with an interstitial or consent overlay and
             the real content on the second.
+        retry_delay: seconds to wait before that second request (default 0),
+            for an interstitial that only lets the client through after a
+            pause ("One moment, please...", reloading itself after 5 s).
         encoding: forced on the response before its ``.text`` is read.
         raise_for_status: raise on an error status (default). Off for a
             provider whose error status is itself the answer a ``pick`` reads.
@@ -1827,6 +1830,7 @@ class Request(_BaseRetriever):
         before: Sequence[Callable[[BaseSource, tuple], Any]] = (),
         when: Callable[..., bool] | None = None,
         retry_if: Callable[[Response], bool] | None = None,
+        retry_delay: float = 0,
         encoding: str | None = None,
         raise_for_status: bool = True,
         timeout: int = 30,
@@ -1846,6 +1850,7 @@ class Request(_BaseRetriever):
         self.before = tuple(before)
         self.when = when
         self.retry_if = retry_if
+        self.retry_delay = retry_delay
         self.encoding = encoding
         self.raise_for_status = raise_for_status
         self.timeout = timeout
@@ -1858,6 +1863,8 @@ class Request(_BaseRetriever):
             return None
         response = self._send(source, args)
         if self.retry_if is not None and self.retry_if(response):
+            if self.retry_delay:
+                time.sleep(self.retry_delay)
             response = self._send(source, args)
         if self.encoding is not None:
             response.encoding = self.encoding
@@ -1957,8 +1964,8 @@ class Lookup:
             optional level the user left out.
         **request: the remaining :class:`Request` arguments (``method``,
             ``params``, ``data``, ``json``, ``headers``, ``cookies``,
-            ``allow_redirects``, ``encoding``, ``raise_for_status``,
-            ``timeout``).
+            ``allow_redirects``, ``retry_if``, ``retry_delay``, ``encoding``,
+            ``raise_for_status``, ``timeout``).
     """
 
     def __init__(
