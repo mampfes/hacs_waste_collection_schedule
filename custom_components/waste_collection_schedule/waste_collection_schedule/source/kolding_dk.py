@@ -54,7 +54,7 @@ class Source(BaseSource):
         "en": (
             "Go to https://kolding.infovision.dk/public/selectaddress and search "
             "for your address. Your ID is in the URL, e.g. "
-            "`00007b8d-0002-0001-4164-647265737320`."
+            "`00007b8c-0002-0001-4164-647265737320`."
         ),
     }
 
