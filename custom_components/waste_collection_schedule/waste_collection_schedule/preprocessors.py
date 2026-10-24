@@ -1931,15 +1931,6 @@ _EN_MONTH_ABBREVIATIONS = {
 }
 
 
-_ROMAN_MONTHS = {
-    numeral: number
-    for number, numeral in enumerate(
-        ("I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"),
-        start=1,
-    )
-}
-
-
 class GridBlock(NamedTuple):
     """One block of a :class:`PdfRoundMonthGrid` table.
 
@@ -1999,7 +1990,8 @@ class PdfRoundMonthGrid(Preprocessor["list[PdfWordLayout]", GridBlock]):
         year_pattern: regex searched against the document's text lines (joined
             by newlines), its first group the four-digit year.
         roman_months: the month header prints Roman numerals ("I" ... "XII")
-            instead of month names.
+            instead of month names (read with ``recurrence.month(...,
+            roman=True)``).
         label_x: optional ``(left, right)`` x range a label line's centre must lie in.
         stop_pattern: optional regex (matched against a word's
             :func:`lookups.normalize_loose` text) marking the end of the table,
@@ -2054,9 +2046,7 @@ class PdfRoundMonthGrid(Preprocessor["list[PdfWordLayout]", GridBlock]):
         self._side_band = side_band
 
     def _month(self, text: str) -> "int | None":
-        if self._roman:
-            return _ROMAN_MONTHS.get(text.strip())
-        return recurrence.month(text)
+        return recurrence.month(text, roman=self._roman)
 
     def __call__(
         self, records: "list[PdfWordLayout]", source: "BaseSource | None" = None
