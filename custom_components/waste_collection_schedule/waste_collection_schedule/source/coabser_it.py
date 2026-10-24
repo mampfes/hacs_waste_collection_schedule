@@ -67,6 +67,7 @@ class Source(BaseSource):
 
     WASTE_TYPES: ClassVar[list] = [
         wt.GENERAL_WASTE,
+        wt.GLASS,
         wt.HAZARDOUS,
         wt.ORGANIC,
         wt.PAPER,
