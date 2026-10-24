@@ -37,7 +37,7 @@ from waste_collection_schedule.exceptions import (
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
-    from waste_collection_schedule.parsers import PdfRow, PdfWord
+    from waste_collection_schedule.parsers import PdfRow, PdfWord, PdfWordLayout
 
 InT = TypeVar("InT", contravariant=True)
 OutT = TypeVar("OutT", covariant=True)
@@ -1929,6 +1929,285 @@ _EN_MONTH_ABBREVIATIONS = {
     )
     for name in names
 }
+
+
+_ROMAN_MONTHS = {
+    numeral: number
+    for number, numeral in enumerate(
+        ("I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"),
+        start=1,
+    )
+}
+
+
+class GridBlock(NamedTuple):
+    """One block of a :class:`PdfRoundMonthGrid` table.
+
+    ``year`` is the document's year, ``page`` and ``top`` (the PDF y of the
+    block's first row label, larger = higher) place it, ``side_text`` is what
+    the table prints left of the row labels for this block (an area's street
+    list), one text line per line top to bottom, and ``rows`` are its
+    ``(date, label)`` records in page order.
+    """
+
+    year: int
+    page: int
+    top: float
+    side_text: str
+    rows: list[tuple[datetime.date, str]]
+
+
+class PdfRoundMonthGrid(Preprocessor["list[PdfWordLayout]", GridBlock]):
+    """Read a PDF table with one row per round and one column per month.
+
+    The layout many Polish municipalities export from a spreadsheet: a header
+    row of the twelve months (names in any supported language, or Roman
+    numerals), a waste-round label at the left of each row, and in each cell
+    that month's collection days ("5, 19"). The table usually repeats in
+    blocks, one per area, each starting with the same round (the mixed waste
+    row) and often carrying the area's street list in a cell to the left::
+
+        parse = parsers.EachResponse(
+            parsers.PdfWordLayoutParser(min_words=200),
+            then=preprocessors.PdfRoundMonthGrid(
+                labels=_label, block_start=MIXED, year_pattern=r"OD 01\\.01\\.(20\\d\\d)",
+                side_margin=150,
+            ),
+        )
+        preprocess = staticmethod(_select)   # pick the block for the address
+
+    Empty cells (a seasonal round) are simply missing, so a day is not placed
+    by its order in the row but by position: it belongs to the nearest row
+    label (vertically, within ``row_tolerance``) and the nearest month column
+    (horizontally). The header is the topmost row holding all twelve months
+    exactly once, so a street such as "3 Maja" lower down cannot be mistaken
+    for it. Each page of each document is read on its own; a page without a
+    month header is skipped.
+
+    Returns one :class:`GridBlock` per block, in page order; choosing the
+    block (by its index, its ``side_text``, or merging several documents) is
+    the source's selection step. A document without a month header on any
+    page, or whose year does not match ``year_pattern``, raises
+    ``ResponseShapeError``: the layout has changed.
+
+    Args:
+        labels: names the round of a text line: ``callable(text) -> label
+            | None``, or a mapping from the line's text (compared with
+            :func:`lookups.normalize_loose`) to the label.
+        block_start: the label whose row starts a new block. Rows above the
+            first one form the first block.
+        year_pattern: regex searched against the document's text lines (joined
+            by newlines), its first group the four-digit year.
+        roman_months: the month header prints Roman numerals ("I" ... "XII")
+            instead of month names.
+        label_x: optional ``(left, right)`` x range a label line's centre must lie in.
+        stop_pattern: optional regex (matched against a word's
+            :func:`lookups.normalize_loose` text) marking the end of the table,
+            e.g. the heading of a second table printed below it; only words
+            above the topmost match below the header are read.
+        day_margin: how far (in points) left of the first month column's centre
+            a day may sit.
+        header_gap: how far below the header row a day or side text must start.
+        row_tolerance: the largest vertical distance between a day and its row
+            label; ``None`` for no limit.
+        side_margin: collect ``side_text`` from the text lines at least this far
+            left of the first month column's centre; ``None`` to skip it.
+        side_band: ``(above, below)``: a block's side text runs from this far
+            above its first row label down to this far above the next block's.
+    """
+
+    def __init__(
+        self,
+        *,
+        labels: "Callable[[str], str | None] | Mapping[str, str]",
+        block_start: str,
+        year_pattern: str,
+        roman_months: bool = False,
+        label_x: "tuple[float, float] | None" = None,
+        stop_pattern: "str | None" = None,
+        day_margin: float = 25.0,
+        header_gap: float = 5.0,
+        row_tolerance: "float | None" = 12.0,
+        side_margin: "float | None" = None,
+        side_band: tuple[float, float] = (15.0, 8.0),
+    ):
+        if callable(labels):
+            self._classify = labels
+        else:
+            by_name = {
+                lookups.normalize_loose(key): value for key, value in labels.items()
+            }
+
+            def classify(text: str) -> "str | None":
+                return by_name.get(lookups.normalize_loose(text))
+
+            self._classify = classify
+        self._block_start = block_start
+        self._year_re = re.compile(year_pattern)
+        self._roman = roman_months
+        self._label_x = label_x
+        self._stop_re = re.compile(stop_pattern) if stop_pattern else None
+        self._day_margin = day_margin
+        self._header_gap = header_gap
+        self._row_tolerance = row_tolerance
+        self._side_margin = side_margin
+        self._side_band = side_band
+
+    def _month(self, text: str) -> "int | None":
+        if self._roman:
+            return _ROMAN_MONTHS.get(text.strip())
+        return recurrence.month(text)
+
+    def __call__(
+        self, records: "list[PdfWordLayout]", source: "BaseSource | None" = None
+    ) -> list[GridBlock]:
+        from waste_collection_schedule import response_shape
+
+        blocks: list[GridBlock] = []
+        for layout in records:
+            text = "\n".join(line.text for line in layout.lines)
+            match = self._year_re.search(text)
+            response_shape.expect(
+                match is not None,
+                source_name=response_shape.source_name(source),
+                detail=f"no year matching {self._year_re.pattern!r} in the PDF",
+                raw=text[:500],
+            )
+            year = int(match.group(1)) if match else datetime.date.today().year
+            found = False
+            for page in sorted({word.page for word in layout.words}):
+                page_blocks = self._page(layout, page, year, source)
+                if page_blocks is not None:
+                    found = True
+                    blocks.extend(page_blocks)
+            response_shape.expect(
+                found,
+                source_name=response_shape.source_name(source),
+                detail="no row of twelve month headings in the PDF",
+                raw=text[:500],
+            )
+        return blocks
+
+    def _header(
+        self, words: list[Any]
+    ) -> "tuple[float, list[tuple[float, int]]] | None":
+        named = [(word, month) for word in words if (month := self._month(word.text))]
+        for word, _ in sorted(named, key=lambda item: -item[0].y):
+            row = [
+                (other.x, month) for other, month in named if abs(other.y - word.y) < 2
+            ]
+            if len(row) == 12 and len({month for _, month in row}) == 12:
+                return word.y, sorted(row)
+        return None
+
+    def _page(
+        self, layout: "PdfWordLayout", page: int, year: int, source: "BaseSource | None"
+    ) -> "list[GridBlock] | None":
+        from waste_collection_schedule import response_shape
+
+        words = [word for word in layout.words if word.page == page]
+        header = self._header(words)
+        if header is None:
+            return None
+        header_y, months = header
+        first_x = months[0][0]
+        floor = max(
+            (
+                word.y
+                for word in words
+                if self._stop_re is not None
+                and word.y < header_y
+                and self._stop_re.search(lookups.normalize_loose(word.text))
+            ),
+            default=float("-inf"),
+        )
+
+        labels = sorted(
+            (
+                (line.y, label)
+                for line in layout.lines
+                if line.page == page
+                and floor < line.y < header_y
+                and (
+                    self._label_x is None
+                    or self._label_x[0] <= line.x <= self._label_x[1]
+                )
+                and (label := self._classify(line.text))
+            ),
+            key=lambda item: -item[0],
+        )
+        if not labels:
+            return []
+
+        # Split the rows into blocks at each block-start row.
+        block_of: list[int] = []
+        tops: list[float] = []
+        for y, label in labels:
+            if label == self._block_start or not tops:
+                tops.append(y)
+            block_of.append(len(tops) - 1)
+        rows: list[list[tuple[datetime.date, str]]] = [[] for _ in tops]
+
+        for word in words:
+            day = word.text.strip(",")
+            if not (
+                day.isdigit()
+                and word.x > first_x - self._day_margin
+                and floor < word.y < header_y - self._header_gap
+            ):
+                continue
+            index = min(range(len(labels)), key=lambda i: abs(labels[i][0] - word.y))
+            label_y, label = labels[index]
+            if (
+                self._row_tolerance is not None
+                and abs(label_y - word.y) > self._row_tolerance
+            ):
+                continue
+            _, month = min(months, key=lambda column: abs(column[0] - word.x))
+            try:
+                collection_date = datetime.date(year, month, int(day))
+            except ValueError:
+                response_shape.expect(
+                    False,
+                    source_name=response_shape.source_name(source),
+                    detail=f"day {day} binned into month {month}",
+                )
+                continue
+            rows[block_of[index]].append((collection_date, label))
+
+        return [
+            GridBlock(
+                year,
+                page,
+                top,
+                self._side_text(layout, page, tops, i, header_y, first_x),
+                rows[i],
+            )
+            for i, top in enumerate(tops)
+        ]
+
+    def _side_text(
+        self,
+        layout: "PdfWordLayout",
+        page: int,
+        tops: list[float],
+        index: int,
+        header_y: float,
+        first_x: float,
+    ) -> str:
+        if self._side_margin is None:
+            return ""
+        above, below = self._side_band
+        top = min(tops[index] + above, header_y - self._header_gap)
+        bottom = tops[index + 1] + below if index + 1 < len(tops) else float("-inf")
+        return "\n".join(
+            line.text
+            for line in sorted(layout.lines, key=lambda line: -line.y)
+            if line.page == page
+            and bottom < line.y <= top
+            and line.x < first_x - self._side_margin
+            and not re.fullmatch(r"\d+", line.text)
+        )
 
 
 def _month_number(value: "str | None") -> "int | None":

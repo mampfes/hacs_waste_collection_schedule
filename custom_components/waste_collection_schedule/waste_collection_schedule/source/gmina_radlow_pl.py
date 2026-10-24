@@ -1,12 +1,15 @@
 import datetime
-import re
-from collections.abc import Iterator
 from typing import ClassVar, final
 
 from waste_collection_schedule import config_params, lookups
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.parsers import PdfWordLayout, PdfWordLayoutParser
+from waste_collection_schedule.parsers import PdfWordLayoutParser
+from waste_collection_schedule.preprocessors import (
+    Compose,
+    GridBlock,
+    PdfRoundMonthGrid,
+)
 from waste_collection_schedule.retrievers import PdfLinkRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
@@ -17,14 +20,14 @@ PAPER = "Papier"
 GLASS = "Szkło"
 ASH = "Popiół"
 
-# Row labels of the yearly table, matched on their first word.
+# Row labels of the yearly table, as printed.
 _ROW_LABELS = {
-    "odpady": MIXED,
-    "bio": BIO,
-    "tworzywa": PLASTIC,
-    "papier": PAPER,
-    "szklo": GLASS,
-    "popiol": ASH,
+    "Odpady zmieszane": MIXED,
+    "Bio": BIO,
+    "Tworzywa sztuczne": PLASTIC,
+    "Papier": PAPER,
+    "Szkło": GLASS,
+    "Popiół": ASH,
 }
 
 _INDEX_URL = (
@@ -51,78 +54,18 @@ _TOWNS = {
     "Przybysławice": 2,
 }
 
-_MONTHS = ("I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII")
-
-# Row labels sit between the village names and the first month column.
-_LABEL_X = (120.0, 235.0)
-
 
 def _rows(
-    pages: list[PdfWordLayout], source: BaseSource | None = None
-) -> Iterator[tuple[datetime.date, str]]:
+    blocks: list[GridBlock], source: BaseSource | None = None
+) -> list[tuple[datetime.date, str]]:
+    """The configured village's group: the table's blocks in order."""
     group = lookups.resolve(
         _TOWNS,
         source.params["town"] if source else "",
         argument="town",
         normalize=lookups.normalize_loose,
     )
-    words = list(pages[0].words) if pages else []
-    text = " ".join(w.text for w in words)
-    year_match = re.search(r"ROK\s+(20\d{2})", text)
-    year = int(year_match.group(1)) if year_match else datetime.date.today().year
-
-    # Month columns from the first roman-numeral header row.
-    header = next(
-        (w for w in sorted(words, key=lambda w: -w.y) if w.text == "XII"), None
-    )
-    if header is None:
-        return
-    columns = {
-        w.text: w.x for w in words if abs(w.y - header.y) < 2 and w.text in _MONTHS
-    }
-    if len(columns) != 12:
-        return
-    col_x = [columns[m] for m in _MONTHS]
-
-    # Bulky waste table below the yearly table is not parsed.
-    bulky = next(
-        (w.y for w in words if lookups.normalize_loose(w.text) == "zbiorka"), 0.0
-    )
-
-    labels: list[tuple[float, str]] = []
-    for w in words:
-        if _LABEL_X[0] <= w.x <= _LABEL_X[1] and bulky < w.y < header.y:
-            kind = _ROW_LABELS.get(lookups.normalize_loose(w.text).rstrip(","))
-            if kind:
-                labels.append((w.y, kind))
-    labels.sort(key=lambda lab: -lab[0])
-
-    # Each group starts at its "Odpady zmieszane" row; keep the wanted group.
-    groups: list[list[tuple[float, str]]] = []
-    for label in labels:
-        if label[1] == MIXED or not groups:
-            groups.append([])
-        groups[-1].append(label)
-    if group >= len(groups):
-        return
-    rows = groups[group]
-
-    for w in words:
-        if not (bulky < w.y < header.y) or w.x < col_x[0] - 15:
-            continue
-        number = w.text.rstrip(",")
-        if not number.isdigit():
-            continue
-        # A wrapped cell belongs to the nearest row label; skip other groups.
-        nearest = min(labels, key=lambda lab: abs(lab[0] - w.y))
-        if nearest not in rows:
-            continue
-        kind = nearest[1]
-        month = min(range(12), key=lambda i: abs(col_x[i] - w.x)) + 1
-        try:
-            yield datetime.date(year, month, int(number)), kind
-        except ValueError:
-            continue
+    return blocks[group].rows if group < len(blocks) else []
 
 
 @final
@@ -156,7 +99,19 @@ class Source(BaseSource):
 
     retrieve = PdfLinkRetriever(index_url=_INDEX_URL, pattern=_PDF_PATTERN)
     parse = PdfWordLayoutParser(min_words=100)
-    preprocess = staticmethod(_rows)
+    preprocess = Compose(
+        PdfRoundMonthGrid(
+            labels=_ROW_LABELS,
+            block_start=MIXED,
+            year_pattern=r"ROK\s+(20\d{2})",
+            roman_months=True,
+            # Row labels sit between the village names and the first month.
+            label_x=(120.0, 235.0),
+            # The bulky-waste table below the yearly table is not parsed.
+            stop_pattern=r"^zbiorka$",
+        ),
+        _rows,
+    )
     transform = ICSTransformer(
         type_value_map={
             MIXED: wt.GENERAL_WASTE,
