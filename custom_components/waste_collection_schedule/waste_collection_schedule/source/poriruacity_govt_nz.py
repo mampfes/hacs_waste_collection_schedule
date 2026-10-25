@@ -1,153 +1,116 @@
-import json
-import re
 from datetime import date, datetime, timedelta
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "Porirua City"
-DESCRIPTION = "Source for Porirua City."
-URL = "https://poriruacity.govt.nz/"
-TEST_CASES = {
-    "6 Ration Lane, Whitby, Porirua City 5024": {
-        "address": "6 Ration Lane Whitby, Porirua City 5024"
-    },
-    "104 Main Road, Titahi Bay, Porirua City 5022": {
-        "address": "104 Main Road Titahi Bay, Porirua City 5022"
-    },
-    "Address single-comma test": {
-        "address": "104 Main Road Titahi Bay, Porirua City 5022"
-    },
-}
-
-
-ICON_MAP = {
-    "rubbish": Icons.GENERAL_WASTE,
-    "glass": Icons.GLASS,
-    "mixed": Icons.RECYCLING,
-}
+from waste_collection_schedule.transformers import RowTransformer
 
 CALENDAR_PAGE_URL = (
     "https://poriruacity.govt.nz/services/rubbish-and-recycling/recycling-calendar/"
 )
+
 JS_URL = "https://storage.googleapis.com/pcc-static-v6/ALLJS/recycle-calendar/index.js"
-JS_URL_REGEX = re.compile(
-    r'src="(https://storage\.googleapis\.com/pcc-static-v6/[^"]*recycle-calendar/index\.js[^"]*)"'
-)
-
-ZONES_REGEX = re.compile(r"const\s?Xs\s?=\s?\{.*?\};", re.DOTALL)
-COLLECTIONS_MAP_REGEX = re.compile(r"collections:\s?\{(\w+:\s?\[.*?\],?)+\}", re.DOTALL)
+_JS_LINK = r'src="(https://storage\.googleapis\.com/pcc-static-v6/[^"]*recycle-calendar/index\.js[^"]*)"'
+_MAP_URL = "https://maps.poriruacity.govt.nz/server/rest/services/Property/PropertyAdminExternal/MapServer/5/query"
 
 
-class Source:
-    def __init__(self, address: str):
-        self._address: str = address
-        # 2025 endpoint change means street names no longer have a "," separator
-        # To preserve old configs, remove the first one if there are 2 or more.
-        if self._address.count(",") > 1:
-            self._address = self._address.replace(",", "", 1)
+def _address(address):
+    return address.replace(",", "", 1) if address.count(",") > 1 else address
 
-    @staticmethod
-    def get_js_infos() -> tuple[dict[str, list[str]], dict[str, list[str]]]:
-        js_url = JS_URL
-        try:
-            page = requests.get(CALENDAR_PAGE_URL, timeout=30)
-            m = JS_URL_REGEX.search(page.text)
-            if m:
-                js_url = m.group(1)
-        except requests.RequestException:
-            pass
-        r = requests.get(js_url, timeout=30)
-        r.raise_for_status()
-        zones_js_match = ZONES_REGEX.search(r.text)
-        if not zones_js_match:
-            raise Exception(
-                "Zones not found probably due to a change in the websites javascript"
-            )
-        zones_js = zones_js_match.group(0)
-        # const Xs={zone1:[new Date(2022,7,22),new Date(2022,7,23),new Date(2022,7,24),new Date(2022,7,25),new Date(2022,7,26)],zone2:[new Date(2022,7,8),new Date(2022,7,9),new Date(2022,7,10),new Date(2022,7,11),new Date(2022,7,12)],zone3:[new Date(2022,7,1),new Date(2022,7,2),new Date(2022,7,3),new Date(2022,7,4),new Date(2022,7,5)],zone4:[new Date(2022,7,15),new Date(2022,7,16),new Date(2022,7,17),new Date(2022,7,18),new Date(2022,7,19)]};
-        zones_js = zones_js.replace("const Xs=", "").replace(";", "")
-        # replace new Date(2022,7,22) with "2022-08-22"
-        zones_js = re.sub(
-            r"new Date\((\d{4}),(\d{1,2}),(\d{1,2})\)",
-            lambda m: (
-                f'"{m.group(1)}-{str(int(m.group(2)) + 1).zfill(2)}-{m.group(3).zfill(2)}"'
+
+def _query(target, context, address, **_):
+    return {
+        "where": f"lower(address) = '{_address(address).lower()}'",
+        "f": "pjson",
+        "outFields": "Address,OBJECTID,Collection_Day,Collection_Zone",
+        "returnGeometry": "false",
+        "resultRecordCount": 20,
+        "orderByFields": "Address",
+    }
+
+
+def _collections(record, source):
+    address = _address(source.params["address"]) if source is not None else ""
+    data = record["address"]
+    if "features" not in data or not data["features"]:
+        raise SourceArgumentNotFound("address", address)
+    properties = data["features"][0]["attributes"]
+    today = date.today()
+    next_day = next(
+        (
+            today + timedelta(days=i)
+            for i in range(1, 8)
+            if (today + timedelta(days=i)).strftime("%A")
+            == properties["Collection_Day"]
+        ),
+        None,
+    )
+    if next_day is None:
+        raise SourceArgumentNotFound("address", address)
+    calendar = record["calendar"]
+    zone = properties["Collection_Zone"].replace(" ", "").lower()
+    anchor = datetime.strptime(calendar["zones"][zone][next_day.weekday()], "%Y-%m-%d")
+    sequence = ["glass", "rubbish", "mixed", "rubbish"]
+    rows = []
+    for offset in (0, 7, 14):
+        day = next_day + timedelta(days=offset)
+        stamp = int(datetime(day.year, day.month, day.day).timestamp() * 1000)
+        anchor_stamp = int(anchor.timestamp() * 1000)
+        week = int(round((stamp - anchor_stamp) / 864e5) // 7)
+        key = sequence[abs(week) % 4]
+        rows.extend((day, label) for label in calendar["collections"][key])
+    return rows
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Porirua City"
+    DESCRIPTION = "Source for Porirua City."
+    URL = "https://poriruacity.govt.nz/"
+    COUNTRY = "nz"
+    TEST_CASES: ClassVar[dict] = {
+        "6 Ration Lane, Whitby, Porirua City 5024": {
+            "address": "6 Ration Lane Whitby, Porirua City 5024"
+        },
+        "104 Main Road, Titahi Bay, Porirua City 5022": {
+            "address": "104 Main Road Titahi Bay, Porirua City 5022"
+        },
+        "Address single-comma test": {
+            "address": "104 Main Road Titahi Bay, Porirua City 5022"
+        },
+    }
+    PARAMS = (street_address(),)
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.GLASS, wt.RECYCLABLES]
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter your address as shown at https://poriruacity.govt.nz/services/rubbish-and-recycling/recycling-calendar/. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    }
+    retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.LinkedAssetRetriever(
+            CALENDAR_PAGE_URL, pattern=_JS_LINK, fallback_url=JS_URL
+        ),
+        targets=lambda source, context: (_MAP_URL,),
+        fetch=retrievers.Request(lambda target, context, **_: target, params=_query),
+        include_prepared=True,
+    )
+    parse = parsers.NamedResponses(
+        {
+            "calendar": parsers.JsObjectParser(
+                {
+                    "zones": r"const\s?Xs\s?=\s?(\{.*?\});",
+                    "collections": r"collections:\s?(\{(?:\w+:\s?\[.*?\],?)+\})",
+                }
             ),
-            zones_js,
-        )
-        # replace zone1 with "zone1"
-        zones_js = re.sub(r"zone(\d+)", r'"zone\1"', zones_js)
-        ZONES: dict[str, list[str]] = json.loads(zones_js)
-        collections_map_reg_result = COLLECTIONS_MAP_REGEX.search(r.text)
-        if not collections_map_reg_result:
-            raise Exception(
-                "Collections map not found probably due to a change in the websites javascript"
-            )
-        collections_map_str = (
-            collections_map_reg_result.group(0).replace("collections:", "").strip()
-        )
-
-        # replace glass with "glass"
-        collections_map_str = re.sub(r"(\w+):", r'"\1":', collections_map_str)
-        COLLECTIONS_MAP: dict[str, list[str]] = json.loads(collections_map_str)
-        return ZONES, COLLECTIONS_MAP
-
-    def fetch(self) -> list[Collection]:
-        ZONES, COLLECTIONS_MAP = self.get_js_infos()
-        url = "https://maps.poriruacity.govt.nz/server/rest/services/Property/PropertyAdminExternal/MapServer/5/query"
-        params: dict[str, str | int] = {
-            "where": f"lower(address) = '{self._address.lower()}'",
-            "f": "pjson",
-            "outFields": "Address,OBJECTID,Collection_Day,Collection_Zone",
-            "returnGeometry": "false",
-            "resultRecordCount": 20,
-            "orderByFields": "Address",
+            "address": parsers.JsonParser(),
         }
-
-        r = requests.get(url, params=params)
-
-        data = r.json()
-        if "features" not in data or not data["features"]:
-            raise SourceArgumentNotFound("address", self._address)
-
-        feature = data["features"][0]
-        properties = feature["attributes"]
-
-        today = date.today()
-
-        col_day = properties["Collection_Day"]
-        col_zone = properties["Collection_Zone"].replace(" ", "").lower()
-
-        next_col_day = None
-        for i in range(1, 8, 1):
-            if (today + timedelta(days=i)).strftime("%A") == col_day:
-                next_col_day = today + timedelta(days=i)
-                break
-        if not next_col_day:
-            raise SourceArgumentNotFound("address", self._address)
-
-        z = ZONES[col_zone][next_col_day.weekday()]
-
-        z_date = datetime.strptime(z, "%Y-%m-%d")
-
-        next_days = (
-            next_col_day,
-            next_col_day + timedelta(days=7),
-            next_col_day + timedelta(days=14),
-        )
-
-        qs = ["glass", "rubbish", "mixed", "rubbish"]
-        entries: list[Collection] = []
-        for d in next_days:
-            d_time = datetime(d.year, d.month, d.day)
-            unix_time = int(d_time.timestamp() * 1000)
-            z_date_unix_time = int(z_date.timestamp() * 1000)
-            js_r = int(round((unix_time - z_date_unix_time) / 864e5) // 7)
-            js_i = abs(js_r) % 4
-            map_idx = qs[js_i]
-            relevant_types = COLLECTIONS_MAP[map_idx]
-            for col_type in relevant_types:
-                entries.append(Collection(d, col_type, ICON_MAP.get(col_type)))
-
-        return entries
+    )
+    preprocess = preprocessors.ExplodeList(_collections)
+    transform = RowTransformer(
+        type_value_map={
+            "rubbish": wt.GENERAL_WASTE,
+            "glass": wt.GLASS,
+            "mixed": wt.RECYCLABLES,
+        }
+    )

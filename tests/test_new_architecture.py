@@ -9196,6 +9196,141 @@ def test_html_calendar_grid_marker_attributes(
     assert parser(response) == expected
 
 
+class TestLinkedAssetRetriever:
+    @pytest.mark.parametrize("page_error", [None, "requests", "curl"])
+    def test_missing_link_or_page_transport_error_uses_fallback(self, page_error):
+        import requests
+        from curl_cffi.requests import RequestsError
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.retrievers import LinkedAssetRetriever
+
+        source = BaseSource()
+        source._session = MagicMock()
+        asset = MagicMock(text="calendar")
+        if page_error == "requests":
+            page = requests.Timeout("page unavailable")
+        elif page_error == "curl":
+            page = RequestsError("page unavailable")
+        else:
+            page = SimpleNamespace(
+                text="no script link", url="https://council.test/page"
+            )
+        source._session.get.side_effect = [page, asset]
+        retriever = LinkedAssetRetriever(
+            "https://council.test/page",
+            pattern=r'src="([^"]+)"',
+            fallback_url="https://static.test/calendar.js",
+        )
+        assert retriever(source) is asset
+        assert [call.args[0] for call in source._session.get.call_args_list] == [
+            "https://council.test/page",
+            "https://static.test/calendar.js",
+        ]
+        asset.raise_for_status.assert_called_once()
+
+    def test_relative_discovered_asset_wins_over_fallback(self):
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.retrievers import LinkedAssetRetriever
+
+        source = BaseSource()
+        source._session = MagicMock()
+        source._session.get.side_effect = [
+            SimpleNamespace(
+                text='<script src="../build/calendar.js?v=2"></script>',
+                url="https://council.test/bin/page",
+            ),
+            MagicMock(),
+        ]
+        LinkedAssetRetriever(
+            "https://council.test/bin/page",
+            pattern=r'src="([^"]+)"',
+            fallback_url="https://static.test/old.js",
+        )(source)
+        assert (
+            source._session.get.call_args.args[0]
+            == "https://council.test/build/calendar.js?v=2"
+        )
+
+    def test_asset_http_error_propagates(self):
+        import requests
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.retrievers import LinkedAssetRetriever
+
+        source = BaseSource()
+        source._session = MagicMock()
+        failed = MagicMock()
+        failed.raise_for_status.side_effect = requests.HTTPError("asset unavailable")
+        source._session.get.side_effect = [
+            SimpleNamespace(text="blocked", url="https://council.test/"),
+            failed,
+        ]
+        with pytest.raises(requests.HTTPError, match="asset unavailable"):
+            LinkedAssetRetriever(
+                "https://council.test/",
+                pattern=r'src="([^"]+)"',
+                fallback_url="https://static.test/calendar.js",
+            )(source)
+
+
+class TestJsObjectParser:
+    def test_unquoted_keys_zero_based_months_and_strings_are_decoded_without_execution(
+        self,
+    ):
+        from waste_collection_schedule.parsers import JsObjectParser
+
+        parser = JsObjectParser({"calendar": r"const data=(.*);"})
+        response = SimpleNamespace(
+            text='const data={zone1:[new Date(2026,0,2),new Date(2026,11,31)],label:"key:new Date(2026,0,1)",nested:{items:["glass","mixed"]}};'
+        )
+        assert parser(response) == {
+            "calendar": {
+                "zone1": ["2026-01-02", "2026-12-31"],
+                "label": "key:new Date(2026,0,1)",
+                "nested": {"items": ["glass", "mixed"]},
+            }
+        }
+
+    def test_missing_object_is_an_error(self):
+        from waste_collection_schedule.parsers import JsObjectParser
+
+        with pytest.raises(ValueError, match="not found"):
+            JsObjectParser({"calendar": r"const data=(.*);"})(
+                SimpleNamespace(text="unrelated script")
+            )
+
+    @pytest.mark.parametrize(
+        "literal", ["{day:new Date(2026,12,1)}", "{day:dangerousFunction()}"]
+    )
+    def test_invalid_dates_and_non_json_expressions_are_rejected(self, literal):
+        from waste_collection_schedule.parsers import JsObjectParser
+
+        with pytest.raises(ValueError):
+            JsObjectParser({"calendar": r"const data=(.*);"})(
+                SimpleNamespace(text=f"const data={literal};")
+            )
+
+
+class TestNamedResponses:
+    def test_each_named_parser_receives_its_response_and_source(self):
+        from waste_collection_schedule.parsers import NamedResponses
+
+        first = MagicMock(return_value={"zones": []})
+        second = MagicMock(return_value={"features": []})
+        source = MagicMock()
+        assert NamedResponses({"calendar": first, "address": second})(
+            ["script", "json"], source
+        ) == [{"calendar": {"zones": []}, "address": {"features": []}}]
+        first.assert_called_once_with("script", source)
+        second.assert_called_once_with("json", source)
+
+    @pytest.mark.parametrize("responses", [[], ["one", "extra"]])
+    def test_missing_or_extra_response_is_an_error(self, responses):
+        from waste_collection_schedule.parsers import NamedResponses
+
+        with pytest.raises(ValueError, match="number of responses"):
+            NamedResponses({"calendar": MagicMock()})(responses)
+
+
 class TestSourceSessionImpersonation:
     @pytest.mark.parametrize("fingerprint", ["chrome", None, "firefox"])
     def test_configured_fingerprint_is_used_for_cached_per_source_session(
