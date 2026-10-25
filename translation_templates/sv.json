@@ -1,0 +1,278 @@
+{
+  "title": "Waste Collection Schedule",
+  "config": {
+    "abort": {
+      "already_configured": "Den här källan är redan konfigurerad."
+    },
+    "step": {
+      "user": {
+        "title": "Välj land",
+        "data": {
+          "country": "Land"
+        },
+        "data_description": {
+          "country": "Välj ditt land, eller *Generic* om du vill konfigurera en *ICS*-källa."
+        }
+      },
+      "source": {
+        "title": "Välj källa",
+        "description": "Välj din avfallsleverantör i listan.",
+        "data": {
+          "name": "Källa"
+        }
+      },
+      "flow_type": {
+        "title": "Välj konfigurationsnivå",
+        "description": "Välj hur detaljerat du vill konfigurera integrationen. Lämna tomt om du bara vill konfigurera en enkel kalender.",
+        "data": {
+          "show_customize_config": "Visa anpassning av hämtningstyper",
+          "show_sensor_config": "Visa sensorkonfiguration",
+          "default_sensors": "Standardsensorer"
+        },
+        "data_description": {
+          "show_customize_config": "Välj detta om du vill anpassa hämtningstyperna.",
+          "show_sensor_config": "Välj detta om du vill konfigurera sensorer.",
+          "default_sensors": "Välj vilka standardsensorer som ska skapas. De kan kombineras med dina egna sensorer."
+        }
+      },
+      "customize_select": {
+        "title": "Anpassa hämtningstyper: välj (valfritt)",
+        "description": "Välj de hämtningstyper du vill anpassa i nästa steg.",
+        "data": {
+          "type": "Typ (valfritt)"
+        },
+        "data_description": {
+          "type": "I nästa steg kan du ändra namn och ikon, välja en egen kalender eller dölja typen."
+        }
+      },
+      "customize": {
+        "title": "Anpassa hämtningstyp ({index}/{total}): {type}",
+        "description": "Anpassa {type}. Lämna alla fält tomma för att använda standardvärdena.",
+        "data": {
+          "alias": "Alias",
+          "show": "Visa",
+          "icon": "Ikon",
+          "picture": "Bild",
+          "use_dedicated_calendar": "Använd egen kalender",
+          "dedicated_calendar_title": "Namn på egen kalender"
+        },
+        "data_description": {
+          "alias": "Nytt namn på hämtningstypen (bara om du vill ändra det).",
+          "show": "Avmarkera för att dölja hämtningstypen.",
+          "icon": "Ikon för hämtningstypen (bara om du vill ändra den).",
+          "picture": "Sökväg till en bild för hämtningstypen.",
+          "use_dedicated_calendar": "Markera om hämtningstypen ska ha en egen kalenderentitet.",
+          "dedicated_calendar_title": "Namnet på den egna kalenderentiteten."
+        }
+      },
+      "args": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "cascade_confirm": {
+        "title": "Konfigurera källa",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "app_id": "App-ID",
+          "f_abfallarten": "Avfallstyper",
+          "hpid": "Hemsido-ID",
+          "key": "API-nyckel",
+          "municipality": "Kommun",
+          "ort": "Distrikt",
+          "realmid": "Realm-ID",
+          "split_bins": "Dela upp kärl i fraktioner",
+          "wasteTypes": "Avfallstyper"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "f_abfallarten": "Valfritt filter: de avfallstyper som ska tas med."
+        }
+      },
+      "sensor": {
+        "title": "Skapa sensor \"{sensor_number}\"",
+        "description": "Konfigurera en sensor i taget.",
+        "data": {
+          "name": "Sensorns namn",
+          "details_format": "Detaljformat",
+          "count": "Antal",
+          "leadtime": "Framförhållning",
+          "value_template": "Värdemall",
+          "date_template": "Datummall",
+          "add_days_to": "Lägg till dagar kvar",
+          "event_index": "Händelseindex",
+          "types": "Typer",
+          "skip": "Skapa inte sensorn",
+          "additional": "Lägg till fler sensorer"
+        },
+        "data_description": {
+          "details_format": "Anger formatet för informationen i Home Assistants informationsfönster. 'upcoming': lista över kommande hämtningar, 'appointment_types': lista över avfallstyper och deras nästa hämtningsdatum, 'generic': alla attribut som generiska Python-datatyper, 'hidden': döljer attributen för kommande hämtningar",
+          "count": "Begränsar Home Assistants informationsfönster till de närmaste int hämtningarna",
+          "leadtime": "Begränsar Home Assistants informationsfönster till hämtningar inom de närmaste leadtime dagarna",
+          "value_template": "Formaterar entitetens tillstånd med Home Assistants mallar. Du kan använda 'value.date', 'value.daysTo', 'value.types",
+          "date_template": "Formaterar datumen i entitetens informationsfönster med Home Assistants mallar, t.ex. 'value.date.strftime(\"%d.%m.%Y\")'",
+          "add_days_to": "Lägger till attributet 'daysTo' i källentitetens tillstånd med antalet dagar till nästa hämtning",
+          "event_index": "Kopplar sensorn till ett visst hämtningsdatum. Nästa hämtning har event_index 0. Användbart om du vill ha separata sensorer för nästa hämtning, den andra, den tredje …",
+          "types": "Filtrerar avfallstyper. Sensorn visar bara hämtningar av dessa avfallstyper. Har du angett alias i källans konfiguration måste du använda aliaset.",
+          "skip": "Om markerad skapas inte sensorn och inställningarna ovan ignoreras.",
+          "additional": "Om markerad får du lägga till ytterligare en sensor när den här har sparats."
+        }
+      },
+      "reconfigure": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn"
+        }
+      }
+    },
+    "error": {
+      "invalid_weekday": "Ogiltig veckodag. Ange en giltig veckodag (MO, TU, WE, TH, FR, SA, SU).",
+      "invalid_count": "Ogiltigt antal. Ange ett giltigt tal.",
+      "invalid_weekdays": "Ogiltigt veckodagsformat. Ange en veckodag (MO, TU, WE, TH, FR, SA, SU) eller en dictionary som MO: 1.",
+      "invalid_source": "Du har inte valt någon källa. Välj en giltig källa.",
+      "fetch_error": "Källan gav ett ogiltigt svar: \"{fetch_error_message}\". Kontrollera argumenten och försök igen.",
+      "invalid_arg": "Ogiltigt argument: \"{invalid_arg_message}\"",
+      "fetch_empty": "Källan gav ett tomt svar. Kontrollera argumenten och försök igen.",
+      "invalid_template": "Mallen är ogiltig. Kontrollera syntaxen och försök igen.",
+      "skip_additional": "Du kan inte hoppa över den här sensorn och samtidigt lägga till fler sensorer.",
+      "name_exists": "Sensornamnet finns redan. Välj ett annat namn.",
+      "preset_selected": "Du kan inte välja en förinställning och samtidigt ange egna värden.",
+      "sensor_name_empty": "Sensornamnet får inte vara tomt. Ange ett namn.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan inte ange ett namn på en egen kalender utan att aktivera egen kalender."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Uppdatera inställningarna för Waste Collection Schedule.",
+        "data": {
+          "sensor_select": "Sensorer att ändra",
+          "default_sensors": "Lägg till standardsensorer",
+          "customize_select": "Anpassningar att ändra",
+          "calendar_title": "Kalendernamn",
+          "separator": "Avgränsare",
+          "fetch_time": "Hämtningstid",
+          "random_fetch_time_offset": "Slumpmässig förskjutning av hämtningstid",
+          "day_switch_time": "Tid för dagsbyte",
+          "fetch_interval_days": "Dagar mellan hämtningar",
+          "day_offset": "Dagsförskjutning",
+          "ignore_duplicates": "Ignorera dubbletter per dag",
+          "show_original_label": "Visa leverantörens ursprungliga etikett"
+        },
+        "data_description": {
+          "sensor_select": "Välj sensorn du vill ändra (välj 'Lägg till ny sensor' för att skapa en ny).",
+          "default_sensors": "Lägger till de valda standardsensorer som saknas. Befintliga sensorer lämnas orörda.",
+          "customize_select": "Välj anpassningen du vill ändra (eller välj en ny för att skapa den).",
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "separator": "Används för att sammanfoga posterna när källan ger flera värden för samma dag.",
+          "fetch_time": "Klockslag i formatet 'HH:MM' då Home Assistant hämtar det senaste hämtschemat från leverantören.",
+          "random_fetch_time_offset": "Förskjuter hämtningstiden slumpmässigt med upp till x minuter. Sprider Home Assistants hämtningar över en längre tid så att leverantörerna slipper toppbelastning.",
+          "day_switch_time": "Klockslag i formatet 'HH:MM' då Home Assistant släpper dagens post och går vidare till nästa.",
+          "fetch_interval_days": "Hur ofta Home Assistant hämtar hämtningstillfällen från den här kalenderkällan. Standard är 1 dag; med värdet 2 hämtas de varannan dag.",
+          "day_offset": "Antal dagar att lägga till hämtningsdatumet (kan vara negativt). Anges inget värde används standardvärdet 0",
+          "ignore_duplicates": "När aktiverad tas dubbletter med samma avfallstyp samma dag bort, så att bara en post per typ och dag finns kvar.",
+          "show_original_label": "När aktiverad (standard) behåller vissa källor leverantörens ursprungliga etikett (t.ex. kärlets exakta namn) i hämtningens beskrivning, även när den har mappats till en standardavfallstyp. Avaktivera för att dölja den ursprungliga etiketten."
+        }
+      },
+      "customize": {
+        "title": "Ändra/skapa anpassning av hämtningstyp ({index}/{total}): {type}",
+        "description": "Ändra/skapa anpassning för \"{type}\". Lämna alla fält tomma för att använda standardvärdena.",
+        "data": {
+          "delete": "Ta bort",
+          "alias": "Alias",
+          "show": "Visa",
+          "icon": "Ikon",
+          "picture": "Bild",
+          "use_dedicated_calendar": "Använd egen kalender",
+          "dedicated_calendar_title": "Namn på egen kalender"
+        },
+        "data_description": {
+          "delete": "Ta bort den här anpassningen.",
+          "alias": "Nytt namn på hämtningstypen (bara om du vill ändra det).",
+          "show": "Avmarkera för att dölja hämtningstypen.",
+          "icon": "Ikon för hämtningstypen (bara om du vill ändra den).",
+          "picture": "Sökväg till en bild för hämtningstypen.",
+          "use_dedicated_calendar": "Markera om hämtningstypen ska ha en egen kalenderentitet.",
+          "dedicated_calendar_title": "Namnet på den egna kalenderentiteten."
+        }
+      },
+      "sensor": {
+        "title": "Ändra/skapa sensor \"{sensor_number}\"",
+        "description": "Konfigurera en sensor i taget.",
+        "data": {
+          "delete": "Ta bort",
+          "name": "Sensorns namn",
+          "details_format": "Detaljformat",
+          "count": "Antal",
+          "leadtime": "Framförhållning",
+          "value_template": "Värdemall",
+          "date_template": "Datummall",
+          "add_days_to": "Lägg till dagar kvar",
+          "event_index": "Händelseindex",
+          "types": "Typer",
+          "skip": "Skapa inte sensorn",
+          "additional": "Lägg till fler sensorer"
+        },
+        "data_description": {
+          "delete": "Ta bort den här sensorn.",
+          "details_format": "Anger formatet för informationen i Home Assistants informationsfönster. 'upcoming': lista över kommande hämtningar, 'appointment_types': lista över avfallstyper och deras nästa hämtningsdatum, 'generic': alla attribut som generiska Python-datatyper, 'hidden': döljer attributen för kommande hämtningar",
+          "count": "Begränsar Home Assistants informationsfönster till de närmaste int hämtningarna",
+          "leadtime": "Begränsar Home Assistants informationsfönster till hämtningar inom de närmaste leadtime dagarna",
+          "value_template": "Formaterar entitetens tillstånd med Home Assistants mallar. Du kan använda 'value.date', 'value.daysTo', 'value.types",
+          "date_template": "Formaterar datumen i entitetens informationsfönster med Home Assistants mallar, t.ex. 'value.date.strftime(\"%d.%m.%Y\")'",
+          "add_days_to": "Lägger till attributet 'daysTo' i källentitetens tillstånd med antalet dagar till nästa hämtning",
+          "event_index": "Kopplar sensorn till ett visst hämtningsdatum. Nästa hämtning har event_index 0. Användbart om du vill ha separata sensorer för nästa hämtning, den andra, den tredje …",
+          "types": "Filtrerar avfallstyper. Sensorn visar bara hämtningar av dessa avfallstyper. Har du angett alias i källans konfiguration måste du använda aliaset.",
+          "skip": "Om markerad skapas inte sensorn och inställningarna ovan ignoreras.",
+          "additional": "Om markerad får du lägga till ytterligare en sensor när den här har sparats."
+        }
+      }
+    },
+    "error": {
+      "time_format": "Tider måste anges i formatet HH:MM.",
+      "invalid_template": "Mallen är ogiltig. Kontrollera syntaxen och försök igen.",
+      "name_exists": "Sensornamnet finns redan. Välj ett annat namn.",
+      "preset_selected": "Du kan inte välja en förinställning och samtidigt ange egna värden.",
+      "sensor_name_empty": "Sensornamnet får inte vara tomt. Ange ett namn.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan inte ange ett namn på en egen kalender utan att aktivera egen kalender."
+    },
+    "abort": {}
+  },
+  "selector": {
+    "details_format": {
+      "options": {
+        "upcoming": "Kommande",
+        "appointment_types": "Hämtningstyper",
+        "generic": "Generisk",
+        "hidden": "Dold"
+      }
+    },
+    "default_sensors": {
+      "options": {
+        "legacy": "En sensor per avfallstyp",
+        "new": "Översiktssensorer (nästa hämtning, dagar kvar, senast uppdaterad)"
+      }
+    },
+    "custom_flow_types": {
+      "options": {
+        "yearly": "Årligen",
+        "monthly": "Månadsvis",
+        "weekly": "Veckovis",
+        "daily": "Dagligen"
+      }
+    },
+    "sensor_select": {
+      "options": {
+        "sensor_select_add_new": "Lägg till ny sensor"
+      }
+    }
+  },
+  "issues": {}
+}
