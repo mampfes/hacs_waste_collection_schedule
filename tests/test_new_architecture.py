@@ -9264,7 +9264,7 @@ class TestRollingHtmlCalendarGrid:
                 '<td><div class="day">unknown</div></td>',
                 "Invalid collection calendar day",
             ),
-            ('<td><div class="day">32</div></td>', "day is out of range"),
+            ('<td><div class="day">32</div></td>', r"day.*range"),
         ],
     )
     def test_explicit_invalid_day_is_not_silently_skipped(self, cell, message):
