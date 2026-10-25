@@ -15,9 +15,22 @@ Two nested packages:
 
 Source modules live at `custom_components/waste_collection_schedule/waste_collection_schedule/source/<provider>.py`. Shared platforms (used by multiple sources) live at `.../service/<Platform>.py`.
 
-## Source module contract
+## New sources: branch and architecture
 
-Every file under `source/` must define:
+New Python sources must target `release/3.0.0` of `mampfes/hacs_waste_collection_schedule`. Base the feature branch on `release/3.0.0`; changing only the PR target does not convert a legacy implementation. Bug fixes for the current stable release still target `master`, and fixes to existing legacy sources do not require migration.
+
+New sources must use the `BaseSource` pipeline. New legacy-style sources with a hand-written `fetch()` are not accepted. Follow the [release branch contribution guide](https://github.com/mampfes/hacs_waste_collection_schedule/blob/release/3.0.0/doc/contributing_source.md), [source skeleton](https://github.com/mampfes/hacs_waste_collection_schedule/blob/release/3.0.0/doc/new_source_template.py), and [PR template](https://github.com/mampfes/hacs_waste_collection_schedule/blob/release/3.0.0/.github/PULL_REQUEST_TEMPLATE.md).
+
+- Declare metadata and typed `PARAMS` on `Source(BaseSource)`; use canonical waste types rather than a per-source icon map.
+- Compose shared retrievers, parsers, preprocessors, and transformers. Extend shared components under `service/` when needed rather than adding source-local retrieval/parsing steps or HTTP callbacks.
+- Record real `TEST_CASES` with `python tests/record_fixtures.py <module>` and commit the resulting `tests/fixtures/<module>/*.json`. Explain any genuine recording blocker in the PR summary.
+- Pipeline source documentation in `doc/source/` is generated from class metadata; do not hand-write or commit it.
+
+The legacy-specific contracts, icon rules, language rules, and examples below apply to existing sources on `master`. For new sources, use the release branch guide above.
+
+## Legacy source module contract (stable fixes)
+
+Every legacy file under `source/` must define:
 
 - `TITLE: str` — display name shown in the README and config flow.
 - `DESCRIPTION: str` — one-line summary.
@@ -43,7 +56,7 @@ The following are regenerated automatically by CI after every merge to `master`.
 - `custom_components/waste_collection_schedule/translations/{en,de,it,fr}.json`
 - `doc/ics/*.md` (generated from `doc/ics/yaml/*.yaml`)
 
-`doc/source/*.md` is **not** generated — you must create one manually for each new source.
+`doc/source/*.md` is hand-maintained for legacy sources on `master`. For pipeline sources on `release/3.0.0`, it is generated from class metadata and must not be committed.
 
 ## Icons
 
@@ -163,7 +176,7 @@ pre-commit install
 
 > **Note:** Do not run `update_docu_links.py` in a PR branch. The `Update Documentation` CI workflow runs it automatically on every push to `master` (post-merge) and commits the generated output.
 
-## Example sources to model on
+## Legacy examples (stable fixes only)
 
 - HTML scraping (BeautifulSoup): [`source/birmingham_gov_uk.py`](custom_components/waste_collection_schedule/waste_collection_schedule/source/birmingham_gov_uk.py)
 - ICS-based: [`source/stadtreinigung_hamburg.py`](custom_components/waste_collection_schedule/waste_collection_schedule/source/stadtreinigung_hamburg.py)
@@ -172,8 +185,8 @@ pre-commit install
 ## Pull request checklist
 
 1. Source module passes `test_sources.py -s <name>` against real TEST_CASES.
-2. New `doc/source/<name>.md` exists.
+2. Pipeline source documentation is generated from class metadata; do not commit `doc/source/<name>.md`. Keep legacy documentation accurate when fixing an existing stable source.
 3. `python -m pytest tests/` passes locally.
 4. Changed files are formatted and linted with `ruff format` and `ruff check --fix`.
-5. PR targets `master` of `mampfes/hacs_waste_collection_schedule`.
+5. New-source PRs target `release/3.0.0` of `mampfes/hacs_waste_collection_schedule` and use `BaseSource` with recorded fixtures. Stable bug fixes target `master`; existing legacy sources need not be migrated for a fix.
 6. Do **not** commit changes to `README.md`, `info.md`, `sources.json`, `source_metadata.json`, `translations/*.json`, or `doc/ics/*.md` — CI regenerates these after merge.
