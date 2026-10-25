@@ -38,6 +38,7 @@ import base64
 import json
 import re
 from collections.abc import Callable, Mapping, Sequence
+from types import SimpleNamespace
 from typing import TYPE_CHECKING, Any
 from urllib.parse import urljoin
 
@@ -93,6 +94,9 @@ class GossFormRetriever(RetrieverFunc):
             gives the name used from then on.
         steps: the submissions to make, in order.
         timeout: request timeout in seconds.
+        state_fields: optional unprefixed input names to carry into each POST.
+            None keeps all form inputs; an explicit sequence keeps only those
+            state fields before the step's answers are added.
     """
 
     def __init__(
@@ -102,11 +106,13 @@ class GossFormRetriever(RetrieverFunc):
         form: str | re.Pattern[str],
         steps: Sequence[GossStep],
         timeout: int = 30,
+        state_fields: Sequence[str] | None = None,
     ):
         self.form_url = form_url
         self.form = form
         self.steps = tuple(steps)
         self.timeout = timeout
+        self.state_fields = tuple(state_fields) if state_fields is not None else None
 
     def _form_name(self, response: Response) -> str:
         """The form's prefix on this page (``self.form`` unless it is a pattern)."""
@@ -123,7 +129,11 @@ class GossFormRetriever(RetrieverFunc):
         """The page's form: its ``action`` and its hidden fields, or ``None``."""
         soup = BeautifulSoup(response.text, "html.parser")
         marker = soup.find("input", {"name": f"{form_name}_PAGENAME"})
-        form = marker.find_parent("form") if marker is not None else None
+        form = (
+            marker.find_parent("form")
+            if marker is not None
+            else soup.find("form", id=f"{form_name}_FORM")
+        )
         if form is None:
             return None
         data = {
@@ -131,6 +141,11 @@ class GossFormRetriever(RetrieverFunc):
             for field in form.find_all("input")
             if field.get("name") and field.get("type") not in ("submit", "button")
         }
+        if self.state_fields is not None:
+            data = {
+                f"{form_name}_{name}": data[f"{form_name}_{name}"]
+                for name in self.state_fields
+            }
         return urljoin(str(response.url), str(form.get("action") or "")), data
 
     def __call__(self, source: BaseSource) -> Response:
@@ -249,3 +264,59 @@ class GossJsonParser(Parser["list[dict[str, Any]]"]):
         if not isinstance(value, dict) or not value:
             raise ValueError("GOSS FormData carries no result object")
         return [value]
+
+
+class GossWhitespaceParser(Parser["list[dict[str, Any]]"]):
+    """Whitespace's collection result in a GOSS ``Recordset1`` variable.
+
+    The ``value`` and SOAP result wrappers are optional. A single Collection
+    object and a list are normalised to the same record stream. Failed API
+    results raise rather than masquerading as an empty collection calendar.
+    """
+
+    def __init__(self, form: str):
+        self.form = form
+
+    def __call__(
+        self, response: Any, source: BaseSource | None = None
+    ) -> list[dict[str, Any]]:
+        serialized = serialized_variables(response, self.form)
+        if "Recordset1" not in serialized:
+            raise ValueError("No Recordset1 in response")
+        recordset = serialized["Recordset1"]
+        value = (
+            recordset.get("value", recordset)
+            if isinstance(recordset, dict)
+            else recordset
+        )
+        result = value.get("GetCollectionByUprnAndDateResult", value)
+        if not result.get("SuccessFlag"):
+            raise ValueError(
+                f"API error: {result.get('ErrorDescription', 'Unknown error')}"
+            )
+        collections = result.get("Collections")
+        if not collections:
+            return []
+        records = collections.get("Collection", [])
+        return [records] if isinstance(records, dict) else records
+
+
+class GossFormDataParser(Parser[Any]):
+    """Parse an HTML field from each ``FormData`` page in ``_PAGEORDER_``.
+
+    ``field`` names the HTML fragment, e.g. ``COLLECTIONDETAILS2``. Joining
+    fragments before applying the configured HTML parser keeps page and
+    collection ordering, while leaving layout knowledge in that parser.
+    """
+
+    def __init__(self, field: str, *, parser: Parser):
+        self.field = field
+        self.parser = parser
+
+    def __call__(self, response: Any, source: BaseSource | None = None) -> Any:
+        data = form_data(response)
+        if "_PAGEORDER_" not in data:
+            raise ValueError("No _PAGEORDER_ in GOSS FormData response")
+        markup = "\n".join(data[page][self.field] for page in data["_PAGEORDER_"])
+        decoded: Any = SimpleNamespace(text=markup)
+        return self.parser(decoded, source)

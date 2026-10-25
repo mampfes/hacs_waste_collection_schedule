@@ -25,7 +25,6 @@ from waste_collection_schedule.preprocessors import (
 )
 from waste_collection_schedule.service.PhilaGov import (
     ADDRESS_URL,
-    HEADERS,
     AddressPropertiesParser,
     HolidayCascadeShift,
 )
@@ -83,9 +82,8 @@ class Source(BaseSource):
         "collection-day search results.",
     }
 
-    retrieve = retrievers.LegacyHttpGetRetriever(
+    retrieve = retrievers.HttpGetRetriever(
         url=lambda address, **_: ADDRESS_URL.format(address=address.upper()),
-        headers=HEADERS,
     )
     parse = AddressPropertiesParser()
     preprocess = Compose(

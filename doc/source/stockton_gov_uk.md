@@ -1,37 +1,34 @@
 # Stockton-on-Tees Borough Council
 
-Support for schedules provided by [Stockton-on-Tees Borough Council](https://www.stockton.gov.uk/), serving Stockton-on-Tees Borough Council, UK.
+Support for schedules provided by [Stockton-on-Tees Borough Council](https://www.stockton.gov.uk/).
+
+Source for Stockton-on-Tees Borough Council.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: stockton_gov_uk
       args:
         uprn: UPRN
-        
 ```
 
 ### Configuration Variables
 
 **uprn**  
-*(Integer) (required)*
-
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: stockton_gov_uk
       args:
-        uprn: 10003082467
-        
+        uprn: '100110203615'
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-An easy way to discover your Unique Property Reference Number (UPRN) is by going to [Find My Address](https://www.findmyaddress.co.uk/) and providing your address details.
-
-Alternatively you can use the browser inspection tools. In network traffic the last response after entering the postcode and pressing `Find address` returns JSON containing the UPRN for all addresses in this postcode range.
+Find your UPRN at https://www.findmyaddress.co.uk/ by entering your address. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.
