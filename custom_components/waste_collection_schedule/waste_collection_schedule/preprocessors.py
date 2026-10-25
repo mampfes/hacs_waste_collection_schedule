@@ -1294,7 +1294,15 @@ class PdfMonthColumns(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"])
 
 
 # Italian weekday abbreviations, Monday first, as regexes ("Giov", "Sa" seen).
-ITALIAN_WEEKDAYS = ("lun", "mar", "mer", r"gio(?:v|vedì)?", "ven", "sab?", "dom")
+ITALIAN_WEEKDAYS = (
+    r"lun(?:ed[iì])?",
+    r"mar(?:ted[iì])?",
+    r"mer(?:coled[iì])?",
+    r"gio(?:v|ved[iì])?",
+    r"ven(?:erd[iì])?",
+    r"sa(?:b|bato)?",
+    r"dom(?:enica)?",
+)
 
 
 class _DayCell(NamedTuple):
@@ -1331,11 +1339,14 @@ class PdfMonthBlocks(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"]):
       calendar matches every printed weekday, so a leaflet running March to
       February dates its January in the next year without being told. A block
       matching no year or several raises, as do blocks that are not in
-      ascending month order across the document.
+      ascending month order across the document (unless ``any_order``) and a
+      month read twice.
 
     Headings may carry the year ("Gennaio 2027") or be split by a drop cap
     ("F ebbraio"). Pages without day cells (a cover, a legend) are skipped; a
-    page with day cells but no month heading raises ``ResponseShapeError``.
+    page with day cells but no month heading, or a month block missing some of
+    its days (a weekday spelling the regexes do not cover), raises
+    ``ResponseShapeError``.
 
     Args:
         labels: the round labels printed in the cells, matched
@@ -1346,6 +1357,9 @@ class PdfMonthBlocks(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"]):
             Defaults to Italian.
         column_gap: the horizontal gap (PDF points) between day cells that
             starts a new column.
+        any_order: accept month blocks in any order across the document (a
+            fold-out sheet printing October to December before January), still
+            raising on a month read twice.
     """
 
     def __init__(
@@ -1354,6 +1368,7 @@ class PdfMonthBlocks(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"]):
         labels: Iterable[str],
         weekdays: Sequence[str] = ITALIAN_WEEKDAYS,
         column_gap: float = 40.0,
+        any_order: bool = False,
     ):
         self._labels = [
             (label, re.compile(rf"(?<!\w){re.escape(str(label))}(?!\w)", re.IGNORECASE))
@@ -1367,6 +1382,7 @@ class PdfMonthBlocks(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"]):
             re.compile(rf"(?:{weekday})\.?", re.IGNORECASE) for weekday in weekdays
         ]
         self._gap = column_gap
+        self._any_order = any_order
 
     def __call__(
         self, records: Any, source: "BaseSource | None" = None
@@ -1410,8 +1426,9 @@ class PdfMonthBlocks(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"]):
                 ):
                     blocks_seen.append((year, month))
                     found.extend(dated)
+        expected = sorted(set(blocks_seen))
         response_shape.expect(
-            blocks_seen == sorted(set(blocks_seen)),
+            (sorted(blocks_seen) if self._any_order else blocks_seen) == expected,
             source_name=name,
             detail=f"month blocks out of order or repeated: {blocks_seen}",
         )
@@ -1446,7 +1463,8 @@ class PdfMonthBlocks(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"]):
                 if (
                     other in used
                     or abs(next_y - y) > 4
-                    or not 0 <= next_word.x0 - word.x1 <= 12
+                    # Kerning can overlap the boxes by a fraction of a point.
+                    or not -1 <= next_word.x0 - word.x1 <= 12
                 ):
                     continue
                 next_parts = next_word.text.split(None, 1)
@@ -1574,6 +1592,14 @@ class PdfMonthBlocks(Preprocessor["list[PdfRow]", "tuple[datetime.date, str]"]):
                 raw=sorted((cell.day, cell.weekday) for cell, _ in block),
             )
             year = fits[0]
+            # A weekday spelling the reader missed leaves days out of the block,
+            # and their rounds would land on the day before: every day must be read.
+            response_shape.expect(
+                sorted(days) == list(range(1, calendar.monthrange(year, month)[1] + 1)),
+                source_name=name,
+                detail=f"page {page + 1}: month {month} is missing days",
+                raw=sorted(days),
+            )
             yield (
                 (year, month),
                 [
