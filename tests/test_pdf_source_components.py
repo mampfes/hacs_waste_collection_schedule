@@ -406,6 +406,30 @@ class TestPdfMonthBlocks:
         with pytest.raises(ResponseShapeError):
             list(preprocessors.PdfMonthBlocks(labels=self.LABELS)(self.build(page)))
 
+    @freeze_time("2026-10-11")
+    def test_any_order_reads_a_fold_out_sheet_but_rejects_repeats(self):
+        # A fold-out sheet printing October-December before January-March.
+        page1 = [
+            *self.month(0, 30, "Ottobre", 2026, 10),
+            *self.month(0, 300, "Gennaio", 2026, 1),
+        ]
+        with pytest.raises(ResponseShapeError, match="out of order"):
+            list(preprocessors.PdfMonthBlocks(labels=self.LABELS)(self.build(page1)))
+        found = set(
+            preprocessors.PdfMonthBlocks(labels=self.LABELS, any_order=True)(
+                self.build(page1)
+            )
+        )
+        assert (D(2026, 10, 5), "SECCO") in found
+        assert (D(2026, 1, 5), "SECCO") in found
+        twice = [*page1, *self.month(0, 570, "Ottobre", 2026, 10)]
+        with pytest.raises(ResponseShapeError, match="repeated"):
+            list(
+                preprocessors.PdfMonthBlocks(labels=self.LABELS, any_order=True)(
+                    self.build(twice)
+                )
+            )
+
     def test_day_cells_without_a_heading_fail_loudly(self):
         page = self.month(0, 30, "x", 2026, 12)[1:]
         with pytest.raises(ResponseShapeError):
