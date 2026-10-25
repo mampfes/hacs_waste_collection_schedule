@@ -1,19 +1,22 @@
 # Blackpool Council
 
-Support for schedules provided by [Blackpool Council](https://blackpool.gov.uk/Residents/), serving the town of Blackpool, UK.
+Support for schedules provided by [Blackpool Council](https://blackpool.gov.uk).
+
+Source for blackpool.gov.uk services for Blackpool Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: blackpool_gov_uk
       args:
         postcode: POSTCODE
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
+
 **postcode**  
 *(string) (required)*
 
@@ -24,13 +27,13 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: blackpool_gov_uk
       args:
-        postcode: "FY1 4DZ"
-        uprn: "100010802829"
+        postcode: FY1 4DZ
+        uprn: '100010802829'
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Find your UPRN at https://www.findmyaddress.co.uk/ by entering your address. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.

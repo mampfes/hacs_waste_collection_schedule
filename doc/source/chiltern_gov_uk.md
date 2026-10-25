@@ -1,14 +1,15 @@
-# DEPRECATED Chiltern Area - Buckinghamshire Council
+# Deprecated: Buckinghamshire
 
-This integration is deprecated and may be removed in a future release. Please use the [Itouchvision Source using the encrypted API](/doc/source/iapp_itouchvision_com.md) instead.
+Support for schedules provided by [Deprecated: Buckinghamshire](https://chiltern.gov.uk).
 
+Deprecated: use the iapp_iTouchVision instead.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
-    - name: chiltern_gov_uk # DEPRECATED USE iapp_itouchvision_com INSTEAD with mun
+  sources:
+    - name: chiltern_gov_uk
       args:
         uprn: UPRN
 ```
@@ -18,12 +19,16 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
-    - name: chiltern_gov_uk # DEPRECATED USE iapp_itouchvision_com INSTEAD
+  sources:
+    - name: chiltern_gov_uk
       args:
-        uprn: 200000811701
+        uprn: 766251559
 ```
+
+## How to get the source arguments
+
+Deprecated. Add iTouchVision instead and choose municipality BUCKINGHAMSHIRE. This entry still accepts a UPRN and reads the Buckinghamshire bin-day form.

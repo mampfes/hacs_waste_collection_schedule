@@ -670,6 +670,7 @@ def parcel_centroid(
     out_fields: str = "*",
     result_record_count: int | None = None,
     wkid: int | None = None,
+    suggestions: Callable[..., list] | None = None,
     timeout: int = 20,
 ) -> Callable[..., dict[str, Any]]:
     """Build a ``point`` resolver that reads a centroid off the council's parcel layer.
@@ -703,6 +704,10 @@ def parcel_centroid(
         result_record_count: cap on the parcels considered.
         wkid: spatial reference of the returned centroid, carried into the
             follow-up spatial query. Leave unset for a layer already in 4326.
+        suggestions: ``callable(**source.params) -> list`` listing the
+            addresses the user could have meant, offered when nothing matched
+            (typically :meth:`ArcGisDistinctValues.for_params` with a ``where``
+            close to what was typed).
         timeout: request timeout in seconds.
     """
 
@@ -721,6 +726,10 @@ def parcel_centroid(
         data = response_shape.validate(response.json(), FeatureEnvelope)
         features = data["features"]
         if not features:
+            if suggestions is not None:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    argument, value, suggestions(**params)
+                )
             raise SourceArgumentNotFound(argument, value)
 
         if disambiguate_by is not None:
@@ -791,13 +800,17 @@ class ArcGisDistinctValues:
         self.timeout = timeout
 
     def __call__(self, source: BaseSource | None = None) -> list[str]:
+        return self.for_params(**(source.params if source is not None else {}))
+
+    def for_params(self, **params: Any) -> list[str]:
+        """The suggestions for these ``source.params``, where no source is at hand.
+
+        A ``point`` resolver such as :func:`parcel_centroid` sees only the
+        params, not the source.
+        """
         try:
-            where = (
-                self.where(**(source.params if source is not None else {}))
-                if callable(self.where)
-                else self.where
-            )
-            params: dict[str, Any] = {
+            where = self.where(**params) if callable(self.where) else self.where
+            query: dict[str, Any] = {
                 "where": where,
                 "outFields": self.field,
                 "returnGeometry": "false",
@@ -806,10 +819,10 @@ class ArcGisDistinctValues:
                 "f": "json",
             }
             if self.limit is not None:
-                params["resultRecordCount"] = self.limit
+                query["resultRecordCount"] = self.limit
             response = requests.get(
                 f"{_layer_url(self.feature_url).rstrip('/')}/query",
-                params=params,
+                params=query,
                 timeout=self.timeout,
             )
             response.raise_for_status()

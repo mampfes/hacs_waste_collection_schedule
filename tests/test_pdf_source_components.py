@@ -56,6 +56,30 @@ def test_normalize_loose_drops_accents_case_and_punctuation():
     assert lookups.normalize_loose(" Pérouges  hors cité ") == "perouges hors cite"
 
 
+@pytest.mark.parametrize("case", ["Bannockburn, Monday A", "Bannockburn, Tuesday B"])
+def test_lrs_shared_event_cells_keep_both_collections(case):
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.lrsrecycles_com import (
+        E_WASTE,
+        RECYCLING,
+        WASTE,
+        Source,
+    )
+
+    source = Source(**Source.TEST_CASES[case])
+    with cassette.replaying(fixture_path("lrsrecycles_com", case)):
+        rows = list(
+            source.preprocess(source.parse(source.retrieve(source), source), source)
+        )
+
+    assert sum(label == RECYCLING for _, label in rows) == 26
+    assert sum(label == WASTE for _, label in rows) == 52
+    assert sum(label == E_WASTE for _, label in rows) == 20
+    assert (D(2026, 2, 23), E_WASTE) in rows
+    assert (D(2026, 2, 24), E_WASTE) in rows
+
+
 class TestYearlyLinks:
     HTML = """
         <a href="/files/cal_2025.pdf">2025</a>
@@ -178,6 +202,28 @@ class TestPdfMonthRows:
             list(pre(self.rows()[1:], None))  # no year
         with pytest.raises(ResponseShapeError):
             list(pre([self.rows()[0], self.rows()[3]], None))  # no headings
+
+
+def test_marion_new_year_thursday_is_collected_on_january_second():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.marion_sa_gov_au import (
+        ORGANICS,
+        WASTE,
+        Source,
+    )
+
+    case = "Marion (A, Thursday)"
+    source = Source(**Source.TEST_CASES[case])
+    with cassette.replaying(fixture_path("marion_sa_gov_au", case)):
+        rows = list(
+            source.preprocess(source.parse(source.retrieve(source), source), source)
+        )
+
+    assert (D(2026, 1, 2), WASTE) in rows
+    assert (D(2026, 1, 2), ORGANICS) in rows
+    assert sum(label == WASTE for _, label in rows) == 53
+    assert not any(day == D(2026, 1, 1) for day, _ in rows)
 
 
 class TestTextGroupedDatesEnd:
@@ -514,6 +560,39 @@ def test_ekoland_asks_again_after_the_one_moment_interstitial(
     assert slept == [5] * (attempts - 1)
 
 
+@pytest.mark.parametrize(
+    ("args", "argument"),
+    [
+        ({"city": "Pisz"}, "street"),
+        ({"city": "Pisz", "street": "  "}, "street"),
+        (
+            {"city": "Pisz", "street": "Lipowa", "building": "wielorodzinna"},
+            "house_number",
+        ),
+    ],
+)
+def test_pisz_requires_the_address_fields_for_the_selected_building(args, argument):
+    from waste_collection_schedule.exceptions import SourceArgumentRequired
+    from waste_collection_schedule.source.pisz_pl import Source
+
+    source = Source(**args)
+    with pytest.raises(SourceArgumentRequired, match=argument):
+        list(source.preprocess("", source))
+
+
+def test_pisz_missing_flat_number_must_not_return_a_partial_calendar():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.exceptions import SourceArgumentRequired
+    from waste_collection_schedule.source.pisz_pl import Source
+
+    case = "Pisz, Lipowa 12 (flats)"
+    args = {k: v for k, v in Source.TEST_CASES[case].items() if k != "house_number"}
+    with cassette.replaying(fixture_path("pisz_pl", case)):
+        with pytest.raises(SourceArgumentRequired, match="house_number"):
+            Source(**args).fetch()
+
+
 class TestPdfRoundMonthGrid:
     """One row per round, one column per month, blocks per area."""
 
@@ -605,6 +684,19 @@ class TestPdfRoundMonthGrid:
         assert len(blocks) == 1  # the second block is below the stop word
         assert blocks[0].rows[-1] == (D(2026, 2, 7), "Paper")
 
+    def test_cells_with_dotted_or_run_together_days(self):
+        # Hungarian calendars print "12." and "2.,"; a narrow cell runs its
+        # days together ("3,17,31"). A year or street number is not a day.
+        cells = [("12.", 241, 700), ("3,17,31", 280, 680), ("2026", 320, 700)]
+        blocks = self.grid()([self.table(self.MONTHS, extra_words=cells)])
+        assert (D(2026, 2, 12), "Mixed") in blocks[0].rows
+        assert [date for date, label in blocks[0].rows if date.month == 3] == [
+            D(2026, 3, 3),
+            D(2026, 3, 17),
+            D(2026, 3, 31),
+        ]
+        assert not [date for date, _ in blocks[0].rows if date.month == 4]
+
     def test_row_tolerance_none_keeps_far_days(self):
         blocks = self.grid(row_tolerance=None)([self.table(self.MONTHS)])
         assert (D(2026, 3, 9), "Paper") in blocks[0].rows
@@ -617,3 +709,23 @@ class TestPdfRoundMonthGrid:
         impossible = [("31", 241, 680)]  # 31 February
         with pytest.raises(ResponseShapeError):
             self.grid()([self.table(self.MONTHS, extra_words=impossible)])
+
+
+def test_marker_calendar_half_cell_bar_reaches_its_day_numbers():
+    from waste_collection_schedule.parsers import PdfVector
+    from waste_collection_schedule.service.PdfMarkerCalendar import (
+        MarkerCalendarParser,
+        _Anchor,
+    )
+
+    parser = MarkerCalendarParser([], placement="cell")
+    bar = PdfVector(0, 172, 530, 206, 539, None, (0.4, 0.7, 0.3))
+    days = [
+        _Anchor(0, 16, 180, 547),
+        _Anchor(0, 17, 197, 547),
+        _Anchor(0, 23, 180, 528.7),
+        _Anchor(0, 24, 197, 528.7),
+        _Anchor(0, 25, 214, 528.7),
+        _Anchor(1, 23, 180, 528.7),
+    ]
+    assert parser._anchors_of(bar, days) == days[2:4]

@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-10-24",
+  "interactions": [
+    {
+      "key": "GET https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay ",
+      "method": "GET",
+      "url": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+      "final_url": "https://iweb.itouchvision.com/portal/itouchvision/kmbd/collectionDay",
+      "body": "",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "vary": "Origin",
+        "access-control-allow-methods": "GET, POST, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Authorization",
+        "access-control-allow-credentials": "true",
+        "content-security-policy": "default-src 'self' blob: https://iweb.itouchvision.com https://itouch.vision https://iportal.itouchvision.com https://fonts.googleapis.com https://fonts.gstatic.com https://itouchvision.freshdesk.com https://*.gov.uk https://bournemouth-tc.gov.uk; script-src 'self' 'unsafe-inline' 'unsafe-eval' data: https://iweb.itouchvision.com https://itouch.vision https://*.googleapis.com https://unpkg.com/ https://cdn.jsdelivr.net https://*.amazonaws.com https://maps.google.com https://euc-widget.freshworks.com https://*.cloudflare.com https://*.gov.uk https://bournemouth-tc.gov.uk; style-src 'self' 'unsafe-inline' data: https://iweb.itouchvision.com https://itouch.vision https://unpkg.com/ https://cdn.jsdelivr.net https://euc-widget.freshworks.com https://fonts.googleapis.com https://*.gov.uk https://bournemouth-tc.gov.uk; img-src 'self' data: blob: https://iweb.itouchvision.com https://itouch.vision https://server.arcgisonline.com https://blackburn.statmap.co.uk https://cdn.jsdelivr.net https://*.openstreetmap.org https://unpkg.com https://*.amazonaws.com https://*.googleapis.com https://maps.google.com https://*.gstatic.com https://*.ggpht.com https://euc-widget.freshworks.com https://datamap.gov.wales https://itouchvision.freshdesk.com https://*.gov.uk https://bournemouth-tc.gov.uk; connect-src 'self' https://iweb.itouchvision.com https://itouch.vision https://unpkg.com https://cdn.jsdelivr.net https://*.amazonaws.com https://*.googleapis.com https://*.what3words.com https://euc-widget.freshworks.com https://itouchvision.freshdesk.com https://*.gov.uk https://bournemouth-tc.gov.uk; font-src 'self' data: https://fonts.gstatic.com; frame-ancestors 'self' blob: https://iweb.itouchvision.com https://itouch.vision https://*.google.com https://cdn.jsdelivr.net https://*.gov.uk https://bournemouth-tc.gov.uk;",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "date": "Sat, 24 Oct 2026 17:31:41 GMT",
+        "content-type": "text/html; charset=UTF-8",
+        "x-oracle-dms-ecid": "dec631a8-0c11-461b-944b-1e87765157b2-001245cf",
+        "x-oracle-dms-rid": "0",
+        "x-ords_debug": "false",
+        "etag": "\"B9zYRkbvIMwlKA74DriKjm2AbxXlln16VNVcMKGx89WpwDH3yRi55rbochfl2+SiDkbLj8w/pc0gAAmz/JbL8A==\"",
+        "server": "Apache"
+      },
+      "content_b64": "QTg1RDQxNzMzMjQyQ0EyRjg3M0QzQjBGQjI3N0QyNEQ5OEQ0RDJGM0Q4REI4QzcwRDRCQ0ZEMzZCMzhDRDEyNEQwQTgzM0Y4NTQ2QTcwNTE5QkE1QUJBNzQzMjlEMzFCRjdBOTc3NEMzOTBCRTc1NTg3NTU0M0RCNEQ1Q0M4MTUzQzYzNDA2QTgxREMyM0MzNDU0N0FBMzBBOEVCQ0IwQjhCNzhFNUE4NTExNkVCMTU0NTM5RUVDM0NCNEM5NEM4NEE5NzQ5OEM0QjlGNjM1QjQ3MEI1RTdCNUVEN0Y0NEE1OTBCNUMyNUU2MDFERTBGRTJGQkNBNkFGREI0RUI2MDZEOURGMTlCQjFGQzEyMDU4N0NFQjQ3OEFGRTY1QTdDQjRCMkQzM0JCQzIzMkJEODNCMDIzQjMyRTA0ODU0NDFDNkRBREEyNjQwMTE0QjFEMEQxQjAxQ0JGRUUzQTkzNUEwQUJCMjQ4RTVGQ0FFQUQ5NEM2MjUzOTUxQkFGNjNDOTc5RjQ4QzYyRjM1ODI5RDI2QTNEMDZDNDMxMjFGMEIxRUM1QTM4REIwQ0VBNDcxNEI5MDYwMzQ3MUE2NkI1MTU3Q0E0MjYwNjAzMzQxQzVEQzFGMjY1MDU0OEFFNUIxODhGMzUyMTY5ODA5RkFEOTM2REIyRDlDNUYzQzI2NjI5MkM1NTM0N0VCMkFFMjUxRjkxQTcyOUYzNUY5QTNDMjlEMkVCMTVENzAzNDNDRDQ4NzNDQzIyREUxNEQ5OTQwQzQ5NTk2MzQ2QURDRDdCMTBBMjFCNDYzMzVBMzAyQTIxMUVCOTYxQTkzNjc3NTM3NjA2MDc3QTM2MjJGQjE4OEQ3NjIxNTg2NDc2QUFFNUNEODlCREFBQTNBNDU2QjkyQkIyRTZFMkVGNTNEQ0Q0ODUyN0FGMTMyMkUyREI0MjlDRTlDNTZEMEZDOUY3N0U5Rjk4Q0VDMzdBQkM1NUEwODk4MjVBMTgyRERBMTQxMUFBNUFCODlCQzMwN0Y1QjdBM0I1MEQ1MTRFQTVDMjhDNDhBMDI5MkUyNzFCODhDMDE="
+    }
+  ]
+}

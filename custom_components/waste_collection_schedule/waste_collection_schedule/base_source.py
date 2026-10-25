@@ -109,6 +109,9 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
     # --- Pipeline config ---
     API_URL: str = ""
     TIMEOUT: int = 30
+    # Some APIs reject the browser fingerprint and require a neutral HTTP client.
+    # None disables impersonation for every request in this source's session.
+    IMPERSONATE: str | None = "chrome"
 
     # When True, fetch() raises instead of returning an empty list if the
     # pipeline produced no collections. Set on address/lookup sources where an
@@ -230,7 +233,7 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
 
     @property
     def session(self) -> Any:
-        """A shared, lazily-created HTTP client (curl_cffi, browser impersonation).
+        """A shared, lazy curl_cffi client with the declared IMPERSONATE setting.
 
         Available to every pipeline stage so that retrieval and any parse-driven
         follow-up requests reuse one connection. A parser that needs to fetch a
@@ -244,7 +247,7 @@ class BaseSource(ABC, Generic[ParserType, TransformerType]):
         if self._session is None:
             from curl_cffi import requests as _cffi_requests
 
-            self._session = _cffi_requests.Session(impersonate="chrome")
+            self._session = _cffi_requests.Session(impersonate=self.IMPERSONATE)
         return self._session
 
     # --- Pipeline orchestration ---

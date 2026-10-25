@@ -1,6 +1,8 @@
-# Montreal
+# Montreal (QC)
 
-Waste collection schedules provided by [Info Collecte Montreal](https://montreal.ca/info-collectes/).
+Support for schedules provided by [Montreal (QC)](https://montreal.ca/info-collectes).
+
+Source script for montreal.ca/info-collectes
 
 ## Configuration via configuration.yaml
 
@@ -10,49 +12,39 @@ waste_collection_schedule:
     - name: montreal_ca
       args:
         sector: SECTOR
-        food: SECTOR_A
-        recycling: SECTOR_B
-        green: SECTOR_C
-        bulky: SECTOR_D
+        recycling: RECYCLING
+        bulky: BULKY
+        food: FOOD
+        green: GREEN
 ```
 
 ### Configuration Variables
 
-* **sector** *(string) (required)*
-* **food** *(string) (optional)*
-* **recycling** *(string) (optional)*
-* **green** *(string) (optional)*
-* **bulky** *(string) (optional)*
+**sector**  
+*(string) (required)*
 
-**How do I find my sector?**
+**recycling**  
+*(string) (optional)*
 
-- Download on your computer a [Montreal GeoJSON file](https://donnees.montreal.ca/dataset/2df0fa28-7a7b-46c6-912f-93b215bd201e/resource/5f3fb372-64e8-45f2-a406-f1614930305c/download/collecte-des-ordures-menageres.geojson)
-- Visit https://geojson.io/
-- Click on *Open* and select the Montreal GeoJSON file
-- Find your sector on the map
+**bulky**  
+*(string) (optional)*
 
-![Alt text](../../images/montreal_ca_helper.png)
+**food**  
+*(string) (optional)*
+
+**green**  
+*(string) (optional)*
 
 ## Example
-
-French calendar labels
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: montreal_ca
-      calendar_title: Info-Collecte
       args:
-        sector: MHM_41-1
-      customize:
-        - type: Waste
-          alias: Ordures
-        - type: Food
-          alias: Composte  # codespell:ignore composte
-        - type: Recycling
-          alias: Recyclage
-        - type: Green
-          alias: Feuilles mortes et résidus vert
-        - type: Bulky
-          alias: Encombrants et résidus de construction
+        sector: LSL4
 ```
+
+## How to get the source arguments
+
+Download the Montreal GeoJSON file (https://donnees.montreal.ca/dataset/collecte-des-ordures-menageres), open it on https://geojson.io/ and find your sector on the map. Recycling, bulky items, food waste and greens use the waste sector unless you give a different one.

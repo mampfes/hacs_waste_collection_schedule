@@ -773,10 +773,12 @@ class FallbackRetriever(_BaseRetriever):
         return self._attempts(source, context)
 
 
-#: Default pattern for the JS chunks a Next.js page loads. Group 1 is the
+#: Default pattern for the JS chunks a Next.js page loads. Chunks have lived
+#: under both ``/_next/static/chunks/`` and ``/_next/static/immutable/chunks/``,
+#: so this accepts any ``.js`` path below ``/_next/static/``. Group 1 is the
 #: chunk's href, resolved against the page URL; any ``?v=`` cache-buster after
 #: the ``.js`` is dropped so the same chunk is only fetched once.
-NEXT_CHUNK_PATTERN = r'src="([^"]*/_next/static/chunks/[^"?]+\.js)(?:\?[^"]*)?"'
+NEXT_CHUNK_PATTERN = r'src="([^"]*/_next/static/[^"?]+\.js)(?:\?[^"]*)?"'
 
 
 class NextActionRetriever(_BaseRetriever):

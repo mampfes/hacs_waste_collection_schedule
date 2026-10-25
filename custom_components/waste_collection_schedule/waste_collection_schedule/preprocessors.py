@@ -21,6 +21,7 @@ import calendar
 import datetime
 import itertools
 import re
+import unicodedata
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Literal, NamedTuple, Protocol, TypeVar
@@ -1931,6 +1932,11 @@ _EN_MONTH_ABBREVIATIONS = {
 }
 
 
+# A grid cell's word: one day ("5", "5,", "5.") or several run together
+# ("2,16,30", "2.,"), but never a year or a street number such as "1/A".
+_GRID_DAYS = re.compile(r"\d{1,2}\.?(?:,\d{1,2}\.?)*,?")
+
+
 class GridBlock(NamedTuple):
     """One block of a :class:`PdfRoundMonthGrid` table.
 
@@ -1967,7 +1973,8 @@ class PdfRoundMonthGrid(Preprocessor["list[PdfWordLayout]", GridBlock]):
         )
         preprocess = staticmethod(_select)   # pick the block for the address
 
-    Empty cells (a seasonal round) are simply missing, so a day is not placed
+    A cell's word may carry one day ("5", "5,", "12.") or several run together
+    ("3,17,31"). Empty cells (a seasonal round) are simply missing, so a day is not placed
     by its order in the row but by position: it belongs to the nearest row
     label (vertically, within ``row_tolerance``) and the nearest month column
     (horizontally). The header is the topmost row holding all twelve months
@@ -2139,9 +2146,9 @@ class PdfRoundMonthGrid(Preprocessor["list[PdfWordLayout]", GridBlock]):
         rows: list[list[tuple[datetime.date, str]]] = [[] for _ in tops]
 
         for word in words:
-            day = word.text.strip(",")
+            days = _GRID_DAYS.fullmatch(word.text)
             if not (
-                day.isdigit()
+                days
                 and word.x > first_x - self._day_margin
                 and floor < word.y < header_y - self._header_gap
             ):
@@ -2154,16 +2161,17 @@ class PdfRoundMonthGrid(Preprocessor["list[PdfWordLayout]", GridBlock]):
             ):
                 continue
             _, month = min(months, key=lambda column: abs(column[0] - word.x))
-            try:
-                collection_date = datetime.date(year, month, int(day))
-            except ValueError:
-                response_shape.expect(
-                    False,
-                    source_name=response_shape.source_name(source),
-                    detail=f"day {day} binned into month {month}",
-                )
-                continue
-            rows[block_of[index]].append((collection_date, label))
+            for day in re.findall(r"\d+", days.group(0)):
+                try:
+                    collection_date = datetime.date(year, month, int(day))
+                except ValueError:
+                    response_shape.expect(
+                        False,
+                        source_name=response_shape.source_name(source),
+                        detail=f"day {day} binned into month {month}",
+                    )
+                    continue
+                rows[block_of[index]].append((collection_date, label))
 
         return [
             GridBlock(
@@ -2319,10 +2327,357 @@ class TextDatedBlocks(Preprocessor[str, "tuple[datetime.date, str]"]):
         return datetime.date.today().year
 
 
+_TNB_DATE = re.compile(r"(?<![\d.])(\d{1,2})\.(\d{1,2})(?:\.(20\d{2}))?(?![\d])")
+_TNB_NUMBERS = re.compile(r"[ \t:]*(\d+[a-z]?(?:\s*,\s*\d+[a-z]?)*)")
+
+
+def _fold_text(text: str) -> str:
+    """Casefold and drop accents, keeping punctuation and line breaks."""
+    text = unicodedata.normalize("NFKD", text.replace("ł", "l").replace("Ł", "L"))
+    text = "".join(char for char in text if not unicodedata.combining(char)).casefold()
+    # A Polish ordinal: "1-go Maja" is "1 Maja".
+    return re.sub(r"(?<=\d)-?go\b", "", text)
+
+
+def _name_word(word: str) -> str:
+    """A first name, also matching its initial ("J." for "Józefa")."""
+    if len(word) == 1:
+        return re.escape(word) + r"\w*"
+    return f"(?:{re.escape(word)}|{re.escape(word[0])}(?=\\.))"
+
+
+@dataclass
+class _NamedBlock:
+    keys: tuple[str, ...]
+    names: list[str] = field(default_factory=list)
+    dates: list[tuple[int, int, int | None]] = field(default_factory=list)
+    weekdays: set[int] = field(default_factory=set)
+
+
+class TextNamedBlocks(Preprocessor[str, "tuple[datetime.date, str]"]):
+    """Read a plain-text schedule of "these streets (or villages): these dates".
+
+    For the municipal PDF that lists, per waste fraction, blocks of place
+    names (comma separated, or one per line) each followed by its collection
+    dates ("STYCZEŃ 02.01., 16.01.", "16.03.2026") or by a weekday
+    ("PONIEDZIAŁEK", collected every week)::
+
+        parse = parsers.PdfTextParser(min_chars=500)
+        preprocess = preprocessors.TextNamedBlocks(
+            sections={r"ODPADY ZMIESZANE": "Mixed", r"WIELKOGABARYTOWYCH": "Bulky"},
+            name="street",
+            holidays=lambda year: holidays.country_holidays("PL", years=year),
+        )
+
+    ``sections`` maps a heading regex to the key (or keys) of the rows the text
+    after it yields, up to the next heading; text before the first heading is
+    ignored, and a heading found inside a longer one already matched there is
+    not a heading of its own. A block is the run of name lines up to its
+    schedule lines; a line ending in a weekday carries both. A block whose
+    dates pick up the months where the block before it stopped is that block's
+    table row continued on the next page, and is read as one.
+
+    The user's name matches a whole entry of a block, case and accents
+    ignored. An entry followed by house numbers ("LIPOWA: 1, 5, 7", "SŁUBICKA
+    60") matches only an address whose ``number`` param is one of them.
+
+    Dates without a year take the first ``20xx`` in the document (or
+    ``year_pattern``'s first group). A weekday yields that weekday of every
+    week of that year; ``holidays`` (``callable(year) -> dates``) moves one
+    falling on a holiday to the next working day.
+
+    Args:
+        sections: heading regex (case-insensitive) -> key or keys.
+        name: the source param holding the street or place name, or a
+            ``callable(**params) -> str``.
+        number: the source param holding the house number, or a callable.
+        year_pattern: regex whose first group is the schedule's year.
+        holidays: ``callable(year) -> container of dates`` for weekday blocks.
+    """
+
+    def __init__(
+        self,
+        *,
+        sections: Mapping[str, "str | Sequence[str]"],
+        name: "str | Callable[..., str]",
+        number: "str | Callable[..., str | None] | None" = None,
+        year_pattern: "str | None" = None,
+        holidays: "Callable[[int], Any] | None" = None,
+    ):
+        self._sections = [
+            (
+                re.compile(pattern, re.IGNORECASE),
+                (keys,) if isinstance(keys, str) else tuple(keys),
+            )
+            for pattern, keys in sections.items()
+        ]
+        self._name = name
+        self._number = number
+        self._year_re = (
+            re.compile(year_pattern)
+            if year_pattern
+            else re.compile(r"(?<!\d)(20\d{2})(?!\d)")
+        )
+        self._holidays = holidays
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        text = str(records)
+        params = source.params if source else {}
+        name = self._param(self._name, params)
+        number = self._param(self._number, params) if self._number else None
+        match = self._year_re.search(text)
+        year = int(match.group(1)) if match else datetime.date.today().year
+
+        rows: set[tuple[datetime.date, str]] = set()
+        for block in self._blocks(text):
+            if not name or not self._lists(block, name, number):
+                continue
+            for day, month, block_year in block.dates:
+                try:
+                    collection = datetime.date(block_year or year, month, day)
+                except ValueError:
+                    continue
+                rows.update((collection, key) for key in block.keys)
+            for weekday in block.weekdays:
+                for collection in self._weekly(year, weekday):
+                    rows.update((collection, key) for key in block.keys)
+        return sorted(rows)
+
+    @staticmethod
+    def _param(value: Any, params: Mapping[str, Any]) -> "str | None":
+        result = value(**params) if callable(value) else params.get(value)
+        return str(result).strip() if result not in (None, "") else None
+
+    def _headings(self, text: str) -> list[tuple[int, int, tuple[str, ...]]]:
+        found = sorted(
+            (m.start(), -m.end(), keys)
+            for pattern, keys in self._sections
+            for m in pattern.finditer(text)
+        )
+        headings: list[tuple[int, int, tuple[str, ...]]] = []
+        for start, neg_end, keys in found:
+            if headings and start < headings[-1][1]:
+                continue
+            headings.append((start, -neg_end, keys))
+        return headings
+
+    def _blocks(self, text: str) -> list[_NamedBlock]:
+        headings = self._headings(text)
+        blocks: list[_NamedBlock] = []
+        for index, (_, end, keys) in enumerate(headings):
+            stop = headings[index + 1][0] if index + 1 < len(headings) else len(text)
+            section: list[_NamedBlock] = []
+            block = _NamedBlock(keys)
+            for line in text[end:stop].split("\n"):
+                dates = [
+                    (int(d), int(m), int(y) if y else None)
+                    for d, m, y in _TNB_DATE.findall(line)
+                ]
+                words = line.split()
+                weekday = recurrence.weekday(words[-1].strip(".,")) if words else None
+                schedule_only = bool(words) and all(
+                    recurrence.month(w.strip(".,")) or _TNB_DATE.fullmatch(w.strip(","))
+                    for w in words
+                )
+                if dates or weekday is not None or schedule_only:
+                    if weekday is not None and len(words) > 1:
+                        # "BABROSTY, ŁUPKI. CZWARTEK": a block on one line.
+                        if block.dates or block.weekdays:
+                            section.append(block)
+                            block = _NamedBlock(keys)
+                        block.names.append(" ".join(words[:-1]))
+                    block.dates.extend(dates)
+                    if weekday is not None:
+                        block.weekdays.add(weekday)
+                elif line.strip():
+                    if block.dates or block.weekdays:
+                        section.append(block)
+                        block = _NamedBlock(keys)
+                    block.names.append(line)
+            section.append(block)
+            blocks.extend(self._joined(section))
+        return blocks
+
+    @staticmethod
+    def _joined(section: list[_NamedBlock]) -> list[_NamedBlock]:
+        """Join a table row split over two pages back into one block."""
+        joined: list[_NamedBlock] = []
+        for block in section:
+            if not (block.dates or block.weekdays):
+                continue
+            previous = joined[-1] if joined else None
+            if (
+                previous is not None
+                and previous.dates
+                and block.dates
+                and not previous.weekdays
+                and block.dates[0][1] > max(m for _, m, _ in previous.dates)
+            ):
+                previous.names.extend([";", *block.names])
+                previous.dates.extend(block.dates)
+                continue
+            joined.append(block)
+        return joined
+
+    @staticmethod
+    def _lists(block: _NamedBlock, name: str, number: "str | None") -> bool:
+        """Whether the block lists the name (at that house number)."""
+        words = re.findall(r"\w+", _fold_text(name))
+        if not words:
+            return False
+        names = _fold_text("\n".join(block.names))
+        # Entries one per line ("LIPOWA", "SŁUBICKA 60") rather than in a
+        # comma-separated list wrapped across lines.
+        per_line = not re.search(r",\s*[^\W\d_]", names)
+        after = r"[ \t]*(?:$|[,;:.(\n]|\d)" if per_line else r"\s*(?:$|[,;:.(]|\d)"
+        pattern = re.compile(
+            r"(?:^|[,;:\n]|\.\s)\s*"
+            + r"[\s.\-]+".join([*map(_name_word, words[:-1]), re.escape(words[-1])])
+            + f"(?={after})"
+        )
+        for match in pattern.finditer(names):
+            listed = _TNB_NUMBERS.match(names, match.end())
+            if listed is None:
+                return True
+            numbers = {n.strip() for n in listed.group(1).split(",")}
+            if number is not None and _fold_text(number).replace(" ", "") in numbers:
+                return True
+        return False
+
+    def _weekly(self, year: int, weekday: int) -> Iterable[datetime.date]:
+        holidays = self._holidays(year) if self._holidays else ()
+        day = datetime.date(year, 1, 1)
+        day += datetime.timedelta(days=(weekday - day.weekday()) % 7)
+        while day.year == year:
+            collection = day
+            while collection in holidays or collection.weekday() > 4:
+                collection += datetime.timedelta(days=1)
+            yield collection
+            day += datetime.timedelta(days=7)
+
+
 # A calendar grid's own furniture, in any language: a row of nothing but day
 # numbers, and a row of nothing but short weekday abbreviations.
 _DAY_ROW_PATTERN = r"^(?:\d{1,2})(?:\s+\d{1,2})*$"
 _WEEKDAY_ROW_PATTERN = r"^[^\W\d_]{2,3}(?:\s+[^\W\d_]{2,3}){2,}$"
+
+
+def _trailing_month(word: str) -> "int | None":
+    """The month a word names, also when glued to the text before it."""
+    for start in range(len(word) - 2):
+        number = recurrence.month(word[start:])
+        if number is not None:
+            return number
+    return None
+
+
+class TextMonthColumns(Preprocessor[str, "tuple[datetime.date, str]"]):
+    """Read months printed side by side, one text line per day number.
+
+    For a text PDF whose page shows several months as columns of day rows
+    ("4 Mer RSU"), which a plain text extractor emits as one line per day
+    number running across the months under a heading line of month names::
+
+        GENNAIO FEBBRAIO MARZO APRILE MAGGIO GIUGNO
+        4 Dom 4 Mer RSU 4 Mer RSU 4 Sab ORG PLA 4 Lun 4 Gio CAR
+
+    Each cell is a day number, its printed weekday and the round codes after
+    it. A short month leaves its cell out of the lines for 29 to 31, so a cell
+    is dated by its weekday: it belongs to the next month of the heading line,
+    left to right, on which that day falls on that weekday. A cell fitting none
+    of them fails loudly (a wrong year or a changed layout), and so does a
+    second heading line naming months already read (a PDF holding one calendar
+    per zone)::
+
+        parse = parsers.PdfTextParser(min_chars=500)
+        preprocess = preprocessors.TextMonthColumns(
+            keys=TYPE_MAP,
+            weekdays=("Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"),
+            year_pattern=r"raccolta rifiuti (\\d{4})",
+        )
+
+    Args:
+        keys: the round codes printed in the cells, matched case-insensitively
+            as whole words. Pass the transformer's ``type_value_map``.
+        weekdays: the printed weekday abbreviations, Monday first.
+        year_pattern: regex searched in the text, its first group the year.
+            Falls back to the current year.
+    """
+
+    def __init__(
+        self,
+        *,
+        keys: Iterable[str],
+        weekdays: Sequence[str],
+        year_pattern: "str | None" = None,
+    ):
+        if len(weekdays) != 7:
+            raise ValueError("TextMonthColumns needs seven weekdays, Monday first")
+        self._keys = {str(key).upper(): key for key in keys}
+        self._weekdays = [w.lower() for w in weekdays]
+        names = "|".join(re.escape(w) for w in weekdays)
+        self._cell_re = re.compile(
+            rf"(?<!\S)(\d{{1,2}})\s+({names})\b((?:\s+(?!\d{{1,2}}\s+(?:{names})\b)\S+)*)",
+            re.IGNORECASE,
+        )
+        self._year_re = (
+            re.compile(year_pattern, re.IGNORECASE) if year_pattern else None
+        )
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[tuple[datetime.date, str]]:
+        text = str(records)
+        year = datetime.date.today().year
+        if self._year_re is not None and (match := self._year_re.search(text)):
+            year = int(match.group(1))
+        months: list[int] = []
+        seen: set[int] = set()
+        for line in text.splitlines():
+            names = [_trailing_month(word) for word in line.split()]
+            # A legend may run into the heading ("PILE PILEGENNAIO FEBBRAIO").
+            while names and names[0] is None:
+                names.pop(0)
+            if len(names) >= 2 and all(number is not None for number in names):
+                months = [number for number in names if number is not None]
+                if seen & set(months):
+                    from waste_collection_schedule import response_shape
+
+                    raise response_shape.ResponseShapeError(
+                        response_shape.source_name(source),
+                        "the PDF holds more than one calendar for the same months",
+                    )
+                seen.update(months)
+                continue
+            if not months:
+                continue
+            position = 0
+            for match in self._cell_re.finditer(line):
+                day = int(match.group(1))
+                weekday = self._weekdays.index(match.group(2).lower())
+                while position < len(months):
+                    month = months[position]
+                    position += 1
+                    try:
+                        dated = datetime.date(year, month, day)
+                    except ValueError:
+                        continue
+                    if dated.weekday() == weekday:
+                        break
+                else:
+                    from waste_collection_schedule import response_shape
+
+                    raise response_shape.ResponseShapeError(
+                        response_shape.source_name(source),
+                        f"day {day} {match.group(2)} fits none of the months "
+                        f"{months} of {year}",
+                    )
+                for token in match.group(3).split():
+                    key = self._keys.get(token.upper())
+                    if key is not None:
+                        yield dated, key
 
 
 class TextCalendarGrid(Preprocessor[str, "tuple[datetime.date, str]"]):
