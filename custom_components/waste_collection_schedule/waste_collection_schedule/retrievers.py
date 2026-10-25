@@ -475,6 +475,25 @@ class FanOutRetriever(_BaseRetriever):
         return fetched
 
 
+class SelectRetriever(RetrieverFunc):
+    """Select one configured retrieval flow from the source's parameters.
+
+    Only the chosen flow runs. Errors propagate without trying another input
+    mode, so an upstream failure cannot be mistaken for an invalid address.
+    """
+
+    def __init__(
+        self,
+        choose: Callable[[BaseSource], str],
+        choices: Mapping[str, RetrieverFunc],
+    ):
+        self.choose = choose
+        self.choices = dict(choices)
+
+    def __call__(self, source: BaseSource) -> Any:
+        return self.choices[self.choose(source)](source)
+
+
 class LinkedAssetRetriever(RetrieverFunc):
     """Fetch an asset linked by a page, with a known fallback asset URL.
 

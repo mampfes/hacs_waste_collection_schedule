@@ -478,6 +478,14 @@ Use `parsers.JsObjectParser({name: pattern, ...})` for object literals captured 
 
 `parsers.NamedResponses({name: parser, ...})` applies one parser per ordered HTTP response and returns a single named record. Pair it with `FanOutRetriever(include_prepared=True)` when a calendar combines a script reference with JSON address metadata. A response-count mismatch raises rather than silently dropping data.
 
+`retrievers.SelectRetriever(choose, choices)` selects exactly one configured retrieval flow from the source parameters. Use it for alternative input modes, such as an address payload or a postcode search. Only the selected flow runs; its failures propagate.
+
+`service.HtmlForms.HtmlFormRetriever(url, steps=...)` follows changing HTML forms on one session. Each `FormStep` selects a form or one of its controls, preserves input tokens and selected options, and adds answers from a pure callback. Forms without an action submit to the current URL. Set `button` to include the named action button and `redirects=True` for explicit, bounded GET redirect hops after a submission. This covers both ordinary CSRF forms and GOSS forms that require manual 302/303 handling.
+
+`service.GossForm.GossJsonParser(*path)` reads a result object from the page's base64-encoded `FormData`, including omitted base64 padding. Missing paths or empty result objects raise. This differs from `GossVariablesParser`, which reads `SerializedVariables`.
+
+`service.MyArea.MyAreaParser` reads My Area bin-summary cards or the linked WebAspx round calendar. Pair `calendar_uprn` with `FanOutRetriever(include_prepared=True)` to fetch a linked calendar only when one is advertised. When a calendar is present, its dates replace the summary dates, which can conflate alternating rounds.
+
 ### A service-based source (fully declarative)
 
 ```python

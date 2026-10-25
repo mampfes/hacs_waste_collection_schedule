@@ -1,112 +1,99 @@
-import json
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import municipality, street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-TITLE = "Silea"
-DESCRIPTION = "Silea"
-URL = "https://www.sileaspa.it"
+from waste_collection_schedule.transformers import JsonTransformer
 
 API = "https://www.sileaspa.it/wp-admin/admin-ajax.php"
-TEST_CASES = {
-    "Test_001": {"municipality": "Lomagna", "address": "via martiri"},
-    "Test_002": {"municipality": "Cesana", "address": "via foscolo"},
-}
-ICON_MAP = {
-    "INDIFFERENZIATO": Icons.GENERAL_WASTE,
-    "PLASTICA, LATTINE E TETRAPAK": Icons.RECYCLING,
-    "VETRO": Icons.GLASS,
-    "CARTA E CARTONE": Icons.PAPER,
-    "SPAZZAMENTO MECCANIZZATO": Icons.GENERAL_WASTE,
-    "UMIDO": Icons.BIO_KITCHEN,
-}
 
 
-class Source:
-    def __init__(self, municipality, address):
-        self._municipality = None
-        self._address = None
+def _match(response, argument, value):
+    records = response.json()
+    for item in records:
+        if value.lower() in item["name"].lower():
+            return item["id"]
+    raise SourceArgumentNotFoundWithSuggestions(
+        argument, value, [item["name"].title() for item in records]
+    )
 
-        s = requests.Session()
 
-        # Retrieve Municipality/town
-        payload = {"action": "get_comuni"}
-        resp = s.post(API, data=payload)
-        data = json.loads(resp.text)
-
-        for item in data:
-            if municipality.lower() in item["name"].lower():
-                self._municipality = item["id"]
-                break
-
-        # Raise error if municipality is not found
-        if self._municipality is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "municipality",
-                self._municipality,
-                [item["name"].title() for item in data],
-            )
-
-        # Retrieve Street
-        payload = {"action": "get_vie", "id_cliente": self._municipality}
-        resp = s.post(API, data=payload)
-        data = json.loads(resp.text)
-
-        for item in data:
-            if address.lower() in item["name"].lower():
-                self._address = item["id"]
-                break
-
-        # Raise error if address is not found
-        if self._address is None:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address", self._address, [item["name"].title() for item in data]
-            )
-
-    def fetch(self):
-        entries = []
-        s = requests.Session()
-
-        payload = {
-            "action": "get_months",
-            "id_cliente": self._municipality,
-            "id_via": self._address,
-        }
-        resp = s.post(API, data=payload)
-        available_months = resp.json()
-
-        for month in available_months:
-            payload = {
+@final
+class Source(BaseSource):
+    TITLE = "Silea"
+    DESCRIPTION = "Silea"
+    URL = "https://www.sileaspa.it"
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"municipality": "Lomagna", "address": "via martiri"},
+        "Test_002": {"municipality": "Cesana", "address": "via ugo foscolo"},
+    }
+    COUNTRY = "it"
+    PARAMS = (municipality(), street_address())
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.PAPER,
+        wt.FOOD_WASTE,
+    ]
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter your municipality and street as listed at https://www.sileaspa.it. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    }
+    retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.Chain(
+            retrievers.Lookup(
+                API,
+                method="POST",
+                data={"action": "get_comuni"},
+                pick=lambda response, municipality, **_: _match(
+                    response, "municipality", municipality
+                ),
+            ),
+            retrievers.Lookup(
+                API,
+                method="POST",
+                data=lambda town, **_: {"action": "get_vie", "id_cliente": town},
+                pick=lambda response, town, address, **_: _match(
+                    response, "address", address
+                ),
+            ),
+            retrievers.Lookup(
+                API,
+                method="POST",
+                data=lambda town, street, **_: {
+                    "action": "get_months",
+                    "id_cliente": town,
+                    "id_via": street,
+                },
+                pick=lambda response, *_, **__: response.json(),
+            ),
+        ),
+        targets=lambda source, context: context[2],
+        fetch=retrievers.Request(
+            API,
+            method="POST",
+            data=lambda target, context, **_: {
                 "action": "get_calendar",
-                "id_cliente": self._municipality,
-                "id_via": self._address,
-                "id_mese": month["id"],
-            }
-            resp = s.post(API, data=payload)
-            month_data = resp.json()
-
-            for item in month_data:
-                try:
-                    # use 'format' field, already in YYYY-MM-DD format
-                    date_str = item.get("format")
-                    if not date_str:
-                        continue
-                    collection_date = datetime.strptime(date_str, "%Y-%m-%d").date()
-                except Exception:
-                    continue
-
-                for service in item.get("services", []):
-                    # Service name is something like "INDIFFERENZIATO" or "CARTA E CARTONE"
-                    raw_name = service.get("service", "").strip()
-
-                    entries.append(
-                        Collection(
-                            date=collection_date,
-                            t=raw_name.title(),
-                            icon=ICON_MAP.get(raw_name),
-                        )
-                    )
-
-        return entries
+                "id_cliente": context[0],
+                "id_via": context[1],
+                "id_mese": target["id"],
+            },
+        ),
+    )
+    parse = parsers.EachResponse(parsers.JsonParser())
+    preprocess = preprocessors.ExplodeList("services", into="service")
+    transform = JsonTransformer(
+        date_key="format",
+        type_key=lambda record: record["service"].get("service", "").strip(),
+        skip_unparseable_dates=True,
+        type_value_map={
+            "INDIFFERENZIATO": wt.GENERAL_WASTE,
+            "PLASTICA, LATTINE E TETRAPAK": wt.RECYCLABLES,
+            "VETRO": wt.GLASS,
+            "CARTA E CARTONE": wt.PAPER,
+            "SPAZZAMENTO MECCANIZZATO": wt.GENERAL_WASTE,
+            "UMIDO": wt.FOOD_WASTE,
+        },
+    )

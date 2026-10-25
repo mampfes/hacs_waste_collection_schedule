@@ -455,3 +455,15 @@ def test_abfallplus_replay_restores_recorded_client_ids_and_pins_app(tmp_path):
                 },
             )
     assert AppAbfallplusDe._new_client_id is original
+
+
+def test_replayed_headers_are_case_insensitive():
+    response = cassette.CassetteResponse(
+        {
+            "status": 303,
+            "content_b64": "",
+            "headers": {"location": "/next", "Content-Type": "text/html"},
+        }
+    )
+    assert response.headers["Location"] == "/next"
+    assert response.headers.get("content-type") == "text/html"
