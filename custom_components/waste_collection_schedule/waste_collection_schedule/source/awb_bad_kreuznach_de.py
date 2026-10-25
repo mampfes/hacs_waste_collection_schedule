@@ -1,7 +1,7 @@
 import logging
 from datetime import date, datetime, timedelta
 
-import requests
+from curl_cffi import requests
 from dateutil.rrule import DAILY, rrule
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 from waste_collection_schedule.exceptions import (
@@ -56,6 +56,7 @@ class Source:
         self._nummer = str(nummer) if nummer else None
 
     def fetch(self):
+        session = requests.Session(impersonate="chrome")
         params = {
             "active": True,
             "appId": 44,
@@ -67,7 +68,7 @@ class Source:
             "districtId": None,
         }
 
-        r = requests.post(URL, json=params)
+        r = session.post(URL, json=params)
         r.raise_for_status()
         data = r.json()
 
@@ -76,7 +77,7 @@ class Source:
         if "regions" in data["data"]:
             params["regionId"] = data["data"]["regions"][0]["id"]
 
-        r = requests.post(URL, json=params)
+        r = session.post(URL, json=params)
         r.raise_for_status()
         data = r.json()
 
@@ -92,7 +93,7 @@ class Source:
                 "ort", self._ort, [city["name"] for city in data["data"]["citys"]]
             )
 
-        r = requests.post(URL, json=params)
+        r = session.post(URL, json=params)
         r.raise_for_status()
         data = r.json()
 
@@ -124,7 +125,7 @@ class Source:
                     ],
                 )
 
-        r = requests.post(URL, json=params)
+        r = session.post(URL, json=params)
         r.raise_for_status()
         data = r.json()
 
@@ -151,7 +152,7 @@ class Source:
                     [street["name"] for street in data["data"]["streets"]],
                 )
 
-        r = requests.post(URL, json=params)
+        r = session.post(URL, json=params)
         r.raise_for_status()
         data = r.json()
 
@@ -192,9 +193,9 @@ class Source:
 
         header = {"Accept": "application/json, text/plain, */*"}
 
-        r = requests.get(
+        r = session.get(
             "https://blupassionsystem.de/city/rest/garbageorte/getAllGarbageCalendar",
-            params=params,
+            params={k: v for k, v in params.items() if v is not None},
             headers=header,
         )
         r.raise_for_status()
