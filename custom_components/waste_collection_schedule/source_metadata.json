@@ -4365,6 +4365,14 @@
     },
     "urls": {}
   },
+  "gelsiambiente_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gelsiambiente_it.md",
+    "howto": {
+      "en": "Giussano is split into zones A, B and C by street. Find your street in the zone lists on page 2 and 3 of the municipal calendar (https://www.gelsiambiente.it/servizi/calendario-dei-servizi/) and select that zone.",
+      "it": "Giussano è divisa in zone A, B e C in base alla via. Trova la tua via negli elenchi delle zone alle pagine 2 e 3 del calendario comunale (https://www.gelsiambiente.it/servizi/calendario-dei-servizi/) e seleziona quella zona."
+    },
+    "urls": {}
+  },
   "gruppoveritas_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gruppoveritas_it.md",
     "howto": {

@@ -3579,6 +3579,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gazzo Veronese](/doc/source/siunet_it.md) / siunet.it
 - [Gazzuolo](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/gazzuolo
 - [GEA Srl](/doc/source/junker_app.md) / junker.app
+- [Gelsia Ambiente (Giussano)](/doc/source/gelsiambiente_it.md) / gelsiambiente.it
 - [Genova](/doc/source/siunet_it.md) / siunet.it
 - [Geovest](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [GESENU  Gestione Servizi Nettezza Urbana S.P.A](/doc/source/junker_app.md) / junker.app
@@ -3590,7 +3591,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Ginosa](/doc/source/junker_app.md) / junker.app
 - [Gioiosa Ionica](/doc/source/junker_app.md) / junker.app
 - [Gioiosa Marea - Pizzo Pippo](/doc/source/junker_app.md) / junker.app
-- [Giussano](/doc/source/siunet_it.md) / siunet.it
 - [Goito](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/goito
 - [Gonnesa - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Gonzaga](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/gonzaga
