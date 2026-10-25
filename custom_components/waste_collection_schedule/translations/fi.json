@@ -3465,12 +3465,11 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "address": "Osoite",
-          "suburb": "Kaupunki"
+          "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
-          "address": "Koko osoitteesi.",
-          "suburb": "Kaupunkisi tai paikkakuntasi."
+          "address": "Koko osoitteesi."
         }
       },
       "reconfigure_tr_qld_gov_au": {
@@ -3479,11 +3478,10 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "address": "Osoite",
-          "suburb": "Kaupunki"
+          "suburb": "Suburb"
         },
         "data_description": {
-          "address": "Koko osoitteesi.",
-          "suburb": "Kaupunkisi tai paikkakuntasi."
+          "address": "Koko osoitteesi."
         }
       },
       "args_bassendean_wa_gov_au": {

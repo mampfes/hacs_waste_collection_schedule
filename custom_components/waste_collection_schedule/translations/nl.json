@@ -3465,12 +3465,11 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "address": "Adres",
-          "suburb": "Plaats"
+          "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "address": "Uw volledige adres.",
-          "suburb": "Uw stad of dorp."
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_tr_qld_gov_au": {
@@ -3479,11 +3478,10 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "address": "Adres",
-          "suburb": "Plaats"
+          "suburb": "Suburb"
         },
         "data_description": {
-          "address": "Uw volledige adres.",
-          "suburb": "Uw stad of dorp."
+          "address": "Uw volledige adres."
         }
       },
       "args_bassendean_wa_gov_au": {

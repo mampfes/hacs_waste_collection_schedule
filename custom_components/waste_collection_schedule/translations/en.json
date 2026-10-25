@@ -3500,12 +3500,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "suburb": "City"
+          "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your full address.",
-          "suburb": "Your city or town."
+          "address": "Your full address."
         }
       },
       "reconfigure_tr_qld_gov_au": {
@@ -3514,11 +3513,10 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "suburb": "City"
+          "suburb": "Suburb"
         },
         "data_description": {
-          "address": "Your full address.",
-          "suburb": "Your city or town."
+          "address": "Your full address."
         }
       },
       "args_bassendean_wa_gov_au": {

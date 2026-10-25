@@ -3465,12 +3465,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "suburb": "By"
+          "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "address": "Din fulde adresse",
-          "suburb": "Din by"
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_tr_qld_gov_au": {
@@ -3479,11 +3478,10 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "suburb": "By"
+          "suburb": "Suburb"
         },
         "data_description": {
-          "address": "Din fulde adresse",
-          "suburb": "Din by"
+          "address": "Din fulde adresse"
         }
       },
       "args_bassendean_wa_gov_au": {

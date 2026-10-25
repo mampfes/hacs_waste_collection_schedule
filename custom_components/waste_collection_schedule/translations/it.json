@@ -3471,12 +3471,11 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo",
-          "suburb": "Città"
+          "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "address": "Il vostro indirizzo completo.",
-          "suburb": "La vostra città o paese."
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_tr_qld_gov_au": {
@@ -3485,11 +3484,10 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo",
-          "suburb": "Città"
+          "suburb": "Suburb"
         },
         "data_description": {
-          "address": "Il vostro indirizzo completo.",
-          "suburb": "La vostra città o paese."
+          "address": "Il vostro indirizzo completo."
         }
       },
       "args_bassendean_wa_gov_au": {

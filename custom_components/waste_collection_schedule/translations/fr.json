@@ -3471,12 +3471,11 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "suburb": "Ville"
+          "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "address": "Votre adresse complète.",
-          "suburb": "Votre ville ou village."
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_tr_qld_gov_au": {
@@ -3485,11 +3484,10 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "suburb": "Ville"
+          "suburb": "Suburb"
         },
         "data_description": {
-          "address": "Votre adresse complète.",
-          "suburb": "Votre ville ou village."
+          "address": "Votre adresse complète."
         }
       },
       "args_bassendean_wa_gov_au": {

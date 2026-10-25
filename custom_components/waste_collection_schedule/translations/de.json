@@ -3471,12 +3471,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "suburb": "Stadt"
+          "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "address": "Ihre vollständige Adresse.",
-          "suburb": "Ihre Stadt oder Gemeinde."
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_tr_qld_gov_au": {
@@ -3485,11 +3484,10 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "address": "Adresse",
-          "suburb": "Stadt"
+          "suburb": "Suburb"
         },
         "data_description": {
-          "address": "Ihre vollständige Adresse.",
-          "suburb": "Ihre Stadt oder Gemeinde."
+          "address": "Ihre vollständige Adresse."
         }
       },
       "args_bassendean_wa_gov_au": {

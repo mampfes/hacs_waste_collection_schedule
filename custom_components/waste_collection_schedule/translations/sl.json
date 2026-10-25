@@ -3463,12 +3463,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Naslov",
-          "suburb": "Mesto"
+          "suburb": "Suburb"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Vaš celoten naslov.",
-          "suburb": "Vaše mesto ali kraj."
+          "address": "Vaš celoten naslov."
         }
       },
       "reconfigure_tr_qld_gov_au": {
@@ -3477,11 +3476,10 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Naslov",
-          "suburb": "Mesto"
+          "suburb": "Suburb"
         },
         "data_description": {
-          "address": "Vaš celoten naslov.",
-          "suburb": "Vaše mesto ali kraj."
+          "address": "Vaš celoten naslov."
         }
       },
       "args_bassendean_wa_gov_au": {
