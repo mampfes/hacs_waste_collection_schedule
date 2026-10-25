@@ -4,6 +4,74 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [2.36.0] - 2026-10-25
+
+This release adds Sigtuna, RWM (Sittard-Geleen, Beek, Stein) and Newmarket (ON) to existing sources, and fixes about 45 sources whose providers changed their websites or APIs. No breaking changes and no deprecations; existing configurations keep working.
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@16Millbank, @CloCkWeRX, @D-creek, @JakobVinje, @MissStabby, @MyLittleGodziak, @Nordranei, @cbrugman, @developerjillur, @n42net, @oqfktm, @sailedev, @terjefl, @timboothby, @tkgalk and @wit3. 🎉
+Thanks as well to our returning contributors (@bbr111, @CRZTFR, @PMKA, @Zaunei, @costajohnt, @emiltorp, @mbendtsen) for the fixes below.
+
+### Added Sources
+
+- added Sigtuna (Sivab) to avfallsapp_se, Sweden (#7648)
+- added RWM (Sittard-Geleen, Beek, Stein) to hvcgroep_nl, Netherlands (thanks @D-creek) (#7834)
+- added Newmarket (ON) to recyclecoach_com, Canada (thanks @cbrugman) (#7876)
+
+### Fixed Sources
+
+- fixed avfallsapp_se: correct API URL for Sigtuna (thanks @MissStabby) (#7694)
+- fixed app_abfallplus_de: decode "+" as a space in house-number labels, and look for the house number in every street entry of that name (thanks @developerjillur) (#7620, #7686)
+- fixed lismore_city_nsw_gov_au: use the council widget API again (#7624)
+- fixed iapp_itouchvision_com: skip rows with unparsable dates, and add a User-Agent to prevent HTTP 403 (thanks @16Millbank) (#7636, #7772)
+- fixed abfall_io_graphql: parse a comma-separated `wasteTypes` string (#7653)
+- fixed rotorua_lakes_council_nz: support FOGO collections (thanks @PMKA) (#7658)
+- fixed ressourceindsamling_dk: fix the timestamp format (thanks @mbendtsen) (#7661)
+- fixed bochnia_gmina_pl: update the PDF URLs to wp-content/uploads (thanks @MyLittleGodziak) (#7680)
+- fixed wirral_gov_uk: read the new bin collection dates page (thanks @developerjillur) (#7690)
+- fixed glasgow_gov_uk: fetch two future months (thanks @tkgalk) (#7701)
+- fixed delight_system_com: resolve areas level by level on multi-level area lists (thanks @developerjillur) (#7692)
+- fixed folkestone_hythe_gov_uk: read collections from the new `api_collections.php` endpoint (#7707)
+- fixed smiecioplan_pl: include green waste and ash types in the ICS export (#7708)
+- fixed rfd_no: fall back to the rfd.no schedule page when the API returns no days (thanks @JakobVinje), accept the postcode/post-place spelling of addresses, and keep residual and food waste as separate types (thanks @terjefl) (#7717, #7727, #7793)
+- fixed adur_worthing_gov_uk: parse the new multi-date layout and add Food waste (#7728)
+- fixed teignbridge_gov_uk: use the new bin collection endpoint (#7726)
+- fixed doncaster_gov_uk: use the council's new bin lookup (thanks @developerjillur) (#7715)
+- fixed rctcbc_gov_uk: use the new collection-day page URL (#7735)
+- fixed recyclecoach_com: reject unsupported placeholder cities on multi-match, and raise a clear error when an address has no service zone (#7740, #7754)
+- fixed abfalltransport_li: follow the move to ezv.li and parse the new calendar markup (#7777)
+- fixed sidec_lu: read the yearly collection JSON of the new SIDEC website (thanks @n42net) (#7864)
+- fixed wyndham_vic_gov_au: use the council's public ArcGIS bin collection layer (thanks @n42net) (#7863)
+- fixed swan_wa_gov_au: read weekly FOGO collections (thanks @n42net) (#7862)
+- fixed api_golemio_cz: don't crash when a container has no `pick_days` (thanks @n42net) (#7860)
+- fixed solihull_gov_uk: send a browser user agent and read the new frequency text (thanks @n42net) (#7858)
+- fixed sector27_de: read the provider's new Livewire calendar (thanks @n42net) (#7857)
+- fixed him_as: follow the exact match when several properties share an address (thanks @sailedev) (#7849)
+- fixed portenf_sa_gov_au: handle calendars without a today marker (thanks @oqfktm) (#7848)
+- fixed irenambiente_it: read fortnightly week parity from the notes, not FlagFreq (thanks @wit3) (#7840)
+- fixed rir_no: fill months the monthly endpoint leaves empty (thanks @Nordranei) (#7836)
+- fixed belmont_wa_gov_au, casey_vic_gov_au, stirling_gov_uk and manningham_vic_gov_au: an exact address match or a picked suggestion no longer comes back ambiguous or unresolved (thanks @CRZTFR) (#7822, #7823, #7824, #7825)
+- fixed swansea_gov_uk: use the council's new GOSS-based recycling search, with a new optional `uprn` argument (thanks @timboothby) (#7830)
+- fixed phila_gov: cancel the secondary pickup in holiday weeks (thanks @costajohnt), and use Chrome impersonation to pass the CloudFront block (#7831, #7988)
+- fixed sandiego_gov: include the first collection block (Trash) (#7877)
+- fixed mags_de: raise instead of silently returning an empty schedule (#7879)
+- fixed sevenoaks_gov_uk: follow the council's new collection day page (#7889)
+- fixed poriruacity_govt_nz: follow the moved calendar script (#7916)
+- fixed rv_de: follow the move of the API to port 8080 (#7922)
+- fixed kolding_dk: parse the new `chainDetails*` API response (#7954)
+- fixed awista_kommunal_de: follow the move of Next.js chunks to `/_next/static/immutable/` (thanks @Zaunei) (#7962)
+- fixed gastrikeatervinnare_se: explain that the public search was removed instead of failing silently (thanks @emiltorp) (#7974)
+- fixed awb_bad_kreuznach_de: use curl_cffi to avoid a 403 (#7991)
+- fixed great_yarmouth_gov_uk: send the address record so the UPRN is applied (#7994)
+- fixed random_fetch_time_offset = 0 raising ValueError (#7796)
+
+### Other
+
+- docs(ics): replaced the dead Barrow and South Lakeland ICS docs with Westmorland & Furness (westmorlandandfurness_gov_uk); existing ICS entries are unaffected (#7742)
+- stuttgart_de: added @n42net as source owner (thanks @n42net) (#7856)
+- devcontainer: added the Node.js feature (thanks @CloCkWeRX) (#7838)
+- docs: BaseSource pipeline rule in the PR template, and aligned the agent guidance with the new source requirements (#7645, #7993)
+
 ## [2.35.0] - 2026-09-27
 
 A warm welcome and huge thank-you to our **first-time contributors** in this release:
