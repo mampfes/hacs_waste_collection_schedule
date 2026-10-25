@@ -249,6 +249,7 @@ If you already have enough information for your municipality/region, you are ver
 - [The Flinders Ranges Council](/doc/source/app_my_local_services_au.md) / frc.sa.gov.au/page.aspx
 - [The Hawkesbury City Council, Sydney](/doc/source/hawkesbury_nsw_gov_au.md) / hawkesbury.nsw.gov.au
 - [The Hills Shire Council, Sydney](/doc/source/thehills_nsw_gov_au.md) / thehills.nsw.gov.au
+- [Toowoomba Regional Council](/doc/source/tr_qld_gov_au.md) / tr.qld.gov.au
 - [Town of Bassendean](/doc/source/bassendean_wa_gov_au.md) / bassendean.wa.gov.au
 - [Town of Cambridge (WA)](/doc/source/cambridge_wa_gov_au.md) / cambridge.wa.gov.au
 - [Town of Victoria Park](/doc/source/victoriapark_wa_gov_au.md) / victoriapark.wa.gov.au
@@ -260,6 +261,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Wakefield Regional Council](/doc/source/app_my_local_services_au.md) / wakefieldrc.sa.gov.au
 - [Warrnambool City Council](/doc/source/warrnambool_vic_gov_au.md) / warrnambool.vic.gov.au
 - [WasteTrack (3Logix)](/doc/source/wastetrack_net.md) / v2.wastetrack.net
+- [Waverley Council](/doc/source/waverley_nsw_gov_au.md) / waverley.nsw.gov.au
 - [Wellington Shire Council](/doc/source/impactapps_com_au.md) / wellington.vic.gov.au
 - [Whitehorse City Council](/doc/source/whitehorse_vic_gov_au.md) / whitehorse.vic.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/My-Neighbourhood
@@ -2894,6 +2896,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stadt Aachen](/doc/source/abfallnavi_de.md) / aachen.de
 - [Stadt Ansbach](/doc/source/stadt_ansbach_de.md) / ansbach.de
 - [Stadt Arnsberg](/doc/source/c_trace_de.md) / arnsberg.de
+- [Stadt Bad Wildungen](/doc/source/bad_wildungen_de.md) / bad-wildungen.de
 - [Stadt Bayreuth](/doc/source/c_trace_de.md) / bayreuth.de
 - [Stadt Bünde](/doc/ics/buende_de.md) / buende.de
 - [Stadt Cottbus](/doc/source/abfallnavi_de.md) / cottbus.de
@@ -3167,7 +3170,7 @@ If you already have enough information for your municipality/region, you are ver
 
 - [AKSD Debrecen](/doc/source/aksd_hu.md) / aksd.hu
 - [Depónia Nonprofit Kft.](/doc/source/deponia_hu.md) / deponia.hu
-- [DTKH Nonprofit Kft. (Kiskunfélegyháza)](/doc/source/dtkh_hu.md) / dtkh.hu
+- [DTKH Nonprofit Kft.](/doc/source/dtkh_hu.md) / dtkh.hu
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
 - [Győri Hulladékgazdálkodási Nonprofit Kft.](/doc/source/gyhg_hu.md) / gyhg.hu
 - [MOHU Budapest](/doc/source/mohu_bp_hu.md) / mohubudapest.hu
@@ -4105,6 +4108,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Vigasio](/doc/source/siunet_it.md) / siunet.it
 - [Vignate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Vignate](/doc/source/siunet_it.md) / siunet.it
+- [Vigonza](/doc/source/etraspa_it.md) / comune.vigonza.pd.it
 - [Villa Cortese](/doc/source/siunet_it.md) / siunet.it
 - [Villa Faraldi](/doc/source/siunet_it.md) / siunet.it
 - [Villanterio](/doc/source/junker_app.md) / junker.app
@@ -4378,6 +4382,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Kluczbork](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kolbudy](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kozy](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Kołbaskowo](/doc/source/kolbaskowo_pl.md) / kolbaskowo.pl
 - [Gmina Krotoszyce](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kruszwica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Krzanowice](/doc/source/sims_pl.md) / sisms.pl
@@ -4402,6 +4407,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Osiek](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Osielsko](/doc/source/osielsko_pl.md) / osielsko.pl
 - [Gmina Ostrowiec Świętokrzyski](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Oświęcim](/doc/source/gmina_oswiecim_pl.md) / zuk.oswiecim.pl
 - [Gmina Paczków](/doc/source/paczkow_pl.md) / paczkow.pl
 - [Gmina Pajęczno](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Pawłowice](/doc/source/sims_pl.md) / sisms.pl
@@ -4451,6 +4457,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Świdnica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Świecie](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Żmigród](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Żukowo (ELWOZ ECO)](/doc/source/elwozeco_pl.md) / elwozeco.pl
 - [Gminne Przedsiębiorstwo Komunalne Sp. z o.o. w Skarszewach](/doc/source/sims_pl.md) / sisms.pl
 - [GOAP Poznań](/doc/source/goap_poznan_pl.md) / goap.poznan.pl
 - [Gorzków](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
@@ -4471,6 +4478,7 @@ If you already have enough information for your municipality/region, you are ver
 - [KOMUS](/doc/source/sims_pl.md) / sisms.pl
 - [Koziegłowy/Objezierze/Oborniki](/doc/source/sepan_remondis_pl.md) / sepan.remondis.pl
 - [Krzyżanowice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
+- [Legionowo](/doc/source/legionowo_pl.md) / legionowo.pl/harmonogramy-odpady
 - [Legnica](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Majkowice](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Miasto i Gmina Morawica](/doc/source/sims_pl.md) / sisms.pl
@@ -4565,6 +4573,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Prodnik](/doc/source/prodnik_si.md) / prodnik.si
 - [Publicus d.o.o.](/doc/ics/publicus_si.md) / beta.smetar.si
 - [PUP Saubermacher](/doc/source/pup_si.md) / pup-saubermacher.si
+- [Saubermacher - Komunala](/doc/source/saubermacher_komunala_si.md) / saubermacher-komunala.si
 - [Simbio](/doc/source/simbio_si.md) / simbio.si
 - [Snaga Maribor](/doc/source/snaga_mb_si.md) / snaga-mb.si
 - [Čisto mesto](/doc/source/cistomesto_si.md) / cistomesto.si
@@ -4594,7 +4603,7 @@ If you already have enough information for your municipality/region, you are ver
 - [EDPEvent - Multi Source](/doc/source/edpevent_se.md) / edpevent.se
 - [Falu Energi & Vatten (FEV)](/doc/source/fev_se.md) / fev.se
 - [Finspång](/doc/source/avfallsapp_se.md) / finspang.se
-- [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / gastrikeatervinnare.se
+- [Gästrike Återvinnare](/doc/source/gastrikeatervinnare_se.md) / minasidor.gastrikeatervinnare.se
 - [Hedemora Energi](/doc/source/hedemora_energi_se.md) / hedemoraenergi.se
 - [Herrljunga & Vårgårda kommun](/doc/source/edpevent_se.md) / remondisrecycling.se/hushallsavfall/herrljunga-vargarda
 - [Hudiksvall](/doc/source/hudiksvall_se.md) / hudiksvall.se
@@ -5299,6 +5308,7 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Plano](/doc/source/plano_gov.md) / plano.gov/630/Residential-Collection-Schedules
 - [City of Raleigh, NC](/doc/ics/recollect.md) / raleighnc.gov/landfill-and-reuse/services/raleigh-reuse-web-tool-and-mobile-app
 - [City of Roseville, CA](/doc/ics/recollect.md) / roseville.ca.gov/environmental_utilities/at_your_service/trash_recycling/index.php
+- [City of Saint Paul, MN](/doc/source/stpaul_gov.md) / stpaul.gov/departments/public-works/garbage-and-recycling
 - [City of San Antonio](/doc/source/sanantonio_gov.md) / sa.gov/Directory/Departments/SWMD/Garbage/My-Collection-Day
 - [City of San Diego](/doc/source/sandiego_gov.md) / sandiego.gov
 - [City of Stamford, CT](/doc/source/stamford_ct_us.md) / stamfordct.gov/government/operations/recycling-and-sanitation/about/recycling-and-garbage-schedule

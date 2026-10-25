@@ -76,9 +76,15 @@ def cell_text(chars: list[Any]) -> str:
     """Join the characters of one cell (pdfminer ``LTChar``) into single-spaced text.
 
     Characters are read top to bottom, then left to right; a change of line or a
-    horizontal gap starts a new word.
+    horizontal gap starts a new word. Whitespace glyphs are dropped: an Excel
+    PDF paints a cell's padding as space characters that overlap the real
+    glyphs, and sorting those by x splits a day number ("11" comes out "1 1").
+    A real word space is still a gap between the glyphs on either side.
     """
-    ordered = sorted(chars, key=lambda c: (-round(c.y0 / _LINE_HEIGHT), c.x0))
+    ordered = sorted(
+        (char for char in chars if not char.get_text().isspace()),
+        key=lambda c: (-round(c.y0 / _LINE_HEIGHT), c.x0),
+    )
     out = ""
     prev = None
     for char in ordered:

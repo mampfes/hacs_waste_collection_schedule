@@ -85,6 +85,10 @@ Notes:
 - **There is no `__init__`.** `BaseSource.__init__` takes the declared `PARAMS` as keyword arguments, applies their defaults, validates them, and stores the result on `self.params`. Restating that in the source adds a second place for the argument list to drift from `PARAMS`, so `test_pipeline_sources_dont_redeclare_init` rejects an `__init__` that only forwards its arguments to `super()`. Write one only when it does real work.
 - The request is shaped on the retriever. `HttpGetRetriever(params=...)` takes a callable receiving the params by name (end it with `**_` so it ignores the ones it does not use). Declaring no `retrieve` at all gives the zero-config GET, which reads `API_URL`, `self._params`, `self._headers` and `TIMEOUT` from the source; prefer the configured retriever, since setting `self._params` needs an `__init__`.
 - No icons. The icon comes from the canonical `WasteType`, not from a per-source map.
+- The shared HTTP session impersonates Chrome by default. Declare
+  `IMPERSONATE = None` only when live verification shows the provider rejects
+  that fingerprint (see `blackpool_gov_uk`); this applies to lookup and schedule
+  requests alike. Other sources keep the default browser session.
 
 ## Building blocks
 
@@ -764,7 +768,7 @@ recording, which is why the correspondence is gated rather than trusted:
 
 | gate | what it catches |
 |---|---|
-| `test_pipeline_sources_ship_a_cassette` | a source with no recording at all (backlog: `SOURCES_AWAITING_CASSETTE`) |
+| `test_pipeline_sources_ship_a_cassette` | a source with no recording at all (backlog: `SOURCES_AWAITING_CASSETTE`; permanent privacy exceptions: `SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY`) |
 | `test_every_test_case_ships_a_cassette` | a *case* with no recording, in a source that has others (backlog: `CASES_AWAITING_CASSETTE`) |
 | `test_the_cassette_backlog_is_not_stale` / `..._source_cassette_backlog_is_not_stale` | a backlog entry that has since been recorded |
 | `test_no_cassettes_without_a_source` | recordings left behind by a deleted source |

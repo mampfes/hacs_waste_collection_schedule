@@ -1,104 +1,84 @@
-import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup, Tag
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
-
-TITLE = "City of Greater Geelong"
-DESCRIPTION = "Source City of Greater Geelong rubbish collection"
-URL = "https://www.geelongcity.vic.gov.au/"
-TEST_CASES = {
-    "155 Mercer Street Geelong 3220": {"address": "155 Mercer Street Geelong 3220"},
-    "1/271 Roslyn Road Highton 3216": {"address": "1/271 Roslyn Road Highton 3216"},
-    "1a Orton Street Ocean Grove 3226": {"address": "1a Orton Street Ocean Grove 3226"},
-    "100-102 Gheringhap Street Geelong 3220": {
-        "address": "100-102 Gheringhap Street Geelong 3220"
-    },
-}
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.transformers import HtmlTransformer
 
 API_URL = "https://www.geelongaustralia.com.au/recycling/calendar/default.aspx"
-ICON_MAP = {
-    "Garbage": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Green waste": Icons.GARDEN,
-}
-
-SUBMIT_ARGS = {
-    "ctl00$ContentBody$BTN_SEARCH": "Search",
-}
-
-ADDRESS_FIELD = "ctl00$ContentBody$TB_SEARCH"
+_STATE_FIELDS = ("__VIEWSTATE", "__EVENTVALIDATION")
 
 
-class Source:
-    def __init__(
-        self, address: str
-    ):  # argX correspond to the args dict in the source configuration
-        self._address = address
-        self._submit_args = SUBMIT_ARGS.copy()
-        self._submit_args[ADDRESS_FIELD] = f"{self._address}"
+def _form(response, **_):
+    fields = retrievers.form_inputs(response.text, required=_STATE_FIELDS)
+    return response.url, {name: fields[name] for name in _STATE_FIELDS}
 
-    def fetch(self):
-        s = requests.Session()
-        r = s.get(API_URL)
-        r.raise_for_status()
-        post_url = r.url
 
-        soup: BeautifulSoup = BeautifulSoup(r.text, "html.parser")
+def _bin_type(element):
+    heading = element.find_previous("h3", class_="heading-icon")
+    return heading.get_text().split(" (", 1)[0] if heading is not None else ""
 
-        viewstate = soup.find("input", id="__VIEWSTATE")
-        eventvalidation = soup.find("input", id="__EVENTVALIDATION")
 
-        if (
-            not viewstate
-            or not isinstance(viewstate, Tag)
-            or not eventvalidation
-            or not isinstance(eventvalidation, Tag)
-        ):
-            raise Exception("could not get valid data from geelongaustralia.com.au")
+@final
+class Source(BaseSource):
+    TITLE = "City of Greater Geelong"
+    DESCRIPTION = "Source City of Greater Geelong rubbish collection"
+    URL = "https://www.geelongcity.vic.gov.au/"
+    COUNTRY = "au"
 
-        self._submit_args["__VIEWSTATE"] = str(viewstate["value"])
+    TEST_CASES: ClassVar[dict] = {
+        "155 Mercer Street Geelong 3220": {"address": "155 Mercer Street Geelong 3220"},
+        "1/271 Roslyn Road Highton 3216": {"address": "1/271 Roslyn Road Highton 3216"},
+        "1a Orton Street Ocean Grove 3226": {
+            "address": "1a Orton Street Ocean Grove 3226"
+        },
+        "100-102 Gheringhap Street Geelong 3220": {
+            "address": "100-102 Gheringhap Street Geelong 3220"
+        },
+    }
+    PARAMS = (street_address(),)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your address exactly as accepted by the council's calendar search: "
+            "https://www.geelongaustralia.com.au/recycling/calendar.aspx"
+            ". Since the v3 pipeline migration, waste types use canonical, localised "
+            "names. Update filters, automations and customisations using the old labels."
+        ),
+    }
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.GARDEN_WASTE]
 
-        self._submit_args["__EVENTVALIDATION"] = str(eventvalidation["value"])
-
-        r = s.post(post_url, data=self._submit_args)
-        r.raise_for_status()
-
-        if "We couldn't find a match for" in r.text:
-            # The council answered, and its answer is that this address is not
-            # in its register. Raising a bare Exception made that a server
-            # error to every caller; SourceArgumentNotFound names the argument
-            # at fault so it can be reported against the field.
-            raise SourceArgumentNotFound(
-                "address",
-                self._address,
-                "No collection calendars are available for this property. "
-                f"Check the address against the council's own search ({API_URL}).",
-            )
-
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        div = soup.find("div", id="ctl00_ContentBody_P_CALENDAR").find(
-            "div", class_="read-text"
-        )
-
-        bins = div.find_all("h3", class_="heading-icon")
-        next4s = div.find_all("ul")
-        entries = []  # List that holds collection schedule
-
-        for bin, next4 in zip(bins, next4s, strict=False):
-            t = bin.text.split(" (", 1)[0]
-            dates = next4.find_all("li")
-            for date in dates:
-                entries.append(
-                    Collection(
-                        date=datetime.datetime.strptime(
-                            date.text.strip(), "%A, %d %B %Y"
-                        ).date(),
-                        t=t,  # Collection type
-                        icon=ICON_MAP.get(t),  # Collection icon
-                    )
-                )
-
-        return entries
+    retrieve = retrievers.Request(
+        lambda form, **_: form[0],
+        method="POST",
+        before=(retrievers.Lookup(API_URL, pick=_form),),
+        data=lambda form, address, **_: {
+            "ctl00$ContentBody$BTN_SEARCH": "Search",
+            "ctl00$ContentBody$TB_SEARCH": address,
+            **form[1],
+        },
+    )
+    parse = parsers.ArgumentGuard(
+        parsers.HtmlParser(
+            "#ctl00_ContentBody_P_CALENDAR .read-text ul li",
+            require=["#ctl00_ContentBody_P_CALENDAR .read-text"],
+        ),
+        argument="address",
+        matches=lambda response, source: (
+            "We couldn't find a match for" not in response.text
+        ),
+        hint=(
+            "No collection calendars are available for this property. Check the "
+            f"address against the council's own search ({API_URL})."
+        ),
+    )
+    transform = HtmlTransformer(
+        date_getter=lambda element: element.get_text(strip=True),
+        type_getter=_bin_type,
+        parse_date=date_parsers.for_format("%A, %d %B %Y"),
+        type_value_map={
+            "Garbage": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Green waste": wt.GARDEN_WASTE,
+        },
+    )
