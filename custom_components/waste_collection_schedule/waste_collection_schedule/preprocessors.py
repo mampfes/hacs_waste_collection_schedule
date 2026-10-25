@@ -1932,6 +1932,11 @@ _EN_MONTH_ABBREVIATIONS = {
 }
 
 
+# A grid cell's word: one day ("5", "5,", "5.") or several run together
+# ("2,16,30", "2.,"), but never a year or a street number such as "1/A".
+_GRID_DAYS = re.compile(r"\d{1,2}\.?(?:,\d{1,2}\.?)*,?")
+
+
 class GridBlock(NamedTuple):
     """One block of a :class:`PdfRoundMonthGrid` table.
 
@@ -1968,7 +1973,8 @@ class PdfRoundMonthGrid(Preprocessor["list[PdfWordLayout]", GridBlock]):
         )
         preprocess = staticmethod(_select)   # pick the block for the address
 
-    Empty cells (a seasonal round) are simply missing, so a day is not placed
+    A cell's word may carry one day ("5", "5,", "12.") or several run together
+    ("3,17,31"). Empty cells (a seasonal round) are simply missing, so a day is not placed
     by its order in the row but by position: it belongs to the nearest row
     label (vertically, within ``row_tolerance``) and the nearest month column
     (horizontally). The header is the topmost row holding all twelve months
@@ -2140,9 +2146,9 @@ class PdfRoundMonthGrid(Preprocessor["list[PdfWordLayout]", GridBlock]):
         rows: list[list[tuple[datetime.date, str]]] = [[] for _ in tops]
 
         for word in words:
-            day = word.text.strip(",")
+            days = _GRID_DAYS.fullmatch(word.text)
             if not (
-                day.isdigit()
+                days
                 and word.x > first_x - self._day_margin
                 and floor < word.y < header_y - self._header_gap
             ):
@@ -2155,16 +2161,17 @@ class PdfRoundMonthGrid(Preprocessor["list[PdfWordLayout]", GridBlock]):
             ):
                 continue
             _, month = min(months, key=lambda column: abs(column[0] - word.x))
-            try:
-                collection_date = datetime.date(year, month, int(day))
-            except ValueError:
-                response_shape.expect(
-                    False,
-                    source_name=response_shape.source_name(source),
-                    detail=f"day {day} binned into month {month}",
-                )
-                continue
-            rows[block_of[index]].append((collection_date, label))
+            for day in re.findall(r"\d+", days.group(0)):
+                try:
+                    collection_date = datetime.date(year, month, int(day))
+                except ValueError:
+                    response_shape.expect(
+                        False,
+                        source_name=response_shape.source_name(source),
+                        detail=f"day {day} binned into month {month}",
+                    )
+                    continue
+                rows[block_of[index]].append((collection_date, label))
 
         return [
             GridBlock(
