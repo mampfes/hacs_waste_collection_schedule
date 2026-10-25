@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-10-25",
+  "interactions": [
+    {
+      "key": "GET https://maps.tr.qld.gov.au/arcgis/rest/services/External/External_TRMaps/MapServer/1/query 0640db7a86",
+      "method": "GET",
+      "url": "https://maps.tr.qld.gov.au/arcgis/rest/services/External/External_TRMaps/MapServer/1/query",
+      "final_url": "https://maps.tr.qld.gov.au/arcgis/rest/services/External/External_TRMaps/MapServer/1/query?outFields=FormattedAddress%2CGarbage%2CRecycleBinWeek%2CRecycleRunDay%2CGreenRunWeek%2CGreenRunDay&returnGeometry=false&f=json&where=FormattedAddress+LIKE+%272+RUTHVEN+STREET_HARLAXTON+QLD+%25%27&resultRecordCount=1",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"FormattedAddress,Garbage,RecycleBinWeek,RecycleRunDay,GreenRunWeek,GreenRunDay\"],[\"resultRecordCount\",\"1\"],[\"returnGeometry\",\"false\"],[\"where\",\"FormattedAddress LIKE '2 RUTHVEN STREET_HARLAXTON QLD %'\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "332",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"428ff507\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": "AGS_ROLES=\"419jqfa+uOZgYod4xPOQ8Q==\"; Version=1; Max-Age=60; Expires=Sun, 25 Oct 2026 13:41:24 GMT; Path=/arcgis/rest; Secure; HttpOnly",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 25 Oct 2026 13:40:23 GMT"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiU3RyZWV0Tm8iLCJmaWVsZEFsaWFzZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IkZvcm1hdHRlZCBBZGRyZXNzIiwiR2FyYmFnZSI6IkdhcmJhZ2UiLCJSZWN5Y2xlQmluV2VlayI6IlJlY3ljbGUgQmluIFdlZWsiLCJSZWN5Y2xlUnVuRGF5IjoiUmVjeWNsZSBSdW4gRGF5IiwiR3JlZW5SdW5XZWVrIjoiR3JlZW4gUnVuIFdlZWsiLCJHcmVlblJ1bkRheSI6IkdyZWVuIFJ1biBEYXkifSwiZmllbGRzIjpbeyJuYW1lIjoiRm9ybWF0dGVkQWRkcmVzcyIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJGb3JtYXR0ZWQgQWRkcmVzcyIsImxlbmd0aCI6MTUwfSx7Im5hbWUiOiJHYXJiYWdlIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkdhcmJhZ2UiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlJlY3ljbGVCaW5XZWVrIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlJlY3ljbGUgQmluIFdlZWsiLCJsZW5ndGgiOjJ9LHsibmFtZSI6IlJlY3ljbGVSdW5EYXkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUmVjeWNsZSBSdW4gRGF5IiwibGVuZ3RoIjo2fSx7Im5hbWUiOiJHcmVlblJ1bldlZWsiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiR3JlZW4gUnVuIFdlZWsiLCJsZW5ndGgiOjZ9LHsibmFtZSI6IkdyZWVuUnVuRGF5IiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkdyZWVuIFJ1biBEYXkiLCJsZW5ndGgiOjZ9XSwiZmVhdHVyZXMiOlt7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjIgUnV0aHZlbiBTdHJlZXRcckhBUkxBWFRPTiBRTEQgNDM1MCIsIkdhcmJhZ2UiOiJUdWUiLCJSZWN5Y2xlQmluV2VlayI6IjEiLCJSZWN5Y2xlUnVuRGF5IjoiVHVlIiwiR3JlZW5SdW5XZWVrIjoiMiIsIkdyZWVuUnVuRGF5IjoiVHVlIn19XX0="
+    }
+  ]
+}

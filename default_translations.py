@@ -2,6 +2,23 @@ import json
 from collections.abc import Iterable
 
 DEFAULT_PARAM_TRANSLATIONS = {
+    "sv": {
+        "address": "Adress",
+        "bill_number": "Fakturanummer",
+        "calendar_title": "Kalendernamn",
+        "city": "Ort",
+        "district": "Distrikt",
+        "house_number": "Husnummer",
+        "municipality": "Kommun",
+        "password": "Lösenord",
+        "postcode": "Postnummer",
+        "street": "Gata",
+        "town": "Ort",
+        "types": "Avfallstyper",
+        "url": "URL",
+        "username": "Användarnamn",
+        "zone": "Zon",
+    },
     "fi": {
         "address": "Osoite",
         "bill_number": "Laskun numero",
@@ -720,6 +737,9 @@ DEFAULT_PARAM_DESCRIPTIONS = {
     },
     "nl": {
         "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar https://www.findmyaddress.co.uk/ te gaan en je adresgegevens in te voeren."
+    },
+    "sv": {
+        "uprn": "Ett enkelt sätt att hitta ditt Unique Property Reference Number (UPRN) är att gå till https://www.findmyaddress.co.uk/ och ange dina adressuppgifter.",
     },
 }
 

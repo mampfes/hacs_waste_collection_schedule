@@ -15,7 +15,7 @@ The two shapes below are what a source on this API composes: the parser that
 picks the matched property out of AIS, and the preprocessor that applies the
 city's published holiday rule to already-projected rows::
 
-    retrieve = retrievers.LegacyHttpGetRetriever(url=..., headers=PhilaGov.HEADERS)
+    retrieve = retrievers.HttpGetRetriever(url=...)
     parse = PhilaGov.AddressPropertiesParser()
     preprocess = Compose(
         RecurrenceExpander(_describe),
@@ -23,8 +23,10 @@ city's published holiday rule to already-projected rows::
         Deduplicate(),
     )
 
-Plain ``requests`` rather than the shared curl_cffi session: api.phila.gov
-answers the impersonated-Chrome client with a 202 bot challenge.
+api.phila.gov sits behind CloudFront, which answers non-browser TLS clients
+with a 403, so both endpoints are fetched through the curl_cffi Chrome session.
+A fixed ``user-agent`` header must not be sent: it overrides the impersonated
+one and brings the block back.
 """
 
 from __future__ import annotations
@@ -32,7 +34,7 @@ from __future__ import annotations
 import datetime
 from typing import TYPE_CHECKING, Any
 
-import requests
+from curl_cffi import requests
 
 from waste_collection_schedule import date_parsers
 from waste_collection_schedule.preprocessors import Preprocessor
@@ -45,7 +47,6 @@ if TYPE_CHECKING:
 
 ADDRESS_URL = "https://api.phila.gov/ais/v1/addresses/{address}"
 HOLIDAYS_URL = "https://api.phila.gov/phila/trashday/v1"
-HEADERS = {"user-agent": "Mozilla/5.0"}
 
 _parse_iso = date_parsers.for_format("%Y-%m-%d")
 
@@ -69,11 +70,13 @@ class AddressPropertiesParser:
 def observed_holidays(
     *,
     url: str = HOLIDAYS_URL,
-    headers: Mapping[str, str] = HEADERS,
     timeout: int = 30,
+    session: Any = None,
 ) -> list[datetime.date]:
     """Every date the city publishes as an observed holiday."""
-    response = requests.get(url, headers=dict(headers), timeout=timeout)
+    session = session or requests.Session(impersonate="chrome")
+    response = session.get(url, timeout=timeout)
+    response.raise_for_status()
     return [_parse_iso(item["start_date"]) for item in response.json()["holidays"]]
 
 
@@ -113,7 +116,6 @@ class HolidayCascadeShift(Preprocessor):
 
     Args:
         url: the observed-holiday feed.
-        headers: headers for that request.
         timeout: request timeout in seconds.
         weekdays_only: ignore a holiday falling at a weekend (default True).
             Nothing is collected then, so such a holiday moves nothing, and
@@ -127,13 +129,11 @@ class HolidayCascadeShift(Preprocessor):
         self,
         *,
         url: str = HOLIDAYS_URL,
-        headers: Mapping[str, str] = HEADERS,
         timeout: int = 30,
         weekdays_only: bool = True,
         cancel_in_holiday_weeks: Collection[str] = (),
     ):
         self._url = url
-        self._headers = headers
         self._timeout = timeout
         self._weekdays_only = weekdays_only
         self._cancel_in_holiday_weeks = frozenset(cancel_in_holiday_weeks)
@@ -142,7 +142,9 @@ class HolidayCascadeShift(Preprocessor):
         self, records: Any, source: BaseSource | None = None
     ) -> Iterable[tuple[datetime.date, str]]:
         holidays = observed_holidays(
-            url=self._url, headers=self._headers, timeout=self._timeout
+            url=self._url,
+            timeout=self._timeout,
+            session=getattr(source, "session", None),
         )
         if self._weekdays_only:
             holidays = [h for h in holidays if h.weekday() < 5]

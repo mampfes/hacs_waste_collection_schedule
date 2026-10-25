@@ -1,6 +1,6 @@
 # Gästrike Återvinnare
 
-Support for schedules provided by [Gästrike Återvinnare](https://gastrikeatervinnare.se/).
+Support for schedules provided by [Gästrike Återvinnare](https://minasidor.gastrikeatervinnare.se/).
 
 Source for Gästrike Återvinnare waste collection
 
@@ -11,17 +11,21 @@ waste_collection_schedule:
   sources:
     - name: gastrikeatervinnare_se
       args:
-        street: STREET
-        city: CITY
+        customer_number: CUSTOMER_NUMBER
+        password: PASSWORD
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
-**street**  
+**customer_number**  
 *(string) (required)*
 
-**city**  
+**password**  
 *(string) (required)*
+
+**address**  
+*(string) (optional)*
 
 ## Example
 
@@ -30,10 +34,10 @@ waste_collection_schedule:
   sources:
     - name: gastrikeatervinnare_se
       args:
-        street: "Nedre V\xE4gen 52"
-        city: "\xC5rsunda"
+        customer_number: '!secret gastrikeatervinnare_se_customer_number'
+        password: '!secret gastrikeatervinnare_se_password'
 ```
 
 ## How to get the source arguments
 
-Enter your street name with house number and your city exactly as shown on https://gastrikeatervinnare.se/ when you search for your collection days.
+Gästrike Återvinnare no longer publishes collection days openly; they are shown on Mina sidor (https://minasidor.gastrikeatervinnare.se) after login. Enter the customer number and password you log in with there (BankID login is not supported: create a password via 'Glömt lösenord' on the login page). If the account has bins at several addresses, enter one as shown on Mina sidor, e.g. 'Storgatan 1, GÄVLE'; otherwise leave the address empty.

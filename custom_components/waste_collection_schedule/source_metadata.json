@@ -110,7 +110,7 @@
   "byron_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/byron_nsw_gov_au.md",
     "howto": {
-      "en": "Enter the full service address used by Byron Shire Council, for example '120 Jonson St, Byron Bay'."
+      "en": "This source is deprecated. Use recyclecoach_com with street set to your address, project_id 592 and district_id BYSC. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -230,7 +230,9 @@
   },
   "geelongaustralia_com_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/geelongaustralia_com_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address exactly as accepted by the council's calendar search: https://www.geelongaustralia.com.au/recycling/calendar.aspx. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "greatershepparton_com_au": {
@@ -865,6 +867,14 @@
     "howto": {},
     "urls": {}
   },
+  "tr_qld_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tr_qld_gov_au.md",
+    "howto": {
+      "de": "Adresse mit ausgeschriebenem Straßentyp (z. B. '191 Herries Street', Wohnungen als '2/86C Hogg Street') und den Ort (z. B. 'Toowoomba City') eingeben, wie sie die Karte 'Find your bin day' der Stadt anzeigt. Eine Adresse aus der Vorschlagsliste kann komplett übernommen werden. Die Grünabfalltonne ist ein optionaler Dienst: die Termine sind die der Grünabfalltour des Gebiets, unabhängig davon, ob eine Grünabfalltonne vorhanden ist.",
+      "en": "Enter the street address with the street type written out (e.g. '191 Herries Street', units as '2/86C Hogg Street') and the suburb (e.g. 'Toowoomba City'), as the council's 'Find your bin day' map shows them. An address from the suggestion list may be pasted whole ('191 Herries Street, TOOWOOMBA CITY QLD 4350'). Green waste is an optional service: the dates are those of your area's green waste round, whether or not you have a green waste bin."
+    },
+    "urls": {}
+  },
   "bassendean_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bassendean_wa_gov_au.md",
     "howto": {
@@ -913,6 +923,13 @@
   "warrnambool_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warrnambool_vic_gov_au.md",
     "howto": {},
+    "urls": {}
+  },
+  "waverley_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/waverley_nsw_gov_au.md",
+    "howto": {
+      "en": "Enter your address as the council's 'Find your collection day' search lists it, e.g. '1 Aboukir Street Dover Heights' or a unit as '2/585 Old South Head Road Rose Bay' (state and postcode are optional). A whole building's address works when all its units share one waste zone."
+    },
     "urls": {}
   },
   "whitehorse_vic_gov_au": {
@@ -3725,6 +3742,14 @@
     },
     "urls": {}
   },
+  "bad_wildungen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bad_wildungen_de.md",
+    "howto": {
+      "de": "Straße oder, außerhalb der Kernstadt, Stadtteil (z. B. Reinhardshausen) so, wie sie im Straßenverzeichnis des Abfallkalenders (PDF auf bad-wildungen.de) stehen. Ist eine Straße nach Hausnummern aufgeteilt, den Eintrag mit den Hausnummern wählen, z. B. 'Königsquellenweg 12, 14, 16'.",
+      "en": "Enter your street or, outside the core town, your Stadtteil (e.g. Reinhardshausen) as printed in the street directory of the city's waste calendar (Abfallkalender PDF on bad-wildungen.de). Where a street is split by house numbers, use the entry with the numbers, e.g. 'Königsquellenweg 12, 14, 16'."
+    },
+    "urls": {}
+  },
   "ics_buende_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/buende_de.md",
     "howto": {
@@ -4153,7 +4178,7 @@
   "dtkh_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dtkh_hu.md",
     "howto": {
-      "en": "Pick the weekday your general waste (vegyes hulladék) is collected; recyclables (szelektív) are collected every other week on the same day (Hétfő = Monday, Kedd = Tuesday, Szerda = Wednesday, Csütörtök = Thursday, Péntek = Friday). Green waste (zöldhulladék) is collected Wednesday to Friday by street: enter your street as printed in the street list (Zöld utcajegyzék) on the back of the yearly calendar at https://dtkh.hu/letoltheto-dokumentumok-kiskunfelegyhaza, e.g. \"Petőfi Sándor utca\". Where a street is split by house numbers, use the full entry, e.g. \"Nádasdy utca 1-5, 2-10\"; an ambiguous street lists the possible entries. Leave the street empty to skip green waste."
+      "en": "Enter your settlement as listed at https://dtkh.hu/telepules, e.g. \"Kiskunfélegyháza\". Where the yearly calendar (Hulladéknaptár) prints one table per collection weekday or per area, also enter yours as district: the weekday your general waste (vegyes hulladék) is collected (Hétfő = Monday, Kedd = Tuesday, Szerda = Wednesday, Csütörtök = Thursday, Péntek = Friday; either name works), or the area as printed, e.g. \"Lakitelek - üdülő\"; a wrong or missing district lists the possible ones. Towns that print a green-waste street list (Zöld utcajegyzék, e.g. Kiskunfélegyháza) collect green waste by street: enter your street as printed there, e.g. \"Petőfi Sándor utca\", or the full entry where a street is split by house numbers (\"Nádasdy utca 1-5, 2-10\"); leave it empty to skip green waste. Not supported: calendars without the month table (Kecskemét, Szeged, Kalocsa, Mindszent) or with a misprinted one (Kiskunhalas, Sándorfalva, Újszentiván), and Úri, whose calendar is not a PDF."
     },
     "urls": {}
   },
@@ -4297,8 +4322,8 @@
   "etraspa_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/etraspa_it.md",
     "howto": {
-      "en": "Choose your municipality and its collection zone as printed on the ETRA calendar: A or B in San Martino di Lupari, C or D in Bassano del Grappa.",
-      "it": "Scegli il comune e la zona di raccolta indicata sul calendario ETRA: A o B a San Martino di Lupari, C o D a Bassano del Grappa."
+      "en": "Choose your municipality and its collection zone as printed on the ETRA calendar: A or B in San Martino di Lupari, C or D in Bassano del Grappa, 1 to 4 in Vigonza (see the street list 'Il territorio' at the end of the calendar: zones 1 and 2 are zone A, 3 and 4 zone B, and the number also picks your glass round).",
+      "it": "Scegli il comune e la zona di raccolta indicata sul calendario ETRA: A o B a San Martino di Lupari, C o D a Bassano del Grappa, da 1 a 4 a Vigonza (vedi l'elenco delle vie 'Il territorio' in fondo al calendario: le zone 1 e 2 sono la zona A, le zone 3 e 4 la zona B, e il numero indica anche il giro del vetro)."
     },
     "urls": {}
   },
@@ -4337,6 +4362,14 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ecolan_it.md",
     "howto": {
       "en": "Use the Google Calendar ICS feed URL below. This calendar covers the Lanciano area served by Ecolan.\n"
+    },
+    "urls": {}
+  },
+  "gelsiambiente_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gelsiambiente_it.md",
+    "howto": {
+      "en": "Giussano is split into zones A, B and C by street. Find your street in the zone lists on page 2 and 3 of the municipal calendar (https://www.gelsiambiente.it/servizi/calendario-dei-servizi/) and select that zone.",
+      "it": "Giussano è divisa in zone A, B e C in base alla via. Trova la tua via negli elenchi delle zone alle pagine 2 e 3 del calendario comunale (https://www.gelsiambiente.it/servizi/calendario-dei-servizi/) e seleziona quella zona."
     },
     "urls": {}
   },
@@ -4411,7 +4444,9 @@
   },
   "silea_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/silea_it.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your municipality and street as listed at https://www.sileaspa.it. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "araccolta_it": {
@@ -4773,7 +4808,9 @@
   },
   "poriruacity_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/poriruacity_govt_nz.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address as shown at https://poriruacity.govt.nz/services/rubbish-and-recycling/recycling-calendar/. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "rotorua_lakes_council_nz": {
@@ -5034,6 +5071,13 @@
     },
     "urls": {}
   },
+  "kolbaskowo_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kolbaskowo_pl.md",
+    "howto": {
+      "en": "Enter your village as named on https://kolbaskowo.pl/harmonogramy-odbioru-odpadow-dla-zabudowy-jednorodzinnej.html (e.g. 'Kurów' or 'Kołbaskowo'). 'Kurów' is the schedule for the village except ul. Na Klifie and ul. Wichrowe Wzgórza; set street to one of those (e.g. 'Na Klifie') for their file. For Będargowo 50-57, Siadło Dolne 32, 32a or 34-63, or Stobno 52-54 (Małe Stobno), also enter the house number. You can instead paste the full link title. This covers single-family housing only."
+    },
+    "urls": {}
+  },
   "maslow_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maslow_pl.md",
     "howto": {
@@ -5057,6 +5101,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/osielsko_pl.md",
     "howto": {
       "en": "Enter your collection area number (rejon, 1-9) as listed on https://osielsko.pl/odpady-komunalne.html (e.g. '8' for Żołędowo, Strzelce Leśne and Bożenkowo). Tick 'multi_family' for a multi-family building (zabudowa wielorodzinna)."
+    },
+    "urls": {}
+  },
+  "gmina_oswiecim_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_oswiecim_pl.md",
+    "howto": {
+      "en": "On https://zuk.oswiecim.pl/harmonogramy open the Gmina Oświęcim schedule for detached houses (zabudowa jednorodzinna). Enter your village (sołectwo, e.g. 'Brzezinka') and your street as printed there (e.g. 'Niwy'). Ofiar Faszyzmu is split by house number: 14-18 is a separate mixed-waste round, so enter the house number too. Bulky waste and kitchen bio-waste are collected on the printed days only after you book them with ZUK. Multi-family buildings and the town of Oświęcim are not covered."
     },
     "urls": {}
   },
@@ -5099,6 +5150,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_sroda_slaska_pl.md",
     "howto": {
       "en": "Visit https://www.com-d.pl/komunalne/harm/sroda-slaska, select your locality or Środa Śląska district, and enter the final part of its URL as `location`. `property_type` is `all` (default), `single_family` or `multi_family`; select the dwelling type when the provider publishes separate schedules."
+    },
+    "urls": {}
+  },
+  "elwozeco_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/elwozeco_pl.md",
+    "howto": {
+      "en": "ELWOZ ECO publishes the Gmina Żukowo household calendars at https://elwozeco.pl/harmonogram/ (one PDF per sector). Enter the village name as printed, for example Skrzeszewo. In Żukowo and Banino the calendar is split by street: enter the street as printed, including the house-number range when the PDF shows one (each range is its own round). Żukowo on its own matches the numbered Żukowo zones and the multifamily (WIELORODZINNE) round, so the error lists those headings. The same happens for a name printed on more than one page, such as Barniewice or Dąbrowa. Przyjaźń on its own is the village calendar; multifamily buildings in Przyjaźń, Babi Dół and Żukowo use WIELORODZINNE. Business (Firmy) calendars are not included."
     },
     "urls": {}
   },
@@ -5154,6 +5212,13 @@
   "sepan_remondis_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sepan_remondis_pl.md",
     "howto": {},
+    "urls": {}
+  },
+  "legionowo_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/legionowo_pl.md",
+    "howto": {
+      "en": "Enter your street as listed on https://legionowo.pl/harmonogramy-odpady/ (for example 'Senatorska'). Where a street is split by house number, include the range exactly as shown, such as 'Aleja Legionów do nr 75' or 'Aleja Legionów od nr 76'. Accents and a leading 'ul.' are ignored."
+    },
     "urls": {}
   },
   "zywiec_pl": {
@@ -5354,6 +5419,14 @@
     },
     "urls": {}
   },
+  "saubermacher_komunala_si": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/saubermacher_komunala_si.md",
+    "howto": {
+      "en": "Choose your municipality, then enter your settlement exactly as its calendar is named under 'Urniki odvozov' on the municipality's page at https://www.saubermacher-komunala.si/kje-zbiramo-odpadke (e.g. 'Bogojina'). In Murska Sobota town use your district without the weekday, e.g. 'Murska Sobota - rajon 4' or 'Murska Sobota - bloki'; the PDF 'Razdelitev mesta Murska Sobota na rajone' shows the districts.",
+      "sl": "Izberite občino in vpišite naselje natanko tako, kot je urnik poimenovan pod 'Urniki odvozov' na strani občine na https://www.saubermacher-komunala.si/kje-zbiramo-odpadke (npr. 'Bogojina'). V mestu Murska Sobota vpišite rajon brez dneva, npr. 'Murska Sobota - rajon 4' ali 'Murska Sobota - bloki'; rajone prikazuje PDF 'Razdelitev mesta Murska Sobota na rajone'."
+    },
+    "urls": {}
+  },
   "simbio_si": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md",
     "howto": {},
@@ -5435,7 +5508,7 @@
   "gastrikeatervinnare_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gastrikeatervinnare_se.md",
     "howto": {
-      "en": "Enter your street name with house number and your city exactly as shown on https://gastrikeatervinnare.se/ when you search for your collection days."
+      "en": "Gästrike Återvinnare no longer publishes collection days openly; they are shown on Mina sidor (https://minasidor.gastrikeatervinnare.se) after login. Enter the customer number and password you log in with there (BankID login is not supported: create a password via 'Glömt lösenord' on the login page). If the account has bins at several addresses, enter one as shown on Mina sidor, e.g. 'Storgatan 1, GÄVLE'; otherwise leave the address empty."
     },
     "urls": {}
   },
@@ -6170,7 +6243,9 @@
   },
   "blackpool_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/blackpool_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at https://www.findmyaddress.co.uk/ by entering your address. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6276,7 +6351,9 @@
   },
   "south_norfolk_and_broadland_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/south_norfolk_and_broadland_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the postcode and address from My Area, or supply the address_payload object from its MyArea.Data cookie. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "bromsgrove_gov_uk": {
@@ -6532,7 +6609,9 @@
   },
   "croydon_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/croydon_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and address as shown at https://service.croydon.gov.uk/wasteservices/w/webpage/bin-day-enter-address. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "cumberland_gov_uk": {
@@ -6912,9 +6991,11 @@
   "gosport_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gosport_gov_uk.md",
     "howto": {
-      "en": "Go to https://www.gosport.gov.uk/refuserecyclingdays, enter your postcode, and select your address. The UPRN is the number shown next to your address in the dropdown (also appended at the end of the address text)."
+      "en": "Go to https://www.gosport.gov.uk/refuserecyclingdays, enter your postcode, and select your address. Use the Whitespace property reference shown next to your address in the dropdown as uprn. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "great_yarmouth_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/great_yarmouth_gov_uk.md",
@@ -7872,7 +7953,9 @@
   },
   "south_ayrshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/south_ayrshire_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and the property UPRN from the council's bin collection form. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -8032,7 +8115,9 @@
   },
   "stockton_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stockton_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Find your UPRN at https://www.findmyaddress.co.uk/ by entering your address. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -8062,7 +8147,9 @@
   },
   "sunderland_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunderland_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the postcode and property address from the Sunderland bin day checker. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "sutton_gov_uk": {
@@ -8558,6 +8645,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/plano_gov.md",
     "howto": {
       "en": "Use the Plano interactive waste map (https://www.plano.gov/630/Residential-Collection-Schedules) to search for and retrieve your object ID using browser dev tools or a capture tool like Fiddler."
+    },
+    "urls": {}
+  },
+  "stpaul_gov": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stpaul_gov.md",
+    "howto": {
+      "en": "Enter your street address with the house number, e.g. '1006 Summit Ave' (city, state and ZIP are optional). It is looked up on the city's Garbage & Recycling Day Map (https://stpaul.maps.arcgis.com/apps/instant/lookup/index.html?appid=5b3d5ace287e428596cf18fd025fa6fb). Turn on 'Every-other-week garbage collection' if you chose that service; garbage is then collected in the weeks shaded on the city's collection calendar. Downtown recycling has no fixed day and is not included."
     },
     "urls": {}
   },

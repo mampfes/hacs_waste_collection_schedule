@@ -483,3 +483,15 @@ def test_wastenet_scrubber_keeps_matches_and_original_fallback_suggestions(addre
         row for i, row in enumerate(rows) if i < 5 or wanted in row["address"].lower()
     ]
     assert interaction.get("body") == original_body
+
+
+def test_replayed_headers_are_case_insensitive():
+    response = cassette.CassetteResponse(
+        {
+            "status": 303,
+            "content_b64": "",
+            "headers": {"location": "/next", "Content-Type": "text/html"},
+        }
+    )
+    assert response.headers["Location"] == "/next"
+    assert response.headers.get("content-type") == "text/html"

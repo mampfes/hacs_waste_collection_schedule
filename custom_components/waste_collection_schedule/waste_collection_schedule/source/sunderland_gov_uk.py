@@ -1,806 +1,157 @@
-"""Source for Sunderland City Council bin collection information."""
-
-from __future__ import annotations
-
-import base64
 import json
 import re
 from datetime import datetime
-from urllib.parse import urljoin
+from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import preprocessors
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
-
-# ============================================================================
-# WASTE COLLECTION SCHEDULE SOURCE METADATA
-# ============================================================================
-
-TITLE = "Sunderland City Council"
-
-DESCRIPTION = "Source for Sunderland City Council bin collection schedules."
-
-URL = "https://www.sunderland.gov.uk/bindays?ccp=true"
-
-COUNTRY = "uk"
-
-TEST_CASES = {
-    "Test_001": {"postcode": "SR4 7PU", "address": "191 Cleveland Road"},
-    "Test_002": {"postcode": "SR3 2DW", "address": "43 Hill Street"},
-    "Test_003": {"postcode": "SR4 8RJ", "address": "17 Sutherland Drive"},
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postcode",
-        "address": "Address",
-    }
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "The postcode for the property.",
-        "address": "The full address of the property.",
-    }
-}
-
-
-# ============================================================================
-# SUNDERLAND / GOSS CONFIGURATION
-# ============================================================================
-
-BASE_URL = "https://www.sunderland.gov.uk"
-
-BIN_DAYS_URL = f"{BASE_URL}/bindays?ccp=true"
-
-FORM_PREFIX = "BINCOLLECTIONCHECKERNEWV3"
-
-POSTCODE_FIELD = f"{FORM_PREFIX}_ADDRESSSEARCH_SCCPOSTCODE"
-
-ADDRESS_FIELD = f"{FORM_PREFIX}_ADDRESSSEARCH_SCCLISTOFADDRESSES"
-
-POSTCODE_TRIGGER = f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODETRIGGER"
-
-FORM_ACTION_NEXT = f"{FORM_PREFIX}_FORMACTION_NEXT"
-
-UPRN_FIELD = f"{FORM_PREFIX}_ADDRESSSEARCH_UPRN"
-
-POSTCODE_RESULT_FIELD = f"{FORM_PREFIX}_ADDRESSSEARCH_POSTCODE"
-
-ADDRESS_TEXT_FIELD = f"{FORM_PREFIX}_ADDRESSSEARCH_ADDRESSTEXT"
-
-FORM_DATA_PATTERN = re.compile(r'BINCOLLECTIONCHECKERNEWV3FormData\s*=\s*"([^"]+)"')
-
-MAX_REDIRECTS = 10
-
-# Labels used by the rendered results page.
-ICON_MAP = {
-    "Household Green Bin": Icons.GENERAL_WASTE,
-    "Blue Recycling Bin": Icons.RECYCLING,
-    "Garden Waste": Icons.GARDEN,
-}
-
-# The serialized form data exposes free-text ``binName`` values which do not
-# always match the rendered labels above, so fall back to keyword matching to
-# keep the canonical icons. Order matters: "Garden Waste" must match GARDEN
-# before the generic "waste" keyword.
-ICON_KEYWORDS: tuple[tuple[str, Icons], ...] = (
-    ("garden", Icons.GARDEN),
-    ("recycl", Icons.RECYCLING),
-    ("blue", Icons.RECYCLING),
-    ("bulky", Icons.BULKY),
-    ("household", Icons.GENERAL_WASTE),
-    ("green", Icons.GENERAL_WASTE),
-    ("residual", Icons.GENERAL_WASTE),
-    ("refuse", Icons.GENERAL_WASTE),
-    ("waste", Icons.GENERAL_WASTE),
-)
-
-
-class Source:
-    """Sunderland City Council source."""
-
-    def __init__(self, postcode: str, address: str):
-        self._postcode = self._normalise_postcode(postcode)
-        self._address = address
-
-        self._session = requests.Session(impersonate="chrome")
-
-    # =========================================================================
-    # HELPERS
-    # =========================================================================
-
-    @staticmethod
-    def _normalise_postcode(
-        postcode: str,
-    ) -> str:
-        """Normalise a UK postcode."""
-
-        return re.sub(
-            r"\s+",
-            " ",
-            str(postcode).strip().upper(),
-        )
-
-    @staticmethod
-    def _normalise_address(address: str) -> str:
-        """Normalise address text for matching provider results."""
-
-        return " ".join(re.sub(r"[^\w]+", " ", str(address)).split()).casefold()
-
-    @staticmethod
-    def _icon_for(bin_name: str) -> Icons | None:
-        """Return the canonical icon for a Sunderland bin name."""
-
-        icon = ICON_MAP.get(bin_name)
-
-        if icon is not None:
-            return icon
-
-        lowered = bin_name.casefold()
-
-        for keyword, candidate in ICON_KEYWORDS:
-            if keyword in lowered:
-                return candidate
-
-        return None
-
-    @staticmethod
-    def _follow_redirects(
-        session,
-        location: str,
-    ):
-        """
-        Follow Sunderland/GOSS redirects manually.
-
-        Sunderland uses a mixture of 303 and 302 redirects
-        and the intermediate pages must retain the same
-        session/cookies.
-        """
-
-        response = None
-
-        for _ in range(MAX_REDIRECTS):
-            response = session.get(
-                location,
-                allow_redirects=False,
-                timeout=30,
-            )
-
-            if response.status_code not in (
-                301,
-                302,
-                303,
-                307,
-                308,
-            ):
-                response.raise_for_status()
-
-                return response
-
-            redirect = response.headers.get("Location")
-
-            if not redirect:
-                return response
-
-            location = urljoin(
-                response.url,
-                redirect,
-            )
-
-        # Too many hops: hand the last response back so the caller raises an
-        # argument-specific error rather than looping forever.
-        return response
-
-    @staticmethod
-    def _element_value(
-        element,
-    ) -> str:
-        """Return the value of a form element."""
-
-        if element.name == "textarea":
-            return element.text or ""
-
-        if element.name == "select":
-            selected = element.find(
-                "option",
-                selected=True,
-            )
-
-            if selected:
-                return selected.get(
-                    "value",
-                    "",
-                )
-
-            return ""
-
-        return element.get(
-            "value",
-            "",
-        )
-
-    @classmethod
-    def _build_form_data(
-        cls,
-        form,
-        include_buttons: bool = False,
-    ) -> dict[str, str]:
-        """Build POST data from a GOSS form."""
-
-        data = {}
-
-        for element in form.find_all(
-            [
-                "input",
-                "select",
-                "textarea",
-                "button",
-            ]
-        ):
-            name = element.get("name")
-
-            if not name:
-                continue
-
-            element_type = (element.get("type") or "").lower()
-
-            # Buttons are only included when explicitly
-            # requested. The postcode form needs its
-            # NEXT button.
-            if element.name == "button":
-                if not include_buttons:
-                    continue
-
-                if name != FORM_ACTION_NEXT:
-                    continue
-
-            if element_type in (
-                "submit",
-                "button",
-                "image",
-            ):
-                if not include_buttons:
-                    continue
-
-            if element_type in (
-                "checkbox",
-                "radio",
-            ):
-                if not element.has_attr("checked"):
-                    continue
-
-            data[name] = cls._element_value(element)
-
-        return data
-
-    # =========================================================================
-    # STEP 1 - INITIAL PAGE
-    # =========================================================================
-
-    def _get_initial_page(self):
-        """Open the Sunderland bin checker."""
-
-        response = self._session.get(
-            BIN_DAYS_URL,
-            timeout=30,
-        )
-
-        response.raise_for_status()
-
-        return response
-
-    def _find_postcode_form(
-        self,
-        html: str,
-    ):
-        """Find the postcode search form."""
-
-        soup = BeautifulSoup(
-            html,
-            "html.parser",
-        )
-
-        postcode = soup.find(
-            "input",
-            {
-                "name": POSTCODE_FIELD,
-            },
-        )
-
-        if postcode is None:
-            raise SourceArgumentNotFoundWithSuggestions("postcode", self._postcode, [])
-
-        form = postcode.find_parent("form")
-
-        if form is None:
-            raise SourceArgumentNotFoundWithSuggestions("postcode", self._postcode, [])
-
-        return form
-
-    # =========================================================================
-    # STEP 2 - POSTCODE LOOKUP
-    # =========================================================================
-
-    def _lookup_postcode(
-        self,
-    ):
-        """Submit the postcode and retrieve addresses."""
-
-        initial = self._get_initial_page()
-
-        form = self._find_postcode_form(initial.text)
-
-        action = form.get("action")
-
-        if not action:
-            raise SourceArgumentNotFoundWithSuggestions("postcode", self._postcode, [])
-
-        process_url = urljoin(
-            initial.url,
-            action,
-        )
-
-        data = self._build_form_data(
-            form,
-            include_buttons=True,
-        )
-
-        # Exact postcode entered by the user.
-        data[POSTCODE_FIELD] = self._postcode
-
-        # Exact action used by the working
-        # standalone Sunderland flow.
-        data[FORM_ACTION_NEXT] = POSTCODE_TRIGGER
-
-        response = self._session.post(
-            process_url,
-            data=data,
-            allow_redirects=False,
-            timeout=30,
-        )
-
-        response.raise_for_status()
-
-        if response.status_code not in (
-            301,
-            302,
-            303,
-            307,
-            308,
-        ):
-            raise SourceArgumentNotFoundWithSuggestions(
-                "postcode",
-                self._postcode,
-                [],
-            )
-
-        location = response.headers.get("Location")
-
-        if not location:
-            raise SourceArgumentNotFoundWithSuggestions("postcode", self._postcode, [])
-
-        location = urljoin(
-            response.url,
-            location,
-        )
-
-        return self._follow_redirects(
-            self._session,
-            location,
-        )
-
-    # =========================================================================
-    # STEP 3 - ADDRESS LIST
-    # =========================================================================
-
-    @staticmethod
-    def _get_addresses(
-        html: str,
-    ):
-        """Extract addresses returned by Sunderland."""
-
-        soup = BeautifulSoup(
-            html,
-            "html.parser",
-        )
-
-        select = soup.find(
-            "select",
-            {
-                "name": ADDRESS_FIELD,
-            },
-        )
-
-        if select is None:
-            return []
-
-        addresses = []
-
-        for option in select.find_all("option"):
-            value = option.get(
-                "value",
-                "",
-            ).strip()
-
-            text = option.get_text(
-                " ",
-                strip=True,
-            )
-
-            if value:
-                addresses.append(
-                    (
-                        value,
-                        text,
-                    )
-                )
-
-        return addresses
-
-    # =========================================================================
-    # STEP 4 - SUBMIT SELECTED ADDRESS
-    # =========================================================================
-
-    def _submit_address(
-        self,
-        html: str,
-        uprn: str,
-        address: str,
-    ):
-        """Submit the selected UPRN."""
-
-        soup = BeautifulSoup(
-            html,
-            "html.parser",
-        )
-
-        select = soup.find(
-            "select",
-            {
-                "name": ADDRESS_FIELD,
-            },
-        )
-
-        if select is None:
-            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
-
-        form = select.find_parent("form")
-
-        if form is None:
-            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
-
-        action = form.get("action")
-
-        if not action:
-            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
-
-        process_url = urljoin(
-            BASE_URL,
-            action,
-        )
-
-        data = self._build_form_data(
-            form,
-            include_buttons=False,
-        )
-
-        # These exactly reproduce the Javascript
-        # event handler from Sunderland:
-        #
-        # helper.setFieldValue(
-        #     "POSTCODE",
-        #     helper.getFieldValue("SCCPOSTCODE")
-        # )
-        #
-        # helper.setFieldValue("UPRN", value)
-        #
-        # helper.setFieldValue(
-        #     "ADDRESSTEXT",
-        #     selected address
-        # )
-        #
-        # helper.triggerActionButton("NEXT")
-
-        data[ADDRESS_FIELD] = uprn
-
-        data[POSTCODE_RESULT_FIELD] = self._postcode
-
-        data[UPRN_FIELD] = uprn
-
-        data[ADDRESS_TEXT_FIELD] = address
-
-        data[FORM_ACTION_NEXT] = POSTCODE_TRIGGER
-
-        response = self._session.post(
-            process_url,
-            data=data,
-            allow_redirects=False,
-            timeout=30,
-        )
-
-        response.raise_for_status()
-
-        if response.status_code not in (
-            301,
-            302,
-            303,
-            307,
-            308,
-        ):
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address",
-                self._address,
-                [],
-            )
-
-        location = response.headers.get("Location")
-
-        if not location:
-            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
-
-        location = urljoin(
-            response.url,
-            location,
-        )
-
-        return self._follow_redirects(
-            self._session,
-            location,
-        )
-
-    # =========================================================================
-    # STEP 5 - SERIALIZED FORM DATA
-    # =========================================================================
-
-    def _extract_form_data(
-        self,
-        html: str,
-    ):
-        """Extract BINCOLLECTIONCHECKERNEWV3FormData."""
-
-        match = FORM_DATA_PATTERN.search(html)
-
-        if not match:
-            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
-
-        encoded = match.group(1)
-
-        try:
-            decoded = base64.b64decode(encoded).decode("utf-8")
-        except (ValueError, UnicodeDecodeError) as error:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address", self._address, []
-            ) from error
-
-        try:
-            return json.loads(decoded)
-        except json.JSONDecodeError as error:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address", self._address, []
-            ) from error
-
-    def _extract_result(
-        self,
-        form_data,
-    ):
-        """Extract result from DATARETURNED."""
-
-        address_search = form_data.get(
-            "ADDRESSSEARCH_1",
-            {},
-        )
-
-        raw = address_search.get("DATARETURNED")
-
-        if not raw:
-            raise SourceArgumentNotFoundWithSuggestions("address", self._address, [])
-
-        if isinstance(raw, dict):
-            return raw.get(
-                "result",
-                raw,
-            )
-
-        try:
-            decoded = json.loads(raw)
-        except json.JSONDecodeError as error:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address", self._address, []
-            ) from error
-
-        return decoded.get(
-            "result",
-            decoded,
-        )
-
-    # =========================================================================
-    # STEP 6 - COLLECTION PARSING
-    # =========================================================================
-
-    @staticmethod
-    def _parse_date(
-        value,
-    ):
-        """Parse Sunderland's ISO date."""
-
-        if not value:
-            return None
-
-        try:
-            parsed = datetime.fromisoformat(
-                str(value).replace(
-                    "Z",
-                    "+00:00",
-                )
-            )
-
-            # WCS requires datetime.date objects,
-            # not datetime.datetime objects.
-            return parsed.date()
-
-        except ValueError:
-            return None
-
-    @classmethod
-    def _create_collections(
-        cls,
-        result,
-    ):
-        """Convert Sunderland schedules into Collections."""
-
-        collections = []
-
-        schedules = result.get(
-            "schedules",
-            [],
-        )
-
-        for schedule in schedules:
-            status = str(
-                schedule.get(
-                    "status",
-                    "",
-                )
-            ).upper()
-
-            # Sunderland can return PLANNED services
-            # such as garden waste and bulky collections.
-            #
-            # Only IN SERVICE schedules represent actual
-            # active household collection schedules.
-            if status != "IN SERVICE":
-                continue
-
-            bin_name = (
-                schedule.get("binName") or schedule.get("jobName") or "Bin Collection"
-            )
-
-            future_jobs = schedule.get(
-                "futureJobs",
-                [],
-            )
-
-            for date_value in future_jobs:
-                date = cls._parse_date(date_value)
-
-                if date is None:
-                    continue
-
-                collections.append(
-                    Collection(
-                        date,
-                        bin_name,
-                        icon=cls._icon_for(bin_name),
-                    )
-                )
-
-        return collections
-
-    # =========================================================================
-    # MAIN WCS ENTRY POINT
-    # =========================================================================
-
-    def fetch(self):
-        """Fetch all available Sunderland collections."""
-
-        if not self._postcode:
-            raise SourceArgumentNotFoundWithSuggestions("postcode", self._postcode, [])
-
-        # -------------------------------------------------------------
-        # Postcode lookup
-        # -------------------------------------------------------------
-
-        address_page = self._lookup_postcode()
-
-        addresses = self._get_addresses(address_page.text)
-
-        if not addresses:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "postcode",
-                self._postcode,
-                [],
-            )
-
-        # -------------------------------------------------------------
-        # Address selection
-        # -------------------------------------------------------------
-
-        requested_address = self._normalise_address(self._address or "")
-        normalised_addresses = [
-            (uprn, address_text, self._normalise_address(address_text))
-            for uprn, address_text in addresses
-        ]
-
+from waste_collection_schedule.service.GossForm import GossJsonParser
+from waste_collection_schedule.service.HtmlForms import FormStep, HtmlFormRetriever
+from waste_collection_schedule.transformers import RowTransformer
+
+_PREFIX = "BINCOLLECTIONCHECKERNEWV3"
+_ACTION = f"{_PREFIX}_FORMACTION_NEXT"
+_POSTCODE = f"{_PREFIX}_ADDRESSSEARCH_SCCPOSTCODE"
+_ADDRESSES = f"{_PREFIX}_ADDRESSSEARCH_SCCLISTOFADDRESSES"
+_TRIGGER = f"{_PREFIX}_ADDRESSSEARCH_POSTCODETRIGGER"
+
+
+def _normalise(value):
+    return " ".join(re.sub(r"[^\w]+", " ", str(value)).split()).casefold()
+
+
+def _address_fields(response, postcode, address, **_):
+    page = BeautifulSoup(response.text, "html.parser")
+    addresses = [
+        (str(option.get("value") or "").strip(), option.get_text(" ", strip=True))
+        for option in page.select(f'select[name="{_ADDRESSES}"] option')
+        if option.get("value")
+    ]
+    if not addresses:
+        raise SourceArgumentNotFoundWithSuggestions("postcode", postcode, [])
+    requested = _normalise(address)
+    matches = [
+        (value, label) for value, label in addresses if _normalise(label) == requested
+    ]
+    if not matches and requested:
         matches = [
-            (uprn, address_text)
-            for uprn, address_text, key in normalised_addresses
-            if key == requested_address
+            (value, label)
+            for value, label in addresses
+            if requested in _normalise(label)
         ]
-        if not matches and requested_address:
-            matches = [
-                (uprn, address_text)
-                for uprn, address_text, key in normalised_addresses
-                if requested_address in key
-            ]
-
-        if len(matches) != 1:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "address",
-                self._address,
-                [address_text for _, address_text in addresses],
-            )
-
-        uprn, address = matches[0]
-        # -------------------------------------------------------------
-        # Address submission
-        # -------------------------------------------------------------
-
-        final_page = self._submit_address(
-            address_page.text,
-            uprn,
-            address,
+    if len(matches) != 1:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "address", address, [label for _, label in addresses]
         )
+    uprn, label = matches[0]
+    return {
+        _ADDRESSES: uprn,
+        f"{_PREFIX}_ADDRESSSEARCH_POSTCODE": postcode,
+        f"{_PREFIX}_ADDRESSSEARCH_UPRN": uprn,
+        f"{_PREFIX}_ADDRESSSEARCH_ADDRESSTEXT": label,
+        _ACTION: _TRIGGER,
+    }
 
-        # -------------------------------------------------------------
-        # Extract serialized GOSS data
-        # -------------------------------------------------------------
 
-        form_data = self._extract_form_data(final_page.text)
+def _label(label):
+    for keyword, key in (
+        ("garden", "garden"),
+        ("recycl", "recycling"),
+        ("blue", "recycling"),
+        ("bulky", "bulky"),
+        ("household", "general"),
+        ("green", "general"),
+        ("residual", "general"),
+        ("refuse", "general"),
+        ("waste", "general"),
+    ):
+        if keyword in label.casefold():
+            return key
+    return label
 
-        # -------------------------------------------------------------
-        # Extract API result
-        # -------------------------------------------------------------
 
-        result = self._extract_result(form_data)
+def _rows(record, source):
+    raw = record.get("DATARETURNED")
+    if not raw:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "address", source.params.get("address") if source else "", []
+        )
+    value = json.loads(raw) if isinstance(raw, str) else raw
+    result = value.get("result", value)
+    rows = {}
+    for schedule in result.get("schedules", []):
+        if str(schedule.get("status", "")).upper() != "IN SERVICE":
+            continue
+        label = schedule.get("binName") or schedule.get("jobName") or "Bin Collection"
+        for value in schedule.get("futureJobs", []):
+            if not value:
+                continue
+            try:
+                day = datetime.fromisoformat(str(value).replace("Z", "+00:00")).date()
+            except ValueError:
+                continue
+            rows[(day, label)] = (day, label)
+    return sorted(rows.values(), key=lambda row: row[0])
 
-        # -------------------------------------------------------------
-        # Convert schedules into WCS collections
-        # -------------------------------------------------------------
 
-        collections = self._create_collections(result)
-
-        # -------------------------------------------------------------
-        # Remove duplicates
-        # -------------------------------------------------------------
-
-        unique = {}
-
-        for collection in collections:
-            key = (
-                collection.date,
-                collection.type,
-            )
-
-            unique[key] = collection
-
-        collections = list(unique.values())
-
-        # -------------------------------------------------------------
-        # Sort chronologically
-        # -------------------------------------------------------------
-
-        collections.sort(key=lambda collection: collection.date)
-
-        return collections
+@final
+class Source(BaseSource):
+    TITLE = "Sunderland City Council"
+    DESCRIPTION = "Source for Sunderland City Council bin collection schedules."
+    URL = "https://www.sunderland.gov.uk/bindays?ccp=true"
+    COUNTRY = "uk"
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"postcode": "SR4 7PU", "address": "191 Cleveland Road"},
+        "Test_002": {"postcode": "SR3 2DW", "address": "43 Hill Street"},
+        "Test_003": {"postcode": "SR4 8RJ", "address": "17 Sutherland Drive"},
+    }
+    PARAMS = (postcode(), street_address())
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GARDEN_WASTE,
+        wt.BULKY_WASTE,
+    ]
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter the postcode and property address from the Sunderland bin day checker. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    }
+    retrieve = HtmlFormRetriever(
+        "https://www.sunderland.gov.uk/bindays?ccp=true",
+        steps=(
+            FormStep(
+                form=f'input[name="{_POSTCODE}"]',
+                argument="postcode",
+                button=_ACTION,
+                redirects=True,
+                fields=lambda response, postcode, **_: {
+                    _POSTCODE: re.sub(r"\s+", " ", str(postcode).strip().upper()),
+                    _ACTION: _TRIGGER,
+                },
+            ),
+            FormStep(
+                form=f'select[name="{_ADDRESSES}"]',
+                argument="address",
+                redirects=True,
+                fields=lambda response, postcode, address, **_: _address_fields(
+                    response,
+                    re.sub(r"\s+", " ", str(postcode).strip().upper()),
+                    address,
+                ),
+            ),
+        ),
+    )
+    parse = GossJsonParser("ADDRESSSEARCH_1")
+    preprocess = preprocessors.ExplodeList(_rows)
+    transform = RowTransformer(
+        clean=_label,
+        type_value_map={
+            "general": wt.GENERAL_WASTE,
+            "recycling": wt.RECYCLABLES,
+            "garden": wt.GARDEN_WASTE,
+            "bulky": wt.BULKY_WASTE,
+        },
+    )

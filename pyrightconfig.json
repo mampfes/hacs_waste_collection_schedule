@@ -8,6 +8,15 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/wastenet_org_nz.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/portenf_sa_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/AspNetForms.py",
+
+
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/GossForm.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/gosport_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/stockton_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/croydon_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/poriruacity_govt_nz.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/blackpool_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/geelongaustralia_com_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/parsers.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/preprocessors.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/transformers.py",
@@ -652,6 +661,13 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/KomLubCalendar.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/MyWasteWatcherCalendar.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/PendleCalendar.py",
-    "custom_components/waste_collection_schedule/waste_collection_schedule/service/WasteManagementCalendar.py"
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/WasteManagementCalendar.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/silea_it.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/south_ayrshire_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/sunderland_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/south_norfolk_and_broadland_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/byron_nsw_gov_au.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/HtmlForms.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/MyArea.py"
   ]
 }

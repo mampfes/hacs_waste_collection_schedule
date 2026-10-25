@@ -1,18 +1,22 @@
-# South Norfolk Council and Broadland District Council
+# Broadland District Council
 
-Support for schedules provided by [South Norfolk and Broadland District Councils](https://www.southnorfolkandbroadland.gov.uk/rubbish/find-bin-collection-day) (the joint operations of South Norfolk Council and Broadland District Council).
+Support for schedules provided by [Broadland District Council](https://area.southnorfolkandbroadland.gov.uk/).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Norfolk, please continue to use the source for your current area as long as it's still working. New sources for the new West Norfolk, Greater Norwich, and East Norfolk councils are not expected to be live until at least April 2028, when the councils themselves officially come into being.
-
-## Bin calendar information
-This source uses different methods to fetch information for areas in the two districts, and as a result gives different levels of detail:
-
-For addresses in Broadland, this source only fetches the next collection day for each type of bin, as that is all the information provided by the councils' website.
-
-For addresses in South Norfolk, this source fetches a full list of future collection days, as the councils' website provides access to a full dynamic calendar for future collections.
+Source for southnorfolkandbroadland.gov.uk services for South Norfolk and Broadland, UK
 
 ## Configuration via configuration.yaml
+
+### Using address_payload
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: south_norfolk_and_broadland_gov_uk
+      args:
+        address_payload: ADDRESS_PAYLOAD
+```
+
+### Using postcode and address
 
 ```yaml
 waste_collection_schedule:
@@ -21,109 +25,53 @@ waste_collection_schedule:
       args:
         postcode: POSTCODE
         address: ADDRESS
-        address_payload: ADDRESS_PAYLOAD ## Deprecated
 ```
-
-Full examples for both council areas are given at the bottom of the documentation.
 
 ### Configuration Variables
 
+**address_payload**  
+*(string) (alternative)*
+
 **postcode**  
-*(String) (optional)  
+*(string) (alternative)*
 
 **address**  
-*(String) (optional)  
+*(string) (alternative)*
 
-**address_payload**  
-*(dict) (optional) (deprecated)*  
+Provide one of: `address_payload` or `postcode` + `address`.
 
-Either address_payload alone or both postcode and address are needed (address_payload will be used if both are present).
+## Example
 
-## Get the arguments
-
-### postcode and address
-
-- Go to <https://area.southnorfolkandbroadland.gov.uk/FindAddress>.
-- Enter your postcode and also use it as postcode variable.
-- Select your address and use it as address variable. The configured string should exactly match the text of your selection in the dropdown.
-
-### address_payload (deprecated)
-
-This argument is the old way of configuring this source, and using it overrides any arguments given for postcode and address. It is easy to fetch by capturing the data from a cookie using Google Chrome or a Chromium-based browser (e.g. Edge). If you are using another browser (such as Firefox or Safari), please use the postcode and address arguments instead as this method will not work.
-1. Go to https://area.southnorfolkandbroadland.gov.uk/
-2. Input your postcode and select your address
-3. Open your browser's console (right click -> Inspect Element -> Console)
-4. Paste the following code snippet into the console
-5. Paste the result into your `configuration.yaml`
-
-```js
-cookieStore.get("MyArea.Data")
-    .then(({ value }) => value)
-    .then(decodeURIComponent)
-    .then(JSON.parse)
-    .then((value) => JSON.stringify(value, null, 2))
-    .then(console.log)
-    .catch(console.error);
-```
-
-## Example (for an address in Broadland)
+### Using address_payload
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: south_norfolk_and_broadland_gov_uk
       args:
-        address: 29 Mallard Way, Sprowston, Norfolk, NR7 8DN
+        address_payload:
+          Uprn: '010014355477'
+          Address: 29 Mallard Way, Sprowston, Norwich, Norfolk, NR7 8DN
+          X: '626227.00000'
+          Y: '312136.00000'
+          Ward: Sprowston East
+          Parish: Sprowston
+          Village: Sprowston
+          Street: Mallard Way
+          Authority: '2610'
+```
+
+### Using postcode and address
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: south_norfolk_and_broadland_gov_uk
+      args:
         postcode: NR7 8DN
+        address: 29 Mallard Way, Sprowston, Norfolk, NR7 8DN
 ```
 
-or
+## How to get the source arguments
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: south_norfolk_and_broadland_gov_uk
-      args:
-        address_payload: {
-            "Uprn": "010014355477",
-            "Address": "29 Mallard Way, Sprowston, Norwich, Norfolk, NR7 8DN",
-            "X": "626227.00000",
-            "Y": "312136.00000",
-            "Ward": "Sprowston East",
-            "Parish": "Sprowston",
-            "Village": "Sprowston",
-            "Street": "Mallard Way",
-            "Authority": "2610"
-          }
-```
-
-## Example (for an address in South Norfolk)
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: south_norfolk_and_broadland_gov_uk
-      args:
-        address: 1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX
-        postcode: NR14 8BX
-```
-
-or
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: south_norfolk_and_broadland_gov_uk
-      args:
-        address_payload: {
-            "Uprn": "002630130840",
-            "Address": "1 Brindle Drive, Mulbarton, Norfolk, NR14 8BX",
-            "X": "619142.00000",
-            "Y": "300585.00000",
-            "Ward": "Mulbarton And Stoke Holy Cross",
-            "Parish": "Mulbarton",
-            "Village": "Mulbarton",
-            "Street": "Brindle Drive",
-            "Authority": "2630"
-          }
-```
+Enter the postcode and address from My Area, or supply the address_payload object from its MyArea.Data cookie. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

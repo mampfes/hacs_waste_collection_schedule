@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 # would only cover a fixed value set and not these surfaces. Any HA language
 # outside this set falls back to English. Add a language here AND to the
 # config-flow allowlist (update_docu_links.LANGUAGES) to keep the two in step.
-SUPPORTED_LANGUAGES = ("en", "de", "fr", "it", "nl", "sl", "da", "fi")
+SUPPORTED_LANGUAGES = ("en", "de", "fr", "it", "nl", "sl", "da", "fi", "sv")
 
 
 @dataclass(frozen=True)
@@ -76,6 +76,7 @@ GENERAL_WASTE = WasteType(
     color="#6B6B6B",
     names={
         "fi": "Sekajäte",
+        "sv": "Restavfall",
         "en": "General Waste",
         "de": "Restmüll",
         "fr": "Ordures ménagères",
@@ -116,6 +117,7 @@ RECYCLABLES = WasteType(
     color="#2196F3",
     names={
         "fi": "Kierrätettävä jäte",
+        "sv": "Förpackningar",
         "en": "Recycling",
         "de": "Wertstoffe",
         "fr": "Recyclage",
@@ -168,6 +170,7 @@ ORGANIC = WasteType(
     color="#4CAF50",
     names={
         "fi": "Biojäte",
+        "sv": "Organiskt avfall",
         "en": "Organic Waste",
         "de": "Biomüll",
         "fr": "Biodéchets",
@@ -200,6 +203,7 @@ PAPER = WasteType(
     color="#795548",
     names={
         "fi": "Paperi ja kartonki",
+        "sv": "Papper och kartong",
         "en": "Paper & Cardboard",
         "de": "Altpapier",
         "fr": "Papier",
@@ -237,6 +241,7 @@ GLASS = WasteType(
     color="#009688",
     names={
         "fi": "Lasi",
+        "sv": "Glasförpackningar",
         "en": "Glass",
         "de": "Glas",
         "fr": "Verre",
@@ -261,6 +266,7 @@ FOOD_WASTE = WasteType(
     color="#FF9800",
     names={
         "fi": "Ruokajäte",
+        "sv": "Matavfall",
         "en": "Food Waste",
         "de": "Lebensmittelabfall",
         "fr": "Déchets alimentaires",
@@ -285,6 +291,7 @@ GARDEN_WASTE = WasteType(
     color="#2E7D32",
     names={
         "fi": "Puutarhajäte",
+        "sv": "Trädgårdsavfall",
         "en": "Garden Waste",
         "de": "Grünschnitt",
         "fr": "Déchets verts",
@@ -337,6 +344,7 @@ BULKY_WASTE = WasteType(
     color="#607D8B",
     names={
         "fi": "Suurikokoinen jäte",
+        "sv": "Grovavfall",
         "en": "Bulky Waste",
         "de": "Sperrmüll",
         "fr": "Encombrants",
@@ -362,6 +370,7 @@ HAZARDOUS = WasteType(
     color="#E53935",
     names={
         "fi": "Vaarallinen jäte",
+        "sv": "Farligt avfall",
         "en": "Hazardous Waste",
         "de": "Problemstoff",
         "fr": "Déchets dangereux",
@@ -398,6 +407,7 @@ ELECTRONICS = WasteType(
     color="#5E35B1",
     names={
         "fi": "Sähkö- ja elektroniikkaromu",
+        "sv": "Elavfall",
         "en": "Electronic Waste",
         "de": "Elektroschrott",
         "fr": "Déchets électroniques",
@@ -432,6 +442,7 @@ TEXTILES = WasteType(
     color="#EC407A",
     names={
         "fi": "Tekstiilit",
+        "sv": "Textil",
         "en": "Textiles",
         "de": "Altkleider",
         # "Abiti usati" (used clothing), deliberately not "Tessili". Italian
@@ -490,6 +501,7 @@ METAL = WasteType(
     color="#C2C8CC",
     names={
         "fi": "Metalli",
+        "sv": "Metallförpackningar",
         "en": "Metal",
         "de": "Metall",
         "it": "Metallo",
@@ -508,6 +520,7 @@ PLASTIC = WasteType(
     color="#3587BD",
     names={
         "fi": "Muovi",
+        "sv": "Plastförpackningar",
         "en": "Plastic",
         "de": "Plastik",
         "it": "Plastica",
@@ -526,6 +539,7 @@ CARTONS = WasteType(
     color="#5D9B75",
     names={
         "fi": "Elintarvike- ja juomapakkaukset",
+        "sv": "Mat- och dryckeskartonger",
         "en": "Food and beverage cartons",
         "de": "Lebensmittel- und Getränkekartons",
         "it": "Cartoni per alimenti e bevande",
@@ -544,6 +558,7 @@ OTHER = WasteType(
     color="#9E9E9E",
     names={
         "fi": "Muu jäte",
+        "sv": "Övrigt",
         "en": "Other",
         "de": "Sonstiges",
         "fr": "Autres",

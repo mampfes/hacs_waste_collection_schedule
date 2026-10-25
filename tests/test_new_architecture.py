@@ -7916,6 +7916,16 @@ def test_the_hand_rolled_retrieval_backlog_is_not_stale() -> None:
 
 SOURCES_AWAITING_CASSETTE: set[str] = set()
 
+# Not a backlog: sources whose recording would leak personal data, so they can
+# never ship one. Each entry needs its reason. Use it only for a login source
+# whose cassette would hold the account holder's identifiers or session, which
+# ``cassette_scrubbers`` cannot rewrite (it only drops interactions).
+SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY: dict[str, str] = {
+    "gastrikeatervinnare_se": (
+        "Mina sidor login: a recording holds the customer number, address and session"
+    ),
+}
+
 
 @pytest.mark.skipif(
     len(_NEW_STYLE_SOURCES) == 0,
@@ -7928,7 +7938,10 @@ def test_pipeline_sources_ship_a_cassette(stem: str) -> None:
     """Pipeline sources must ship an offline cassette covering their TEST_CASES."""
     from pathlib import Path
 
-    if stem in SOURCES_AWAITING_CASSETTE:
+    if (
+        stem in SOURCES_AWAITING_CASSETTE
+        or stem in SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY
+    ):
         return
     fixture_dir = Path(__file__).resolve().parent / "fixtures" / stem
     assert fixture_dir.is_dir() and any(fixture_dir.glob("*.json")), (
@@ -8840,6 +8853,22 @@ def test_the_source_cassette_backlog_is_not_stale() -> None:
     )
 
 
+def test_privacy_excluded_sources_ship_no_cassette() -> None:
+    """A source excluded for privacy must not commit a recording after all."""
+    from pathlib import Path
+
+    fixtures = Path(__file__).resolve().parent / "fixtures"
+    recorded = sorted(
+        stem
+        for stem in SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY
+        if any((fixtures / stem).glob("*.json"))
+    )
+    assert not recorded, (
+        f"{recorded} ship a cassette. Either it is scrubbed and the entry can leave "
+        "SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY, or the recording must go."
+    )
+
+
 class TestGlobalCalendarMigrations:
     def test_iren_published_iso_dates_are_not_dropped(self):
         """The live Roccavione feed publishes three dates separated by semicolons."""
@@ -9293,3 +9322,484 @@ class TestAspNetFormRetriever:
             with pytest.raises(requests.HTTPError, match="upstream failure"):
                 retriever(BaseSource())
             assert session.post.call_count == 1
+
+
+class TestGossFormComponents:
+    @staticmethod
+    def _encoded_response(variable, value):
+        import base64
+
+        encoded = base64.b64encode(json.dumps(value).encode()).decode()
+        return SimpleNamespace(text=f'var {variable} = "{encoded}";')
+
+    @pytest.mark.parametrize("state_fields", [None, ("NONCE",), ()])
+    def test_selected_state_fields_and_rotating_tokens(self, state_fields):
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.service.GossForm import (
+            GossFormRetriever,
+            GossStep,
+        )
+
+        def page(number):
+            return SimpleNamespace(
+                url="https://council.test/start",
+                text=(
+                    f'<form id="F_FORM" action="/step{number}">'
+                    f'<input name="F_PAGESESSIONID" value="page{number}">'
+                    f'<input name="F_NONCE" value="nonce{number}">'
+                    '<input name="F_OTHER" value="keep-by-default"></form>'
+                ),
+                raise_for_status=MagicMock(),
+            )
+
+        source = BaseSource()
+        source._session = MagicMock()
+        source._session.get.return_value = page(1)
+        final = page(3)
+        source._session.post.side_effect = [page(2), final]
+        retriever = GossFormRetriever(
+            "https://council.test/start",
+            form="F",
+            state_fields=state_fields,
+            steps=(GossStep("NEXT", fields=lambda response, **_: {"ANSWER": "yes"}),)
+            * 2,
+        )
+        assert retriever(source) is final
+        for number, call in enumerate(source._session.post.call_args_list, 1):
+            assert call.args == (f"https://council.test/step{number}",)
+            data = call.kwargs["data"]
+            assert data["F_ANSWER"] == "yes"
+            assert data["F_FORMACTION_NEXT"] == "F_NEXT"
+            expected = {"F_ANSWER", "F_FORMACTION_NEXT"}
+            if state_fields is None:
+                expected |= {"F_PAGESESSIONID", "F_NONCE", "F_OTHER"}
+            else:
+                expected |= {f"F_{name}" for name in state_fields}
+            assert set(data) == expected
+            if "F_NONCE" in data:
+                assert data["F_NONCE"] == f"nonce{number}"
+
+    @pytest.mark.parametrize("wrapped", [False, True])
+    @pytest.mark.parametrize("soap", [False, True])
+    @pytest.mark.parametrize("single", [False, True])
+    def test_whitespace_optional_wrappers_and_single_collection(
+        self, wrapped, soap, single
+    ):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        record = {"Date": "27/10/2026 00:00:00", "Service": "Recycling"}
+        result = {
+            "SuccessFlag": True,
+            "Collections": {"Collection": record if single else [record]},
+        }
+        if soap:
+            result = {"GetCollectionByUprnAndDateResult": result}
+        if wrapped:
+            result = {"value": result, "scope": "SERVERCLIENT"}
+        response = self._encoded_response(
+            "FSerializedVariables", {"Recordset1": result}
+        )
+        assert GossWhitespaceParser("F")(response) == [record]
+
+    @pytest.mark.parametrize("collections", [None, {}, {"Collection": []}])
+    def test_whitespace_empty_successful_calendar(self, collections):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        response = self._encoded_response(
+            "FSerializedVariables",
+            {"Recordset1": {"SuccessFlag": True, "Collections": collections}},
+        )
+        assert GossWhitespaceParser("F")(response) == []
+
+    def test_whitespace_api_error_is_not_an_empty_calendar(self):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        response = self._encoded_response(
+            "FSerializedVariables",
+            {
+                "Recordset1": {
+                    "SuccessFlag": False,
+                    "ErrorDescription": "upstream failed",
+                }
+            },
+        )
+        with pytest.raises(ValueError, match="upstream failed"):
+            GossWhitespaceParser("F")(response)
+
+    def test_whitespace_missing_recordset_is_reported(self):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        with pytest.raises(ValueError, match="Recordset1"):
+            GossWhitespaceParser("F")(SimpleNamespace(text="<html>redesigned</html>"))
+
+    def test_form_data_follows_page_order_and_ignores_unlisted_pages(self):
+        from waste_collection_schedule.parsers import HtmlParser
+        from waste_collection_schedule.service.GossForm import GossFormDataParser
+
+        response = self._encoded_response(
+            "FFormData",
+            {
+                "_PAGEORDER_": ["SECOND", "FIRST"],
+                "FIRST": {"HTML": "<p>first</p>"},
+                "SECOND": {"HTML": "<p>second</p>"},
+                "UNLISTED": {"HTML": "<p>not a collection</p>"},
+            },
+        )
+        parser = GossFormDataParser("HTML", parser=HtmlParser("p"))
+        assert [tag.get_text() for tag in parser(response)] == ["second", "first"]
+
+    def test_form_data_missing_page_order_is_reported(self):
+        from waste_collection_schedule.parsers import HtmlParser
+        from waste_collection_schedule.service.GossForm import GossFormDataParser
+
+        with pytest.raises(ValueError, match="_PAGEORDER_"):
+            GossFormDataParser("HTML", parser=HtmlParser("p"))(
+                SimpleNamespace(text="no data")
+            )
+
+
+class TestLinkedAssetRetriever:
+    @pytest.mark.parametrize("page_error", [None, "requests", "curl"])
+    def test_missing_link_or_page_transport_error_uses_fallback(self, page_error):
+        import requests
+        from curl_cffi.requests import RequestsError
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.retrievers import LinkedAssetRetriever
+
+        source = BaseSource()
+        source._session = MagicMock()
+        asset = MagicMock(text="calendar")
+        if page_error == "requests":
+            page = requests.Timeout("page unavailable")
+        elif page_error == "curl":
+            page = RequestsError("page unavailable")
+        else:
+            page = SimpleNamespace(
+                text="no script link", url="https://council.test/page"
+            )
+        source._session.get.side_effect = [page, asset]
+        retriever = LinkedAssetRetriever(
+            "https://council.test/page",
+            pattern=r'src="([^"]+)"',
+            fallback_url="https://static.test/calendar.js",
+        )
+        assert retriever(source) is asset
+        assert [call.args[0] for call in source._session.get.call_args_list] == [
+            "https://council.test/page",
+            "https://static.test/calendar.js",
+        ]
+        asset.raise_for_status.assert_called_once()
+
+    def test_relative_discovered_asset_wins_over_fallback(self):
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.retrievers import LinkedAssetRetriever
+
+        source = BaseSource()
+        source._session = MagicMock()
+        source._session.get.side_effect = [
+            SimpleNamespace(
+                text='<script src="../build/calendar.js?v=2"></script>',
+                url="https://council.test/bin/page",
+            ),
+            MagicMock(),
+        ]
+        LinkedAssetRetriever(
+            "https://council.test/bin/page",
+            pattern=r'src="([^"]+)"',
+            fallback_url="https://static.test/old.js",
+        )(source)
+        assert (
+            source._session.get.call_args.args[0]
+            == "https://council.test/build/calendar.js?v=2"
+        )
+
+    def test_asset_http_error_propagates(self):
+        import requests
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.retrievers import LinkedAssetRetriever
+
+        source = BaseSource()
+        source._session = MagicMock()
+        failed = MagicMock()
+        failed.raise_for_status.side_effect = requests.HTTPError("asset unavailable")
+        source._session.get.side_effect = [
+            SimpleNamespace(text="blocked", url="https://council.test/"),
+            failed,
+        ]
+        with pytest.raises(requests.HTTPError, match="asset unavailable"):
+            LinkedAssetRetriever(
+                "https://council.test/",
+                pattern=r'src="([^"]+)"',
+                fallback_url="https://static.test/calendar.js",
+            )(source)
+
+
+class TestJsObjectParser:
+    def test_unquoted_keys_zero_based_months_and_strings_are_decoded_without_execution(
+        self,
+    ):
+        from waste_collection_schedule.parsers import JsObjectParser
+
+        parser = JsObjectParser({"calendar": r"const data=(.*);"})
+        response = SimpleNamespace(
+            text='const data={zone1:[new Date(2026,0,2),new Date(2026,11,31)],label:"key:new Date(2026,0,1)",nested:{items:["glass","mixed"]}};'
+        )
+        assert parser(response) == {
+            "calendar": {
+                "zone1": ["2026-01-02", "2026-12-31"],
+                "label": "key:new Date(2026,0,1)",
+                "nested": {"items": ["glass", "mixed"]},
+            }
+        }
+
+    def test_missing_object_is_an_error(self):
+        from waste_collection_schedule.parsers import JsObjectParser
+
+        with pytest.raises(ValueError, match="not found"):
+            JsObjectParser({"calendar": r"const data=(.*);"})(
+                SimpleNamespace(text="unrelated script")
+            )
+
+    @pytest.mark.parametrize(
+        "literal", ["{day:new Date(2026,12,1)}", "{day:dangerousFunction()}"]
+    )
+    def test_invalid_dates_and_non_json_expressions_are_rejected(self, literal):
+        from waste_collection_schedule.parsers import JsObjectParser
+
+        with pytest.raises(ValueError):
+            JsObjectParser({"calendar": r"const data=(.*);"})(
+                SimpleNamespace(text=f"const data={literal};")
+            )
+
+
+class TestNamedResponses:
+    def test_each_named_parser_receives_its_response_and_source(self):
+        from waste_collection_schedule.parsers import NamedResponses
+
+        first = MagicMock(return_value={"zones": []})
+        second = MagicMock(return_value={"features": []})
+        source = MagicMock()
+        assert NamedResponses({"calendar": first, "address": second})(
+            ["script", "json"], source
+        ) == [{"calendar": {"zones": []}, "address": {"features": []}}]
+        first.assert_called_once_with("script", source)
+        second.assert_called_once_with("json", source)
+
+    @pytest.mark.parametrize("responses", [[], ["one", "extra"]])
+    def test_missing_or_extra_response_is_an_error(self, responses):
+        from waste_collection_schedule.parsers import NamedResponses
+
+        with pytest.raises(ValueError, match="number of responses"):
+            NamedResponses({"calendar": MagicMock()})(responses)
+
+
+class TestSourceSessionImpersonation:
+    @pytest.mark.parametrize("fingerprint", ["chrome", None, "firefox"])
+    def test_configured_fingerprint_is_used_for_cached_per_source_session(
+        self, fingerprint
+    ):
+        from waste_collection_schedule.base_source import BaseSource
+
+        class ConfiguredSource(BaseSource):
+            IMPERSONATE = fingerprint
+
+        with patch("curl_cffi.requests.Session") as factory:
+            first = ConfiguredSource()
+            second = ConfiguredSource()
+            factory.assert_not_called()
+            assert first.session is first.session
+            factory.assert_called_once_with(impersonate=fingerprint)
+            _ = second.session
+            assert factory.call_count == 2
+
+    def test_default_fingerprint_stays_chrome(self):
+        from waste_collection_schedule.base_source import BaseSource
+
+        with patch("curl_cffi.requests.Session") as factory:
+            _ = BaseSource().session
+            factory.assert_called_once_with(impersonate="chrome")
+
+
+class TestSelectedRetrieval:
+    def test_only_selected_flow_runs(self):
+        from waste_collection_schedule.retrievers import SelectRetriever
+
+        direct, address = MagicMock(return_value="calendar"), MagicMock()
+        source = SimpleNamespace(params={"payload": {"id": 1}})
+        retrieve = SelectRetriever(
+            lambda source: "direct" if source.params.get("payload") else "address",
+            {"direct": direct, "address": address},
+        )
+        assert retrieve(source) == "calendar"
+        direct.assert_called_once_with(source)
+        address.assert_not_called()
+
+    def test_failure_does_not_try_other_input_mode(self):
+        from waste_collection_schedule.retrievers import SelectRetriever
+
+        failed, other = MagicMock(side_effect=ValueError("upstream")), MagicMock()
+        with pytest.raises(ValueError, match="upstream"):
+            SelectRetriever(
+                lambda source: "direct", {"direct": failed, "address": other}
+            )(MagicMock())
+        other.assert_not_called()
+
+
+class TestHtmlFormFlow:
+    @staticmethod
+    def response(html="", *, status=200, url="https://council.test/find", headers=None):
+        return SimpleNamespace(
+            text=html,
+            status_code=status,
+            url=url,
+            headers=headers or {},
+            raise_for_status=MagicMock(),
+        )
+
+    def test_preserves_successful_controls_and_only_selected_button(self):
+        from bs4 import BeautifulSoup
+        from waste_collection_schedule.service.HtmlForms import form_values
+
+        form = BeautifulSoup(
+            """<form><input name="csrf" value="token">
+            <input name="checked" type="checkbox" checked value="yes">
+            <input name="unchecked" type="checkbox" value="no">
+            <select name="address"><option value="1">One</option><option selected value="2">Two</option></select>
+            <textarea name="notes">text</textarea><button name="next" value="go">Next</button>
+            <button name="back" value="previous">Back</button></form>""",
+            "html.parser",
+        ).form
+        assert form_values(form, "next") == {
+            "csrf": "token",
+            "checked": "yes",
+            "address": "2",
+            "notes": "text",
+            "next": "go",
+        }
+
+    def test_missing_action_submits_to_current_url_and_carries_new_tokens(self):
+        from waste_collection_schedule.service.HtmlForms import (
+            FormStep,
+            HtmlFormRetriever,
+        )
+
+        first = self.response(
+            '<form><input name="csrf" value="first"><input name="postcode"></form>'
+        )
+        second = self.response(
+            '<form action="/submit"><input name="csrf" value="second"><select name="address"></select></form>'
+        )
+        final = self.response("calendar")
+        source = SimpleNamespace(
+            params={"postcode": "AB1", "address": "7"}, session=MagicMock()
+        )
+        source.session.get.return_value = first
+        source.session.post.side_effect = [second, final]
+        retrieve = HtmlFormRetriever(
+            "https://council.test/find",
+            steps=(
+                FormStep(
+                    'input[name="postcode"]',
+                    lambda response, postcode, **_: {"postcode": postcode},
+                    "postcode",
+                ),
+                FormStep(
+                    'select[name="address"]',
+                    lambda response, address, **_: {"address": address},
+                    "address",
+                ),
+            ),
+        )
+        assert retrieve(source) is final
+        calls = source.session.post.call_args_list
+        assert calls[0].args == ("https://council.test/find",)
+        assert calls[0].kwargs["data"] == {"csrf": "first", "postcode": "AB1"}
+        assert calls[1].args == ("https://council.test/submit",)
+        assert calls[1].kwargs["data"] == {"csrf": "second", "address": "7"}
+
+    @pytest.mark.parametrize("hops", [1, 10, 11])
+    def test_explicit_relative_redirects_are_bounded(self, hops):
+        from waste_collection_schedule.service.HtmlForms import (
+            FormStep,
+            HtmlFormRetriever,
+        )
+
+        initial = self.response(
+            '<form action="/submit"><input name="token" value="x"></form>'
+        )
+        redirect = self.response(status=303, headers={"Location": "/next"})
+        final = self.response("calendar")
+        source = SimpleNamespace(params={}, session=MagicMock())
+        source.session.get.side_effect = [initial] + [redirect] * (hops - 1) + [final]
+        source.session.post.return_value = redirect
+        retrieve = HtmlFormRetriever(
+            "https://council.test/find",
+            steps=(
+                FormStep("form", lambda response, **_: {}, "address", redirects=True),
+            ),
+        )
+        if hops > 10:
+            with pytest.raises(ValueError, match="Too many"):
+                retrieve(source)
+        else:
+            assert retrieve(source) is final
+            assert source.session.get.call_args.args == ("https://council.test/next",)
+            assert source.session.get.call_args.kwargs["allow_redirects"] is False
+
+    def test_http_error_propagates(self):
+        import requests
+        from waste_collection_schedule.service.HtmlForms import HtmlFormRetriever
+
+        response = self.response(status=503)
+        response.raise_for_status.side_effect = requests.HTTPError("unavailable")
+        source = SimpleNamespace(params={}, session=MagicMock())
+        source.session.get.return_value = response
+        with pytest.raises(requests.HTTPError, match="unavailable"):
+            HtmlFormRetriever("https://council.test/find", steps=())(source)
+        source.session.post.assert_not_called()
+
+    def test_missing_form_is_argument_error(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+        from waste_collection_schedule.service.HtmlForms import (
+            FormStep,
+            HtmlFormRetriever,
+        )
+
+        source = SimpleNamespace(params={"postcode": "missing"}, session=MagicMock())
+        source.session.get.return_value = self.response("no form")
+        with pytest.raises(SourceArgumentNotFound):
+            HtmlFormRetriever(
+                "https://council.test/find",
+                steps=(FormStep("form", lambda response, **_: {}, "postcode"),),
+            )(source)
+
+
+class TestGossJsonResult:
+    def test_nested_formdata_accepts_omitted_base64_padding(self):
+        import base64
+        import json
+
+        from waste_collection_schedule.service.GossForm import GossJsonParser
+
+        value = {
+            "PAGE3_1": {"FIELD15": {"success": True, "calArray": [{"bin": "Blue"}]}}
+        }
+        raw = base64.b64encode(json.dumps(value).encode()).decode().rstrip("=")
+        assert GossJsonParser("PAGE3_1", "FIELD15")(
+            SimpleNamespace(text=f'var BINDAYSFormData = "{raw}";')
+        ) == [value["PAGE3_1"]["FIELD15"]]
+
+    @pytest.mark.parametrize(
+        "value", [{}, {"PAGE3_1": {}}, {"PAGE3_1": {"FIELD15": []}}]
+    )
+    def test_missing_or_invalid_result_raises(self, value):
+        import base64
+        import json
+
+        from waste_collection_schedule.service.GossForm import GossJsonParser
+
+        raw = base64.b64encode(json.dumps(value).encode()).decode()
+        with pytest.raises(ValueError):
+            GossJsonParser("PAGE3_1", "FIELD15")(
+                SimpleNamespace(text=f'var BINDAYSFormData = "{raw}";')
+            )

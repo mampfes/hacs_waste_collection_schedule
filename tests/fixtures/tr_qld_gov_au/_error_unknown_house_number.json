@@ -1,0 +1,55 @@
+{
+  "recorded_at": "2026-10-25",
+  "interactions": [
+    {
+      "key": "GET https://maps.tr.qld.gov.au/arcgis/rest/services/External/External_TRMaps/MapServer/1/query a3499cf983",
+      "method": "GET",
+      "url": "https://maps.tr.qld.gov.au/arcgis/rest/services/External/External_TRMaps/MapServer/1/query",
+      "final_url": "https://maps.tr.qld.gov.au/arcgis/rest/services/External/External_TRMaps/MapServer/1/query?outFields=FormattedAddress%2CGarbage%2CRecycleBinWeek%2CRecycleRunDay%2CGreenRunWeek%2CGreenRunDay&returnGeometry=false&f=json&where=FormattedAddress+LIKE+%27999+HERRIES+STREET_TOOWOOMBA+CITY+QLD+%25%27&resultRecordCount=1",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"outFields\",\"FormattedAddress,Garbage,RecycleBinWeek,RecycleRunDay,GreenRunWeek,GreenRunDay\"],[\"resultRecordCount\",\"1\"],[\"returnGeometry\",\"false\"],[\"where\",\"FormattedAddress LIKE '999 HERRIES STREET_TOOWOOMBA CITY QLD %'\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "274",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"5ee4d5d\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": "AGS_ROLES=\"419jqfa+uOZgYod4xPOQ8Q==\"; Version=1; Max-Age=60; Expires=Sun, 25 Oct 2026 13:41:26 GMT; Path=/arcgis/rest; Secure; HttpOnly",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 25 Oct 2026 13:40:26 GMT"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiU3RyZWV0Tm8iLCJmaWVsZEFsaWFzZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IkZvcm1hdHRlZCBBZGRyZXNzIiwiR2FyYmFnZSI6IkdhcmJhZ2UiLCJSZWN5Y2xlQmluV2VlayI6IlJlY3ljbGUgQmluIFdlZWsiLCJSZWN5Y2xlUnVuRGF5IjoiUmVjeWNsZSBSdW4gRGF5IiwiR3JlZW5SdW5XZWVrIjoiR3JlZW4gUnVuIFdlZWsiLCJHcmVlblJ1bkRheSI6IkdyZWVuIFJ1biBEYXkifSwiZmllbGRzIjpbeyJuYW1lIjoiRm9ybWF0dGVkQWRkcmVzcyIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJGb3JtYXR0ZWQgQWRkcmVzcyIsImxlbmd0aCI6MTUwfSx7Im5hbWUiOiJHYXJiYWdlIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkdhcmJhZ2UiLCJsZW5ndGgiOjV9LHsibmFtZSI6IlJlY3ljbGVCaW5XZWVrIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlJlY3ljbGUgQmluIFdlZWsiLCJsZW5ndGgiOjJ9LHsibmFtZSI6IlJlY3ljbGVSdW5EYXkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUmVjeWNsZSBSdW4gRGF5IiwibGVuZ3RoIjo2fSx7Im5hbWUiOiJHcmVlblJ1bldlZWsiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiR3JlZW4gUnVuIFdlZWsiLCJsZW5ndGgiOjZ9LHsibmFtZSI6IkdyZWVuUnVuRGF5IiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkdyZWVuIFJ1biBEYXkiLCJsZW5ndGgiOjZ9XSwiZmVhdHVyZXMiOltdfQ=="
+    },
+    {
+      "key": "GET https://maps.tr.qld.gov.au/arcgis/rest/services/External/External_TRMaps/MapServer/1/query 864d779be6",
+      "method": "GET",
+      "url": "https://maps.tr.qld.gov.au/arcgis/rest/services/External/External_TRMaps/MapServer/1/query",
+      "final_url": "https://maps.tr.qld.gov.au/arcgis/rest/services/External/External_TRMaps/MapServer/1/query?where=FormattedAddress+LIKE+%27%25+HERRIES%25_TOOWOOMBA+CITY+QLD+%25%27&outFields=FormattedAddress&returnGeometry=false&returnDistinctValues=true&orderByFields=FormattedAddress&f=json&resultRecordCount=50",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"orderByFields\",\"FormattedAddress\"],[\"outFields\",\"FormattedAddress\"],[\"resultRecordCount\",\"50\"],[\"returnDistinctValues\",\"true\"],[\"returnGeometry\",\"false\"],[\"where\",\"FormattedAddress LIKE '% HERRIES%_TOOWOOMBA CITY QLD %'\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Length": "329",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Encoding": "gzip",
+        "ETag": "\"4d52755\"",
+        "Vary": "Origin",
+        "Server": "Microsoft-IIS/10.0",
+        "X-Content-Type-Options": "nosniff",
+        "Set-Cookie": "AGS_ROLES=\"419jqfa+uOZgYod4xPOQ8Q==\"; Version=1; Max-Age=60; Expires=Sun, 25 Oct 2026 13:41:27 GMT; Path=/arcgis/rest; Secure; HttpOnly",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sun, 25 Oct 2026 13:40:26 GMT"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiU3RyZWV0Tm8iLCJmaWVsZEFsaWFzZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IkZvcm1hdHRlZCBBZGRyZXNzIn0sImZpZWxkcyI6W3sibmFtZSI6IkZvcm1hdHRlZEFkZHJlc3MiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiRm9ybWF0dGVkIEFkZHJlc3MiLCJsZW5ndGgiOjE1MH1dLCJmZWF0dXJlcyI6W3siYXR0cmlidXRlcyI6eyJGb3JtYXR0ZWRBZGRyZXNzIjoiMTIyLTEyNiBIZXJyaWVzIFN0cmVldFxyVE9PV09PTUJBIENJVFkgUUxEIDQzNTAifX0seyJhdHRyaWJ1dGVzIjp7IkZvcm1hdHRlZEFkZHJlc3MiOiIxMjgtMTMyIEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fSx7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjEyOS0xMzEgSGVycmllcyBTdHJlZXRcclRPT1dPT01CQSBDSVRZIFFMRCA0MzUwIn19LHsiYXR0cmlidXRlcyI6eyJGb3JtYXR0ZWRBZGRyZXNzIjoiMTM1IEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fSx7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjEzNiBIZXJyaWVzIFN0cmVldFxyVE9PV09PTUJBIENJVFkgUUxEIDQzNTAifX0seyJhdHRyaWJ1dGVzIjp7IkZvcm1hdHRlZEFkZHJlc3MiOiIxMzgtMTQyIEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fSx7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjE0NCBIZXJyaWVzIFN0cmVldFxyVE9PV09PTUJBIENJVFkgUUxEIDQzNTAifX0seyJhdHRyaWJ1dGVzIjp7IkZvcm1hdHRlZEFkZHJlc3MiOiIxNDYgSGVycmllcyBTdHJlZXRcclRPT1dPT01CQSBDSVRZIFFMRCA0MzUwIn19LHsiYXR0cmlidXRlcyI6eyJGb3JtYXR0ZWRBZGRyZXNzIjoiMTUxLTE1MyBIZXJyaWVzIFN0cmVldFxyVE9PV09PTUJBIENJVFkgUUxEIDQzNTAifX0seyJhdHRyaWJ1dGVzIjp7IkZvcm1hdHRlZEFkZHJlc3MiOiIxNTIgSGVycmllcyBTdHJlZXRcclRPT1dPT01CQSBDSVRZIFFMRCA0MzUwIn19LHsiYXR0cmlidXRlcyI6eyJGb3JtYXR0ZWRBZGRyZXNzIjoiMTU0IEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fSx7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjE2NUEgSGVycmllcyBTdHJlZXRcclRPT1dPT01CQSBDSVRZIFFMRCA0MzUwIn19LHsiYXR0cmlidXRlcyI6eyJGb3JtYXR0ZWRBZGRyZXNzIjoiMTY2IEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fSx7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjE2OS0xODEgSGVycmllcyBTdHJlZXRcclRPT1dPT01CQSBDSVRZIFFMRCA0MzUwIn19LHsiYXR0cmlidXRlcyI6eyJGb3JtYXR0ZWRBZGRyZXNzIjoiMTg0IEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fSx7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjE4NSBIZXJyaWVzIFN0cmVldFxyVE9PV09PTUJBIENJVFkgUUxEIDQzNTAifX0seyJhdHRyaWJ1dGVzIjp7IkZvcm1hdHRlZEFkZHJlc3MiOiIxODYgSGVycmllcyBTdHJlZXRcclRPT1dPT01CQSBDSVRZIFFMRCA0MzUwIn19LHsiYXR0cmlidXRlcyI6eyJGb3JtYXR0ZWRBZGRyZXNzIjoiMTg3IEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fSx7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjE4OSBIZXJyaWVzIFN0cmVldFxyVE9PV09PTUJBIENJVFkgUUxEIDQzNTAifX0seyJhdHRyaWJ1dGVzIjp7IkZvcm1hdHRlZEFkZHJlc3MiOiIxOTEgSGVycmllcyBTdHJlZXRcclRPT1dPT01CQSBDSVRZIFFMRCA0MzUwIn19LHsiYXR0cmlidXRlcyI6eyJGb3JtYXR0ZWRBZGRyZXNzIjoiMTkyIEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fSx7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjE5NCBIZXJyaWVzIFN0cmVldFxyVE9PV09PTUJBIENJVFkgUUxEIDQzNTAifX0seyJhdHRyaWJ1dGVzIjp7IkZvcm1hdHRlZEFkZHJlc3MiOiIxOTggSGVycmllcyBTdHJlZXRcclRPT1dPT01CQSBDSVRZIFFMRCA0MzUwIn19LHsiYXR0cmlidXRlcyI6eyJGb3JtYXR0ZWRBZGRyZXNzIjoiMi8xNzgtMTgwIEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fSx7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjIvMjAwIEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fSx7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjIwNiBIZXJyaWVzIFN0cmVldFxyVE9PV09PTUJBIENJVFkgUUxEIDQzNTAifX0seyJhdHRyaWJ1dGVzIjp7IkZvcm1hdHRlZEFkZHJlc3MiOiIyMDggSGVycmllcyBTdHJlZXRcclRPT1dPT01CQSBDSVRZIFFMRCA0MzUwIn19LHsiYXR0cmlidXRlcyI6eyJGb3JtYXR0ZWRBZGRyZXNzIjoiMjEyIEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fSx7ImF0dHJpYnV0ZXMiOnsiRm9ybWF0dGVkQWRkcmVzcyI6IjIxNCBIZXJyaWVzIFN0cmVldFxyVE9PV09PTUJBIENJVFkgUUxEIDQzNTAifX0seyJhdHRyaWJ1dGVzIjp7IkZvcm1hdHRlZEFkZHJlc3MiOiIyMTYgSGVycmllcyBTdHJlZXRcclRPT1dPT01CQSBDSVRZIFFMRCA0MzUwIn19LHsiYXR0cmlidXRlcyI6eyJGb3JtYXR0ZWRBZGRyZXNzIjoiMjE4IEhlcnJpZXMgU3RyZWV0XHJUT09XT09NQkEgQ0lUWSBRTEQgNDM1MCJ9fV19"
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'address' with the value '999 Herries Street', you may want to use one of the following: ['122-126 Herries Street, TOOWOOMBA CITY QLD 4350', '128-132 Herries Street, TOOWOOMBA CITY QLD 4350', '129-131 Herries Street, TOOWOOMBA CITY QLD 4350', '135 Herries Street, TOOWOOMBA CITY QLD 4350', '136 Herries Street, TOOWOOMBA CITY QLD 4350', '138-142 Herries Street, TOOWOOMBA CITY QLD 4350', '144 Herries Street, TOOWOOMBA CITY QLD 4350', '146 Herries Street, TOOWOOMBA CITY QLD 4350', '151-153 Herries Street, TOOWOOMBA CITY QLD 4350', '152 Herries Street, TOOWOOMBA CITY QLD 4350', '154 Herries Street, TOOWOOMBA CITY QLD 4350', '165A Herries Street, TOOWOOMBA CITY QLD 4350', '166 Herries Street, TOOWOOMBA CITY QLD 4350', '169-181 Herries Street, TOOWOOMBA CITY QLD 4350', '184 Herries Street, TOOWOOMBA CITY QLD 4350', '185 Herries Street, TOOWOOMBA CITY QLD 4350', '186 Herries Street, TOOWOOMBA CITY QLD 4350', '187 Herries Street, TOOWOOMBA CITY QLD 4350', '189 Herries Street, TOOWOOMBA CITY QLD 4350', '191 Herries Street, TOOWOOMBA CITY QLD 4350', '192 Herries Street, TOOWOOMBA CITY QLD 4350', '194 Herries Street, TOOWOOMBA CITY QLD 4350', '198 Herries Street, TOOWOOMBA CITY QLD 4350', '2/178-180 Herries Street, TOOWOOMBA CITY QLD 4350', '2/200 Herries Street, TOOWOOMBA CITY QLD 4350', '206 Herries Street, TOOWOOMBA CITY QLD 4350', '208 Herries Street, TOOWOOMBA CITY QLD 4350', '212 Herries Street, TOOWOOMBA CITY QLD 4350', '214 Herries Street, TOOWOOMBA CITY QLD 4350', '216 Herries Street, TOOWOOMBA CITY QLD 4350', '218 Herries Street, TOOWOOMBA CITY QLD 4350']"
+  }
+}
