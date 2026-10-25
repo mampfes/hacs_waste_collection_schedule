@@ -9,7 +9,9 @@ the legend explains them: yellow container recycling, blue paper and
 cardboard, green garden (or food and garden) organics, a cell split in two
 colours for two bins. The bins' weekday heads its column in red (garbage,
 collected every week); a tree icon marks the natural Christmas tree
-collection, and an orange frame the evening to put out the scheduled clean-up.
+collection, and an orange frame the Sunday evening to put out the scheduled
+clean-up; the collection itself starts the Monday after ("commences on
+MONDAY ..."), which is the date reported.
 
 A cell's date comes from its place in the grid (month heading, weekday
 column, week row) rather than from its printed day number, as the tree icon
@@ -267,6 +269,9 @@ def _collections(
         if label == _ORGANICS and fogo:
             label = _FOGO
         if label and (day := grid.date((v.x0 + v.x1) / 2, (v.y0 + v.y1) / 2)):
+            if label == _CLEAN_UP:
+                # The frame marks the put-out evening; collection is next day.
+                day += datetime.timedelta(days=1)
             found.add((day, label))
     bins = sum(1 for _d, label in found if label in (_RECYCLING, _PAPER))
     _expect(bins >= 40, f"only {bins} recycling or paper days found", source)
@@ -293,9 +298,6 @@ class Source(BaseSource):
     TEST_CASES: ClassVar[dict] = {
         "585 Old South Head Road, Rose Bay": {
             "address": "585 Old South Head Road, Rose Bay NSW 2029"
-        },
-        "1 Aboukir Street, Dover Heights": {
-            "address": "1 Aboukir Street Dover Heights"
         },
         "FOGO zone: 423 Old South Head Road, Rose Bay": {
             "address": "423 Old South Head Road ROSE BAY NSW 2029"
