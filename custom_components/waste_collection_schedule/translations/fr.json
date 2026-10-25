@@ -19139,6 +19139,33 @@
           "zona": "Votre quartier ou partie de la commune."
         }
       },
+      "args_econetsrl_eu": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "comune": "Commune",
+          "zona": "Quartier"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "comune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "zona": "Votre quartier ou partie de la commune."
+        }
+      },
+      "reconfigure_econetsrl_eu": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "comune": "Commune",
+          "zona": "Quartier"
+        },
+        "data_description": {
+          "comune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "zona": "Votre quartier ou partie de la commune."
+        }
+      },
       "args_aliaserviziambientali_it": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",

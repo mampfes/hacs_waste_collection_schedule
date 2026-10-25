@@ -3201,6 +3201,9 @@ If you already have enough information for your municipality/region, you are ver
 - [Aci Sant'Antonio](/doc/source/junker_app.md) / junker.app
 - [Acinque Spa](/doc/source/junker_app.md) / junker.app
 - [Acquanegra sul Chiese](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/acquanegra-sul-chiese
+- [Acqui Terme (Centro Storico)](/doc/source/econetsrl_eu.md) / econetsrl.eu
+- [Acqui Terme (Città)](/doc/source/econetsrl_eu.md) / econetsrl.eu
+- [Acqui Terme (Standard)](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [AET Ambiente Energia Territorio S.p.A.](/doc/source/junker_app.md) / junker.app
 - [Agliana](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Agno Chiampo Ambiente](/doc/source/junker_app.md) / junker.app
@@ -3215,6 +3218,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Alessano](/doc/source/siunet_it.md) / siunet.it
 - [Alezio](/doc/source/siunet_it.md) / siunet.it
 - [Alia Servizi Ambientali S.p.A.](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Alice bel Colle](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Alife - CZETA Spa](/doc/source/junker_app.md) / junker.app
 - [Alliste](/doc/source/siunet_it.md) / siunet.it
 - [Altavilla Irpina](/doc/source/junker_app.md) / junker.app
@@ -3281,6 +3285,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Bassano Romano](/doc/source/junker_app.md) / junker.app
 - [Belfiore](/doc/source/siunet_it.md) / siunet.it
 - [Belforte del Chienti](/doc/source/junker_app.md) / junker.app
+- [Belforte Monferrato](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Bellano](/doc/source/siunet_it.md) / siunet.it
 - [Bellinzago Lombardo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Bellinzago Lombardo](/doc/source/siunet_it.md) / siunet.it
@@ -3294,6 +3299,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Biassono](/doc/source/siunet_it.md) / siunet.it
 - [Bientina](/doc/source/junker_app.md) / junker.app
 - [Binasco](/doc/source/siunet_it.md) / siunet.it
+- [Bistagno](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Bitti, Luna e Onanì - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Blera](/doc/source/junker_app.md) / junker.app
 - [Boca](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
@@ -3313,6 +3319,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Borgomanero (zona C)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Borgomaro](/doc/source/junker_app.md) / junker.app
 - [Borgosesia - Seso Srl](/doc/source/junker_app.md) / junker.app
+- [Bosio](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Bosisio Parini](/doc/source/siunet_it.md) / siunet.it
 - [Bovisio Masciago](/doc/source/siunet_it.md) / siunet.it
 - [Bovolone](/doc/source/siunet_it.md) / siunet.it
@@ -3377,6 +3384,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Carnate](/doc/source/siunet_it.md) / siunet.it
 - [Caronno Pertusella - Econord](/doc/source/junker_app.md) / junker.app
 - [Carovigno](/doc/source/siunet_it.md) / siunet.it
+- [Carpeneto](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Carpiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Carpiano](/doc/source/siunet_it.md) / siunet.it
 - [Carpignano Salentino](/doc/source/junker_app.md) / junker.app
@@ -3385,6 +3393,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Carugate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Carugate](/doc/source/siunet_it.md) / siunet.it
 - [Casale Marittimo](/doc/source/junker_app.md) / junker.app
+- [Casaleggio Boiro](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Casaleone](/doc/source/siunet_it.md) / siunet.it
 - [Casaletto Lodigiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Casaletto Lodigiano](/doc/source/siunet_it.md) / siunet.it
@@ -3405,6 +3414,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Cassina De' Pecchi](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Cassina De' Pecchi](/doc/source/siunet_it.md) / siunet.it
 - [Cassina Valsassina](/doc/source/siunet_it.md) / siunet.it
+- [Cassine](/doc/source/econetsrl_eu.md) / econetsrl.eu
+- [Cassinelle](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Castagnaro](/doc/source/siunet_it.md) / siunet.it
 - [Castegnero](/doc/source/siunet_it.md) / siunet.it
 - [Castel d'Ario](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/casteldario
@@ -3418,6 +3429,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Castelforte](/doc/source/junker_app.md) / junker.app
 - [Castellammare del Golfo - Agesp Spa](/doc/source/junker_app.md) / junker.app
 - [Castellanza](/doc/source/siunet_it.md) / siunet.it
+- [Castelletto d'Orba](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Castelletto Sopra Ticino (zona A)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Castelletto Sopra Ticino (zona B)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Castello Di Brianza](/doc/source/siunet_it.md) / siunet.it
@@ -3509,6 +3521,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Crandola Valsassina](/doc/source/siunet_it.md) / siunet.it
 - [Cremella](/doc/source/siunet_it.md) / siunet.it
 - [Cremeno](/doc/source/siunet_it.md) / siunet.it
+- [Cremolino](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Cressa](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Crevalcore](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Cuggiono](/doc/source/siunet_it.md) / siunet.it
@@ -3536,6 +3549,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ecoambiente Srl](/doc/source/junker_app.md) / junker.app
 - [EcoInnova Srl](/doc/source/junker_app.md) / junker.app
 - [Ecolan - Lanciano](/doc/ics/ecolan_it.md) / ecolan.it
+- [Econet](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Econova Srl](/doc/source/junker_app.md) / junker.app
 - [Ello](/doc/source/siunet_it.md) / siunet.it
 - [Empoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -3672,6 +3686,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Leinì](/doc/source/junker_app.md) / junker.app
 - [Lentate sul Seveso](/doc/source/junker_app.md) / junker.app
 - [Leporano - Impregico Srl](/doc/source/junker_app.md) / junker.app
+- [Lerma](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Lesa](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Lesina](/doc/source/siunet_it.md) / siunet.it
 - [Lesmo](/doc/source/cem_ambiente_it.md) / cemambiente.it
@@ -3750,12 +3765,15 @@ If you already have enough information for your municipality/region, you are ver
 - [Misinto](/doc/source/siunet_it.md) / siunet.it
 - [Missaglia](/doc/source/siunet_it.md) / siunet.it
 - [Moggio](/doc/source/siunet_it.md) / siunet.it
+- [Molare](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Molteno](/doc/source/siunet_it.md) / siunet.it
 - [Mondolfo](/doc/source/junker_app.md) / junker.app
 - [Mondragone - DHI](/doc/source/junker_app.md) / junker.app
 - [Monserrato - Gesenu Spa](/doc/source/junker_app.md) / junker.app
 - [Monsummano Terme](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Montaione](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Montaldeo](/doc/source/econetsrl_eu.md) / econetsrl.eu
+- [Montaldo Bormida](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Montale](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Montalto di Castro](/doc/source/junker_app.md) / junker.app
 - [Monte di Procida - DM Technology Srl](/doc/source/junker_app.md) / junker.app
@@ -3787,6 +3805,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Monza - Impresa Sangalli](/doc/source/junker_app.md) / junker.app
 - [Monzambano](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/monzambano
 - [Morciano Di Leuca](/doc/source/siunet_it.md) / siunet.it
+- [Mornese](/doc/source/econetsrl_eu.md) / econetsrl.eu
+- [Morsasco](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Morterone](/doc/source/siunet_it.md) / siunet.it
 - [Mosciano Sant'Angelo - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Motteggiana](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/motteggiana
@@ -3819,11 +3839,15 @@ If you already have enough information for your municipality/region, you are ver
 - [Ornago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Ornago](/doc/source/siunet_it.md) / siunet.it
 - [Orosei - Sceas - Ciclat](/doc/source/junker_app.md) / junker.app
+- [Orsara](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Orta San Giulio](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Osimo - Astea](/doc/source/junker_app.md) / junker.app
 - [Osnago](/doc/source/siunet_it.md) / siunet.it
 - [Ossago Lodigiano](/doc/source/junker_app.md) / junker.app
 - [Ossona](/doc/source/siunet_it.md) / siunet.it
+- [Ovada (Centro Storico)](/doc/source/econetsrl_eu.md) / econetsrl.eu
+- [Ovada (Città)](/doc/source/econetsrl_eu.md) / econetsrl.eu
+- [Ovada (Standard)](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Paderno D'Adda](/doc/source/siunet_it.md) / siunet.it
 - [Pagnona](/doc/source/siunet_it.md) / siunet.it
 - [Palata](/doc/source/junker_app.md) / junker.app
@@ -3873,6 +3897,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Pozzo D'Adda](/doc/source/siunet_it.md) / siunet.it
 - [Pozzuolo Martesana](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Pozzuolo Martesana](/doc/source/siunet_it.md) / siunet.it
+- [Prasco](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Prato](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Prato Sesia](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Pratola Peligna - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
@@ -3896,6 +3921,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Rescaldina](/doc/source/junker_app.md) / junker.app
 - [Rescaldina](/doc/source/siunet_it.md) / siunet.it
 - [Rho - A.Se.R SpA](/doc/source/junker_app.md) / junker.app
+- [Ricaldone](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Rieco - Abruzzo](/doc/source/junker_app.md) / junker.app
 - [Rieco - Lazio](/doc/source/junker_app.md) / junker.app
 - [Rieco - Marche](/doc/source/junker_app.md) / junker.app
@@ -3904,12 +3930,14 @@ If you already have enough information for your municipality/region, you are ver
 - [Riola Sardo - EffeAmbiente](/doc/source/junker_app.md) / junker.app
 - [Ripalimosani](/doc/source/junker_app.md) / junker.app
 - [Riparbella](/doc/source/junker_app.md) / junker.app
+- [Rivalta Bormida](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Rivarolo Mantovano](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/rivarolo-mantovano
 - [Rivolta D'Adda](/doc/source/siunet_it.md) / siunet.it
 - [Robbiate](/doc/source/siunet_it.md) / siunet.it
 - [Robecchetto con Induno](/doc/source/junker_app.md) / junker.app
 - [Robecchetto Con Induno](/doc/source/siunet_it.md) / siunet.it
 - [Rocca di Papa - DM Technology Srl](/doc/source/junker_app.md) / junker.app
+- [Rocca Grimalda](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Roccella Ionica - Jonica Multiservizi Spa](/doc/source/junker_app.md) / junker.app
 - [Rodano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Rodano](/doc/source/siunet_it.md) / siunet.it
@@ -3945,6 +3973,7 @@ If you already have enough information for your municipality/region, you are ver
 - [San Bartolomeo Al Mare](/doc/source/siunet_it.md) / siunet.it
 - [San Casciano in Val di Pesa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [San Cipriano Po](/doc/source/junker_app.md) / junker.app
+- [San Cristoforo](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [San Ferdinando Di Puglia](/doc/source/siunet_it.md) / siunet.it
 - [San Giacomo delle Segnate](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/san-giacomo-delle-segnate
 - [San Giorgio Bigarello](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/san-giorgio-e-bigarello
@@ -3998,6 +4027,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Sieco Spa](/doc/source/junker_app.md) / junker.app
 - [Signa](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Silea](/doc/source/silea_it.md) / sileaspa.it
+- [Silvano d'Orba](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Silvi - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
 - [Siniscola - DLR Ambiente - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Sirone](/doc/source/siunet_it.md) / siunet.it
@@ -4019,6 +4049,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Stefanaconi](/doc/source/junker_app.md) / junker.app
 - [Stellanello](/doc/source/siunet_it.md) / siunet.it
 - [Stradella](/doc/source/junker_app.md) / junker.app
+- [Strevi](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Sueglio](/doc/source/siunet_it.md) / siunet.it
 - [Suello](/doc/source/siunet_it.md) / siunet.it
 - [Sulbiate](/doc/source/cem_ambiente_it.md) / cemambiente.it
@@ -4027,6 +4058,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Suno](/doc/source/junker_app.md) / junker.app
 - [Suzzara](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/suzzara
 - [Taceno](/doc/source/siunet_it.md) / siunet.it
+- [Tagliolo Monferrato](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Taranto (araccolta.it)](/doc/source/araccolta_it.md) / araccolta.it
 - [Taviano](/doc/source/siunet_it.md) / siunet.it
 - [Termoli - Rieco Sud Scarl](/doc/source/junker_app.md) / junker.app
@@ -4035,6 +4067,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Terracina](/doc/source/junker_app.md) / junker.app
 - [Terrazzo](/doc/source/siunet_it.md) / siunet.it
 - [Terre Roveresche](/doc/source/junker_app.md) / junker.app
+- [Terzo](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Testico](/doc/source/siunet_it.md) / siunet.it
 - [Tiggiano](/doc/source/siunet_it.md) / siunet.it
 - [Tivoli - ASA Tivoli Spa](/doc/source/junker_app.md) / junker.app
@@ -4058,6 +4091,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Tricase](/doc/source/junker_app.md) / junker.app
 - [Tricase](/doc/source/siunet_it.md) / siunet.it
 - [Triora](/doc/source/junker_app.md) / junker.app
+- [Trisobbio](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Triuggio](/doc/source/siunet_it.md) / siunet.it
 - [Trivento - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
 - [Truccazzano](/doc/source/cem_ambiente_it.md) / cemambiente.it
@@ -4123,6 +4157,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Vimodrone](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Vimodrone](/doc/source/siunet_it.md) / siunet.it
 - [Vinci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Visone](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Vitorchiano](/doc/source/junker_app.md) / junker.app
 - [Vitulazio - DM Technology Srl](/doc/source/junker_app.md) / junker.app
 - [Vizzolo Predabissi](/doc/source/cem_ambiente_it.md) / cemambiente.it

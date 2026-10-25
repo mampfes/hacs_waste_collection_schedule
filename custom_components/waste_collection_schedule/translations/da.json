@@ -19121,6 +19121,33 @@
           "zona": "Dit distrikt eller del af kommunen"
         }
       },
+      "args_econetsrl_eu": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "comune": "Kommune",
+          "zona": "Distrikt"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "comune": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "zona": "Dit distrikt eller del af kommunen"
+        }
+      },
+      "reconfigure_econetsrl_eu": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "comune": "Kommune",
+          "zona": "Distrikt"
+        },
+        "data_description": {
+          "comune": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "zona": "Dit distrikt eller del af kommunen"
+        }
+      },
       "args_aliaserviziambientali_it": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",

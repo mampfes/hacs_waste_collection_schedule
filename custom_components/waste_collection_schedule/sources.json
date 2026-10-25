@@ -23777,6 +23777,33 @@
       "id": "mantovaambiente_it"
     },
     {
+      "title": "Acqui Terme (Centro Storico)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Acqui Terme",
+        "zona": "Centro Storico"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Acqui Terme (Citt\u00e0)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Acqui Terme",
+        "zona": "Citt\u00e0"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Acqui Terme (Standard)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Acqui Terme",
+        "zona": "Standard"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "AET Ambiente Energia Territorio S.p.A.",
       "module": "junker_app",
       "default_params": {},
@@ -23881,6 +23908,14 @@
       "module": "aliaserviziambientali_it",
       "default_params": {},
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Alice bel Colle",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Alice bel Colle"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Alife - CZETA Spa",
@@ -24347,6 +24382,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Belforte Monferrato",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Belforte Monferrato"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Bellano",
       "module": "siunet_it",
       "default_params": {
@@ -24445,6 +24488,14 @@
         "comune": "BINASCO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Bistagno",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Bistagno"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Bitti, Luna e Onan\u00ec - Formula Ambiente Spa",
@@ -24587,6 +24638,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Bosio",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Bosio"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Bosisio Parini",
@@ -25059,6 +25118,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Carpeneto",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Carpeneto"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Carpiano",
       "module": "cem_ambiente_it",
       "default_params": {
@@ -25115,6 +25182,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Casaleggio Boiro",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Casaleggio Boiro"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Casaleone",
@@ -25275,6 +25350,22 @@
       "id": "siunet_it"
     },
     {
+      "title": "Cassine",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Cassine"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Cassinelle",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Cassinelle"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Castagnaro",
       "module": "siunet_it",
       "default_params": {
@@ -25367,6 +25458,14 @@
         "comune": "CASTELLANZA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Castelletto d'Orba",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Castelletto d'Orba"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Castelletto Sopra Ticino (zona A)",
@@ -26023,6 +26122,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Cremolino",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Cremolino"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Cressa",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -26221,6 +26328,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_ecolan_it"
+    },
+    {
+      "title": "Econet",
+      "module": "econetsrl_eu",
+      "default_params": {},
+      "id": "econetsrl_eu"
     },
     {
       "title": "Econova Srl",
@@ -27155,6 +27268,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Lerma",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Lerma"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Lesa",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -27733,6 +27854,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Molare",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Molare"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Molteno",
       "module": "siunet_it",
       "default_params": {
@@ -27773,6 +27902,22 @@
         "municipality": "Montaione"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Montaldeo",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Montaldeo"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Montaldo Bormida",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Montaldo Bormida"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Montale",
@@ -27989,6 +28134,22 @@
         "comune": "MORCIANO DI LEUCA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Mornese",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Mornese"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Morsasco",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Morsasco"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Morterone",
@@ -28223,6 +28384,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Orsara",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Orsara"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Orta San Giulio",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -28257,6 +28426,33 @@
         "comune": "OSSONA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Ovada (Centro Storico)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Ovada",
+        "zona": "Centro Storico"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Ovada (Citt\u00e0)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Ovada",
+        "zona": "Citt\u00e0"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Ovada (Standard)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Ovada",
+        "zona": "Standard"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Paderno D'Adda",
@@ -28625,6 +28821,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Prasco",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Prasco"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Prato",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -28793,6 +28997,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Ricaldone",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Ricaldone"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Rieco - Abruzzo",
       "module": "junker_app",
       "default_params": {},
@@ -28843,6 +29055,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Rivalta Bormida",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Rivalta Bormida"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Rivarolo Mantovano",
       "module": "mantovaambiente_it",
       "default_params": {
@@ -28885,6 +29105,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Rocca Grimalda",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Rocca Grimalda"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Roccella Ionica - Jonica Multiservizi Spa",
@@ -29145,6 +29373,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "San Cristoforo",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "San Cristoforo"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "San Ferdinando Di Puglia",
@@ -29529,6 +29765,14 @@
       "id": "silea_it"
     },
     {
+      "title": "Silvano d'Orba",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Silvano d'Orba"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Silvi - Diodoro Ecologia",
       "module": "junker_app",
       "default_params": {},
@@ -29679,6 +29923,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Strevi",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Strevi"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Sueglio",
       "module": "siunet_it",
       "default_params": {
@@ -29741,6 +29993,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Tagliolo Monferrato",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Tagliolo Monferrato"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Taranto (araccolta.it)",
       "module": "araccolta_it",
       "default_params": {},
@@ -29793,6 +30053,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Terzo",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Terzo"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Testico",
@@ -29961,6 +30229,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Trisobbio",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Trisobbio"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Triuggio",
@@ -30433,6 +30709,14 @@
         "municipality": "Vinci"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Visone",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Visone"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Vitorchiano",
