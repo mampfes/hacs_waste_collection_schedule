@@ -9196,6 +9196,140 @@ def test_html_calendar_grid_marker_attributes(
     assert parser(response) == expected
 
 
+class TestGossFormComponents:
+    @staticmethod
+    def _encoded_response(variable, value):
+        import base64
+
+        encoded = base64.b64encode(json.dumps(value).encode()).decode()
+        return SimpleNamespace(text=f'var {variable} = "{encoded}";')
+
+    @pytest.mark.parametrize("state_fields", [None, ("NONCE",), ()])
+    def test_selected_state_fields_and_rotating_tokens(self, state_fields):
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.service.GossForm import (
+            GossFormRetriever,
+            GossStep,
+        )
+
+        def page(number):
+            return SimpleNamespace(
+                url="https://council.test/start",
+                text=(
+                    f'<form id="F_FORM" action="/step{number}">'
+                    f'<input name="F_PAGESESSIONID" value="page{number}">'
+                    f'<input name="F_NONCE" value="nonce{number}">'
+                    '<input name="F_OTHER" value="keep-by-default"></form>'
+                ),
+                raise_for_status=MagicMock(),
+            )
+
+        source = BaseSource()
+        source._session = MagicMock()
+        source._session.get.return_value = page(1)
+        final = page(3)
+        source._session.post.side_effect = [page(2), final]
+        retriever = GossFormRetriever(
+            "https://council.test/start",
+            form="F",
+            state_fields=state_fields,
+            steps=(GossStep("NEXT", fields=lambda response, **_: {"ANSWER": "yes"}),)
+            * 2,
+        )
+        assert retriever(source) is final
+        for number, call in enumerate(source._session.post.call_args_list, 1):
+            assert call.args == (f"https://council.test/step{number}",)
+            data = call.kwargs["data"]
+            assert data["F_ANSWER"] == "yes"
+            assert data["F_FORMACTION_NEXT"] == "F_NEXT"
+            expected = {"F_ANSWER", "F_FORMACTION_NEXT"}
+            if state_fields is None:
+                expected |= {"F_PAGESESSIONID", "F_NONCE", "F_OTHER"}
+            else:
+                expected |= {f"F_{name}" for name in state_fields}
+            assert set(data) == expected
+            if "F_NONCE" in data:
+                assert data["F_NONCE"] == f"nonce{number}"
+
+    @pytest.mark.parametrize("wrapped", [False, True])
+    @pytest.mark.parametrize("soap", [False, True])
+    @pytest.mark.parametrize("single", [False, True])
+    def test_whitespace_optional_wrappers_and_single_collection(
+        self, wrapped, soap, single
+    ):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        record = {"Date": "27/10/2026 00:00:00", "Service": "Recycling"}
+        result = {
+            "SuccessFlag": True,
+            "Collections": {"Collection": record if single else [record]},
+        }
+        if soap:
+            result = {"GetCollectionByUprnAndDateResult": result}
+        if wrapped:
+            result = {"value": result, "scope": "SERVERCLIENT"}
+        response = self._encoded_response(
+            "FSerializedVariables", {"Recordset1": result}
+        )
+        assert GossWhitespaceParser("F")(response) == [record]
+
+    @pytest.mark.parametrize("collections", [None, {}, {"Collection": []}])
+    def test_whitespace_empty_successful_calendar(self, collections):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        response = self._encoded_response(
+            "FSerializedVariables",
+            {"Recordset1": {"SuccessFlag": True, "Collections": collections}},
+        )
+        assert GossWhitespaceParser("F")(response) == []
+
+    def test_whitespace_api_error_is_not_an_empty_calendar(self):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        response = self._encoded_response(
+            "FSerializedVariables",
+            {
+                "Recordset1": {
+                    "SuccessFlag": False,
+                    "ErrorDescription": "upstream failed",
+                }
+            },
+        )
+        with pytest.raises(ValueError, match="upstream failed"):
+            GossWhitespaceParser("F")(response)
+
+    def test_whitespace_missing_recordset_is_reported(self):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        with pytest.raises(ValueError, match="Recordset1"):
+            GossWhitespaceParser("F")(SimpleNamespace(text="<html>redesigned</html>"))
+
+    def test_form_data_follows_page_order_and_ignores_unlisted_pages(self):
+        from waste_collection_schedule.parsers import HtmlParser
+        from waste_collection_schedule.service.GossForm import GossFormDataParser
+
+        response = self._encoded_response(
+            "FFormData",
+            {
+                "_PAGEORDER_": ["SECOND", "FIRST"],
+                "FIRST": {"HTML": "<p>first</p>"},
+                "SECOND": {"HTML": "<p>second</p>"},
+                "UNLISTED": {"HTML": "<p>not a collection</p>"},
+            },
+        )
+        parser = GossFormDataParser("HTML", parser=HtmlParser("p"))
+        assert [tag.get_text() for tag in parser(response)] == ["second", "first"]
+
+    def test_form_data_missing_page_order_is_reported(self):
+        from waste_collection_schedule.parsers import HtmlParser
+        from waste_collection_schedule.service.GossForm import GossFormDataParser
+
+        with pytest.raises(ValueError, match="_PAGEORDER_"):
+            GossFormDataParser("HTML", parser=HtmlParser("p"))(
+                SimpleNamespace(text="no data")
+            )
+
+
 class TestLinkedAssetRetriever:
     @pytest.mark.parametrize("page_error", [None, "requests", "curl"])
     def test_missing_link_or_page_transport_error_uses_fallback(self, page_error):
