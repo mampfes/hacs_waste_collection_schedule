@@ -1,6 +1,7 @@
 import re
 from typing import ClassVar, final
 
+from bs4 import Tag
 from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
@@ -17,6 +18,16 @@ _FORM = "LOOKUPBINDATESBYADDRESSSKIPOUTOFREGIONV2"
 
 def _date(element):
     return re.sub(r"(?<=[0-9])(?:st|nd|rd|th)", "", element.get_text(strip=True))
+
+
+def _type(element: Tag) -> str:
+    cell = element.find_parent("div", class_="grid__cell")
+    if cell is None:
+        raise ValueError("Collection date has no bin container")
+    title = cell.select_one("p.myaccount-block__title--bin")
+    if title is None:
+        raise ValueError("Collection container has no bin title")
+    return title.get_text(strip=True)
 
 
 @final
@@ -64,11 +75,7 @@ class Source(BaseSource):
     )
     transform = HtmlTransformer(
         date_getter=_date,
-        type_getter=lambda element: (
-            element.find_parent("div", class_="grid__cell")
-            .select_one("p.myaccount-block__title--bin")
-            .get_text(strip=True)
-        ),
+        type_getter=_type,
         parse_date=date_parsers.for_format("%a %d %B %Y"),
         skip_unparseable_dates=True,
         type_value_map={
