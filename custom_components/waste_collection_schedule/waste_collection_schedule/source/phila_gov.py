@@ -1,6 +1,6 @@
 from datetime import date, datetime, timedelta
 
-import requests
+from curl_cffi import requests
 from dateutil.rrule import FR, MO, SA, SU, TH, TU, WE, WEEKLY, rrule
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
@@ -14,7 +14,6 @@ TEST_CASES = {
     "Test_003": {"address": "582 Paoli Ave"},
     "Test_004": {"address": "2714 S Marvine St"},
 }
-HEADERS = {"user-agent": "Mozilla/5.0"}
 DAYS = {
     "MON": MO,
     "TUE": TU,
@@ -97,25 +96,28 @@ class Source:
         return adjusted
 
     def fetch(self) -> list[Collection]:
-        s = requests.Session()
+        # the CloudFront CDN in front of api.phila.gov blocks non-browser TLS clients
+        s = requests.Session(impersonate="chrome")
 
         # get list of observed holidays
         # weekend holidays are excluded as they don't affect collections
         holidays = []
-        h_json = s.get(
+        h_response = s.get(
             "https://api.phila.gov/phila/trashday/v1",
-            headers=HEADERS,
-        ).json()
+        )
+        h_response.raise_for_status()
+        h_json = h_response.json()
         for item in h_json["holidays"]:
             h_date = datetime.strptime(item["start_date"], "%Y-%m-%d").date()
             if h_date.weekday() not in [5, 6]:
                 holidays.append(h_date)
 
         # get property info
-        p_json = s.get(
+        p_response = s.get(
             f"https://api.phila.gov/ais/v1/addresses/{self._address}",
-            headers=HEADERS,
-        ).json()
+        )
+        p_response.raise_for_status()
+        p_json = p_response.json()
 
         props = p_json["features"][0]["properties"]
 
