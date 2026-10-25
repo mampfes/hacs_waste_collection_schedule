@@ -33262,6 +33262,12 @@
       "id": "pup_si"
     },
     {
+      "title": "Saubermacher - Komunala",
+      "module": "saubermacher_komunala_si",
+      "default_params": {},
+      "id": "saubermacher_komunala_si"
+    },
+    {
       "title": "Simbio",
       "module": "simbio_si",
       "default_params": {},

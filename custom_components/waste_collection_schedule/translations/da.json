@@ -23689,6 +23689,31 @@
         },
         "data_description": {}
       },
+      "args_saubermacher_komunala_si": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Distrikt",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "district": "Dit distrikt eller del af kommunen"
+        }
+      },
+      "reconfigure_saubermacher_komunala_si": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "district": "Distrikt",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "district": "Dit distrikt eller del af kommunen"
+        }
+      },
       "args_simbio_si": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",

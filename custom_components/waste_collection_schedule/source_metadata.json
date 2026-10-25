@@ -5407,6 +5407,14 @@
     },
     "urls": {}
   },
+  "saubermacher_komunala_si": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/saubermacher_komunala_si.md",
+    "howto": {
+      "en": "Choose your municipality, then enter your settlement exactly as its calendar is named under 'Urniki odvozov' on the municipality's page at https://www.saubermacher-komunala.si/kje-zbiramo-odpadke (e.g. 'Bogojina'). In Murska Sobota town use your district without the weekday, e.g. 'Murska Sobota - rajon 4' or 'Murska Sobota - bloki'; the PDF 'Razdelitev mesta Murska Sobota na rajone' shows the districts.",
+      "sl": "Izberite občino in vpišite naselje natanko tako, kot je urnik poimenovan pod 'Urniki odvozov' na strani občine na https://www.saubermacher-komunala.si/kje-zbiramo-odpadke (npr. 'Bogojina'). V mestu Murska Sobota vpišite rajon brez dneva, npr. 'Murska Sobota - rajon 4' ali 'Murska Sobota - bloki'; rajone prikazuje PDF 'Razdelitev mesta Murska Sobota na rajone'."
+    },
+    "urls": {}
+  },
   "simbio_si": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/simbio_si.md",
     "howto": {},

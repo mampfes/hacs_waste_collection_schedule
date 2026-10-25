@@ -23694,6 +23694,31 @@
         },
         "data_description": {}
       },
+      "args_saubermacher_komunala_si": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "district": "Kaupunginosa",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "district": "Kaupunginosasi tai kunnan osa."
+        }
+      },
+      "reconfigure_saubermacher_komunala_si": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "district": "Kaupunginosa",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "district": "Kaupunginosasi tai kunnan osa."
+        }
+      },
       "args_simbio_si": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",

@@ -4573,6 +4573,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Prodnik](/doc/source/prodnik_si.md) / prodnik.si
 - [Publicus d.o.o.](/doc/ics/publicus_si.md) / beta.smetar.si
 - [PUP Saubermacher](/doc/source/pup_si.md) / pup-saubermacher.si
+- [Saubermacher - Komunala](/doc/source/saubermacher_komunala_si.md) / saubermacher-komunala.si
 - [Simbio](/doc/source/simbio_si.md) / simbio.si
 - [Snaga Maribor](/doc/source/snaga_mb_si.md) / snaga-mb.si
 - [Čisto mesto](/doc/source/cistomesto_si.md) / cistomesto.si
