@@ -5,6 +5,9 @@
   "reportMissingModuleSource": false,
   "include": [
     "custom_components/waste_collection_schedule/waste_collection_schedule/base_source.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/GossForm.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/gosport_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/stockton_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/parsers.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/preprocessors.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/transformers.py",
