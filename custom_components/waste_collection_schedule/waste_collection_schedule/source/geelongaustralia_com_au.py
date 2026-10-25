@@ -15,6 +15,11 @@ def _form(response, **_):
     return response.url, {name: fields[name] for name in _STATE_FIELDS}
 
 
+def _bin_type(element):
+    heading = element.find_previous("h3", class_="heading-icon")
+    return heading.get_text().split(" (", 1)[0] if heading is not None else ""
+
+
 @final
 class Source(BaseSource):
     TITLE = "City of Greater Geelong"
@@ -69,11 +74,7 @@ class Source(BaseSource):
     )
     transform = HtmlTransformer(
         date_getter=lambda element: element.get_text(strip=True),
-        type_getter=lambda element: (
-            element.find_previous("h3", class_="heading-icon")
-            .get_text()
-            .split(" (", 1)[0]
-        ),
+        type_getter=_bin_type,
         parse_date=date_parsers.for_format("%A, %d %B %Y"),
         type_value_map={
             "Garbage": wt.GENERAL_WASTE,
