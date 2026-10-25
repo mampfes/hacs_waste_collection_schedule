@@ -1461,6 +1461,12 @@
       "id": "wastetrack_net"
     },
     {
+      "title": "Waverley Council",
+      "module": "waverley_nsw_gov_au",
+      "default_params": {},
+      "id": "waverley_nsw_gov_au"
+    },
+    {
       "title": "Wellington Shire Council",
       "module": "impactapps_com_au",
       "default_params": {

@@ -925,6 +925,13 @@
     "howto": {},
     "urls": {}
   },
+  "waverley_nsw_gov_au": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/waverley_nsw_gov_au.md",
+    "howto": {
+      "en": "Enter your address as the council's 'Find your collection day' search lists it, e.g. '1 Aboukir Street Dover Heights' or a unit as '2/585 Old South Head Road Rose Bay' (state and postcode are optional). A whole building's address works when all its units share one waste zone."
+    },
+    "urls": {}
+  },
   "whitehorse_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/whitehorse_vic_gov_au.md",
     "howto": {

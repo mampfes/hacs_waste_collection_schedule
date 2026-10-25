@@ -261,6 +261,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Wakefield Regional Council](/doc/source/app_my_local_services_au.md) / wakefieldrc.sa.gov.au
 - [Warrnambool City Council](/doc/source/warrnambool_vic_gov_au.md) / warrnambool.vic.gov.au
 - [WasteTrack (3Logix)](/doc/source/wastetrack_net.md) / v2.wastetrack.net
+- [Waverley Council](/doc/source/waverley_nsw_gov_au.md) / waverley.nsw.gov.au
 - [Wellington Shire Council](/doc/source/impactapps_com_au.md) / wellington.vic.gov.au
 - [Whitehorse City Council](/doc/source/whitehorse_vic_gov_au.md) / whitehorse.vic.gov.au
 - [Whittlesea City Council](/doc/source/whittlesea_vic_gov_au.md) / whittlesea.vic.gov.au/My-Neighbourhood
