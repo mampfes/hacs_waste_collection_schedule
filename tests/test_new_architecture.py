@@ -9165,3 +9165,30 @@ def test_html_calendar_grid_marker_attributes(
     )
     expected = [(datetime.date(2026, 10, 2), expected_label)] if expected_label else []
     assert parser(response) == expected
+
+
+class TestSourceSessionImpersonation:
+    @pytest.mark.parametrize("fingerprint", ["chrome", None, "firefox"])
+    def test_configured_fingerprint_is_used_for_cached_per_source_session(
+        self, fingerprint
+    ):
+        from waste_collection_schedule.base_source import BaseSource
+
+        class ConfiguredSource(BaseSource):
+            IMPERSONATE = fingerprint
+
+        with patch("curl_cffi.requests.Session") as factory:
+            first = ConfiguredSource()
+            second = ConfiguredSource()
+            factory.assert_not_called()
+            assert first.session is first.session
+            factory.assert_called_once_with(impersonate=fingerprint)
+            _ = second.session
+            assert factory.call_count == 2
+
+    def test_default_fingerprint_stays_chrome(self):
+        from waste_collection_schedule.base_source import BaseSource
+
+        with patch("curl_cffi.requests.Session") as factory:
+            _ = BaseSource().session
+            factory.assert_called_once_with(impersonate="chrome")
