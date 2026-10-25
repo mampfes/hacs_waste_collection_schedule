@@ -684,6 +684,19 @@ class TestPdfRoundMonthGrid:
         assert len(blocks) == 1  # the second block is below the stop word
         assert blocks[0].rows[-1] == (D(2026, 2, 7), "Paper")
 
+    def test_cells_with_dotted_or_run_together_days(self):
+        # Hungarian calendars print "12." and "2.,"; a narrow cell runs its
+        # days together ("3,17,31"). A year or street number is not a day.
+        cells = [("12.", 241, 700), ("3,17,31", 280, 680), ("2026", 320, 700)]
+        blocks = self.grid()([self.table(self.MONTHS, extra_words=cells)])
+        assert (D(2026, 2, 12), "Mixed") in blocks[0].rows
+        assert [date for date, label in blocks[0].rows if date.month == 3] == [
+            D(2026, 3, 3),
+            D(2026, 3, 17),
+            D(2026, 3, 31),
+        ]
+        assert not [date for date, _ in blocks[0].rows if date.month == 4]
+
     def test_row_tolerance_none_keeps_far_days(self):
         blocks = self.grid(row_tolerance=None)([self.table(self.MONTHS)])
         assert (D(2026, 3, 9), "Paper") in blocks[0].rows
