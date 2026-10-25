@@ -756,7 +756,7 @@ recording, which is why the correspondence is gated rather than trusted:
 
 | gate | what it catches |
 |---|---|
-| `test_pipeline_sources_ship_a_cassette` | a source with no recording at all (backlog: `SOURCES_AWAITING_CASSETTE`) |
+| `test_pipeline_sources_ship_a_cassette` | a source with no recording at all (backlog: `SOURCES_AWAITING_CASSETTE`; permanent privacy exceptions: `SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY`) |
 | `test_every_test_case_ships_a_cassette` | a *case* with no recording, in a source that has others (backlog: `CASES_AWAITING_CASSETTE`) |
 | `test_the_cassette_backlog_is_not_stale` / `..._source_cassette_backlog_is_not_stale` | a backlog entry that has since been recorded |
 | `test_no_cassettes_without_a_source` | recordings left behind by a deleted source |
