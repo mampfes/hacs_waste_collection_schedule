@@ -20,7 +20,7 @@ from typing import ClassVar, final
 from waste_collection_schedule import recurrence
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import city, street_address
+from waste_collection_schedule.config_params import street_address, text_field
 from waste_collection_schedule.preprocessors import RecurrenceExpander, Schedule
 from waste_collection_schedule.service.ArcGis import (
     ArcGisDistinctValues,
@@ -150,7 +150,7 @@ class Source(BaseSource):
             "suburb": "Toowoomba City",
         },
     }
-    PARAMS = (street_address("address"), city("suburb"))
+    PARAMS = (street_address("address"), text_field("suburb", label="Suburb"))
     HOWTO: ClassVar[dict[str, str]] = {
         "en": (
             "Enter the street address with the street type written out (e.g. "
