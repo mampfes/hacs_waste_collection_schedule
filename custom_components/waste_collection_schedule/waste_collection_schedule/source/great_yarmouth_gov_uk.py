@@ -104,6 +104,19 @@ class Source:
             }
         )
 
+        # The council looks the schedule up from the address record the page
+        # puts in VARIABLES, not from ADDRESS_UPRN; without it a default is returned.
+        form_data[f"{_FORM_NAME}_VARIABLES"] = base64.b64encode(
+            json.dumps(
+                {
+                    "ALcurrentRecord": {
+                        "value": {"uprn": self._uprn},
+                        "scope": "SERVERCLIENTWITHUPDATE",
+                    }
+                }
+            ).encode()
+        ).decode()
+
         r2 = session.post(action, data=form_data)
         r2.raise_for_status()
 
