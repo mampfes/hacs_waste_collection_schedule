@@ -7916,6 +7916,16 @@ def test_the_hand_rolled_retrieval_backlog_is_not_stale() -> None:
 
 SOURCES_AWAITING_CASSETTE: set[str] = set()
 
+# Not a backlog: sources whose recording would leak personal data, so they can
+# never ship one. Each entry needs its reason. Use it only for a login source
+# whose cassette would hold the account holder's identifiers or session, which
+# ``cassette_scrubbers`` cannot rewrite (it only drops interactions).
+SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY: dict[str, str] = {
+    "gastrikeatervinnare_se": (
+        "Mina sidor login: a recording holds the customer number, address and session"
+    ),
+}
+
 
 @pytest.mark.skipif(
     len(_NEW_STYLE_SOURCES) == 0,
@@ -7928,7 +7938,10 @@ def test_pipeline_sources_ship_a_cassette(stem: str) -> None:
     """Pipeline sources must ship an offline cassette covering their TEST_CASES."""
     from pathlib import Path
 
-    if stem in SOURCES_AWAITING_CASSETTE:
+    if (
+        stem in SOURCES_AWAITING_CASSETTE
+        or stem in SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY
+    ):
         return
     fixture_dir = Path(__file__).resolve().parent / "fixtures" / stem
     assert fixture_dir.is_dir() and any(fixture_dir.glob("*.json")), (
@@ -8837,6 +8850,22 @@ def test_the_source_cassette_backlog_is_not_stale() -> None:
     assert not recorded, (
         f"{recorded} now ship a cassette. Delete them from "
         "SOURCES_AWAITING_CASSETTE so the backlog reflects real debt."
+    )
+
+
+def test_privacy_excluded_sources_ship_no_cassette() -> None:
+    """A source excluded for privacy must not commit a recording after all."""
+    from pathlib import Path
+
+    fixtures = Path(__file__).resolve().parent / "fixtures"
+    recorded = sorted(
+        stem
+        for stem in SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY
+        if any((fixtures / stem).glob("*.json"))
+    )
+    assert not recorded, (
+        f"{recorded} ship a cassette. Either it is scrubbed and the entry can leave "
+        "SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY, or the recording must go."
     )
 
 
