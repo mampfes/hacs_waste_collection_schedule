@@ -21277,7 +21277,8 @@
           "address": "Osoite"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
         }
       },
       "reconfigure_poriruacity_govt_nz": {
@@ -21287,7 +21288,9 @@
           "calendar_title": "Kalenterin nimi",
           "address": "Osoite"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
       },
       "args_rotorua_lakes_council_nz": {
         "title": "Määritä lähde",
@@ -27929,11 +27932,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "houseID": "House Id",
+          "houseID": "Osoite",
           "postcode": "Postinumero"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "houseID": "Koko osoitteesi.",
+          "postcode": "Postinumerosi."
         }
       },
       "reconfigure_croydon_gov_uk": {
@@ -27941,10 +27946,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "houseID": "House Id",
+          "houseID": "Osoite",
           "postcode": "Postinumero"
         },
-        "data_description": {}
+        "data_description": {
+          "houseID": "Koko osoitteesi.",
+          "postcode": "Postinumerosi."
+        }
       },
       "args_cumberland_gov_uk": {
         "title": "Määritä lähde",

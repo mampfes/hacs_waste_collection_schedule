@@ -4806,7 +4806,9 @@
   },
   "poriruacity_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/poriruacity_govt_nz.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your address as shown at https://poriruacity.govt.nz/services/rubbish-and-recycling/recycling-calendar/. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "rotorua_lakes_council_nz": {
@@ -6603,7 +6605,9 @@
   },
   "croydon_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/croydon_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and address as shown at https://service.croydon.gov.uk/wasteservices/w/webpage/bin-day-enter-address. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "cumberland_gov_uk": {

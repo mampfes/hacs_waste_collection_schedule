@@ -1,36 +1,39 @@
 # Croydon Council
 
-Support for schedules provided by [Croydon Council](https://www.croydon.gov.uk/), serving Croydon, UK.
+Support for schedules provided by [Croydon Council](https://croydon.gov.uk).
+
+Source for croydon.gov.uk services for Croydon Council, UK.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: croydon_gov_uk
       args:
         postcode: POSTCODE
-        houseID: HOUSE_NUMBER & STREET
+        houseID: HOUSEID
 ```
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
-**houseID**
+**houseID**  
 *(string) (required)*
-
-houseID should be in the format used by the website, road names tend not to be abbreviated.
-
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: croydon_gov_uk
       args:
-        postcode: "CR0 2EG"
-        houseID: "23B Howard Road"
+        postcode: CR0 6LN
+        houseID: 64 Coniston Road
 ```
+
+## How to get the source arguments
+
+Enter your postcode and address as shown at https://service.croydon.gov.uk/wasteservices/w/webpage/bin-day-enter-address. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

@@ -21269,10 +21269,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_poriruacity_govt_nz": {
@@ -21280,9 +21281,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       },
       "args_rotorua_lakes_council_nz": {
         "title": "Konfigurer Kilde",
@@ -27927,11 +27930,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "houseID": "House Id",
+          "houseID": "Adresse",
           "postcode": "Postnummer"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "houseID": "Din fulde adresse",
+          "postcode": "Dit postnummer"
         }
       },
       "reconfigure_croydon_gov_uk": {
@@ -27939,10 +27944,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "houseID": "House Id",
+          "houseID": "Adresse",
           "postcode": "Postnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "houseID": "Din fulde adresse",
+          "postcode": "Dit postnummer"
+        }
       },
       "args_cumberland_gov_uk": {
         "title": "Konfigurer Kilde",
