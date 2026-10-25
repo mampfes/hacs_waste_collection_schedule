@@ -198,7 +198,10 @@ class Source(BaseSource):
             "https://www.econetsrl.eu/testi.php?id_testi=25, e.g. `Strevi`. "
             "Acqui Terme and Ovada have one calendar per zone: also enter the "
             "zone (`Centro Storico`, `Città` or `Standard`); the streets of "
-            "each zone are listed on the comune's 'Calendari' page."
+            "each zone are listed on the comune's 'Calendari' page. Garden "
+            "waste (verde) dates are those printed in the calendar, but in "
+            "most comuni verde is only collected when booked in advance with "
+            "Econet."
         ),
         "it": (
             "Inserisci il comune come indicato su "
@@ -206,7 +209,9 @@ class Source(BaseSource):
             "`Strevi`. Acqui Terme e Ovada hanno un calendario per zona: "
             "indica anche la zona (`Centro Storico`, `Città` o `Standard`); "
             "le vie di ogni zona sono elencate nella pagina 'Calendari' del "
-            "comune."
+            "comune. Le date del verde sono quelle del calendario, ma nella "
+            "maggior parte dei comuni il ritiro del verde va prenotato in "
+            "anticipo presso Econet."
         ),
     }
 
