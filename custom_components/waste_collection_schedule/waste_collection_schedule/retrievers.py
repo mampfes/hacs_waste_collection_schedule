@@ -45,6 +45,7 @@ from weakref import WeakKeyDictionary
 
 import requests as _plain_requests
 from bs4 import BeautifulSoup, Tag
+from curl_cffi.requests import RequestsError as _CurlRequestsError
 
 if TYPE_CHECKING:
     from curl_cffi import requests as _cffi_requests
@@ -472,6 +473,36 @@ class FanOutRetriever(_BaseRetriever):
         if self.include_prepared:
             fetched.insert(0, cast("Response", context))
         return fetched
+
+
+class LinkedAssetRetriever(RetrieverFunc):
+    """Fetch an asset linked by a page, with a known fallback asset URL.
+
+    ``pattern`` captures the asset URL in group 1. A missing link or a page
+    transport failure uses ``fallback_url``; failures of the asset itself
+    propagate. The page need not be accessible when the static asset is.
+    """
+
+    def __init__(
+        self, page_url: str, *, pattern: str, fallback_url: str, timeout: int = 30
+    ):
+        self.page_url = page_url
+        self.pattern = re.compile(pattern)
+        self.fallback_url = fallback_url
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource) -> Response:
+        asset_url = self.fallback_url
+        try:
+            page = source.session.get(self.page_url, timeout=self.timeout)
+            match = self.pattern.search(page.text)
+            if match:
+                asset_url = urljoin(str(page.url), match.group(1))
+        except (_plain_requests.RequestException, _CurlRequestsError):
+            pass
+        response = source.session.get(asset_url, timeout=self.timeout)
+        response.raise_for_status()
+        return response
 
 
 class FirstMatchRetriever(_BaseRetriever):

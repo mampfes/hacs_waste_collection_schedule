@@ -466,6 +466,14 @@ Before writing a retriever or parser, check whether the provider runs on a platf
 
 Also check the existing shared YAML and EXTRA_INFO platforms (Recollect, Recycle Coach, ICS YAML, Publidata, c-trace, and the others) before writing anything new. If your provider is covered, add it there instead of writing a new source.
 
+### Linked script assets and mixed response formats
+
+`retrievers.LinkedAssetRetriever(page_url, pattern=..., fallback_url=...)` reads the asset URL captured by a page regex and fetches it on the shared session. A missing link or page transport failure falls back to the known asset URL; an asset failure propagates. This supports a public static calendar script even when its hosting page is unavailable.
+
+Use `parsers.JsObjectParser({name: pattern, ...})` for object literals captured in group 1, with JSON values, identifier keys and calendar `new Date(year, zero_based_month, day)` constructors. It converts these literals without executing JavaScript and leaves quoted strings untouched. Other expressions fail decoding.
+
+`parsers.NamedResponses({name: parser, ...})` applies one parser per ordered HTTP response and returns a single named record. Pair it with `FanOutRetriever(include_prepared=True)` when a calendar combines a script reference with JSON address metadata. A response-count mismatch raises rather than silently dropping data.
+
 ### A service-based source (fully declarative)
 
 ```python

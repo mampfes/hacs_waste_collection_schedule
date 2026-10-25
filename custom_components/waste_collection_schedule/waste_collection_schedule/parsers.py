@@ -746,6 +746,82 @@ class JsVarParser(Parser[Any]):
         return values
 
 
+class JsObjectParser(Parser["dict[str, Any]"]):
+    """Read captured JavaScript object literals without executing code.
+
+    Each named regex captures an object in group 1. The supported JSON subset
+    additionally accepts unquoted object keys and ``new Date(year, month, day)``
+    constructors (JavaScript's zero-based month), returned as ISO dates.
+    Quoted strings are left untouched; other JavaScript expressions fail JSON
+    decoding rather than being evaluated.
+    """
+
+    _TOKENS = re.compile(
+        r'(?P<string>"(?:\\.|[^"\\])*")'
+        r"|new Date\(\s*(?P<year>\d{4})\s*,\s*(?P<month>\d{1,2})\s*,\s*(?P<day>\d{1,2})\s*\)"
+        r"|(?P<key>[A-Za-z_$][\w$]*)(?=\s*:)"
+    )
+
+    def __init__(self, patterns: Mapping[str, str]):
+        self.patterns = {
+            name: re.compile(pattern, re.DOTALL) for name, pattern in patterns.items()
+        }
+
+    @staticmethod
+    def _token(match: re.Match[str]) -> str:
+        import json
+
+        if match.group("string") is not None:
+            return match.group(0)
+        if match.group("key") is not None:
+            return json.dumps(match.group("key"))
+        day = datetime.date(
+            int(match.group("year")),
+            int(match.group("month")) + 1,
+            int(match.group("day")),
+        )
+        return json.dumps(day.isoformat())
+
+    def __call__(
+        self, response: Any, source: "BaseSource | None" = None
+    ) -> dict[str, Any]:
+        import json
+
+        result: dict[str, Any] = {}
+        for name, pattern in self.patterns.items():
+            match = pattern.search(response.text)
+            if match is None:
+                raise ValueError(f"JavaScript object {name!r} not found")
+            result[name] = json.loads(self._TOKENS.sub(self._token, match.group(1)))
+        return result
+
+
+class NamedResponses(Parser["list[dict[str, Any]]"]):
+    """Parse ordered responses with distinct parsers into one named record.
+
+    Pair with ``FanOutRetriever(include_prepared=True)`` when a calendar needs
+    both reference data and an address response in a different format.
+    """
+
+    def __init__(self, parsers: Mapping[str, Parser]):
+        self.parsers = dict(parsers)
+
+    def __call__(
+        self, response: Any, source: "BaseSource | None" = None
+    ) -> list[dict[str, Any]]:
+        responses = list(response)
+        if len(responses) != len(self.parsers):
+            raise ValueError("Unexpected number of responses for named parsers")
+        return [
+            {
+                name: parser(raw, source)
+                for (name, parser), raw in zip(
+                    self.parsers.items(), responses, strict=True
+                )
+            }
+        ]
+
+
 class DateListParser(Parser["list[tuple[str, str]]"]):
     """Parse a JSON payload that is a flat array of date strings.
 
