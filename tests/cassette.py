@@ -235,7 +235,9 @@ class CassetteResponse:
         self.status_code: int = interaction["status"]
         self._content: bytes = base64.b64decode(interaction["content_b64"])
         self.encoding: str = interaction.get("encoding") or "utf-8"
-        self.headers: dict = interaction.get("headers") or {}
+        self.headers = requests.structures.CaseInsensitiveDict(
+            interaction.get("headers") or {}
+        )
         self.url: str = interaction.get("final_url") or interaction.get("url", "")
 
     @property

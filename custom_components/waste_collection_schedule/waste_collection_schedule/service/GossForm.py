@@ -202,7 +202,10 @@ def form_data(response: Response) -> dict[str, Any]:
     empty dict when the page carries none.
     """
     match = re.search(r'[A-Z0-9_]+FormData\s*=\s*"([^"]+)"', response.text)
-    return json.loads(base64.b64decode(match.group(1))) if match else {}
+    if match is None:
+        return {}
+    raw = match.group(1)
+    return json.loads(base64.b64decode(raw + "=" * (-len(raw) % 4)))
 
 
 def serialized_variables(response: Response, form: str) -> dict[str, Any]:
@@ -238,6 +241,29 @@ class GossVariablesParser(Parser[Any]):
                 return None
             value = value[key]
         return value
+
+
+class GossJsonParser(Parser["list[dict[str, Any]]"]):
+    """One record at a path in the page's base64-encoded FormData JSON.
+
+    Unlike GossVariablesParser, this reads FormData rather than
+    SerializedVariables. Missing data is an upstream shape error.
+    """
+
+    def __init__(self, *path: str):
+        self.path = path
+
+    def __call__(
+        self, response: Any, source: BaseSource | None = None
+    ) -> list[dict[str, Any]]:
+        value = form_data(response)
+        for key in self.path:
+            if not isinstance(value, dict) or key not in value:
+                raise ValueError(f"GOSS FormData is missing {key!r}")
+            value = value[key]
+        if not isinstance(value, dict) or not value:
+            raise ValueError("GOSS FormData carries no result object")
+        return [value]
 
 
 class GossWhitespaceParser(Parser["list[dict[str, Any]]"]):
