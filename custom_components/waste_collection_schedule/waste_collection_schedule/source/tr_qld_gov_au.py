@@ -54,17 +54,44 @@ def _sql(value: str) -> str:
     return text.upper().replace("'", "''")
 
 
+def _street_part(address: str) -> str:
+    """The address line alone, also when a suggestion was pasted whole.
+
+    No address line in the layer contains a comma, so everything from the
+    first comma on is the locality the suggestion list appends.
+    """
+    return str(address).split(",", 1)[0]
+
+
 def _where(address: str, suburb: str, **_) -> str:
     # FormattedAddress is "<address>\r<SUBURB> QLD <postcode>"; "_" matches the
     # line break. The layer's collation is case-insensitive.
-    return f"FormattedAddress LIKE '{_sql(address)}_{_sql(suburb)} QLD %'"
+    street = _sql(_street_part(address))
+    return f"FormattedAddress LIKE '{street}_{_sql(suburb)} QLD %'"
 
 
 def _similar(address: str, suburb: str, **_) -> str:
     """Addresses on the same street in the suburb, for a no-match suggestion."""
-    words = [w for w in _sql(address).split() if not any(c.isdigit() for c in w)]
+    words = [
+        w
+        for w in _sql(_street_part(address)).split()
+        if not any(c.isdigit() for c in w)
+    ]
     street = " ".join(words[:1])
     return f"FormattedAddress LIKE '% {street}%_{_sql(suburb)} QLD %'"
+
+
+_SIMILAR_ADDRESSES = ArcGisDistinctValues(
+    _LAYER, "FormattedAddress", where=_similar, limit=50
+)
+
+
+def _address_suggestions(source: BaseSource | None = None) -> list[str]:
+    """The street's addresses in the suburb, as "<address>, <SUBURB> QLD <code>"."""
+    return [
+        ", ".join(part.strip() for part in value.splitlines() if part.strip())
+        for value in _SIMILAR_ADDRESSES(source)
+    ]
 
 
 def _weekday(value: object) -> int | None:
@@ -112,6 +139,16 @@ class Source(BaseSource):
             "address": "1 McDougall Street",
             "suburb": "Yarraman",
         },
+        "Suggestion pasted whole": {
+            "address": "191 Herries Street, TOOWOOMBA CITY QLD 4350",
+            "suburb": "Toowoomba City",
+        },
+    }
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown house number": {
+            "address": "999 Herries Street",
+            "suburb": "Toowoomba City",
+        },
     }
     PARAMS = (street_address("address"), city("suburb"))
     HOWTO: ClassVar[dict[str, str]] = {
@@ -119,7 +156,8 @@ class Source(BaseSource):
             "Enter the street address with the street type written out (e.g. "
             "'191 Herries Street', units as '2/86C Hogg Street') and the suburb "
             "(e.g. 'Toowoomba City'), as the council's 'Find your bin day' map "
-            "shows them. Green waste is an optional service: the dates are those "
+            "shows them. An address from the suggestion list may be pasted "
+            "whole ('191 Herries Street, TOOWOOMBA CITY QLD 4350'). Green waste is an optional service: the dates are those "
             "of your area's green waste round, whether or not you have a green "
             "waste bin."
         ),
@@ -127,7 +165,8 @@ class Source(BaseSource):
             "Adresse mit ausgeschriebenem Straßentyp (z. B. '191 Herries "
             "Street', Wohnungen als '2/86C Hogg Street') und den Ort (z. B. "
             "'Toowoomba City') eingeben, wie sie die Karte 'Find your bin day' "
-            "der Stadt anzeigt. Die Grünabfalltonne ist ein optionaler Dienst: "
+            "der Stadt anzeigt. Eine Adresse aus der Vorschlagsliste kann "
+            "komplett übernommen werden. Die Grünabfalltonne ist ein optionaler Dienst: "
             "die Termine sind die der Grünabfalltour des Gebiets, unabhängig "
             "davon, ob eine Grünabfalltonne vorhanden ist."
         ),
@@ -138,9 +177,7 @@ class Source(BaseSource):
     )
     parse = ArcGisFeatureParser(
         argument="address",
-        suggestions=ArcGisDistinctValues(
-            _LAYER, "FormattedAddress", where=_similar, limit=50
-        ),
+        suggestions=_address_suggestions,
     )
     preprocess = RecurrenceExpander(_describe)
     transform = ICSTransformer(
