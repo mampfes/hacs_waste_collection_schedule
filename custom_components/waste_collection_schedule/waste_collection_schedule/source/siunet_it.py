@@ -161,7 +161,6 @@ _MUNICIPALITIES: dict[str, tuple[int, int]] = {
     "GAZZO VERONESE": (157, 2887),
     "GENOVA": (55, 1399),
     "GESSATE": (153, 2817),
-    "GIUSSANO": (80, 1477),
     "GORGONZOLA": (153, 2818),
     "GREZZAGO": (153, 2819),
     "GRISIGNANO DI ZOCCO": (156, 2874),
