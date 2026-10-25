@@ -35,4 +35,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Choose your municipality and its collection zone as printed on the ETRA calendar: A or B in San Martino di Lupari, C or D in Bassano del Grappa.
+Choose your municipality and its collection zone as printed on the ETRA calendar: A or B in San Martino di Lupari, C or D in Bassano del Grappa, 1 to 4 in Vigonza (see the street list 'Il territorio' at the end of the calendar: zones 1 and 2 are zone A, 3 and 4 zone B, and the number also picks your glass round).

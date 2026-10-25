@@ -1023,7 +1023,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_geelongaustralia_com_au": {
@@ -1033,7 +1034,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_greatershepparton_com_au": {
         "title": "Configure Source",
@@ -3486,6 +3489,33 @@
           "houseNo": "Your house number.",
           "street": "Your street name.",
           "suburb": "Your district or part of the municipality."
+        }
+      },
+      "args_tr_qld_gov_au": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "suburb": "City"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address.",
+          "suburb": "Your city or town."
+        }
+      },
+      "reconfigure_tr_qld_gov_au": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "suburb": "City"
+        },
+        "data_description": {
+          "address": "Your full address.",
+          "suburb": "Your city or town."
         }
       },
       "args_bassendean_wa_gov_au": {
@@ -16662,6 +16692,29 @@
           "street": "Your street name."
         }
       },
+      "args_bad_wildungen_de": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Your street name."
+        }
+      },
+      "reconfigure_bad_wildungen_de": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street"
+        },
+        "data_description": {
+          "street": "Your street name."
+        }
+      },
       "args_ics_buende_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -18788,11 +18841,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street": "Street",
-          "weekday": "Collection day"
+          "city": "City",
+          "district": "District",
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Your city or town.",
+          "district": "Your district or part of the municipality.",
           "street": "Your street name."
         }
       },
@@ -18801,10 +18857,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street": "Street",
-          "weekday": "Collection day"
+          "city": "City",
+          "district": "District",
+          "street": "Street"
         },
         "data_description": {
+          "city": "Your city or town.",
+          "district": "Your district or part of the municipality.",
           "street": "Your street name."
         }
       },
@@ -22358,6 +22417,37 @@
         },
         "data_description": {}
       },
+      "args_kolbaskowo_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "Your district or part of the municipality.",
+          "house_number": "Your house number.",
+          "street": "Your street name."
+        }
+      },
+      "reconfigure_kolbaskowo_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "district": "Your district or part of the municipality.",
+          "house_number": "Your house number.",
+          "street": "Your street name."
+        }
+      },
       "args_maslow_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -22444,6 +22534,37 @@
         },
         "data_description": {
           "rejon": "Your district or part of the municipality."
+        }
+      },
+      "args_gmina_oswiecim_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Your city or town.",
+          "house_number": "Your house number.",
+          "street": "Your street name."
+        }
+      },
+      "reconfigure_gmina_oswiecim_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "house_number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "Your city or town.",
+          "house_number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "args_paczkow_pl": {
@@ -22585,6 +22706,29 @@
           "property_type": "Property type"
         },
         "data_description": {}
+      },
+      "args_elwozeco_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "Your district or part of the municipality."
+        }
+      },
+      "reconfigure_elwozeco_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "district": "District"
+        },
+        "data_description": {
+          "district": "Your district or part of the municipality."
+        }
       },
       "args_goap_poznan_pl": {
         "title": "Configure Source",
@@ -22840,6 +22984,29 @@
           "city": "Your city or town.",
           "street_name": "Your street name.",
           "street_number": "Your house number."
+        }
+      },
+      "args_legionowo_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Your street name."
+        }
+      },
+      "reconfigure_legionowo_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street": "Street"
+        },
+        "data_description": {
+          "street": "Your street name."
         }
       },
       "args_zywiec_pl": {
@@ -23922,13 +24089,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City",
-          "street": "Street"
+          "address": "Address",
+          "customer_number": "Customer Number",
+          "password": "Password"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "Your city or town.",
-          "street": "Your street name."
+          "address": "Your full address."
         }
       },
       "reconfigure_gastrikeatervinnare_se": {
@@ -23936,12 +24103,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City",
-          "street": "Street"
+          "address": "Address",
+          "customer_number": "Customer Number",
+          "password": "Password"
         },
         "data_description": {
-          "city": "Your city or town.",
-          "street": "Your street name."
+          "address": "Your full address."
         }
       },
       "args_hedemora_energi_se": {
@@ -26580,7 +26747,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_blackpool_gov_uk": {
@@ -26592,7 +26760,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_bolsover_gov_uk": {
@@ -34536,6 +34705,31 @@
           "objectId": "Object ID"
         },
         "data_description": {}
+      },
+      "args_stpaul_gov": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "every_other_week_garbage": "Every-other-week garbage collection"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
+        }
+      },
+      "reconfigure_stpaul_gov": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "every_other_week_garbage": "Every-other-week garbage collection"
+        },
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_sanantonio_gov": {
         "title": "Configure Source",

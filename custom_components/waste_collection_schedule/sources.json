@@ -1389,6 +1389,12 @@
       "id": "thehills_nsw_gov_au"
     },
     {
+      "title": "Toowoomba Regional Council",
+      "module": "tr_qld_gov_au",
+      "default_params": {},
+      "id": "tr_qld_gov_au"
+    },
+    {
       "title": "Town of Bassendean",
       "module": "bassendean_wa_gov_au",
       "default_params": {},
@@ -21475,6 +21481,12 @@
       "id": "c_trace_de"
     },
     {
+      "title": "Stadt Bad Wildungen",
+      "module": "bad_wildungen_de",
+      "default_params": {},
+      "id": "bad_wildungen_de"
+    },
+    {
       "title": "Stadt Bayreuth",
       "module": "c_trace_de",
       "default_params": {
@@ -23651,7 +23663,7 @@
       "id": "deponia_hu"
     },
     {
-      "title": "DTKH Nonprofit Kft. (Kiskunf\u00e9legyh\u00e1za)",
+      "title": "DTKH Nonprofit Kft.",
       "module": "dtkh_hu",
       "default_params": {},
       "id": "dtkh_hu"
@@ -30307,6 +30319,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Vigonza",
+      "module": "etraspa_it",
+      "default_params": {
+        "municipality": "Vigonza"
+      },
+      "id": "etraspa_it"
+    },
+    {
       "title": "Villa Cortese",
       "module": "siunet_it",
       "default_params": {
@@ -31936,6 +31956,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Ko\u0142baskowo",
+      "module": "kolbaskowo_pl",
+      "default_params": {},
+      "id": "kolbaskowo_pl"
+    },
+    {
       "title": "Gmina Krotoszyce",
       "module": "sims_pl",
       "default_params": {
@@ -32118,6 +32144,12 @@
         "owner": "Gmina Ostrowiec \u015awi\u0119tokrzyski"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina O\u015bwi\u0119cim",
+      "module": "gmina_oswiecim_pl",
+      "default_params": {},
+      "id": "gmina_oswiecim_pl"
     },
     {
       "title": "Gmina Paczk\u00f3w",
@@ -32500,6 +32532,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina \u017bukowo (ELWOZ ECO)",
+      "module": "elwozeco_pl",
+      "default_params": {},
+      "id": "elwozeco_pl"
+    },
+    {
       "title": "Gminne Przedsi\u0119biorstwo Komunalne Sp. z o.o. w Skarszewach",
       "module": "sims_pl",
       "default_params": {
@@ -32642,6 +32680,12 @@
         "town": "Krzy\u017canowice"
       },
       "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Legionowo",
+      "module": "legionowo_pl",
+      "default_params": {},
+      "id": "legionowo_pl"
     },
     {
       "title": "Legnica",
@@ -38022,6 +38066,12 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "City of Saint Paul, MN",
+      "module": "stpaul_gov",
+      "default_params": {},
+      "id": "stpaul_gov"
     },
     {
       "title": "City of San Antonio",
