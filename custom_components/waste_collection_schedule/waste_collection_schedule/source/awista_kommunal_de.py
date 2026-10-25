@@ -114,10 +114,12 @@ class Source:
         page = session.get(BASE_URL, timeout=30)
         page.raise_for_status()
 
-        # Script tags carry a `?dpl=<deployment>` query suffix, so match the
-        # `.js` path and allow (and discard) the trailing query string.
+        # Chunks have lived under both `/_next/static/chunks/` and
+        # `/_next/static/immutable/chunks/`, so accept any `.js` path below
+        # `/_next/static/`. Script tags may carry a `?dpl=<deployment>` query
+        # suffix, so allow (and discard) a trailing query string.
         chunk_paths = re.findall(
-            r'src="(/_next/static/chunks/[^"?]+\.js)(?:\?[^"]*)?"', page.text
+            r'src="(/_next/static/[^"?]+\.js)(?:\?[^"]*)?"', page.text
         )
 
         candidates: list[str] = []
