@@ -114,7 +114,7 @@ Things the maintainers consistently bounce in code review — avoid these from t
 
 `HOW_TO_GET_ARGUMENTS_DESCRIPTION` is an optional dict shown in the Home Assistant config flow above the input fields. It explains to users how to find the required parameter values (e.g. "Visit https://example.com and note the ID from the URL").
 
-**Valid language keys:** only `"en"`, `"de"`, `"it"`, `"fr"`, `"nl"`, `"sl"`, `"da"`, `"fi"` — the same set as `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS`. Any other key (e.g. `"pl"`, `"sk"`, `"lt"`, `"cs"`) will cause `test_source_has_necessary_parameters` to fail.
+**Valid language keys:** only `"en"`, `"de"`, `"it"`, `"fr"`, `"nl"`, `"sl"`, `"da"`, `"fi"`, `"sv"` — the same set as `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS`. Any other key (e.g. `"pl"`, `"sk"`, `"lt"`, `"cs"`) will cause `test_source_has_necessary_parameters` to fail.
 
 **It does not need to be provided in every language.** A contributor who only writes English or only writes their native language is perfectly valid:
 
