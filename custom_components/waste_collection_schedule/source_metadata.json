@@ -110,7 +110,7 @@
   "byron_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/byron_nsw_gov_au.md",
     "howto": {
-      "en": "Enter the full service address used by Byron Shire Council, for example '120 Jonson St, Byron Bay'."
+      "en": "This source is deprecated. Use recyclecoach_com with street set to your address, project_id 592 and district_id BYSC. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -4444,7 +4444,9 @@
   },
   "silea_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/silea_it.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your municipality and street as listed at https://www.sileaspa.it. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "araccolta_it": {
@@ -6349,7 +6351,9 @@
   },
   "south_norfolk_and_broadland_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/south_norfolk_and_broadland_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the postcode and address from My Area, or supply the address_payload object from its MyArea.Data cookie. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "bromsgrove_gov_uk": {
@@ -7949,7 +7953,9 @@
   },
   "south_ayrshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/south_ayrshire_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and the property UPRN from the council's bin collection form. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -8141,7 +8147,9 @@
   },
   "sunderland_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunderland_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the postcode and property address from the Sunderland bin day checker. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "sutton_gov_uk": {

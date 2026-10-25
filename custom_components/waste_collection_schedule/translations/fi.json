@@ -559,7 +559,8 @@
           "address": "Osoite"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
         }
       },
       "reconfigure_byron_nsw_gov_au": {
@@ -569,7 +570,9 @@
           "calendar_title": "Kalenterin nimi",
           "address": "Osoite"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
       },
       "args_recyclecoach_com": {
         "title": "Määritä lähde",
@@ -19761,7 +19764,9 @@
           "municipality": "Kunta"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
       },
       "reconfigure_silea_it": {
@@ -19772,7 +19777,10 @@
           "address": "Osoite",
           "municipality": "Kunta"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Koko osoitteesi.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
       },
       "args_araccolta_it": {
         "title": "Määritä lähde",
@@ -27081,7 +27089,9 @@
           "postcode": "Postinumero"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi.",
+          "postcode": "Postinumerosi."
         }
       },
       "reconfigure_south_norfolk_and_broadland_gov_uk": {
@@ -27093,7 +27103,10 @@
           "address_payload": "Address Payload",
           "postcode": "Postinumero"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Koko osoitteesi.",
+          "postcode": "Postinumerosi."
+        }
       },
       "args_bromsgrove_gov_uk": {
         "title": "Määritä lähde",
@@ -32249,10 +32262,12 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_south_ayrshire_gov_uk": {
@@ -32261,9 +32276,12 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_scambs_gov_uk": {
         "title": "Määritä lähde",
@@ -32840,7 +32858,9 @@
           "postcode": "Postinumero"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi.",
+          "postcode": "Postinumerosi."
         }
       },
       "reconfigure_sunderland_gov_uk": {
@@ -32851,7 +32871,10 @@
           "address": "Osoite",
           "postcode": "Postinumero"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Koko osoitteesi.",
+          "postcode": "Postinumerosi."
+        }
       },
       "args_sutton_gov_uk": {
         "title": "Määritä lähde",

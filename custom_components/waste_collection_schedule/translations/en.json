@@ -559,7 +559,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_byron_nsw_gov_au": {
@@ -569,7 +570,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_recyclecoach_com": {
         "title": "Configure Source",
@@ -19836,7 +19839,9 @@
           "municipality": "Municipality"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address.",
+          "municipality": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_silea_it": {
@@ -19847,7 +19852,10 @@
           "address": "Address",
           "municipality": "Municipality"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address.",
+          "municipality": "The name of your municipality, as shown on the provider's website."
+        }
       },
       "args_araccolta_it": {
         "title": "Configure Source",
@@ -27192,11 +27200,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "address_payload": "Address Payload",
+          "address_payload": "My Area address payload",
           "postcode": "Postcode"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address.",
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_south_norfolk_and_broadland_gov_uk": {
@@ -27205,10 +27215,13 @@
         "data": {
           "calendar_title": "Calendar Title",
           "address": "Address",
-          "address_payload": "Address Payload",
+          "address_payload": "My Area address payload",
           "postcode": "Postcode"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address.",
+          "postcode": "Your postcode."
+        }
       },
       "args_bromsgrove_gov_uk": {
         "title": "Configure Source",
@@ -32428,7 +32441,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_south_ayrshire_gov_uk": {
@@ -32440,7 +32454,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_scambs_gov_uk": {
@@ -33019,8 +33034,8 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "The full address of the property.",
-          "postcode": "The postcode for the property."
+          "address": "Your full address.",
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_sunderland_gov_uk": {
@@ -33032,8 +33047,8 @@
           "postcode": "Postcode"
         },
         "data_description": {
-          "address": "The full address of the property.",
-          "postcode": "The postcode for the property."
+          "address": "Your full address.",
+          "postcode": "Your postcode."
         }
       },
       "args_sutton_gov_uk": {
