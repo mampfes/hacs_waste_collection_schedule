@@ -466,6 +466,12 @@ Before writing a retriever or parser, check whether the provider runs on a platf
 
 Also check the existing shared YAML and EXTRA_INFO platforms (Recollect, Recycle Coach, ICS YAML, Publidata, c-trace, and the others) before writing anything new. If your provider is covered, add it there instead of writing a new source.
 
+### ASP.NET search forms and rolling HTML calendars
+
+`service.AspNetForms.AspNetFormRetriever(url, steps=(...))` runs a GET followed by declared POST steps. Each pure `step(response, **params)` returns the form fields for the next request, using the current page's hidden state. It uses one neutral curl session with certificate verification enabled; Port Adelaide Enfield returns no addresses with browser impersonation. Sources read fields with `retrievers.form_inputs(..., hidden_only=True)` rather than issuing HTTP themselves.
+
+For a calendar that spans several months in one table, configure `parsers.HtmlCalendarGrid(..., day=".daynumber, .daynumber-empty", rolling=True)`. It advances the month when the day number drops and resolves range headers such as `December - January 2027` to a December 2026 start. An explicit `day` selector makes missing or invalid day numbers an error; the existing per-month parser defaults are unchanged.
+
 ### A service-based source (fully declarative)
 
 ```python

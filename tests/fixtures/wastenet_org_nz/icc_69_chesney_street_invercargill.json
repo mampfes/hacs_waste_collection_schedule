@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-10-25",
+  "interactions": [
+    {
+      "key": "GET https://www.wastenet.org.nz/client-api/icc/rubbish/address-list ",
+      "method": "GET",
+      "url": "https://www.wastenet.org.nz/client-api/icc/rubbish/address-list",
+      "final_url": "https://www.wastenet.org.nz/client-api/icc/rubbish/address-list",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 25 Oct 2026 14:31:47 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "x-id": "CB",
+        "x-powered-by": "ASP.NET",
+        "strict-transport-security": "max-age=31536000;",
+        "x-envoy-upstream-service-time": "829",
+        "server": "envoy",
+        "transfer-encoding": "chunked"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjEgQWJib3QgU3RyZWV0LCBJbnZlcmNhcmdpbGwifSx7ImFkZHJlc3MiOiIxIEFpbHNhIFN0cmVldCwgV2FsbGFjZXRvd24ifSx7ImFkZHJlc3MiOiIxIEFsYW1laW4gU3RyZWV0LCBSaXZlcnRvbiJ9LHsiYWRkcmVzcyI6IjEgQWxiaW9uIFN0cmVldCwgTWF0YXVyYSJ9LHsiYWRkcmVzcyI6IjEgQWxleGFuZGVyIEF2ZW51ZSwgSW52ZXJjYXJnaWxsIn0seyJhZGRyZXNzIjoiNjkgQ2hlc25leSBTdHJlZXQsIEludmVyY2FyZ2lsbCJ9XQ=="
+    },
+    {
+      "key": "GET https://www.wastenet.org.nz/client-api/icc/rubbish/search 52b910a59e",
+      "method": "GET",
+      "url": "https://www.wastenet.org.nz/client-api/icc/rubbish/search",
+      "final_url": "https://www.wastenet.org.nz/client-api/icc/rubbish/search?address=69+Chesney+Street%2C+Invercargill&date=2026-10-25",
+      "body": "{\"params\":[[\"address\",\"69 Chesney Street, Invercargill\"],[\"date\",\"2026-10-25\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 25 Oct 2026 14:31:49 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "221",
+        "cache-control": "private",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "x-id": "CA",
+        "x-powered-by": "ASP.NET",
+        "strict-transport-security": "max-age=31536000;",
+        "x-envoy-upstream-service-time": "1115",
+        "server": "envoy"
+      },
+      "content_b64": "eyJBZGRyZXNzIjoiNjkgQ2hlc25leSBTdHJlZXQsIEludmVyY2FyZ2lsbCIsIkNvdW5jaWwiOjEsIkRheSI6IkZyaWRheSIsIldlZWsiOiJCIiwiTmV4dERhdGVzIjpbeyJEYXRlIjoiMjAyNi0xMC0zMVQwNzowMDowMCIsIldlZWsiOiJZZWxsb3cgV2VlayJ9LHsiRGF0ZSI6IjIwMjYtMTEtMDZUMDc6MDA6MDAiLCJXZWVrIjoiUmVkIFdlZWsifV19"
+    }
+  ]
+}

@@ -455,3 +455,31 @@ def test_abfallplus_replay_restores_recorded_client_ids_and_pins_app(tmp_path):
                 },
             )
     assert AppAbfallplusDe._new_client_id is original
+
+
+@pytest.mark.parametrize("address", ["MATCH", "MATCH INVERCARGILL", "missing"])
+def test_wastenet_scrubber_keeps_matches_and_original_fallback_suggestions(address):
+    import cassette_scrubbers
+
+    rows = [{"address": f"other {i}"} for i in range(8)] + [
+        {"address": "MATCH, Invercargill"},
+        {"address": "MATCH nearby"},
+    ]
+    interaction = _interaction(
+        url="https://www.wastenet.org.nz/client-api/icc/rubbish/address-list",
+        content_b64=_b64(json.dumps(rows)),
+    )
+    original_body = interaction.get("body")
+    scrub = cassette_scrubbers.for_case(
+        "wastenet_org_nz", {"address": address}, "2026-10-25"
+    )
+    assert scrub is not None
+    scrub(
+        [interaction],
+    )
+    kept = json.loads(base64.b64decode(interaction["content_b64"]))
+    wanted = address.replace(" INVERCARGILL", ", Invercargill").lower()
+    assert kept == [
+        row for i, row in enumerate(rows) if i < 5 or wanted in row["address"].lower()
+    ]
+    assert interaction.get("body") == original_body

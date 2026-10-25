@@ -1694,6 +1694,12 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         attribute: the marker attribute identifying the round (default
             ``"class"``). A tuple tries the next attribute only when the previous one is absent.
             Where an attribute holds several values, the first is used.
+        day: optional selector of the day number within a cell. A missing or
+            invalid explicit day raises rather than silently skipping the cell.
+        rolling: a single table spanning several months. Read the starting
+            month from a range header and advance when the day number drops.
+            A header like ``December - January 2027`` starts in December 2026;
+            a single month without a year uses the current year.
     """
 
     def __init__(
@@ -1703,22 +1709,40 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         header: str,
         marker: str = "span",
         attribute: str | tuple[str, ...] = "class",
+        day: str | None = None,
+        rolling: bool = False,
     ):
         self.table = table
         self.header = header
         self.marker = marker
         self.attribute = attribute
+        self.day = day
+        self.rolling = rolling
 
     def _month_and_year(self, text: str) -> "tuple[int, int] | None":
         from waste_collection_schedule import recurrence
 
-        year = re.search(r"\d{4}", text)
-        if year is None:
+        if self.rolling:
+            parts = text.split("-")
+            start = parts[0].split()
+            month = recurrence.month(start[0]) if start else None
+            if month is None:
+                return None
+            if len(start) > 1:
+                return month, int(start[1])
+            if len(parts) > 1:
+                end = parts[-1].split()
+                end_month = recurrence.month(end[0])
+                year = int(end[-1])
+                return month, year - int(end_month is not None and month > end_month)
+            return month, datetime.date.today().year
+        year_match = re.search(r"\d{4}", text)
+        if year_match is None:
             return None
         for word in re.findall(r"[^\W\d_]+", text, flags=re.UNICODE):
             month = recurrence.month(word)
             if month is not None:
-                return month, int(year.group(0))
+                return month, int(year_match.group(0))
         return None
 
     def _marker_name(self, element: Tag) -> "str | None":
@@ -1745,27 +1769,49 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
             header = month_table.select_one(self.header)
             if header is None:
                 continue
-            resolved = self._month_and_year(header.get_text(strip=True))
+            header_text = (
+                header.get_text(" ", strip=True)
+                if self.rolling
+                else header.get_text(strip=True)
+            )
+            resolved = self._month_and_year(header_text)
             if resolved is None:
                 continue
             month, year = resolved
+            previous_day: int | None = None
 
             for day_cell in month_table.find_all("td"):
                 # The markers sit inside the cell, so their own text would run
                 # into the day number if it were read with them still in place.
-                without_markers = BeautifulSoup(
-                    day_cell.decode_contents(), "html.parser"
-                )
-                for element in without_markers.select(self.marker):
-                    element.decompose()
-                stripped = without_markers.get_text(strip=True)
-                day_text = stripped.split()[0] if stripped else ""
+                if self.day is not None:
+                    day_number = day_cell.select_one(self.day)
+                    if day_number is None:
+                        raise ValueError("Collection calendar day number not found")
+                    day_text = day_number.get_text(strip=True)
+                    if not day_text.isdigit():
+                        raise ValueError(
+                            f"Invalid collection calendar day: {day_text!r}"
+                        )
+                else:
+                    without_markers = BeautifulSoup(
+                        day_cell.decode_contents(), "html.parser"
+                    )
+                    for element in without_markers.select(self.marker):
+                        element.decompose()
+                    stripped = without_markers.get_text(strip=True)
+                    day_text = stripped.split()[0] if stripped else ""
                 if not day_text.isdigit():
                     continue
+                day = int(day_text)
+                if self.rolling and previous_day is not None and day < previous_day:
+                    month, year = (1, year + 1) if month == 12 else (month + 1, year)
+                previous_day = day
 
                 try:
-                    collection_date = datetime.date(year, month, int(day_text))
+                    collection_date = datetime.date(year, month, day)
                 except ValueError:
+                    if self.day is not None:
+                        raise
                     continue
 
                 for element in day_cell.select(self.marker):
