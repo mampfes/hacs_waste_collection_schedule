@@ -4442,6 +4442,14 @@
     },
     "urls": {}
   },
+  "lozzolo_roasio_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lozzolo_roasio_it.md",
+    "howto": {
+      "en": "Lozzolo and Roasio share one calendar, read from the yearly 'Calendario Raccolta Rifiuti' notice on Roasio's website; no address is needed. Households keep `utenza` at `domestica`; businesses choose `non domestica` to add the non-domestic residual waste, commercial metals and commercial cardboard rounds. Sanitary textiles (tessili sanitari) and garden waste (sfalci verdi) are only collected for users who have signed up with COVEVAR.",
+      "it": "Lozzolo e Roasio hanno lo stesso calendario, letto dall'avviso annuale 'Calendario Raccolta Rifiuti' sul sito del Comune di Roasio; non serve l'indirizzo. Le famiglie lasciano `utenza` su `domestica`; le attività scelgono `non domestica` per aggiungere indifferenziato non domestico, metalli commerciali e cartone commerciale. Tessili sanitari e sfalci verdi vengono ritirati solo per chi ha attivato il servizio presso COVEVAR."
+    },
+    "urls": {}
+  },
   "montecospa_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/montecospa_it.md",
     "howto": {

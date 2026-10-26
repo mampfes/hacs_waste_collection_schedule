@@ -3742,6 +3742,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Lomagna](/doc/source/siunet_it.md) / siunet.it
 - [Longare](/doc/source/siunet_it.md) / siunet.it
 - [Loreto Aprutino - Diodoro Ecologia](/doc/source/junker_app.md) / junker.app
+- [Lozzolo](/doc/source/lozzolo_roasio_it.md) / comune.roasio.vc.it
+- [Lozzolo, Roasio (COVEVAR)](/doc/source/lozzolo_roasio_it.md) / comune.roasio.vc.it
 - [Lu e Cuccaro Monferrato](/doc/source/junker_app.md) / junker.app
 - [Lucca - Sistema Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Macerata Campania - DHI](/doc/source/junker_app.md) / junker.app
@@ -3994,6 +3996,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Rivalta Bormida](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Rivarolo Mantovano](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/rivarolo-mantovano
 - [Rivolta D'Adda](/doc/source/siunet_it.md) / siunet.it
+- [Roasio](/doc/source/lozzolo_roasio_it.md) / comune.roasio.vc.it
 - [Robbiate](/doc/source/siunet_it.md) / siunet.it
 - [Robecchetto con Induno](/doc/source/junker_app.md) / junker.app
 - [Robecchetto Con Induno](/doc/source/siunet_it.md) / siunet.it

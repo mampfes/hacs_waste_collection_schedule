@@ -27724,6 +27724,18 @@
       "id": "junker_app"
     },
     {
+      "title": "Lozzolo",
+      "module": "lozzolo_roasio_it",
+      "default_params": {},
+      "id": "lozzolo_roasio_it"
+    },
+    {
+      "title": "Lozzolo, Roasio (COVEVAR)",
+      "module": "lozzolo_roasio_it",
+      "default_params": {},
+      "id": "lozzolo_roasio_it"
+    },
+    {
       "title": "Lu e Cuccaro Monferrato",
       "module": "junker_app",
       "default_params": {},
@@ -29599,6 +29611,12 @@
         "comune": "RIVOLTA D'ADDA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Roasio",
+      "module": "lozzolo_roasio_it",
+      "default_params": {},
+      "id": "lozzolo_roasio_it"
     },
     {
       "title": "Robbiate",
