@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 import requests
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 TITLE = "Potsdam"
 DESCRIPTION = "Source for Potsdam."
@@ -15,15 +16,15 @@ TEST_CASES = {
         "papier_rhythm": 2,
         "bio_rhythm": 3,
     },
-    "Teltower Vorstadt  Albert-Einstein-Str. 2": {
+    "Teltower Vorstadt Kurze Str.": {
         "ortsteil": "Teltower Vorstadt",
-        "strasse": "Albert-Einstein-Str.",
+        "strasse": "Kurze Str.",
         "rest_rhythm": 1,
         "papier_rhythm": 3,
         "bio_rhythm": 5,
     },
-    "Uetz  Kanalweg ": {
-        "ortsteil": "Uetz",
+    "Uetz-Paaren Kanalweg": {
+        "ortsteil": "Uetz-Paaren",
         "strasse": "Kanalweg",
         "rest_rhythm": 4,
         "papier_rhythm": 4,
@@ -119,13 +120,28 @@ class Source:
         except Exception as e:
             raise Exception("Could not decode server response") from e
 
-        for ortsteil in data["allRegionen"][0]["regionen"][0]["ortsteile"]:
+        ortsteile = data["allRegionen"][0]["regionen"][0]["ortsteile"]
+        for ortsteil in ortsteile:
             if ortsteil["name"].lower().strip() != self._ortsteil.lower().strip():
                 continue
             for strasse in ortsteil["strassen"]:
                 if strasse["name"].lower().strip() != self._strasse.lower().strip():
                     continue
                 return strasse["eintraege"]
+            # districts and streets are reorganised between years, so only
+            # report unknown values for the current year
+            if year == today.year:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "strasse",
+                    self._strasse,
+                    sorted(s["name"] for s in ortsteil["strassen"]),
+                )
+            return None
+
+        if year == today.year:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "ortsteil", self._ortsteil, sorted(o["name"] for o in ortsteile)
+            )
         return None
 
     # generate dates, typematch and date_is_collection* are nearly 1:1 implementation of teir original crappy js code

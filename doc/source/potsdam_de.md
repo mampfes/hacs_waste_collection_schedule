@@ -60,7 +60,7 @@ waste_collection_schedule:
     - name: potsdam_de
       args:
         ortsteil: Teltower Vorstadt
-        strasse: Albert-Einstein-Str.
+        strasse: Kurze Str.
         rest_rhythm: 1
         papier_rhythm: 3
         bio_rhythm: 5
@@ -71,7 +71,7 @@ waste_collection_schedule:
     sources:
     - name: potsdam_de
       args:
-        ortsteil: Uetz
+        ortsteil: Uetz-Paaren
         strasse: Kanalweg
         rest_rhythm: 4
         papier_rhythm: 4
