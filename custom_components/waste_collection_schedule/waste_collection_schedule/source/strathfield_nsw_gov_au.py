@@ -1,84 +1,91 @@
-import datetime
+import calendar
+import re
+from datetime import date
+from typing import ClassVar, final
+from urllib.parse import urljoin
 
-from dateutil.rrule import WEEKLY, rrule
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from bs4 import BeautifulSoup
+from waste_collection_schedule import parsers, preprocessors, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import text_field
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.service.MarkedPdfCalendar import MarkedPdfCalendarParser
+from waste_collection_schedule.transformers import JsonTransformer
 
-TITLE = "Strathfield Council"
-DESCRIPTION = "Source for Strathfield Council, NSW, Australia."
-URL = "https://www.strathfield.nsw.gov.au"
-TEST_CASES = {
-    "Monday collection": {"collection_day": "Monday"},
-    "Tuesday collection": {"collection_day": "Tuesday"},
-    "Wednesday collection": {"collection_day": "Wednesday"},
-}
-
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden Organics": Icons.GARDEN,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Your collection day is printed on your rates notice. "
-        "It can also be found by contacting Strathfield Council."
-    ),
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {"collection_day": "Collection Day"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "collection_day": (
-            "The day of the week your bins are collected (e.g. Tuesday). "
-            "Check your rates notice or contact Strathfield Council."
-        ),
-    },
-}
-
-# Monday of the first Garden Organics (green lid) week of 2026.
-# All Strathfield properties share this fortnightly alternating cycle.
-_GREEN_WEEK_ANCHOR = datetime.date(2026, 1, 5)
-
-_WEEKDAY_MAP = {
-    "monday": 0,
-    "tuesday": 1,
-    "wednesday": 2,
-    "thursday": 3,
-    "friday": 4,
-}
+_PAGE = "https://www.strathfield.nsw.gov.au/Live/Waste/Residential-Bin-Collection"
 
 
-class Source:
-    def __init__(self, collection_day: str):
-        day = collection_day.strip().lower()
-        if day not in _WEEKDAY_MAP:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "collection_day",
-                collection_day,
-                [d.capitalize() for d in _WEEKDAY_MAP],
-            )
-        self._day_offset = _WEEKDAY_MAP[day]
+def _calendars(response, **_):
+    soup = BeautifulSoup(response.text, "html.parser")
+    urls = []
+    for a in soup.select("a[href]"):
+        url = urljoin(response.url, str(a["href"]))
+        year = re.search(r"calendar-(20\d{2})", url, re.I)
+        if (
+            year
+            and "english.pdf" in url.lower()
+            and date.today().year <= int(year[1]) <= date.today().year + 1
+            and url not in urls
+        ):
+            urls.append(url)
+    if not urls:
+        raise ValueError("Strathfield has no current published English waste calendar")
+    return urls
 
-    def fetch(self) -> list[Collection]:
-        # Shift the Monday anchor to the user's actual collection weekday
-        first_green = _GREEN_WEEK_ANCHOR + datetime.timedelta(days=self._day_offset)
-        first_yellow = first_green + datetime.timedelta(weeks=1)
 
-        until = datetime.date.today() + datetime.timedelta(days=730)
+def _weekday(record, source):
+    text = source.params["collection_day"]
+    day = recurrence.weekday(text)
+    if day is None or day > 4:
+        raise SourceArgumentNotFoundWithSuggestions(
+            "collection_day", text, list(calendar.day_name)[:5]
+        )
+    return record["date"] >= date.today() and record["date"].weekday() == day
 
-        entries = []
-        for dt in rrule(WEEKLY, interval=1, dtstart=first_green, until=until):
-            entries.append(
-                Collection(dt.date(), "General Waste", ICON_MAP["General Waste"])
-            )
-        for dt in rrule(WEEKLY, interval=2, dtstart=first_green, until=until):
-            entries.append(
-                Collection(dt.date(), "Garden Organics", ICON_MAP["Garden Organics"])
-            )
-        for dt in rrule(WEEKLY, interval=2, dtstart=first_yellow, until=until):
-            entries.append(Collection(dt.date(), "Recycling", ICON_MAP["Recycling"]))
-        return entries
+
+@final
+class Source(BaseSource):
+    TITLE = "Strathfield Council"
+    DESCRIPTION = "Source for Strathfield Council, NSW, Australia."
+    URL = "https://www.strathfield.nsw.gov.au"
+    TEST_CASES: ClassVar[dict] = {
+        "Monday collection": {"collection_day": "Monday"},
+        "Tuesday collection": {"collection_day": "Tuesday"},
+        "Wednesday collection": {"collection_day": "Wednesday"},
+    }
+    COUNTRY = "au"
+    ERROR_TEST_CASES: ClassVar[dict] = {"Invalid weekday": {"collection_day": "Sunday"}}
+    PARAMS = (text_field("collection_day", "Collection weekday"),)
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.GARDEN_WASTE]
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter the Monday-Friday collection day from your rates notice or the council's street guide. The current linked calendar supplies green/yellow weeks and actual dates. Dates stop at the published end instead of projecting a fixed anchor two years ahead. Types now use canonical, localised names; update filters and customisations using old labels."
+    }
+    retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.Lookup(_PAGE, pick=_calendars),
+        targets=lambda source, urls: urls,
+        fetch=retrievers.Request(lambda url, urls, **_: url),
+    )
+    parse = parsers.EachResponse(
+        MarkedPdfCalendarParser(
+            pages=(0,),
+            months=tuple(calendar.month_name)[1:],
+            weekdays=("M", "T", "W", "T", "F", "S", "S"),
+            year_pattern=r"(20\d{2}) WASTE CALENDAR",
+            colors={"yellow": ((0.96, 0.70, 0.14),), "green": ((0.67, 0.77, 0.62),)},
+            tolerance=0.16,
+            row_bands=True,
+        )
+    )
+    preprocess = preprocessors.Compose(
+        preprocessors.RowFilter(_weekday),
+        preprocessors.Deduplicate(key=lambda r: (r["date"], r["type"])),
+    )
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        type_value_map={
+            "yellow": [wt.GENERAL_WASTE, wt.RECYCLABLES],
+            "green": [wt.GENERAL_WASTE, wt.GARDEN_WASTE],
+        },
+    )

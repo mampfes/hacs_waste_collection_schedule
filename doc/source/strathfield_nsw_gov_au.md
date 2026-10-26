@@ -1,40 +1,15 @@
 # Strathfield Council
 
-Support for schedules provided by [Strathfield Council](https://www.strathfield.nsw.gov.au), NSW, Australia.
-
-The schedule is based on Strathfield Council's published waste calendar:
-- **General Waste** (red lid): collected every week
-- **Garden Organics** (green lid): collected fortnightly
-- **Recycling** (yellow lid): collected fortnightly, alternating with Garden Organics
-
-## Configuration via configuration.yaml
-
 ```yaml
 waste_collection_schedule:
   sources:
     - name: strathfield_nsw_gov_au
       args:
-        collection_day: COLLECTION_DAY
+        collection_day: "Monday"
 ```
 
-### Configuration Variables
+Find your Monday-Friday collection day on your rates notice or the street guide linked from the [Residential Bin Collection page](https://www.strathfield.nsw.gov.au/Live/Waste/Residential-Bin-Collection).
 
-**collection_day**
-*(string) (required)*
+`collection_day` keeps its existing name and accepts the collection weekday. The source reads the currently linked English PDF calendar. Green weeks mean general waste plus garden organics; yellow weeks mean general waste plus recycling.
 
-The day of the week your bins are collected. Must be a full weekday name (e.g. `Tuesday`).
-
-## Example
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: strathfield_nsw_gov_au
-      args:
-        collection_day: Tuesday
-```
-
-## How to find your collection day
-
-Your collection day is printed on your rates notice. It can also be found by contacting
-[Strathfield Council](https://www.strathfield.nsw.gov.au).
+Dates start today and stop at the published calendar's end. The source no longer emits historical dates or projects a fixed anchor two years ahead. If no current calendar is published, it raises an error. The PDF parser validates all twelve month grids and reads week-wide colour bands. Types now use canonical names; update filters and customisations using old labels.

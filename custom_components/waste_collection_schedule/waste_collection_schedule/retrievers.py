@@ -2358,3 +2358,24 @@ class _DefaultHttpPostRetriever(RetrieverFunc):
 # Zero-config default instances (used by BaseSource and simple sources).
 http_get = _DefaultHttpGetRetriever()
 http_post = _DefaultHttpPostRetriever()
+
+
+class WithParams(RetrieverFunc):
+    """Bind provider configuration without adding an unused config-form field.
+
+    A shallow source view keeps the shared HTTP session and component context;
+    the caller's params are never changed. Bound values take precedence.
+    """
+
+    def __init__(self, retrieve: RetrieverFunc, **params: Any):
+        self.retrieve = retrieve
+        self.params = params
+
+    def __call__(self, source: BaseSource) -> Any:
+        from copy import copy
+
+        session = source.session
+        view = copy(source)
+        view.params = {**source.params, **self.params}
+        view._session = session
+        return self.retrieve(view)
