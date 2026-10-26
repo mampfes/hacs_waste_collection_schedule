@@ -54,8 +54,14 @@ class Source:
 
     def fetch_year(self, year):
         args = convert_to_arg(self._district)
-        r = requests.get(API_URL.format(year=year, arg=args[0]))
-        r.raise_for_status()
+        # the file name spelling of some districts differs between years,
+        # so use the first variant that exists
+        for i, arg in enumerate(args):
+            r = requests.get(API_URL.format(year=year, arg=arg))
+            if r.status_code == 404 and i < len(args) - 1:
+                continue
+            r.raise_for_status()
+            break
         entries = self._ics.convert(r.text)
         for prefix in (
             "Schadstoffmobil",
@@ -69,6 +75,7 @@ class Source:
                     r.raise_for_status()
                     new_entries = self._ics.convert(r.text)
                     entries.extend(new_entries)
+                    break
                 except (ValueError, requests.exceptions.HTTPError):
                     pass
         return entries
@@ -87,5 +94,5 @@ def convert_to_arg(district, prefix=""):
     prefix = prefix + "_" if prefix else ""
     arg = urllib.parse.quote(f"{prefix}Ortsteil_{district}")
     if "-_" in arg:  # no uniform format e.g Seefeld/ Testorf- Steinfort
-        return [arg, arg.replace("-_", "-")]
+        return [arg, arg.replace("-_", "-"), arg.replace("-_", "_")]
     return [arg]
