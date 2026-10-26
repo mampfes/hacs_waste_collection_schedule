@@ -8,8 +8,6 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/wastenet_org_nz.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/portenf_sa_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/AspNetForms.py",
-
-
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/GossForm.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/gosport_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/stockton_gov_uk.py",
@@ -668,6 +666,11 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/south_norfolk_and_broadland_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/byron_nsw_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/HtmlForms.py",
-    "custom_components/waste_collection_schedule/waste_collection_schedule/service/MyArea.py"
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/MyArea.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/ciudad_de_la_costa_uy.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/grosswangen_ch.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/ritl_ca.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/KmlZones.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/MarkedPdfCalendar.py"
   ]
 }

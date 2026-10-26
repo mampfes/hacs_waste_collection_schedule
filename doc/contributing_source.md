@@ -493,6 +493,10 @@ Use `parsers.JsObjectParser({name: pattern, ...})` for object literals captured 
 
 `service.MyArea.MyAreaParser` reads My Area bin-summary cards or the linked WebAspx round calendar. Pair `calendar_uprn` with `FanOutRetriever(include_prepared=True)` to fetch a linked calendar only when one is advertised. When a calendar is present, its dates replace the summary dates, which can conflate alternating rounds.
 
+`service.KmlZones.KmlWeekdayZoneParser` combines a Nominatim point response and a KML map response. Configure the folder name, the label patterns that capture each service's weekday list, and the provider's weekday vocabulary. It selects the first published polygon covering the point and returns weekday/type records for `RecurrenceExpander`. Invalid addresses and addresses outside the zones raise argument errors; missing or unrecognised zone data raises a shape error instead of returning an empty calendar.
+
+`service.MarkedPdfCalendar.MarkedPdfCalendarParser` reads annual month grids whose dates have coloured cells, numerals, or nested vector markers. Configure month/weekday names, the printed-year pattern and the marker palette. It validates day positions against the calendar, preserves visible combined-service markers, and ignores colours hidden by later solid fills. `pages` restricts extraction to calendar pages. Missing dates are rejected unless `allow_unmarked_missing_days` is enabled; even then a collection marker without a readable day is an error. `cancelled_colors` recognises crossed-out cells, exposing the cancelled dates and the next actual marked dates as metadata. A source must interpret that metadata using the published sector and exception instructions; the parser never invents a replacement date or cadence.
+
 ### A service-based source (fully declarative)
 
 ```python

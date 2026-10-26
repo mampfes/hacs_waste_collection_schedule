@@ -9803,3 +9803,60 @@ class TestGossJsonResult:
             GossJsonParser("PAGE3_1", "FIELD15")(
                 SimpleNamespace(text=f'var BINDAYSFormData = "{raw}";')
             )
+
+
+class TestKmlWeekdayZones:
+    @staticmethod
+    def parser():
+        from waste_collection_schedule.service.KmlZones import KmlWeekdayZoneParser
+
+        return KmlWeekdayZoneParser(
+            folder="RESIDUOS",
+            groups={
+                "general": r"MEZCLADOS\s*\(([^)]+)\)",
+                "recycling": r"RECICLABLES\s*\(([^)]+)\)",
+            },
+            weekdays={"MIERCOLES": 2, "DOMINGO": 6, "MARTES": 1},
+        )
+
+    @staticmethod
+    def responses(
+        x=1, y=1, name="MEZCLADOS (MIÉRCOLES - DOMINGOS) RECICLABLES (MARTES)"
+    ):
+        point = MagicMock()
+        point.json.return_value = [{"lon": str(x), "lat": str(y)}]
+        markup = f"""<kml xmlns="http://www.opengis.net/kml/2.2"><Document><Folder><name>RECOLECCIÓN DE RESIDUOS</name>
+            <Placemark><name>{name}</name><Polygon><outerBoundaryIs><LinearRing><coordinates>0,0,0 2,0,0 2,2,0 0,2,0 0,0,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+            </Folder></Document></kml>"""
+        return [point, SimpleNamespace(content=markup.encode())]
+
+    def test_reads_only_published_days_from_the_matching_polygon(self):
+        assert self.parser()(self.responses()) == [
+            {"weekday": 2, "type": "general"},
+            {"weekday": 6, "type": "general"},
+            {"weekday": 1, "type": "recycling"},
+        ]
+
+    def test_point_outside_zones_is_an_address_error(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+
+        with pytest.raises(SourceArgumentNotFound):
+            self.parser()(self.responses(x=5))
+
+    def test_unresolved_address_is_an_address_error(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+
+        responses = self.responses()
+        responses[0].json.return_value = []
+        with pytest.raises(SourceArgumentNotFound):
+            self.parser()(responses)
+
+    def test_changed_zone_labels_fail_rather_than_returning_an_empty_calendar(self):
+        with pytest.raises(ValueError, match="no recognised collection zones"):
+            self.parser()(self.responses(name="Unrecognised schedule"))
+
+    def test_missing_kml_document_is_an_error(self):
+        responses = self.responses()
+        responses[1].content = b'<kml xmlns="http://www.opengis.net/kml/2.2"/>'
+        with pytest.raises(ValueError, match="no Document"):
+            self.parser()(responses)
