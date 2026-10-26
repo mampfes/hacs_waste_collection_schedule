@@ -862,6 +862,68 @@ def test_marker_calendar_half_cell_bar_reaches_its_day_numbers():
     assert parser._anchors_of(bar, days) == days[2:4]
 
 
+def test_marker_calendar_below_binds_symbols_to_the_day_number_heading_the_cell():
+    from waste_collection_schedule.parsers import PdfVector
+    from waste_collection_schedule.service.PdfMarkerCalendar import (
+        MarkerCalendarParser,
+        _Anchor,
+    )
+
+    parser = MarkerCalendarParser([], placement="below", row_reach=40)
+    # Monday 2 and Tuesday 3 head their cells at y=277; the week above
+    # starts at y=327.
+    days = [
+        _Anchor(0, 1, 416, 327),
+        _Anchor(0, 2, 37.6, 277),
+        _Anchor(0, 16, 40.5, 226),
+        _Anchor(0, 3, 100.6, 277),
+    ]
+    first = PdfVector(0, 31.3, 244, 40.2, 253.5, None, (0.9, 0.2, 0.1))
+    last = PdfVector(0, 85.7, 249, 88.8, 251.4, None, (0.9, 0.2, 0.1))
+    next_cell = PdfVector(0, 96, 244, 105, 253, None, (0.9, 0.2, 0.1))
+    below_16 = PdfVector(0, 32.3, 193, 41.2, 202.5, None, (0.9, 0.2, 0.1))
+    assert parser._anchors_of(first, days) == [days[1]]
+    assert parser._anchors_of(last, days) == [days[1]]
+    assert parser._anchors_of(next_cell, days) == [days[3]]
+    assert parser._anchors_of(below_16, days) == [days[2]]
+    # Nothing above within reach: not a day's symbol.
+    legend = PdfVector(0, 31, 500, 40, 510, None, (0.9, 0.2, 0.1))
+    assert parser._anchors_of(legend, days) == []
+
+
+def test_marker_calendar_page_headings_accept_a_lone_heading_over_a_month():
+    from waste_collection_schedule.parsers import PdfTextFragment
+    from waste_collection_schedule.service.PdfMarkerCalendar import (
+        MarkerCalendarParser,
+        _Anchor,
+    )
+
+    grid = [
+        _Anchor(0, day, 40 + 60 * ((day - 1) % 7), 330 - 50 * ((day - 1) // 7))
+        for day in range(1, 29)
+    ]
+    prose = [_Anchor(1, 16, 100, 300), _Anchor(1, 3, 120, 300)]
+    words = [
+        PdfTextFragment(0, "FEBBRAIO", 110, 380),
+        PdfTextFragment(0, "26", 220, 380),
+        PdfTextFragment(1, "maggio", 100, 320),  # "dal 3 maggio ... 16 kg"
+    ]
+    anchors = [*grid, *prose]
+
+    months, first = MarkerCalendarParser([], placement="below")._months_from_headings(
+        words, anchors
+    )
+    assert months == {}
+    assert first is None
+
+    months, first = MarkerCalendarParser(
+        [], placement="below", page_headings=True
+    )._months_from_headings(words, anchors)
+    assert first == 2
+    assert {months[a] for a in grid} == {2}
+    assert not any(a in months for a in prose)
+
+
 _MARKED_MONTHS = (
     "January",
     "February",
