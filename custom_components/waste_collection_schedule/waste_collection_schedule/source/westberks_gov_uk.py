@@ -1,9 +1,13 @@
 import json
+import re
 import time
 from datetime import date, datetime
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFoundWithSuggestions,
+)
 
 TITLE = "West Berkshire Council"
 DESCRIPTION = "Source for westberks.gov.uk services for West Berkshire Council"
@@ -31,6 +35,22 @@ SEARCH_URLS = {
 }
 
 COLLECTIONS = {"Rubbish", "Recycling", "FoodWaste"}
+
+
+def find_uprn(addresses: list[dict], housenumberorname: str) -> str | None:
+    """Return the UPRN of the first address matching housenumberorname.
+
+    The house number or name must match a whole leading token of the
+    address, so "1" matches "1 HIGH STREET" but not "10 HIGH STREET".
+    """
+    wanted = str(housenumberorname).strip().upper()
+    pattern = re.compile(rf"^{re.escape(wanted)}(?=[\s,]|$)")
+    for address in addresses:
+        line1 = (address.get("line1") or "").strip().upper()
+        building = (address.get("buildingnumber") or "").strip().upper()
+        if pattern.match(line1) or building == wanted:
+            return address["udprn"]
+    return None
 
 
 def fix_date(d: date):
@@ -68,14 +88,14 @@ class Source:
             response_sub = response_str[14:data_length]
             address_data = json.loads(response_sub)
 
-            propertyUprns = address_data["result"]
-            for match in propertyUprns:
-                if match["line1"].startswith(self._housenumberorname):
-                    self._uprn = match["udprn"]
-                if match["buildingnumber"].startswith(
-                    self._housenumberorname
-                ):  # no evidence (yet) that their database uses this
-                    self._uprn = match["udprn"]
+            addresses = address_data["result"]
+            self._uprn = find_uprn(addresses, self._housenumberorname)
+            if self._uprn is None:
+                raise SourceArgumentNotFoundWithSuggestions(
+                    "housenumberorname",
+                    self._housenumberorname,
+                    [a["line1"] for a in addresses],
+                )
 
         entries = []
 
