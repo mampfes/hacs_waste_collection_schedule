@@ -6,6 +6,7 @@ SERVICE_MAP = [
         "realm": 41500,
         "name": "Blankenheim App - Müllkalender",
         "region": "Gemeinde Blankenheim",
+        "disabled": True,
         "icons": {
             "158": "mdi:package-variant",  # Altpapier
             "154": "mdi:leaf",  # Biomüll
@@ -71,6 +72,7 @@ SERVICE_MAP = [
         "realm": 22500,
         "name": "Deggenhausertal App - Müllkalender",
         "region": "Gemeinde Deggenhausertal",
+        "disabled": True,
         "icons": {
             "141": "mdi:nail",  # Altmetallsammlung Vereine
             "138": "mdi:leaf",  # Bioabfall 2-wöchentlich
@@ -115,6 +117,7 @@ SERVICE_MAP = [
         "realm": 33100,
         "name": "www.schutterwald.de - Müllkalender",
         "region": "Gemeinde Schutterwald",
+        "disabled": True,
         "icons": {
             "67": "mdi:trash-can",  # Bio- und Restmüllabfuhr (60 l/120 l/240 l/1,1 m³)
             "65": "mdi:recycle",  # Gelbe Säcke
@@ -205,6 +208,7 @@ SERVICE_MAP = [
         "realm": 42400,
         "name": "Emmendingen App - Müllkalender",
         "region": "Stadt Emmendingen",
+        "disabled": True,
         "icons": {
             "79": "mdi:trash-can",  # Bio- und Restmüllabfuhr (60 l/120 l/240 l/1,1 m³)
             "77": "mdi:recycle",  # Gelbe Säcke
@@ -216,6 +220,7 @@ SERVICE_MAP = [
         "realm": 42600,
         "name": "DORFnet - Müllkalender",
         "region": "Gemeinde Kalletal",
+        "disabled": True,
         "icons": {
             "63": "mdi:package-variant",  # Blaue Altpapiertonne
             "124": "mdi:recycle",  # Gelbe Tonne
@@ -231,6 +236,7 @@ SERVICE_MAP = [
         "realm": 44100,
         "name": "Messstetten App - Müllkalender",
         "region": "Stadt Messstetten",
+        "disabled": True,
         "icons": {
             "113": "mdi:package-variant",  # Altpapiersammlung
             "107": "mdi:package-variant",  # Altpapiertonne
