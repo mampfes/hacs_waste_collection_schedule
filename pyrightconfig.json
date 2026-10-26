@@ -5,11 +5,10 @@
   "reportMissingModuleSource": false,
   "include": [
     "custom_components/waste_collection_schedule/waste_collection_schedule/base_source.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/antrimandnewtownabbey_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/wastenet_org_nz.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/portenf_sa_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/AspNetForms.py",
-
-
     "custom_components/waste_collection_schedule/waste_collection_schedule/service/GossForm.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/gosport_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/stockton_gov_uk.py",
