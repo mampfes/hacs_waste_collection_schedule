@@ -10145,3 +10145,21 @@ def test_wolverhampton_rejects_missing_calendar_and_unknown_service():
     ]
     with pytest.raises(ValueError, match="Unknown collection"):
         ServiceCalendarParser()(response)
+
+
+def test_awb_mainz_saved_legacy_street_is_accepted_without_unused_form_field():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.awb_mainz_bingen_de import Source
+
+    case = "Stadt Bingen, Bingen-Stadt"
+    args = Source.TEST_CASES[case]
+    path = fixture_path("awb_mainz_bingen_de", case)
+    with cassette.replaying(path):
+        expected = Source(**args).fetch()
+    with cassette.replaying(path):
+        actual = Source(**args, strasse="Hafenstraße").fetch()
+    assert [(e.date, e.waste_type, e.location, e.description) for e in actual] == [
+        (e.date, e.waste_type, e.location, e.description) for e in expected
+    ]
+    assert "strasse" not in {name for param in Source.PARAMS for name in param.fields}

@@ -22,14 +22,6 @@ class Source(BaseSource):
     }
     URL = KawSource.URL
     COUNTRY = "de"
-    TEST_CASES = {
-        **TEST_CASES,
-        "Saved legacy street": {
-            "bezirk": "Stadt Bingen",
-            "ort": "Bingen-Stadt",
-            "strasse": "Hafenstraße",
-        },
-    }
     ERROR_TEST_CASES: ClassVar[dict] = {
         "Unknown district": {"bezirk": "zzzznotreal", "ort": "Mommenheim"}
     }
