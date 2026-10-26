@@ -26,6 +26,7 @@ ICON_MAP = {
     "Recycling": Icons.RECYCLING,
     "Garden Waste": Icons.GARDEN,
     "Purple Bin": Icons.RECYCLING,
+    "Food Waste": Icons.BIO_KITCHEN,
 }
 
 _PAGE_URL = "https://www.e-lindsey.gov.uk/mywastecollections"
@@ -157,6 +158,7 @@ class Source:
             ("wastenextref", "Refuse"),
             ("wastenextrec", "Recycling"),
             ("wastenextpur", "Purple Bin"),
+            ("wastenextfood", "Food Waste"),
             ("greenfirst", "Garden Waste"),
         ]:
             raw = result.get(field, "")
