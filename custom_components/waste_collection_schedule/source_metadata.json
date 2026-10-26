@@ -780,7 +780,7 @@
   "dardanup_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dardanup_wa_gov_au.md",
     "howto": {
-      "en": "Visit https://www.dardanup.wa.gov.au/our-services/waste-and-recycling/find-your-bin-day.aspx and find your street in the list to determine your collection day. Enter your street name (without house number) as the 'street' argument, or enter the day directly as 'collection_day' (for Dardanup West / Ferguson Valley residents). For recycling_in_even_week: check your last recycling collection date and see if its ISO week number (https://whatweekisit.org/) was even (True) or odd (False)."
+      "en": "Find your street/townsite and service area in the current waste guide linked from https://www.dardanup.wa.gov.au/our-services/waste-and-recycling/find-your-bin-day.aspx. Enter street and service_area; collection_day can specify the published weekday directly. Streets spanning Area 1 and Area 2 require service_area. Replace the old recycling_in_even_week argument with service_area: the published calendar now supplies the recycling phase and holiday replacements, including across ISO week 53. Rural two-bin services have no FOGO collection. Dates stop at the end of the published guide, with no projection beyond it. Since the v3 migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -1623,6 +1623,13 @@
     },
     "urls": {}
   },
+  "ritl_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ritl_ca.md",
+    "howto": {
+      "en": "Choose a municipality and sector listed under Calendriers de collecte at https://ritl.ca/. The former ICS export has been replaced by the published annual PDFs. Montcalm, Val-David and Val-Morin have no calendar in the current RITL listing. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
+    "urls": {}
+  },
   "ics_laval_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/laval_ca.md",
     "howto": {
@@ -1732,11 +1739,6 @@
       "en": "Pick your sector from the <a href=\"https://repentigny.ca/services/citoyens/collectes\">collection calendar</a>.",
       "fr": "Choisissez votre secteur d'après le <a href=\"https://repentigny.ca/services/citoyens/collectes\">calendrier de collecte</a>."
     },
-    "urls": {}
-  },
-  "ritl_ca": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ritl_ca.md",
-    "howto": {},
     "urls": {}
   },
   "ics_riviere_beaudette_com": {
@@ -5950,7 +5952,9 @@
   },
   "grosswangen_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grosswangen_ch.md",
-    "howto": {},
+    "howto": {
+      "en": "Choose your refuse route: Aussentour (default), Innentour, or Sigerswil. Other collection types use the municipality-wide dates printed in the calendar. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "lindau_ch": {
@@ -6089,7 +6093,9 @@
   },
   "antrimandnewtownabbey_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/antrimandnewtownabbey_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Search your address at https://antrimandnewtownabbey.gov.uk/binchecker/ and copy the Id from the selected property's URL into id. The council now publishes dated recycling collections alongside refuse and brown-bin collections. UPRN-only configurations must be updated to this council ID because the old Bryson lookup has been retired; with id configured, the old uprn argument is unnecessary. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -8628,7 +8634,7 @@
   "lacity_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lacity_gov.md",
     "howto": {
-      "en": "Enter your street address exactly as it appears on your LA Sanitation bill. The address must be within Los Angeles city limits."
+      "en": "Enter your complete street address within Los Angeles city limits, without city/state. The official GeoQuery API supplies the collection weekday. Black, blue and green bins share this day; the existing LASAN holiday delays are applied. Since the v3 migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -8893,7 +8899,7 @@
   "ciudad_de_la_costa_uy": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ciudad_de_la_costa_uy.md",
     "howto": {
-      "en": "Enter your street address (house number and street, or just the street) within Ciudad de la Costa. The address is geocoded and matched against the municipality's published waste collection zone map (https://www.google.com/maps/d/u/0/viewer?mid=17F0VsWkN9V7hoqMSyQ_H2_rl0SYLlZel). If your street name is common to multiple neighbourhoods, include the neighbourhood (barrio) name for a more accurate match."
+      "en": "Enter your street address in Ciudad de la Costa. Include the neighbourhood for common street names. The published municipal zone map supplies collection weekdays. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
     },
     "urls": {}
   }

@@ -51,6 +51,113 @@ def _page(html: str, url: str = "https://example.org/waste/") -> SimpleNamespace
     return SimpleNamespace(text=html, url=url)
 
 
+def _fiscal_week_grid():
+    """Two dated years and seven printed day columns, with no PDF dependency."""
+    import calendar
+
+    from waste_collection_schedule.parsers import (
+        PdfTextFragment,
+        PdfVector,
+        PdfWordLayout,
+    )
+
+    lines, words, vectors = [], [], []
+    for index in range(12):
+        year, month = 2026 + (index + 6) // 12, (index + 6) % 12 + 1
+        cx, cy = 100 + index % 3 * 100, 600 - index // 3 * 120
+        lines.append(PdfTextFragment(0, f"{calendar.month_name[month]} {year}", cx, cy))
+        for day in range(1, calendar.monthrange(year, month)[1] + 1):
+            date = D(year, month, day)
+            x = cx - 30 + date.weekday() * 10
+            y = cy - 20 - ((D(year, month, 1).weekday() + day - 1) // 7) * 10
+            words.append(PdfTextFragment(0, str(day), x, y))
+            if date.weekday() < 5:
+                vectors.append(
+                    PdfVector(0, x - 4, y - 4, x + 4, y + 4, None, (1.0, 0.0, 0.0))
+                )
+    return PdfWordLayout(lines, words, vectors)
+
+
+@pytest.mark.parametrize("fault", [None, "missing_day", "wrong_column", "wrong_year"])
+def test_dardanup_fiscal_grid_validates_printed_dates(fault):
+    from waste_collection_schedule.service.DardanupCalendar import month_cells
+
+    layout = _fiscal_week_grid()
+    if fault == "missing_day":
+        layout.words.pop(0)
+    elif fault == "wrong_column":
+        layout.words[0] = layout.words[0]._replace(x=layout.words[0].x + 10)
+    elif fault == "wrong_year":
+        layout.lines[0] = layout.lines[0]._replace(text="July 2025")
+    if fault:
+        with pytest.raises(ValueError):
+            month_cells(layout, 0)
+    else:
+        cells = month_cells(layout, 0)
+        assert len(cells) == 365
+        assert min(cells) == D(2026, 7, 1)
+        assert max(cells) == D(2027, 6, 30)
+        assert cells[D(2026, 12, 31)] == "general"
+
+
+@pytest.mark.parametrize(
+    "case,key,day",
+    [
+        ("Hale Street (Area 1, Tuesday)", "recycling", D(2027, 1, 5)),
+        ("Hale Street Area 2", "general", D(2027, 1, 5)),
+        ("Burekup", "recycling", D(2027, 1, 7)),
+    ],
+)
+def test_dardanup_published_phase_survives_iso_week_53(case, key, day):
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.source.dardanup_wa_gov_au import Source
+
+    expected = wt.RECYCLABLES if key == "recycling" else wt.GENERAL_WASTE
+    with (
+        cassette.replaying(fixture_path("dardanup_wa_gov_au", case)),
+        freeze_time("2027-01-04"),
+    ):
+        entries = Source(**Source.TEST_CASES[case]).fetch()
+    assert any(e.date == day and e.type == wt.display_name(expected) for e in entries)
+
+
+@pytest.mark.parametrize("holiday", [D(2026, 12, 25), D(2027, 1, 1), D(2027, 3, 26)])
+def test_dardanup_guide_moves_cancelled_friday_to_saturday(holiday):
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.dardanup_wa_gov_au import Source
+
+    case = "Hale Street (Area 1, Tuesday)"
+    with (
+        cassette.replaying(fixture_path("dardanup_wa_gov_au", case)),
+        freeze_time(holiday),
+    ):
+        entries = Source(service_area="Area 1", collection_day="Friday").fetch()
+    assert not any(e.date == holiday for e in entries)
+    assert sum(e.date == holiday + datetime.timedelta(days=1) for e in entries) == 2
+    assert all(e.date <= D(2027, 6, 30) for e in entries)
+
+
+def test_dardanup_rural_service_has_separate_weekdays_and_no_fogo():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.source.dardanup_wa_gov_au import Source
+
+    case = "Rural Ferguson Valley split weekdays"
+    with cassette.replaying(fixture_path("dardanup_wa_gov_au", case)):
+        entries = Source(**Source.TEST_CASES[case]).fetch()
+    assert {
+        e.date.weekday() for e in entries if e.type == wt.display_name(wt.GENERAL_WASTE)
+    } == {0}
+    assert {
+        e.date.weekday() for e in entries if e.type == wt.display_name(wt.RECYCLABLES)
+    } == {3}
+    assert not any(e.type == wt.display_name(wt.ORGANIC) for e in entries)
+
+
 def test_normalize_loose_drops_accents_case_and_punctuation():
     assert lookups.normalize_loose("OSIEDLE JAMNO-ŁABUSZ") == "osiedle jamno labusz"
     assert lookups.normalize_loose(" Pérouges  hors cité ") == "perouges hors cite"
@@ -806,3 +913,283 @@ def test_marker_calendar_read_headings_off_numbers_columns_in_order(monkeypatch)
 
     rows = MarkerCalendarParser(markers, read_headings=False, min_markers=3)(response)
     assert rows == [(datetime.date(2026, month, 1), "Dot") for month in (1, 2, 3)]
+
+
+_MARKED_MONTHS = (
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+)
+_MARKED_WEEKDAYS = ("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So")
+
+
+def _marked_calendar_pdf(
+    *,
+    year=2026,
+    columns=7,
+    omitted=None,
+    bad_day=None,
+    year_label=True,
+    hidden_blue=False,
+    marked_day=(1, 26),
+    cancelled=None,
+):
+    """A complete printed calendar; January 26 has fill and stroke markers."""
+    import calendar
+    from io import BytesIO
+
+    from pypdf import PdfWriter
+    from pypdf.generic import DecodedStreamObject, DictionaryObject, NameObject
+
+    writer = PdfWriter()
+    font = writer._add_object(
+        DictionaryObject(
+            {
+                NameObject("/Type"): NameObject("/Font"),
+                NameObject("/Subtype"): NameObject("/Type1"),
+                NameObject("/BaseFont"): NameObject("/Helvetica"),
+            }
+        )
+    )
+    for month, name in enumerate(_MARKED_MONTHS, 1):
+        page = writer.add_blank_page(width=220, height=800)
+        page[NameObject("/Resources")] = DictionaryObject(
+            {NameObject("/Font"): DictionaryObject({NameObject("/F1"): font})}
+        )
+        commands = []
+
+        def text(value, x, y, color="0 0 0", output_commands=commands):
+            output_commands.append(f"BT /F1 9 Tf {color} rg {x} {y} Td ({value}) Tj ET")
+
+        if year_label:
+            text(f"YEAR {year}", 20, 760)
+        text(name, 20, 700)
+        for column, label in enumerate(_MARKED_WEEKDAYS[:columns]):
+            text(label, 20 + 20 * column, 680)
+        for week, days in enumerate(calendar.monthcalendar(year, month)):
+            for column, day in enumerate(days[:columns]):
+                if not day:
+                    continue
+                x, y = 20 + 20 * column, 660 - 20 * week
+                if (month, day) == cancelled:
+                    commands.append(f"q 1 .11 .49 rg {x - 2} {y - 4} 16 14 re f Q")
+                    continue
+                marked = (month, day) == marked_day
+                if marked and hidden_blue:
+                    commands.append(f"q 0 0 1 rg {x + 1} {y - 1} 8 8 re f Q")
+                if marked:
+                    commands.append(f"q 0 0 0 rg {x - 2} {y - 4} 16 14 re f Q")
+                    commands.append(f"q 1 0 0 RG 2 w {x - 2} {y - 4} 16 14 re S Q")
+                if (month, day) != omitted:
+                    value = 32 if (month, day) == bad_day else day
+                    text(value, x, y, "1 1 1" if marked else "0 0 0")
+        stream = DecodedStreamObject()
+        stream.set_data("\n".join(commands).encode("ascii"))
+        page[NameObject("/Contents")] = writer._add_object(stream)
+    output = BytesIO()
+    writer.write(output)
+    return output.getvalue()
+
+
+def _marked_parser(**kwargs):
+    from waste_collection_schedule.service.MarkedPdfCalendar import (
+        MarkedPdfCalendarParser,
+    )
+
+    columns = kwargs.pop("columns", 7)
+    return MarkedPdfCalendarParser(
+        months=_MARKED_MONTHS,
+        weekdays=_MARKED_WEEKDAYS[:columns],
+        year_pattern=r"YEAR (20\d{2})",
+        alignment="left",
+        colors={
+            "general": ((0, 0, 0),),
+            "organic": ((1, 0, 0),),
+            "recycling": ((0, 0, 1),),
+        },
+        **kwargs,
+    )
+
+
+@pytest.mark.parametrize("year,columns", [(2026, 7), (2027, 7), (2026, 5), (2027, 5)])
+def test_marked_pdf_grid_reads_combined_fill_and_stroke_across_year_layouts(
+    year, columns
+):
+    response = SimpleNamespace(content=_marked_calendar_pdf(year=year, columns=columns))
+    rows = _marked_parser(columns=columns)(response)
+    assert [(r["date"], r["type"]) for r in rows] == [
+        (D(year, 1, 26), "general"),
+        (D(year, 1, 26), "organic"),
+    ]
+
+
+@pytest.mark.parametrize("allow_missing", [False, True])
+def test_marked_pdf_missing_unmarked_holiday_is_opt_in(allow_missing):
+    response = SimpleNamespace(content=_marked_calendar_pdf(omitted=(1, 1)))
+    if allow_missing:
+        assert len(_marked_parser(allow_unmarked_missing_days=True)(response)) == 2
+    else:
+        with pytest.raises(ValueError, match="Incomplete printed grid"):
+            _marked_parser()(response)
+
+
+def test_marked_pdf_never_ignores_a_collection_marker_without_its_day_number():
+    response = SimpleNamespace(content=_marked_calendar_pdf(omitted=(1, 26)))
+    with pytest.raises(ValueError, match="Collection marker has no printed day"):
+        _marked_parser(allow_unmarked_missing_days=True)(response)
+
+
+def test_marked_pdf_rejects_invalid_printed_day():
+    response = SimpleNamespace(content=_marked_calendar_pdf(bad_day=(1, 15)))
+    with pytest.raises(ValueError, match="Incomplete printed grid"):
+        _marked_parser()(response)
+
+
+def test_marked_pdf_requires_a_published_year():
+    with pytest.raises(ValueError, match="Printed calendar year not found"):
+        _marked_parser()(
+            SimpleNamespace(content=_marked_calendar_pdf(year_label=False))
+        )
+
+
+def _recorded_pdf_response(module, case):
+    import cassette
+    from fixtures_support import fixture_path
+
+    data = json.loads(Path(fixture_path(module, case)).read_text())
+    item = next(item for item in data["interactions"] if ".pdf" in item["url"])
+    return cassette.CassetteResponse(item)
+
+
+def test_marked_pdf_preserves_ritl_combined_rounds_and_ignores_padding_days():
+    from collections import Counter
+
+    from waste_collection_schedule.source.ritl_ca import Source
+
+    response = _recorded_pdf_response("ritl_ca", "Lac-Supérieur Secteur 1")
+    rows = Source.parse([response])
+    pairs = {(row["date"], row["type"]) for row in rows}
+    assert Counter(row["type"] for row in rows) == {
+        "general": 19,
+        "organic": 39,
+        "recycling": 26,
+    }
+    assert {
+        (D(2026, 1, 26), "general"),
+        (D(2026, 1, 26), "organic"),
+        (D(2026, 5, 11), "organic"),
+        (D(2026, 5, 11), "recycling"),
+    } <= pairs
+    assert all(day.year == 2026 for day, _ in pairs)
+
+
+@pytest.mark.parametrize(
+    "route,count", [("Innentour", 52), ("Aussentour", 26), ("Sigerswil", 26)]
+)
+def test_marked_pdf_respects_published_grosswangen_route_restrictions(route, count):
+    from collections import Counter
+
+    from waste_collection_schedule.source.grosswangen_ch import Source
+
+    source = Source(route=route)
+    response = _recorded_pdf_response("grosswangen_ch", "TEST")
+    rows = list(source.preprocess(source.parse([response]), source))
+    counts = Counter(row["type"] for row in rows)
+    assert counts == {
+        "general": count,
+        "organic": 22,
+        "paper": 16,
+        "garden": 5,
+        "metal": 2,
+        "electronics": 2,
+    }
+    pairs = {(row["date"], row["type"]) for row in rows}
+    assert (D(2026, 3, 5), "garden") in pairs
+    assert (D(2026, 3, 5), "paper") in pairs
+    assert (D(2026, 1, 8), "paper") in pairs
+    assert (D(2026, 6, 11), "paper") in pairs
+    assert (D(2026, 6, 4), "paper") not in pairs
+    if route != "Innentour":
+        assert all(
+            row["date"].isocalendar().week % 2 == (0 if route == "Sigerswil" else 1)
+            for row in rows
+            if row["type"] == "general"
+        )
+
+
+@pytest.mark.parametrize(
+    "municipality,sector,case,weekday,exceptions",
+    [
+        ("Mont-Blanc", "Secteur Est", "Mont-Blanc Secteur Est", 1, set()),
+        ("Mont-Blanc", "Secteur Ouest", "Mont-Blanc Secteur Ouest", 3, {D(2026, 1, 2)}),
+        (
+            "Sainte-Agathe-des-Monts",
+            "Secteur Centre-ville",
+            "Sainte-Agathe-des-Monts Secteur Centre-ville",
+            2,
+            set(),
+        ),
+        (
+            "Sainte-Agathe-des-Monts",
+            "Secteur Nord",
+            "Sainte-Agathe-des-Monts Secteur Nord",
+            3,
+            {D(2026, 1, 2)},
+        ),
+        (
+            "Sainte-Agathe-des-Monts",
+            "Secteur Sud / Fatima",
+            "Sainte-Agathe-des-Monts Secteur Sud / Fatima",
+            4,
+            {D(2026, 12, 28)},
+        ),
+    ],
+)
+def test_ritl_shared_pdf_keeps_only_the_chosen_sector_and_printed_exceptions(
+    municipality, sector, case, weekday, exceptions
+):
+    from waste_collection_schedule.source.ritl_ca import Source
+
+    response = _recorded_pdf_response("ritl_ca", case)
+    source = Source(municipality=municipality, sector=sector)
+    with freeze_time("2026-01-01"):
+        rows = list(source.preprocess(source.parse([response]), source))
+    days = {row["date"] for row in rows}
+    assert rows
+    assert {day for day in days if day.weekday() != weekday} == exceptions
+    assert D(2026, 1, 1) not in days
+    if sector == "Secteur Sud / Fatima":
+        assert D(2026, 12, 25) not in days
+        assert any(
+            row["date"] == D(2026, 12, 28) and row["type"] == "recycling"
+            for row in rows
+        )
+
+
+def test_marked_pdf_ignores_a_colour_fully_hidden_by_a_later_solid_marker():
+    rows = _marked_parser()(
+        SimpleNamespace(content=_marked_calendar_pdf(hidden_blue=True))
+    )
+    assert {row["type"] for row in rows} == {"general", "organic"}
+
+
+def test_marked_pdf_records_crossed_out_cells_and_the_next_actual_marked_date():
+    response = SimpleNamespace(
+        content=_marked_calendar_pdf(cancelled=(1, 1), marked_day=(1, 2))
+    )
+    rows = _marked_parser(
+        allow_unmarked_missing_days=True, cancelled_colors=((1, 0.11, 0.49),)
+    )(response)
+    assert len(rows) == 2
+    assert all(row["date"] == D(2026, 1, 2) for row in rows)
+    assert rows[0]["cancelled_dates"] == (D(2026, 1, 1),)
+    assert rows[0]["next_marked_after_cancelled"] == {D(2026, 1, 1): D(2026, 1, 2)}

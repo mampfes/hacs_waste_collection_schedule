@@ -1,6 +1,8 @@
-# Grosswangen, CH
+# Grosswangen
 
-Support for schedules provided by [https://www.grosswangen.ch/institution/details/abfallsammlungen](https://www.grosswangen.ch/institution/details/abfallsammlungen).
+Support for schedules provided by [Grosswangen](https://www.grosswangen.ch).
+
+Waste collection calendar for Grosswangen, Switzerland.
 
 ## Configuration via configuration.yaml
 
@@ -8,13 +10,14 @@ Support for schedules provided by [https://www.grosswangen.ch/institution/detail
 waste_collection_schedule:
   sources:
     - name: grosswangen_ch
-      args: {}
+      args:
+        route: ROUTE
 ```
 
 ### Configuration Variables
 
-*(no args required)*
-but use args as shown in example.
+**route**  
+*(string) (optional)*
 
 ## Example
 
@@ -22,5 +25,10 @@ but use args as shown in example.
 waste_collection_schedule:
   sources:
     - name: grosswangen_ch
-      args: {}
+      args:
+        route: Innentour
 ```
+
+## How to get the source arguments
+
+Choose your refuse route: Aussentour (default), Innentour, or Sigerswil. Other collection types use the municipality-wide dates printed in the calendar. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

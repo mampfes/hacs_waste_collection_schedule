@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-10-26",
+  "interactions": [],
+  "expected_error": {
+    "type": "SourceArgumentRequired",
+    "message": "Argument 'id' must be provided, select your property in the council bin checker and use the Id from its URL"
+  }
+}

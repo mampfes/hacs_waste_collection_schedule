@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-10-26",
+  "interactions": [
+    {
+      "key": "GET https://api.lacity.org/boe_geoquery/addressvalidationservice 633fe165e5",
+      "method": "GET",
+      "url": "https://api.lacity.org/boe_geoquery/addressvalidationservice",
+      "final_url": "https://api.lacity.org/boe_geoquery/addressvalidationservice?address=zzzz+invalid+address+999999&status=new&layerset=neighborhoodinfo&apikey=YsvfDePjTDKtLl041Vz25jCbfjExMtCh",
+      "body": "{\"params\":[[\"address\",\"zzzz invalid address 999999\"],[\"apikey\",\"YsvfDePjTDKtLl041Vz25jCbfjExMtCh\"],[\"layerset\",\"neighborhoodinfo\"],[\"status\",\"new\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Mon, 26 Oct 2026 13:58:39 GMT",
+        "content-type": "application/json;charset=UTF-8",
+        "content-length": "88",
+        "server": "envoy",
+        "x-powered-by": "ASP.NET",
+        "access-control-allow-origin": "",
+        "access-control-allow-headers": "origin, x-requested-with, accept, content-type",
+        "access-control-max-age": "3628800",
+        "access-control-allow-methods": "GET, PUT, POST, DELETE",
+        "x-envoy-upstream-service-time": "481"
+      },
+      "content_b64": "eyJsb2NhdGlvbiI6IlpaWlogSU5WQUxJRCBBRERSRVNTIDk5OTk5OSIsInN0YXR1cyI6ImVycm9yIiwiY29tbWVudHMiOiJJbnZhbGlkIEFkZHJlc3MifQ=="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'street_address' with the value 'zzzz invalid address 999999', please check the spelling and try again."
+  }
+}
