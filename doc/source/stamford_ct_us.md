@@ -1,20 +1,38 @@
 # City of Stamford, CT
 
+Support for schedules provided by [City of Stamford, CT](https://www.stamfordct.gov/government/operations/recycling-and-sanitation/about/recycling-and-garbage-schedule).
+
+Source for the City of Stamford, CT garbage and recycling pickup day lookup.
+
+## Configuration via configuration.yaml
+
 ```yaml
 waste_collection_schedule:
   sources:
     - name: stamford_ct_us
       args:
-        street: "Parker Ave"
+        street: STREET
+        house_number: HOUSE_NUMBER
 ```
 
-Use the [public garbage and recycling lookup](https://stamfordapps.org/garbagerecycling/default.asp) to find your street.
+### Configuration Variables
 
-- `street`: Street name without house number, for example `Parker Ave` or `Washington Blvd`.
-- `house_number` (optional): Required when collection days vary by house-number range.
+**street**  
+*(string) (required)*
 
-The source reads both the recycling and garbage tables and returns 26 weekly dates per applicable service. The council's `ALL` range works with or without a house number. Numbered ranges retain their odd/even restrictions; an explicit no-pickup entry omits that service. Ambiguous streets and required house numbers return suggestions.
+**house_number**  
+*(string) (optional)*
 
-## BaseSource migration
+## Example
 
-Configuration argument names stay unchanged. Waste types now use canonical, localised names; update filters, automations and customisations using the former labels.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: stamford_ct_us
+      args:
+        street: Parker Ave
+```
+
+## How to get the source arguments
+
+Enter your street name without house number. Enter house_number separately when pickup days vary along the street; the error lists the available ranges. Both numbered ranges and the council's ALL designation are supported. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

@@ -865,7 +865,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_cbcity_nsw_gov_au": {
@@ -875,7 +876,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_casey_vic_gov_au": {
         "title": "Bron configureren",
@@ -3319,10 +3322,11 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "locality": "Locality",
-          "street_name": "Straatnaam"
+          "street_name": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "street_name": "Uw straatnaam."
         }
       },
       "reconfigure_sunshinecoast_qld_gov_au": {
@@ -3331,9 +3335,11 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "locality": "Locality",
-          "street_name": "Straatnaam"
+          "street_name": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Uw straatnaam."
+        }
       },
       "args_surf_coast_vic_gov_au": {
         "title": "Bron configureren",
@@ -8352,12 +8358,15 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "commune": "Commune",
+          "commune": "Gemeente",
           "house_number": "Huisnummer",
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "commune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_sudestavenir_fr": {
@@ -8365,11 +8374,15 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "commune": "Commune",
+          "commune": "Gemeente",
           "house_number": "Huisnummer",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_chartres_metropole_fr": {
         "title": "Bron configureren",
@@ -19105,6 +19118,29 @@
           "comune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
       },
+      "args_cbbo_it": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "comune": "Gemeente"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "comune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
+      },
+      "reconfigure_cbbo_it": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "comune": "Gemeente"
+        },
+        "data_description": {
+          "comune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
+      },
       "args_mantovaambiente_it": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -19360,6 +19396,37 @@
         "data_description": {
           "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
           "street": "Uw straatnaam."
+        }
+      },
+      "args_portapporta_it": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "comune": "Gemeente",
+          "gestore": "Gestore",
+          "utenza": "Utenza",
+          "zona": "Wijk"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "comune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "zona": "Uw wijk of deel van de gemeente."
+        }
+      },
+      "reconfigure_portapporta_it": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "comune": "Gemeente",
+          "gestore": "Gestore",
+          "utenza": "Utenza",
+          "zona": "Wijk"
+        },
+        "data_description": {
+          "comune": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "zona": "Uw wijk of deel van de gemeente."
         }
       },
       "args_etraspa_it": {
@@ -34748,7 +34815,9 @@
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_stamford_ct_us": {
@@ -34759,7 +34828,10 @@
           "house_number": "Huisnummer",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_talgov_com": {
         "title": "Bron configureren",

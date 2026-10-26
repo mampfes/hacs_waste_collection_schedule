@@ -865,7 +865,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "address": "Hele adressen din."
         }
       },
       "reconfigure_cbcity_nsw_gov_au": {
@@ -875,7 +876,9 @@
           "calendar_title": "Kalendernavn",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Hele adressen din."
+        }
       },
       "args_casey_vic_gov_au": {
         "title": "Konfigurer kilde",
@@ -3319,10 +3322,11 @@
         "data": {
           "calendar_title": "Kalendernavn",
           "locality": "Locality",
-          "street_name": "Street Name"
+          "street_name": "Gate"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "street_name": "Gatenavnet ditt."
         }
       },
       "reconfigure_sunshinecoast_qld_gov_au": {
@@ -3331,9 +3335,11 @@
         "data": {
           "calendar_title": "Kalendernavn",
           "locality": "Locality",
-          "street_name": "Street Name"
+          "street_name": "Gate"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Gatenavnet ditt."
+        }
       },
       "args_surf_coast_vic_gov_au": {
         "title": "Konfigurer kilde",
@@ -8352,12 +8358,15 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "commune": "Commune",
+          "commune": "Kommune",
           "house_number": "Husnummer",
           "street": "Gate"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "commune": "Navnet på kommunen din, slik det står på leverandørens nettside.",
+          "house_number": "Husnummeret ditt.",
+          "street": "Gatenavnet ditt."
         }
       },
       "reconfigure_sudestavenir_fr": {
@@ -8365,11 +8374,15 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "commune": "Commune",
+          "commune": "Kommune",
           "house_number": "Husnummer",
           "street": "Gate"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Navnet på kommunen din, slik det står på leverandørens nettside.",
+          "house_number": "Husnummeret ditt.",
+          "street": "Gatenavnet ditt."
+        }
       },
       "args_chartres_metropole_fr": {
         "title": "Konfigurer kilde",
@@ -19105,6 +19118,29 @@
           "comune": "Navnet på kommunen din, slik det står på leverandørens nettside."
         }
       },
+      "args_cbbo_it": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "comune": "Kommune"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "comune": "Navnet på kommunen din, slik det står på leverandørens nettside."
+        }
+      },
+      "reconfigure_cbbo_it": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "comune": "Kommune"
+        },
+        "data_description": {
+          "comune": "Navnet på kommunen din, slik det står på leverandørens nettside."
+        }
+      },
       "args_mantovaambiente_it": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -19360,6 +19396,37 @@
         "data_description": {
           "municipality": "Navnet på kommunen din, slik det står på leverandørens nettside.",
           "street": "Gatenavnet ditt."
+        }
+      },
+      "args_portapporta_it": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "comune": "Kommune",
+          "gestore": "Gestore",
+          "utenza": "Utenza",
+          "zona": "Område"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "comune": "Navnet på kommunen din, slik det står på leverandørens nettside.",
+          "zona": "Bydelen eller delen av kommunen du bor i."
+        }
+      },
+      "reconfigure_portapporta_it": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "comune": "Kommune",
+          "gestore": "Gestore",
+          "utenza": "Utenza",
+          "zona": "Område"
+        },
+        "data_description": {
+          "comune": "Navnet på kommunen din, slik det står på leverandørens nettside.",
+          "zona": "Bydelen eller delen av kommunen du bor i."
         }
       },
       "args_etraspa_it": {
@@ -34748,7 +34815,9 @@
           "street": "Gate"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "house_number": "Husnummeret ditt.",
+          "street": "Gatenavnet ditt."
         }
       },
       "reconfigure_stamford_ct_us": {
@@ -34759,7 +34828,10 @@
           "house_number": "Husnummer",
           "street": "Gate"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Husnummeret ditt.",
+          "street": "Gatenavnet ditt."
+        }
       },
       "args_talgov_com": {
         "title": "Konfigurer kilde",

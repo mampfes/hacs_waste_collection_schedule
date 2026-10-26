@@ -865,7 +865,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_cbcity_nsw_gov_au": {
@@ -875,7 +876,9 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
       },
       "args_casey_vic_gov_au": {
         "title": "Configurer la Source",
@@ -3325,10 +3328,11 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "locality": "Locality",
-          "street_name": "Nom de rue"
+          "street_name": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_name": "Le nom de votre rue."
         }
       },
       "reconfigure_sunshinecoast_qld_gov_au": {
@@ -3337,9 +3341,11 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "locality": "Locality",
-          "street_name": "Nom de rue"
+          "street_name": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Le nom de votre rue."
+        }
       },
       "args_surf_coast_vic_gov_au": {
         "title": "Configurer la Source",
@@ -8360,13 +8366,13 @@
           "calendar_title": "Titre du Calendrier",
           "commune": "Commune",
           "house_number": "Numéro",
-          "street": "Voie"
+          "street": "Rue"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "commune": "Votre commune du territoire GPSEA : Alfortville, Boissy-Saint-Léger, Bonneuil-sur-Marne, Chennevières-sur-Marne, Créteil, Limeil-Brévannes, Noiseau, Ormesson-sur-Marne, Le Plessis-Trévise, La Queue-en-Brie, Sucy-en-Brie",
-          "house_number": "Votre numéro de voie",
-          "street": "Le nom de votre voie"
+          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_sudestavenir_fr": {
@@ -8376,12 +8382,12 @@
           "calendar_title": "Titre du Calendrier",
           "commune": "Commune",
           "house_number": "Numéro",
-          "street": "Voie"
+          "street": "Rue"
         },
         "data_description": {
-          "commune": "Votre commune du territoire GPSEA : Alfortville, Boissy-Saint-Léger, Bonneuil-sur-Marne, Chennevières-sur-Marne, Créteil, Limeil-Brévannes, Noiseau, Ormesson-sur-Marne, Le Plessis-Trévise, La Queue-en-Brie, Sucy-en-Brie",
-          "house_number": "Votre numéro de voie",
-          "street": "Le nom de votre voie"
+          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
         }
       },
       "args_chartres_metropole_fr": {
@@ -19118,6 +19124,29 @@
           "comune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
+      "args_cbbo_it": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "comune": "Commune"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "comune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
+      },
+      "reconfigure_cbbo_it": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "comune": "Commune"
+        },
+        "data_description": {
+          "comune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
+      },
       "args_mantovaambiente_it": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -19373,6 +19402,37 @@
         "data_description": {
           "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
           "street": "Le nom de votre rue."
+        }
+      },
+      "args_portapporta_it": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "comune": "Commune",
+          "gestore": "Gestore",
+          "utenza": "Utenza",
+          "zona": "Quartier"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "comune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "zona": "Votre quartier ou partie de la commune."
+        }
+      },
+      "reconfigure_portapporta_it": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "comune": "Commune",
+          "gestore": "Gestore",
+          "utenza": "Utenza",
+          "zona": "Quartier"
+        },
+        "data_description": {
+          "comune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "zona": "Votre quartier ou partie de la commune."
         }
       },
       "args_etraspa_it": {
@@ -34757,11 +34817,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_stamford_ct_us": {
@@ -34769,10 +34831,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_talgov_com": {
         "title": "Configurer la Source",

@@ -865,7 +865,8 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_cbcity_nsw_gov_au": {
@@ -875,7 +876,9 @@
           "calendar_title": "Nome Calendario",
           "address": "Indirizzo"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Il vostro indirizzo completo."
+        }
       },
       "args_casey_vic_gov_au": {
         "title": "Configurazione Sorgente",
@@ -3325,10 +3328,11 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "locality": "Locality",
-          "street_name": "Nome Strada"
+          "street_name": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "street_name": "Il nome della vostra via."
         }
       },
       "reconfigure_sunshinecoast_qld_gov_au": {
@@ -3337,9 +3341,11 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "locality": "Locality",
-          "street_name": "Nome Strada"
+          "street_name": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Il nome della vostra via."
+        }
       },
       "args_surf_coast_vic_gov_au": {
         "title": "Configurazione Sorgente",
@@ -8359,11 +8365,14 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "commune": "Comune",
-          "house_number": "Civico",
-          "street": "Strada"
+          "house_number": "Numero civico",
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "house_number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_sudestavenir_fr": {
@@ -8372,10 +8381,14 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "commune": "Comune",
-          "house_number": "Civico",
-          "street": "Strada"
+          "house_number": "Numero civico",
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "house_number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_chartres_metropole_fr": {
         "title": "Configurazione Sorgente",
@@ -19111,6 +19124,29 @@
           "comune": "Il nome del vostro comune, come indicato sul sito del fornitore."
         }
       },
+      "args_cbbo_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "comune": "Comune"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "comune": "Il nome del vostro comune, come indicato sul sito del fornitore."
+        }
+      },
+      "reconfigure_cbbo_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "comune": "Comune"
+        },
+        "data_description": {
+          "comune": "Il nome del vostro comune, come indicato sul sito del fornitore."
+        }
+      },
       "args_mantovaambiente_it": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -19366,6 +19402,37 @@
         "data_description": {
           "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore.",
           "street": "Il nome della vostra via."
+        }
+      },
+      "args_portapporta_it": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "comune": "Comune",
+          "gestore": "Gestore",
+          "utenza": "Utenza",
+          "zona": "Quartiere"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "comune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "zona": "Il vostro quartiere o parte del comune."
+        }
+      },
+      "reconfigure_portapporta_it": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "comune": "Comune",
+          "gestore": "Gestore",
+          "utenza": "Utenza",
+          "zona": "Quartiere"
+        },
+        "data_description": {
+          "comune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "zona": "Il vostro quartiere o parte del comune."
         }
       },
       "args_etraspa_it": {
@@ -34750,11 +34817,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "house_number": "Civico",
-          "street": "Strada"
+          "house_number": "Numero civico",
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "house_number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_stamford_ct_us": {
@@ -34762,10 +34831,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "house_number": "Civico",
-          "street": "Strada"
+          "house_number": "Numero civico",
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_talgov_com": {
         "title": "Configurazione Sorgente",

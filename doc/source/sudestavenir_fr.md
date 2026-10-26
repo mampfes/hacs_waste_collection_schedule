@@ -1,23 +1,44 @@
 # Grand Paris Sud Est Avenir (GPSEA)
 
+Support for schedules provided by [Grand Paris Sud Est Avenir (GPSEA)](https://sudestavenir.fr/).
+
+Source script for sudestavenir.fr, waste collection schedules for the Grand Paris Sud Est Avenir (GPSEA) intercommunal territory
+
+## Configuration via configuration.yaml
+
 ```yaml
 waste_collection_schedule:
   sources:
     - name: sudestavenir_fr
       args:
-        commune: "Creteil"
-        street: "Place du Grand Pavois"
-        house_number: "1"
+        commune: COMMUNE
+        street: STREET
+        house_number: HOUSE_NUMBER
 ```
 
-Use your address in the [GPSEA waste collection map](https://sudestavenir.fr/).
+### Configuration Variables
 
-- `commune`: Your commune within GPSEA.
-- `street`: Street name. French types such as Place/PL, Avenue/AV and Allée/ALL are accepted.
-- `house_number`: House number, as shown in the map.
+**commune**  
+*(string) (required)*
 
-The public GEO Software map supplies the address-specific infosheet. Its weekly/fortnightly rules, ISO-week parity, date lists and seasonal ranges determine the dates. The year of explicitly dated lists/ranges comes from the calendar linked by that infosheet; those lists are not projected into the next year. Morning/afternoon descriptions are retained. Ambiguous matches raise an error with suggestions.
+**street**  
+*(string) (required)*
 
-## BaseSource migration
+**house_number**  
+*(string) (required)*
 
-Configuration argument names stay unchanged. Waste types now use canonical, localised names; update filters, automations and customisations using the former labels.
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: sudestavenir_fr
+      args:
+        commune: Creteil
+        street: Place du Grand Pavois
+        house_number: '1'
+```
+
+## How to get the source arguments
+
+Enter your GPSEA commune, street and house number. French street types such as Place/PL and Avenue/AV are accepted. The infosheet supplies recurring weekdays, date lists, seasons and morning/afternoon details. Dated precision belongs to the year of its published calendar link. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.
