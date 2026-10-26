@@ -1,21 +1,38 @@
-# Sunshine Coast Queensland
+# Sunshine Coast Queensland (QLD)
+
+Support for schedules provided by [Sunshine Coast Queensland (QLD)](https://www.sunshinecoast.qld.gov.au/living-and-community/waste-and-recycling/bin-collection-days).
+
+Source script for Sunshine Coast Queensland (QLD).
+
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: sunshinecoast_qld_gov_au
       args:
-        street_name: "Hospital Rd"
-        locality: "Nambour"
+        street_name: STREET_NAME
+        locality: LOCALITY
 ```
 
-Use the [council bin checker](https://www.sunshinecoast.qld.gov.au/living-and-community/waste-and-recycling/bin-collection-days) to find your street.
+### Configuration Variables
 
-- `street_name`: Street name. House numbers, a comma-separated suburb and spelled-out street types are accepted.
-- `locality` (optional): Suburb, required when the street name has multiple matches.
+**street_name**  
+*(string) (required)*
 
-The street API supplies the collection weekday and week 1/2 assignment. The source reads the cycle anchor from the currently published bin widget and returns ten dates per collection type. Collections happening today are included, matching the council widget. The garden bin is mapped to canonical garden waste.
+**locality**  
+*(string) (optional)*
 
-## BaseSource migration
+## Example
 
-Configuration argument names stay unchanged. Waste types now use canonical, localised names; update filters, automations and customisations using the former labels.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: sunshinecoast_qld_gov_au
+      args:
+        street_name: hospital rd
+```
+
+## How to get the source arguments
+
+Enter the street name as shown by the council's bin checker. House numbers, a comma-separated suburb and spelled-out street types are accepted. Use locality when a street occurs in several suburbs. The current published widget supplies the week-cycle anchor; the API supplies your street's weekday and week. Collections happening today are included. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

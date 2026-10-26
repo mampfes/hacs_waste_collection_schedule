@@ -23820,6 +23820,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Acquafredda",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Acquafredda"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Acquanegra sul Chiese",
       "module": "mantovaambiente_it",
       "default_params": {
@@ -24279,6 +24287,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Aulla (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Aulla",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Avellino - Grande Srl",
       "module": "junker_app",
       "default_params": {},
@@ -24317,6 +24334,15 @@
         "comune": "Bagnolo San Vito"
       },
       "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Bagnone (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Bagnone",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Ballabio",
@@ -24893,6 +24919,12 @@
       "id": "siunet_it"
     },
     {
+      "title": "C.B.B.O.",
+      "module": "cbbo_it",
+      "default_params": {},
+      "id": "cbbo_it"
+    },
+    {
       "title": "C.C.S. - Consorzio Campale Stabile",
       "module": "junker_app",
       "default_params": {},
@@ -24973,6 +25005,23 @@
       "id": "junker_app"
     },
     {
+      "title": "Calvisano",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Calvisano"
+      },
+      "id": "cbbo_it"
+    },
+    {
+      "title": "Camaiore (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Camaiore",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Cambiago",
       "module": "cem_ambiente_it",
       "default_params": {
@@ -25033,6 +25082,15 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Campo nell'Elba (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Campo nell'Elba",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Campobasso - S.E.A. Servizi e Ambiente SPA",
       "module": "junker_app",
       "default_params": {},
@@ -25079,6 +25137,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Capoliveri (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Capoliveri",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Caponago",
       "module": "cem_ambiente_it",
       "default_params": {
@@ -25101,6 +25168,14 @@
         "municipality": "Capraia e Limite"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Capriano del Colle",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Capriano del Colle"
+      },
+      "id": "cbbo_it"
     },
     {
       "title": "Capua - CZETA Spa - Ciclat",
@@ -25169,6 +25244,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Carpenedolo",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Carpenedolo"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Carpeneto",
       "module": "econetsrl_eu",
       "default_params": {
@@ -25233,6 +25316,15 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Casale Marittimo (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Casale Marittimo",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Casaleggio Boiro",
@@ -25351,6 +25443,15 @@
         "comune": "CASELLE LURANI"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Casola (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Casola",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Cassago Brianza",
@@ -25535,6 +25636,15 @@
       "id": "consorziomedionovarese_it"
     },
     {
+      "title": "Castellina Marittima (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Castellina Marittima",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Castello Di Brianza",
       "module": "siunet_it",
       "default_params": {
@@ -25567,6 +25677,23 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Castenedolo",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Castenedolo"
+      },
+      "id": "cbbo_it"
+    },
+    {
+      "title": "Castiglioncello (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Castiglioncello",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Castiglione in Teverina - Cosp Tecno Service",
@@ -25613,6 +25740,15 @@
         "comune": "CAVENAGO DI BRIANZA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Cecina (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Cecina",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "CEM Ambiente",
@@ -25901,6 +26037,15 @@
       "id": "siunet_it"
     },
     {
+      "title": "Collesalvetti (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Collesalvetti",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Collinas",
       "module": "junker_app",
       "default_params": {},
@@ -25943,6 +26088,15 @@
         "comune": "COLTURANO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Comano (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Comano",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Comazzo",
@@ -26503,6 +26657,15 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Filattiera (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Filattiera",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Finale Emilia",
       "module": "geovest_it",
       "default_params": {
@@ -26523,6 +26686,23 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Fivizzano (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Fivizzano",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Flero",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Flero"
+      },
+      "id": "cbbo_it"
     },
     {
       "title": "Floridia - IGM rifiuti industriali",
@@ -26561,6 +26741,24 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Forte dei Marmi (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Forte dei Marmi",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Fosdinovo (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Fosdinovo",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Frosinone - De Vizia Transfer Spa",
@@ -26743,6 +26941,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Ghedi",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Ghedi"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Ghemme",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -26879,6 +27085,24 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Guardistallo (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Guardistallo",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Guasticce (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Guasticce",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Gudo Visconti",
@@ -27197,6 +27421,14 @@
       "id": "isontinambiente_it"
     },
     {
+      "title": "Isorella",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Isorella"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Ispica - Impregico Srl",
       "module": "junker_app",
       "default_params": {},
@@ -27369,6 +27601,15 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Licciana Nardi (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Licciana Nardi",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Lierna",
@@ -27603,6 +27844,24 @@
       "id": "junker_app"
     },
     {
+      "title": "Marciana (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Marciana",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Marciana Marina (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Marciana Marina",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Margherita Di Savoia",
       "module": "siunet_it",
       "default_params": {
@@ -27681,6 +27940,15 @@
       "id": "siunet_it"
     },
     {
+      "title": "Massa (ASMIU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Massa",
+        "gestore": "asmiu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Massa e Cozzile",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -27711,12 +27979,29 @@
       "id": "siunet_it"
     },
     {
+      "title": "Massarosa (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Massarosa",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Massino Visconti",
       "module": "consorziomedionovarese_it",
       "default_params": {
         "municipality": "Massino Visconti"
       },
       "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Mazzano",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Mazzano"
+      },
+      "id": "cbbo_it"
     },
     {
       "title": "Meda",
@@ -28121,6 +28406,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Montescudaio (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Montescudaio",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Montespertoli",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -28143,6 +28437,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Monteverdi Marittimo (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Monteverdi Marittimo",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Monticello Brianza",
       "module": "siunet_it",
       "default_params": {
@@ -28159,10 +28462,35 @@
       "id": "siunet_it"
     },
     {
+      "title": "Montichiari",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Montichiari"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Monticiano",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Montignoso (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Montignoso",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Montirone",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Montirone"
+      },
+      "id": "cbbo_it"
     },
     {
       "title": "Monza - Impresa Sangalli",
@@ -28245,6 +28573,15 @@
         "comune": "MULAZZANO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Mulazzo (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Mulazzo",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Municipium",
@@ -28353,6 +28690,22 @@
       "id": "junker_app"
     },
     {
+      "title": "Nuvolento",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Nuvolento"
+      },
+      "id": "cbbo_it"
+    },
+    {
+      "title": "Nuvolera",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Nuvolera"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Oggiono",
       "module": "siunet_it",
       "default_params": {
@@ -28405,6 +28758,15 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Orciano Pisano (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Orciano Pisano",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Oristano - Formula Ambiente Spa",
@@ -28712,6 +29074,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Pietrasanta (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Pietrasanta",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Pieve a Nievole",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -28748,6 +29119,15 @@
         "municipality": "Pistoia"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Podenzana (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Podenzana",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Poggiardo",
@@ -28796,12 +29176,29 @@
       "id": "junker_app"
     },
     {
+      "title": "Pomarance (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Pomarance",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Pombia",
       "module": "consorziomedionovarese_it",
       "default_params": {
         "municipality": "Pombia"
       },
       "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Poncarale",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Poncarale"
+      },
+      "id": "cbbo_it"
     },
     {
       "title": "Ponte Buggianese",
@@ -28820,12 +29217,36 @@
       "id": "mantovaambiente_it"
     },
     {
+      "title": "Pontremoli (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Pontremoli",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "PortAPPorta (ERSU, ASMIU, REA, ESA)",
+      "module": "portapporta_it",
+      "default_params": {},
+      "id": "portapporta_it"
+    },
+    {
       "title": "Porto Mantovano",
       "module": "mantovaambiente_it",
       "default_params": {
         "comune": "Porto Mantovano"
       },
       "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Portoferraio (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Portoferraio",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Posada - Formula Ambiente Spa",
@@ -29012,6 +29433,14 @@
       "id": "mantovaambiente_it"
     },
     {
+      "title": "Remedello",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Remedello"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Renate (1)",
       "module": "siunet_it",
       "default_params": {
@@ -29088,6 +29517,15 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Rio (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Rio",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Riola Sardo - EffeAmbiente",
       "module": "junker_app",
       "default_params": {},
@@ -29104,6 +29542,15 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Riparbella (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Riparbella",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Rivalta Bormida",
@@ -29274,6 +29721,15 @@
         "comune": "ROSATE"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Rosignano Marittimo (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Rosignano Marittimo",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Rosora",
@@ -29598,6 +30054,15 @@
       "id": "siunet_it"
     },
     {
+      "title": "Santa Luce (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Santa Luce",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Santa Lucia del Mela",
       "module": "junker_app",
       "default_params": {},
@@ -29712,6 +30177,15 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Seravezza (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Seravezza",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Seregno",
@@ -29952,6 +30426,24 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Stagno (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Stagno",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Stazzema (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Stazzema",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Stefanaconi",
@@ -30196,6 +30688,15 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Tresana (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Tresana",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Trevenzuolo",
@@ -30598,6 +31099,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Vicarello (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Vicarello",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Vicchio",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -30672,6 +31182,15 @@
         "comune": "VILLA FARALDI"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Villafranca (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Villafranca",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Villanterio",
@@ -30762,6 +31281,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Visano",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Visano"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Visone",
       "module": "econetsrl_eu",
       "default_params": {
@@ -30828,6 +31355,15 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Zeri (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Zeri",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Zevio",

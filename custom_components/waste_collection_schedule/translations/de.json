@@ -865,7 +865,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_cbcity_nsw_gov_au": {
@@ -875,7 +876,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_casey_vic_gov_au": {
         "title": "Quelle konfigurieren",
@@ -3325,10 +3328,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "locality": "Locality",
-          "street_name": "Straßenname"
+          "street_name": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street_name": "Ihr Straßenname."
         }
       },
       "reconfigure_sunshinecoast_qld_gov_au": {
@@ -3337,9 +3341,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "locality": "Locality",
-          "street_name": "Straßenname"
+          "street_name": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "street_name": "Ihr Straßenname."
+        }
       },
       "args_surf_coast_vic_gov_au": {
         "title": "Quelle konfigurieren",
@@ -8364,9 +8370,9 @@
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "commune": "Ihre Gemeinde im GPSEA-Gebiet: Alfortville, Boissy-Saint-Léger, Bonneuil-sur-Marne, Chennevières-sur-Marne, Créteil, Limeil-Brévannes, Noiseau, Ormesson-sur-Marne, Le Plessis-Trévise, La Queue-en-Brie, Sucy-en-Brie",
-          "house_number": "Ihre Hausnummer",
-          "street": "Ihr Straßenname"
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_sudestavenir_fr": {
@@ -8379,9 +8385,9 @@
           "street": "Straße"
         },
         "data_description": {
-          "commune": "Ihre Gemeinde im GPSEA-Gebiet: Alfortville, Boissy-Saint-Léger, Bonneuil-sur-Marne, Chennevières-sur-Marne, Créteil, Limeil-Brévannes, Noiseau, Ormesson-sur-Marne, Le Plessis-Trévise, La Queue-en-Brie, Sucy-en-Brie",
-          "house_number": "Ihre Hausnummer",
-          "street": "Ihr Straßenname"
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "args_chartres_metropole_fr": {
@@ -19118,6 +19124,29 @@
           "comune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
+      "args_cbbo_it": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "comune": "Gemeinde"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "comune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
+      },
+      "reconfigure_cbbo_it": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "comune": "Gemeinde"
+        },
+        "data_description": {
+          "comune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
+      },
       "args_mantovaambiente_it": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -19373,6 +19402,37 @@
         "data_description": {
           "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
           "street": "Ihr Straßenname."
+        }
+      },
+      "args_portapporta_it": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "comune": "Gemeinde",
+          "gestore": "Gestore",
+          "utenza": "Utenza",
+          "zona": "Ortsteil"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "comune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "zona": "Ihr Ortsteil oder Stadtteil."
+        }
+      },
+      "reconfigure_portapporta_it": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "comune": "Gemeinde",
+          "gestore": "Gestore",
+          "utenza": "Utenza",
+          "zona": "Ortsteil"
+        },
+        "data_description": {
+          "comune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "zona": "Ihr Ortsteil oder Stadtteil."
         }
       },
       "args_etraspa_it": {
@@ -34761,7 +34821,9 @@
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_stamford_ct_us": {
@@ -34772,7 +34834,10 @@
           "house_number": "Hausnummer",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_talgov_com": {
         "title": "Quelle konfigurieren",

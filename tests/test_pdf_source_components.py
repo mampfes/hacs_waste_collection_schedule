@@ -915,6 +915,97 @@ def test_marker_calendar_read_headings_off_numbers_columns_in_order(monkeypatch)
     assert rows == [(datetime.date(2026, month, 1), "Dot") for month in (1, 2, 3)]
 
 
+class TestOutlinedDayRows:
+    """Text labels dated by the outlined day rows and month headings."""
+
+    TOP = 459.0
+    PITCH = 13.7
+
+    def layout(self, *, february_days=28):
+        frag = parsers.PdfTextFragment
+        vec = parsers.PdfVector
+        black = (0.0, 0.0, 0.0)
+        vectors = []
+        # Outlined month names: a legend title on the left, then January and
+        # February over their columns.
+        for x0 in (120, 130, 140, 240, 250, 260, 345, 355, 365):
+            vectors.append(vec(0, x0, 476, x0 + 6, 484, None, black))
+        # Day number and weekday glyphs, one row per day.
+        for x0, days in ((211, 31), (316, february_days)):
+            for day in range(days):
+                y = self.TOP - day * self.PITCH
+                vectors.append(vec(0, x0, y - 4, x0 + 5, y + 4, None, black))
+                vectors.append(vec(0, x0 + 12, y - 4, x0 + 16, y + 4, None, black))
+        words = [
+            frag(0, "GENNAIO - GIUGNO 2027", 580, 510),
+            frag(0, "UMIDO", 255, self.TOP - 1.8),  # 1 January
+            frag(0, "PLASTICA", 291, self.TOP - 1.8),
+            frag(0, "VETRO VERDE", 273, self.TOP - 30 * self.PITCH - 1.8),
+            frag(0, "CARTA", 378, self.TOP - self.PITCH - 1.8),  # 2 February
+            frag(0, "SECCO", 160, self.TOP - 1.8),  # the legend
+            frag(0, "Festività", 378, 20),
+        ]
+        return parsers.PdfWordLayout(words, words, vectors)
+
+    def parser(self):
+        from waste_collection_schedule.service.PdfOutlinedCalendar import (
+            OutlinedDayRowsParser,
+        )
+
+        return OutlinedDayRowsParser(
+            ["UMIDO", "PLASTICA", "VETRO", "VERDE", "CARTA", "SECCO"],
+            year_pattern=r"GIUGNO (20\d\d)",
+            min_labels=1,
+        )
+
+    def test_dates_labels_by_row_and_heading(self):
+        assert self.parser().read(self.layout()) == [
+            (D(2027, 1, 1), "PLASTICA"),
+            (D(2027, 1, 1), "UMIDO"),
+            (D(2027, 1, 31), "VERDE"),
+            (D(2027, 1, 31), "VETRO"),
+            (D(2027, 2, 2), "CARTA"),
+        ]
+
+    def test_a_column_running_past_its_month_raises(self):
+        with pytest.raises(ResponseShapeError):
+            self.parser().read(self.layout(february_days=29))
+
+
+def test_halley_portal_attachment_conversation():
+    from types import SimpleNamespace
+
+    from waste_collection_schedule.service import HalleyPortal
+
+    listing = SimpleNamespace(
+        url="https://www.comune.example.it/novita/avvisi/avvisi.html",
+        text=(
+            '<a href="https://www.comune.example.it/novita/avvisi/novita_6.html">'
+            "Calendario 2026 raccolta rifiuti</a>"
+            '<a href="/novita/avvisi/novita_19.html">'
+            "Calendario 2027 raccolta rifiuti differenziata</a>"
+            '<a href="/novita/avvisi/novita_17.html">Scadenza carte</a>'
+        ),
+    )
+    news = HalleyPortal.news_pick(r"calendario.*raccolta")(listing)
+    assert news == "https://www.comune.example.it/novita/avvisi/novita_19.html"
+
+    page = SimpleNamespace(
+        url=news,
+        text=(
+            "<a href=\"javascript:SCHIOCCIOLA('en=eg696&MESSA=PUBBLICA&DSK=0000"
+            "&NOME=Calendario rifiuti 2027.pdf&FORM=pdf','EG0/EGDOCVISJS.HBL')\">"
+            "Calendario</a>"
+        ),
+    )
+    attachment = HalleyPortal.attachment_pick(r"\.pdf")(page)
+    assert HalleyPortal.download_body(attachment) == (
+        '--AZazAZ\r\n&name="protocollo=https&ser=www.comune.example.it&'
+        "en=eg696&MESSA=PUBBLICA&DSK=0000&NOME=Calendario rifiuti 2027.pdf"
+        '&FORM=pdf&PAGINA="\r\n\n\r\n--AZazAZ--\r\n'
+    )
+
+
 def test_marker_calendar_below_binds_symbols_to_the_day_number_heading_the_cell():
     from waste_collection_schedule.parsers import PdfVector
     from waste_collection_schedule.service.PdfMarkerCalendar import (

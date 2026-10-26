@@ -3205,6 +3205,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Abbadia Lariana (2)](/doc/source/siunet_it.md) / siunet.it
 - [Aci Sant'Antonio](/doc/source/junker_app.md) / junker.app
 - [Acinque Spa](/doc/source/junker_app.md) / junker.app
+- [Acquafredda](/doc/source/cbbo_it.md) / cbbo.it
 - [Acquanegra sul Chiese](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/acquanegra-sul-chiese
 - [Acqui Terme (Centro Storico)](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Acqui Terme (Città)](/doc/source/econetsrl_eu.md) / econetsrl.eu
@@ -3269,12 +3270,14 @@ If you already have enough information for your municipality/region, you are ver
 - [Asti - ASP S.p.A.](/doc/source/junker_app.md) / junker.app
 - [ATO2 - Ancona](/doc/source/junker_app.md) / junker.app
 - [Auer - Ora](/doc/source/junker_app.md) / junker.app
+- [Aulla (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Avellino - Grande Srl](/doc/source/junker_app.md) / junker.app
 - [Azienda Ambiente Srl](/doc/source/junker_app.md) / junker.app
 - [Bacino Ventimigliese - TeknoService](/doc/source/junker_app.md) / junker.app
 - [Bagheria - A.M.B. S.p.a](/doc/source/junker_app.md) / junker.app
 - [Bagno a Ripoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Bagnolo San Vito](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/bagnolo-san-vito
+- [Bagnone (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Ballabio](/doc/source/siunet_it.md) / siunet.it
 - [Barberino di Mugello](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Barberino Tavarnelle](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -3351,6 +3354,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Busnago](/doc/source/siunet_it.md) / siunet.it
 - [Bussero](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Bussero](/doc/source/siunet_it.md) / siunet.it
+- [C.B.B.O.](/doc/source/cbbo_it.md) / cbbo.it
 - [C.C.S. - Consorzio Campale Stabile](/doc/source/junker_app.md) / junker.app
 - [Cabiate](/doc/source/siunet_it.md) / siunet.it
 - [Cabras](/doc/source/junker_app.md) / junker.app
@@ -3362,6 +3366,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Calolziocorte](/doc/source/siunet_it.md) / siunet.it
 - [Calvi Dell'Umbria](/doc/source/siunet_it.md) / siunet.it
 - [Calvi Risorta - Isola Verde Ecologia](/doc/source/junker_app.md) / junker.app
+- [Calvisano](/doc/source/cbbo_it.md) / cbbo.it
+- [Camaiore (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Cambiago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Cambiago](/doc/source/siunet_it.md) / siunet.it
 - [Camerino](/doc/source/junker_app.md) / junker.app
@@ -3370,6 +3376,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Camparada](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Camparada](/doc/source/siunet_it.md) / siunet.it
 - [Campi Bisenzio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Campo nell'Elba (ESA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Campobasso - S.E.A. Servizi e Ambiente SPA](/doc/source/junker_app.md) / junker.app
 - [Campolieto - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
 - [Cancello ed Arnone - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
@@ -3377,9 +3384,11 @@ If you already have enough information for your municipality/region, you are ver
 - [Canicattini Bagni - Traina Srl](/doc/source/junker_app.md) / junker.app
 - [Cantagallo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Capannori - Ascit](/doc/source/junker_app.md) / junker.app
+- [Capoliveri (ESA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Caponago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Caponago](/doc/source/siunet_it.md) / siunet.it
 - [Capraia e Limite](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Capriano del Colle](/doc/source/cbbo_it.md) / cbbo.it
 - [Capua - CZETA Spa - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Carate Brianza](/doc/source/siunet_it.md) / siunet.it
 - [Carenno](/doc/source/siunet_it.md) / siunet.it
@@ -3389,6 +3398,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Carnate](/doc/source/siunet_it.md) / siunet.it
 - [Caronno Pertusella - Econord](/doc/source/junker_app.md) / junker.app
 - [Carovigno](/doc/source/siunet_it.md) / siunet.it
+- [Carpenedolo](/doc/source/cbbo_it.md) / cbbo.it
 - [Carpeneto](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Carpiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Carpiano](/doc/source/siunet_it.md) / siunet.it
@@ -3398,6 +3408,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Carugate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Carugate](/doc/source/siunet_it.md) / siunet.it
 - [Casale Marittimo](/doc/source/junker_app.md) / junker.app
+- [Casale Marittimo (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Casaleggio Boiro](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Casaleone](/doc/source/siunet_it.md) / siunet.it
 - [Casaletto Lodigiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
@@ -3413,6 +3424,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Casavatore - Ecology Srl](/doc/source/junker_app.md) / junker.app
 - [Caselle Lurani](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Caselle Lurani](/doc/source/siunet_it.md) / siunet.it
+- [Casola (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Cassago Brianza](/doc/source/siunet_it.md) / siunet.it
 - [Cassano D'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Cassano D'Adda](/doc/source/siunet_it.md) / siunet.it
@@ -3437,17 +3449,21 @@ If you already have enough information for your municipality/region, you are ver
 - [Castelletto d'Orba](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Castelletto Sopra Ticino (zona A)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Castelletto Sopra Ticino (zona B)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Castellina Marittima (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Castello Di Brianza](/doc/source/siunet_it.md) / siunet.it
 - [Castellucchio](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/castellucchio
 - [Castelnuovo di Porto](/doc/source/junker_app.md) / junker.app
 - [Castelsardo](/doc/source/junker_app.md) / junker.app
 - [Castelvetrano](/doc/source/junker_app.md) / junker.app
+- [Castenedolo](/doc/source/cbbo_it.md) / cbbo.it
+- [Castiglioncello (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Castiglione in Teverina - Cosp Tecno Service](/doc/source/junker_app.md) / junker.app
 - [Cavaglietto](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Cavaglio d'Agogna](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Cavallirio](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Cavenago Di Brianza](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Cavenago Di Brianza](/doc/source/siunet_it.md) / siunet.it
+- [Cecina (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [CEM Ambiente](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Ceresara](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/ceresara
 - [Ceriano Laghetto](/doc/source/siunet_it.md) / siunet.it
@@ -3488,12 +3504,14 @@ If you already have enough information for your municipality/region, you are ver
 - [Colazza](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Colico](/doc/source/siunet_it.md) / siunet.it
 - [Colle Brianza](/doc/source/siunet_it.md) / siunet.it
+- [Collesalvetti (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Collinas](/doc/source/junker_app.md) / junker.app
 - [Cologno Monzese](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Cologno Monzese](/doc/source/siunet_it.md) / siunet.it
 - [Cologno Monzese - CEM Ambiente](/doc/source/junker_app.md) / junker.app
 - [Colturano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Colturano](/doc/source/siunet_it.md) / siunet.it
+- [Comano (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Comazzo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Comazzo](/doc/source/siunet_it.md) / siunet.it
 - [Comignago](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
@@ -3571,15 +3589,20 @@ If you already have enough information for your municipality/region, you are ver
 - [Fiemme Servizi](/doc/source/junker_app.md) / junker.app
 - [Fiesole](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Figline e Incisa Valdarno](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Filattiera (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Finale Emilia](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Firenze](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Fiuggi](/doc/source/junker_app.md) / junker.app
+- [Fivizzano (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
+- [Flero](/doc/source/cbbo_it.md) / cbbo.it
 - [Floridia - IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
 - [Follonica](/doc/source/junker_app.md) / junker.app
 - [Fondi - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Fonni, Oliena e Orgosolo - San Germano - Gruppo Iren](/doc/source/junker_app.md) / junker.app
 - [Fontaneto d'Agogna](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Formula Ambiente Spa - Abruzzo](/doc/source/junker_app.md) / junker.app
+- [Forte dei Marmi (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
+- [Fosdinovo (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Frosinone - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Fucecchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Gaggiano](/doc/source/siunet_it.md) / siunet.it
@@ -3605,6 +3628,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gessate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Gessate](/doc/source/siunet_it.md) / siunet.it
 - [Gestione Ambiente Spa](/doc/source/junker_app.md) / junker.app
+- [Ghedi](/doc/source/cbbo_it.md) / cbbo.it
 - [Ghemme](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Giarre - IGM rifiuti industriali](/doc/source/junker_app.md) / junker.app
 - [Ginosa](/doc/source/junker_app.md) / junker.app
@@ -3624,6 +3648,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Grumolo Delle Abbadesse](/doc/source/siunet_it.md) / siunet.it
 - [Gruppo Veritas](/doc/source/gruppoveritas_it.md) / gruppoveritas.it
 - [Guardistallo](/doc/source/junker_app.md) / junker.app
+- [Guardistallo (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
+- [Guasticce (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Gudo Visconti](/doc/source/siunet_it.md) / siunet.it
 - [Iglesias](/doc/source/junker_app.md) / junker.app
 - [Il Rifiutologo](/doc/source/ilrifiutologo_it.md) / ilrifiutologo.it
@@ -3673,6 +3699,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Isontina Ambiente: Staranzano](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/staranzano
 - [Isontina Ambiente: Turriaco](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/turriaco
 - [Isontina Ambiente: Villesse](/doc/source/isontinambiente_it.md) / isontinambiente.it/it/servizi/servizi-per-il-tuo-comune/villesse
+- [Isorella](/doc/source/cbbo_it.md) / cbbo.it
 - [Ispica - Impregico Srl](/doc/source/junker_app.md) / junker.app
 - [Itri - De Vizia Transfer Spa](/doc/source/junker_app.md) / junker.app
 - [Junker](/doc/source/junker_app.md) / junker.app
@@ -3698,6 +3725,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Lesmo](/doc/source/siunet_it.md) / siunet.it
 - [Letino](/doc/source/junker_app.md) / junker.app
 - [Levate](/doc/source/junker_app.md) / junker.app
+- [Licciana Nardi (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Lierna](/doc/source/siunet_it.md) / siunet.it
 - [Limbiate](/doc/source/siunet_it.md) / siunet.it
 - [Limosano](/doc/source/junker_app.md) / junker.app
@@ -3730,6 +3758,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Marcallo Con Casone](/doc/source/siunet_it.md) / siunet.it
 - [Marcaria](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/marcaria
 - [Marche Multiservizi Falconara](/doc/source/junker_app.md) / junker.app
+- [Marciana (ESA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
+- [Marciana Marina (ESA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Margherita Di Savoia](/doc/source/siunet_it.md) / siunet.it
 - [Margno](/doc/source/siunet_it.md) / siunet.it
 - [Mariana Mantovana](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/mariana
@@ -3740,11 +3770,14 @@ If you already have enough information for your municipality/region, you are ver
 - [Martina Franca](/doc/source/siunet_it.md) / siunet.it
 - [Masate](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Masate](/doc/source/siunet_it.md) / siunet.it
+- [Massa (ASMIU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Massa e Cozzile](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Massalengo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Massalengo](/doc/source/junker_app.md) / junker.app
 - [Massalengo](/doc/source/siunet_it.md) / siunet.it
+- [Massarosa (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Massino Visconti](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Mazzano](/doc/source/cbbo_it.md) / cbbo.it
 - [Meda](/doc/source/junker_app.md) / junker.app
 - [Mediglia](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Mediglia](/doc/source/siunet_it.md) / siunet.it
@@ -3801,12 +3834,17 @@ If you already have enough information for your municipality/region, you are ver
 - [Monterotondo - APM](/doc/source/junker_app.md) / junker.app
 - [Monterotondo Marittimo](/doc/source/junker_app.md) / junker.app
 - [Montescudaio](/doc/source/junker_app.md) / junker.app
+- [Montescudaio (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Montespertoli](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Montevecchia](/doc/source/siunet_it.md) / siunet.it
 - [Monteverdi Marittimo](/doc/source/junker_app.md) / junker.app
+- [Monteverdi Marittimo (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Monticello Brianza](/doc/source/siunet_it.md) / siunet.it
 - [Monticello Conte Otto](/doc/source/siunet_it.md) / siunet.it
+- [Montichiari](/doc/source/cbbo_it.md) / cbbo.it
 - [Monticiano](/doc/source/junker_app.md) / junker.app
+- [Montignoso (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
+- [Montirone](/doc/source/cbbo_it.md) / cbbo.it
 - [Monza - Impresa Sangalli](/doc/source/junker_app.md) / junker.app
 - [Monzambano](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/monzambano
 - [Morciano Di Leuca](/doc/source/siunet_it.md) / siunet.it
@@ -3818,6 +3856,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Mottola e Laterza - Meridionale Servizi Ambientali Srl](/doc/source/junker_app.md) / junker.app
 - [Mulazzano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Mulazzano](/doc/source/siunet_it.md) / siunet.it
+- [Mulazzo (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Municipium](/doc/source/municipium_it.md) / municipiumapp.it
 - [Muraca Srl](/doc/source/junker_app.md) / junker.app
 - [Narni](/doc/source/siunet_it.md) / siunet.it
@@ -3833,6 +3872,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Noventa di Piave](/doc/source/junker_app.md) / junker.app
 - [Noviglio](/doc/source/siunet_it.md) / siunet.it
 - [Nuoro - È-Comune srl](/doc/source/junker_app.md) / junker.app
+- [Nuvolento](/doc/source/cbbo_it.md) / cbbo.it
+- [Nuvolera](/doc/source/cbbo_it.md) / cbbo.it
 - [Oggiono](/doc/source/siunet_it.md) / siunet.it
 - [Oleggio Castello](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Olgiate Molgora](/doc/source/siunet_it.md) / siunet.it
@@ -3840,6 +3881,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Oliveto Lario](/doc/source/siunet_it.md) / siunet.it
 - [Oppeano](/doc/source/siunet_it.md) / siunet.it
 - [Orciano Pisano](/doc/source/junker_app.md) / junker.app
+- [Orciano Pisano (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Oristano - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Ornago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Ornago](/doc/source/siunet_it.md) / siunet.it
@@ -3881,21 +3923,28 @@ If you already have enough information for your municipality/region, you are ver
 - [Pettenasco](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Piazza Brembana](/doc/source/junker_app.md) / junker.app
 - [Pietrabruna](/doc/source/junker_app.md) / junker.app
+- [Pietrasanta (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Pieve a Nievole](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Pieve Emanuele](/doc/source/siunet_it.md) / siunet.it
 - [Pimonte - Ecogin Srl](/doc/source/junker_app.md) / junker.app
 - [Pisano](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Pistoia](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Podenzana (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Poggiardo](/doc/source/siunet_it.md) / siunet.it
 - [Poggio a Caiano](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Poggio Rusco](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/poggio-rusco
 - [Pogno](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Polino](/doc/source/siunet_it.md) / siunet.it
 - [Pomarance](/doc/source/junker_app.md) / junker.app
+- [Pomarance (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Pombia](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Poncarale](/doc/source/cbbo_it.md) / cbbo.it
 - [Ponte Buggianese](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Ponti sul Mincio](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/ponti-sul-mincio
+- [Pontremoli (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
+- [PortAPPorta (ERSU, ASMIU, REA, ESA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Porto Mantovano](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/porto-mantovano
+- [Portoferraio (ESA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Posada - Formula Ambiente Spa](/doc/source/junker_app.md) / junker.app
 - [Potenza - Acta Spa](/doc/source/junker_app.md) / junker.app
 - [Pozzo D'Adda](/doc/source/cem_ambiente_it.md) / cemambiente.it
@@ -3921,6 +3970,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ravarino](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Ravello](/doc/source/junker_app.md) / junker.app
 - [Redondesco](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/redondesco
+- [Remedello](/doc/source/cbbo_it.md) / cbbo.it
 - [Renate (1)](/doc/source/siunet_it.md) / siunet.it
 - [Renate (2)](/doc/source/siunet_it.md) / siunet.it
 - [Rescaldina](/doc/source/junker_app.md) / junker.app
@@ -3932,9 +3982,11 @@ If you already have enough information for your municipality/region, you are ver
 - [Rieco - Marche](/doc/source/junker_app.md) / junker.app
 - [Rieti - ASM Rieti Spa](/doc/source/junker_app.md) / junker.app
 - [Rignano sull'Arno](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Rio (ESA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Riola Sardo - EffeAmbiente](/doc/source/junker_app.md) / junker.app
 - [Ripalimosani](/doc/source/junker_app.md) / junker.app
 - [Riparbella](/doc/source/junker_app.md) / junker.app
+- [Riparbella (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Rivalta Bormida](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Rivarolo Mantovano](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/rivarolo-mantovano
 - [Rivolta D'Adda](/doc/source/siunet_it.md) / siunet.it
@@ -3957,6 +4009,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ronco Briantino](/doc/source/siunet_it.md) / siunet.it
 - [Roncoferraro](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/roncoferraro
 - [Rosate](/doc/source/siunet_it.md) / siunet.it
+- [Rosignano Marittimo (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Rosora](/doc/source/junker_app.md) / junker.app
 - [Rovellasca](/doc/source/junker_app.md) / junker.app
 - [Rovello Porro](/doc/source/siunet_it.md) / siunet.it
@@ -4000,6 +4053,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Sant'Agata Bolognese](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Sant'Angelo Lodigiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Sant'Angelo Lodigiano](/doc/source/siunet_it.md) / siunet.it
+- [Santa Luce (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Santa Lucia del Mela](/doc/source/junker_app.md) / junker.app
 - [Santa Maria a Vico](/doc/source/junker_app.md) / junker.app
 - [Santa Maria Capua Vetere - DHI](/doc/source/junker_app.md) / junker.app
@@ -4018,6 +4072,7 @@ If you already have enough information for your municipality/region, you are ver
 - [SEAB Biella](/doc/source/seab_biella_it.md) / seab.biella.it
 - [Seab SPA Bolzano](/doc/source/junker_app.md) / junker.app
 - [Sennori e Sorso - Gesenu Spa](/doc/source/junker_app.md) / junker.app
+- [Seravezza (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Seregno](/doc/source/siunet_it.md) / siunet.it
 - [Sermide e Felonica](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/sermide-e-felonica-1
 - [Sermoneta - Del Prete Srl](/doc/source/junker_app.md) / junker.app
@@ -4051,6 +4106,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Sovico](/doc/source/siunet_it.md) / siunet.it
 - [Spoltore - Rieco](/doc/source/junker_app.md) / junker.app
 - [Squillace - Sieco Spa](/doc/source/junker_app.md) / junker.app
+- [Stagno (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
+- [Stazzema (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Stefanaconi](/doc/source/junker_app.md) / junker.app
 - [Stellanello](/doc/source/siunet_it.md) / siunet.it
 - [Stradella](/doc/source/junker_app.md) / junker.app
@@ -4085,6 +4142,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Torri Di Quartesolo](/doc/source/siunet_it.md) / siunet.it
 - [Traona](/doc/source/junker_app.md) / junker.app
 - [Trappeto](/doc/source/junker_app.md) / junker.app
+- [Tresana (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Trevenzuolo](/doc/source/siunet_it.md) / siunet.it
 - [Treviglio](/doc/source/siunet_it.md) / siunet.it
 - [Trezzano Rosa](/doc/source/cem_ambiente_it.md) / cemambiente.it
@@ -4140,6 +4198,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Vernio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Vezzano sul Crostolo](/doc/source/junker_app.md) / junker.app
 - [Viagrande](/doc/source/junker_app.md) / junker.app
+- [Vicarello (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Vicchio](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
 - [Vicoforte](/doc/source/junker_app.md) / junker.app
 - [Vieste - Impregico Srl](/doc/source/junker_app.md) / junker.app
@@ -4150,6 +4209,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Vigonza](/doc/source/etraspa_it.md) / comune.vigonza.pd.it
 - [Villa Cortese](/doc/source/siunet_it.md) / siunet.it
 - [Villa Faraldi](/doc/source/siunet_it.md) / siunet.it
+- [Villafranca (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Villanterio](/doc/source/junker_app.md) / junker.app
 - [Villaputzu](/doc/source/junker_app.md) / junker.app
 - [Villaricca - Sieco Spa](/doc/source/junker_app.md) / junker.app
@@ -4162,6 +4222,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Vimodrone](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Vimodrone](/doc/source/siunet_it.md) / siunet.it
 - [Vinci](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Visano](/doc/source/cbbo_it.md) / cbbo.it
 - [Visone](/doc/source/econetsrl_eu.md) / econetsrl.eu
 - [Vitorchiano](/doc/source/junker_app.md) / junker.app
 - [Vitulazio - DM Technology Srl](/doc/source/junker_app.md) / junker.app
@@ -4172,6 +4233,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Volterra](/doc/source/junker_app.md) / junker.app
 - [Wipptal](/doc/source/junker_app.md) / junker.app
 - [Zambrone - Tecnew Srl](/doc/source/junker_app.md) / junker.app
+- [Zeri (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Zevio](/doc/source/siunet_it.md) / siunet.it
 - [Zibido San Giacomo](/doc/source/siunet_it.md) / siunet.it
 </details>

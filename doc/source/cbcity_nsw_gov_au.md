@@ -1,19 +1,34 @@
-# City of Canterbury-Bankstown
+# City of Canterbury-Bankstown (NSW)
+
+Support for schedules provided by [City of Canterbury-Bankstown (NSW)](https://bindayfinder.azurewebsites.net).
+
+City of Canterbury-Bankstown bin day finder
+
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: cbcity_nsw_gov_au
       args:
-        address: "102 Crinan Street, Hurlstone Park 2193"
+        address: ADDRESS
 ```
 
-Find your property using the [council bin day finder](https://bindayfinder.azurewebsites.net).
+### Configuration Variables
 
-- `address`: Full property address. Commas and NSW may be omitted; common street type abbreviations and unit addresses are accepted.
+**address**  
+*(string) (required)*
 
-The source uses the public street dataset, retains its address-specific bin model and reads the cycle anchor from the current web application. It returns dates from today to the end of the year. Red bins map to general waste, yellow bins to recycling and green bins to organic waste. Ambiguous addresses return suggestions. Each fetch reads the current data rather than relying on the legacy source's month-long cache.
+## Example
 
-## BaseSource migration
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: cbcity_nsw_gov_au
+      args:
+        address: 102 Crinan Street, Hurlstone Park 2193
+```
 
-Configuration argument names stay unchanged. Waste types now use canonical, localised names; update filters, automations and customisations using the former labels.
+## How to get the source arguments
+
+Enter your full Canterbury-Bankstown property address, e.g. '102 Crinan Street, Hurlstone Park 2193'. Address punctuation, NSW and common abbreviated street types are accepted. The current published web application supplies the cycle anchor and address-specific bin model. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

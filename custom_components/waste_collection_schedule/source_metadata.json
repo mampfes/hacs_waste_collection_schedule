@@ -187,7 +187,9 @@
   },
   "cbcity_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cbcity_nsw_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your full Canterbury-Bankstown property address, e.g. '102 Crinan Street, Hurlstone Park 2193'. Address punctuation, NSW and common abbreviated street types are accepted. The current published web application supplies the cycle anchor and address-specific bin model. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "casey_vic_gov_au": {
@@ -839,7 +841,7 @@
   "sunshinecoast_qld_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sunshinecoast_qld_gov_au.md",
     "howto": {
-      "en": "Use the street name as the council's bin collection page spells it, e.g. 'Hospital Rd'. A house number and suburb are ignored if you include them. Set `locality` to the suburb when the same street name occurs in more than one suburb; the error message lists the suburbs to choose from."
+      "en": "Enter the street name as shown by the council's bin checker. House numbers, a comma-separated suburb and spelled-out street types are accepted. Use locality when a street occurs in several suburbs. The current published widget supplies the week-cycle anchor; the API supplies your street's weekday and week. Collections happening today are included. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -894,7 +896,7 @@
   "victoriapark_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/victoriapark_wa_gov_au.md",
     "howto": {
-      "en": "Visit the <a href='https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx'>Bins and Collections</a> page to find your collection group (1 or 2) and day."
+      "en": "Find your collection group (1 or 2) and weekday on the council Bins and Collections page. The current linked July-June image calendar supplies the actual red/yellow weeks and public-holiday replacement dates. Dates stop at its published end; no fixed historical anchor is used. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -2053,7 +2055,9 @@
   },
   "sudestavenir_fr": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sudestavenir_fr.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your GPSEA commune, street and house number. French street types such as Place/PL and Avenue/AV are accepted. The infosheet supplies recurring weekdays, date lists, seasons and morning/afternoon details. Dated precision belongs to the year of its published calendar link. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "chartres_metropole_fr": {
@@ -4260,6 +4264,14 @@
     },
     "urls": {}
   },
+  "cbbo_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cbbo_it.md",
+    "howto": {
+      "en": "Enter your comune as listed on https://www.cbbo.it/ (menu 'Comuni'), e.g. `Capriano del Colle`. The dates are read from the comune's yearly Ecocalendario PDF. Barbariga and San Zeno Naviglio publish a calendar in another layout and are not supported yet.",
+      "it": "Inserisci il tuo comune come indicato su https://www.cbbo.it/ (menu 'Comuni'), ad esempio `Capriano del Colle`. Le date vengono lette dall'Ecocalendario annuale in PDF del comune. Barbariga e San Zeno Naviglio pubblicano un calendario con un'impaginazione diversa e non sono ancora supportati."
+    },
+    "urls": {}
+  },
   "mantovaambiente_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mantovaambiente_it.md",
     "howto": {
@@ -4328,6 +4340,14 @@
     "howto": {
       "en": "Open https://www.asm.pv.it/raccolta-differenziata/porta-a-porta-pavia/ and pick your municipality and street from the search. Use the same values here. For small municipalities served by a single zone, use 'Tutte le vie' as the street.",
       "it": "Apri https://www.asm.pv.it/raccolta-differenziata/porta-a-porta-pavia/ e scegli il tuo comune e la tua via nella ricerca. Usa gli stessi valori qui. Per i piccoli comuni serviti da un'unica zona, usa 'Tutte le vie' come via."
+    },
+    "urls": {}
+  },
+  "portapporta_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/portapporta_it.md",
+    "howto": {
+      "en": "Choose the operator: `ersu` (Versilia and Lunigiana), `asmiu` (Massa), `rea` (Rosignano Marittimo, Cecina and surroundings) or `esa` (Elba). Enter your comune as the PortAPPorta app lists it, e.g. `Rosignano Marittimo`. Where the comune has more than one collection zone, also enter the zone as named in the app, e.g. `Gabbro, Nibbiaia e Castelnuovo della Misericordia` (a wrong or missing zone lists the valid ones). The domestic calendar is used unless you enter another user type in `utenza`, e.g. `Commerciale`.",
+      "it": "Scegli il gestore: `ersu` (Versilia e Lunigiana), `asmiu` (Massa), `rea` (Rosignano Marittimo, Cecina e dintorni) o `esa` (Elba). Inserisci il comune come appare nell'app PortAPPorta, ad esempio `Rosignano Marittimo`. Se il comune ha più zone di raccolta, indica anche la zona come nell'app, ad esempio `Gabbro, Nibbiaia e Castelnuovo della Misericordia` (con una zona errata o mancante viene mostrato l'elenco). Viene usato il calendario delle utenze domestiche, salvo indicare un altro tipo di utenza in `utenza`, ad esempio `Commerciale`."
     },
     "urls": {}
   },
@@ -8688,7 +8708,7 @@
   "stamford_ct_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stamford_ct_us.md",
     "howto": {
-      "en": "Use the City of Stamford Garbage and Recycling Lookup (https://stamfordapps.org/garbagerecycling/default.asp) to find your street. Enter just the street name (e.g. 'Parker' for 'Parker Ave'), leaving out the street suffix (Ave, St, Rd, etc.) and the house number. If your street has multiple pickup-day ranges, also provide your house number; the source will tell you the available ranges if it is required but missing."
+      "en": "Enter your street name without house number. Enter house_number separately when pickup days vary along the street; the error lists the available ranges. Both numbered ranges and the council's ALL designation are supported. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
