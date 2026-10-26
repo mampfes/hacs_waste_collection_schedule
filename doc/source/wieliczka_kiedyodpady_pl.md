@@ -1,31 +1,4 @@
-# Wieliczka Kiedy Odpady
-
-Support for schedules provided by [Wieliczka Kiedy Odpady](https://wieliczka.kiedyodpady.pl), Poland.
-
-## Configuration via configuration.yaml
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: wieliczka_kiedyodpady_pl
-      args:
-        city: Wieliczka (miasto)
-        street: ul. Adama Asnyka  # optional for some cities
-        number: pozostałe         # optional for some cities
-```
-
-### Configuration Variables
-
-**number**  
-*(String) (optional)* House number/address entry from the selected street.
-
-**city**  
-*(String) (required)* City name.
-
-**street**  
-*(String) (optional)* Street name.
-
-## Example
+# Wieliczka Kiedy Odpady (deprecated)
 
 ```yaml
 waste_collection_schedule:
@@ -37,17 +10,8 @@ waste_collection_schedule:
         number: "pozostałe"
 ```
 
-## How to get the source argument
+This source remains **deprecated**. Prefer `kiedyodpady_pl` with `municipality: wieliczka` for new configurations.
 
-1. Fetch cities from:
-   `https://api.kiedyodpady.pl/public/territory/localities`
-2. Fetch streets for a city:
-   `https://api.kiedyodpady.pl/public/territory/localities/<locality_id>/streets`
-3. Fetch house numbers for a street:
-   `https://api.kiedyodpady.pl/public/territory/localities/<locality_id>/addresses/<street_id>`
+The source uses the shared Kiedy Odpady address lookup and schedule parser. `city`, optional `street` and optional `number` remain unchanged. An optional `lookahead_days` defaults to **35**, preserving the legacy window. Copy address values from the [public Wieliczka selector](https://wieliczka.kiedyodpady.pl).
 
-All API requests must include header:
-
-```text
-Origin: https://wieliczka.kiedyodpady.pl
-```
+Waste names now use the canonical platform vocabulary. Combined metals/plastics collections produce both canonical categories on the same date. Update filters and customisations that use the former labels. The provider is fixed internally to Wieliczka, without an unused municipality field in the form.

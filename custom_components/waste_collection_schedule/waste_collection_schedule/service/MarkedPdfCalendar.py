@@ -196,6 +196,8 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
     ``pages`` can restrict a document to its calendar pages. With
     ``allow_unmarked_missing_days``, blank holiday cells are accepted only when
     their inferred position carries no collection marker.
+
+    Set row_bands=True for filled week rows spanning several day cells.
     """
 
     def __init__(
@@ -211,6 +213,7 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         allow_unmarked_missing_days: bool = False,
         pages: Sequence[int] | None = None,
         cancelled_colors: Sequence[tuple[float, ...]] = (),
+        row_bands: bool = False,
     ):
         self.months = {_normal(name): i + 1 for i, name in enumerate(months)}
         self.weekdays = tuple(_normal(name) for name in weekdays)
@@ -224,6 +227,7 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         self.allow_unmarked_missing_days = allow_unmarked_missing_days
         self.pages = frozenset(pages) if pages is not None else None
         self.cancelled_colors = {"cancelled": tuple(cancelled_colors)}
+        self.row_bands = row_bands
 
     def _keys(
         self, color: Any, palette: Mapping[str, Sequence[tuple[float, ...]]]
@@ -396,7 +400,9 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
                             candidates = [
                                 shape
                                 for shape in shapes
-                                if 1 < shape.width < cell_width * 1.6
+                                if 1
+                                < shape.width
+                                < cell_width * (7.2 if self.row_bands else 1.6)
                                 and 1 < shape.height < cell_width * 1.6
                                 and min(shape.x1, word.x1) - max(shape.x0, word.x0)
                                 > 0.1

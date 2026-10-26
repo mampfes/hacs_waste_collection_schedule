@@ -1135,6 +1135,7 @@ def _marked_calendar_pdf(
     hidden_blue=False,
     marked_day=(1, 26),
     cancelled=None,
+    row_band=False,
 ):
     """A complete printed calendar; January 26 has fill and stroke markers."""
     import calendar
@@ -1180,8 +1181,9 @@ def _marked_calendar_pdf(
                 if marked and hidden_blue:
                     commands.append(f"q 0 0 1 rg {x + 1} {y - 1} 8 8 re f Q")
                 if marked:
-                    commands.append(f"q 0 0 0 rg {x - 2} {y - 4} 16 14 re f Q")
-                    commands.append(f"q 1 0 0 RG 2 w {x - 2} {y - 4} 16 14 re S Q")
+                    width = 136 if row_band else 16
+                    commands.append(f"q 0 0 0 rg {x - 2} {y - 4} {width} 14 re f Q")
+                    commands.append(f"q 1 0 0 RG 2 w {x - 2} {y - 4} {width} 14 re S Q")
                 if (month, day) != omitted:
                     value = 32 if (month, day) == bad_day else day
                     text(value, x, y, "1 1 1" if marked else "0 0 0")
@@ -1443,6 +1445,35 @@ def test_victoria_park_raster_grid_tracks_image_scale(group, scale):
         SimpleNamespace(content=payload.getvalue(), url=response.url), source
     )
     assert actual == expected
+
+
+@pytest.mark.parametrize("year,day", [(2026, 12), (2027, 11)])
+def test_marked_pdf_week_bands_span_printed_day_cells(year, day):
+    response = SimpleNamespace(
+        content=_marked_calendar_pdf(year=year, marked_day=(1, day), row_band=True)
+    )
+    rows = _marked_parser(row_bands=True)(response)
+    expected = {D(year, 1, day) + datetime.timedelta(days=i) for i in range(7)}
+    assert {r["date"] for r in rows if r["type"] == "general"} == expected
+    assert {r["date"] for r in rows if r["type"] == "organic"} == expected
+
+
+def test_strathfield_published_calendar_is_complete_and_stops_at_year_end():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.strathfield_nsw_gov_au import Source
+
+    case = "Monday collection"
+    source = Source(**Source.TEST_CASES[case])
+    with cassette.replaying(fixture_path("strathfield_nsw_gov_au", case)):
+        response = source.retrieve(source)
+        days = source.parse(response, source)
+    with cassette.replaying(fixture_path("strathfield_nsw_gov_au", case)):
+        entries = source.fetch()
+    assert len(days) == 365
+    assert len({r["date"] for r in days}) == 365
+    assert (D(2026, 1, 5), "green") in {(r["date"], r["type"]) for r in days}
+    assert all(D(2026, 10, 26) <= e.date <= D(2026, 12, 31) for e in entries)
 
 
 def test_paczkow_joins_day_lists_wrapped_onto_their_own_lines():

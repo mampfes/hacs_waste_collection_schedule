@@ -312,6 +312,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
                        (never collapsed to OTHER), so no collection is lost.
         parse_date:    A ``date_parsers`` callable. Defaults to ``date_parsers.auto``.
                        Use ``date_parsers.for_format("%d/%m/%Y")`` for a known format.
+        picture_key:   Optional field or callable returning a collection image URL.
     """
 
     def __init__(
@@ -329,6 +330,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         description_key: "str | Callable[[Any], Any] | None" = None,
         color_key: "str | Callable[[Any], Any] | None" = None,
         carry_raw_label: bool = False,
+        picture_key: "str | Callable[[Any], Any] | None" = None,
     ):
         super().__init__(
             type_value_map,
@@ -342,6 +344,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         )
         self._date_key = date_key
         self._type_key = type_key
+        self._picture_key = picture_key
 
     def __call__(
         self, record: Mapping[str, Any]
@@ -352,7 +355,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
         raw_type = str(self._get(record, self._type_key) or "")
         resolved = self._resolve_type(raw_type)
         location, description, color = self._meta(record)
-        return self._collections(
+        result = self._collections(
             date,
             resolved,
             location,
@@ -360,6 +363,13 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
             color,
             raw_label=raw_type if self._carry_raw_label else None,
         )
+
+        if self._picture_key is not None and result is not None:
+            picture = self._get(record, self._picture_key)
+            if isinstance(picture, str) and picture:
+                for entry in result if isinstance(result, list) else [result]:
+                    entry.set_picture(picture)
+        return result
 
 
 class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
