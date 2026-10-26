@@ -18,3 +18,7 @@ custom_components/waste_collection_schedule/waste_collection_schedule/test/secre
 
 # Personal overrides on top of the tracked CLAUDE.md.
 CLAUDE.local.md
+# Python package build outputs
+build/
+dist/
+*.egg-info/

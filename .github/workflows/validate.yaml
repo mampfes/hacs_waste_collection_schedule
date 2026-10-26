@@ -15,6 +15,30 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  standalone:
+    name: standalone (${{ matrix.python_version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version: ['3.12', '3.14']
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Build source distribution and wheel
+        run: |
+          python -m pip install build
+          python -m build
+      - name: Install and test without Home Assistant
+        run: |
+          python -m venv "${{ runner.temp }}/wcs-standalone"
+          "${{ runner.temp }}/wcs-standalone/bin/python" -m pip install dist/*.whl packaging
+          "${{ runner.temp }}/wcs-standalone/bin/python" -m pip check
+          "${{ runner.temp }}/wcs-standalone/bin/python" -I tests/standalone_smoke.py
+
   lint:
     runs-on: ubuntu-latest
     steps:
