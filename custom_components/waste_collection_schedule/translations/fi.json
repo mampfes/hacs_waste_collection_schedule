@@ -26219,11 +26219,12 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "id": "Id",
-          "uprn": "Uprn"
+          "id": "Sijainnin tunnus",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_antrimandnewtownabbey_gov_uk": {
@@ -26231,10 +26232,12 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "id": "Id",
-          "uprn": "Uprn"
+          "id": "Sijainnin tunnus",
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_apps_imactivate_com": {
         "title": "Määritä lähde",

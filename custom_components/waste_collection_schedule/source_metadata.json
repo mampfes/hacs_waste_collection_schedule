@@ -6089,7 +6089,9 @@
   },
   "antrimandnewtownabbey_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/antrimandnewtownabbey_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Search your address at https://antrimandnewtownabbey.gov.uk/binchecker/ and copy the Id from the selected property's URL into id. The council now publishes dated recycling collections alongside refuse and brown-bin collections. UPRN-only configurations must be updated to this council ID because the old Bryson lookup has been retired; with id configured, the old uprn argument is unnecessary. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
