@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-10-26",
+  "interactions": [],
+  "expected_error": {
+    "type": "SourceArgumentRequired",
+    "message": "Argument 'street_address' must be provided, this argument is required."
+  }
+}

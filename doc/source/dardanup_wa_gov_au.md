@@ -1,6 +1,8 @@
 # Shire of Dardanup
 
-Support for schedules provided by [Shire of Dardanup](https://www.dardanup.wa.gov.au/our-services/waste-and-recycling/find-your-bin-day.aspx).
+Support for schedules provided by [Shire of Dardanup](https://www.dardanup.wa.gov.au).
+
+Source for Shire of Dardanup (WA) waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -9,28 +11,23 @@ waste_collection_schedule:
   sources:
     - name: dardanup_wa_gov_au
       args:
-        street: STREET_NAME
-        recycling_in_even_week: true
+        street: STREET
+        service_area: SERVICE_AREA
+        collection_day: COLLECTION_DAY
 ```
 
 ### Configuration Variables
 
-**street**
+**street**  
 *(string) (optional)*
 
-Your street name without a house number, e.g. `Hale Street` or `Flinders Street`. Used to automatically look up your collection day from the Shire website. Provide either `street` or `collection_day`.
-
-**collection_day**
+**service_area**  
 *(string) (optional)*
 
-Your collection day as a string: `Monday`, `Tuesday`, `Wednesday`, `Thursday`, or `Friday`. Use this instead of `street` for Dardanup West (Monday) and Ferguson Valley residents, or if street lookup fails.
+**collection_day**  
+*(string) (optional)*
 
-**recycling_in_even_week**
-*(boolean) (optional, default: `true`)*
-
-Set to `true` if your recycling bin is collected on even ISO week numbers, `false` if on odd ISO week numbers. Check your last recycling collection date to determine this (use [whatweekisit.org](https://whatweekisit.org/)).
-
-## Example — street lookup
+## Example
 
 ```yaml
 waste_collection_schedule:
@@ -38,23 +35,9 @@ waste_collection_schedule:
     - name: dardanup_wa_gov_au
       args:
         street: Hale Street
-        recycling_in_even_week: true
-```
-
-## Example — direct day (Dardanup West / Ferguson Valley)
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: dardanup_wa_gov_au
-      args:
-        collection_day: Monday
-        recycling_in_even_week: false
+        service_area: Area 1
 ```
 
 ## How to get the source arguments
 
-1. Visit the [Shire of Dardanup Find Your Bin Day page](https://www.dardanup.wa.gov.au/our-services/waste-and-recycling/find-your-bin-day.aspx).
-2. Find your street in the accordion lists for Area 1 or Area 2, or note your collection day directly (Area 3 = Monday; Ferguson Valley residents should check the Waste Guide PDF linked on that page).
-3. Enter your street name (without house number) as `street`, or enter the day as `collection_day`.
-4. To determine `recycling_in_even_week`: note the date of your last recycling collection, look up its ISO week number (e.g. using [whatweekisit.org](https://whatweekisit.org/)), and set `true` if even, `false` if odd.
+Find your street/townsite and service area in the current waste guide linked from https://www.dardanup.wa.gov.au/our-services/waste-and-recycling/find-your-bin-day.aspx. Enter street and service_area; collection_day can specify the published weekday directly. Streets spanning Area 1 and Area 2 require service_area. Replace the old recycling_in_even_week argument with service_area: the published calendar now supplies the recycling phase and holiday replacements, including across ISO week 53. Rural two-bin services have no FOGO collection. Dates stop at the end of the published guide, with no projection beyond it. Since the v3 migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

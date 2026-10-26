@@ -5469,6 +5469,15 @@
       "id": "recollect_net"
     },
     {
+      "title": "Ivry-sur-le-Lac",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Ivry-sur-le-Lac",
+        "sector": null
+      },
+      "id": "ritl_ca"
+    },
+    {
       "title": "Kawartha Lakes (ON)",
       "module": "recyclecoach_com",
       "default_params": {
@@ -5487,6 +5496,24 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Lac-Sup\u00e9rieur Secteur 1",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Lac-Sup\u00e9rieur",
+        "sector": "Secteur 1"
+      },
+      "id": "ritl_ca"
+    },
+    {
+      "title": "Lac-Sup\u00e9rieur Secteur 2",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Lac-Sup\u00e9rieur",
+        "sector": "Secteur 2"
+      },
+      "id": "ritl_ca"
+    },
+    {
       "title": "Lakeshore (ON)",
       "module": "recyclecoach_com",
       "default_params": {
@@ -5494,6 +5521,15 @@
         "project_id": "583"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Lantier",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Lantier",
+        "sector": null
+      },
+      "id": "ritl_ca"
     },
     {
       "title": "LaSalle (ON)",
@@ -5574,6 +5610,24 @@
         "project_id": "3179"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Mont-Blanc Secteur Est",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Mont-Blanc",
+        "sector": "Secteur Est"
+      },
+      "id": "ritl_ca"
+    },
+    {
+      "title": "Mont-Blanc Secteur Ouest",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Mont-Blanc",
+        "sector": "Secteur Ouest"
+      },
+      "id": "ritl_ca"
     },
     {
       "title": "Montreal (QC)",
@@ -5807,6 +5861,42 @@
       "id": "ics_vsj_ca"
     },
     {
+      "title": "Sainte-Agathe-des-Monts Secteur Centre-ville",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Sainte-Agathe-des-Monts",
+        "sector": "Secteur Centre-ville"
+      },
+      "id": "ritl_ca"
+    },
+    {
+      "title": "Sainte-Agathe-des-Monts Secteur Nord",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Sainte-Agathe-des-Monts",
+        "sector": "Secteur Nord"
+      },
+      "id": "ritl_ca"
+    },
+    {
+      "title": "Sainte-Agathe-des-Monts Secteur Sud / Fatima",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Sainte-Agathe-des-Monts",
+        "sector": "Secteur Sud / Fatima"
+      },
+      "id": "ritl_ca"
+    },
+    {
+      "title": "Sainte-Lucie-des-Laurentides",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Sainte-Lucie-des-Laurentides",
+        "sector": null
+      },
+      "id": "ritl_ca"
+    },
+    {
       "title": "Saskatoon, SK",
       "module": "ics",
       "default_params": {
@@ -5873,6 +5963,15 @@
         "project_id": "521"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Val-des-Lacs",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Val-des-Lacs",
+        "sector": null
+      },
+      "id": "ritl_ca"
     },
     {
       "title": "Valleyfield, Qu\u00e9bec",
