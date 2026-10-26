@@ -311,8 +311,8 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
                        multilingual vocabulary, and otherwise preserved verbatim
                        (never collapsed to OTHER), so no collection is lost.
         parse_date:    A ``date_parsers`` callable. Defaults to ``date_parsers.auto``.
-        picture_key: Optional field or callable returning a collection image URL.
                        Use ``date_parsers.for_format("%d/%m/%Y")`` for a known format.
+        picture_key:   Optional field or callable returning a collection image URL.
     """
 
     def __init__(
