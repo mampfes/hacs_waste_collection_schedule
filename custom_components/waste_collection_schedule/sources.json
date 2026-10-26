@@ -15282,22 +15282,6 @@
       "id": "ics_gelsendienste_de"
     },
     {
-      "title": "Gemeinde Blankenheim",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 415
-      },
-      "id": "cmcitymedia_de"
-    },
-    {
-      "title": "Gemeinde Deggenhausertal",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 225
-      },
-      "id": "cmcitymedia_de"
-    },
-    {
       "title": "Gemeinde Gro\u00df Pankow (Landkreis Prignitz)",
       "module": "abfall_io",
       "default_params": {
@@ -15350,14 +15334,6 @@
       "module": "ismaning_de",
       "default_params": {},
       "id": "ismaning_de"
-    },
-    {
-      "title": "Gemeinde Kalletal",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 426
-      },
-      "id": "cmcitymedia_de"
     },
     {
       "title": "Gemeinde Karst\u00e4dt (Landkreis Prignitz)",
@@ -15414,14 +15390,6 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_abfall_export_vcal"
-    },
-    {
-      "title": "Gemeinde Schutterwald",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 331
-      },
-      "id": "cmcitymedia_de"
     },
     {
       "title": "Gemeinde Unterhaching",
@@ -21555,14 +21523,6 @@
       "id": "abfallnavi_de"
     },
     {
-      "title": "Stadt Emmendingen",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 424
-      },
-      "id": "cmcitymedia_de"
-    },
-    {
       "title": "Stadt Enger",
       "module": "ics",
       "default_params": {
@@ -21711,14 +21671,6 @@
         "customer": "memmingen"
       },
       "id": "awido_de"
-    },
-    {
-      "title": "Stadt Messstetten",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 441
-      },
-      "id": "cmcitymedia_de"
     },
     {
       "title": "Stadt Norderstedt",
