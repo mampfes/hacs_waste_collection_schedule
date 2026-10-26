@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-10-26",
+  "interactions": [],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'municipality' with the value 'Val-David', you may want to use one of the following: ['Ivry-sur-le-Lac', 'Lac-Supérieur', 'Lantier', 'Mont-Blanc', 'Sainte-Agathe-des-Monts', 'Sainte-Lucie-des-Laurentides', 'Val-des-Lacs']"
+  }
+}
