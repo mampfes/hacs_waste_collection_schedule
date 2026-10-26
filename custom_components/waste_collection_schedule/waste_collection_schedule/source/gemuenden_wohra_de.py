@@ -2,6 +2,7 @@ import re
 import urllib.parse
 from datetime import date
 from io import BytesIO
+from statistics import median
 
 import requests
 from bs4 import BeautifulSoup
@@ -123,44 +124,38 @@ class Source:
         # 12 months at evenly-spaced positions (holiday text can shift a column
         # on affected day lines, so we look for a clean reference line).
         col_boundaries: list[int] | None = None
+        width = 0.0
         for line in lines[header_idx + 1 :]:
             matches = list(_WEEKDAY_RE.finditer(line))
             if len(matches) != 12:
                 continue
             positions = [m.start() for m in matches]
             gaps = [positions[j + 1] - positions[j] for j in range(11)]
-            if all(30 <= g <= 55 for g in gaps):
+            # column width depends on the PDF layout (~40 chars in 2025, ~21 in 2026)
+            width = median(gaps)
+            if width >= 15 and all(abs(g - width) <= 3 for g in gaps):
                 col_boundaries = positions
                 break
 
         if col_boundaries is None:
             return []
 
-        col_ends = [*col_boundaries[1:], col_boundaries[-1] + 50]
-        first_col_slice = slice(max(0, col_boundaries[0] - 5), col_boundaries[0] + 35)
-
         entries: list[Collection] = []
         for line in lines[header_idx + 1 :]:
-            if not _WEEKDAY_RE.search(line):
-                continue
+            matches = list(_WEEKDAY_RE.finditer(line))
 
-            # Confirm the line starts with a day entry in the first month's column
-            first_col_m = _WEEKDAY_RE.search(line[first_col_slice])
-            if not first_col_m:
-                continue
-            day = int(first_col_m.group(1))
-
-            for month_idx, (col_start, col_end) in enumerate(
-                zip(col_boundaries, col_ends, strict=False)
-            ):
-                if col_start >= len(line):
+            # Holiday text shifts the following columns by a few characters, so
+            # assign each day entry to the nearest column instead of slicing at
+            # fixed positions; a cell runs up to the next day entry.
+            for i, cell_m in enumerate(matches):
+                distances = [abs(cell_m.start() - pos) for pos in col_boundaries]
+                month_idx = distances.index(min(distances))
+                if distances[month_idx] > width / 2:
                     continue
-                cell = line[col_start:col_end]
                 month = month_idx + 1
-
-                cell_m = _WEEKDAY_RE.search(cell)
-                if not cell_m or int(cell_m.group(1)) != day:
-                    continue
+                day = int(cell_m.group(1))
+                end = matches[i + 1].start() if i + 1 < len(matches) else len(line)
+                cell = line[cell_m.start() : end]
 
                 try:
                     d = date(year, month, day)
