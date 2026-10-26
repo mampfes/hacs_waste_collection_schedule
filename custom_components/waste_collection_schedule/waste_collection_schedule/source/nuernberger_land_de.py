@@ -1,5 +1,8 @@
+import re
+
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import SourceArgumentNotFound
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Abfallwirtschaft Nürnberger Land"
@@ -29,8 +32,17 @@ class Source:
         self._ics = ICS(split_at="/")
 
     def fetch(self):
+        # the ical id is "<tour group>-<section>"; the group is part of the calendar data
+        r = requests.get(f"{API_URL}/get_calendar_data", params={"id": self._id})
+        r.raise_for_status()
+        match = re.search(r'id="tg_group_id"[^>]*value="(\d+)"', r.text)
+        if not match:
+            raise SourceArgumentNotFound("id", self._id)
+
         # fetch the ical
-        r = requests.get(f"{API_URL}/ical?id={self._id}&filter={FILTER}")
+        r = requests.get(
+            f"{API_URL}/ical?id={match.group(1)}-{self._id}&filter={FILTER}"
+        )
         r.raise_for_status()
 
         # replace non-ascii character in UID, otherwise ICS converter will fail
