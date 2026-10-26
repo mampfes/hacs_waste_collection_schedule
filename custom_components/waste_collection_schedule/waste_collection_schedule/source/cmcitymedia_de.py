@@ -21,7 +21,7 @@ from waste_collection_schedule.transformers import JsonTransformer
 URL = "https://cmcitymedia.de"
 
 _PROVIDERS = [
-    {"hpid": 415, "realm": 41500, "region": "Gemeinde Blankenheim"},
+    {"hpid": 415, "realm": 41500, "region": "Gemeinde Blankenheim", "disabled": True},
     {
         "hpid": 95,
         "realm": 9501,
@@ -36,10 +36,15 @@ _PROVIDERS = [
         "disabled": True,
     },
     {"hpid": 168, "realm": 16801, "region": "Hohenlohekreis", "disabled": True},
-    {"hpid": 225, "realm": 22500, "region": "Gemeinde Deggenhausertal"},
+    {
+        "hpid": 225,
+        "realm": 22500,
+        "region": "Gemeinde Deggenhausertal",
+        "disabled": True,
+    },
     {"hpid": 233, "realm": 23301, "region": "Stadt Kraichtal", "disabled": True},
     {"hpid": 248, "realm": 24800, "region": "Gemeinde Kappelrodeck", "disabled": True},
-    {"hpid": 331, "realm": 33100, "region": "Gemeinde Schutterwald"},
+    {"hpid": 331, "realm": 33100, "region": "Gemeinde Schutterwald", "disabled": True},
     {"hpid": 374, "realm": 37401, "region": "Gemeinde Aschheim", "disabled": True},
     {
         "hpid": 390,
@@ -55,9 +60,9 @@ _PROVIDERS = [
         "disabled": True,
     },
     {"hpid": 421, "realm": 42100, "region": "Stadt Emden", "disabled": True},
-    {"hpid": 424, "realm": 42400, "region": "Stadt Emmendingen"},
-    {"hpid": 426, "realm": 42600, "region": "Gemeinde Kalletal"},
-    {"hpid": 441, "realm": 44100, "region": "Stadt Messstetten"},
+    {"hpid": 424, "realm": 42400, "region": "Stadt Emmendingen", "disabled": True},
+    {"hpid": 426, "realm": 42600, "region": "Gemeinde Kalletal", "disabled": True},
+    {"hpid": 441, "realm": 44100, "region": "Stadt Messstetten", "disabled": True},
     {"hpid": 447, "realm": 44700, "region": "Gemeinde Oberstadion", "disabled": True},
 ]
 
@@ -90,8 +95,9 @@ class Source(BaseSource):
         wt.RECYCLABLES,
     ]
 
-    # Both cases exercise the enabled Blankenheim provider (district-based and
-    # realmid-override paths); disabled providers serve no data so are not tested.
+    # Both cases exercise the Blankenheim provider (district-based and
+    # realmid-override paths). The CM City Media API has been offline since
+    # October 2026 (#8002), so all providers are disabled and these fail live.
     TEST_CASES: ClassVar[dict] = {
         "Blankenheim - Bezirk F: Lindweiler, Rohr": {"hpid": 415, "district": 1371},
         "Blankenheim": {"hpid": 415, "realmid": 41500},
