@@ -32,6 +32,37 @@ def _set_json(interaction: dict, value: Any) -> None:
     interaction["content_b64"] = base64.b64encode(raw.encode("utf-8")).decode("ascii")
 
 
+def _dardanup_wa_gov_au(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Retain all calendar pages and their dated colour grids, without photos."""
+    from io import BytesIO
+
+    from pypdf import PdfReader, PdfWriter
+    from pypdf.constants import ImageType
+
+    for interaction in interactions:
+        if ".pdf" not in interaction["url"].lower():
+            continue
+        reader = PdfReader(BytesIO(base64.b64decode(interaction["content_b64"])))
+        writer = PdfWriter()
+        for page in reader.pages:
+            text = page.extract_text() or ""
+            if re.search(r"[23]-BIN SERVICE", text) and "202" in text:
+                writer.add_page(page)
+        if len(writer.pages) != 5:
+            raise ValueError(
+                "Expected all five Dardanup calendar pages before trimming"
+            )
+        writer.remove_images(ImageType.XOBJECT_IMAGES | ImageType.INLINE_IMAGES)
+        for page in writer.pages:
+            page.compress_content_streams()
+        writer.compress_identical_objects()
+        output = BytesIO()
+        writer.write(output)
+        interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
+
+
 def _sica_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None:
     """Keep the configured commune's collections from the recording day on."""
     wanted = str(args["municipality"]).lower()
@@ -519,6 +550,7 @@ def _wastenet_org_nz(
 SCRUBBERS: dict[str, Scrubber] = {
     "wastenet_org_nz": _wastenet_org_nz,
     "montreal_ca": _montreal_ca,
+    "dardanup_wa_gov_au": _dardanup_wa_gov_au,
     "awb_bad_kreuznach_de": _awb_bad_kreuznach_de,
     "segreguj_gliwice_eu": _segreguj_gliwice_eu,
     "eth_erd_hu": _eth_erd_hu,

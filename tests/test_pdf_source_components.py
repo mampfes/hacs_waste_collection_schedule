@@ -51,6 +51,113 @@ def _page(html: str, url: str = "https://example.org/waste/") -> SimpleNamespace
     return SimpleNamespace(text=html, url=url)
 
 
+def _fiscal_week_grid():
+    """Two dated years and seven printed day columns, with no PDF dependency."""
+    import calendar
+
+    from waste_collection_schedule.parsers import (
+        PdfTextFragment,
+        PdfVector,
+        PdfWordLayout,
+    )
+
+    lines, words, vectors = [], [], []
+    for index in range(12):
+        year, month = 2026 + (index + 6) // 12, (index + 6) % 12 + 1
+        cx, cy = 100 + index % 3 * 100, 600 - index // 3 * 120
+        lines.append(PdfTextFragment(0, f"{calendar.month_name[month]} {year}", cx, cy))
+        for day in range(1, calendar.monthrange(year, month)[1] + 1):
+            date = D(year, month, day)
+            x = cx - 30 + date.weekday() * 10
+            y = cy - 20 - ((D(year, month, 1).weekday() + day - 1) // 7) * 10
+            words.append(PdfTextFragment(0, str(day), x, y))
+            if date.weekday() < 5:
+                vectors.append(
+                    PdfVector(0, x - 4, y - 4, x + 4, y + 4, None, (1.0, 0.0, 0.0))
+                )
+    return PdfWordLayout(lines, words, vectors)
+
+
+@pytest.mark.parametrize("fault", [None, "missing_day", "wrong_column", "wrong_year"])
+def test_dardanup_fiscal_grid_validates_printed_dates(fault):
+    from waste_collection_schedule.service.DardanupCalendar import month_cells
+
+    layout = _fiscal_week_grid()
+    if fault == "missing_day":
+        layout.words.pop(0)
+    elif fault == "wrong_column":
+        layout.words[0] = layout.words[0]._replace(x=layout.words[0].x + 10)
+    elif fault == "wrong_year":
+        layout.lines[0] = layout.lines[0]._replace(text="July 2025")
+    if fault:
+        with pytest.raises(ValueError):
+            month_cells(layout, 0)
+    else:
+        cells = month_cells(layout, 0)
+        assert len(cells) == 365
+        assert min(cells) == D(2026, 7, 1)
+        assert max(cells) == D(2027, 6, 30)
+        assert cells[D(2026, 12, 31)] == "general"
+
+
+@pytest.mark.parametrize(
+    "case,key,day",
+    [
+        ("Hale Street (Area 1, Tuesday)", "recycling", D(2027, 1, 5)),
+        ("Hale Street Area 2", "general", D(2027, 1, 5)),
+        ("Burekup", "recycling", D(2027, 1, 7)),
+    ],
+)
+def test_dardanup_published_phase_survives_iso_week_53(case, key, day):
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.source.dardanup_wa_gov_au import Source
+
+    expected = wt.RECYCLABLES if key == "recycling" else wt.GENERAL_WASTE
+    with (
+        cassette.replaying(fixture_path("dardanup_wa_gov_au", case)),
+        freeze_time("2027-01-04"),
+    ):
+        entries = Source(**Source.TEST_CASES[case]).fetch()
+    assert any(e.date == day and e.type == wt.display_name(expected) for e in entries)
+
+
+@pytest.mark.parametrize("holiday", [D(2026, 12, 25), D(2027, 1, 1), D(2027, 3, 26)])
+def test_dardanup_guide_moves_cancelled_friday_to_saturday(holiday):
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.dardanup_wa_gov_au import Source
+
+    case = "Hale Street (Area 1, Tuesday)"
+    with (
+        cassette.replaying(fixture_path("dardanup_wa_gov_au", case)),
+        freeze_time(holiday),
+    ):
+        entries = Source(service_area="Area 1", collection_day="Friday").fetch()
+    assert not any(e.date == holiday for e in entries)
+    assert sum(e.date == holiday + datetime.timedelta(days=1) for e in entries) == 2
+    assert all(e.date <= D(2027, 6, 30) for e in entries)
+
+
+def test_dardanup_rural_service_has_separate_weekdays_and_no_fogo():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.source.dardanup_wa_gov_au import Source
+
+    case = "Rural Ferguson Valley split weekdays"
+    with cassette.replaying(fixture_path("dardanup_wa_gov_au", case)):
+        entries = Source(**Source.TEST_CASES[case]).fetch()
+    assert {
+        e.date.weekday() for e in entries if e.type == wt.display_name(wt.GENERAL_WASTE)
+    } == {0}
+    assert {
+        e.date.weekday() for e in entries if e.type == wt.display_name(wt.RECYCLABLES)
+    } == {3}
+    assert not any(e.type == wt.display_name(wt.ORGANIC) for e in entries)
+
+
 def test_normalize_loose_drops_accents_case_and_punctuation():
     assert lookups.normalize_loose("OSIEDLE JAMNO-ŁABUSZ") == "osiedle jamno labusz"
     assert lookups.normalize_loose(" Pérouges  hors cité ") == "perouges hors cite"

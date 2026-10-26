@@ -1,44 +1,15 @@
 from datetime import date, timedelta
+from typing import ClassVar, final
 
-import requests
-from requests import RequestException
-from waste_collection_schedule import Collection, Icons
+from waste_collection_schedule import parsers, preprocessors, recurrence, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
-    SourceArgumentException,
+    SourceArgumentNotFound,
     SourceArgumentRequired,
 )
-
-TITLE = "City of Los Angeles, CA"
-DESCRIPTION = "Source script for Los Angeles, California waste collection services"
-URL = "https://www.lacitysan.org"
-COUNTRY = "us"
-TEST_CASES = {
-    "East Valley District Yard": {"street_address": "11050 Pendleton Street"},
-    "West Valley District Yard": {"street_address": "8840 Vanalden Avenue"},
-    "North Central District Yard": {"street_address": "452 North San Fernando Road"},
-    "South Los Angeles District Yard": {"street_address": "786 South Mission Road"},
-    "Harbor District Yard": {"street_address": "1400 North Gaffey Street"},
-    "West Los Angeles District Yard": {"street_address": "2027 Stoner Avenue"},
-}
-
-ICON_MAP = {
-    "BLACK BIN": Icons.GENERAL_WASTE,
-    "BLUE BIN": Icons.RECYCLING,
-    "GREEN BIN": Icons.ORGANIC,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Enter your street address exactly as it appears on your LA Sanitation bill. "
-        "The address must be within Los Angeles city limits."
-    )
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_address": "Your complete street address without city/state (e.g. '22472 Denker Ave')"
-    }
-}
+from waste_collection_schedule.transformers import RowTransformer
 
 
 def _nth_weekday(year: int, month: int, weekday: int, n: int) -> date:
@@ -56,8 +27,8 @@ def _delay_holidays(year: int) -> list[date]:
     return [
         date(year, 1, 1),  # New Year's Day
         date(year, 7, 4),  # Independence Day
-        _nth_weekday(year, 9, 0, 1),  # Labor Day (first Monday of September)
-        _nth_weekday(year, 11, 3, 4),  # Thanksgiving (fourth Thursday of November)
+        _nth_weekday(year, 9, 0, 1),  # Labor Day
+        _nth_weekday(year, 11, 3, 4),  # Thanksgiving
         date(year, 12, 25),  # Christmas Day
     ]
 
@@ -72,79 +43,79 @@ def _apply_holiday_delay(collection_date: date) -> date:
     return collection_date
 
 
-class Source:
-    def __init__(self, street_address: str):
-        """Initialize the LA City waste collection source.
-
-        Args:
-            street_address: Street address in Los Angeles
-
-        Raises:
-            SourceArgumentRequired: If street_address is not provided
-        """
-        if not street_address:
-            raise SourceArgumentRequired(
-                "street_address",
-                "A valid street address in Los Angeles is required to look up collection schedule",
-            )
-
-        self._street_address = street_address
-        self._api_key = (
-            "YsvfDePjTDKtLl041Vz25jCbfjExMtCh"  # Public API key from LA City website
+def _schedule(record, source):
+    if source is None:
+        raise ValueError("Address lookup requires a source")
+    address = source.params["street_address"]
+    if not address:
+        raise SourceArgumentRequired(
+            "street_address", "Enter a Los Angeles street address"
         )
-        self._api_url = "https://api.lacity.org/boe_geoquery/addressvalidationservice"
+    if record.get("status") != "exactMatch":
+        raise SourceArgumentNotFound("street_address", address)
+    day = record["layers"]["merge"]["day"]
+    weekday = recurrence.weekday(day)
+    if weekday is None or weekday > 4:
+        raise ValueError(f"Unknown Los Angeles collection day: {day!r}")
+    today = date.today()
+    for key in ("BLACK BIN", "BLUE BIN", "GREEN BIN"):
+        yield preprocessors.Schedule(
+            key,
+            recurrence.next_weekday(weekday, on_or_after=today - timedelta(days=1)),
+            until=today + timedelta(days=13),
+        )
 
-    def fetch(self) -> list[Collection]:
-        params = {
-            "address": self._street_address,
+
+def _holiday(collection_date, _key, _source):
+    shifted = _apply_holiday_delay(collection_date)
+    return shifted if shifted >= date.today() else None
+
+
+@final
+class Source(BaseSource):
+    TITLE = "City of Los Angeles, CA"
+    DESCRIPTION = "Source script for Los Angeles, California waste collection services"
+    URL = "https://www.lacitysan.org"
+    COUNTRY = "us"
+    TEST_CASES: ClassVar[dict] = {
+        "East Valley District Yard": {"street_address": "11050 Pendleton Street"},
+        "West Valley District Yard": {"street_address": "8840 Vanalden Avenue"},
+        "North Central District Yard": {
+            "street_address": "452 North San Fernando Road"
+        },
+        "South Los Angeles District Yard": {"street_address": "786 South Mission Road"},
+        "Harbor District Yard": {"street_address": "1400 North Gaffey Street"},
+        "West Los Angeles District Yard": {"street_address": "2027 Stoner Avenue"},
+    }
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Missing address": {"street_address": ""},
+        "Unknown address": {"street_address": "zzzz invalid address 999999"},
+    }
+    PARAMS = (street_address("street_address"),)
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.ORGANIC]
+    HOWTO: ClassVar[dict] = {
+        "en": "Enter your complete street address within Los Angeles city limits, without city/state. The official GeoQuery API supplies the collection weekday. Black, blue and green bins share this day; the existing LASAN holiday delays are applied. Since the v3 migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    }
+    retrieve = retrievers.Request(
+        "https://api.lacity.org/boe_geoquery/addressvalidationservice",
+        params=lambda street_address, **_: {
+            "address": street_address,
             "status": "new",
             "layerset": "neighborhoodinfo",
-            "apikey": self._api_key,
+            "apikey": "YsvfDePjTDKtLl041Vz25jCbfjExMtCh",  # Public website API key
+        },
+    )
+    parse = parsers.JsonParser()
+    preprocess = preprocessors.Compose(
+        preprocessors.DefaultPreprocessor(),
+        preprocessors.RecurrenceExpander(_schedule),
+        preprocessors.HolidayShift(_holiday),
+        preprocessors.SortRows(),
+    )
+    transform = RowTransformer(
+        type_value_map={
+            "BLACK BIN": wt.GENERAL_WASTE,
+            "BLUE BIN": wt.RECYCLABLES,
+            "GREEN BIN": wt.ORGANIC,
         }
-
-        try:
-            response = requests.get(self._api_url, params=params)
-            response.raise_for_status()
-            data = response.json()
-
-        except RequestException as ex:
-            raise Exception(f"Error fetching collection data: {ex!s}") from ex
-
-        # Verify Address was found
-        if data["status"] != "exactMatch":
-            raise SourceArgumentException(
-                argument=self._street_address,
-                message=data.get("message", "Address not found"),
-            )
-
-        # Get Collection Day
-        weekday_map = {
-            "MONDAY": 0,
-            "TUESDAY": 1,
-            "WEDNESDAY": 2,
-            "THURSDAY": 3,
-            "FRIDAY": 4,
-        }
-        collection_day = data["layers"]["merge"]["day"]
-        collection_weekday = weekday_map[collection_day]
-
-        entries = []
-
-        # Get Next 2 Weeks for Collection Dates. Start one day back so that a
-        # pickup delayed by a holiday and landing on today is still included.
-        today = date.today()
-        for i in range(-1, 14):
-            check_date = today + timedelta(days=i)
-            if check_date.weekday() == collection_weekday:
-                actual_date = _apply_holiday_delay(check_date)
-                if actual_date < today:
-                    continue
-                for waste_type in ICON_MAP:
-                    entries.append(
-                        Collection(
-                            date=actual_date,
-                            t=waste_type,
-                            icon=ICON_MAP.get(waste_type),
-                        )
-                    )
-        return entries
+    )

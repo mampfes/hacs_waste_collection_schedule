@@ -8886,6 +8886,51 @@ def test_antrim_checker_keeps_dated_recycling_on_its_separate_weekday():
     assert (datetime.date(2026, 10, 27), "General Waste") not in pairs
 
 
+@pytest.mark.parametrize(
+    "today,weekday,expected",
+    [
+        ("2026-11-26", "THURSDAY", "2026-11-27"),
+        ("2026-11-27", "THURSDAY", "2026-11-27"),
+        ("2026-11-27", "FRIDAY", "2026-11-28"),
+        ("2026-12-25", "FRIDAY", "2026-12-26"),
+        ("2027-01-01", "FRIDAY", "2027-01-02"),
+        ("2026-07-03", "FRIDAY", "2026-07-03"),
+        ("2026-05-25", "MONDAY", "2026-05-25"),
+    ],
+)
+def test_lacity_pipeline_keeps_holiday_delay_and_delayed_collection_today(
+    today, weekday, expected
+):
+    from waste_collection_schedule.source.lacity_gov import Source
+
+    response = MagicMock()
+    response.json.return_value = {
+        "status": "exactMatch",
+        "layers": {"merge": {"day": weekday}},
+    }
+    with freeze_time(today):
+        source = Source(street_address="11050 Pendleton Street")
+        source.session.get = MagicMock(return_value=response)
+        entries = source.fetch()
+    assert len(entries) == (9 if today == "2026-11-27" and weekday == "THURSDAY" else 6)
+    assert sum(e.date.isoformat() == expected for e in entries) == 3
+    assert all(e.date.isoformat() >= today for e in entries)
+
+
+def test_lacity_pipeline_rejects_unrecognized_weekday():
+    from waste_collection_schedule.source.lacity_gov import Source
+
+    response = MagicMock()
+    response.json.return_value = {
+        "status": "exactMatch",
+        "layers": {"merge": {"day": "MAYBE"}},
+    }
+    source = Source(street_address="11050 Pendleton Street")
+    source.session.get = MagicMock(return_value=response)
+    with pytest.raises(ValueError, match="Unknown Los Angeles collection day"):
+        source.fetch()
+
+
 class TestGlobalCalendarMigrations:
     def test_iren_published_iso_dates_are_not_dropped(self):
         """The live Roccavione feed publishes three dates separated by semicolons."""
