@@ -496,7 +496,28 @@ def _montreal_ca(interactions: list[dict], args: dict[str, Any], today: str) -> 
             _set_json(interaction, payload)
 
 
+def _wastenet_org_nz(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep address matches and the fallback suggestions, not the whole registry."""
+    wanted = (
+        str(args["address"]).replace(" INVERCARGILL", ", Invercargill").strip().lower()
+    )
+    for interaction in interactions:
+        if interaction["url"].endswith("/address-list"):
+            rows = _json(interaction)
+            _set_json(
+                interaction,
+                [
+                    row
+                    for index, row in enumerate(rows)
+                    if index < 5 or wanted in row["address"].lower()
+                ],
+            )
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "wastenet_org_nz": _wastenet_org_nz,
     "montreal_ca": _montreal_ca,
     "awb_bad_kreuznach_de": _awb_bad_kreuznach_de,
     "segreguj_gliwice_eu": _segreguj_gliwice_eu,

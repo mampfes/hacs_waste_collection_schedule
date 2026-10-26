@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-10-25",
+  "interactions": [
+    {
+      "key": "GET https://www.wastenet.org.nz/client-api/icc/rubbish/address-list ",
+      "method": "GET",
+      "url": "https://www.wastenet.org.nz/client-api/icc/rubbish/address-list",
+      "final_url": "https://www.wastenet.org.nz/client-api/icc/rubbish/address-list",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 25 Oct 2026 14:31:13 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "x-id": "CA",
+        "x-powered-by": "ASP.NET",
+        "strict-transport-security": "max-age=31536000;",
+        "x-envoy-upstream-service-time": "1672",
+        "server": "envoy",
+        "transfer-encoding": "chunked"
+      },
+      "content_b64": "W3siYWRkcmVzcyI6IjEgQWJib3QgU3RyZWV0LCBJbnZlcmNhcmdpbGwifSx7ImFkZHJlc3MiOiIxIEFpbHNhIFN0cmVldCwgV2FsbGFjZXRvd24ifSx7ImFkZHJlc3MiOiIxIEFsYW1laW4gU3RyZWV0LCBSaXZlcnRvbiJ9LHsiYWRkcmVzcyI6IjEgQWxiaW9uIFN0cmVldCwgTWF0YXVyYSJ9LHsiYWRkcmVzcyI6IjEgQWxleGFuZGVyIEF2ZW51ZSwgSW52ZXJjYXJnaWxsIn0seyJhZGRyZXNzIjoiMTY2IExld2lzIFN0cmVldCwgSW52ZXJjYXJnaWxsIn1d"
+    },
+    {
+      "key": "GET https://www.wastenet.org.nz/client-api/icc/rubbish/search 8faa1baaa6",
+      "method": "GET",
+      "url": "https://www.wastenet.org.nz/client-api/icc/rubbish/search",
+      "final_url": "https://www.wastenet.org.nz/client-api/icc/rubbish/search?address=166+Lewis+Street%2C+Invercargill&date=2026-10-25",
+      "body": "{\"params\":[[\"address\",\"166 Lewis Street, Invercargill\"],[\"date\",\"2026-10-25\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sun, 25 Oct 2026 14:31:16 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "220",
+        "cache-control": "private",
+        "content-encoding": "gzip",
+        "vary": "Accept-Encoding",
+        "x-id": "CB",
+        "x-powered-by": "ASP.NET",
+        "strict-transport-security": "max-age=31536000;",
+        "x-envoy-upstream-service-time": "1612",
+        "server": "envoy"
+      },
+      "content_b64": "eyJBZGRyZXNzIjoiMTY2IExld2lzIFN0cmVldCwgSW52ZXJjYXJnaWxsIiwiQ291bmNpbCI6MSwiRGF5IjoiTW9uZGF5IiwiV2VlayI6IkIiLCJOZXh0RGF0ZXMiOlt7IkRhdGUiOiIyMDI2LTEwLTI3VDA3OjAwOjAwIiwiV2VlayI6IlllbGxvdyBXZWVrIn0seyJEYXRlIjoiMjAyNi0xMS0wMlQwNzowMDowMCIsIldlZWsiOiJSZWQgV2VlayJ9XX0="
+    }
+  ]
+}

@@ -9196,6 +9196,134 @@ def test_html_calendar_grid_marker_attributes(
     assert parser(response) == expected
 
 
+class TestRollingHtmlCalendarGrid:
+    @staticmethod
+    def _parser():
+        from waste_collection_schedule.parsers import HtmlCalendarGrid
+
+        return HtmlCalendarGrid(
+            table="table",
+            header="th",
+            day=".day",
+            rolling=True,
+            marker=".pickup",
+            attribute=("data-stream", "class"),
+        )
+
+    @staticmethod
+    def _page(header, cells):
+        return SimpleNamespace(
+            text=f"<table><tr><th>{header}</th></tr><tr>{cells}</tr></table>"
+        )
+
+    @pytest.mark.parametrize(
+        "header",
+        [
+            "December - January 2027",
+            "December 2026 - January 2027",
+            "<span>December</span> - <span>January 2027</span>",
+        ],
+    )
+    def test_year_boundary_uses_range_header_even_when_a_day_has_no_pickup(
+        self, header
+    ):
+        response = self._page(
+            header,
+            '<td><div class="day">30</div><span class="pickup red"></span></td><td><div class="day">31</div></td><td><div class="day">1</div><span class="pickup yellow"></span></td>',
+        )
+        assert self._parser()(response) == [
+            (datetime.date(2026, 12, 30), "pickup"),
+            (datetime.date(2027, 1, 1), "pickup"),
+        ]
+
+    def test_single_month_without_year_uses_frozen_current_year(self):
+        with freeze_time("2026-10-25"):
+            assert self._parser()(
+                self._page(
+                    "October",
+                    '<td><div class="day">27</div><span class="pickup"></span></td>',
+                )
+            ) == [(datetime.date(2026, 10, 27), "pickup")]
+
+    def test_multiple_month_boundaries_and_markers_keep_order(self):
+        response = self._page(
+            "October - December 2026",
+            '<td><div class="day">31</div></td><td><div class="day">1</div><span class="pickup" data-stream="first"></span></td><td><div class="day">30</div></td><td><div class="day">1</div><span class="pickup" data-stream="second"></span><img class="pickup" data-stream="third"></td>',
+        )
+        assert self._parser()(response) == [
+            (datetime.date(2026, 11, 1), "first"),
+            (datetime.date(2026, 12, 1), "second"),
+            (datetime.date(2026, 12, 1), "third"),
+        ]
+
+    @pytest.mark.parametrize(
+        "cell, message",
+        [
+            ('<td><span class="pickup"></span></td>', "day number not found"),
+            (
+                '<td><div class="day">unknown</div></td>',
+                "Invalid collection calendar day",
+            ),
+            ('<td><div class="day">32</div></td>', r"day.*range"),
+        ],
+    )
+    def test_explicit_invalid_day_is_not_silently_skipped(self, cell, message):
+        with pytest.raises(ValueError, match=message):
+            self._parser()(self._page("October 2026", cell))
+
+
+class TestAspNetFormRetriever:
+    def test_steps_receive_current_state_and_share_a_verified_neutral_session(self):
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.service.AspNetForms import AspNetFormRetriever
+
+        source = BaseSource()
+        initial = MagicMock(text="initial-state")
+        intermediate = MagicMock(text="updated-state")
+        final = MagicMock(text="calendar")
+        with patch(
+            "waste_collection_schedule.service.AspNetForms.requests.Session"
+        ) as factory:
+            session = factory.return_value.__enter__.return_value
+            session.get.return_value = initial
+            session.post.side_effect = [intermediate, final]
+            retriever = AspNetFormRetriever(
+                "https://council.test/",
+                steps=(lambda response, **_: {"__VIEWSTATE": response.text},) * 2,
+            )
+            assert retriever(source) is final
+            factory.assert_called_once_with()
+            assert [call.kwargs["data"] for call in session.post.call_args_list] == [
+                {"__VIEWSTATE": "initial-state"},
+                {"__VIEWSTATE": "updated-state"},
+            ]
+            assert session.get.call_args.kwargs.get("verify", True) is True
+            assert all(
+                call.kwargs.get("verify", True) is True
+                for call in session.post.call_args_list
+            )
+            factory.return_value.__exit__.assert_called_once()
+
+    def test_http_failure_stops_the_form_flow(self):
+        import requests
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.service.AspNetForms import AspNetFormRetriever
+
+        failure = MagicMock()
+        failure.raise_for_status.side_effect = requests.HTTPError("upstream failure")
+        with patch(
+            "waste_collection_schedule.service.AspNetForms.requests.Session"
+        ) as factory:
+            session = factory.return_value.__enter__.return_value
+            session.post.return_value = failure
+            retriever = AspNetFormRetriever(
+                "https://council.test/", steps=(lambda response, **_: {},) * 2
+            )
+            with pytest.raises(requests.HTTPError, match="upstream failure"):
+                retriever(BaseSource())
+            assert session.post.call_count == 1
+
+
 class TestGossFormComponents:
     @staticmethod
     def _encoded_response(variable, value):
