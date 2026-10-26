@@ -1,6 +1,6 @@
 # Dashboard card validation
 
-Validated on 26 October 2026 on branch `codex/waste-dashboard-cards`.
+Validated on 26 October 2026 on branch `feat/waste-dashboard-cards`.
 
 ## Automated checks
 
