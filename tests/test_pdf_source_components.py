@@ -10,6 +10,7 @@ import base64
 import datetime
 import json
 import os
+import re
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -591,6 +592,45 @@ def test_east_lindsey_replays_the_complete_lookup_and_calendar_download():
     garden = [entry for entry in entries if entry.type == "Garden Waste"]
     assert len(garden) == 21
     assert max(entry.date for entry in garden) == D(2027, 3, 16)
+
+
+def test_east_lindsey_reads_food_waste_from_wastenextfood(tmp_path):
+    """``wastenextfood`` is the next food-waste collection (port of #8024).
+
+    The recorded cassette predates that field, so this copies it and adds a
+    ``wastenextfood`` value in the same shape as the other ``wastenext*`` dates.
+    """
+    recording = json.loads(_EAST_LINDSEY_FIXTURE.read_text(encoding="utf-8"))
+    html = base64.b64decode(recording["interactions"][1]["content_b64"]).decode()
+    match = re.search(r'([A-Z0-9_]+FormData\s*=\s*")([^"]+)(")', html)
+    assert match is not None
+    payload = json.loads(base64.b64decode(match.group(2)))
+    payload["RESULTS_1"]["FIELD12"]["result"][0]["wastenextfood"] = (
+        "Wednesday 28th October 2026"
+    )
+    encoded = base64.b64encode(json.dumps(payload).encode()).decode()
+    html = html[: match.start(2)] + encoded + html[match.end(2) :]
+    recording["interactions"][1]["content_b64"] = base64.b64encode(
+        html.encode()
+    ).decode()
+    path = tmp_path / "with_food.json"
+    path.write_text(json.dumps(recording), encoding="utf-8")
+
+    import cassette
+    from waste_collection_schedule.source.e_lindsey_gov_uk import Source
+
+    with cassette.replaying(str(path)):
+        entries = Source(uprn="100030786099").fetch()
+    non_garden = sorted(
+        (entry for entry in entries if entry.type != "Garden Waste"),
+        key=lambda entry: entry.date,
+    )
+    assert [(entry.date, entry.type, entry.icon) for entry in non_garden] == [
+        (D(2026, 10, 14), "General Waste", "mdi:trash-can"),
+        (D(2026, 10, 21), "Paper & Cardboard", "mdi:package-variant"),
+        (D(2026, 10, 28), "Food Waste", "mdi:food-apple"),
+        (D(2026, 11, 4), "Recycling", "mdi:recycle"),
+    ]
 
 
 def test_east_lindsey_without_a_garden_subscription_does_not_fetch_a_pdf():
