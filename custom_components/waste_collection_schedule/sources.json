@@ -7925,6 +7925,12 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Grand Lieu Communaut\u00e9",
+      "module": "grandlieu_fr",
+      "default_params": {},
+      "id": "grandlieu_fr"
+    },
+    {
       "title": "Grand Paris Seine et Oise",
       "module": "publidata_fr",
       "default_params": {
@@ -9919,6 +9925,12 @@
         "customer": "emeraude"
       },
       "id": "circularcity_world"
+    },
+    {
+      "title": "SYVALORM Loir & Sarthe",
+      "module": "syvalorm_fr",
+      "default_params": {},
+      "id": "syvalorm_fr"
     },
     {
       "title": "Taisni\u00e8res-sur-Hon",

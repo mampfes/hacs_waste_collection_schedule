@@ -8844,6 +8844,26 @@
           "commune": "Namnet på din kommun, som det visas på leverantörens webbplats."
         }
       },
+      "args_grandlieu_fr": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "municipality": "Kommun"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_grandlieu_fr": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "municipality": "Kommun"
+        },
+        "data_description": {}
+      },
       "args_mamirolle_info": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -9180,6 +9200,29 @@
         },
         "data_description": {
           "district": "Ditt distrikt eller del av kommunen."
+        }
+      },
+      "args_syvalorm_fr": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "municipality": "Kommun"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats."
+        }
+      },
+      "reconfigure_syvalorm_fr": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "municipality": "Kommun"
+        },
+        "data_description": {
+          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats."
         }
       },
       "args_toulouse_metropole_fr": {

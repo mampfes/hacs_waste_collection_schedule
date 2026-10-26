@@ -1260,6 +1260,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Grand Besançon Métropole](/doc/source/grandbesancon_fr.md) / grandbesancon.fr
 - [Grand Bourg Agglomération](/doc/source/grandbourg_fr.md) / grandbourg.fr
 - [Grand Calais Terres et Mers](/doc/source/publidata_fr.md) / grandcalais.fr
+- [Grand Lieu Communauté](/doc/source/grandlieu_fr.md) / grandlieu.fr
 - [Grand Paris Seine et Oise](/doc/source/publidata_fr.md) / infos-dechets.gpseo.fr
 - [Grand Paris Seine Ouest](/doc/source/publidata_fr.md) / dechets.seineouest.fr
 - [Grand Paris Sud Est Avenir (GPSEA)](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
@@ -1514,6 +1515,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Sucy-en-Brie](/doc/source/sudestavenir_fr.md) / sudestavenir.fr
 - [Sud Sainte Baume](/doc/source/publidata_fr.md) / agglo-sudsaintebaume.fr
 - [Syndicat Émeraude](/doc/source/circularcity_world.md) / emeraude.circularcity.world
+- [SYVALORM Loir & Sarthe](/doc/source/syvalorm_fr.md) / syvalorm.fr
 - [Taisnières-sur-Hon](/doc/source/cc_paysdemormal_fr.md) / cc-paysdemormal.fr
 - [Terres Touloises](/doc/source/terrestouloises_com.md) / terrestouloises.com
 - [Theuville](/doc/source/chartres_metropole_fr.md) / chartres-metropole.fr/dechets/collectes

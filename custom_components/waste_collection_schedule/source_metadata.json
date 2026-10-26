@@ -2209,6 +2209,13 @@
     },
     "urls": {}
   },
+  "grandlieu_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grandlieu_fr.md",
+    "howto": {
+      "en": "Select your commune. This source supports the shared six-commune calendar for Le Bignon, Geneston, La Limouzinière, Montbert, Saint Colomban and Saint Lumine de Coutais. Grey and yellow bins use the same dates. Public-holiday collections move to the Saturday specified by the calendar. Other communes and special drop-off events use separate calendars and are not included."
+    },
+    "urls": {}
+  },
   "mamirolle_info": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mamirolle_info.md",
     "howto": {},
@@ -2308,6 +2315,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/sivom_rivedroite_fr.md",
     "howto": {
       "en": "Enter your district exactly as named on the collection map at https://www.sivom-rivedroite.fr/ (e.g. 'BASSENS 3')."
+    },
+    "urls": {}
+  },
+  "syvalorm_fr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/syvalorm_fr.md",
+    "howto": {
+      "en": "Enter your commune as printed on the map in the calendar at https://www.syvalorm.fr/omr-smirgeomes/. Residual waste and packaging are collected together. Only dates in the published annual calendars are returned; current and future calendars are read separately to account for route changes."
     },
     "urls": {}
   },
