@@ -516,7 +516,49 @@ def _wastenet_org_nz(
             )
 
 
+def _portapporta_it(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Drop zone polygons and the per-day copies of each trash type's guide.
+
+    The calendar repeats every trash type's full sorting guide (what goes in,
+    what does not) on every collection day, and the operator record carries its
+    app styling; only the zone list and the slugs are read.
+    """
+    for interaction in interactions:
+        if interaction["status"] != 200:
+            continue
+        if interaction["url"].endswith("/zones.geojson"):
+            payload = _json(interaction)
+            payload["features"] = [
+                {key: value for key, value in feature.items() if key != "geometry"}
+                for feature in payload["features"]
+            ]
+            _set_json(interaction, payload)
+        elif "/calendar/z/" in interaction["url"]:
+            payload = _json(interaction)
+            data = payload.get("data") or {}
+            for key in ("zone", "company"):
+                if isinstance(data.get(key), dict):
+                    data[key] = {
+                        field: data[key][field]
+                        for field in ("id", "name", "label", "comune")
+                        if field in data[key]
+                    }
+            calendar = data.get("calendar")
+            for entries in calendar.values() if isinstance(calendar, dict) else []:
+                for entry in entries:
+                    entry["trash_types"] = [
+                        {
+                            field: trash_type[field]
+                            for field in ("id", "slug", "name")
+                            if field in trash_type
+                        }
+                        for trash_type in entry.get("trash_types") or []
+                    ]
+            _set_json(interaction, payload)
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "portapporta_it": _portapporta_it,
     "wastenet_org_nz": _wastenet_org_nz,
     "montreal_ca": _montreal_ca,
     "awb_bad_kreuznach_de": _awb_bad_kreuznach_de,
