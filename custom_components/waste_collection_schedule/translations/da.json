@@ -3100,11 +3100,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "collection_day": "Collection Day",
-          "recycling_in_even_week": "Recycling In Even Week",
-          "street": "Street"
+          "service_area": "Service Area",
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_dardanup_wa_gov_au": {
@@ -3113,10 +3114,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "collection_day": "Collection Day",
-          "recycling_in_even_week": "Recycling In Even Week",
-          "street": "Street"
+          "service_area": "Service Area",
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Dit gadenavn"
+        }
       },
       "args_harvey_wa_gov_au": {
         "title": "Konfigurer Kilde",
@@ -34548,10 +34551,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street_address": "Din fulde adresse"
         }
       },
       "reconfigure_lacity_gov": {
@@ -34559,9 +34563,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Din fulde adresse"
+        }
       },
       "args_okc_gov": {
         "title": "Konfigurer Kilde",

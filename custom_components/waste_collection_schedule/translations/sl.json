@@ -3098,11 +3098,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "collection_day": "Collection Day",
-          "recycling_in_even_week": "Recycling In Even Week",
+          "service_area": "Service Area",
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_dardanup_wa_gov_au": {
@@ -3111,10 +3112,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "collection_day": "Collection Day",
-          "recycling_in_even_week": "Recycling In Even Week",
+          "service_area": "Service Area",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ime vaše ulice."
+        }
       },
       "args_harvey_wa_gov_au": {
         "title": "Configure Source",
@@ -34546,10 +34549,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Ulični naslov"
+          "street_address": "Naslov"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Vaš celoten naslov."
         }
       },
       "reconfigure_lacity_gov": {
@@ -34557,9 +34561,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Ulični naslov"
+          "street_address": "Naslov"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Vaš celoten naslov."
+        }
       },
       "args_okc_gov": {
         "title": "Configure Source",

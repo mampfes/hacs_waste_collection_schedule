@@ -3119,15 +3119,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "collection_day": "Collection Day (override)",
-          "recycling_in_even_week": "Recycling collected on even ISO weeks",
-          "street": "Street Name"
+          "collection_day": "Collection weekday",
+          "service_area": "Service Area",
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "collection_day": "Your collection day as a string: 'Monday', 'Tuesday', 'Wednesday', 'Thursday', or 'Friday'. Use this instead of 'street' for Dardanup West (Monday) and Ferguson Valley residents, or if street lookup fails.",
-          "recycling_in_even_week": "Set to True if your recycling bin is collected on even ISO week numbers, False if on odd ISO week numbers. Check your last recycling collection date to determine this.",
-          "street": "Your street name without a house number, e.g. 'Hale Street' or 'Flinders Street'. Used to look up your collection day automatically."
+          "street": "Your street name."
         }
       },
       "reconfigure_dardanup_wa_gov_au": {
@@ -3135,14 +3133,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "collection_day": "Collection Day (override)",
-          "recycling_in_even_week": "Recycling collected on even ISO weeks",
-          "street": "Street Name"
+          "collection_day": "Collection weekday",
+          "service_area": "Service Area",
+          "street": "Street"
         },
         "data_description": {
-          "collection_day": "Your collection day as a string: 'Monday', 'Tuesday', 'Wednesday', 'Thursday', or 'Friday'. Use this instead of 'street' for Dardanup West (Monday) and Ferguson Valley residents, or if street lookup fails.",
-          "recycling_in_even_week": "Set to True if your recycling bin is collected on even ISO week numbers, False if on odd ISO week numbers. Check your last recycling collection date to determine this.",
-          "street": "Your street name without a house number, e.g. 'Hale Street' or 'Flinders Street'. Used to look up your collection day automatically."
+          "street": "Your street name."
         }
       },
       "args_harvey_wa_gov_au": {
@@ -34709,11 +34705,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street_address": "Your complete street address without city/state (e.g. '22472 Denker Ave')"
+          "street_address": "Your full address."
         }
       },
       "reconfigure_lacity_gov": {
@@ -34721,10 +34717,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
-          "street_address": "Your complete street address without city/state (e.g. '22472 Denker Ave')"
+          "street_address": "Your full address."
         }
       },
       "args_okc_gov": {

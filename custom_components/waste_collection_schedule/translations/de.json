@@ -3106,11 +3106,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "collection_day": "Collection Day",
-          "recycling_in_even_week": "Recycling In Even Week",
+          "service_area": "Service Area",
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_dardanup_wa_gov_au": {
@@ -3119,10 +3120,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "collection_day": "Collection Day",
-          "recycling_in_even_week": "Recycling In Even Week",
+          "service_area": "Service Area",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ihr Straßenname."
+        }
       },
       "args_harvey_wa_gov_au": {
         "title": "Quelle konfigurieren",
@@ -34561,10 +34564,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Straßenadresse"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "street_address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_lacity_gov": {
@@ -34572,9 +34576,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Straßenadresse"
+          "street_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Ihre vollständige Adresse."
+        }
       },
       "args_okc_gov": {
         "title": "Quelle konfigurieren",

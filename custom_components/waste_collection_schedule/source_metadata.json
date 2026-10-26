@@ -780,7 +780,7 @@
   "dardanup_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dardanup_wa_gov_au.md",
     "howto": {
-      "en": "Visit https://www.dardanup.wa.gov.au/our-services/waste-and-recycling/find-your-bin-day.aspx and find your street in the list to determine your collection day. Enter your street name (without house number) as the 'street' argument, or enter the day directly as 'collection_day' (for Dardanup West / Ferguson Valley residents). For recycling_in_even_week: check your last recycling collection date and see if its ISO week number (https://whatweekisit.org/) was even (True) or odd (False)."
+      "en": "Find your street/townsite and service area in the current waste guide linked from https://www.dardanup.wa.gov.au/our-services/waste-and-recycling/find-your-bin-day.aspx. Enter street and service_area; collection_day can specify the published weekday directly. Streets spanning Area 1 and Area 2 require service_area. Replace the old recycling_in_even_week argument with service_area: the published calendar now supplies the recycling phase and holiday replacements, including across ISO week 53. Rural two-bin services have no FOGO collection. Dates stop at the end of the published guide, with no projection beyond it. Since the v3 migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -8634,7 +8634,7 @@
   "lacity_gov": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lacity_gov.md",
     "howto": {
-      "en": "Enter your street address exactly as it appears on your LA Sanitation bill. The address must be within Los Angeles city limits."
+      "en": "Enter your complete street address within Los Angeles city limits, without city/state. The official GeoQuery API supplies the collection weekday. Black, blue and green bins share this day; the existing LASAN holiday delays are applied. Since the v3 migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },

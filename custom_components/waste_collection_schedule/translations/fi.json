@@ -3100,11 +3100,12 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "collection_day": "Collection Day",
-          "recycling_in_even_week": "Recycling In Even Week",
+          "service_area": "Service Area",
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_dardanup_wa_gov_au": {
@@ -3113,10 +3114,12 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "collection_day": "Collection Day",
-          "recycling_in_even_week": "Recycling In Even Week",
+          "service_area": "Service Area",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Kadun nimi."
+        }
       },
       "args_harvey_wa_gov_au": {
         "title": "Määritä lähde",
@@ -34532,10 +34535,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street_address": "Street Address"
+          "street_address": "Osoite"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street_address": "Koko osoitteesi."
         }
       },
       "reconfigure_lacity_gov": {
@@ -34543,9 +34547,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street_address": "Street Address"
+          "street_address": "Osoite"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Koko osoitteesi."
+        }
       },
       "args_okc_gov": {
         "title": "Määritä lähde",

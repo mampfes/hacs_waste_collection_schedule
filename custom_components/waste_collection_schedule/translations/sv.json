@@ -3100,11 +3100,12 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "collection_day": "Collection Day",
-          "recycling_in_even_week": "Recycling In Even Week",
+          "service_area": "Service Area",
           "street": "Gata"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street": "Ditt gatunamn."
         }
       },
       "reconfigure_dardanup_wa_gov_au": {
@@ -3113,10 +3114,12 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "collection_day": "Collection Day",
-          "recycling_in_even_week": "Recycling In Even Week",
+          "service_area": "Service Area",
           "street": "Gata"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Ditt gatunamn."
+        }
       },
       "args_harvey_wa_gov_au": {
         "title": "Konfigurera källa",
@@ -34548,10 +34551,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street_address": "Din fullständiga adress."
         }
       },
       "reconfigure_lacity_gov": {
@@ -34559,9 +34563,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Din fullständiga adress."
+        }
       },
       "args_okc_gov": {
         "title": "Konfigurera källa",
