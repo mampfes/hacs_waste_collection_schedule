@@ -33,3 +33,9 @@ The integration uses the official LA City GeoQuery API to look up collection sch
 - All bins are collected on the same day of the week.
 
 Collection schedules are provided for a 2-week window from the current date.
+
+## BaseSource migration
+
+The `street_address` argument stays unchanged. Waste types now use canonical, localised names for general waste, recycling and organic waste; update filters, automations and customisations using the former `BLACK BIN`, `BLUE BIN` and `GREEN BIN` labels.
+
+The source preserves LASAN's existing holiday delays for New Year's Day, Independence Day, Labor Day, Thanksgiving and Christmas when they fall on weekdays. Collections from the holiday through Friday shift to the following day. A holiday on a weekend does not shift collections. A delayed collection happening today remains in the two-week window.
