@@ -109,6 +109,4 @@ simultaneous pickups, time zones/DST, rollover, keyboard actions, long labels,
 errors and light/dark accessibility. These tests use fixture calendar responses;
 real provider and live HA rendering checks are separate deployment steps.
 
-Research, community card references and image examples are recorded in
-[the research note](development/dashboard-card-research.md). No community card code
-or remote images are bundled.
+No community card code or remote images are bundled.
