@@ -1,6 +1,6 @@
 # Abfalltermine Landkreis Germersheim
 
-Support for Landkreis Germersheim schedules provided by [abfalltermine-forchheim.de](https://www.abfallwirtschaft-germersheim.de/) located in Rhineland-Palatinate, Germany.
+Support for Landkreis Germersheim schedules provided by [abfallwirtschaft-germersheim.de](https://www.abfallwirtschaft-germersheim.de/) located in Rhineland-Palatinate, Germany.
 
 ## Configuration via configuration.yaml
 
