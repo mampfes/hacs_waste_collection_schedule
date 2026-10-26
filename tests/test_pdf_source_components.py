@@ -753,3 +753,56 @@ def test_marker_calendar_half_cell_bar_reaches_its_day_numbers():
         _Anchor(1, 23, 180, 528.7),
     ]
     assert parser._anchors_of(bar, days) == days[2:4]
+
+
+def test_marker_calendar_year_pattern_joins_a_year_printed_in_pieces():
+    from waste_collection_schedule.service.PdfMarkerCalendar import (
+        MarkerCalendarParser,
+    )
+
+    split = MarkerCalendarParser([], year_pattern=r"Giugno\s+(20)\s+(\d\d)\b")
+    assert split._year("Maggio Giugno 20 26 1 GI 2 VE", "") == 2026
+    whole = MarkerCalendarParser([], year_pattern=r"Calendar\s+(20\d\d)")
+    assert whole._year("Collection Calendar 2027", "") == 2027
+
+
+def test_marker_calendar_read_headings_off_numbers_columns_in_order(monkeypatch):
+    import datetime
+
+    from waste_collection_schedule.parsers import (
+        PdfTextFragment,
+        PdfVector,
+        PdfWordLayout,
+    )
+    from waste_collection_schedule.service import PdfMarkerCalendar
+    from waste_collection_schedule.service.PdfMarkerCalendar import (
+        Marker,
+        MarkerCalendarParser,
+    )
+
+    # Three day-row columns of 2026 whose headings sit unevenly (104, 246,
+    # 396 over columns at 85, 222, 360), each 1st marked with a dot.
+    words = [
+        PdfTextFragment(0, name, x, 1057)
+        for name, x in (("Gennaio", 104), ("Febbraio", 246), ("Marzo", 396))
+    ]
+    vectors = []
+    for x, days in ((85, 31), (222, 28), (360, 31)):
+        for day in range(1, days + 1):
+            words.append(PdfTextFragment(0, str(day), x, 1030 - 27 * day))
+        vectors.append(PdfVector(0, x + 20, 1000, x + 26, 1006, None, (1, 0, 0)))
+    layout = PdfWordLayout(lines=[], words=words, vectors=vectors)
+
+    class _Layout:
+        def __init__(self, **_):
+            pass
+
+        def __call__(self, *_):
+            return [layout]
+
+    monkeypatch.setattr(PdfMarkerCalendar, "PdfWordLayoutParser", _Layout)
+    response = type("R", (), {"url": "https://example.org/calendario_2026.pdf"})()
+    markers = [Marker("Dot", (1, 0, 0))]
+
+    rows = MarkerCalendarParser(markers, read_headings=False, min_markers=3)(response)
+    assert rows == [(datetime.date(2026, month, 1), "Dot") for month in (1, 2, 3)]
