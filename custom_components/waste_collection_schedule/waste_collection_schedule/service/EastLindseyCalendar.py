@@ -27,6 +27,7 @@ _LOOKUP_FIELDS = (
     ("wastenextref", "Refuse"),
     ("wastenextrec", "Recycling"),
     ("wastenextpur", "Purple Bin"),
+    ("wastenextfood", "Food Waste"),
 )
 _CALENDAR_URL = "https://www.e-lindsey.gov.uk/media/{id}/file/PDF/{day}{week}.pdf"
 
