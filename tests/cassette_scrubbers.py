@@ -7,8 +7,9 @@ case. A scrubber registered here is run by ``record_fixtures.py`` on the live
 interactions before they are written, and cuts such a response down to what the
 test case actually reads, so re-recording reproduces the same trimmed cassette.
 
-A scrubber only *removes* records from a recorded response; it never edits or
-invents one. Register one only for a feed that cannot be filtered server side.
+A scrubber only *removes* records or unused document pages from a recorded
+response; it never invents collection data. Register one only for a feed that
+cannot be filtered server side.
 """
 
 from __future__ import annotations
@@ -516,7 +517,31 @@ def _wastenet_org_nz(
             )
 
 
+def _ritl_ca(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep the annual calendar page; remove the unrelated information pages.
+
+    The source's PDF parser is explicitly configured for page zero. Preserve
+    its vector marks, fonts and printed dates rather than rasterising the PDF.
+    """
+    from io import BytesIO
+
+    from pypdf import PdfReader, PdfWriter
+
+    for interaction in interactions:
+        if ".pdf" not in interaction["url"].lower():
+            continue
+        reader = PdfReader(BytesIO(base64.b64decode(interaction["content_b64"])))
+        writer = PdfWriter()
+        writer.add_page(reader.pages[0])
+        writer.compress_identical_objects()
+        writer.pages[0].compress_content_streams()
+        output = BytesIO()
+        writer.write(output)
+        interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "ritl_ca": _ritl_ca,
     "wastenet_org_nz": _wastenet_org_nz,
     "montreal_ca": _montreal_ca,
     "awb_bad_kreuznach_de": _awb_bad_kreuznach_de,

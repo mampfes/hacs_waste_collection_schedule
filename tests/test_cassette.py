@@ -495,3 +495,30 @@ def test_replayed_headers_are_case_insensitive():
     )
     assert response.headers["Location"] == "/next"
     assert response.headers.get("content-type") == "text/html"
+
+
+def test_ritl_scrubber_removes_information_pages_and_preserves_calendar_marks():
+    from io import BytesIO
+    from pathlib import Path
+
+    import cassette_scrubbers
+    from fixtures_support import fixture_path
+    from pypdf import PdfReader, PdfWriter
+    from waste_collection_schedule.source.ritl_ca import Source
+
+    data = json.loads(
+        Path(fixture_path("ritl_ca", "Lac-Supérieur Secteur 1")).read_text()
+    )
+    item = next(item for item in data["interactions"] if ".pdf" in item["url"])
+    writer = PdfWriter()
+    writer.add_page(PdfReader(BytesIO(base64.b64decode(item["content_b64"]))).pages[0])
+    writer.add_blank_page(width=800, height=600)
+    output = BytesIO()
+    writer.write(output)
+    item["content_b64"] = base64.b64encode(output.getvalue()).decode()
+    expected = Source.parse([cassette.CassetteResponse(item)])
+    body, url = item.get("body"), item["url"]
+    cassette_scrubbers.for_case("ritl_ca", {}, "2026-10-26")([item])
+    assert len(PdfReader(BytesIO(base64.b64decode(item["content_b64"]))).pages) == 1
+    assert Source.parse([cassette.CassetteResponse(item)]) == expected
+    assert (item.get("body"), item["url"]) == (body, url)
