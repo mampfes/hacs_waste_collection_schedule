@@ -2,6 +2,7 @@ import re
 import urllib.parse
 from datetime import date
 from io import BytesIO
+from statistics import median
 
 import requests
 from bs4 import BeautifulSoup
@@ -22,6 +23,15 @@ _WEEKDAY_RE = re.compile(r"(\d{2})\s+(Mo|Di|Mi|Do|Fr|Sa|So)")
 _COLLECTION_RE = re.compile(r"([BRGP])\s+(1/2|[12])")
 _AR_RE = re.compile(r"\bAR\b")
 _SO_RE = re.compile(r"\bSO\b")
+_WEEKDAYS = ("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So")
+
+
+def _weekday(year: int, month: int, day: int) -> int | None:
+    try:
+        return date(year, month, day).weekday()
+    except ValueError:
+        return None
+
 
 _CODE_MAP = {
     "B": "Bioabfall",
@@ -123,49 +133,46 @@ class Source:
         # 12 months at evenly-spaced positions (holiday text can shift a column
         # on affected day lines, so we look for a clean reference line).
         col_boundaries: list[int] | None = None
+        width = 0.0
         for line in lines[header_idx + 1 :]:
             matches = list(_WEEKDAY_RE.finditer(line))
             if len(matches) != 12:
                 continue
             positions = [m.start() for m in matches]
             gaps = [positions[j + 1] - positions[j] for j in range(11)]
-            if all(30 <= g <= 55 for g in gaps):
+            # column width depends on the PDF layout and pypdf version (~20-55)
+            width = median(gaps)
+            if width >= 15 and all(abs(g - width) <= 3 for g in gaps):
                 col_boundaries = positions
                 break
 
         if col_boundaries is None:
             return []
 
-        col_ends = [*col_boundaries[1:], col_boundaries[-1] + 50]
-        first_col_slice = slice(max(0, col_boundaries[0] - 5), col_boundaries[0] + 35)
-
         entries: list[Collection] = []
         for line in lines[header_idx + 1 :]:
-            if not _WEEKDAY_RE.search(line):
-                continue
+            matches = list(_WEEKDAY_RE.finditer(line))
 
-            # Confirm the line starts with a day entry in the first month's column
-            first_col_m = _WEEKDAY_RE.search(line[first_col_slice])
-            if not first_col_m:
-                continue
-            day = int(first_col_m.group(1))
-
-            for month_idx, (col_start, col_end) in enumerate(
-                zip(col_boundaries, col_ends, strict=False)
-            ):
-                if col_start >= len(line):
+            # Holiday text shifts the following columns by up to half a column
+            # or more, so slicing at fixed positions is unreliable. Each day entry
+            # ("01 Mo") is assigned to the nearest column whose month has that
+            # weekday on that day; a cell runs up to the next day entry.
+            for i, cell_m in enumerate(matches):
+                day = int(cell_m.group(1))
+                weekday = _WEEKDAYS.index(cell_m.group(2))
+                distances = {
+                    month: abs(cell_m.start() - col_boundaries[month - 1])
+                    for month in range(1, 13)
+                    if _weekday(year, month, day) == weekday
+                }
+                if not distances:
                     continue
-                cell = line[col_start:col_end]
-                month = month_idx + 1
-
-                cell_m = _WEEKDAY_RE.search(cell)
-                if not cell_m or int(cell_m.group(1)) != day:
+                month = min(distances, key=distances.__getitem__)
+                if distances[month] > 2 * width:
                     continue
-
-                try:
-                    d = date(year, month, day)
-                except ValueError:
-                    continue
+                d = date(year, month, day)
+                end = matches[i + 1].start() if i + 1 < len(matches) else len(line)
+                cell = line[cell_m.start() : end]
 
                 for cm in _COLLECTION_RE.finditer(cell):
                     tour_group = cm.group(2)
