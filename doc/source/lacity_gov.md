@@ -1,35 +1,34 @@
-# City of Los Angeles
+# City of Los Angeles, CA
 
-Configuration through configuration.yaml:
+Support for schedules provided by [City of Los Angeles, CA](https://www.lacitysan.org).
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: lacity_gov
-      args:
-        street_address: "STREET_ADDRESS"
-```
+Source script for Los Angeles, California waste collection services
 
-## Configuration Variables
-
-**street_address** *(string) (required)*: Your street address in Los Angeles (e.g., "22472 Denker Ave" or "200 N Spring St")
-
-## Example Configuration
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: lacity_gov
       args:
-        street_address: "22472 Denker Ave"
+        street_address: STREET_ADDRESS
 ```
 
-## How It Works
+### Configuration Variables
 
-The integration uses the official LA City GeoQuery API to look up collection schedules. The API returns:
+**street_address**  
+*(string) (required)*
 
-- Collection day of the week for your address
-- Services include Black Bin (trash), Blue Bin (recycling), and Green Bin (yard/food waste)
-- All bins are collected on the same day of the week.
+## Example
 
-Collection schedules are provided for a 2-week window from the current date.
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: lacity_gov
+      args:
+        street_address: 11050 Pendleton Street
+```
+
+## How to get the source arguments
+
+Enter your complete street address within Los Angeles city limits, without city/state. The official GeoQuery API supplies the collection weekday. Black, blue and green bins share this day; the existing LASAN holiday delays are applied. Since the v3 migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

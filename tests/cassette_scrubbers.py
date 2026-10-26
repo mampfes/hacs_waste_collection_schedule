@@ -7,8 +7,9 @@ case. A scrubber registered here is run by ``record_fixtures.py`` on the live
 interactions before they are written, and cuts such a response down to what the
 test case actually reads, so re-recording reproduces the same trimmed cassette.
 
-A scrubber only *removes* records from a recorded response; it never edits or
-invents one. Register one only for a feed that cannot be filtered server side.
+A scrubber only *removes* records or unused document pages from a recorded
+response; it never invents collection data. Register one only for a feed that
+cannot be filtered server side.
 """
 
 from __future__ import annotations
@@ -30,6 +31,37 @@ def _json(interaction: dict) -> Any:
 def _set_json(interaction: dict, value: Any) -> None:
     raw = json.dumps(value, ensure_ascii=False, separators=(",", ":"))
     interaction["content_b64"] = base64.b64encode(raw.encode("utf-8")).decode("ascii")
+
+
+def _dardanup_wa_gov_au(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Retain all calendar pages and their dated colour grids, without photos."""
+    from io import BytesIO
+
+    from pypdf import PdfReader, PdfWriter
+    from pypdf.constants import ImageType
+
+    for interaction in interactions:
+        if ".pdf" not in interaction["url"].lower():
+            continue
+        reader = PdfReader(BytesIO(base64.b64decode(interaction["content_b64"])))
+        writer = PdfWriter()
+        for page in reader.pages:
+            text = page.extract_text() or ""
+            if re.search(r"[23]-BIN SERVICE", text) and "202" in text:
+                writer.add_page(page)
+        if len(writer.pages) != 5:
+            raise ValueError(
+                "Expected all five Dardanup calendar pages before trimming"
+            )
+        writer.remove_images(ImageType.XOBJECT_IMAGES | ImageType.INLINE_IMAGES)
+        for page in writer.pages:
+            page.compress_content_streams()
+        writer.compress_identical_objects()
+        output = BytesIO()
+        writer.write(output)
+        interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
 
 
 def _sica_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None:
@@ -557,10 +589,35 @@ def _portapporta_it(interactions: list[dict], args: dict[str, Any], today: str) 
             _set_json(interaction, payload)
 
 
+def _ritl_ca(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep the annual calendar page; remove the unrelated information pages.
+
+    The source's PDF parser is explicitly configured for page zero. Preserve
+    its vector marks, fonts and printed dates rather than rasterising the PDF.
+    """
+    from io import BytesIO
+
+    from pypdf import PdfReader, PdfWriter
+
+    for interaction in interactions:
+        if ".pdf" not in interaction["url"].lower():
+            continue
+        reader = PdfReader(BytesIO(base64.b64decode(interaction["content_b64"])))
+        writer = PdfWriter()
+        writer.add_page(reader.pages[0])
+        writer.compress_identical_objects()
+        writer.pages[0].compress_content_streams()
+        output = BytesIO()
+        writer.write(output)
+        interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
+
+
 SCRUBBERS: dict[str, Scrubber] = {
     "portapporta_it": _portapporta_it,
+    "ritl_ca": _ritl_ca,
     "wastenet_org_nz": _wastenet_org_nz,
     "montreal_ca": _montreal_ca,
+    "dardanup_wa_gov_au": _dardanup_wa_gov_au,
     "awb_bad_kreuznach_de": _awb_bad_kreuznach_de,
     "segreguj_gliwice_eu": _segreguj_gliwice_eu,
     "eth_erd_hu": _eth_erd_hu,

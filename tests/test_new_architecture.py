@@ -8869,6 +8869,68 @@ def test_privacy_excluded_sources_ship_no_cassette() -> None:
     )
 
 
+def test_antrim_checker_keeps_dated_recycling_on_its_separate_weekday():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.antrimandnewtownabbey_gov_uk import Source
+
+    with cassette.replaying(
+        fixture_path("antrimandnewtownabbey_gov_uk", "Recycling on a separate weekday")
+    ):
+        rows = Source(id=58105).fetch()
+    pairs = {(row.date, row.type) for row in rows}
+    assert len(rows) == 27
+    assert (datetime.date(2026, 10, 27), "Recycling") in pairs
+    assert (datetime.date(2026, 10, 29), "General Waste") in pairs
+    assert (datetime.date(2026, 10, 29), "Organic Waste") in pairs
+    assert (datetime.date(2026, 10, 27), "General Waste") not in pairs
+
+
+@pytest.mark.parametrize(
+    "today,weekday,expected",
+    [
+        ("2026-11-26", "THURSDAY", "2026-11-27"),
+        ("2026-11-27", "THURSDAY", "2026-11-27"),
+        ("2026-11-27", "FRIDAY", "2026-11-28"),
+        ("2026-12-25", "FRIDAY", "2026-12-26"),
+        ("2027-01-01", "FRIDAY", "2027-01-02"),
+        ("2026-07-03", "FRIDAY", "2026-07-03"),
+        ("2026-05-25", "MONDAY", "2026-05-25"),
+    ],
+)
+def test_lacity_pipeline_keeps_holiday_delay_and_delayed_collection_today(
+    today, weekday, expected
+):
+    from waste_collection_schedule.source.lacity_gov import Source
+
+    response = MagicMock()
+    response.json.return_value = {
+        "status": "exactMatch",
+        "layers": {"merge": {"day": weekday}},
+    }
+    with freeze_time(today):
+        source = Source(street_address="11050 Pendleton Street")
+        source.session.get = MagicMock(return_value=response)
+        entries = source.fetch()
+    assert len(entries) == (9 if today == "2026-11-27" and weekday == "THURSDAY" else 6)
+    assert sum(e.date.isoformat() == expected for e in entries) == 3
+    assert all(e.date.isoformat() >= today for e in entries)
+
+
+def test_lacity_pipeline_rejects_unrecognized_weekday():
+    from waste_collection_schedule.source.lacity_gov import Source
+
+    response = MagicMock()
+    response.json.return_value = {
+        "status": "exactMatch",
+        "layers": {"merge": {"day": "MAYBE"}},
+    }
+    source = Source(street_address="11050 Pendleton Street")
+    source.session.get = MagicMock(return_value=response)
+    with pytest.raises(ValueError, match="Unknown Los Angeles collection day"):
+        source.fetch()
+
+
 class TestGlobalCalendarMigrations:
     def test_iren_published_iso_dates_are_not_dropped(self):
         """The live Roccavione feed publishes three dates separated by semicolons."""
@@ -9803,3 +9865,60 @@ class TestGossJsonResult:
             GossJsonParser("PAGE3_1", "FIELD15")(
                 SimpleNamespace(text=f'var BINDAYSFormData = "{raw}";')
             )
+
+
+class TestKmlWeekdayZones:
+    @staticmethod
+    def parser():
+        from waste_collection_schedule.service.KmlZones import KmlWeekdayZoneParser
+
+        return KmlWeekdayZoneParser(
+            folder="RESIDUOS",
+            groups={
+                "general": r"MEZCLADOS\s*\(([^)]+)\)",
+                "recycling": r"RECICLABLES\s*\(([^)]+)\)",
+            },
+            weekdays={"MIERCOLES": 2, "DOMINGO": 6, "MARTES": 1},
+        )
+
+    @staticmethod
+    def responses(
+        x=1, y=1, name="MEZCLADOS (MIÉRCOLES - DOMINGOS) RECICLABLES (MARTES)"
+    ):
+        point = MagicMock()
+        point.json.return_value = [{"lon": str(x), "lat": str(y)}]
+        markup = f"""<kml xmlns="http://www.opengis.net/kml/2.2"><Document><Folder><name>RECOLECCIÓN DE RESIDUOS</name>
+            <Placemark><name>{name}</name><Polygon><outerBoundaryIs><LinearRing><coordinates>0,0,0 2,0,0 2,2,0 0,2,0 0,0,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+            </Folder></Document></kml>"""
+        return [point, SimpleNamespace(content=markup.encode())]
+
+    def test_reads_only_published_days_from_the_matching_polygon(self):
+        assert self.parser()(self.responses()) == [
+            {"weekday": 2, "type": "general"},
+            {"weekday": 6, "type": "general"},
+            {"weekday": 1, "type": "recycling"},
+        ]
+
+    def test_point_outside_zones_is_an_address_error(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+
+        with pytest.raises(SourceArgumentNotFound):
+            self.parser()(self.responses(x=5))
+
+    def test_unresolved_address_is_an_address_error(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+
+        responses = self.responses()
+        responses[0].json.return_value = []
+        with pytest.raises(SourceArgumentNotFound):
+            self.parser()(responses)
+
+    def test_changed_zone_labels_fail_rather_than_returning_an_empty_calendar(self):
+        with pytest.raises(ValueError, match="no recognised collection zones"):
+            self.parser()(self.responses(name="Unrecognised schedule"))
+
+    def test_missing_kml_document_is_an_error(self):
+        responses = self.responses()
+        responses[1].content = b'<kml xmlns="http://www.opengis.net/kml/2.2"/>'
+        with pytest.raises(ValueError, match="no Document"):
+            self.parser()(responses)

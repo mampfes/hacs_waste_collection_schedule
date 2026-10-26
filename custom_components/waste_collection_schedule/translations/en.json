@@ -3119,15 +3119,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "collection_day": "Collection Day (override)",
-          "recycling_in_even_week": "Recycling collected on even ISO weeks",
-          "street": "Street Name"
+          "collection_day": "Collection weekday",
+          "service_area": "Service Area",
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "collection_day": "Your collection day as a string: 'Monday', 'Tuesday', 'Wednesday', 'Thursday', or 'Friday'. Use this instead of 'street' for Dardanup West (Monday) and Ferguson Valley residents, or if street lookup fails.",
-          "recycling_in_even_week": "Set to True if your recycling bin is collected on even ISO week numbers, False if on odd ISO week numbers. Check your last recycling collection date to determine this.",
-          "street": "Your street name without a house number, e.g. 'Hale Street' or 'Flinders Street'. Used to look up your collection day automatically."
+          "street": "Your street name."
         }
       },
       "reconfigure_dardanup_wa_gov_au": {
@@ -3135,14 +3133,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "collection_day": "Collection Day (override)",
-          "recycling_in_even_week": "Recycling collected on even ISO weeks",
-          "street": "Street Name"
+          "collection_day": "Collection weekday",
+          "service_area": "Service Area",
+          "street": "Street"
         },
         "data_description": {
-          "collection_day": "Your collection day as a string: 'Monday', 'Tuesday', 'Wednesday', 'Thursday', or 'Friday'. Use this instead of 'street' for Dardanup West (Monday) and Ferguson Valley residents, or if street lookup fails.",
-          "recycling_in_even_week": "Set to True if your recycling bin is collected on even ISO week numbers, False if on odd ISO week numbers. Check your last recycling collection date to determine this.",
-          "street": "Your street name without a house number, e.g. 'Hale Street' or 'Flinders Street'. Used to look up your collection day automatically."
+          "street": "Your street name."
         }
       },
       "args_harvey_wa_gov_au": {
@@ -6744,6 +6740,33 @@
         },
         "data_description": {}
       },
+      "args_ritl_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "sector": "Waste sector"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "sector": "This is the default sector."
+        }
+      },
+      "reconfigure_ritl_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "sector": "Waste sector"
+        },
+        "data_description": {
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "sector": "This is the default sector."
+        }
+      },
       "args_ics_laval_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -7128,33 +7151,6 @@
           "sector": "Sector"
         },
         "data_description": {}
-      },
-      "args_ritl_ca": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "municipality": "Municipality",
-          "sector": "Sector"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "municipality": "Name of the municipality (e.g., Lac-Supérieur, Lantier, Sainte-Agathe-des-Monts...)",
-          "sector": "Sector name (only required for municipalities with sectors)"
-        }
-      },
-      "reconfigure_ritl_ca": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "municipality": "Municipality",
-          "sector": "Sector"
-        },
-        "data_description": {
-          "municipality": "Name of the municipality (e.g., Lac-Supérieur, Lantier, Sainte-Agathe-des-Monts...)",
-          "sector": "Sector name (only required for municipalities with sectors)"
-        }
       },
       "args_ics_riviere_beaudette_com": {
         "title": "Configure Source",
@@ -25751,7 +25747,8 @@
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "route": "Collection route"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -25761,7 +25758,8 @@
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "route": "Collection route"
         },
         "data_description": {}
       },
@@ -26328,12 +26326,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id",
+          "id": "Location ID",
           "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_antrimandnewtownabbey_gov_uk": {
@@ -26341,11 +26339,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "id": "Id",
+          "id": "Location ID",
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_apps_imactivate_com": {
@@ -34707,11 +34705,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street_address": "Your complete street address without city/state (e.g. '22472 Denker Ave')"
+          "street_address": "Your full address."
         }
       },
       "reconfigure_lacity_gov": {
@@ -34719,10 +34717,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
-          "street_address": "Your complete street address without city/state (e.g. '22472 Denker Ave')"
+          "street_address": "Your full address."
         }
       },
       "args_okc_gov": {
@@ -35665,7 +35663,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Street address (or street name) within Ciudad de la Costa, e.g. 'De los Pinos, Ciudad de la Costa' or '1901 Cuba, Ciudad de la Costa'. Adding the neighbourhood (barrio) improves accuracy for common street names."
+          "address": "Your full address."
         }
       },
       "reconfigure_ciudad_de_la_costa_uy": {
@@ -35676,7 +35674,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Street address (or street name) within Ciudad de la Costa, e.g. 'De los Pinos, Ciudad de la Costa' or '1901 Cuba, Ciudad de la Costa'. Adding the neighbourhood (barrio) improves accuracy for common street names."
+          "address": "Your full address."
         }
       }
     },
