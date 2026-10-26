@@ -3380,6 +3380,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Campobasso - S.E.A. Servizi e Ambiente SPA](/doc/source/junker_app.md) / junker.app
 - [Campolieto - Smaltimenti Sud](/doc/source/junker_app.md) / junker.app
 - [Cancello ed Arnone - WM Magenta Srl](/doc/source/junker_app.md) / junker.app
+- [Candia Lomellina](/doc/source/castelnovetto_pv_it.md) / comune.castelnovetto.pv.it
 - [Canegrate](/doc/source/siunet_it.md) / siunet.it
 - [Canicattini Bagni - Traina Srl](/doc/source/junker_app.md) / junker.app
 - [Cantagallo](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
@@ -3450,8 +3451,11 @@ If you already have enough information for your municipality/region, you are ver
 - [Castelletto Sopra Ticino (zona A)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Castelletto Sopra Ticino (zona B)](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
 - [Castellina Marittima (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
+- [Castello d'Agogna](/doc/source/castelnovetto_pv_it.md) / comune.castelnovetto.pv.it
 - [Castello Di Brianza](/doc/source/siunet_it.md) / siunet.it
 - [Castellucchio](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/castellucchio
+- [Castelnovetto](/doc/source/castelnovetto_pv_it.md) / comune.castelnovetto.pv.it
+- [Castelnovetto, Candia Lomellina, Castello d'Agogna, Rosasco, Sant'Angelo Lomellina, Zeme](/doc/source/castelnovetto_pv_it.md) / comune.castelnovetto.pv.it
 - [Castelnuovo di Porto](/doc/source/junker_app.md) / junker.app
 - [Castelsardo](/doc/source/junker_app.md) / junker.app
 - [Castelvetrano](/doc/source/junker_app.md) / junker.app
@@ -4008,6 +4012,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ronco Briantino](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Ronco Briantino](/doc/source/siunet_it.md) / siunet.it
 - [Roncoferraro](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/roncoferraro
+- [Rosasco](/doc/source/castelnovetto_pv_it.md) / comune.castelnovetto.pv.it
 - [Rosate](/doc/source/siunet_it.md) / siunet.it
 - [Rosignano Marittimo (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Rosora](/doc/source/junker_app.md) / junker.app
@@ -4053,6 +4058,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Sant'Agata Bolognese](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Sant'Angelo Lodigiano](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Sant'Angelo Lodigiano](/doc/source/siunet_it.md) / siunet.it
+- [Sant'Angelo Lomellina](/doc/source/castelnovetto_pv_it.md) / comune.castelnovetto.pv.it
 - [Santa Luce (REA)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Santa Lucia del Mela](/doc/source/junker_app.md) / junker.app
 - [Santa Maria a Vico](/doc/source/junker_app.md) / junker.app
@@ -4233,6 +4239,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Volterra](/doc/source/junker_app.md) / junker.app
 - [Wipptal](/doc/source/junker_app.md) / junker.app
 - [Zambrone - Tecnew Srl](/doc/source/junker_app.md) / junker.app
+- [Zeme](/doc/source/castelnovetto_pv_it.md) / comune.castelnovetto.pv.it
 - [Zeri (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Zevio](/doc/source/siunet_it.md) / siunet.it
 - [Zibido San Giacomo](/doc/source/siunet_it.md) / siunet.it

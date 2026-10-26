@@ -4359,6 +4359,14 @@
     },
     "urls": {}
   },
+  "castelnovetto_pv_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/castelnovetto_pv_it.md",
+    "howto": {
+      "en": "No configuration is needed: Candia Lomellina, Castello d'Agogna, Castelnovetto, Rosasco, Sant'Angelo Lomellina and Zeme share one calendar, read from the yearly notice on Castelnovetto's website.",
+      "it": "Nessuna configurazione necessaria: Candia Lomellina, Castello d'Agogna, Castelnovetto, Rosasco, Sant'Angelo Lomellina e Zeme condividono lo stesso calendario, letto dall'avviso annuale sul sito del Comune di Castelnovetto."
+    },
+    "urls": {}
+  },
   "cidiu_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cidiu_it.md",
     "howto": {
