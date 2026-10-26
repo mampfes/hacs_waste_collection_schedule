@@ -2931,7 +2931,9 @@
           "unit_number": "Unit Number"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "house_number": "Talon numero.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_portenf_sa_gov_au": {
@@ -2944,7 +2946,10 @@
           "suburb": "Suburb",
           "unit_number": "Unit Number"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Talon numero.",
+          "street": "Kadun nimi."
+        }
       },
       "args_portstephens_nsw_gov_au": {
         "title": "Määritä lähde",
@@ -21100,7 +21105,8 @@
           "address": "Osoite"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
         }
       },
       "reconfigure_wastenet_org_nz": {
@@ -21110,7 +21116,9 @@
           "calendar_title": "Kalenterin nimi",
           "address": "Osoite"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
       },
       "args_hcc_govt_nz": {
         "title": "Määritä lähde",

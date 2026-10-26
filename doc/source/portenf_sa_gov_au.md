@@ -1,49 +1,49 @@
-# City of Port Adelaide Enfield, South Australia
+# Port Adelaide Enfield, South Australia
 
-Support for schedules provided by [City of Port Adelaide Enfield, South Australia](https://ecouncil.portenf.sa.gov.au/), serving City of Port Adelaide Enfield, South Australia, South Australia.
+Support for schedules provided by [Port Adelaide Enfield, South Australia](https://ecouncil.portenf.sa.gov.au/).
+
+Source for City of Port Adelaide Enfield, South Australia.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: portenf_sa_gov_au
       args:
         suburb: SUBURB
-        street: STREET NAME
-        house_number: "HOUSE NUMBER"
-        unit_number: UNIT NUMBER
-        
+        street: STREET
+        house_number: HOUSE_NUMBER
+        unit_number: UNIT_NUMBER
 ```
 
 ### Configuration Variables
 
 **suburb**  
-*(String) (required)*
+*(string) (required)*
 
 **street**  
-*(String) (required)*
+*(string) (required)*
 
 **house_number**  
-*(String | Integer) (required)*
+*(string) (required)*
 
 **unit_number**  
-*(String | Integer) (optional)*
+*(string) (optional)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: portenf_sa_gov_au
       args:
-        suburb: Rosewater
-        street: Addison Road
-        house_number: 91
-        unit_number: 2
-        
+        suburb: Broadview
+        street: Regency Road
+        house_number: 565
+        unit_number: ''
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Find the parameter of your address using [https://www.cityofpae.sa.gov.au/live/waste/bin-collection](https://www.cityofpae.sa.gov.au/live/waste/bin-collection) and write them exactly like the address you get searching for your address.
+Enter the suburb, street, house number and optional unit number as accepted by https://ecouncil.portenf.sa.gov.au/public/propertywastedates/public.aspx. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

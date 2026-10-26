@@ -2945,10 +2945,12 @@
           "house_number": "House Number",
           "street": "Street",
           "suburb": "Suburb",
-          "unit_number": "Unit Number"
+          "unit_number": "Unit number"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "house_number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "reconfigure_portenf_sa_gov_au": {
@@ -2959,9 +2961,12 @@
           "house_number": "House Number",
           "street": "Street",
           "suburb": "Suburb",
-          "unit_number": "Unit Number"
+          "unit_number": "Unit number"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Your house number.",
+          "street": "Your street name."
+        }
       },
       "args_portstephens_nsw_gov_au": {
         "title": "Configure Source",
@@ -21175,11 +21180,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Street Address"
+          "address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Full street address, e.g. '166 Lewis Street, Invercargill' or '1 Anderson Place, Gore'"
+          "address": "Your full address."
         }
       },
       "reconfigure_wastenet_org_nz": {
@@ -21187,10 +21192,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Street Address"
+          "address": "Address"
         },
         "data_description": {
-          "address": "Full street address, e.g. '166 Lewis Street, Invercargill' or '1 Anderson Place, Gore'"
+          "address": "Your full address."
         }
       },
       "args_hcc_govt_nz": {

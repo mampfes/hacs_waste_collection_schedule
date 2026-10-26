@@ -2933,11 +2933,13 @@
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
           "street": "Straße",
-          "suburb": "Stadtteil",
+          "suburb": "Suburb",
           "unit_number": "Unit Number"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_portenf_sa_gov_au": {
@@ -2947,10 +2949,13 @@
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
           "street": "Straße",
-          "suburb": "Stadtteil",
+          "suburb": "Suburb",
           "unit_number": "Unit Number"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_portstephens_nsw_gov_au": {
         "title": "Quelle konfigurieren",
@@ -21108,7 +21113,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "address": "Ihre vollständige Adresse."
         }
       },
       "reconfigure_wastenet_org_nz": {
@@ -21118,7 +21124,9 @@
           "calendar_title": "Kalender Titel",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Ihre vollständige Adresse."
+        }
       },
       "args_hcc_govt_nz": {
         "title": "Quelle konfigurieren",

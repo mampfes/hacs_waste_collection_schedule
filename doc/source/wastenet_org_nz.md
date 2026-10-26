@@ -1,6 +1,8 @@
-# WasteNet Southland
+# Gore, Invercargill & Southland
 
-Support for schedules provided by [WasteNet Southland](https://www.wastenet.org.nz/), serving the Gore District Council, Invercargill City Council and Southland District Council.
+Support for schedules provided by [Gore, Invercargill & Southland](https://www.wastenet.org.nz).
+
+Source for Wastenet.org.nz.
 
 ## Configuration via configuration.yaml
 
@@ -17,8 +19,6 @@ waste_collection_schedule:
 **address**  
 *(string) (required)*
 
-Your full street address including the city/town name, as it appears in the [WasteNet bin day finder](https://www.wastenet.org.nz/3-bin-day-finder).
-
 ## Example
 
 ```yaml
@@ -26,11 +26,9 @@ waste_collection_schedule:
   sources:
     - name: wastenet_org_nz
       args:
-        address: "166 Lewis Street, Invercargill"
+        address: 166 Lewis Street, Invercargill
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-1. Go to the [WasteNet bin day finder](https://www.wastenet.org.nz/3-bin-day-finder).
-2. Start typing your street address in the search box and select the matching entry from the autocomplete dropdown.
-3. Use the full address exactly as shown in the dropdown (e.g. `166 Lewis Street, Invercargill`).
+Visit https://www.wastenet.org.nz and find your property address. Use the full address, e.g. '166 Lewis Street, Invercargill' or '1 Anderson Place, Gore'. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

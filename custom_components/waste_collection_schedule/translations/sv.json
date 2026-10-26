@@ -2931,7 +2931,9 @@
           "unit_number": "Unit Number"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "house_number": "Ditt husnummer.",
+          "street": "Ditt gatunamn."
         }
       },
       "reconfigure_portenf_sa_gov_au": {
@@ -2944,7 +2946,10 @@
           "suburb": "Suburb",
           "unit_number": "Unit Number"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ditt husnummer.",
+          "street": "Ditt gatunamn."
+        }
       },
       "args_portstephens_nsw_gov_au": {
         "title": "Konfigurera källa",
@@ -21095,7 +21100,8 @@
           "address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress."
         }
       },
       "reconfigure_wastenet_org_nz": {
@@ -21105,7 +21111,9 @@
           "calendar_title": "Kalendernamn",
           "address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fullständiga adress."
+        }
       },
       "args_hcc_govt_nz": {
         "title": "Konfigurera källa",
