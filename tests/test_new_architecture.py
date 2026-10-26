@@ -9922,3 +9922,132 @@ class TestKmlWeekdayZones:
         responses[1].content = b'<kml xmlns="http://www.opengis.net/kml/2.2"/>'
         with pytest.raises(ValueError, match="no Document"):
             self.parser()(responses)
+
+
+@freeze_time("2026-10-26")
+def test_canterbury_bankstown_reads_the_published_anchor():
+    import gzip
+
+    from waste_collection_schedule.preprocessors import RecurrenceExpander
+    from waste_collection_schedule.service.CanterburyBankstown import CalendarParser
+    from waste_collection_schedule.source.cbcity_nsw_gov_au import Source
+
+    record = {
+        "fullAddress": "102 Crinan Street, Hurlstone Park 2193",
+        "tab": "1",
+        "zone": "A",
+        "redServiceDay": "Monday",
+        "yellowServiceDay": "Monday",
+    }
+    response = SimpleNamespace(content=gzip.compress(json.dumps([record]).encode()))
+    source = Source(address=record["fullAddress"])
+    dates = []
+    for anchor in (7, 14):
+        parsed = CalendarParser()(
+            [response, SimpleNamespace(text=f"var cycle=new Date(2021,2,{anchor});")],
+            source,
+        )
+        rows = list(RecurrenceExpander(lambda schedule, _: (schedule,))(parsed, source))
+        dates.append({d for d, key in rows if key == "yellow"})
+    assert dates[0] and dates[1]
+    assert not dates[0] & dates[1]
+    with pytest.raises(ValueError, match="anchor is missing"):
+        CalendarParser()(
+            [response, SimpleNamespace(text="changed application")], source
+        )
+
+
+@freeze_time("2026-10-26")
+def test_sunshine_coast_reads_widget_anchor_and_includes_today():
+    from waste_collection_schedule.preprocessors import RecurrenceExpander
+    from waste_collection_schedule.service.SunshineCoast import CalendarParser
+    from waste_collection_schedule.source.sunshinecoast_qld_gov_au import Source
+
+    response = MagicMock()
+    response.json.return_value = [
+        {"street": "Main St", "locality": "Eumundi", "day": "Monday", "week": "1"}
+    ]
+    source = Source(street_name="Main St", locality="Eumundi")
+    dates = []
+    for anchor in ("2021-12-11", "2021-12-18"):
+        widget = SimpleNamespace(
+            text=f'const O=y("{anchor}"),x=s=>y(s).startOf("week").diff(O,"week")%2===0?"1":"2";'
+        )
+        schedules = CalendarParser()((widget, response), source)
+        rows = list(
+            RecurrenceExpander(lambda schedule, _: (schedule,))(schedules, source)
+        )
+        assert (datetime.date(2026, 10, 26), "general") in rows
+        dates.append({d for d, key in rows if key == "recycling"})
+    assert not dates[0] & dates[1]
+
+
+@pytest.mark.parametrize(
+    "number,expected", [(None, "TUESDAY"), (200, "TUESDAY"), (500, "TUESDAY")]
+)
+def test_stamford_all_range_applies_with_or_without_house_number(number, expected):
+    from bs4 import BeautifulSoup
+    from waste_collection_schedule.service.StamfordCalendar import determine_day
+
+    table = BeautifulSoup(
+        "<table><tr><td>ALL</td><td>PARKER AVE</td><td>TUESDAY</td></tr></table>",
+        "html.parser",
+    ).table
+    assert determine_day(table, "Garbage", "Parker Ave", number) == expected
+
+
+def test_stamford_number_ranges_keep_odd_even_and_no_service():
+    from bs4 import BeautifulSoup
+    from waste_collection_schedule.exceptions import (
+        SourceArgumentRequiredWithSuggestions,
+    )
+    from waste_collection_schedule.service.StamfordCalendar import determine_day
+
+    table = BeautifulSoup(
+        "<table><tr><td>1 TO 100 ODD</td><td>MAIN</td><td>MONDAY</td></tr><tr><td>1 TO 100 EVEN</td><td>MAIN</td><td>THURSDAY</td></tr><tr><td>101 TO 200 BOTH</td><td>MAIN</td><td>NO RECYCLING PICKUP</td></tr></table>",
+        "html.parser",
+    ).table
+    assert determine_day(table, "Recycling", "Main", 51) == "MONDAY"
+    assert determine_day(table, "Recycling", "Main", 52) == "THURSDAY"
+    assert determine_day(table, "Recycling", "Main", 150) is None
+    with pytest.raises(SourceArgumentRequiredWithSuggestions):
+        determine_day(table, "Recycling", "Main", None)
+
+
+@freeze_time("2027-01-01")
+def test_gpsea_precision_uses_the_linked_calendar_year_and_keeps_descriptions():
+    from waste_collection_schedule.preprocessors import RecurrenceExpander
+    from waste_collection_schedule.service.GeoSoftware import schedules
+    from waste_collection_schedule.source.sudestavenir_fr import Source
+
+    record = {
+        "Calendrier": '<a href="/2025/12/collectes-2026.pdf">calendar</a>',
+        "ve_frequen": "QUINZAINE",
+        "ve_jour": "lundi",
+        "ve_precisi": "Janv. : 5 - 19",
+        "om_frequen": "HEBDOMADAIRE",
+        "om_jour": "lundi",
+        "om_am_pm": "AM",
+    }
+    rows = list(RecurrenceExpander(schedules)([record]))
+    assert rows and not any(key.startswith("ve|") for _, key in rows)
+    source = Source(commune="Creteil", street="PL DU GRAND PAVOIS", house_number="1")
+    collection = source.transform(rows[0])
+    assert collection.description == "Matin"
+
+
+@freeze_time("2026-03-01")
+def test_gpsea_bounded_season_does_not_expand_into_the_next_year():
+    from waste_collection_schedule.preprocessors import RecurrenceExpander
+    from waste_collection_schedule.service.GeoSoftware import schedules
+
+    record = {
+        "Calendrier": '<a href="/collectes-2026.pdf">calendar</a>',
+        "dv_frequen": "HEBDOMADAIRE",
+        "dv_jour": "lundi",
+        "dv_precisi": "À partir du 1 mars au 30 novembre",
+    }
+    rows = list(RecurrenceExpander(schedules)([record]))
+    assert rows
+    assert min(d for d, _ in rows) == datetime.date(2026, 3, 2)
+    assert max(d for d, _ in rows) == datetime.date(2026, 11, 30)
