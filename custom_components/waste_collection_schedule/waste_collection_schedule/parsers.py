@@ -2278,6 +2278,17 @@ class PdfVector(NamedTuple):
     fill_color: tuple[float, ...] | None
 
 
+class PdfPolygon(PdfVector):
+    """A vector with vertices, preserving PdfVector's existing tuple interface."""
+
+    points: tuple[tuple[float, float], ...]
+
+    def __new__(cls, *args, points: tuple[tuple[float, float], ...] = ()):
+        polygon = super().__new__(cls, *args)
+        polygon.points = points
+        return polygon
+
+
 class PdfDocumentLayout(NamedTuple):
     """A PDF's text plus positioned fragments and vector paths."""
 
@@ -2422,6 +2433,7 @@ def _pdf_word_layout(
     *,
     include_form_text: bool = False,
     include_strokes: bool = False,
+    include_points: bool = False,
 ) -> PdfWordLayout:
     """Retain individual word centres even when lines span several grid cells."""
     from io import BytesIO
@@ -2471,16 +2483,19 @@ def _pdf_word_layout(
             for child in item:
                 visit(child, page)
         elif isinstance(item, LTCurve) and item.fill:
+            vector = PdfVector(
+                page,
+                item.x0,
+                item.y0,
+                item.x1,
+                item.y1,
+                _pdf_color(item.stroking_color, grayscale_to_rgb=True),
+                _pdf_color(item.non_stroking_color, grayscale_to_rgb=True),
+            )
             vectors.append(
-                PdfVector(
-                    page,
-                    item.x0,
-                    item.y0,
-                    item.x1,
-                    item.y1,
-                    _pdf_color(item.stroking_color, grayscale_to_rgb=True),
-                    _pdf_color(item.non_stroking_color, grayscale_to_rgb=True),
-                )
+                PdfPolygon(*vector, points=tuple(item.pts))
+                if include_points
+                else vector
             )
         elif isinstance(item, LTCurve) and item.stroke and include_strokes:
             # A stroke-only path paints a band around its geometry: report the
@@ -2524,6 +2539,8 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
     kept too, as the area they paint (widened by half the line width), with
     ``fill_color`` None and the paint in ``stroke_color``.
     The one-item list composes with ``parsers.EachResponse``.
+    ``include_points`` retains filled polygon vertices for matching labels on
+    a coloured service-area map; bounding boxes alone overlap across areas.
     """
 
     def __init__(
@@ -2533,11 +2550,13 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
         min_vectors: int = 0,
         include_form_text: bool = False,
         include_strokes: bool = False,
+        include_points: bool = False,
     ):
         self.min_words = min_words
         self.min_vectors = min_vectors
         self.include_form_text = include_form_text
         self.include_strokes = include_strokes
+        self.include_points = include_points
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -2546,6 +2565,7 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
             response,
             include_form_text=self.include_form_text,
             include_strokes=self.include_strokes,
+            include_points=self.include_points,
         )
         response_shape.expect(
             len(layout.words) >= self.min_words

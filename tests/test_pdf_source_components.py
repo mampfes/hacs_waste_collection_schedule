@@ -48,6 +48,139 @@ from waste_collection_schedule.service.PdfTextCalendar import (
 D = datetime.date
 
 
+def _grand_lieu_calendar():
+    """A complete synthetic published table, with a retained holiday pickup."""
+    import calendar
+
+    from waste_collection_schedule.parsers import (
+        PdfTextFragment,
+        PdfVector,
+        PdfWordLayout,
+    )
+    from waste_collection_schedule.service.FrenchColourCalendar import _MONTHS
+
+    line = PdfTextFragment
+    colours = ((0.98, 0.84, 0.79), (0.86, 0.89, 0.93))
+    lines = [line(0, "2026", 5, 600), line(0, "Jours fériés : samedi suivant", 5, 580)]
+    vectors, words = [], []
+    for index, (name, day, parity) in enumerate(
+        [
+            ("GENESTON", "Lundi", 0),
+            ("LE BIGNON", "Lundi", 1),
+            ("MONTBERT", "Vendredi", 1),
+            ("SAINT LUMINE", "Vendredi", 0),
+        ]
+    ):
+        y = 400 - index * 30
+        lines.append(line(0, name, 20, y))
+        weekday = line(0, day, 70, y)
+        words.append(weekday)
+        vectors.append(PdfVector(0, 60, y - 5, 80, y + 5, None, colours[parity]))
+    for month, name in enumerate(_MONTHS, 1):
+        x = 130 + month * 60
+        words.append(line(0, name.upper(), x, 550))
+        for day in range(1, calendar.monthrange(2026, month)[1] + 1):
+            d = D(2026, month, day)
+            y = 530 - day * 10
+            p = line(0, f"{'LMMJVSD'[d.weekday()]} {day}", x, y)
+            lines.append(p)
+            vectors.append(
+                PdfVector(
+                    0,
+                    x - 25,
+                    y - 4,
+                    x + 25,
+                    y + 4,
+                    None,
+                    colours[d.isocalendar().week % 2],
+                )
+            )
+            if d in {D(2026, 4, 6), D(2026, 5, 8), D(2026, 12, 25)}:
+                lines.append(line(0, "Férié", x + 10, y))
+    return PdfWordLayout(lines, words, vectors)
+
+
+@pytest.mark.parametrize(
+    "commune,expected,absent",
+    [
+        ("Geneston", D(2026, 5, 25), D(2026, 5, 30)),
+        ("Le Bignon", D(2026, 4, 11), D(2026, 4, 6)),
+        ("Montbert", D(2026, 5, 9), D(2026, 5, 8)),
+        ("Saint Lumine de Coutais", D(2026, 12, 26), D(2026, 12, 25)),
+    ],
+)
+def test_french_calendar_holiday_replacements_and_retained_collections(
+    commune, expected, absent
+):
+    from waste_collection_schedule.service.FrenchColourCalendar import grand_lieu_rows
+
+    rows = grand_lieu_rows(
+        [_grand_lieu_calendar()], SimpleNamespace(params={"municipality": commune})
+    )
+    assert (expected, "general") in rows
+    assert (expected, "recycling") in rows
+    assert (absent, "general") not in rows
+
+
+def test_french_calendar_rejects_missing_printed_dates():
+    from waste_collection_schedule.service.FrenchColourCalendar import grand_lieu_rows
+
+    document = _grand_lieu_calendar()
+    document.lines.remove(next(p for p in document.lines if p.text == "J 1"))
+    with pytest.raises(ResponseShapeError, match="incomplete day grid"):
+        grand_lieu_rows(
+            [document], SimpleNamespace(params={"municipality": "Geneston"})
+        )
+
+
+def test_french_calendar_area_matching_uses_polygon_not_overlapping_bounds():
+    from waste_collection_schedule.parsers import PdfPolygon, PdfTextFragment
+    from waste_collection_schedule.service.FrenchColourCalendar import (
+        _contains,
+        _normalise,
+    )
+
+    area = PdfPolygon(
+        0, 0, 0, 10, 10, None, (1, 0, 0), points=((0, 0), (10, 0), (0, 10), (0, 0))
+    )
+    assert _contains(area, PdfTextFragment(0, "A", 2, 2))
+    assert not _contains(area, PdfTextFragment(0, "B", 8, 8))
+    assert _normalise("Beillé") == "beille"
+
+
+def test_french_calendar_year_does_not_treat_an_address_number_as_a_year():
+    from waste_collection_schedule.parsers import PdfTextFragment
+    from waste_collection_schedule.service.FrenchColourCalendar import _year
+
+    document = _grand_lieu_calendar()
+    document.lines.append(PdfTextFragment(0, "2033 Route de Connerré", 50, 20))
+    document.words.append(PdfTextFragment(0, "2033", 50, 20))
+    assert _year(document) == 2026
+
+
+def test_pdf_word_layout_can_retain_service_area_polygon_vertices():
+    from io import BytesIO
+
+    from pypdf import PdfWriter
+    from pypdf.generic import DecodedStreamObject, NameObject
+
+    writer = PdfWriter()
+    page = writer.add_blank_page(width=30, height=30)
+    stream = DecodedStreamObject()
+    stream.set_data(b"1 0 0 rg 0 0 m 10 0 l 0 10 l h f")
+    page[NameObject("/Contents")] = writer._add_object(stream)
+    out = BytesIO()
+    writer.write(out)
+    response = SimpleNamespace(content=out.getvalue())
+    ordinary = parsers.PdfWordLayoutParser(min_words=0)(response)[0]
+    polygons = parsers.PdfWordLayoutParser(min_words=0, include_points=True)(response)[
+        0
+    ]
+    assert len(ordinary.vectors[0]) == 7
+    assert not hasattr(ordinary.vectors[0], "points")
+    assert polygons.vectors[0].points[:3] == ((0, 0), (10, 0), (0, 10))
+
+
 def _page(html: str, url: str = "https://example.org/waste/") -> SimpleNamespace:
     return SimpleNamespace(text=html, url=url)
 
