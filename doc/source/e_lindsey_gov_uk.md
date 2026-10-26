@@ -2,6 +2,9 @@
 
 Support for waste collection schedules provided by [East Lindsey District Council](https://www.e-lindsey.gov.uk), serving the East Lindsey district of Lincolnshire, UK.
 
+The source returns refuse, mixed recycling, paper, weekly food waste, and
+subscribed garden-waste collections when available for the property.
+
 ## Configuration via configuration.yaml
 
 ```yaml
