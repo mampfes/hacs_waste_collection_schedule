@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [Unreleased]
+
+### Added
+
+- Three bundled Waste Collection dashboard cards: next pickup, collection schedule,
+  and bin overview, built with TypeScript 7 and Lit.
+- Visual editors for calendar selection, regional waste labels, icons, colours,
+  optional images, filters, date/countdown visibility and look-ahead limits.
+- Automatic dashboard resource registration with content-based cache updates,
+  Sections sizing, keyboard controls, theme support and localised dates.
+- Calendar-day handling across time zones and DST, partial-failure feedback and
+  retry controls, frontend build checks and browser accessibility tests.
+
 ## [2.36.0] - 2026-10-25
 
 This release adds Sigtuna, RWM (Sittard-Geleen, Beek, Stein) and Newmarket (ON) to existing sources, and fixes about 45 sources whose providers changed their websites or APIs. No breaking changes and no deprecations; existing configurations keep working.

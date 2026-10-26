@@ -10,6 +10,7 @@ from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.discovery import async_load_platform
 
+from .frontend import async_register_frontend
 from .service import get_fetch_all_service
 from .waste_collection_api import WasteCollectionApi
 
@@ -99,6 +100,8 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up the component. config contains data from configuration.yaml."""
+    await async_register_frontend(hass)
+
     # Skip for config flow
     if const.DOMAIN not in config:
         return True
