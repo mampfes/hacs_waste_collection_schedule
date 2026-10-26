@@ -177,7 +177,9 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
             month may move).
         year_pattern: a regex whose first group is the calendar's (first) year,
             searched in the PDF text and then in the response URL. Without a
-            match the earliest ``20xx`` in either is used.
+            match the earliest ``20xx`` in either is used. A year printed in
+            two pieces ("20" stacked over "26") is matched with one group per
+            piece, the groups joined: ``r"Giugno\\s+(20)\\s+(\\d\\d)\\b"``.
         weekdays: the weekday names printed beside each day number (or, in a
             month grid, at the head of its column), Monday first: a string of
             initials (``"LMMJVSD"``) or a sequence of abbreviations (``("LU",
@@ -193,6 +195,10 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
         pages: zero-based page numbers to read; all pages when unset. Or a
             ``callable(**source.params) -> page numbers`` for a PDF holding one
             calendar per page, chosen by a param.
+        read_headings: bind day numbers to the printed month headings (the
+            default). ``False`` numbers the day-row columns in reading order
+            from ``first_month`` instead, for a calendar whose headings sit too
+            unevenly over their columns to be told from prose.
         include_form_text: also read text drawn inside Form XObjects (see
             ``PdfWordLayoutParser``), for a PDF whose day numbers are there.
         min_markers: fewest symbols expected; fewer raise
@@ -212,6 +218,7 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
         pages: Sequence[int] | Callable[..., Sequence[int]] | None = None,
         min_markers: int = 10,
         include_form_text: bool = False,
+        read_headings: bool = True,
     ):
         if placement not in ("row", "cell", "below"):
             raise ValueError("placement must be 'row', 'cell' or 'below'")
@@ -225,6 +232,7 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
         self.pages = pages
         self.min_markers = min_markers
         self.include_form_text = include_form_text
+        self.read_headings = read_headings
 
     def __call__(
         self, response: Response, source: BaseSource | None = None
@@ -254,7 +262,11 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
             for w in words
             if _DAY_RE.match(w.text)
         ]
-        months, first_heading = self._months_from_headings(words, anchors)
+        months, first_heading = (
+            self._months_from_headings(words, anchors)
+            if self.read_headings
+            else ({}, None)
+        )
         if not months:
             months = self._months_from_columns(anchors)
         first_month = self.first_month or first_heading or 1
@@ -344,7 +356,7 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
     def _year(self, text: str, url: str) -> int | None:
         for haystack in (text, url):
             if self.year_re and (match := self.year_re.search(haystack)):
-                return int(match.group(1))
+                return int("".join(group for group in match.groups() if group))
         for haystack in (text, url):
             years = [int(y) for y in _YEAR_RE.findall(haystack)]
             if years:
