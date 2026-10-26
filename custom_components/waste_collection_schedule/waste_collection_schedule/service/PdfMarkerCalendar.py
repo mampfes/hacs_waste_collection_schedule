@@ -168,7 +168,8 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
         markers: the legend, one :class:`Marker` per symbol.
         placement: ``"row"`` for symbols printed right of the day number (a day
             per row), ``"cell"`` for a symbol painted behind the day number (a
-            month grid).
+            month grid), ``"below"`` for symbols printed in a row under the
+            day number at the top left of its month-grid cell.
         first_month: the month of the first column or heading (a calendar
             running from April to March passes 4); later months that wrap past
             December belong to the following year. ``None`` takes it from the
@@ -183,7 +184,12 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
             "MA", "ME", "JE", "VE", "SA", "DI")``); a mismatch fails loudly,
             and they settle the year when the PDF names another.
         row_reach: for ``placement="row"``, how far (points) right of its day
-            number a symbol may sit.
+            number a symbol may sit; for ``placement="below"``, how far below
+            it.
+        page_headings: also accept a lone month heading with a month's day
+            numbers below it, for a month grid printed one month per page
+            ("FEBBRAIO 26" over the grid). Off by default, so prose naming a
+            month is ignored.
         pages: zero-based page numbers to read; all pages when unset. Or a
             ``callable(**source.params) -> page numbers`` for a PDF holding one
             calendar per page, chosen by a param.
@@ -202,18 +208,20 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
         year_pattern: str | None = None,
         weekdays: str | Sequence[str] | None = None,
         row_reach: float = 60.0,
+        page_headings: bool = False,
         pages: Sequence[int] | Callable[..., Sequence[int]] | None = None,
         min_markers: int = 10,
         include_form_text: bool = False,
     ):
-        if placement not in ("row", "cell"):
-            raise ValueError("placement must be 'row' or 'cell'")
+        if placement not in ("row", "cell", "below"):
+            raise ValueError("placement must be 'row', 'cell' or 'below'")
         self.markers = tuple(markers)
         self.placement = placement
         self.first_month = first_month
         self.year_re = re.compile(year_pattern, re.IGNORECASE) if year_pattern else None
         self.weekdays = tuple(name.upper() for name in weekdays) if weekdays else None
         self.row_reach = row_reach
+        self.page_headings = page_headings
         self.pages = pages
         self.min_markers = min_markers
         self.include_form_text = include_form_text
@@ -358,6 +366,31 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
 
     def _anchors_of(self, vector: PdfVector, anchors: list[_Anchor]) -> list[_Anchor]:
         """The day numbers a symbol marks: one, or a run of them."""
+        if self.placement == "below":
+            # The day number heads its cell, top left, and the symbols are
+            # printed in a row under it: the nearest number above the symbol,
+            # the last of that row starting left of the symbol's centre (a
+            # one-digit number may sit a little right of the cell's first
+            # symbol).
+            centre_x = (vector.x0 + vector.x1) / 2
+            centre_y = (vector.y0 + vector.y1) / 2
+            reach = (vector.x1 - vector.x0) / 2 + 3
+            above = [
+                a
+                for a in anchors
+                if a.page == vector.page
+                and 0 < a.y - centre_y <= self.row_reach
+                and a.x - reach <= centre_x
+            ]
+            if not above:
+                return []
+            level = min(a.y - centre_y for a in above)
+            return [
+                max(
+                    (a for a in above if a.y - centre_y <= level + 3),
+                    key=lambda a: a.x,
+                )
+            ]
         if self.placement == "cell":
             width = vector.x1 - vector.x0
             height = vector.y1 - vector.y0
@@ -476,6 +509,11 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
             below = [a for a in anchors if a.page == page and a.y < y]
             if len(columns) > 1 and (filled := _fill_columns(sorted(columns), below)):
                 completed.append((page, y, filled))
+            elif self.page_headings and len(columns) == 1:
+                # A lone heading heads a whole month's grid, not a sentence
+                # naming a month above a few numbers.
+                if len({a.day for a in below}) >= 28:
+                    completed.append((page, y, columns))
         bands = completed
         if not bands:
             return {}, None
