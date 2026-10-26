@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-10-26",
+  "interactions": [],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'uprn' with the value '185405500', the former Bryson UPRN lookup has been retired. Select your property at https://antrimandnewtownabbey.gov.uk/binchecker/ and configure the Id from its URL as id; the council checker includes recycling."
+  }
+}

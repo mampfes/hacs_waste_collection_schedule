@@ -8869,6 +8869,23 @@ def test_privacy_excluded_sources_ship_no_cassette() -> None:
     )
 
 
+def test_antrim_checker_keeps_dated_recycling_on_its_separate_weekday():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.antrimandnewtownabbey_gov_uk import Source
+
+    with cassette.replaying(
+        fixture_path("antrimandnewtownabbey_gov_uk", "Recycling on a separate weekday")
+    ):
+        rows = Source(id=58105).fetch()
+    pairs = {(row.date, row.type) for row in rows}
+    assert len(rows) == 27
+    assert (datetime.date(2026, 10, 27), "Recycling") in pairs
+    assert (datetime.date(2026, 10, 29), "General Waste") in pairs
+    assert (datetime.date(2026, 10, 29), "Organic Waste") in pairs
+    assert (datetime.date(2026, 10, 27), "General Waste") not in pairs
+
+
 class TestGlobalCalendarMigrations:
     def test_iren_published_iso_dates_are_not_dropped(self):
         """The live Roccavione feed publishes three dates separated by semicolons."""
