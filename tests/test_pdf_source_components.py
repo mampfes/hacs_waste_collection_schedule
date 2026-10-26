@@ -1434,3 +1434,32 @@ def test_strathfield_published_calendar_is_complete_and_stops_at_year_end():
     assert len({r["date"] for r in days}) == 365
     assert (D(2026, 1, 5), "green") in {(r["date"], r["type"]) for r in days}
     assert all(D(2026, 10, 26) <= e.date <= D(2026, 12, 31) for e in entries)
+
+
+def test_paczkow_joins_day_lists_wrapped_onto_their_own_lines():
+    """pypdf before 6.20 extracts a wrapped month cell as separate lines."""
+    import datetime
+
+    from waste_collection_schedule.source.paczkow_pl import _tables
+
+    header = (
+        "Ulice: Kopernika\n"
+        "RODZAJ ODEBRANEGO ODPADU PAŹDZIERNIK 2026 LISTOPAD 2026 GRUDZIEŃ 2026 \n"
+    )
+    footer = "\nnie mają prawa wchodzenia na teren posesji)"
+    joined = "Odpady BIO 09, 23, 30 06, 20 04, 18\n"
+    wrapped = "Odpady BIO 09, 23, \n30 \n06, 20 \n04, \n18 \n"
+
+    expected = [
+        (datetime.date(2026, month, day), "Odpady BIO")
+        for month, days in ((10, (9, 23, 30)), (11, (6, 20)), (12, (4, 18)))
+        for day in days
+    ]
+    for body in (joined, wrapped):
+        (table,) = _tables(header + body + footer)
+        assert table["areas"] == ["Kopernika"]
+        assert table["rows"] == expected
+
+    # A row genuinely missing a month still fails loudly.
+    with pytest.raises(ValueError):
+        _tables(header + "Odpady BIO 09, 23, 30 06, 20\n" + footer)
