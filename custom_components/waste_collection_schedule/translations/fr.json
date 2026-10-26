@@ -6704,6 +6704,33 @@
         },
         "data_description": {}
       },
+      "args_ritl_ca": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "municipality": "Commune",
+          "sector": "Secteur ordure ménagère"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "sector": "Ce secteur est utilisé par défault"
+        }
+      },
+      "reconfigure_ritl_ca": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "municipality": "Commune",
+          "sector": "Secteur ordure ménagère"
+        },
+        "data_description": {
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "sector": "Ce secteur est utilisé par défault"
+        }
+      },
       "args_ics_laval_ca": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -7088,33 +7115,6 @@
           "sector": "Secteur"
         },
         "data_description": {}
-      },
-      "args_ritl_ca": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "municipality": "Municipalité",
-          "sector": "Secteur"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "municipality": "Nom de la municipalité (ex: Lac-Supérieur, Lantier, Sainte-Agathe-des-Monts...)",
-          "sector": "Nom du secteur (requis uniquement pour les municipalités avec secteurs)"
-        }
-      },
-      "reconfigure_ritl_ca": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "municipality": "Municipalité",
-          "sector": "Secteur"
-        },
-        "data_description": {
-          "municipality": "Nom de la municipalité (ex: Lac-Supérieur, Lantier, Sainte-Agathe-des-Monts...)",
-          "sector": "Nom du secteur (requis uniquement pour les municipalités avec secteurs)"
-        }
       },
       "args_ics_riviere_beaudette_com": {
         "title": "Configurer la Source",
@@ -25655,7 +25655,8 @@
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "route": "Route"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -25665,7 +25666,8 @@
         "title": "Reconfigurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
-          "calendar_title": "Titre du Calendrier"
+          "calendar_title": "Titre du Calendrier",
+          "route": "Route"
         },
         "data_description": {}
       },
@@ -35504,7 +35506,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "address": "Adresse (ou simplement le nom de la rue) à Ciudad de la Costa, par ex. 'De los Pinos, Ciudad de la Costa'. Ajouter le quartier (barrio) améliore la précision pour les noms de rue courants."
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_ciudad_de_la_costa_uy": {
@@ -35515,7 +35517,7 @@
           "address": "Adresse"
         },
         "data_description": {
-          "address": "Adresse (ou simplement le nom de la rue) à Ciudad de la Costa, par ex. 'De los Pinos, Ciudad de la Costa'. Ajouter le quartier (barrio) améliore la précision pour les noms de rue courants."
+          "address": "Votre adresse complète."
         }
       }
     }

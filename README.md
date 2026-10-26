@@ -920,9 +920,13 @@ If you already have enough information for your municipality/region, you are ver
 - [Halton Hills (ON)](/doc/source/recyclecoach_com.md) / haltonhills.ca
 - [Halton Region, ON](/doc/ics/recollect.md) / halton.ca
 - [Halton Region, ON](/doc/source/recollect_net.md) / recollect.net
+- [Ivry-sur-le-Lac](/doc/source/ritl_ca.md) / ritl.ca/calendrier-ivry-sur-le-lac
 - [Kawartha Lakes (ON)](/doc/source/recyclecoach_com.md) / kawarthalakes.ca
 - [Kelowna (BC)](/doc/source/recyclecoach_com.md) / rdco.com
+- [Lac-Supérieur Secteur 1](/doc/source/ritl_ca.md) / ritl.ca/calendrier-lac-superieur-secteur-a
+- [Lac-Supérieur Secteur 2](/doc/source/ritl_ca.md) / ritl.ca/calendrier-lac-superieur-secteur-b
 - [Lakeshore (ON)](/doc/source/recyclecoach_com.md) / lakeshore.ca
+- [Lantier](/doc/source/ritl_ca.md) / ritl.ca/calendrier-lantier
 - [LaSalle (ON)](/doc/source/recyclecoach_com.md) / lasalle.ca
 - [Laval (QC)](/doc/ics/laval_ca.md) / laval.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
@@ -933,6 +937,8 @@ If you already have enough information for your municipality/region, you are ver
 - [Milton (ON)](/doc/source/recyclecoach_com.md) / milton.ca
 - [Mirabel (QC)](/doc/source/mirabel_ca.md) / mirabel.ca/collectes
 - [Mississauga (ON)](/doc/source/recyclecoach_com.md) / mississauga.ca
+- [Mont-Blanc Secteur Est](/doc/source/ritl_ca.md) / ritl.ca/calendrier-saint-faustin-lac-carre-secteur-est
+- [Mont-Blanc Secteur Ouest](/doc/source/ritl_ca.md) / ritl.ca/calendrier-saint-faustin-lac-carre-secteur-ouest
 - [Montreal (QC)](/doc/source/montreal_ca.md) / montreal.ca/info-collectes
 - [MRC de La Vallée-du-Richelieu](/doc/source/mrcvr_ca.md) / mrcvr.ca
 - [MRC de Roussillon (QC)](/doc/source/info_collectes_ca.md) / info-collectes.ca
@@ -965,6 +971,10 @@ If you already have enough information for your municipality/region, you are ver
 - [RMR Lac-Saint-Jean (QC)](/doc/source/rmrlac_qc_ca.md) / calendrier.rmrlac.qc.ca
 - [Saint-Jean-Sur-Richelieu, QC](/doc/ics/recollect.md) / compo.qc.ca
 - [Saint-Jérome (QC)](/doc/ics/vsj_ca.md) / vsj.ca
+- [Sainte-Agathe-des-Monts Secteur Centre-ville](/doc/source/ritl_ca.md) / ritl.ca/calendrier-ville-de-sainte-agathe-des-monts
+- [Sainte-Agathe-des-Monts Secteur Nord](/doc/source/ritl_ca.md) / ritl.ca/calendrier-ville-de-sainte-agathe-des-monts-secteur-nord
+- [Sainte-Agathe-des-Monts Secteur Sud / Fatima](/doc/source/ritl_ca.md) / ritl.ca/calendrier-ville-de-sainte-agathe-des-monts-secteur-sud-fatima
+- [Sainte-Lucie-des-Laurentides](/doc/source/ritl_ca.md) / ritl.ca/calendrier-sainte-lucie-des-laurentides
 - [Saskatoon, SK](/doc/ics/recollect.md) / saskatoon.ca
 - [Shawinigan](/doc/source/shawinigan_ca.md) / geoweb.shawinigan.ca/CollecteMatieresResiduelles
 - [Sherbrooke (QC)](/doc/ics/sherbrooke_ca.md) / sherbrooke.ca
@@ -974,6 +984,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Toronto (ON)](/doc/source/toronto_ca.md) / toronto.ca
 - [Toronto (ON) - Circular Materials](/doc/source/recyclecoach_com.md) / toronto.ca
 - [Township of Langley (BC)](/doc/source/recyclecoach_com.md) / tol.ca
+- [Val-des-Lacs](/doc/source/ritl_ca.md) / ritl.ca/calendrier-val-des-lacs
 - [Valleyfield, Québec](/doc/ics/valleyfiled_qc_ca.md) / ville.valleyfield.qc.ca
 - [Vaughan (ON)](/doc/source/recyclecoach_com.md) / vaughan.ca
 - [Ville de Blainville](/doc/source/blainville_ca.md) / blainville.ca

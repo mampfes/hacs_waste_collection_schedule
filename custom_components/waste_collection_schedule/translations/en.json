@@ -6744,6 +6744,33 @@
         },
         "data_description": {}
       },
+      "args_ritl_ca": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "sector": "Waste sector"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "sector": "This is the default sector."
+        }
+      },
+      "reconfigure_ritl_ca": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality",
+          "sector": "Waste sector"
+        },
+        "data_description": {
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "sector": "This is the default sector."
+        }
+      },
       "args_ics_laval_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -7128,33 +7155,6 @@
           "sector": "Sector"
         },
         "data_description": {}
-      },
-      "args_ritl_ca": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "municipality": "Municipality",
-          "sector": "Sector"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "municipality": "Name of the municipality (e.g., Lac-Supérieur, Lantier, Sainte-Agathe-des-Monts...)",
-          "sector": "Sector name (only required for municipalities with sectors)"
-        }
-      },
-      "reconfigure_ritl_ca": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "municipality": "Municipality",
-          "sector": "Sector"
-        },
-        "data_description": {
-          "municipality": "Name of the municipality (e.g., Lac-Supérieur, Lantier, Sainte-Agathe-des-Monts...)",
-          "sector": "Sector name (only required for municipalities with sectors)"
-        }
       },
       "args_ics_riviere_beaudette_com": {
         "title": "Configure Source",
@@ -25751,7 +25751,8 @@
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "route": "Collection route"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -25761,7 +25762,8 @@
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
-          "calendar_title": "Calendar Title"
+          "calendar_title": "Calendar Title",
+          "route": "Collection route"
         },
         "data_description": {}
       },
@@ -35665,7 +35667,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Street address (or street name) within Ciudad de la Costa, e.g. 'De los Pinos, Ciudad de la Costa' or '1901 Cuba, Ciudad de la Costa'. Adding the neighbourhood (barrio) improves accuracy for common street names."
+          "address": "Your full address."
         }
       },
       "reconfigure_ciudad_de_la_costa_uy": {
@@ -35676,7 +35678,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Street address (or street name) within Ciudad de la Costa, e.g. 'De los Pinos, Ciudad de la Costa' or '1901 Cuba, Ciudad de la Costa'. Adding the neighbourhood (barrio) improves accuracy for common street names."
+          "address": "Your full address."
         }
       }
     },

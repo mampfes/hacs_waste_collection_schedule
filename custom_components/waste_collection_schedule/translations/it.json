@@ -6704,6 +6704,33 @@
         },
         "data_description": {}
       },
+      "args_ritl_ca": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "municipality": "Comune",
+          "sector": "Settore rifiuti"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "sector": "Questo è il settore predefinito."
+        }
+      },
+      "reconfigure_ritl_ca": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "municipality": "Comune",
+          "sector": "Settore rifiuti"
+        },
+        "data_description": {
+          "municipality": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "sector": "Questo è il settore predefinito."
+        }
+      },
       "args_ics_laval_ca": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -7085,28 +7112,6 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "sector": "Settore"
-        },
-        "data_description": {}
-      },
-      "args_ritl_ca": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "municipality": "Municipality",
-          "sector": "Settore"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
-        }
-      },
-      "reconfigure_ritl_ca": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "municipality": "Municipality",
           "sector": "Settore"
         },
         "data_description": {}
@@ -25643,7 +25648,8 @@
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "route": "Route"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
@@ -25653,7 +25659,8 @@
         "title": "Riconfigurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
-          "calendar_title": "Nome Calendario"
+          "calendar_title": "Nome Calendario",
+          "route": "Route"
         },
         "data_description": {}
       },
@@ -35492,7 +35499,7 @@
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "address": "Indirizzo (o solo il nome della via) a Ciudad de la Costa, ad es. 'De los Pinos, Ciudad de la Costa'. Aggiungere il quartiere (barrio) migliora la precisione per i nomi di via comuni."
+          "address": "Il vostro indirizzo completo."
         }
       },
       "reconfigure_ciudad_de_la_costa_uy": {
@@ -35503,7 +35510,7 @@
           "address": "Indirizzo"
         },
         "data_description": {
-          "address": "Indirizzo (o solo il nome della via) a Ciudad de la Costa, ad es. 'De los Pinos, Ciudad de la Costa'. Aggiungere il quartiere (barrio) migliora la precisione per i nomi di via comuni."
+          "address": "Il vostro indirizzo completo."
         }
       }
     },

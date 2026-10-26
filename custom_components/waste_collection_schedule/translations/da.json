@@ -6698,6 +6698,33 @@
         },
         "data_description": {}
       },
+      "args_ritl_ca": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Kommune",
+          "sector": "Restaffaldssektor"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "sector": "Dette er standardsektoren."
+        }
+      },
+      "reconfigure_ritl_ca": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "municipality": "Kommune",
+          "sector": "Restaffaldssektor"
+        },
+        "data_description": {
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "sector": "Dette er standardsektoren."
+        }
+      },
       "args_ics_laval_ca": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -7079,28 +7106,6 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "sector": "Sector"
-        },
-        "data_description": {}
-      },
-      "args_ritl_ca": {
-        "title": "Konfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "municipality": "Municipality",
-          "sector": "Sector"
-        },
-        "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
-        }
-      },
-      "reconfigure_ritl_ca": {
-        "title": "Omkonfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "municipality": "Municipality",
           "sector": "Sector"
         },
         "data_description": {}
@@ -25637,7 +25642,8 @@
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "route": "Route"
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
@@ -25647,7 +25653,8 @@
         "title": "Omkonfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
-          "calendar_title": "Kalender Titel"
+          "calendar_title": "Kalender Titel",
+          "route": "Route"
         },
         "data_description": {}
       },
@@ -35482,10 +35489,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_ciudad_de_la_costa_uy": {
@@ -35493,9 +35501,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       }
     },
     "error": {

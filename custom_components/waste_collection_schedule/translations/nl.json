@@ -6698,6 +6698,33 @@
         },
         "data_description": {}
       },
+      "args_ritl_ca": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "municipality": "Gemeente",
+          "sector": "Afvalsector"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "sector": "Dit is de standaardsector."
+        }
+      },
+      "reconfigure_ritl_ca": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "municipality": "Gemeente",
+          "sector": "Afvalsector"
+        },
+        "data_description": {
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "sector": "Dit is de standaardsector."
+        }
+      },
       "args_ics_laval_ca": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -7079,28 +7106,6 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "sector": "Sector"
-        },
-        "data_description": {}
-      },
-      "args_ritl_ca": {
-        "title": "Bron configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "municipality": "Gemeente",
-          "sector": "Sector"
-        },
-        "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
-        }
-      },
-      "reconfigure_ritl_ca": {
-        "title": "Bron opnieuw configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "municipality": "Gemeente",
           "sector": "Sector"
         },
         "data_description": {}
@@ -25637,7 +25642,8 @@
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
-          "calendar_title": "Kalendertitel"
+          "calendar_title": "Kalendertitel",
+          "route": "Route"
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
@@ -25647,7 +25653,8 @@
         "title": "Bron opnieuw configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
-          "calendar_title": "Kalendertitel"
+          "calendar_title": "Kalendertitel",
+          "route": "Route"
         },
         "data_description": {}
       },
@@ -35485,7 +35492,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_ciudad_de_la_costa_uy": {
@@ -35495,7 +35503,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       }
     },
     "error": {

@@ -6698,6 +6698,33 @@
         },
         "data_description": {}
       },
+      "args_ritl_ca": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Kunta",
+          "sector": "Sekajätealue"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "sector": "Tämä on oletusalue."
+        }
+      },
+      "reconfigure_ritl_ca": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Kunta",
+          "sector": "Sekajätealue"
+        },
+        "data_description": {
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "sector": "Tämä on oletusalue."
+        }
+      },
       "args_ics_laval_ca": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -7079,28 +7106,6 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "sector": "Sector"
-        },
-        "data_description": {}
-      },
-      "args_ritl_ca": {
-        "title": "Määritä lähde",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "municipality": "Kunta",
-          "sector": "Sector"
-        },
-        "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
-        }
-      },
-      "reconfigure_ritl_ca": {
-        "title": "Määritä lähde uudelleen",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "municipality": "Kunta",
           "sector": "Sector"
         },
         "data_description": {}
@@ -25642,7 +25647,8 @@
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
-          "calendar_title": "Kalenterin nimi"
+          "calendar_title": "Kalenterin nimi",
+          "route": "Route"
         },
         "data_description": {
           "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
@@ -25652,7 +25658,8 @@
         "title": "Määritä lähde uudelleen",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
-          "calendar_title": "Kalenterin nimi"
+          "calendar_title": "Kalenterin nimi",
+          "route": "Route"
         },
         "data_description": {}
       },
@@ -35469,7 +35476,8 @@
           "address": "Osoite"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
         }
       },
       "reconfigure_ciudad_de_la_costa_uy": {
@@ -35479,7 +35487,9 @@
           "calendar_title": "Kalenterin nimi",
           "address": "Osoite"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
       }
     },
     "error": {
