@@ -1,16 +1,39 @@
 # Wolverhampton City Council
 
+Support for schedules provided by [Wolverhampton City Council](https://www.wolverhampton.gov.uk).
+
+Source for Wolverhampton City Council waste collection.
+
+## Configuration via configuration.yaml
+
 ```yaml
 waste_collection_schedule:
   sources:
     - name: wolverhampton_gov_uk
       args:
-        postcode: "WV1 1RD"
-        uprn: "10094887108"
+        postcode: POSTCODE
+        uprn: UPRN
 ```
 
-Enter your `postcode` and `uprn` from the council's In Your Area property page. Both argument names remain unchanged.
+### Configuration Variables
 
-The source follows the council's View the calendar link, discovers its current Drupal calendar route and reads explicitly dated service rows. It preserves the printed year at month boundaries and seasonal gaps. Only services actually listed for the property are returned; communal properties may not list individual general-waste/recycling collections. The public garden schedule does not confirm a subscription.
+**postcode**  
+*(string) (required)*
 
-The former HTML-card selectors returned no entries after the site changed. No fixed recurrence or inferred holiday dates are added. Types now use canonical, localised names; update filters and customisations using old labels.
+**uprn**  
+*(string) (required)*
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: wolverhampton_gov_uk
+      args:
+        postcode: WV1 1RD
+        uprn: '10094887108'
+```
+
+## How to get the source arguments
+
+Enter the postcode and UPRN from the council's In Your Area property page. The source follows its View the calendar link and reads the dated calendar supplied by the council, including seasonal gaps. Only services listed for that property are returned. Types now use canonical, localised names; update filters and customisations using old labels.

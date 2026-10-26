@@ -1,17 +1,48 @@
-# Wieliczka Kiedy Odpady (deprecated)
+# Wieliczka Kiedy Odpady (Deprecated)
+
+Support for schedules provided by [Wieliczka Kiedy Odpady (Deprecated)](https://wieliczka.kiedyodpady.pl).
+
+Source for Wieliczka Kiedy Odpady schedules.
+
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: wieliczka_kiedyodpady_pl
       args:
-        city: "Wieliczka (miasto)"
-        street: "ul. Adama Asnyka"
-        number: "pozostałe"
+        city: CITY
+        street: STREET
+        number: NUMBER
+        lookahead_days: LOOKAHEAD_DAYS
 ```
 
-This source remains **deprecated**. Prefer `kiedyodpady_pl` with `municipality: wieliczka` for new configurations.
+### Configuration Variables
 
-The source uses the shared Kiedy Odpady address lookup and schedule parser. `city`, optional `street` and optional `number` remain unchanged. An optional `lookahead_days` defaults to **35**, preserving the legacy window. Copy address values from the [public Wieliczka selector](https://wieliczka.kiedyodpady.pl).
+**city**  
+*(string) (required)*
 
-Waste names now use the canonical platform vocabulary. Combined metals/plastics collections produce both canonical categories on the same date. Update filters and customisations that use the former labels. The provider is fixed internally to Wieliczka, without an unused municipality field in the form.
+**street**  
+*(string) (optional)*
+
+**number**  
+*(string) (optional)*
+
+**lookahead_days**  
+*(string) (optional)*
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: wieliczka_kiedyodpady_pl
+      args:
+        city: Wieliczka (miasto)
+        street: ul. Adama Asnyka
+        number: "pozosta\u0142e"
+```
+
+## How to get the source arguments
+
+This source name remains deprecated; prefer kiedyodpady_pl with municipality=wieliczka. Existing city, street and number arguments remain unchanged. Copy them from the public Wieliczka address selector. The default lookahead remains 35 days. Types now use the canonical platform vocabulary; update filters and customisations using old labels. Combined metals/plastics dates yield both canonical categories.

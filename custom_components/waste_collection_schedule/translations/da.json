@@ -9920,11 +9920,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "District",
-          "street": "Street"
+          "district": "Distrikt",
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "district": "Dit distrikt eller del af kommunen",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_wuerzburg_de": {
@@ -9932,10 +9934,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "District",
-          "street": "Street"
+          "district": "Distrikt",
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Dit distrikt eller del af kommunen",
+          "street": "Dit gadenavn"
+        }
       },
       "args_ics_wuerzburg_de": {
         "title": "Konfigurer Kilde",
@@ -11036,10 +11041,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "bezirk": "Distrikt",
-          "ort": "By"
+          "ort": "Kommune"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "bezirk": "Dit distrikt eller del af kommunen",
+          "ort": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
         }
       },
       "reconfigure_awb_mainz_bingen_de": {
@@ -11048,9 +11055,12 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "bezirk": "Distrikt",
-          "ort": "By"
+          "ort": "Kommune"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Dit distrikt eller del af kommunen",
+          "ort": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
       },
       "args_ics_abfallwirtschaft_uhk_de": {
         "title": "Konfigurer Kilde",
@@ -23420,12 +23430,16 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "number": "Number",
-          "street": "Street"
+          "city": "By",
+          "lookahead_days": "Lookahead Days",
+          "number": "Husnummer",
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by",
+          "number": "Dit husnummer",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_wieliczka_kiedyodpady_pl": {
@@ -23433,11 +23447,16 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "city": "City",
-          "number": "Number",
-          "street": "Street"
+          "city": "By",
+          "lookahead_days": "Lookahead Days",
+          "number": "Husnummer",
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Din by",
+          "number": "Dit husnummer",
+          "street": "Dit gadenavn"
+        }
       },
       "args_ekosystem_wroc_pl": {
         "title": "Konfigurer Kilde",
@@ -34264,11 +34283,11 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "postcode": "Postnummer",
-          "uprn": "UPRN"
+          "uprn": "Lokations-ID"
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "postcode": "Dit postnummer"
         }
       },
       "reconfigure_wolverhampton_gov_uk": {
@@ -34277,10 +34296,10 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "postcode": "Postnummer",
-          "uprn": "UPRN"
+          "uprn": "Lokations-ID"
         },
         "data_description": {
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "postcode": "Dit postnummer"
         }
       },
       "args_wrexham_gov_uk": {

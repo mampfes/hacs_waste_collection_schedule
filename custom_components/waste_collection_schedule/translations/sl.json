@@ -9918,11 +9918,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "Okrožje",
+          "district": "Naselje",
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "Vaše naselje ali del občine.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_wuerzburg_de": {
@@ -9930,10 +9932,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "Okrožje",
+          "district": "Naselje",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Vaše naselje ali del občine.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_ics_wuerzburg_de": {
         "title": "Configure Source",
@@ -11033,11 +11038,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "bezirk": "Okrožje",
-          "ort": "Mesto"
+          "bezirk": "Naselje",
+          "ort": "Občina"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "bezirk": "Vaše naselje ali del občine.",
+          "ort": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
         }
       },
       "reconfigure_awb_mainz_bingen_de": {
@@ -11045,10 +11052,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "bezirk": "Okrožje",
-          "ort": "Mesto"
+          "bezirk": "Naselje",
+          "ort": "Občina"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Vaše naselje ali del občine.",
+          "ort": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
+        }
       },
       "args_ics_abfallwirtschaft_uhk_de": {
         "title": "Configure Source",
@@ -23419,11 +23429,15 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "number": "Številka",
+          "lookahead_days": "Lookahead Days",
+          "number": "Hišna številka",
           "street": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
         }
       },
       "reconfigure_wieliczka_kiedyodpady_pl": {
@@ -23432,10 +23446,15 @@
         "data": {
           "calendar_title": "Calendar Title",
           "city": "Mesto",
-          "number": "Številka",
+          "lookahead_days": "Lookahead Days",
+          "number": "Hišna številka",
           "street": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
+        }
       },
       "args_ekosystem_wroc_pl": {
         "title": "Configure Source",
@@ -34262,11 +34281,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Poštna številka",
-          "uprn": "UPRN"
+          "uprn": "ID lokacije"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka."
         }
       },
       "reconfigure_wolverhampton_gov_uk": {
@@ -34275,10 +34294,10 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Poštna številka",
-          "uprn": "UPRN"
+          "uprn": "ID lokacije"
         },
         "data_description": {
-          "uprn": "Preprost način, da odkrijete svojo edinstveno referenčno številko nepremičnine (UPRN), je, da obiščete {url_www_findmyaddress_co_uk} in vnesete podatke o svojem naslovu."
+          "postcode": "Vaša poštna številka."
         }
       },
       "args_wrexham_gov_uk": {

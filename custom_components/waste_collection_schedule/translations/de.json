@@ -9926,11 +9926,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "Stadtteil",
+          "district": "Ortsteil",
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "district": "Ihr Ortsteil oder Stadtteil.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_wuerzburg_de": {
@@ -9938,10 +9940,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "district": "Stadtteil",
+          "district": "Ortsteil",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Ihr Ortsteil oder Stadtteil.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_ics_wuerzburg_de": {
         "title": "Quelle konfigurieren",
@@ -11041,11 +11046,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "bezirk": "Bezirk",
-          "ort": "Ort"
+          "bezirk": "Ortsteil",
+          "ort": "Gemeinde"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "bezirk": "Ihr Ortsteil oder Stadtteil.",
+          "ort": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
       },
       "reconfigure_awb_mainz_bingen_de": {
@@ -11053,10 +11060,13 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "bezirk": "Bezirk",
-          "ort": "Ort"
+          "bezirk": "Ortsteil",
+          "ort": "Gemeinde"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Ihr Ortsteil oder Stadtteil.",
+          "ort": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
       },
       "args_ics_abfallwirtschaft_uhk_de": {
         "title": "Quelle konfigurieren",
@@ -23427,11 +23437,15 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
-          "number": "Nummer",
+          "lookahead_days": "Lookahead Days",
+          "number": "Hausnummer",
           "street": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
         }
       },
       "reconfigure_wieliczka_kiedyodpady_pl": {
@@ -23440,10 +23454,15 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "city": "Stadt",
-          "number": "Nummer",
+          "lookahead_days": "Lookahead Days",
+          "number": "Hausnummer",
           "street": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
       },
       "args_ekosystem_wroc_pl": {
         "title": "Quelle konfigurieren",
@@ -34269,12 +34288,12 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
-          "uprn": "UPRN"
+          "postcode": "Postleitzahl",
+          "uprn": "Standort-ID"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "postcode": "Ihre Postleitzahl."
         }
       },
       "reconfigure_wolverhampton_gov_uk": {
@@ -34282,11 +34301,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "postcode": "PLZ",
-          "uprn": "UPRN"
+          "postcode": "Postleitzahl",
+          "uprn": "Standort-ID"
         },
         "data_description": {
-          "uprn": "Eine einfache Möglichkeit, Ihre Unique Property Reference Number (UPRN) zu finden, besteht darin, auf {url_www_findmyaddress_co_uk} zu gehen und Ihre Adressdaten einzugeben."
+          "postcode": "Ihre Postleitzahl."
         }
       },
       "args_wrexham_gov_uk": {

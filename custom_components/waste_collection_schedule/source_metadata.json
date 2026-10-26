@@ -834,7 +834,7 @@
   "strathfield_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/strathfield_nsw_gov_au.md",
     "howto": {
-      "en": "Your collection day is printed on your rates notice. It can also be found by contacting Strathfield Council."
+      "en": "Enter the Monday-Friday collection day from your rates notice or the council's street guide. The current linked calendar supplies green/yellow weeks and actual dates. Dates stop at the published end instead of projecting a fixed anchor two years ahead. Types now use canonical, localised names; update filters and customisations using old labels."
     },
     "urls": {}
   },
@@ -2438,7 +2438,9 @@
   },
   "wuerzburg_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wuerzburg_de.md",
-    "howto": {},
+    "howto": {
+      "en": "This source remains deprecated; the generic ICS configuration is recommended. Enter district or street exactly as listed on the city calendar. Street takes precedence if both are set. The published event API supplies actual dates and collection pictures. Types now use canonical, localised names; update filters and customisations using old labels."
+    },
     "urls": {}
   },
   "ics_wuerzburg_de": {
@@ -2650,7 +2652,9 @@
   },
   "awb_mainz_bingen_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/awb_mainz_bingen_de.md",
-    "howto": {},
+    "howto": {
+      "en": "This legacy source name remains deprecated; prefer kaw_mainz_bingen_de. Existing bezirk, ort and saved strasse arguments remain accepted. The current KAW API only needs district and municipality. Collection dates and canonical waste types are unchanged."
+    },
     "urls": {}
   },
   "ics_abfallwirtschaft_uhk_de": {
@@ -5343,7 +5347,7 @@
   "wieliczka_kiedyodpady_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wieliczka_kiedyodpady_pl.md",
     "howto": {
-      "en": "Open https://wieliczka.kiedyodpady.pl and select your location. Use the city name, street name, and house number exactly as shown in the UI."
+      "en": "This source name remains deprecated; prefer kiedyodpady_pl with municipality=wieliczka. Existing city, street and number arguments remain unchanged. Copy them from the public Wieliczka address selector. The default lookahead remains 35 days. Types now use the canonical platform vocabulary; update filters and customisations using old labels. Combined metals/plastics dates yield both canonical categories."
     },
     "urls": {}
   },
@@ -8555,10 +8559,10 @@
   },
   "wolverhampton_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wolverhampton_gov_uk.md",
-    "howto": {},
-    "urls": {
-      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
-    }
+    "howto": {
+      "en": "Enter the postcode and UPRN from the council's In Your Area property page. The source follows its View the calendar link and reads the dated calendar supplied by the council, including seasonal gaps. Only services listed for that property are returned. Types now use canonical, localised names; update filters and customisations using old labels."
+    },
+    "urls": {}
   },
   "wrexham_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wrexham_gov_uk.md",

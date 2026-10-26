@@ -9924,7 +9924,9 @@
           "street": "Gata"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "district": "Ditt distrikt eller del av kommunen.",
+          "street": "Ditt gatunamn."
         }
       },
       "reconfigure_wuerzburg_de": {
@@ -9935,7 +9937,10 @@
           "district": "Distrikt",
           "street": "Gata"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Ditt distrikt eller del av kommunen.",
+          "street": "Ditt gatunamn."
+        }
       },
       "args_ics_wuerzburg_de": {
         "title": "Konfigurera källa",
@@ -11035,11 +11040,13 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "bezirk": "Bezirk",
-          "ort": "Ort"
+          "bezirk": "Distrikt",
+          "ort": "Kommun"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "bezirk": "Ditt distrikt eller del av kommunen.",
+          "ort": "Namnet på din kommun, som det visas på leverantörens webbplats."
         }
       },
       "reconfigure_awb_mainz_bingen_de": {
@@ -11047,10 +11054,13 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "bezirk": "Bezirk",
-          "ort": "Ort"
+          "bezirk": "Distrikt",
+          "ort": "Kommun"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Ditt distrikt eller del av kommunen.",
+          "ort": "Namnet på din kommun, som det visas på leverantörens webbplats."
+        }
       },
       "args_ics_abfallwirtschaft_uhk_de": {
         "title": "Konfigurera källa",
@@ -23421,11 +23431,15 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "city": "Ort",
-          "number": "Number",
+          "lookahead_days": "Lookahead Days",
+          "number": "Husnummer",
           "street": "Gata"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "city": "Din stad eller ort.",
+          "number": "Ditt husnummer.",
+          "street": "Ditt gatunamn."
         }
       },
       "reconfigure_wieliczka_kiedyodpady_pl": {
@@ -23434,10 +23448,15 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "city": "Ort",
-          "number": "Number",
+          "lookahead_days": "Lookahead Days",
+          "number": "Husnummer",
           "street": "Gata"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Din stad eller ort.",
+          "number": "Ditt husnummer.",
+          "street": "Ditt gatunamn."
+        }
       },
       "args_ekosystem_wroc_pl": {
         "title": "Konfigurera källa",
@@ -34264,11 +34283,11 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "Plats-ID"
         },
         "data_description": {
           "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
-          "uprn": "Ett enkelt sätt att hitta ditt Unique Property Reference Number (UPRN) är att gå till {url_www_findmyaddress_co_uk} och ange dina adressuppgifter."
+          "postcode": "Ditt postnummer."
         }
       },
       "reconfigure_wolverhampton_gov_uk": {
@@ -34277,10 +34296,10 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "Plats-ID"
         },
         "data_description": {
-          "uprn": "Ett enkelt sätt att hitta ditt Unique Property Reference Number (UPRN) är att gå till {url_www_findmyaddress_co_uk} och ange dina adressuppgifter."
+          "postcode": "Ditt postnummer."
         }
       },
       "args_wrexham_gov_uk": {

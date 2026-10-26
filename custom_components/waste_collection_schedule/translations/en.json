@@ -3321,11 +3321,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "collection_day": "Collection Day"
+          "collection_day": "Collection weekday"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "collection_day": "The day of the week your bins are collected (e.g. Tuesday). Check your rates notice or contact Strathfield Council."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_strathfield_nsw_gov_au": {
@@ -3333,11 +3332,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "collection_day": "Collection Day"
+          "collection_day": "Collection weekday"
         },
-        "data_description": {
-          "collection_day": "The day of the week your bins are collected (e.g. Tuesday). Check your rates notice or contact Strathfield Council."
-        }
+        "data_description": {}
       },
       "args_sunshinecoast_qld_gov_au": {
         "title": "Configure Source",
@@ -9965,7 +9962,9 @@
           "street": "Street"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "district": "Your district or part of the municipality.",
+          "street": "Your street name."
         }
       },
       "reconfigure_wuerzburg_de": {
@@ -9976,7 +9975,10 @@
           "district": "District",
           "street": "Street"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Your district or part of the municipality.",
+          "street": "Your street name."
+        }
       },
       "args_ics_wuerzburg_de": {
         "title": "Configure Source",
@@ -11077,10 +11079,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bezirk": "District",
-          "ort": "City"
+          "ort": "Municipality"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "bezirk": "Your district or part of the municipality.",
+          "ort": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_awb_mainz_bingen_de": {
@@ -11089,9 +11093,12 @@
         "data": {
           "calendar_title": "Calendar Title",
           "bezirk": "District",
-          "ort": "City"
+          "ort": "Municipality"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Your district or part of the municipality.",
+          "ort": "The name of your municipality, as shown on the provider's website."
+        }
       },
       "args_ics_abfallwirtschaft_uhk_de": {
         "title": "Configure Source",
@@ -23474,15 +23481,16 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City Name",
+          "city": "City",
+          "lookahead_days": "Lookahead days",
           "number": "House Number",
-          "street": "Street Name"
+          "street": "Street"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "City name from the Kiedy Odpady locality list.",
-          "number": "House number/address value from the selected street.",
-          "street": "Street name from the selected city."
+          "city": "Your city or town.",
+          "number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "reconfigure_wieliczka_kiedyodpady_pl": {
@@ -23490,14 +23498,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "city": "City Name",
+          "city": "City",
+          "lookahead_days": "Lookahead days",
           "number": "House Number",
-          "street": "Street Name"
+          "street": "Street"
         },
         "data_description": {
-          "city": "City name from the Kiedy Odpady locality list.",
-          "number": "House number/address value from the selected street.",
-          "street": "Street name from the selected city."
+          "city": "Your city or town.",
+          "number": "Your house number.",
+          "street": "Your street name."
         }
       },
       "args_ekosystem_wroc_pl": {
@@ -34398,11 +34407,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Postcode",
-          "uprn": "UPRN"
+          "uprn": "Location ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode."
         }
       },
       "reconfigure_wolverhampton_gov_uk": {
@@ -34411,10 +34420,10 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Postcode",
-          "uprn": "UPRN"
+          "uprn": "Location ID"
         },
         "data_description": {
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details."
+          "postcode": "Your postcode."
         }
       },
       "args_wrexham_gov_uk": {

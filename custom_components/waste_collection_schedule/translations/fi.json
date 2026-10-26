@@ -9925,11 +9925,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "district": "Alue",
+          "district": "Kaupunginosa",
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "district": "Kaupunginosasi tai kunnan osa.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_wuerzburg_de": {
@@ -9937,10 +9939,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "district": "Alue",
+          "district": "Kaupunginosa",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Kaupunginosasi tai kunnan osa.",
+          "street": "Kadun nimi."
+        }
       },
       "args_ics_wuerzburg_de": {
         "title": "Määritä lähde",
@@ -11040,11 +11045,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "bezirk": "Bezirk",
-          "ort": "Ort"
+          "bezirk": "Kaupunginosa",
+          "ort": "Kunta"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "bezirk": "Kaupunginosasi tai kunnan osa.",
+          "ort": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
       },
       "reconfigure_awb_mainz_bingen_de": {
@@ -11052,10 +11059,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "bezirk": "Bezirk",
-          "ort": "Ort"
+          "bezirk": "Kaupunginosa",
+          "ort": "Kunta"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Kaupunginosasi tai kunnan osa.",
+          "ort": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
       },
       "args_ics_abfallwirtschaft_uhk_de": {
         "title": "Määritä lähde",
@@ -23426,11 +23436,15 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "number": "Number",
+          "lookahead_days": "Lookahead Days",
+          "number": "Talon numero",
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "number": "Talon numero.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_wieliczka_kiedyodpady_pl": {
@@ -23439,10 +23453,15 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "number": "Number",
+          "lookahead_days": "Lookahead Days",
+          "number": "Talon numero",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "number": "Talon numero.",
+          "street": "Kadun nimi."
+        }
       },
       "args_ekosystem_wroc_pl": {
         "title": "Määritä lähde",
@@ -34251,10 +34270,11 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "Sijainnin tunnus"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "postcode": "Postinumerosi."
         }
       },
       "reconfigure_wolverhampton_gov_uk": {
@@ -34263,9 +34283,11 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "Sijainnin tunnus"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Postinumerosi."
+        }
       },
       "args_wrexham_gov_uk": {
         "title": "Määritä lähde",

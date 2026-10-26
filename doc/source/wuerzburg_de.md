@@ -1,17 +1,38 @@
 # Abfallkalender Würzburg (deprecated)
 
+Support for schedules provided by [Abfallkalender Würzburg (deprecated)](https://www.wuerzburg.de).
+
+Deprecated: Use the ICS source instead. Source for waste collection in the city of Würzburg, Germany.
+
+## Configuration via configuration.yaml
+
 ```yaml
 waste_collection_schedule:
   sources:
     - name: wuerzburg_de
       args:
-        district: "Altstadt"
-        street: "Juliuspromenade"
+        district: DISTRICT
+        street: STREET
 ```
 
-This source remains **deprecated**. The [generic Würzburg ICS configuration](../ics/wuerzburg_de.md) is recommended for new configurations.
+### Configuration Variables
 
-- `district` (optional): District name exactly as shown in the city calendar.
-- `street` (optional): Street name exactly as shown in the city calendar.
+**district**  
+*(string) (optional)*
 
-Provide at least one. Street takes precedence when both are set. The city event API supplies the actual dates and collection image URLs for the next 365 days. Pictures are retained. Waste names now use canonical, localised categories; original provider labels are carried in descriptions where useful. Update filters and customisations using the former labels.
+**street**  
+*(string) (optional)*
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: wuerzburg_de
+      args:
+        district: Altstadt
+```
+
+## How to get the source arguments
+
+This source remains deprecated; the generic ICS configuration is recommended. Enter district or street exactly as listed on the city calendar. Street takes precedence if both are set. The published event API supplies actual dates and collection pictures. Types now use canonical, localised names; update filters and customisations using old labels.

@@ -9926,11 +9926,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto",
-          "street": "Strada"
+          "district": "Quartiere",
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "district": "Il vostro quartiere o parte del comune.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_wuerzburg_de": {
@@ -9938,10 +9940,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "district": "Distretto",
-          "street": "Strada"
+          "district": "Quartiere",
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Il vostro quartiere o parte del comune.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_ics_wuerzburg_de": {
         "title": "Configurazione Sorgente",
@@ -11041,11 +11046,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "bezirk": "Distretto",
-          "ort": "Località"
+          "bezirk": "Quartiere",
+          "ort": "Comune"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "bezirk": "Il vostro quartiere o parte del comune.",
+          "ort": "Il nome del vostro comune, come indicato sul sito del fornitore."
         }
       },
       "reconfigure_awb_mainz_bingen_de": {
@@ -11053,10 +11060,13 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "bezirk": "Distretto",
-          "ort": "Località"
+          "bezirk": "Quartiere",
+          "ort": "Comune"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Il vostro quartiere o parte del comune.",
+          "ort": "Il nome del vostro comune, come indicato sul sito del fornitore."
+        }
       },
       "args_ics_abfallwirtschaft_uhk_de": {
         "title": "Configurazione Sorgente",
@@ -23427,11 +23437,15 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "number": "Numero",
-          "street": "Strada"
+          "lookahead_days": "Lookahead Days",
+          "number": "Numero civico",
+          "street": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "city": "La vostra città o paese.",
+          "number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
         }
       },
       "reconfigure_wieliczka_kiedyodpady_pl": {
@@ -23440,10 +23454,15 @@
         "data": {
           "calendar_title": "Nome Calendario",
           "city": "Città",
-          "number": "Numero",
-          "street": "Strada"
+          "lookahead_days": "Lookahead Days",
+          "number": "Numero civico",
+          "street": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "La vostra città o paese.",
+          "number": "Il vostro numero civico.",
+          "street": "Il nome della vostra via."
+        }
       },
       "args_ekosystem_wroc_pl": {
         "title": "Configurazione Sorgente",
@@ -34269,12 +34288,12 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "postcode": "Codice Postale CAP",
-          "uprn": "UPRN"
+          "postcode": "CAP",
+          "uprn": "ID posizione"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "postcode": "Il vostro codice postale (CAP)."
         }
       },
       "reconfigure_wolverhampton_gov_uk": {
@@ -34282,11 +34301,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "postcode": "Codice Postale CAP",
-          "uprn": "UPRN"
+          "postcode": "CAP",
+          "uprn": "ID posizione"
         },
         "data_description": {
-          "uprn": "Un modo facile per scoprire il tuo Numero di Riferimento Proprietà Unica (UPRN) è andare su {url_www_findmyaddress_co_uk} e inserire i dettagli del tuo indirizzo."
+          "postcode": "Il vostro codice postale (CAP)."
         }
       },
       "args_wrexham_gov_uk": {

@@ -1,15 +1,34 @@
 # Strathfield Council
 
+Support for schedules provided by [Strathfield Council](https://www.strathfield.nsw.gov.au).
+
+Source for Strathfield Council, NSW, Australia.
+
+## Configuration via configuration.yaml
+
 ```yaml
 waste_collection_schedule:
   sources:
     - name: strathfield_nsw_gov_au
       args:
-        collection_day: "Monday"
+        collection_day: COLLECTION_DAY
 ```
 
-Find your Monday-Friday collection day on your rates notice or the street guide linked from the [Residential Bin Collection page](https://www.strathfield.nsw.gov.au/Live/Waste/Residential-Bin-Collection).
+### Configuration Variables
 
-`collection_day` keeps its existing name and accepts the collection weekday. The source reads the currently linked English PDF calendar. Green weeks mean general waste plus garden organics; yellow weeks mean general waste plus recycling.
+**collection_day**  
+*(string) (required)*
 
-Dates start today and stop at the published calendar's end. The source no longer emits historical dates or projects a fixed anchor two years ahead. If no current calendar is published, it raises an error. The PDF parser validates all twelve month grids and reads week-wide colour bands. Types now use canonical names; update filters and customisations using old labels.
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: strathfield_nsw_gov_au
+      args:
+        collection_day: Monday
+```
+
+## How to get the source arguments
+
+Enter the Monday-Friday collection day from your rates notice or the council's street guide. The current linked calendar supplies green/yellow weeks and actual dates. Dates stop at the published end instead of projecting a fixed anchor two years ahead. Types now use canonical, localised names; update filters and customisations using old labels.
