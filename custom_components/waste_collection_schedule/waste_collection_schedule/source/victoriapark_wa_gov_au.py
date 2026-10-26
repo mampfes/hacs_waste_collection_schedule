@@ -1,115 +1,99 @@
-from datetime import date, timedelta
+from typing import ClassVar, final
+from urllib.parse import urljoin
 
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFoundWithSuggestions,
+from bs4 import BeautifulSoup
+from waste_collection_schedule import retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import integer, text_field
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.service.ColourWeekCalendar import WeekRows
+from waste_collection_schedule.service.PdfImageCalendar import (
+    ColourBin,
+    ColourGridCalendarParser,
+    RasterColourGridParser,
 )
-
-TITLE = "Town of Victoria Park"
-DESCRIPTION = "Source for www.victoriapark.wa.gov.au Waste Collection Services"
-URL = "https://www.victoriapark.wa.gov.au"
-TEST_CASES = {
-    "Group 1 Monday": {"group": 1, "day": "Monday"},
-    "Group 2 Friday": {"group": 2, "day": "Friday"},
-    "Group 1 Wednesday": {"group": 1, "day": "Wednesday"},
-}
-
-COUNTRY = "au"
-
-ICON_MAP = {
-    "FOGO": Icons.BIO_KITCHEN,
-    "General Waste": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-}
-
-# Reference date: Monday 30 June 2025 is a YELLOW week for Group 1 (FOGO + Recycling)
-# and a RED week for Group 2 (FOGO + General Waste).
-# Weeks alternate every 7 days from this reference.
-REFERENCE_MONDAY = date(2025, 6, 30)
-
-VALID_DAYS = {
-    "Monday": 0,
-    "Tuesday": 1,
-    "Wednesday": 2,
-    "Thursday": 3,
-    "Friday": 4,
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Visit the <a href='https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx'>Bins and Collections</a> page to find your collection group (1 or 2) and day.",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "group": "Collection group (1 or 2) — check the calendar on the council website",
-        "day": "Collection day (Monday to Friday)",
-    },
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "group": "Collection Group",
-        "day": "Collection Day",
-    },
-}
+from waste_collection_schedule.transformers import RowTransformer
 
 
-class Source:
-    def __init__(self, group: int, day: str):
-        if group not in (1, 2):
-            raise SourceArgumentNotFoundWithSuggestions("group", str(group), ["1", "2"])
-        day_title = day.strip().title()
-        if day_title not in VALID_DAYS:
-            raise SourceArgumentNotFoundWithSuggestions(
-                "day", day, list(VALID_DAYS.keys())
-            )
-        self._group = group
-        self._day_offset = VALID_DAYS[day_title]
+def _calendar_url(response, group, **_):
+    if group not in (1, 2):
+        raise SourceArgumentNotFoundWithSuggestions("group", group, ["1", "2"])
+    soup = BeautifulSoup(response.text, "html.parser")
+    links = [
+        urljoin(response.url, str(a["href"]))
+        for a in soup.select("a[href]")
+        if a.get_text(" ", strip=True).lower() == f"group {group} calendar"
+    ]
+    if len(links) != 1:
+        raise ValueError("Current Victoria Park group calendar link is missing")
+    return links[0]
 
-    def fetch(self) -> list[Collection]:
-        today = date.today()
-        entries = []
 
-        # Find the next occurrence of the collection day on or after today minus 1 week
-        start = today - timedelta(days=7)
-        # Align to the collection day
-        days_until = (self._day_offset - start.weekday()) % 7
-        collection_date = start + timedelta(days=days_until)
-
-        # Generate collections for ~52 weeks
-        while collection_date < today + timedelta(days=365):
-            # Determine if this is a yellow or red week for Group 1
-            weeks_since_ref = (collection_date - REFERENCE_MONDAY).days // 7
-            is_yellow_group1 = weeks_since_ref % 2 == 0
-
-            if self._group == 1:
-                is_yellow = is_yellow_group1
-            else:
-                is_yellow = not is_yellow_group1
-
-            # FOGO goes out every week
-            entries.append(
-                Collection(date=collection_date, t="FOGO", icon=ICON_MAP["FOGO"])
-            )
-
-            # Yellow week = Recycling, Red week = General Waste
-            if is_yellow:
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t="Recycling",
-                        icon=ICON_MAP["Recycling"],
-                    )
-                )
-            else:
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t="General Waste",
-                        icon=ICON_MAP["General Waste"],
-                    )
-                )
-
-            collection_date += timedelta(days=7)
-
-        return entries
+@final
+class Source(BaseSource):
+    TITLE = "Town of Victoria Park"
+    DESCRIPTION = "Source for www.victoriapark.wa.gov.au Waste Collection Services"
+    URL = "https://www.victoriapark.wa.gov.au"
+    TEST_CASES: ClassVar[dict] = {
+        "Group 1 Monday": {"group": 1, "day": "Monday"},
+        "Group 2 Friday": {"group": 2, "day": "Friday"},
+        "Group 1 Wednesday": {"group": 1, "day": "Wednesday"},
+    }
+    COUNTRY = "au"
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown group": {"group": 3, "day": "Monday"},
+        "Weekend": {"group": 1, "day": "Sunday"},
+    }
+    PARAMS = (
+        integer("group", "Collection group"),
+        text_field("day", "Collection weekday"),
+    )
+    WASTE_TYPES: ClassVar[list] = [wt.ORGANIC, wt.RECYCLABLES, wt.GENERAL_WASTE]
+    HOWTO: ClassVar[dict] = {
+        "en": "Find your collection group (1 or 2) and weekday on the council Bins and Collections page. The current linked July-June image calendar supplies the actual red/yellow weeks and public-holiday replacement dates. Dates stop at its published end; no fixed historical anchor is used. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    }
+    retrieve = retrievers.Request(
+        lambda calendar_url, **_: calendar_url,
+        before=(
+            retrievers.Lookup(
+                "https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx",
+                pick=_calendar_url,
+            ),
+        ),
+    )
+    parse = RasterColourGridParser(
+        ColourGridCalendarParser(
+            header_matches=lambda r, g, b: (
+                (80 < r < 190 and 110 < g < 200 and b > g + 10)
+                or (r > 160 and g > 180 and 80 < b < r - 20)
+            ),
+            bins=[
+                ColourBin("yellow", lambda r, g, b: r > 180 and g > 160 and b < 120),
+                ColourBin("red", lambda r, g, b: r > 170 and g < 140 and b < 150),
+                ColourBin(
+                    "holiday",
+                    lambda r, g, b: 40 < r < 180 and g > r + 25 and b > r + 10,
+                ),
+            ],
+            start_month=7,
+            ref_width=991,
+            row1_ratio=0.28,
+            row_pitch_ratio=0.12,
+            sample_half_x=8,
+            sample_half_y=7,
+            fill_threshold=25,
+            min_collections=250,
+            min_weekday_share=0.1,
+            max_per_month=25,
+        ),
+        complete_weekdays=(0, 1, 2, 3, 4),
+    )
+    preprocess = WeekRows(weekly_keys=("organic",))
+    transform = RowTransformer(
+        type_value_map={
+            "yellow": wt.RECYCLABLES,
+            "red": wt.GENERAL_WASTE,
+            "organic": wt.ORGANIC,
+        }
+    )

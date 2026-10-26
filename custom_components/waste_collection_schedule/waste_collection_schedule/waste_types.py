@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 # would only cover a fixed value set and not these surfaces. Any HA language
 # outside this set falls back to English. Add a language here AND to the
 # config-flow allowlist (update_docu_links.LANGUAGES) to keep the two in step.
-SUPPORTED_LANGUAGES = ("en", "de", "fr", "it", "nl", "sl", "da", "fi", "sv")
+SUPPORTED_LANGUAGES = ("en", "de", "fr", "it", "nl", "sl", "da", "fi", "sv", "nb")
 
 
 @dataclass(frozen=True)
@@ -77,6 +77,7 @@ GENERAL_WASTE = WasteType(
     names={
         "fi": "Sekajäte",
         "sv": "Restavfall",
+        "nb": "Restavfall",
         "en": "General Waste",
         "de": "Restmüll",
         "fr": "Ordures ménagères",
@@ -108,6 +109,7 @@ GENERAL_WASTE = WasteType(
         "nl": ["restafval", "restafvalcontainer"],
         "sl": ["mešani komunalni odpadki", "mešani odpadki", "mesani", "mko", "ost."],
         "da": ["restaffald", "rest affald", "rest efter sortering", "rest"],
+        "nb": ["restavfall", "restavfall til forbrenning"],
     },
 )
 
@@ -118,6 +120,7 @@ RECYCLABLES = WasteType(
     names={
         "fi": "Kierrätettävä jäte",
         "sv": "Förpackningar",
+        "nb": "Gjenvinning",
         "en": "Recycling",
         "de": "Wertstoffe",
         "fr": "Recyclage",
@@ -171,6 +174,7 @@ ORGANIC = WasteType(
     names={
         "fi": "Biojäte",
         "sv": "Organiskt avfall",
+        "nb": "Bioavfall",
         "en": "Organic Waste",
         "de": "Biomüll",
         "fr": "Biodéchets",
@@ -204,6 +208,7 @@ PAPER = WasteType(
     names={
         "fi": "Paperi ja kartonki",
         "sv": "Papper och kartong",
+        "nb": "Papp og papir",
         "en": "Paper & Cardboard",
         "de": "Altpapier",
         "fr": "Papier",
@@ -232,6 +237,16 @@ PAPER = WasteType(
         "nl": ["papier", "oud papier", "karton"],
         "sl": ["papir", "papir in karton", "karton", "pap", "pap."],
         "da": ["papir", "pap"],
+        "nb": [
+            "papir",
+            "papp og papir",
+            "papir og papp",
+            "papp",
+            "papp/papir",
+            "papiravfall",
+            "papir, papp og kartong",
+            "papp, papir og kartong",
+        ],
     },
 )
 
@@ -242,6 +257,7 @@ GLASS = WasteType(
     names={
         "fi": "Lasi",
         "sv": "Glasförpackningar",
+        "nb": "Glassemballasje",
         "en": "Glass",
         "de": "Glas",
         "fr": "Verre",
@@ -267,6 +283,7 @@ FOOD_WASTE = WasteType(
     names={
         "fi": "Ruokajäte",
         "sv": "Matavfall",
+        "nb": "Matavfall",
         "en": "Food Waste",
         "de": "Lebensmittelabfall",
         "fr": "Déchets alimentaires",
@@ -282,6 +299,7 @@ FOOD_WASTE = WasteType(
         "nl": ["etensresten", "voedselresten", "keukenafval"],
         "sl": ["ostanki hrane", "kuhinjski odpadki"],
         "da": ["mad", "madaffald"],
+        "nb": ["matavfall", "våtorganisk", "våtorganisk avfall"],
     },
 )
 
@@ -292,6 +310,7 @@ GARDEN_WASTE = WasteType(
     names={
         "fi": "Puutarhajäte",
         "sv": "Trädgårdsavfall",
+        "nb": "Hageavfall",
         "en": "Garden Waste",
         "de": "Grünschnitt",
         "fr": "Déchets verts",
@@ -335,6 +354,7 @@ GARDEN_WASTE = WasteType(
         "nl": ["tuinafval", "snoeiafval", "groenafval", "takken"],
         "sl": ["zeleni odrez", "vrtni odpadki", "vejevje", "listje"],
         "da": ["blade", "have affald"],
+        "nb": ["hageavfall"],
     },
 )
 
@@ -345,6 +365,7 @@ BULKY_WASTE = WasteType(
     names={
         "fi": "Suurikokoinen jäte",
         "sv": "Grovavfall",
+        "nb": "Grovavfall",
         "en": "Bulky Waste",
         "de": "Sperrmüll",
         "fr": "Encombrants",
@@ -361,6 +382,7 @@ BULKY_WASTE = WasteType(
         "nl": ["grofvuil", "grof huishoudelijk afval"],
         "sl": ["kosovni odpadki", "kosovni"],
         "da": ["stort affald"],
+        "nb": ["grovavfall"],
     },
 )
 
@@ -371,6 +393,7 @@ HAZARDOUS = WasteType(
     names={
         "fi": "Vaarallinen jäte",
         "sv": "Farligt avfall",
+        "nb": "Farlig avfall",
         "en": "Hazardous Waste",
         "de": "Problemstoff",
         "fr": "Déchets dangereux",
@@ -398,6 +421,7 @@ HAZARDOUS = WasteType(
         "nl": ["kca", "chemisch afval", "klein chemisch afval"],
         "sl": ["nevarni odpadki"],
         "da": ["kemisk affald", "maling"],
+        "nb": ["farlig avfall", "spesialavfall"],
     },
 )
 
@@ -408,6 +432,7 @@ ELECTRONICS = WasteType(
     names={
         "fi": "Sähkö- ja elektroniikkaromu",
         "sv": "Elavfall",
+        "nb": "EE-avfall",
         "en": "Electronic Waste",
         "de": "Elektroschrott",
         "fr": "Déchets électroniques",
@@ -433,6 +458,7 @@ ELECTRONICS = WasteType(
         "nl": ["e-waste", "elektrische apparaten", "wit- en bruingoed", "elektronica"],
         "sl": ["elektronski odpadki", "e-odpadki", "odpadna električna oprema"],
         "da": ["gammel elektronik", "elektronik til genbrug"],
+        "nb": ["ee-avfall", "elektrisk og elektronisk avfall"],
     },
 )
 
@@ -443,6 +469,7 @@ TEXTILES = WasteType(
     names={
         "fi": "Tekstiilit",
         "sv": "Textil",
+        "nb": "Tekstiler",
         "en": "Textiles",
         "de": "Altkleider",
         # "Abiti usati" (used clothing), deliberately not "Tessili". Italian
@@ -482,6 +509,7 @@ TEXTILES = WasteType(
         "nl": ["kleding", "oude kleding", "textielinzameling"],
         "sl": ["tekstil", "oblačila", "stara oblačila"],
         "da": ["tekstil", "stof"],
+        "nb": ["tekstiler", "klær og sko", "tekstiler, klær og sko"],
     },
 )
 
@@ -502,6 +530,7 @@ METAL = WasteType(
     names={
         "fi": "Metalli",
         "sv": "Metallförpackningar",
+        "nb": "Metallemballasje",
         "en": "Metal",
         "de": "Metall",
         "it": "Metallo",
@@ -521,6 +550,7 @@ PLASTIC = WasteType(
     names={
         "fi": "Muovi",
         "sv": "Plastförpackningar",
+        "nb": "Plastemballasje",
         "en": "Plastic",
         "de": "Plastik",
         "it": "Plastica",
@@ -540,6 +570,7 @@ CARTONS = WasteType(
     names={
         "fi": "Elintarvike- ja juomapakkaukset",
         "sv": "Mat- och dryckeskartonger",
+        "nb": "Drikkekartong",
         "en": "Food and beverage cartons",
         "de": "Lebensmittel- und Getränkekartons",
         "it": "Cartoni per alimenti e bevande",
@@ -559,6 +590,7 @@ OTHER = WasteType(
     names={
         "fi": "Muu jäte",
         "sv": "Övrigt",
+        "nb": "Annet",
         "en": "Other",
         "de": "Sonstiges",
         "fr": "Autres",

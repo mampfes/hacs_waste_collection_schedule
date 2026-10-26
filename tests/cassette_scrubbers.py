@@ -64,6 +64,43 @@ def _dardanup_wa_gov_au(
         interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
 
 
+def _cbcity_nsw_gov_au(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep address matches and the first suggestions from the city-wide feed."""
+    import gzip
+
+    from waste_collection_schedule.service.CanterburyBankstown import _normalise
+
+    wanted = _normalise(args["address"])
+    for interaction in interactions:
+        if not interaction["url"].endswith("streetData.json.gz"):
+            continue
+        rows = json.loads(gzip.decompress(base64.b64decode(interaction["content_b64"])))
+        matching = [
+            row for row in rows if wanted in _normalise(row.get("fullAddress", ""))
+        ][:10]
+        retained = [row for row in rows if row in matching or row in rows[:5]]
+        payload = json.dumps(
+            retained, ensure_ascii=False, separators=(",", ":")
+        ).encode()
+        interaction["content_b64"] = base64.b64encode(
+            gzip.compress(payload, mtime=0)
+        ).decode("ascii")
+
+
+def _sunshinecoast_qld_gov_au(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Discard unused framework code from asset discovery, keeping its prefix."""
+    for interaction in interactions:
+        if not interaction["url"].endswith(".js"):
+            continue
+        raw = base64.b64decode(interaction["content_b64"])
+        if b'__name:"BinCollection"' not in raw or b"/streets/" not in raw:
+            interaction["content_b64"] = base64.b64encode(raw[:64]).decode("ascii")
+
+
 def _sica_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None:
     """Keep the configured commune's collections from the recording day on."""
     wanted = str(args["municipality"]).lower()
@@ -548,6 +585,47 @@ def _wastenet_org_nz(
             )
 
 
+def _portapporta_it(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Drop zone polygons and the per-day copies of each trash type's guide.
+
+    The calendar repeats every trash type's full sorting guide (what goes in,
+    what does not) on every collection day, and the operator record carries its
+    app styling; only the zone list and the slugs are read.
+    """
+    for interaction in interactions:
+        if interaction["status"] != 200:
+            continue
+        if interaction["url"].endswith("/zones.geojson"):
+            payload = _json(interaction)
+            payload["features"] = [
+                {key: value for key, value in feature.items() if key != "geometry"}
+                for feature in payload["features"]
+            ]
+            _set_json(interaction, payload)
+        elif "/calendar/z/" in interaction["url"]:
+            payload = _json(interaction)
+            data = payload.get("data") or {}
+            for key in ("zone", "company"):
+                if isinstance(data.get(key), dict):
+                    data[key] = {
+                        field: data[key][field]
+                        for field in ("id", "name", "label", "comune")
+                        if field in data[key]
+                    }
+            calendar = data.get("calendar")
+            for entries in calendar.values() if isinstance(calendar, dict) else []:
+                for entry in entries:
+                    entry["trash_types"] = [
+                        {
+                            field: trash_type[field]
+                            for field in ("id", "slug", "name")
+                            if field in trash_type
+                        }
+                        for trash_type in entry.get("trash_types") or []
+                    ]
+            _set_json(interaction, payload)
+
+
 def _ritl_ca(interactions: list[dict], args: dict[str, Any], today: str) -> None:
     """Keep the annual calendar page; remove the unrelated information pages.
 
@@ -572,9 +650,12 @@ def _ritl_ca(interactions: list[dict], args: dict[str, Any], today: str) -> None
 
 
 SCRUBBERS: dict[str, Scrubber] = {
+    "portapporta_it": _portapporta_it,
     "ritl_ca": _ritl_ca,
     "wastenet_org_nz": _wastenet_org_nz,
     "montreal_ca": _montreal_ca,
+    "sunshinecoast_qld_gov_au": _sunshinecoast_qld_gov_au,
+    "cbcity_nsw_gov_au": _cbcity_nsw_gov_au,
     "dardanup_wa_gov_au": _dardanup_wa_gov_au,
     "awb_bad_kreuznach_de": _awb_bad_kreuznach_de,
     "segreguj_gliwice_eu": _segreguj_gliwice_eu,
