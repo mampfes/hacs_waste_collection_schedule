@@ -1140,3 +1140,60 @@ def test_marked_pdf_records_crossed_out_cells_and_the_next_actual_marked_date():
     assert all(row["date"] == D(2026, 1, 2) for row in rows)
     assert rows[0]["cancelled_dates"] == (D(2026, 1, 1),)
     assert rows[0]["next_marked_after_cancelled"] == {D(2026, 1, 1): D(2026, 1, 2)}
+
+
+@pytest.mark.parametrize("group", [1, 2])
+@pytest.mark.parametrize("holiday", [D(2026, 12, 25), D(2027, 1, 1), D(2027, 3, 26)])
+def test_victoria_park_uses_printed_holiday_replacements(group, holiday):
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.victoriapark_wa_gov_au import Source
+
+    case = "Group 1 Monday" if group == 1 else "Group 2 Friday"
+    with (
+        cassette.replaying(fixture_path("victoriapark_wa_gov_au", case)),
+        freeze_time(holiday),
+    ):
+        entries = Source(group=group, day="Friday").fetch()
+    assert not any(e.date == holiday for e in entries)
+    assert sum(e.date == holiday + datetime.timedelta(days=1) for e in entries) == 2
+    assert all(e.date <= D(2027, 6, 30) for e in entries)
+
+
+def test_victoria_park_does_not_project_beyond_published_guide():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.victoriapark_wa_gov_au import Source
+
+    case = "Group 1 Monday"
+    with (
+        cassette.replaying(fixture_path("victoriapark_wa_gov_au", case)),
+        freeze_time("2027-07-01"),
+        pytest.raises(ValueError, match="does not cover today"),
+    ):
+        Source(**Source.TEST_CASES[case]).fetch()
+
+
+@pytest.mark.parametrize("group", [1, 2])
+@pytest.mark.parametrize("scale", [0.8, 1.2])
+def test_victoria_park_raster_grid_tracks_image_scale(group, scale):
+    from io import BytesIO
+
+    import cassette
+    from fixtures_support import fixture_path
+    from PIL import Image
+    from waste_collection_schedule.source.victoriapark_wa_gov_au import Source
+
+    case = "Group 1 Monday" if group == 1 else "Group 2 Friday"
+    source = Source(**Source.TEST_CASES[case])
+    with cassette.replaying(fixture_path("victoriapark_wa_gov_au", case)):
+        response = source.retrieve(source)
+    expected = source.parse(response, source)
+    img = Image.open(BytesIO(response.content)).convert("RGB")
+    scaled = img.resize((int(img.width * scale), int(img.height * scale)))
+    payload = BytesIO()
+    scaled.save(payload, format="PNG")
+    actual = source.parse(
+        SimpleNamespace(content=payload.getvalue(), url=response.url), source
+    )
+    assert actual == expected

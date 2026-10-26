@@ -1,43 +1,21 @@
 # Town of Victoria Park
 
-Support for schedules provided by [Town of Victoria Park Bins and Collections](https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx).
-
-## Configuration via configuration.yaml
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: victoriapark_wa_gov_au
-      args:
-        group: GROUP
-        day: DAY
-```
-
-### Configuration Variables
-
-**group**  
-*(int) (required)* Collection group: `1` or `2`
-
-**day**  
-*(string) (required)* Collection day: `Monday`, `Tuesday`, `Wednesday`, `Thursday`, or `Friday`
-
-## Example
-
 ```yaml
 waste_collection_schedule:
   sources:
     - name: victoriapark_wa_gov_au
       args:
         group: 1
-        day: Monday
+        day: "Monday"
 ```
 
-## How to get the source arguments
+Find your collection group (1 or 2) and weekday on the [Bins and Collections page](https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx).
 
-Visit the [Bins and Collections](https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx) page to find your collection group (1 or 2) and collection day from the calendar images.
+- `group`: Collection group, 1 or 2.
+- `day`: Collection weekday, Monday to Friday.
 
-Collection types:
+The source discovers the current group calendar image and reads the dated red/yellow week cells. FOGO is weekly; general waste and recycling alternate as printed. Green holiday cells use the following day's printed replacement. Dates stop at the end of the published July-June guide. An expired or incomplete calendar raises an error; there is no projection from a historical anchor.
 
-- **FOGO** (Food Organics/Garden Organics) — collected weekly
-- **Recycling** — collected fortnightly (yellow weeks)
-- **General Waste** — collected fortnightly (red weeks)
+## BaseSource migration
+
+Configuration argument names stay unchanged. Waste types now use canonical, localised names; update filters, automations and customisations using the former labels.

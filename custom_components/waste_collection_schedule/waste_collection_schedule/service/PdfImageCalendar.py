@@ -461,3 +461,37 @@ class ColourGridCalendarParser(Parser["list[tuple[date, str]]"]):
 
         self._validate(raw)
         return raw
+
+
+class RasterColourGridParser(Parser[list[tuple[date, str]]]):
+    """Read a standalone raster calendar with the existing colour-grid parser."""
+
+    def __init__(
+        self, grid: ColourGridCalendarParser, *, complete_weekdays: tuple[int, ...] = ()
+    ):
+        self.grid = grid
+        self.complete_weekdays = complete_weekdays
+
+    def __call__(
+        self, response: Any, source: BaseSource | None = None
+    ) -> list[tuple[date, str]]:
+        from PIL import Image
+
+        image = Image.open(BytesIO(response.content)).convert("RGB")
+        rows = self.grid(CalendarImage(image, response.url), source)
+        if self.complete_weekdays:
+            dates = {d for d, _ in rows}
+            year = year_from_url(response.url)
+            expected: set[date] = set()
+            for index in range(12):
+                y, m = box_year_month(year, self.grid._start_month, index)
+                expected.update(
+                    date(y, m, d)
+                    for d in range(1, calendar.monthrange(y, m)[1] + 1)
+                    if date(y, m, d).weekday() in self.complete_weekdays
+                )
+            if not expected <= dates:
+                raise ValueError(
+                    "Raster calendar is missing printed collection weekday cells"
+                )
+        return rows

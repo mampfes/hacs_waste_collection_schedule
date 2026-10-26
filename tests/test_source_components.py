@@ -604,7 +604,6 @@ def test_ics_source_has_necessary_parameters():
 # should add themselves here and explain why.
 SOURCES_ALLOWED_RAW_ICONS: set[str] = {
     "api_golemio_cz",  # integer keys (Czech API trash-type IDs)
-    "cbcity_nsw_gov_au",  # dynamic ICON_MAP construction
     "insert_it_de",  # nested {region: {waste_type: {icon, name}}} structure
     "landkreis_helmstedt_de",  # computed keys
     "potsdam_de",  # integer keys
