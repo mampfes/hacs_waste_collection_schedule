@@ -23,6 +23,15 @@ _WEEKDAY_RE = re.compile(r"(\d{2})\s+(Mo|Di|Mi|Do|Fr|Sa|So)")
 _COLLECTION_RE = re.compile(r"([BRGP])\s+(1/2|[12])")
 _AR_RE = re.compile(r"\bAR\b")
 _SO_RE = re.compile(r"\bSO\b")
+_WEEKDAYS = ("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So")
+
+
+def _weekday(year: int, month: int, day: int) -> int | None:
+    try:
+        return date(year, month, day).weekday()
+    except ValueError:
+        return None
+
 
 _CODE_MAP = {
     "B": "Bioabfall",
@@ -131,7 +140,7 @@ class Source:
                 continue
             positions = [m.start() for m in matches]
             gaps = [positions[j + 1] - positions[j] for j in range(11)]
-            # column width depends on the PDF layout (~40 chars in 2025, ~21 in 2026)
+            # column width depends on the PDF layout and pypdf version (~20-55)
             width = median(gaps)
             if width >= 15 and all(abs(g - width) <= 3 for g in gaps):
                 col_boundaries = positions
@@ -144,23 +153,26 @@ class Source:
         for line in lines[header_idx + 1 :]:
             matches = list(_WEEKDAY_RE.finditer(line))
 
-            # Holiday text shifts the following columns by a few characters, so
-            # assign each day entry to the nearest column instead of slicing at
-            # fixed positions; a cell runs up to the next day entry.
+            # Holiday text shifts the following columns by up to half a column
+            # or more, so slicing at fixed positions is unreliable. Each day entry
+            # ("01 Mo") is assigned to the nearest column whose month has that
+            # weekday on that day; a cell runs up to the next day entry.
             for i, cell_m in enumerate(matches):
-                distances = [abs(cell_m.start() - pos) for pos in col_boundaries]
-                month_idx = distances.index(min(distances))
-                if distances[month_idx] > width / 2:
-                    continue
-                month = month_idx + 1
                 day = int(cell_m.group(1))
+                weekday = _WEEKDAYS.index(cell_m.group(2))
+                distances = {
+                    month: abs(cell_m.start() - col_boundaries[month - 1])
+                    for month in range(1, 13)
+                    if _weekday(year, month, day) == weekday
+                }
+                if not distances:
+                    continue
+                month = min(distances, key=distances.__getitem__)
+                if distances[month] > 2 * width:
+                    continue
+                d = date(year, month, day)
                 end = matches[i + 1].start() if i + 1 < len(matches) else len(line)
                 cell = line[cell_m.start() : end]
-
-                try:
-                    d = date(year, month, day)
-                except ValueError:
-                    continue
 
                 for cm in _COLLECTION_RE.finditer(cell):
                     tour_group = cm.group(2)
