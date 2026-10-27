@@ -1980,6 +1980,197 @@ class GridBlock(NamedTuple):
     rows: list[tuple[datetime.date, str]]
 
 
+class PdfMonthGridRow(NamedTuple):
+    """One PDF month-grid row with its left-hand label and dated cells."""
+
+    year: int
+    page: int
+    y: float
+    column_count: int
+    label: str
+    cells: list[tuple[int, datetime.date]]
+
+
+class PdfMonthDayGrid(Preprocessor["list[PdfWordLayout]", PdfMonthGridRow]):
+    """Read a PDF grid whose rows list collection days under month headings.
+
+    Month columns are identified by their headings and day values by position;
+    text to the left of the first month column is collected as that row's
+    label. The source remains responsible for interpreting the label and
+    column indexes.
+    """
+
+    def __init__(
+        self,
+        *,
+        year_pattern: str,
+        month_locale: str | None = None,
+        column_counts: Sequence[int] = (12,),
+        label_x: tuple[float, float] | None = None,
+        label_margin: float = 20.0,
+        column_tolerance: float = 35.0,
+        row_tolerance: float = 3.0,
+        header_tolerance: float = 2.0,
+        header_gap: float = 5.0,
+    ):
+        if not column_counts or any(count < 1 for count in column_counts):
+            raise ValueError("column_counts must contain positive integers")
+        self._year_re = re.compile(year_pattern)
+        self._month_locale = month_locale
+        self._column_counts = frozenset(column_counts)
+        self._label_x = label_x
+        self._label_margin = label_margin
+        self._column_tolerance = column_tolerance
+        self._row_tolerance = row_tolerance
+        self._header_tolerance = header_tolerance
+        self._header_gap = header_gap
+
+    def __call__(
+        self, records: "list[PdfWordLayout]", source: "BaseSource | None" = None
+    ) -> list[PdfMonthGridRow]:
+        from waste_collection_schedule import response_shape
+
+        rows: list[PdfMonthGridRow] = []
+        for layout in records:
+            text = "\n".join(line.text for line in layout.lines)
+            match = self._year_re.search(text)
+            response_shape.expect(
+                match is not None,
+                source_name=response_shape.source_name(source),
+                detail=f"no year matching {self._year_re.pattern!r} in the PDF",
+                raw=text[:500],
+            )
+            year = int(match.group(1)) if match else datetime.date.today().year
+            found_header = False
+            for page in sorted({word.page for word in layout.words}):
+                page_rows = self._page(layout, page, year, source)
+                if page_rows is not None:
+                    found_header = True
+                    rows.extend(page_rows)
+            response_shape.expect(
+                found_header,
+                source_name=response_shape.source_name(source),
+                detail="no supported month-heading row in the PDF",
+                raw=text[:500],
+            )
+        return rows
+
+    def _page(
+        self,
+        layout: "PdfWordLayout",
+        page: int,
+        year: int,
+        source: "BaseSource | None",
+    ) -> list[PdfMonthGridRow] | None:
+        from waste_collection_schedule import response_shape
+
+        words = [word for word in layout.words if word.page == page]
+        month_words = [
+            (word, month)
+            for word in words
+            if (month := recurrence.month(word.text, locale=self._month_locale))
+        ]
+        header_rows: list[tuple[float, list[tuple[float, int]]]] = []
+        for word, _month in sorted(month_words, key=lambda item: -item[0].y):
+            columns = [
+                (other.x, month)
+                for other, month in month_words
+                if abs(other.y - word.y) <= self._header_tolerance
+            ]
+            if len(columns) in self._column_counts:
+                header_rows.append((word.y, sorted(columns)))
+        if not header_rows:
+            return None
+
+        header_y, months = max(header_rows, key=lambda item: item[0])
+        first_x = months[0][0]
+        candidates: list[tuple[Any, int]] = []
+        for word in words:
+            if (
+                not _GRID_DAYS.fullmatch(word.text)
+                or word.y >= header_y - self._header_gap
+            ):
+                continue
+            column_index = min(
+                range(len(months)), key=lambda index: abs(months[index][0] - word.x)
+            )
+            if abs(months[column_index][0] - word.x) <= self._column_tolerance:
+                candidates.append((word, column_index))
+
+        grouped_rows: list[list[tuple[Any, int]]] = []
+        for item in sorted(candidates, key=lambda candidate: -candidate[0].y):
+            if (
+                not grouped_rows
+                or abs(item[0].y - grouped_rows[-1][0][0].y) > self._row_tolerance
+            ):
+                grouped_rows.append([item])
+            else:
+                grouped_rows[-1].append(item)
+        if not grouped_rows:
+            response_shape.expect(
+                False,
+                source_name=response_shape.source_name(source),
+                detail="no day cells below the month headings in the PDF",
+                raw="\n".join(line.text for line in layout.lines if line.page == page),
+            )
+            return []
+
+        row_centres = [
+            sum(word.y for word, _ in row) / len(row) for row in grouped_rows
+        ]
+        page_rows: list[PdfMonthGridRow] = []
+        for row_index, (row, row_y) in enumerate(
+            zip(grouped_rows, row_centres, strict=True)
+        ):
+            top = (
+                (header_y + row_y) / 2
+                if row_index == 0
+                else (row_centres[row_index - 1] + row_y) / 2
+            )
+            bottom = (
+                (row_y + row_centres[row_index + 1]) / 2
+                if row_index + 1 < len(row_centres)
+                else float("-inf")
+            )
+            label_left, label_right = self._label_x or (
+                float("-inf"),
+                first_x - self._label_margin,
+            )
+            label = "\n".join(
+                line.text
+                for line in sorted(
+                    (
+                        line
+                        for line in layout.lines
+                        if line.page == page
+                        and label_left <= line.x <= label_right
+                        and bottom < line.y <= top
+                    ),
+                    key=lambda line: (-line.y, line.x),
+                )
+            )
+            cells: list[tuple[int, datetime.date]] = []
+            for word, column_index in row:
+                month = months[column_index][1]
+                for day_text in re.findall(r"\d+", word.text):
+                    try:
+                        collection_date = datetime.date(year, month, int(day_text))
+                    except ValueError:
+                        response_shape.expect(
+                            False,
+                            source_name=response_shape.source_name(source),
+                            detail=(
+                                f"day {day_text} binned into month {month} in the PDF"
+                            ),
+                        )
+                        continue
+                    cells.append((column_index, collection_date))
+            page_rows.append(
+                PdfMonthGridRow(year, page, row_y, len(months), label, cells)
+            )
+        return page_rows
+
+
 class PdfRoundMonthGrid(Preprocessor["list[PdfWordLayout]", GridBlock]):
     """Read a PDF table with one row per round and one column per month.
 

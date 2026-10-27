@@ -842,6 +842,99 @@ class TestPdfRoundMonthGrid:
             self.grid()([self.table(self.MONTHS, extra_words=impossible)])
 
 
+class TestPdfMonthDayGrid:
+    @staticmethod
+    def layout(lines, words, page=0):
+        fragment = parsers.PdfTextFragment
+        return parsers.PdfWordLayout(
+            [fragment(page, text, x, y) for text, x, y in lines],
+            [fragment(page, text, x, y) for text, x, y in words],
+            [],
+        )
+
+    def test_reads_three_month_columns_and_collects_the_row_label(self):
+        layout = self.layout(
+            [
+                ("Calendar 2026", 300, 800),
+                ("Nemėžis and nearby villages", 100, 700),
+            ],
+            [
+                ("Spalis", 200, 750),
+                ("Lapkritis", 250, 750),
+                ("Gruodis", 300, 750),
+                ("7,", 200, 700),
+                ("21", 210, 700),
+                ("4", 250, 700),
+                ("2,16,30", 300, 700),
+            ],
+        )
+
+        rows = preprocessors.PdfMonthDayGrid(
+            year_pattern=r"\b(20\d{2})\b",
+            month_locale="lt",
+            column_counts=(3,),
+        )([layout])
+
+        assert len(rows) == 1
+        assert rows[0].label == "Nemėžis and nearby villages"
+        assert rows[0].column_count == 3
+        assert rows[0].cells == [
+            (0, D(2026, 10, 7)),
+            (0, D(2026, 10, 21)),
+            (1, D(2026, 11, 4)),
+            (2, D(2026, 12, 2)),
+            (2, D(2026, 12, 16)),
+            (2, D(2026, 12, 30)),
+        ]
+
+    def test_keeps_repeated_month_headings_as_distinct_columns(self):
+        layout = self.layout(
+            [
+                ("Calendar 2026", 300, 800),
+                ("Location one", 100, 700),
+                ("Location two", 100, 650),
+            ],
+            [
+                ("Spalis", 200, 750),
+                ("Lapkritis", 250, 750),
+                ("Gruodis", 300, 750),
+                ("Spalis", 350, 750),
+                ("Lapkritis", 400, 750),
+                ("Gruodis", 450, 750),
+                ("9", 200, 700),
+                ("1", 350, 700),
+                ("11", 400, 700),
+                ("8", 450, 650),
+            ],
+        )
+
+        rows = preprocessors.PdfMonthDayGrid(
+            year_pattern=r"\b(20\d{2})\b",
+            month_locale="lt",
+            column_counts=(6,),
+        )([layout])
+
+        assert [row.label for row in rows] == ["Location one", "Location two"]
+        assert rows[0].cells == [
+            (0, D(2026, 10, 9)),
+            (3, D(2026, 10, 1)),
+            (4, D(2026, 11, 11)),
+        ]
+        assert rows[1].cells == [(5, D(2026, 12, 8))]
+
+    def test_changed_month_grid_shape_raises(self):
+        layout = self.layout(
+            [("Calendar 2026", 300, 800)],
+            [("Spalis", 200, 750), ("Lapkritis", 250, 750)],
+        )
+        with pytest.raises(ResponseShapeError, match="month-heading"):
+            preprocessors.PdfMonthDayGrid(
+                year_pattern=r"\b(20\d{2})\b",
+                month_locale="lt",
+                column_counts=(3,),
+            )([layout])
+
+
 def test_marker_calendar_half_cell_bar_reaches_its_day_numbers():
     from waste_collection_schedule.parsers import PdfVector
     from waste_collection_schedule.service.PdfMarkerCalendar import (
