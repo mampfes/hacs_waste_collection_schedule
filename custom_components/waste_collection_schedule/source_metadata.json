@@ -8926,6 +8926,13 @@
     },
     "urls": {}
   },
+  "huntington_ny_us": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/huntington_ny_us.md",
+    "howto": {
+      "en": "Enter your full street address including town and state (e.g. '242 E Main St, Huntington, NY'). Only the weekdays are published, so holiday shifts and the yard waste season are not reflected."
+    },
+    "urls": {}
+  },
   "ics_trashdaynow_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/trashdaynow_com.md",
     "howto": {

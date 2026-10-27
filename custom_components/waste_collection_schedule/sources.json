@@ -39348,6 +39348,12 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Town of Huntington, NY",
+      "module": "huntington_ny_us",
+      "default_params": {},
+      "id": "huntington_ny_us"
+    },
+    {
       "title": "TrashDayNow",
       "module": "ics",
       "default_params": {},

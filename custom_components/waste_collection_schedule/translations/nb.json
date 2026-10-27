@@ -35543,6 +35543,29 @@
           "street_address": "Hele adressen din."
         }
       },
+      "args_huntington_ny_us": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "address": "Hele adressen din."
+        }
+      },
+      "reconfigure_huntington_ny_us": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "address": "Hele adressen din."
+        }
+      },
       "args_ics_trashdaynow_com": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
