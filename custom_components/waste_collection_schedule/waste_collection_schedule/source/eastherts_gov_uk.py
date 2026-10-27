@@ -146,7 +146,7 @@ class Source:
             "formValues": {"Collection Days": {"inputUPRN": {"value": self._uprn}}}
         }
         scheduleRequest = s.post(
-            f"https://eastherts-self.achieveservice.com/apibroker/runLookup?id=683d9ff0e299d&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
+            f"https://eastherts-self.achieveservice.com/apibroker/runLookup?id=6accfd6441228&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
             headers=HEADERS,
             json=payload,
         )
