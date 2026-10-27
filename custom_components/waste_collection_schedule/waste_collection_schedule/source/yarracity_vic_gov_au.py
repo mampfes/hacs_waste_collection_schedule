@@ -60,6 +60,14 @@ _TYPE_MAP = {
     "FOGO": wt.ORGANIC,
 }
 
+# Yarra bin-lid colours, keyed by the source's schedule labels.
+_COLOUR_MAP = {
+    "Glass": "#673AB7",
+    "Rubbish": "#851E17",
+    "FOGO": "#5BD252",
+    "Recycling": "#FFCB3B",
+}
+
 
 def _geocode_address(address: str) -> str:
     """Qualify the address so the world geocoder resolves it in Victoria."""
@@ -182,4 +190,8 @@ class Source(BaseSource):
     retrieve = ArcGisMultiFeatureRetriever(LAYERS, address=_geocode_address)
     parse = ArcGisMultiFeatureParser()
     preprocess = Compose(RecurrenceExpander(_describe), HolidayShift(_adjust))
-    transform = ICSTransformer(type_value_map=_TYPE_MAP)
+    transform = ICSTransformer(
+        type_value_map=_TYPE_MAP,
+        # Recurrence expansion supplies (date, schedule_label).
+        color_key=lambda record: _COLOUR_MAP[record[1]],
+    )
