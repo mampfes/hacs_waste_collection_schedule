@@ -1,0 +1,61 @@
+{
+  "recorded_at": "2026-10-27",
+  "interactions": [
+    {
+      "key": "GET https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates a35646f078",
+      "method": "GET",
+      "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates",
+      "final_url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=242+E+Main+St%2C+Huntington%2C+NY&outSR=%7B%22wkid%22%3A+4326%7D&maxLocations=1&f=json",
+      "body": "{\"params\":[[\"SingleLine\",\"242 E Main St, Huntington, NY\"],[\"f\",\"json\"],[\"maxLocations\",\"1\"],[\"outSR\",\"{\\\"wkid\\\": 4326}\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Tue, 27 Oct 2026 22:33:17 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "Content-Length": "224",
+        "Connection": "keep-alive",
+        "X-Content-Type-Options": "nosniff",
+        "Server": "ArcGIS Online",
+        "ETag": "\"d08195f1\"",
+        "Content-Encoding": "gzip",
+        "Cache-Control": "max-age=300",
+        "X-Cached": "MISS",
+        "Vary": "Origin,Accept-Encoding",
+        "Strict-Transport-Security": "max-age=63072000"
+      },
+      "content_b64": "eyJzcGF0aWFsUmVmZXJlbmNlIjp7IndraWQiOjQzMjYsImxhdGVzdFdraWQiOjQzMjZ9LCJjYW5kaWRhdGVzIjpbeyJhZGRyZXNzIjoiMjQyIEUgTWFpbiBTdCwgSHVudGluZ3RvbiwgTmV3IFlvcmssIDExNzQzIiwibG9jYXRpb24iOnsieCI6LTczLjM5MjAzMjgwMDg5MSwieSI6NDAuODgxNDAyMzIwNjM5fSwic2NvcmUiOjEwMCwiYXR0cmlidXRlcyI6e30sImV4dGVudCI6eyJ4bWluIjotNzMuMzkzMDMyODAwODkxLCJ5bWluIjo0MC44ODA0MDIzMjA2MzksInhtYXgiOi03My4zOTEwMzI4MDA4OTEsInltYXgiOjQwLjg4MjQwMjMyMDYzOX19XX0="
+    },
+    {
+      "key": "GET https://geo.huntingtonny.gov/arcgis/rest/services/Public/Government_Services_v2/MapServer/0/query 56ba0216dd",
+      "method": "GET",
+      "url": "https://geo.huntingtonny.gov/arcgis/rest/services/Public/Government_Services_v2/MapServer/0/query",
+      "final_url": "https://geo.huntingtonny.gov/arcgis/rest/services/Public/Government_Services_v2/MapServer/0/query?outFields=%2A&returnGeometry=false&f=json&geometry=%7B%22x%22%3A+-73.392032800891%2C+%22y%22%3A+40.881402320639%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&inSR=4326",
+      "body": "{\"params\":[[\"f\",\"json\"],[\"geometry\",\"{\\\"x\\\": -73.392032800891, \\\"y\\\": 40.881402320639}\"],[\"geometryType\",\"esriGeometryPoint\"],[\"inSR\",\"4326\"],[\"outFields\",\"*\"],[\"returnGeometry\",\"false\"],[\"spatialRel\",\"esriSpatialRelIntersects\"]]}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "Date": "Tue, 27 Oct 2026 22:33:18 GMT",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Length": "561",
+        "Connection": "keep-alive",
+        "Cache-Control": "must-revalidate,max-age=0,public",
+        "Content-Encoding": "gzip",
+        "etag": "\"c3b11b14\"",
+        "vary": "Origin, accept-encoding",
+        "Server": "cloudflare",
+        "Set-Cookie": "AGS_ROLES=sym-gcm|1|_2-kM_VJkAmjxIfIHZe1qg==|u1drWrvLbtbIiZNANtXfcW6SSHItFkQktvR1aGoc; Max-Age=60; Expires=Tue, 27 Oct 2026 22:34:17 GMT; Path=/arcgis/rest; HttpOnly; SameSite=Lax",
+        "x-content-type-options": "nosniff",
+        "x-xss-protection": "1; mode=block",
+        "strict-transport-security": "max-age=31536000; includeSubDomains",
+        "cf-cache-status": "DYNAMIC",
+        "content-security-policy": "upgrade-insecure-requests; block-all-mixed-content; frame-ancestors 'self' https://huntingtonny.gov https://www.huntingtonny.gov deeds.town-of-huntington.workers.dev;",
+        "permissions-policy": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=()",
+        "referrer-policy": "no-referrer-when-downgrade",
+        "x-frame-options": "SAMEORIGIN",
+        "CF-RAY": "a515295c9b16182d-EWR",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJkaXNwbGF5RmllbGROYW1lIjoiRElTVFJJQ1RfTk8iLCJmaWVsZEFsaWFzZXMiOnsiRElTVFJJQ1RfTk8iOiJESVNUUklDVF9OTyIsIlBBUkNFTElEIjoiUEFSQ0VMSUQiLCJQSFlfQUREUjEiOiJQSFlfQUREUjEiLCJQSFlfQ0lUWSI6IlBIWV9DSVRZIiwiTE9OR19ERVNDIjoiTE9OR19ERVNDIiwiWWFyZFdhc3RlIjoiWWFyZFdhc3RlIiwiSU5TUEVDVE9SIjoiSU5TUEVDVE9SIiwiQ2FydF9BcmVhIjoiQ2FydF9BcmVhIiwiUmVjeWNsaW5nIjoiUmVjeWNsaW5nIiwiQ09MTEVDVElPTiI6IkNPTExFQ1RJT04iLCJDQVJURVIiOiJDQVJURVIiLCJURUxFUEhPTkUiOiJURUxFUEhPTkUiLCJPQkpFQ1RJRCI6Ik9CSkVDVElEIn0sImZpZWxkcyI6W3sibmFtZSI6IkRJU1RSSUNUX05PIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkRJU1RSSUNUX05PIiwibGVuZ3RoIjoxNX0seyJuYW1lIjoiUEFSQ0VMSUQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUEFSQ0VMSUQiLCJsZW5ndGgiOjMwfSx7Im5hbWUiOiJQSFlfQUREUjEiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUEhZX0FERFIxIiwibGVuZ3RoIjo1MH0seyJuYW1lIjoiUEhZX0NJVFkiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiUEhZX0NJVFkiLCJsZW5ndGgiOjM1fSx7Im5hbWUiOiJMT05HX0RFU0MiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiTE9OR19ERVNDIiwibGVuZ3RoIjoyNTV9LHsibmFtZSI6IllhcmRXYXN0ZSIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJZYXJkV2FzdGUiLCJsZW5ndGgiOjUwfSx7Im5hbWUiOiJJTlNQRUNUT1IiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiSU5TUEVDVE9SIiwibGVuZ3RoIjo1MH0seyJuYW1lIjoiQ2FydF9BcmVhIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IkNhcnRfQXJlYSIsImxlbmd0aCI6OH0seyJuYW1lIjoiUmVjeWNsaW5nIiwidHlwZSI6ImVzcmlGaWVsZFR5cGVTdHJpbmciLCJhbGlhcyI6IlJlY3ljbGluZyIsImxlbmd0aCI6NTB9LHsibmFtZSI6IkNPTExFQ1RJT04iLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiQ09MTEVDVElPTiIsImxlbmd0aCI6MjB9LHsibmFtZSI6IkNBUlRFUiIsInR5cGUiOiJlc3JpRmllbGRUeXBlU3RyaW5nIiwiYWxpYXMiOiJDQVJURVIiLCJsZW5ndGgiOjI1fSx7Im5hbWUiOiJURUxFUEhPTkUiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZVN0cmluZyIsImFsaWFzIjoiVEVMRVBIT05FIiwibGVuZ3RoIjoxMn0seyJuYW1lIjoiT0JKRUNUSUQiLCJ0eXBlIjoiZXNyaUZpZWxkVHlwZU9JRCIsImFsaWFzIjoiT0JKRUNUSUQifV0sImZlYXR1cmVzIjpbeyJhdHRyaWJ1dGVzIjp7IkRJU1RSSUNUX05PIjoiZ2EwMDQiLCJQQVJDRUxJRCI6IjA0MDAwNzcwMDAxMDAwMTUwMDciLCJQSFlfQUREUjEiOiIyNDIgRSBNQUlOIFNUIiwiUEhZX0NJVFkiOiJIVU5USU5HVE9OIiwiTE9OR19ERVNDIjoiUmVmdXNlIERpc3RyaWN0IiwiWWFyZFdhc3RlIjoiVGh1cnNkYXkiLCJJTlNQRUNUT1IiOiJSLiBTdGFuY28sIEouIEhhbGwsIEQuIFRheWxvciIsIkNhcnRfQXJlYSI6IjA0IiwiUmVjeWNsaW5nIjoiV2VkbmVzZGF5IiwiQ09MTEVDVElPTiI6IlRVRVNEQVkvRlJJREFZIiwiQ0FSVEVSIjoiR2F0bGFzIEVudGVycHJpc2VzIiwiVEVMRVBIT05FIjoiNjMxLTQ0Ny0wNTEwIiwiT0JKRUNUSUQiOjE3MDUxfX1dfQ=="
+    }
+  ]
+}
