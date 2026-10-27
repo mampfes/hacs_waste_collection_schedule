@@ -19,7 +19,7 @@ from .waste_collection_schedule.service.DeviceKeyStore import (
     initialize_device_key_store,
 )
 from .waste_collection_schedule.source_shell import calc_unique_source_id
-from .wcs_coordinator import WCSCoordinator
+from .wcs_coordinator import WCSCoordinator, cache_store
 
 from . import const  # type: ignore # isort:skip
 from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip
@@ -144,6 +144,11 @@ async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> bool
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload a config entry."""
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+
+
+async def async_remove_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Remove the cached collection data of a deleted config entry."""
+    await cache_store(hass, entry.entry_id).async_remove()
 
 
 async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:

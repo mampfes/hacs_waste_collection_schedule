@@ -2,6 +2,7 @@
 
 from .init_ui import (  # noqa: F401
     async_migrate_entry,
+    async_remove_entry,
     async_setup_entry,
     async_unload_entry,
     async_update_listener,
