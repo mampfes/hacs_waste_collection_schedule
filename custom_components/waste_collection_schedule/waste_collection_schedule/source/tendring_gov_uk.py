@@ -51,11 +51,11 @@ ICON_MAP = {
 # (api_field, waste_type_label, icon_key, conditional_field)
 # conditional_field: if set, skip this waste type if the field value is falsy
 COLLECTION_FIELDS = [
-    ("nextResidualCollection", "Residual waste", "residual", None),
-    ("nextGreenCollection", "Green recycling box", "green", None),
-    ("nextRedCollection", "Red recycling box", "red", None),
-    ("nextFoodCollection", "Food waste", "food", "eligibleFoodCollection"),
-    ("nextGardenCollection", "Garden waste", "garden", "activeGardenCollection"),
+    ("RefuseNextCol", "Residual waste", "residual", None),
+    ("PaperNextCol", "Green recycling box", "green", None),
+    ("DMRNextCol", "Red recycling box", "red", None),
+    ("FoodNextCol", "Food waste", "food", None),
+    ("GardenNextCol", "Garden waste", "garden", "ActiveGardenCollection"),
 ]
 
 
@@ -88,11 +88,15 @@ class Source:
         entries = []
         for date_field, waste_type, icon_key, condition_field in COLLECTION_FIELDS:
             # Skip conditional waste types if the service is not active
-            # API returns string "True"/"False" for boolean fields
-            if condition_field and row.get(condition_field, "").lower() != "true":
+            # API returns "1"/"0" for ActiveGardenCollection
+            if condition_field and row.get(condition_field, "").strip() not in (
+                "1",
+                "true",
+                "True",
+            ):
                 continue
 
-            date_str = row.get(date_field, "").strip()
+            date_str = (row.get(date_field) or "").strip()
             if not date_str:
                 continue
             try:
