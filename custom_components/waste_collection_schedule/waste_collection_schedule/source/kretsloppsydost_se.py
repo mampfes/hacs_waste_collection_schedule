@@ -50,7 +50,8 @@ def _dates(service: dict, source: Any) -> list[str]:
 class Source(BaseSource):
     TITLE = "Kretslopp Sydost"
     DESCRIPTION = (
-        "Source for Kretslopp Sydost (Sävsjö, Vetlanda, Nybro, Kalmar, Alstermo)."
+        "Source for Kretslopp Sydost (Kalmar, Mörbylånga, Nybro, Oskarshamn, "
+        "Sävsjö, Torsås, Uppvidinge and Vetlanda)."
     )
     URL = "https://kretsloppsydost.se"
     COUNTRY = "se"
@@ -75,7 +76,9 @@ class Source(BaseSource):
     HOWTO: ClassVar[dict] = {
         "en": (
             "Enter your street address and place as the search on "
-            "kretsloppsydost.se lists it, for example 'Hägnevägen 1, Sävsjö'."
+            "kretsloppsydost.se lists it, for example 'Hägnevägen 1, Sävsjö'. "
+            "This replaces the 'kretslopp-sydost' provider of the EDP Future "
+            "source, which leaves out the second bin (Kärl 2)."
         ),
     }
 
