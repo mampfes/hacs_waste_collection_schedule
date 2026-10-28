@@ -24370,6 +24370,29 @@
           "street_address": "Vaš celoten naslov."
         }
       },
+      "args_kretsloppsydost_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Naslov"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "street_address": "Vaš celoten naslov."
+        }
+      },
+      "reconfigure_kretsloppsydost_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "street_address": "Naslov"
+        },
+        "data_description": {
+          "street_address": "Vaš celoten naslov."
+        }
+      },
       "args_renhallningen_kristianstad_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

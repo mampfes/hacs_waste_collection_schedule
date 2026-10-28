@@ -24372,6 +24372,29 @@
           "street_address": "Hele adressen din."
         }
       },
+      "args_kretsloppsydost_se": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "street_address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "street_address": "Hele adressen din."
+        }
+      },
+      "reconfigure_kretsloppsydost_se": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "street_address": "Adresse"
+        },
+        "data_description": {
+          "street_address": "Hele adressen din."
+        }
+      },
       "args_renhallningen_kristianstad_se": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",

@@ -10580,6 +10580,14 @@
       "id": "ics_awhas_de"
     },
     {
+      "title": "Abfallwirtschaft Landkreis Neuwied",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "de4957b006c53e47f8b9c21bc2c768f0"
+      },
+      "id": "abfall_io_graphql"
+    },
+    {
       "title": "Abfallwirtschaft Landkreis Nordhausen",
       "module": "ics",
       "default_params": {},
@@ -34435,6 +34443,12 @@
         "service_provider": "kretslopp-sydost"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Kretslopp Sydost",
+      "module": "kretsloppsydost_se",
+      "default_params": {},
+      "id": "kretsloppsydost_se"
     },
     {
       "title": "Kristianstad Renh\u00e5llning",

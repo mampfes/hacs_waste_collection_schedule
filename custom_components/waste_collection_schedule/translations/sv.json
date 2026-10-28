@@ -24372,6 +24372,29 @@
           "street_address": "Din fullständiga adress."
         }
       },
+      "args_kretsloppsydost_se": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "street_address": "Adress"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street_address": "Din fullständiga adress."
+        }
+      },
+      "reconfigure_kretsloppsydost_se": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "street_address": "Adress"
+        },
+        "data_description": {
+          "street_address": "Din fullständiga adress."
+        }
+      },
       "args_renhallningen_kristianstad_se": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",

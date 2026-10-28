@@ -5604,6 +5604,13 @@
     },
     "urls": {}
   },
+  "kretsloppsydost_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kretsloppsydost_se.md",
+    "howto": {
+      "en": "Enter your street address and place as the search on kretsloppsydost.se lists it, for example 'Hägnevägen 1, Sävsjö'. This replaces the 'kretslopp-sydost' provider of the EDP Future source, which leaves out the second bin (Kärl 2)."
+    },
+    "urls": {}
+  },
   "renhallningen_kristianstad_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renhallningen_kristianstad_se.md",
     "howto": {},

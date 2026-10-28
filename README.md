@@ -1609,6 +1609,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Abfallwirtschaft Landkreis Göppingen](/doc/ics/abfall_io_ics.md) / awb-gp.de
 - [Abfallwirtschaft Landkreis Harburg](/doc/source/aw_harburg_de.md) / landkreis-harburg.de
 - [Abfallwirtschaft Landkreis Haßberge](/doc/ics/awhas_de.md) / awhas.de
+- [Abfallwirtschaft Landkreis Neuwied](/doc/source/abfall_io_graphql.md) / abfall-nr.de
 - [Abfallwirtschaft Landkreis Nordhausen](/doc/ics/abfallportal_nordhausen_de.md) / abfall-nordhausen.de
 - [Abfallwirtschaft Neckar-Odenwald-Kreis](/doc/source/awn_de.md) / awn-online.de
 - [Abfallwirtschaft Nürnberger Land](/doc/source/nuernberger_land_de.md) / nuernberger-land.de
@@ -4730,6 +4731,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Kiruna - Tekniska Verken](/doc/source/edpevent_se.md) / tekniskaverkenikiruna.se
 - [Knivsta](/doc/source/avfallsapp_se.md) / knivsta.se
 - [Kretslopp Sydost](/doc/source/edpevent_se.md) / kretsloppsydost.se
+- [Kretslopp Sydost](/doc/source/kretsloppsydost_se.md) / kretsloppsydost.se
 - [Kristianstad Renhållning](/doc/source/renhallningen_kristianstad_se.md) / renhallningen-kristianstad.se
 - [Kungsbacka](/doc/source/avfallsapp_se.md) / kungsbacka.se
 - [Kungsbacka kommun](/doc/source/kungsbacka_se.md) / sjalvservice.kungsbacka.se
