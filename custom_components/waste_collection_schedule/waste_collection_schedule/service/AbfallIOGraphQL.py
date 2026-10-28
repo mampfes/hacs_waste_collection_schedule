@@ -55,4 +55,9 @@ SERVICE_MAP = [
         "url": "https://www.aso-ohz.de/",
         "service_id": "8b016df0116d1d5094fa339bebea0c65",
     },
+    {
+        "title": "Abfallwirtschaft Landkreis Neuwied",
+        "url": "https://abfall-nr.de/",
+        "service_id": "de4957b006c53e47f8b9c21bc2c768f0",
+    },
 ]
