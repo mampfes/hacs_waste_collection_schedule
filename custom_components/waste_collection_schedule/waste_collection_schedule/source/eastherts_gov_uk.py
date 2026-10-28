@@ -1,7 +1,7 @@
-import json
 import logging
 import re
 import time
+import xml.etree.ElementTree as ET
 from datetime import datetime
 
 import requests
@@ -111,9 +111,12 @@ class Source:
     def resolve_year(self, dt):
         today = datetime.now()
         this_year = today.year
-        temp_dt = parse(f"{dt} {this_year}")
+        # The portal returns ordinal day suffixes (e.g. "5th"); strip them
+        # so dateutil can parse the (year-less) date string reliably.
+        dt_clean = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", dt, flags=re.IGNORECASE)
+        temp_dt = parse(f"{dt_clean} {this_year}")
         if temp_dt.month == 1 and today.month == 12:
-            temp_dt = parse(f"{dt} {this_year + 1}")
+            temp_dt = parse(f"{dt_clean} {this_year + 1}")
         return temp_dt
 
     def fetch(self):
@@ -151,17 +154,27 @@ class Source:
             json=payload,
         )
         scheduleRequest.raise_for_status()
-        rowdata = json.loads(scheduleRequest.content)["integration"]["transformed"][
-            "rows_data"
-        ]["0"]
+
+        # The portal now answers with a JSON envelope whose "data" field holds
+        # an XML document containing one row of collection dates.
+        response = scheduleRequest.json()
+        xml_data = response.get("data", "")
+        if not xml_data:
+            raise ValueError("East Herts Council returned no collection data")
+
+        root = ET.fromstring(xml_data)
 
         temp_dict: dict = {}
-        for item in rowdata:
-            if "NextDate" in item:
-                if rowdata[item] != "":
-                    temp_dict.update(
-                        {item.replace("NextDate", ""): self.resolve_year(rowdata[item])}
-                    )
+        for row in root.iter("Row"):
+            for result in row.findall("result"):
+                column = result.get("column", "")
+                if not column.endswith("NextDate"):
+                    continue
+                value = (result.text or "").strip()
+                if not value or result.get("isNull", "").lower() == "true":
+                    continue
+                key = column.replace("NextDate", "")
+                temp_dict[key] = self.resolve_year(value)
 
         entries = []
         for item in temp_dict:
