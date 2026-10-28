@@ -8026,6 +8026,14 @@
       "id": "abfall_io"
     },
     {
+      "title": "Abfallwirtschaft Landkreis Neuwied",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "de4957b006c53e47f8b9c21bc2c768f0"
+      },
+      "id": "abfall_io_graphql"
+    },
+    {
       "title": "Abfallwirtschaft Landkreis Nordhausen",
       "module": "ics",
       "default_params": {},
