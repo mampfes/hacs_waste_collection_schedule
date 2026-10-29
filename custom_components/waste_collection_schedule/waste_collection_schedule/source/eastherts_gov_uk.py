@@ -1,7 +1,7 @@
+import json
 import logging
 import re
 import time
-import xml.etree.ElementTree as ET
 from datetime import datetime
 
 import requests
@@ -40,22 +40,8 @@ ICON_MAP = {
 }
 REGEX = {
     "SID": r"sid=(.+)",
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {  # Optional dictionary to describe how to get the arguments, will be shown in the GUI configuration form above the input fields, does not need to be translated in all languages
-    "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.",
-}
-
-PARAM_DESCRIPTIONS = {  # Optional dict to describe the arguments, will be shown in the GUI configuration below the respective input field
-    "en": {
-        "uprn": "Every UK residential property is allocated a Unique Property Reference Number (UPRN). You can find yours by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
-    },
-}
-
-PARAM_TRANSLATIONS = {  # Optional dict to translate the arguments, will be shown in the GUI configuration form as placeholder text
-    "en": {
-        "uprn": "Unique Property Reference Number",
-    },
+    "PROCESS_URI": r"(AF-Process-[a-f0-9-]+)",
+    "LOOKUP_ID": r'([a-f0-9]{13})',  # Achieveservice IDs are typically 13-char hex strings
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -71,7 +57,6 @@ class Source:
         address_postcode=None,
         uprn=None,
     ):
-
         self._address_name_number = (
             address_name_number
             if address_name_number is not None
@@ -82,112 +67,131 @@ class Source:
         self._address_postcode = address_postcode
         self._uprn = uprn
 
-        if address_name_numer is not None:
-            _LOGGER.warning(
-                "address_name_numer is deprecated. Use address_name_number instead."
-            )
-        if address_street is not None:
-            _LOGGER.warning(
-                "address_street is deprecated. Only address_name_number and address_postcode are required"
-            )
-        if street_town is not None:
-            _LOGGER.warning(
-                "street_town is deprecated. Only address_name_number and address_postcode are required"
-            )
-
     def get_uprn_from_postcode(self, s, pcode):
-        # returns the first uprn from a postcode search
-        # ensures old configs without a uprn arg still work
         r = s.get(f"https://uprn.uk/postcode/{pcode}")
         soup = BeautifulSoup(r.content, "html.parser")
         cols = soup.find("div", {"class": "threecol"})
         li = cols.find("li")
         pcode_uprn = li.find("a", href=True).text
-        _LOGGER.warning(
-            f"Used postcode to find an approximate uprn ({pcode_uprn}). Update config with property uprn for more accurate results."
-        )
         return pcode_uprn
 
     def resolve_year(self, dt):
         today = datetime.now()
         this_year = today.year
-        # The portal returns ordinal day suffixes (e.g. "5th"); strip them
-        # so dateutil can parse the (year-less) date string reliably.
-        dt_clean = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", dt, flags=re.IGNORECASE)
-        temp_dt = parse(f"{dt_clean} {this_year}")
+        temp_dt = parse(f"{dt} {this_year}")
         if temp_dt.month == 1 and today.month == 12:
-            temp_dt = parse(f"{dt_clean} {this_year + 1}")
+            temp_dt = parse(f"{dt} {this_year + 1}")
         return temp_dt
 
     def fetch(self):
-
         s = requests.Session()
 
-        # get a uprn is one has not been provided
-        if self._uprn is None:
-            self._uprn = self.get_uprn_from_postcode(
-                s, self._address_postcode.replace(" ", "")
-            )
-
-        # set up session
-        r = s.get(
-            "https://eastherts-self.achieveservice.com/service/Bins___When_are_my_Bin_Collection_days",
-            headers=HEADERS,
-        )
-        r.raise_for_status()
-        soup = BeautifulSoup(r.content, "html.parser")
-        # get session id
-        links = soup.find_all("link", {"href": True})
-        for link in links:
-            if "apibroker" in link.get("href"):
-                sid = re.findall(REGEX["SID"], link.get("href"))[0]
-                break
-
-        # now query using the uprn
-        timestamp = time.time_ns() // 1_000_000  # epoch time in milliseconds
-        payload = {
-            "formValues": {"Collection Days": {"inputUPRN": {"value": self._uprn}}}
-        }
-        scheduleRequest = s.post(
-            f"https://eastherts-self.achieveservice.com/apibroker/runLookup?id=6accfd6441228&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
-            headers=HEADERS,
-            json=payload,
-        )
-        scheduleRequest.raise_for_status()
-
-        # The portal now answers with a JSON envelope whose "data" field holds
-        # an XML document containing one row of collection dates.
-        response = scheduleRequest.json()
-        xml_data = response.get("data", "")
-        if not xml_data:
-            raise ValueError("East Herts Council returned no collection data")
-
-        root = ET.fromstring(xml_data)
-
-        temp_dict: dict = {}
-        for row in root.iter("Row"):
-            for result in row.findall("result"):
-                column = result.get("column", "")
-                if not column.endswith("NextDate"):
-                    continue
-                value = (result.text or "").strip()
-                if not value or result.get("isNull", "").lower() == "true":
-                    continue
-                key = column.replace("NextDate", "")
-                temp_dict[key] = self.resolve_year(value)
-
-        entries = []
-        for item in temp_dict:
-            if item == "GW":
-                title = "Garden Waste"
-            else:
-                title = item
-            entries.append(
-                Collection(
-                    date=temp_dict[item].date(),
-                    t=title,
-                    icon=ICON_MAP.get(title),
+        try:
+            if self._uprn is None:
+                self._uprn = self.get_uprn_from_postcode(
+                    s, self._address_postcode.replace(" ", "")
                 )
-            )
 
-        return entries
+            # 1. Load the main council bin service page
+            r = s.get(
+                "https://eastherts-self.achieveservice.com/service/Bins___When_are_my_Bin_Collection_days",
+                headers=HEADERS,
+            )
+            r.raise_for_status()
+            soup = BeautifulSoup(r.content, "html.parser")
+
+            # 2. Extract session ID (sid) and Process URI dynamically
+            sid = None
+            process_uri = None
+            
+            for link in soup.find_all(["link", "script", "iframe"], href=True) + soup.find_all(["script", "iframe"], src=True):
+                val = link.get("href") or link.get("src")
+                if "apibroker" in val and not sid:
+                    sid_match = re.findall(REGEX["SID"], val)
+                    if sid_match:
+                        sid = sid_match[0]
+                if "AF-Process-" in val and not process_uri:
+                    process_match = re.findall(REGEX["PROCESS_URI"], val)
+                    if process_match:
+                        process_uri = process_match[0]
+
+            if not sid or not process_uri:
+                text_match_sid = re.search(r"sid=([a-f0-9]{32})", r.text)
+                if text_match_sid and not sid:
+                    sid = text_match_sid.group(1)
+                text_match_process = re.search(r"(AF-Process-[a-f0-9-]+)", r.text)
+                if text_match_process and not process_uri:
+                    process_uri = text_match_process.group(1)
+
+            if not sid:
+                raise ValueError("Could not extract session sid from East Herts page")
+
+            timestamp = time.time_ns() // 1_000_000
+
+            # 3. Dynamically fetch form definition to discover active lookup IDs
+            lookup_id = "6accfd6441228"  # Fallback
+            if process_uri:
+                def_req = s.get(
+                    f"https://eastherts-self.achieveservice.com/apibroker/runLookup?id={process_uri}&getOnlyTokens=true&sid={sid}",
+                    headers=HEADERS,
+                )
+                if def_req.status_code == 200:
+                    found_ids = re.findall(r'"([a-f0-9]{13})"', def_req.text)
+                    if found_ids:
+                        lookup_id = found_ids[-1]
+
+            # 4. Query schedule using UPRN payload
+            payload = {
+                "formValues": {"Collection Days": {"inputUPRN": {"value": self._uprn}}}
+            }
+            scheduleRequest = s.post(
+                f"https://eastherts-self.achieveservice.com/apibroker/runLookup?id={lookup_id}&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
+                headers=HEADERS,
+                json=payload,
+            )
+            scheduleRequest.raise_for_status()
+            rowdata = json.loads(scheduleRequest.content)["integration"]["transformed"][
+                "rows_data"
+            ]["0"]
+
+            temp_dict: dict = {}
+            for item in rowdata:
+                if "NextDate" in item:
+                    if rowdata[item] != "":
+                        temp_dict.update(
+                            {item.replace("NextDate", ""): self.resolve_year(rowdata[item])}
+                        )
+
+            entries = []
+            for item in temp_dict:
+                if item == "GW":
+                    title = "Garden Waste"
+                else:
+                    title = item
+                entries.append(
+                    Collection(
+                        date=temp_dict[item].date(),
+                        t=title,
+                        icon=ICON_MAP.get(title),
+                    )
+                )
+
+            return entries
+
+        except Exception as err:
+            _LOGGER.error(f"East Herts bin fetch failed: {err}")
+            
+            # Fire a persistent notification in Home Assistant UI
+            try:
+                from homeassistant.components import persistent_notification
+                # Create notification using Home Assistant's helper
+                persistent_notification.create(
+                    hass=None, # Will auto-resolve or trigger via notification center
+                    message=f"Failed to update East Herts waste collection schedule:\n`{err}`",
+                    title="Waste Collection Schedule Error",
+                    notification_id="eastherts_waste_fetch_error",
+                )
+            except Exception:
+                pass  # Fall back to logging if persistent_notification helper isn't available in sync thread
+            
+            raise err  # Re-raise so the core integration knows update failed
