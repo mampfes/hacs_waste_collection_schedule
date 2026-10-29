@@ -2,7 +2,7 @@ import datetime
 import logging
 from typing import Literal
 
-import requests
+from curl_cffi import requests
 from waste_collection_schedule import Collection
 
 _LOGGER = logging.getLogger(__name__)
@@ -127,6 +127,7 @@ class Source:
         addition: str = "",
     ):
         self._api_key: str = "AIzaSyA6NkRqJypTfP-cjWzrZNFJzPUbBaGjOdk"
+        self._session = requests.Session(impersonate="chrome")
         self._addition: str = addition
         self._post_code: str = post_code
         self._house_number: str = house_number
@@ -139,7 +140,7 @@ class Source:
         self._address_id: str = ""
 
     def _set_refresh_token(self):
-        res = requests.post(
+        res = self._session.post(
             f"https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key={self._api_key}"
         )
         payload = res.json()
@@ -155,7 +156,7 @@ class Source:
 
         data = {"grant_type": "refresh_token", "refresh_token": self._refresh_token}
 
-        res = requests.post(
+        res = self._session.post(
             f"https://securetoken.googleapis.com/v1/token?key={self._api_key}",
             headers=headers,
             data=data,
@@ -169,7 +170,7 @@ class Source:
     def _set_address_id(self) -> None:
         headers = {"authorization": self._id_token}
 
-        res = requests.get(
+        res = self._session.get(
             f"{self._url}/exposed/organisations/{self._organization_code}/address?zipcode={self._post_code}&housenumber={self._house_number}",
             headers=headers,
         )
@@ -201,7 +202,7 @@ class Source:
                 raise ValueError("Address ID could not be retrieved")
 
         headers = {"authorization": self._id_token}
-        res = requests.get(
+        res = self._session.get(
             f"{self._url}/exposed/organisations/{self._organization_code}/address/{self._address_id}/calendar",
             headers=headers,
         )
