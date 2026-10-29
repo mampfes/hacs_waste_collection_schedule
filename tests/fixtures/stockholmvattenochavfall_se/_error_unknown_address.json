@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-10-29",
+  "interactions": [
+    {
+      "key": "GET https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe 87e7c36ed9",
+      "method": "GET",
+      "url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe",
+      "final_url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe?query=Ingen+gata+999%2C+Stockholm",
+      "body": "{\"params\":[[\"query\",\"Ingen gata 999, Stockholm\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "ASP.NET_SessionId=g0r5m1cuhbixsfgadceznahn; path=/; HttpOnly; SameSite=Lax",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "access-control-allow-origin": "fonts.gstatic.com",
+        "date": "Thu, 29 Oct 2026 19:41:56 GMT",
+        "content-length": "2"
+      },
+      "content_b64": "W10="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'address' with the value 'Ingen gata 999, Stockholm', We could not find any suggestions. Please also check other arguments."
+  }
+}

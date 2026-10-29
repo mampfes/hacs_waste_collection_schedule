@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-10-29",
+  "interactions": [
+    {
+      "key": "GET https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe a5084bf34e",
+      "method": "GET",
+      "url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe",
+      "final_url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe?query=Doktor+Abrahams+v%C3%A4g+4%2C+Bromma%2C+168+58",
+      "body": "{\"params\":[[\"query\",\"Doktor Abrahams v\u00e4g 4, Bromma, 168 58\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "ASP.NET_SessionId=cv1upejmn3nbevc5z3lpdrn5; path=/; HttpOnly; SameSite=Lax",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "access-control-allow-origin": "fonts.gstatic.com",
+        "date": "Thu, 29 Oct 2026 19:41:53 GMT",
+        "content-length": "68"
+      },
+      "content_b64": "W3sidmFsdWUiOiJEb2t0b3IgQWJyYWhhbXMgdsOkZyA0LCBCcm9tbWEsIDE2OCA1OCIsImRhdGEiOiIxNjggNTgifV0="
+    },
+    {
+      "key": "GET https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/Search 16064f9192",
+      "method": "GET",
+      "url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/Search",
+      "final_url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/Search?address=Doktor+Abrahams+v%C3%A4g+4%2C+Bromma%2C+168+58",
+      "body": "{\"params\":[[\"address\",\"Doktor Abrahams v\u00e4g 4, Bromma, 168 58\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "access-control-allow-origin": "fonts.gstatic.com",
+        "date": "Thu, 29 Oct 2026 19:41:55 GMT",
+        "content-length": "372"
+      },
+      "content_b64": "W3siZ3JvdXAiOiJLw6RybCAyIC0gcGFwcGVyIG9jaCBwbGFzdCIsImZldGNoRnJlcXVlbmN5IjoiVmFyYW5uYW4gdmVja2EiLCJleGVjdXRpb25EYXRlIjoiMjAyNi0xMC0yOSIsIndlZWtkYXkiOiJUb3JzZGFnIn0seyJncm91cCI6IkvDpHJsIDMgLSBnbGFzIG9jaCBtZXRhbGwiLCJmZXRjaEZyZXF1ZW5jeSI6IlZhciA0OmUgdmVja2EiLCJleGVjdXRpb25EYXRlIjoiMjAyNi0xMS0wNSIsIndlZWtkYXkiOiJUb3JzZGFnIn0seyJncm91cCI6IkvDpHJsIDEgLSByZXN0YXZmYWxsIG9jaCBtYXRhdmZhbGwiLCJmZXRjaEZyZXF1ZW5jeSI6IlZhcmFubmFuIHZlY2thIiwiZXhlY3V0aW9uRGF0ZSI6IjIwMjYtMTEtMTEiLCJ3ZWVrZGF5IjoiT25zZGFnIn1d"
+    }
+  ]
+}
