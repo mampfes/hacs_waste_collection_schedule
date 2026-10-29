@@ -888,12 +888,20 @@ class AppAbfallplusDe:
         raise SourceArgumentNotFoundWithSuggestions("hnr", self._hnr_search, all_names)
 
     def _find_hnr(self, hnrs: list[dict], name: str) -> bool:
-        for hnr in hnrs:
-            if compare(hnr["name"], name, remove_space=True):
-                self._hnr = hnr["id"]
-                if hnr["f_id_strasse"] is not None:
-                    self._f_id_strasse = hnr["f_id_strasse"]
-                return True
+        names = [name]
+        decoded = unquote_plus(name)
+        if "|" in decoded:
+            # Before #6662 the config flow offered the raw ID ("3%7C%7C174955001")
+            # as house number, so saved configs may still hold it: match its
+            # house-number part ("3") too.
+            names.append(decoded.split("|")[0])
+        for candidate in names:
+            for hnr in hnrs:
+                if compare(hnr["name"], candidate, remove_space=True):
+                    self._hnr = hnr["id"]
+                    if hnr["f_id_strasse"] is not None:
+                        self._f_id_strasse = hnr["f_id_strasse"]
+                    return True
         return False
 
     def select_all_waste_types(self):
