@@ -19,7 +19,7 @@ _STREET_OF = re.compile(r"^(.*?)\s+\d+\w*,")
 
 _AUTOCOMPLETE = retrievers.Request(
     f"{API_URL}/AutoCompleteMe",
-    params=lambda query, *_, **__: {"query": query},
+    params=lambda query, *args, **kwargs: {"query": query},
 )
 
 
@@ -32,7 +32,7 @@ def _normalise(value: str) -> str:
     return " ".join(value.casefold().replace(",", " ").split())
 
 
-def _address(response, *_keys, address=None, street=None, **_params) -> str:
+def _address(response, *keys, address=None, street=None, **params) -> str:
     """The full address ("Street 1, District, 123 45") the address search matched.
 
     The search page only accepts the complete address, so a partial one is
@@ -154,11 +154,11 @@ class Source(BaseSource):
 
     retrieve = retrievers.Request(
         f"{API_URL}/Search",
-        params=lambda full_address, **_: {"address": full_address},
+        params=lambda full_address, **kwargs: {"address": full_address},
         before=(
             retrievers.Lookup(
                 f"{API_URL}/AutoCompleteMe",
-                params=lambda address=None, street=None, **_: {
+                params=lambda address=None, street=None, **kwargs: {
                     "query": address or street
                 },
                 pick=_address,
