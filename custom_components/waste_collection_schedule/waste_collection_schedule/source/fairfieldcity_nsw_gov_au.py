@@ -1,73 +1,14 @@
+"""Fairfield City Council (NSW, Australia) kerbside collection days."""
+
 import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import (
-    SourceArgumentNotFound,
-    SourceArgumentNotFoundWithSuggestions,
-)
-
-TITLE = "Fairfield City Council"
-DESCRIPTION = "Source for Fairfield City Council bin collection, NSW, Australia."
-URL = "https://kerbside.fairfieldcity.nsw.gov.au/kerbside/"
-COUNTRY = "au"
-TEST_CASES = {
-    "1 Dawson Street, FAIRFIELD HEIGHTS": {
-        "street_number": "1",
-        "street_and_suburb": "Dawson Street, FAIRFIELD HEIGHTS",
-    },
-    "12 Zadro Avenue, BOSSLEY PARK": {
-        "street_number": "12",
-        "street_and_suburb": "Zadro Avenue, BOSSLEY PARK",
-    },
-    # Abbreviated street types: what the council's autocomplete used to emit,
-    # and therefore what most existing configurations still contain.
-    "1 Dawson ST, FAIRFIELD HEIGHTS (abbreviated)": {
-        "street_number": "1",
-        "street_and_suburb": "Dawson ST, FAIRFIELD HEIGHTS",
-    },
-    "12 Zadro AVE, BOSSLEY PARK (abbreviated)": {
-        "street_number": "12",
-        "street_and_suburb": "Zadro AVE, BOSSLEY PARK",
-    },
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Visit https://kerbside.fairfieldcity.nsw.gov.au/kerbside/ and start typing "
-        "your street name and suburb into the 'Street name & Suburb' field. "
-        "Use the autocomplete suggestion (e.g. 'Dawson Street, FAIRFIELD HEIGHTS') "
-        "as the value for street_and_suburb, and enter just your street number "
-        "for street_number. Abbreviated street types from older configurations "
-        "(e.g. 'Dawson ST, FAIRFIELD HEIGHTS') are still accepted."
-    )
-}
-
-PARAM_TRANSLATIONS = {
-    "en": {
-        "street_number": "Street Number",
-        "street_and_suburb": "Street Name & Suburb",
-    }
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_number": "Your street number (e.g. 1, 7A, 7/10).",
-        "street_and_suburb": (
-            "Street name and suburb as shown in the autocomplete list "
-            "(e.g. 'Dawson Street, FAIRFIELD HEIGHTS'). Abbreviated street "
-            "types such as 'Dawson ST, FAIRFIELD HEIGHTS' also work."
-        ),
-    }
-}
-
-ICON_MAP = {
-    "Red bin": Icons.GENERAL_WASTE,
-    "Yellow bin": Icons.RECYCLING,
-    "Green bin": Icons.ORGANIC,
-}
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import house_number, street
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.transformers import HtmlTransformer
 
 API_URL = "https://kerbside.fairfieldcity.nsw.gov.au/kerbside/"
 # The council's own autocomplete list. The form only answers for a value taken
@@ -75,10 +16,10 @@ API_URL = "https://kerbside.fairfieldcity.nsw.gov.au/kerbside/"
 # ("Dawson ST") to spelled-out ones ("Dawson Street"), which silently broke
 # every previously valid saved value.
 AUTOCOMPLETE_URL = f"{API_URL}fcc-autocomplete.js"
-AUTOCOMPLETE_ARRAY = "arrAddressStreetAndSuburb"
+_STREET_LIST = re.compile(r"arrAddressStreetAndSuburb\s*=\s*\[(.*?)\]", re.DOTALL)
 
 # Street-type abbreviations seen in the old list and in what people type.
-STREET_TYPES = {
+_STREET_TYPES = {
     "AV": "AVENUE",
     "AVE": "AVENUE",
     "BVD": "BOULEVARD",
@@ -113,103 +54,121 @@ def _canonical(value: str) -> str:
 
     Comparing on this lets a stored "Dawson ST, FAIRFIELD HEIGHTS" match the
     list's current "Dawson Street, FAIRFIELD HEIGHTS", and vice versa.
-    Punctuation and repeated spaces are dropped rather than preserved, so a
-    missing comma or a doubled space is not the thing that fails a lookup.
     """
     words = re.findall(r"\w+", value.upper())
-    return " ".join(STREET_TYPES.get(w, w) for w in words)
+    return " ".join(_STREET_TYPES.get(w, w) for w in words)
 
 
-class Source:
-    def __init__(self, street_number: str, street_and_suburb: str):
-        self._street_number = str(street_number).strip()
-        self._street_and_suburb = street_and_suburb.strip()
+def _street_and_suburb(response, *keys, street_and_suburb, **_) -> str:
+    """The list's own spelling of the configured street and suburb.
 
-    def _known_streets(self, session: requests.Session) -> list[str]:
-        try:
-            response = session.get(AUTOCOMPLETE_URL, timeout=30)
-            response.raise_for_status()
-        except requests.RequestException:
-            # The list is a convenience, not the lookup itself. A timeout, a
-            # refused connection or a 5xx must not stop the POST that would
-            # otherwise have worked, so treat it as "no list" and fall back.
-            return []
-        match = re.search(
-            AUTOCOMPLETE_ARRAY + r"\s*=\s*\[(.*?)\]", response.text, re.DOTALL
-        )
-        if not match:
-            return []
-        return re.findall(r'"([^"]+)"', match.group(1))
+    The list is a convenience, not the lookup itself: when it cannot be read
+    (an error status, a restructured script) the value is sent as typed.
+    """
+    typed = str(street_and_suburb).strip()
+    match = _STREET_LIST.search(response.text) if response.ok else None
+    streets = re.findall(r'"([^"]+)"', match.group(1)) if match else []
+    if not streets:
+        return typed
+    wanted = _canonical(typed)
+    for candidate in streets:
+        if _canonical(candidate) == wanted:
+            return candidate
+    raise SourceArgumentNotFoundWithSuggestions("street_and_suburb", typed, streets)
 
-    def _resolve_street_and_suburb(self, session: requests.Session) -> str:
-        streets = self._known_streets(session)
-        if not streets:
-            # Autocomplete unavailable or restructured; send what we were given
-            # rather than refusing outright.
-            return self._street_and_suburb
-        wanted = _canonical(self._street_and_suburb)
-        for street in streets:
-            if _canonical(street) == wanted:
-                return street
-        raise SourceArgumentNotFoundWithSuggestions(
-            "street_and_suburb", self._street_and_suburb, streets
-        )
 
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        street_and_suburb = self._resolve_street_and_suburb(session)
+@final
+class Source(BaseSource):
+    TITLE = "Fairfield City Council"
+    DESCRIPTION = "Source for Fairfield City Council bin collection, NSW, Australia."
+    URL = "https://kerbside.fairfieldcity.nsw.gov.au/kerbside/"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
 
-        response = session.post(
-            API_URL,
-            data={
-                "myStreetNumber": self._street_number,
-                "myStreetAndSuburb": street_and_suburb,
-            },
-            timeout=30,
-        )
-        response.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "1 Dawson Street, FAIRFIELD HEIGHTS": {
+            "street_number": "1",
+            "street_and_suburb": "Dawson Street, FAIRFIELD HEIGHTS",
+        },
+        "12 Zadro Avenue, BOSSLEY PARK": {
+            "street_number": "12",
+            "street_and_suburb": "Zadro Avenue, BOSSLEY PARK",
+        },
+        # Abbreviated street types: what the council's autocomplete used to
+        # emit, and therefore what most existing configurations still contain.
+        "1 Dawson ST, FAIRFIELD HEIGHTS (abbreviated)": {
+            "street_number": "1",
+            "street_and_suburb": "Dawson ST, FAIRFIELD HEIGHTS",
+        },
+        "12 Zadro AVE, BOSSLEY PARK (abbreviated)": {
+            "street_number": "12",
+            "street_and_suburb": "Zadro AVE, BOSSLEY PARK",
+        },
+    }
 
-        soup = BeautifulSoup(response.text, "html.parser")
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown street": {
+            "street_number": "1",
+            "street_and_suburb": "Nowhere Street, FAIRFIELD",
+        },
+    }
 
-        results_area = soup.find("div", id="fcc-results-area")
-        if results_area is None:
-            raise SourceArgumentNotFound(
-                "street_and_suburb",
-                self._street_and_suburb,
-            )
+    PARAMS = (
+        house_number("street_number"),
+        street("street_and_suburb"),
+    )
 
-        entries: list[Collection] = []
-        seen_types: set[str] = set()
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Visit https://kerbside.fairfieldcity.nsw.gov.au/kerbside/ and start "
+            "typing your street name and suburb into the 'Street name & Suburb' "
+            "field. Use the autocomplete suggestion (e.g. 'Dawson Street, "
+            "FAIRFIELD HEIGHTS') as the street, including the suburb, and enter "
+            "just your street number (e.g. 1, 7A, 7/10) as the house number. "
+            "Abbreviated street types from older configurations (e.g. 'Dawson ST, "
+            "FAIRFIELD HEIGHTS') are still accepted. The council shows the next "
+            "collection of each bin. Since the v3 pipeline migration, waste types "
+            "use canonical, localised names. Update filters, automations and "
+            "customisations using the old labels."
+        ),
+    }
 
-        for p in results_area.find_all("p"):
-            img = p.find("img")
-            strong = p.find("strong")
-            if img is None or strong is None:
-                continue
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.ORGANIC]
 
-            bin_type = img.get("alt", "").strip()
-            if not bin_type or bin_type in seen_types:
-                continue
+    retrieve = retrievers.Request(
+        API_URL,
+        method="POST",
+        before=(
+            retrievers.Lookup(
+                AUTOCOMPLETE_URL, pick=_street_and_suburb, raise_for_status=False
+            ),
+        ),
+        data=lambda resolved, street_number, **_: {
+            "myStreetNumber": str(street_number).strip(),
+            "myStreetAndSuburb": resolved,
+        },
+    )
 
-            date_text = strong.get_text(strip=True)
-            try:
-                collection_date = datetime.strptime(date_text, "%A, %d/%m/%Y").date()
-            except ValueError:
-                continue
+    # One paragraph per bin: its picture names the bin, the bold text is the
+    # date of its next collection.
+    parse = parsers.ArgumentGuard(
+        parsers.HtmlParser("#fcc-results-area p:has(> img[alt]):has(> strong)"),
+        argument="street_and_suburb",
+        contains='id="fcc-results-area"',
+        hint=(
+            "The council has no collection days for this address. Check it on "
+            "https://kerbside.fairfieldcity.nsw.gov.au/kerbside/."
+        ),
+    )
 
-            seen_types.add(bin_type)
-            entries.append(
-                Collection(
-                    date=collection_date,
-                    t=bin_type,
-                    icon=ICON_MAP.get(bin_type),
-                )
-            )
-
-        if not entries:
-            raise SourceArgumentNotFound(
-                "street_and_suburb",
-                self._street_and_suburb,
-            )
-
-        return entries
+    transform = HtmlTransformer(
+        date_getter=lambda element: element.find("strong").get_text(strip=True),
+        type_getter=lambda element: element.find("img")["alt"],
+        parse_date=date_parsers.for_format("%A, %d/%m/%Y"),
+        type_value_map={
+            "Red bin": wt.GENERAL_WASTE,
+            "Yellow bin": wt.RECYCLABLES,
+            "Green bin": wt.ORGANIC,
+        },
+        carry_raw_label=True,
+    )
