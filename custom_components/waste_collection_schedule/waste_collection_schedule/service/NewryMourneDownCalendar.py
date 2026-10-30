@@ -5,6 +5,7 @@ import datetime
 import re
 from io import BytesIO
 
+from waste_collection_schedule import recurrence
 from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.service.PdfVectorDigits import TAHOMA_BOLD, VectorDigits
 
@@ -107,5 +108,21 @@ class CalendarParser(Parser):
             if days != sorted(set(days)):
                 raise ValueError(
                     "Printed collection days are duplicated or out of order"
+                )
+        # Month captions are outlined too. The route code independently checks
+        # their April-to-April ordering: a shifted month/year would put most
+        # dates on another weekday. A few explicitly printed holiday exceptions
+        # remain valid, including the Friday shown in the Wednesday calendar.
+        code = re.search(
+            r"/(MON|TUE|WED|THU|FRI)-Z\d+\.pdf", str(getattr(response, "url", "")), re.I
+        )
+        if code:
+            weekday = recurrence.weekday(code[1])
+            dates = {day for day, _ in results}
+            if sum(day.weekday() != weekday for day in dates) > max(
+                2, len(dates) // 10
+            ):
+                raise ValueError(
+                    "Calendar months disagree with the printed route weekday"
                 )
         return sorted(results)
