@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-10-30",
+  "interactions": [
+    {
+      "key": "GET https://www.gleneira.vic.gov.au/api/nearby/addressautocomplete bd482ae4c2",
+      "method": "GET",
+      "url": "https://www.gleneira.vic.gov.au/api/nearby/addressautocomplete",
+      "final_url": "https://www.gleneira.vic.gov.au/api/nearby/addressautocomplete?text=999+NOWHERE+BOULEVARD",
+      "body": "{\"params\":[[\"text\",\"999 NOWHERE BOULEVARD\"]]}",
+      "status": 404,
+      "encoding": "utf-8",
+      "headers": {
+        "content-length": "162",
+        "content-type": "application/problem+json; charset=utf-8",
+        "date": "Fri, 30 Oct 2026 22:37:38 GMT",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload, max-age=63072000; includeSubDomains; preload",
+        "x-frame-options": "SAMEORIGIN",
+        "x-prisma-event-id": "e7d19506-590f-9612-db75-81b6cd74a103"
+      },
+      "content_b64": "eyJ0eXBlIjoiaHR0cHM6Ly90b29scy5pZXRmLm9yZy9odG1sL3JmYzkxMTAjc2VjdGlvbi0xNS41LjUiLCJ0aXRsZSI6Ik5vdCBGb3VuZCIsInN0YXR1cyI6NDA0LCJ0cmFjZUlkIjoiMDAtZTU0YTkyYzFhMTIyZjk1ZTJjNTgwMmU3M2E3ODkxYzItYmY1Njg4ZTIyZGEyMzFmMy0wMCJ9"
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'street_address' with the value '999 Nowhere Boulevard', the council does not know this address, check it on https://www.gleneira.vic.gov.au/our-city/in-your-area"
+  }
+}
