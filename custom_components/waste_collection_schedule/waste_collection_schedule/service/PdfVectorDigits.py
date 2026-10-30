@@ -54,27 +54,33 @@ class VectorDigits:
         self.templates = dict(templates)
         self.tolerance = tolerance
 
+    def glyph(self, shape) -> str:
+        """Read one outline; templates may also describe a table's punctuation."""
+        topology, moments = signature(shape)
+        matches = [
+            glyph
+            for glyph, (expected_topology, expected_moments) in self.templates.items()
+            if topology == expected_topology
+            and all(
+                abs(actual - expected) <= self.tolerance
+                for actual, expected in zip(moments, expected_moments, strict=True)
+            )
+        ]
+        if len(matches) != 1:
+            raise ValueError("Unknown outlined calendar glyph")
+        return matches[0]
+
     def read(self, shapes: Sequence) -> int:
         digits = []
         last_x = None
         for shape in sorted(shapes, key=lambda s: s.x0):
-            topology, moments = signature(shape)
-            matches = [
-                digit
-                for digit, (
-                    expected_topology,
-                    expected_moments,
-                ) in self.templates.items()
-                if topology == expected_topology
-                and all(
-                    abs(actual - expected) <= self.tolerance
-                    for actual, expected in zip(moments, expected_moments, strict=True)
-                )
-            ]
-            if len(matches) != 1 or (last_x is not None and shape.x0 < last_x - 0.1):
-                raise ValueError("Unknown or overlapping outlined calendar numeral")
+            digit = self.glyph(shape)
+            if not digit.isdecimal() or (
+                last_x is not None and shape.x0 < last_x - 0.1
+            ):
+                raise ValueError("Invalid or overlapping outlined calendar numeral")
             last_x = shape.x1
-            digits.append(matches[0])
+            digits.append(digit)
         if not 1 <= len(digits) <= 2:
             raise ValueError("A calendar cell must contain one or two outlined digits")
         return int("".join(digits))
