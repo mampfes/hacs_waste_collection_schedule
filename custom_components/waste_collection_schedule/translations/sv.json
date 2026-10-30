@@ -24507,6 +24507,29 @@
         },
         "data_description": {}
       },
+      "args_ljusdalenergi_se": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "address": "Adress"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress."
+        }
+      },
+      "reconfigure_ljusdalenergi_se": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "address": "Adress"
+        },
+        "data_description": {
+          "address": "Din fullständiga adress."
+        }
+      },
       "args_lumire_se": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",

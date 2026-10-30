@@ -4740,6 +4740,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Lerum Vatten och Avlopp](/doc/source/lerum_se.md) / vatjanst.lerum.se
 - [Lidköpings kommun](/doc/source/edpevent_se.md) / lidkoping.se
 - [Ljungby kommun](/doc/source/edpevent_se.md) / ljungby.se
+- [Ljusdal Energi](/doc/source/ljusdalenergi_se.md) / ljusdalenergi.se
 - [Luleå](/doc/source/lumire_se.md) / lumire.se
 - [Lund Waste Collection](/doc/source/lund_se.md) / eservice431601.lund.se
 - [Lycksele Kommun](/doc/source/edpevent_se.md) / lycksele.se

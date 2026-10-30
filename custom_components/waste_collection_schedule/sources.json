@@ -34505,6 +34505,12 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Ljusdal Energi",
+      "module": "ljusdalenergi_se",
+      "default_params": {},
+      "id": "ljusdalenergi_se"
+    },
+    {
       "title": "Lule\u00e5",
       "module": "lumire_se",
       "default_params": {},

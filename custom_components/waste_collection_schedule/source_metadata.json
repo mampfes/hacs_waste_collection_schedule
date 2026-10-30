@@ -5640,6 +5640,13 @@
     "howto": {},
     "urls": {}
   },
+  "ljusdalenergi_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ljusdalenergi_se.md",
+    "howto": {
+      "en": "Enter your street address and town as shown in the address search on the [Hämtningsdagar page](https://ljusdalenergi.se/renhallning/privatpersoner/sophamtning/nar-hamtas-dina-sopor/hamtningsdagar.html), e.g. `Norra Järnvägsgatan 21, Ljusdal`. The town is optional unless the same address exists in several towns. Ljusdal Energi's backend only answers requests from Swedish internet connections."
+    },
+    "urls": {}
+  },
   "lumire_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lumire_se.md",
     "howto": {
