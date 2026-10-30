@@ -1434,6 +1434,15 @@ def test_outlined_calendar_keeps_the_printed_friday_exception():
     assert any(day == D(2026, 10, 28) for day, _ in rows)
 
 
+def test_outlined_calendar_rejects_a_month_grid_disagreeing_with_its_route_weekday():
+    from waste_collection_schedule.service.NewryMourneDownCalendar import CalendarParser
+
+    response = _recorded_wednesday_calendar()
+    response.url = response.url.replace("WED-Z1", "MON-Z1")
+    with freeze_time("2026-10-30"), pytest.raises(ValueError, match="route weekday"):
+        CalendarParser()(response)
+
+
 @pytest.mark.parametrize("scale,dx,dy", [(1, 0, 0), (0.6, -50, 70), (2.5, 300, -100)])
 def test_outlined_digit_recognition_is_translation_and_scale_independent(scale, dx, dy):
     from io import BytesIO

@@ -117,7 +117,7 @@ class CalendarParser(Parser):
             r"/(MON|TUE|WED|THU|FRI)-Z\d+\.pdf", str(getattr(response, "url", "")), re.I
         )
         if code:
-            weekday = recurrence.weekday(code[1])
+            weekday = recurrence.weekday(code[1], locale="en", abbreviated=True)
             dates = {day for day, _ in results}
             if sum(day.weekday() != weekday for day in dates) > max(
                 2, len(dates) // 10
