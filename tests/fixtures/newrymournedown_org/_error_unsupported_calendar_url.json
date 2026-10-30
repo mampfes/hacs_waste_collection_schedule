@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-10-30",
+  "interactions": [],
+  "expected_error": {
+    "type": "SourceArgumentException",
+    "message": "Use the council's HTTPS bin-collections PDF link"
+  }
+}

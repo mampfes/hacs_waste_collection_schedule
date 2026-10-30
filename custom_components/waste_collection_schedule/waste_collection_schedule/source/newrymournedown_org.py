@@ -2,7 +2,7 @@
 
 import re
 from typing import ClassVar, final
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup
 from waste_collection_schedule import config_params, retrievers
@@ -59,6 +59,21 @@ def _calendar_link(response, *_, house_number, **__):
     return next(iter(choices[key]))
 
 
+def _given_calendar(*_, url=None, **__):
+    if not url:
+        return None
+    parsed = urlparse(url.strip())
+    if (
+        parsed.scheme != "https"
+        or parsed.hostname not in ("newrymournedown.org", "www.newrymournedown.org")
+        or not re.fullmatch(r"/bin-collections/[^/]+\.pdf", parsed.path, re.I)
+    ):
+        raise SourceArgumentException(
+            "url", "Use the council's HTTPS bin-collections PDF link"
+        )
+    return url.strip()
+
+
 @final
 class Source(BaseSource):
     TITLE = "Newry, Mourne and Down District Council"
@@ -68,17 +83,28 @@ class Source(BaseSource):
     RAISE_ON_EMPTY = True
     TEST_CASES: ClassVar[dict] = {
         "9 Derrymore Road, Bessbrook": {"postcode": "BT35 7DN", "house_number": "9"},
+        "Published Wednesday calendar": {
+            "url": f"{_URL}/bin-collections/WED-Z1.pdf?v=5"
+        },
     }
     ERROR_TEST_CASES: ClassVar[dict] = {
         "Unlisted house number": {"postcode": "BT35 7DN", "house_number": "66"},
         "Invalid postcode": {"postcode": "not a postcode", "house_number": "9"},
+        "Unsupported calendar URL": {"url": "https://example.com/calendar.pdf"},
     }
-    PARAMS = (config_params.postcode(), config_params.house_number())
+    PARAMS = (
+        config_params.alternatives(
+            [config_params.postcode(), config_params.house_number()],
+            [config_params.text_field("url", "Council calendar PDF URL")],
+        ),
+    )
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Enter the postcode and house number shown by the council's lookup at "
+            "Either enter the postcode and house number shown by the council's lookup at "
             "https://www.newrymournedown.org/weekly-bin-collection-and-calendar. "
-            "Dates, including holiday changes, come from the printed calendar. "
+            "Or paste your council bin-collections PDF link into url instead. "
+            "The direct PDF option works independently of the address portal, "
+            "which can be temporarily unavailable. Dates, including holiday changes, come from the printed calendar. "
             "Black bins are general waste, blue bins recycling, and brown bins "
             "combined food/garden waste (Organic). Unnumbered properties and "
             "ambiguous house numbers are not supported by this address lookup."
@@ -87,7 +113,11 @@ class Source(BaseSource):
     retrieve = retrievers.LookupChainRetriever(
         steps=(
             retrievers.Lookup(
-                _PAGE, method="POST", data=_postcode_form, pick=_calendar_link
+                _PAGE,
+                method="POST",
+                data=_postcode_form,
+                pick=_calendar_link,
+                given=_given_calendar,
             ),
         ),
         url=lambda pdf_url, **_: pdf_url,
