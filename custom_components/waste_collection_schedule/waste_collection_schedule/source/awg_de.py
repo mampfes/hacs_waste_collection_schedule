@@ -7,13 +7,12 @@ Demonstrates: the two Athos "WasteManagementServlet" traits that
   it just received, rather than the state the wizard started with, so the
   servlet's own ``ApplicationName`` / ``PageName`` / ``IsLastPage`` follow the
   wizard forward. Other deployments hardcode those per step instead.
-* ``verify=False``. The servlet's certificate is valid (a GoDaddy-issued leaf)
-  but the server sends the leaf alone, omitting the "Go Daddy Secure
+* ``verify=tls.AIA``. The servlet's certificate is valid (a GoDaddy-issued
+  leaf) but the server sends the leaf alone, omitting the "Go Daddy Secure
   Certificate Authority - G2" intermediate, so no default trust store can
-  build a chain to it. Disabling verification is what the legacy source did
-  and is kept here unchanged; the narrower fix is to point ``verify`` at a CA
-  bundle carrying that intermediate, at the cost of shipping and maintaining
-  a certificate in-tree.
+  build a chain to it. The retriever completes the chain from the leaf's AIA
+  URL and keeps verification on (see :mod:`waste_collection_schedule.tls`);
+  the legacy source and the first pipeline version disabled verification.
 
 Two things the legacy source did are deliberately gone, both verified against
 the live servlet and all three recorded cassettes:
@@ -27,7 +26,7 @@ the live servlet and all three recorded cassettes:
 
 from typing import ClassVar, final
 
-from waste_collection_schedule import parsers
+from waste_collection_schedule import parsers, tls
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import (
@@ -91,7 +90,7 @@ class Source(BaseSource):
             "InFrameMode": "true",
         },
         state="rescrape",
-        verify=False,
+        verify=tls.AIA,
         steps=[
             {
                 "submit_action": "CITYCHANGED",
