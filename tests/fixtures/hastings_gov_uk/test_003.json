@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-10-31",
+  "interactions": [
+    {
+      "key": "POST https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService e59c45f046",
+      "method": "POST",
+      "url": "https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService",
+      "final_url": "https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService",
+      "body": "{\"body\":{\"Uprn\":\"100060041770\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private, max-age=0",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET,POST",
+        "access-control-allow-headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+        "date": "Sat, 31 Oct 2026 07:45:54 GMT",
+        "content-length": "663"
+      },
+      "content_b64": "eyJkIjpbeyJfX3R5cGUiOiJUUFdTLldhc3RlLkNvbGxlY3Rpb25EYXlCeVNlcnZpY2UiLCJJZCI6MSwiRGF0ZXMiOlsiXC9EYXRlKDE3OTM4MzY4MDAwMDApXC8iLCJcL0RhdGUoMTc5NDQ0MTYwMDAwMClcLyIsIlwvRGF0ZSgxNzk1MDQ2NDAwMDAwKVwvIiwiXC9EYXRlKDE3OTU2NTEyMDAwMDApXC8iXSwiU2VydmljZSI6IkZvb2Qgd2FzdGUgY29sbGVjdGlvbiBzZXJ2aWNlIiwiU2NoZWR1bGUiOiIiLCJJbWFnZSI6ImZvb2QtYmluLWdyZXkucG5nIn0seyJfX3R5cGUiOiJUUFdTLldhc3RlLkNvbGxlY3Rpb25EYXlCeVNlcnZpY2UiLCJJZCI6MCwiRGF0ZXMiOlsiXC9EYXRlKDE3OTM3NTA0MDAwMDApXC8iLCJcL0RhdGUoMTc5NDk2MDAwMDAwMClcLyJdLCJTZXJ2aWNlIjoiUmVjeWNsaW5nIGNvbGxlY3Rpb24gc2VydmljZSIsIlNjaGVkdWxlIjoiUmVjV2VkRm9ydDEiLCJJbWFnZSI6ImRyLTI0MC5wbmcifSx7Il9fdHlwZSI6IlRQV1MuV2FzdGUuQ29sbGVjdGlvbkRheUJ5U2VydmljZSIsIklkIjoyLCJEYXRlcyI6WyJcL0RhdGUoMTc5NDM1NTIwMDAwMClcLyIsIlwvRGF0ZSgxNzk1NTY0ODAwMDAwKVwvIl0sIlNlcnZpY2UiOiJSdWJiaXNoIGNvbGxlY3Rpb24gc2VydmljZSIsIlNjaGVkdWxlIjoiUmVmV2VkRm9ydDIiLCJJbWFnZSI6ImR3LTI0MC5wbmcifV19"
+    }
+  ]
+}
