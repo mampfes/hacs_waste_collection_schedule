@@ -20,6 +20,7 @@ from .waste_collection_schedule import CollectionAggregator, SourceShell
 from .waste_collection_schedule.service.DeviceKeyStore import get_device_key_store
 
 _LOGGER = logging.getLogger(__name__)
+FETCH_WARNING_SECONDS = 120
 
 
 class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
@@ -209,9 +210,25 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 return True
 
             if self.shell:
-                fetch_succeeded = await self._hass.async_add_executor_job(
-                    self.shell.fetch
+
+                @callback
+                def warn_slow_fetch(_now: Any) -> None:
+                    _LOGGER.warning(
+                        "Fetching from %s has taken more than %s seconds; later "
+                        "fetches for this source will wait until it finishes",
+                        self.shell.title,
+                        FETCH_WARNING_SECONDS,
+                    )
+
+                cancel_warning = async_call_later(
+                    self._hass, FETCH_WARNING_SECONDS, warn_slow_fetch
                 )
+                try:
+                    fetch_succeeded = await self._hass.async_add_executor_job(
+                        self.shell.fetch
+                    )
+                finally:
+                    cancel_warning()
                 if self._shutdown_requested:
                     return False
                 if fetch_succeeded:
