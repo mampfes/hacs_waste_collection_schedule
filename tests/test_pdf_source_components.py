@@ -774,6 +774,45 @@ def test_east_lindsey_without_a_garden_subscription_does_not_fetch_a_pdf():
         assert garden_calendar_urls(None, response) == []
 
 
+def test_tamax_lelow_reads_iso_month_colours_ash_and_the_dated_bulky_notice():
+    from waste_collection_schedule.source.tamax_lelow_pl import Source
+
+    response = _recorded_pdf_response(
+        "tamax_lelow_pl", "Lelów (bez ul. Spacerowej), Lgota Błotna, Lgota Gawronna"
+    )
+    with freeze_time("2026-10-31"):
+        rows = {(r["date"], r["type"]) for r in Source.parse(response)}
+    assert len(rows) == 51
+    assert (D(2026, 1, 12), "Popiół") in rows
+    assert (D(2026, 1, 20), "Zmieszane") in rows
+    assert (D(2026, 1, 20), "Segregowane") in rows
+    assert (D(2026, 1, 20), "Bio") not in rows
+    assert (D(2026, 4, 7), "Bio") in rows
+    assert (D(2026, 7, 30), "Wielkogabarytowe") in rows
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="this year"):
+        Source.parse(response)
+
+
+def test_iso_pdf_month_headings_must_agree_with_the_printed_year(monkeypatch):
+    from waste_collection_schedule.service import MarkedPdfCalendar
+    from waste_collection_schedule.source.tamax_lelow_pl import Source
+
+    response = _recorded_pdf_response(
+        "tamax_lelow_pl", "Lelów (bez ul. Spacerowej), Lgota Błotna, Lgota Gawronna"
+    )
+    normal = MarkedPdfCalendar._normal
+    monkeypatch.setattr(
+        MarkedPdfCalendar,
+        "_normal",
+        lambda value: "2027-02" if value.strip() == "2026-02" else normal(value),
+    )
+    with (
+        freeze_time("2026-10-31"),
+        pytest.raises(ValueError, match="headings disagree"),
+    ):
+        Source.parse(response)
+
+
 def test_fan_out_can_return_the_prepared_response_first():
     prepared = SimpleNamespace(name="lookup")
     retrieve = retrievers.FanOutRetriever(
