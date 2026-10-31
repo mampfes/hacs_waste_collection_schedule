@@ -33083,6 +33083,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Koniusza",
+      "module": "tamax_koniusza_pl",
+      "default_params": {},
+      "id": "tamax_koniusza_pl"
+    },
+    {
       "title": "Gmina Kozy",
       "module": "sims_pl",
       "default_params": {
@@ -33121,6 +33127,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Ksi\u0105\u017c Wielki",
+      "module": "tamax_ksiaz_wielki_pl",
+      "default_params": {},
+      "id": "tamax_ksiaz_wielki_pl"
+    },
+    {
       "title": "Gmina Legnickie Pole",
       "module": "sims_pl",
       "default_params": {
@@ -33147,6 +33159,12 @@
       "module": "maslow_pl",
       "default_params": {},
       "id": "maslow_pl"
+    },
+    {
+      "title": "Gmina Miasto Bochnia",
+      "module": "tamax_bochnia_pl",
+      "default_params": {},
+      "id": "tamax_bochnia_pl"
     },
     {
       "title": "Gmina Miedziana G\u00f3ra",
@@ -33489,6 +33507,12 @@
         "owner": "Gmina Szumowo"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina S\u0119dzisz\u00f3w",
+      "module": "tamax_sedziszow_pl",
+      "default_params": {},
+      "id": "tamax_sedziszow_pl"
     },
     {
       "title": "Gmina S\u0142upca",
@@ -33919,6 +33943,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Miasto Wieliczka",
+      "module": "tamax_wieliczka_pl",
+      "default_params": {},
+      "id": "tamax_wieliczka_pl"
+    },
+    {
       "title": "Miasto \u017bywiec",
       "module": "zywiec_pl",
       "default_params": {},
@@ -34203,10 +34233,28 @@
       "id": "tamax_janow_pl"
     },
     {
+      "title": "TAMAX (Gmina Koniusza)",
+      "module": "tamax_koniusza_pl",
+      "default_params": {},
+      "id": "tamax_koniusza_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Ksi\u0105\u017c Wielki)",
+      "module": "tamax_ksiaz_wielki_pl",
+      "default_params": {},
+      "id": "tamax_ksiaz_wielki_pl"
+    },
+    {
       "title": "TAMAX (Gmina Lel\u00f3w)",
       "module": "tamax_lelow_pl",
       "default_params": {},
       "id": "tamax_lelow_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Miasto Bochnia)",
+      "module": "tamax_bochnia_pl",
+      "default_params": {},
+      "id": "tamax_bochnia_pl"
     },
     {
       "title": "TAMAX (Gmina Radziemice)",
@@ -34221,10 +34269,22 @@
       "id": "tamax_szczekociny_pl"
     },
     {
+      "title": "TAMAX (Gmina S\u0119dzisz\u00f3w)",
+      "module": "tamax_sedziszow_pl",
+      "default_params": {},
+      "id": "tamax_sedziszow_pl"
+    },
+    {
       "title": "TAMAX (Gmina W\u0142odowice)",
       "module": "tamax_wlodowice_pl",
       "default_params": {},
       "id": "tamax_wlodowice_pl"
+    },
+    {
+      "title": "TAMAX (Miasto Wieliczka)",
+      "module": "tamax_wieliczka_pl",
+      "default_params": {},
+      "id": "tamax_wieliczka_pl"
     },
     {
       "title": "Trzebownisko",

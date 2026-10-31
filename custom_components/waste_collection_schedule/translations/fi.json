@@ -22715,6 +22715,26 @@
         },
         "data_description": {}
       },
+      "args_tamax_koniusza_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_koniusza_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_kolbaskowo_pl": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -22745,6 +22765,26 @@
           "house_number": "Talon numero.",
           "street": "Kadun nimi."
         }
+      },
+      "args_tamax_ksiaz_wielki_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_ksiaz_wielki_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
       },
       "args_tamax_lelow_pl": {
         "title": "Määritä lähde",
@@ -22788,6 +22828,26 @@
         "data_description": {
           "district": "Kaupunginosasi tai kunnan osa."
         }
+      },
+      "args_tamax_bochnia_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_bochnia_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
       },
       "args_gmina_miekinia_pl": {
         "title": "Määritä lähde",
@@ -22995,6 +23055,26 @@
         }
       },
       "reconfigure_tamax_szczekociny_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
+      "args_tamax_sedziszow_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_sedziszow_pl": {
         "title": "Määritä lähde uudelleen",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
@@ -23386,6 +23466,26 @@
         "data_description": {
           "street": "Kadun nimi."
         }
+      },
+      "args_tamax_wieliczka_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_wieliczka_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
       },
       "args_zywiec_pl": {
         "title": "Määritä lähde",

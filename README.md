@@ -4520,15 +4520,18 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Kamionka Wielka](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kluczbork](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kolbudy](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Koniusza](/doc/source/tamax_koniusza_pl.md) / tamax.net.pl
 - [Gmina Kozy](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kołbaskowo](/doc/source/kolbaskowo_pl.md) / kolbaskowo.pl
 - [Gmina Krotoszyce](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kruszwica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Krzanowice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Książ Wielki](/doc/source/tamax_ksiaz_wielki_pl.md) / tamax.net.pl
 - [Gmina Legnickie Pole](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Lelów](/doc/source/tamax_lelow_pl.md) / tamax.net.pl
 - [Gmina Lubrza](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Masłów](/doc/source/maslow_pl.md) / maslow.pl
+- [Gmina Miasto Bochnia](/doc/source/tamax_bochnia_pl.md) / tamax.net.pl
 - [Gmina Miedziana Góra](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Miejska Hrubieszów](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Miejska Kowal](/doc/source/sims_pl.md) / sisms.pl
@@ -4574,6 +4577,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Szczytna](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Sztum](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Szumowo](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Sędziszów](/doc/source/tamax_sedziszow_pl.md) / tamax.net.pl
 - [Gmina Słupca](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Słupno](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Topólka](/doc/source/sims_pl.md) / sisms.pl
@@ -4631,6 +4635,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Miasto Rejowiec Fabryczny](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto Rydułtowy](/doc/source/sims_pl.md) / sisms.pl
 - [Miasto Wałbrzych](/doc/source/sims_pl.md) / sisms.pl
+- [Miasto Wieliczka](/doc/source/tamax_wieliczka_pl.md) / tamax.net.pl
 - [Miasto Żywiec](/doc/source/zywiec_pl.md) / zywiec.pl/harmonogram-wywozu-smieci
 - [Mierzęcice](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Moszczenica](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
@@ -4670,10 +4675,15 @@ If you already have enough information for your municipality/region, you are ver
 - [Słupsk](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [TAMAX (Gmina Imielno)](/doc/source/tamax_imielno_pl.md) / tamax.net.pl
 - [TAMAX (Gmina Janów)](/doc/source/tamax_janow_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Koniusza)](/doc/source/tamax_koniusza_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Książ Wielki)](/doc/source/tamax_ksiaz_wielki_pl.md) / tamax.net.pl
 - [TAMAX (Gmina Lelów)](/doc/source/tamax_lelow_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Miasto Bochnia)](/doc/source/tamax_bochnia_pl.md) / tamax.net.pl
 - [TAMAX (Gmina Radziemice)](/doc/source/tamax_net_pl.md) / tamax.net.pl
 - [TAMAX (Gmina Szczekociny)](/doc/source/tamax_szczekociny_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Sędziszów)](/doc/source/tamax_sedziszow_pl.md) / tamax.net.pl
 - [TAMAX (Gmina Włodowice)](/doc/source/tamax_wlodowice_pl.md) / tamax.net.pl
+- [TAMAX (Miasto Wieliczka)](/doc/source/tamax_wieliczka_pl.md) / tamax.net.pl
 - [Trzebownisko](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
 - [Wieliczka](/doc/source/kiedyodpady_pl.md) / wieliczka.kiedyodpady.pl

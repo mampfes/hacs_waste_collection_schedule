@@ -22710,6 +22710,26 @@
         },
         "data_description": {}
       },
+      "args_tamax_koniusza_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_koniusza_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_kolbaskowo_pl": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -22740,6 +22760,26 @@
           "house_number": "Dit husnummer",
           "street": "Dit gadenavn"
         }
+      },
+      "args_tamax_ksiaz_wielki_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_ksiaz_wielki_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
       },
       "args_tamax_lelow_pl": {
         "title": "Konfigurer Kilde",
@@ -22783,6 +22823,26 @@
         "data_description": {
           "district": "Dit distrikt eller del af kommunen"
         }
+      },
+      "args_tamax_bochnia_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_bochnia_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
       },
       "args_gmina_miekinia_pl": {
         "title": "Konfigurer Kilde",
@@ -22990,6 +23050,26 @@
         }
       },
       "reconfigure_tamax_szczekociny_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
+      "args_tamax_sedziszow_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_sedziszow_pl": {
         "title": "Omkonfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
@@ -23381,6 +23461,26 @@
         "data_description": {
           "street": "Dit gadenavn"
         }
+      },
+      "args_tamax_wieliczka_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_wieliczka_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
       },
       "args_zywiec_pl": {
         "title": "Konfigurer Kilde",

@@ -5195,10 +5195,24 @@
     },
     "urls": {}
   },
+  "tamax_koniusza_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_koniusza_pl.md",
+    "howto": {
+      "en": "Open Gmina Koniusza (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/malopolskie/gmina-koniusza/ and select the village group your village appears in. The current half-year calendar is found on the page each time, so a new upload is picked up without a change. Mixed and bio waste are collected on the same day, as are plastic and paper. Apartment blocks (zabudowa wielorodzinna) are only given as weekly and monthly rules without dates and are not supported."
+    },
+    "urls": {}
+  },
   "kolbaskowo_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kolbaskowo_pl.md",
     "howto": {
       "en": "Enter your village as named on https://kolbaskowo.pl/harmonogramy-odbioru-odpadow-dla-zabudowy-jednorodzinnej.html (e.g. 'Kurów' or 'Kołbaskowo'). 'Kurów' is the schedule for the village except ul. Na Klifie and ul. Wichrowe Wzgórza; set street to one of those (e.g. 'Na Klifie') for their file. For Będargowo 50-57, Siadło Dolne 32, 32a or 34-63, or Stobno 52-54 (Małe Stobno), also enter the house number. You can instead paste the full link title. This covers single-family housing only."
+    },
+    "urls": {}
+  },
+  "tamax_ksiaz_wielki_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_ksiaz_wielki_pl.md",
+    "howto": {
+      "en": "Open Gmina Książ Wielki (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/malopolskie/gmina-ksiaz-wielki/ and select the village group your village appears in. The current half-year calendar is found on the page each time, so a new upload is picked up without a change. Mixed waste is collected together with either the segregated waste or the bio waste; the bulky waste collection also takes car tyres and textiles. Apartment blocks (BLOKI) are only given as weekday rules without dates and are not supported."
     },
     "urls": {}
   },
@@ -5213,6 +5227,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maslow_pl.md",
     "howto": {
       "en": "Enter your area as named by its schedule link on https://www.maslow.pl/asp/gospodarka-odpadami,66 (in the article 'Harmonogramy odbioru odpadów na <year> rok'), e.g. 'Dąbrowa, Wiśniówka' or 'Zabudowa wielorodzinna'. A single village named in only one link (e.g. 'Wiśniówka') works too."
+    },
+    "urls": {}
+  },
+  "tamax_bochnia_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_bochnia_pl.md",
+    "howto": {
+      "en": "Open Gmina Miasto Bochnia (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/malopolskie/gmina-bochnia/ and the JEDNORODZINNE (single-family housing) calendar, which has one page per route (TRASA). Select the route whose street list contains your street; the choices show the beginning of each list. Ash (POPIÓŁ) is reported as Other; the bulky waste collection also takes electrical equipment and tyres. Apartment blocks (WIELORODZINNE) are only given as weekday rules without dates and are not supported."
     },
     "urls": {}
   },
@@ -5274,6 +5295,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_szczekociny_pl.md",
     "howto": {
       "en": "Find Gmina Szczekociny (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. Select your village group or street list exactly as printed on the household PDF. Street choices show the beginning of each list; read its PDF for the complete streets. Use the Trudne wjazdy / domki letniskowe route only if the council has assigned your property to that route. Apartment-block and business schedules are not supported. Mixed recycling includes the plastic/metal, paper and glass bags collected together. Textiles and bulky items go to the collection centre; no undated drop-off or appointment is added."
+    },
+    "urls": {}
+  },
+  "tamax_sedziszow_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_sedziszow_pl.md",
+    "howto": {
+      "en": "Open Gmina Sędziszów (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/swietokrzyskie/gmina-sedziszow/ and the JEDNORODZINNE (single-family housing) calendar. Select the village group or street list your address appears in; street choices show the beginning of each list, read the PDF for the complete streets. The current half-year calendar is found on the page each time, so a new upload is picked up without a change. Apartment blocks, housing communities and businesses have separate calendars that are not supported."
     },
     "urls": {}
   },
@@ -5370,6 +5398,13 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/legionowo_pl.md",
     "howto": {
       "en": "Enter your street as listed on https://legionowo.pl/harmonogramy-odpady/ (for example 'Senatorska'). Where a street is split by house number, include the range exactly as shown, such as 'Aleja Legionów do nr 75' or 'Aleja Legionów od nr 76'. Accents and a leading 'ul.' are ignored."
+    },
+    "urls": {}
+  },
+  "tamax_wieliczka_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_wieliczka_pl.md",
+    "howto": {
+      "en": "Open https://www.tamax.net.pl/harmonogramy/malopolskie/gmina-wieliczka/ and select the district (REJON) whose PDF lists your street; the choices show the beginning of each street list. These district calendars list only the mixed and bio waste dates; other fractions are not printed in them and are not included."
     },
     "urls": {}
   },
