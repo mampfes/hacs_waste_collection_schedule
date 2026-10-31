@@ -950,10 +950,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street_address": "Din fullständiga adress."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -961,9 +962,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Din fullständiga adress."
+        }
       },
       "args_gosnells_wa_gov_au": {
         "title": "Konfigurera källa",
@@ -1801,11 +1804,13 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Gata",
+          "street_number": "Husnummer"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street_and_suburb": "Ditt gatunamn.",
+          "street_number": "Ditt husnummer."
         }
       },
       "reconfigure_fairfieldcity_nsw_gov_au": {
@@ -1813,10 +1818,13 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Gata",
+          "street_number": "Husnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "street_and_suburb": "Ditt gatunamn.",
+          "street_number": "Ditt husnummer."
+        }
       },
       "args_frankston_vic_gov_au": {
         "title": "Konfigurera källa",
@@ -19968,6 +19976,30 @@
         },
         "data_description": {}
       },
+      "args_selargiusostenibile_it": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Zon"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_selargiusostenibile_it": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Zon"
+        },
+        "data_description": {}
+      },
       "args_silea_it": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -20163,6 +20195,8 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
+          "city": "Ort",
+          "containers": "Containers",
           "district": "Distrikt",
           "house_number": "Husnummer",
           "region": "Region",
@@ -20178,6 +20212,8 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
+          "city": "Ort",
+          "containers": "Containers",
           "district": "Distrikt",
           "house_number": "Husnummer",
           "region": "Region",
@@ -31052,10 +31088,12 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "postcode": "Ditt postnummer.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_newforest_gov_uk": {
@@ -31064,9 +31102,12 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Ditt postnummer.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_newark_sherwooddc_gov_uk": {
         "title": "Konfigurera källa",
@@ -35705,7 +35746,9 @@
           "municipality": "Kommun"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress.",
+          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats."
         }
       },
       "reconfigure_vogeldisposal_com": {
@@ -35716,7 +35759,10 @@
           "address": "Adress",
           "municipality": "Kommun"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fullständiga adress.",
+          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats."
+        }
       },
       "args_wm_com": {
         "title": "Konfigurera källa",

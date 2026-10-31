@@ -30253,6 +30253,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Selargius Sostenibile",
+      "module": "selargiusostenibile_it",
+      "default_params": {},
+      "id": "selargiusostenibile_it"
+    },
+    {
       "title": "Sennori e Sorso - Gesenu Spa",
       "module": "junker_app",
       "default_params": {},

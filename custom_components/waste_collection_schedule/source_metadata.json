@@ -214,7 +214,7 @@
   "gleneira_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gleneira_vic_gov_au.md",
     "howto": {
-      "en": "Visit the [Glen Eira City Council](https://www.gleneira.vic.gov.au/our-city/in-your-area) \"Find your bin collection day\" page and search for your address, for example: 4 Staniland Grove ELSTERNWICK VIC 3185. The address is resolved through the council's own address lookup, so commas, lower case suburbs and abbreviated street types (e.g. \"Hwy\" for \"Highway\") are accepted as well."
+      "en": "Visit the [Glen Eira City Council](https://www.gleneira.vic.gov.au/our-city/in-your-area) \"Find your bin collection day\" page and search for your address, for example: 4 Staniland Grove ELSTERNWICK VIC 3185. The address is resolved through the council's own address lookup, so commas, lower case suburbs and abbreviated street types (e.g. \"Hwy\" for \"Highway\") are accepted as well. The council shows the next collection of each bin. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -445,7 +445,7 @@
   "fairfieldcity_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fairfieldcity_nsw_gov_au.md",
     "howto": {
-      "en": "Visit https://kerbside.fairfieldcity.nsw.gov.au/kerbside/ and start typing your street name and suburb into the 'Street name & Suburb' field. Use the autocomplete suggestion (e.g. 'Dawson Street, FAIRFIELD HEIGHTS') as the value for street_and_suburb, and enter just your street number for street_number. Abbreviated street types from older configurations (e.g. 'Dawson ST, FAIRFIELD HEIGHTS') are still accepted."
+      "en": "Visit https://kerbside.fairfieldcity.nsw.gov.au/kerbside/ and start typing your street name and suburb into the 'Street name & Suburb' field. Use the autocomplete suggestion (e.g. 'Dawson Street, FAIRFIELD HEIGHTS') as the street, including the suburb, and enter just your street number (e.g. 1, 7A, 7/10) as the house number. Abbreviated street types from older configurations (e.g. 'Dawson ST, FAIRFIELD HEIGHTS') are still accepted. The council shows the next collection of each bin. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -4515,6 +4515,13 @@
     },
     "urls": {}
   },
+  "selargiusostenibile_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/selargiusostenibile_it.md",
+    "howto": {
+      "en": "Copy the link to the current UTENZE DOMESTICHE / CENTRO ABITATO PDF on https://selargiusostenibile.it. Find your residual-waste zone A or B in the street list at the beginning of that PDF. Independently choose Selargius paese or Su Planu e Is Corrias for paper. Update the URL when a new calendar is published. The supported layout is the March-February booklet with two months across facing pages. Oil and textiles are collected only by appointment and have no dates in this source."
+    },
+    "urls": {}
+  },
   "silea_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/silea_it.md",
     "howto": {
@@ -4571,7 +4578,9 @@
   },
   "grafikai_svara_lt": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grafikai_svara_lt.md",
-    "howto": {},
+    "howto": {
+      "en": "Use the same values as in the address search on https://grafikai.svara.lt: 'Regionas' is the region, 'Seniūnija' the district, 'Gatvė' the street and 'Namo numeris' the house number. If a value is misspelled, the error message lists the valid alternatives."
+    },
     "urls": {}
   },
   "nemenkom_lt": {
@@ -7576,7 +7585,9 @@
   },
   "newforest_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newforest_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode (e.g. SO40 8XX) and the Unique Property Reference Number (UPRN) of your property. You can find your UPRN at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -8969,7 +8980,7 @@
   "vogeldisposal_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vogeldisposal_com.md",
     "howto": {
-      "en": "Enter your municipality and street address. Exact spelling is not required: a rough municipality (for example 'butler twp') and a partial street address (for example '1002 tudor') are matched automatically. If the input matches more than one place, the matching options are shown so you can pick the right one."
+      "en": "Enter your municipality and street address. Exact spelling is not required: a rough municipality (for example 'butler twp') and a partial street address (for example '1002 tudor') are matched automatically. If the input matches more than one place, the matching options are shown so you can pick the right one. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },

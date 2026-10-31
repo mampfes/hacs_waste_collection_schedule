@@ -950,10 +950,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "street_address": "Hele adressen din."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -961,9 +962,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Hele adressen din."
+        }
       },
       "args_gosnells_wa_gov_au": {
         "title": "Konfigurer kilde",
@@ -1801,11 +1804,13 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Gate",
+          "street_number": "Husnummer"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "street_and_suburb": "Gatenavnet ditt.",
+          "street_number": "Husnummeret ditt."
         }
       },
       "reconfigure_fairfieldcity_nsw_gov_au": {
@@ -1813,10 +1818,13 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Gate",
+          "street_number": "Husnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "street_and_suburb": "Gatenavnet ditt.",
+          "street_number": "Husnummeret ditt."
+        }
       },
       "args_frankston_vic_gov_au": {
         "title": "Konfigurer kilde",
@@ -19968,6 +19976,30 @@
         },
         "data_description": {}
       },
+      "args_selargiusostenibile_it": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Sone"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+        }
+      },
+      "reconfigure_selargiusostenibile_it": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Sone"
+        },
+        "data_description": {}
+      },
       "args_silea_it": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -20163,6 +20195,8 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
+          "city": "Sted",
+          "containers": "Containers",
           "district": "Område",
           "house_number": "Husnummer",
           "region": "Region",
@@ -20178,6 +20212,8 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
+          "city": "Sted",
+          "containers": "Containers",
           "district": "Område",
           "house_number": "Husnummer",
           "region": "Region",
@@ -31052,10 +31088,12 @@
         "data": {
           "calendar_title": "Kalendernavn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "postcode": "Postnummeret ditt.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_newforest_gov_uk": {
@@ -31064,9 +31102,12 @@
         "data": {
           "calendar_title": "Kalendernavn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Postnummeret ditt.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_newark_sherwooddc_gov_uk": {
         "title": "Konfigurer kilde",
@@ -35705,7 +35746,9 @@
           "municipality": "Kommune"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "address": "Hele adressen din.",
+          "municipality": "Navnet på kommunen din, slik det står på leverandørens nettside."
         }
       },
       "reconfigure_vogeldisposal_com": {
@@ -35716,7 +35759,10 @@
           "address": "Adresse",
           "municipality": "Kommune"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Hele adressen din.",
+          "municipality": "Navnet på kommunen din, slik det står på leverandørens nettside."
+        }
       },
       "args_wm_com": {
         "title": "Konfigurer kilde",

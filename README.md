@@ -4084,6 +4084,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Schivenoglia](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/schivenoglia
 - [SEAB Biella](/doc/source/seab_biella_it.md) / seab.biella.it
 - [Seab SPA Bolzano](/doc/source/junker_app.md) / junker.app
+- [Selargius Sostenibile](/doc/source/selargiusostenibile_it.md) / selargiusostenibile.it
 - [Sennori e Sorso - Gesenu Spa](/doc/source/junker_app.md) / junker.app
 - [Seravezza (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Seregno](/doc/source/siunet_it.md) / siunet.it

@@ -953,11 +953,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street_address": "Full street address, ideally including suburb, state and postal code. Commas and abbreviated street types are accepted."
+          "street_address": "Your full address."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -965,10 +965,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
-          "street_address": "Full street address, ideally including suburb, state and postal code. Commas and abbreviated street types are accepted."
+          "street_address": "Your full address."
         }
       },
       "args_gosnells_wa_gov_au": {
@@ -1810,13 +1810,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_and_suburb": "Street Name & Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Street",
+          "street_number": "House Number"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street_and_suburb": "Street name and suburb as shown in the autocomplete list (e.g. 'Dawson Street, FAIRFIELD HEIGHTS'). Abbreviated street types such as 'Dawson ST, FAIRFIELD HEIGHTS' also work.",
-          "street_number": "Your street number (e.g. 1, 7A, 7/10)."
+          "street_and_suburb": "Your street name.",
+          "street_number": "Your house number."
         }
       },
       "reconfigure_fairfieldcity_nsw_gov_au": {
@@ -1824,12 +1824,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_and_suburb": "Street Name & Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Street",
+          "street_number": "House Number"
         },
         "data_description": {
-          "street_and_suburb": "Street name and suburb as shown in the autocomplete list (e.g. 'Dawson Street, FAIRFIELD HEIGHTS'). Abbreviated street types such as 'Dawson ST, FAIRFIELD HEIGHTS' also work.",
-          "street_number": "Your street number (e.g. 1, 7A, 7/10)."
+          "street_and_suburb": "Your street name.",
+          "street_number": "Your house number."
         }
       },
       "args_frankston_vic_gov_au": {
@@ -20016,6 +20016,30 @@
         },
         "data_description": {}
       },
+      "args_selargiusostenibile_it": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "paper_area": "Paper collection area",
+          "url": "Domestic calendar PDF URL",
+          "zone": "Residual waste zone"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_selargiusostenibile_it": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "paper_area": "Paper collection area",
+          "url": "Domestic calendar PDF URL",
+          "zone": "Residual waste zone"
+        },
+        "data_description": {}
+      },
       "args_silea_it": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -20214,14 +20238,23 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "District",
-          "house_number": "House Number",
-          "region": "Region",
-          "street": "Street",
-          "waste_object_ids": "Waste Object Ids"
+          "city": "City / settlement (Miestas, gyvenvietė)",
+          "containers": "Container IDs",
+          "district": "District (Seniūnija)",
+          "house_number": "House number (Namo numeris)",
+          "region": "Region (Regionas)",
+          "street": "Street (Gatvė)",
+          "waste_object_ids": "Waste object IDs (deprecated)"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Optional. City or settlement, e.g. 'Kauno m.', 'Garliavos m.', 'Domeikavos k.'. Alternative to district for disambiguation.",
+          "containers": "Optional list of container IDs (e.g. 'MK-004108') to restrict the result to specific containers of the address.",
+          "district": "Optional. Only needed if the same street and house number exists in several districts of the region, e.g. 'Išlaužo sen.'.",
+          "house_number": "House number as registered, e.g. '7', '2A', '132B'.",
+          "region": "Municipality as used by Kauno švara, e.g. 'Kauno m. sav.', 'Kauno r. sav.', 'Prienų r. sav.', 'Alytaus m. sav.'.",
+          "street": "Street name including the abbreviation, e.g. 'Demokratų g.'.",
+          "waste_object_ids": "Deprecated and ignored. IDs from the old grafikai.svara.lt API are no longer available; use 'containers' instead."
         }
       },
       "reconfigure_grafikai_svara_lt": {
@@ -20229,13 +20262,23 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "district": "District",
-          "house_number": "House Number",
-          "region": "Region",
-          "street": "Street",
-          "waste_object_ids": "Waste Object Ids"
+          "city": "City / settlement (Miestas, gyvenvietė)",
+          "containers": "Container IDs",
+          "district": "District (Seniūnija)",
+          "house_number": "House number (Namo numeris)",
+          "region": "Region (Regionas)",
+          "street": "Street (Gatvė)",
+          "waste_object_ids": "Waste object IDs (deprecated)"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Optional. City or settlement, e.g. 'Kauno m.', 'Garliavos m.', 'Domeikavos k.'. Alternative to district for disambiguation.",
+          "containers": "Optional list of container IDs (e.g. 'MK-004108') to restrict the result to specific containers of the address.",
+          "district": "Optional. Only needed if the same street and house number exists in several districts of the region, e.g. 'Išlaužo sen.'.",
+          "house_number": "House number as registered, e.g. '7', '2A', '132B'.",
+          "region": "Municipality as used by Kauno švara, e.g. 'Kauno m. sav.', 'Kauno r. sav.', 'Prienų r. sav.', 'Alytaus m. sav.'.",
+          "street": "Street name including the abbreviation, e.g. 'Demokratų g.'.",
+          "waste_object_ids": "Deprecated and ignored. IDs from the old grafikai.svara.lt API are no longer available; use 'containers' instead."
+        }
       },
       "args_nemenkom_lt": {
         "title": "Configure Source",
@@ -31154,11 +31197,11 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Postcode",
-          "uprn": "Unique Property Reference Number (UPRN)"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "postcode": "Your property's postcode, e.g. SO40 8XX",
+          "postcode": "Your postcode.",
           "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
@@ -31168,10 +31211,10 @@
         "data": {
           "calendar_title": "Calendar Title",
           "postcode": "Postcode",
-          "uprn": "Unique Property Reference Number (UPRN)"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "postcode": "Your property's postcode, e.g. SO40 8XX",
+          "postcode": "Your postcode.",
           "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
@@ -35828,13 +35871,13 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Street address",
+          "address": "Address",
           "municipality": "Municipality"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Your street address, for example '1002 tudor' or '1002 TUDOR DR'.",
-          "municipality": "Your Vogel municipality, for example 'butler twp' or 'BUTLER TWP, BUTLER COUNTY'."
+          "address": "Your full address.",
+          "municipality": "The name of your municipality, as shown on the provider's website."
         }
       },
       "reconfigure_vogeldisposal_com": {
@@ -35842,12 +35885,12 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "address": "Street address",
+          "address": "Address",
           "municipality": "Municipality"
         },
         "data_description": {
-          "address": "Your street address, for example '1002 tudor' or '1002 TUDOR DR'.",
-          "municipality": "Your Vogel municipality, for example 'butler twp' or 'BUTLER TWP, BUTLER COUNTY'."
+          "address": "Your full address.",
+          "municipality": "The name of your municipality, as shown on the provider's website."
         }
       },
       "args_wm_com": {

@@ -1,6 +1,8 @@
 # Vogel Disposal Service
 
-Support for schedules provided by [Vogel Disposal Service](https://www.vogeldisposal.com/), serving municipalities in western Pennsylvania, USA.
+Support for schedules provided by [Vogel Disposal Service](https://www.vogeldisposal.com/).
+
+Residential trash and recycling collection schedules for Vogel Disposal Service (Mars, PA).
 
 ## Configuration via configuration.yaml
 
@@ -10,7 +12,7 @@ waste_collection_schedule:
     - name: vogeldisposal_com
       args:
         municipality: MUNICIPALITY
-        address: STREET_ADDRESS
+        address: ADDRESS
 ```
 
 ### Configuration Variables
@@ -18,12 +20,8 @@ waste_collection_schedule:
 **municipality**  
 *(string) (required)*
 
-Your Vogel municipality. Exact spelling is not required — a rough name such as `butler twp` resolves to `BUTLER TWP, BUTLER COUNTY` automatically.
-
 **address**  
 *(string) (required)*
-
-Your street address. A partial such as `1002 tudor` resolves to `1002 TUDOR DR` automatically.
 
 ## Example
 
@@ -32,12 +30,10 @@ waste_collection_schedule:
   sources:
     - name: vogeldisposal_com
       args:
-        municipality: "BUTLER TWP, BUTLER COUNTY"
-        address: "1002 TUDOR DR"
+        municipality: BUTLER TWP, BUTLER COUNTY
+        address: 1002 TUDOR DR
 ```
 
 ## How to get the source arguments
 
-Just enter your municipality and street address roughly — the source resolves them to the exact values Vogel uses. If an entry matches more than one municipality or address, the configuration form lists the matching options so you can pick the right one. To see the canonical spellings, you can use the **Print Schedule** lookup on [vogeldisposal.com](https://www.vogeldisposal.com/).
-
-The source returns weekly **Trash** collections and every-other-week **Recycling** collections. Holiday delays are applied automatically: when a holiday shifts your collection, the shifted date is reflected in the schedule.
+Enter your municipality and street address. Exact spelling is not required: a rough municipality (for example 'butler twp') and a partial street address (for example '1002 tudor') are matched automatically. If the input matches more than one place, the matching options are shown so you can pick the right one. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.
