@@ -4223,6 +4223,13 @@
     },
     "urls": {}
   },
+  "dunanett_hu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dunanett_hu.md",
+    "howto": {
+      "en": "Select one municipality: Pusztaszabolcs, Rácalmás, Perkáta, Nagyvenyim or Dunaföldvár. Official publication indices are https://pusztaszabolcs.hu/, https://racalmas.hu/category/hirek/, https://perkata.munipolis.hu/p/hulladekszallitas, https://nagyvenyim.hu/ and https://dunafoldvar.hu/hir-kategoria/hulladekokkal-kapcsolatos-informaciok/. The provider is https://www.dunanett.hu. The source discovers annual PDF, HTML or DOCX calendars for current/future years automatically, uses the latest timestamped PDF upload or the uniquely published link, and fails on ambiguous links or if the current year is unavailable rather than reusing an expired calendar. New calendars may only be published in January, so the source can be unavailable at the start of the year until publication.\n\nGeneral waste, recycling and garden waste are included, except in Dunaföldvár: its document publishes only recycling and garden dates, so no general-waste schedule is returned there. Where the calendar restricts January collections to Christmas trees, those events use the Garden Waste category with a tree-only description: remove decorations and other waste; ordinary garden waste is not accepted. Bulky waste is by appointment and has no calendar dates. Permanent glass drop-off points are not dated collections.\n\nThese are the annual planned dates. Ad-hoc weather cancellations or street-specific replacement notices are not included; check municipal news and https://www.dunanett.hu/nonprofit/hireink/. Other Dunanett municipalities are not supported: current machine-readable annual calendars could not be verified, or the available calendars are image-only."
+    },
+    "urls": {}
+  },
   "fkf_bo_hu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fkf_bo_hu.md",
     "howto": {
@@ -5887,6 +5894,14 @@
   "ssam_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ssam_se.md",
     "howto": {},
+    "urls": {}
+  },
+  "stockholmvattenochavfall_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stockholmvattenochavfall_se.md",
+    "howto": {
+      "en": "In the UI, type the street name and then pick your address from the list. Enter the address of a house or townhouse (villa och radhus) as on https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, e.g. `Hjortronvägen 3, Bromma`. The postcode is optional. The website only shows the next collection of each bin, so the schedule is refreshed once a day (the default fetch interval).",
+      "sv": "I gränssnittet skriver du gatunamnet och väljer sedan din adress i listan. Ange adressen till en villa eller ett radhus som på https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, t.ex. `Hjortronvägen 3, Bromma`. Postnumret är valfritt. Webbplatsen visar bara nästa tömning av varje kärl, så schemat uppdateras en gång om dagen (standardintervallet)."
+    },
     "urls": {}
   },
   "sysav_se": {

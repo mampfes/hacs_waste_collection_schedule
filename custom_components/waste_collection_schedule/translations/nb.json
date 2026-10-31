@@ -18913,6 +18913,29 @@
           "street": "Gatenavnet ditt."
         }
       },
+      "args_dunanett_hu": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "municipality": "Kommune"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "municipality": "Navnet på kommunen din, slik det står på leverandørens nettside."
+        }
+      },
+      "reconfigure_dunanett_hu": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "municipality": "Kommune"
+        },
+        "data_description": {
+          "municipality": "Navnet på kommunen din, slik det står på leverandørens nettside."
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -25275,6 +25298,33 @@
         },
         "data_description": {
           "street_address": "Hele adressen din."
+        }
+      },
+      "args_stockholmvattenochavfall_se": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "address": "Adresse",
+          "street": "Gate"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "address": "Hele adressen din.",
+          "street": "Gatenavnet ditt."
+        }
+      },
+      "reconfigure_stockholmvattenochavfall_se": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "address": "Adresse",
+          "street": "Gate"
+        },
+        "data_description": {
+          "address": "Hele adressen din.",
+          "street": "Gatenavnet ditt."
         }
       },
       "args_sysav_se": {

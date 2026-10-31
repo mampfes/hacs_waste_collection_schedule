@@ -18913,6 +18913,29 @@
           "street": "Ditt gatunamn."
         }
       },
+      "args_dunanett_hu": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "municipality": "Kommun"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats."
+        }
+      },
+      "reconfigure_dunanett_hu": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "municipality": "Kommun"
+        },
+        "data_description": {
+          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats."
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -25275,6 +25298,33 @@
         },
         "data_description": {
           "street_address": "Din fullständiga adress."
+        }
+      },
+      "args_stockholmvattenochavfall_se": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "address": "Adress",
+          "street": "Gata"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress.",
+          "street": "Ditt gatunamn."
+        }
+      },
+      "reconfigure_stockholmvattenochavfall_se": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "address": "Adress",
+          "street": "Gata"
+        },
+        "data_description": {
+          "address": "Din fullständiga adress.",
+          "street": "Ditt gatunamn."
         }
       },
       "args_sysav_se": {

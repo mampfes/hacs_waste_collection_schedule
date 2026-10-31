@@ -18937,6 +18937,29 @@
           "street": "Your street name."
         }
       },
+      "args_dunanett_hu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "municipality": "The name of your municipality, as shown on the provider's website."
+        }
+      },
+      "reconfigure_dunanett_hu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "municipality": "Municipality"
+        },
+        "data_description": {
+          "municipality": "The name of your municipality, as shown on the provider's website."
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -25345,6 +25368,33 @@
         },
         "data_description": {
           "street_address": "Your full address."
+        }
+      },
+      "args_stockholmvattenochavfall_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address.",
+          "street": "Your street name."
+        }
+      },
+      "reconfigure_stockholmvattenochavfall_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Address",
+          "street": "Street"
+        },
+        "data_description": {
+          "address": "Your full address.",
+          "street": "Your street name."
         }
       },
       "args_sysav_se": {

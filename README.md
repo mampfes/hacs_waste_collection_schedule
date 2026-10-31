@@ -3198,9 +3198,15 @@ If you already have enough information for your municipality/region, you are ver
 - [AKSD Debrecen](/doc/source/aksd_hu.md) / aksd.hu
 - [Depónia Nonprofit Kft.](/doc/source/deponia_hu.md) / deponia.hu
 - [DTKH Nonprofit Kft.](/doc/source/dtkh_hu.md) / dtkh.hu
+- [Dunaföldvár](/doc/source/dunanett_hu.md) / dunafoldvar.hu
+- [Dunanett Nonprofit Kft.](/doc/source/dunanett_hu.md) / dunanett.hu
 - [FKF Budaörs](/doc/source/fkf_bo_hu.md) / fkf.hu
 - [Győri Hulladékgazdálkodási Nonprofit Kft.](/doc/source/gyhg_hu.md) / gyhg.hu
 - [MOHU Budapest](/doc/source/mohu_bp_hu.md) / mohubudapest.hu
+- [Nagyvenyim](/doc/source/dunanett_hu.md) / nagyvenyim.hu
+- [Perkáta](/doc/source/dunanett_hu.md) / perkata.munipolis.hu
+- [Pusztaszabolcs](/doc/source/dunanett_hu.md) / pusztaszabolcs.hu
+- [Rácalmás](/doc/source/dunanett_hu.md) / racalmas.hu
 - [Siókom Nonprofit Kft.](/doc/source/siokom_hu.md) / siokom.hu
 - [STKH Sopron és Térsége](/doc/source/stkh_hu.md) / stkh.hu
 - [ÉTH (Érd, Diósd, Ráckeresztúr, Sóskút, Tárnok)](/doc/source/eth_erd_hu.md) / eth-erd.hu
@@ -4814,6 +4820,7 @@ If you already have enough information for your municipality/region, you are ver
 - [SSAM (Deprecated)](/doc/source/ssam_se.md) / ssam.se
 - [SSAM Södra Smalånds Avfall & Miljö](/doc/source/edpevent_se.md) / ssam.se
 - [Stenungsunds kommun](/doc/source/edpevent_se.md) / stenungsund.se
+- [Stockholm Vatten och Avfall](/doc/source/stockholmvattenochavfall_se.md) / stockholmvattenochavfall.se
 - [Sysav Sophämntning](/doc/source/sysav_se.md) / sysav.se
 - [Söderköping](/doc/source/avfallsapp_se.md) / soderkoping.se
 - [Teknik i Väst (Arvika/Eda)](/doc/source/avfallsapp_se.md) / teknikivast.se

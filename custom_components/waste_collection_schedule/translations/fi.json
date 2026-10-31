@@ -18918,6 +18918,29 @@
           "street": "Kadun nimi."
         }
       },
+      "args_dunanett_hu": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_dunanett_hu": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Kunta"
+        },
+        "data_description": {
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
       "args_fkf_bo_hu": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -25280,6 +25303,33 @@
         },
         "data_description": {
           "street_address": "Koko osoitteesi."
+        }
+      },
+      "args_stockholmvattenochavfall_se": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite",
+          "street": "Katu"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi.",
+          "street": "Kadun nimi."
+        }
+      },
+      "reconfigure_stockholmvattenochavfall_se": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite",
+          "street": "Katu"
+        },
+        "data_description": {
+          "address": "Koko osoitteesi.",
+          "street": "Kadun nimi."
         }
       },
       "args_sysav_se": {

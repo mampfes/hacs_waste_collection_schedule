@@ -73,6 +73,9 @@
     "deponia_hu": [
       "@tothi"
     ],
+    "dunanett_hu": [
+      "@nevembalint"
+    ],
     "durban_gov_za": [
       "@robtesch"
     ],
@@ -324,6 +327,9 @@
     ],
     "stkh_hu": [
       "@markvp"
+    ],
+    "stockholmvattenochavfall_se": [
+      "@chaudis"
     ],
     "stuttgart_de": [
       "@n42net"

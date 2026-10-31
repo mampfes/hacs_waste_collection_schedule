@@ -23896,6 +23896,20 @@
       "id": "dtkh_hu"
     },
     {
+      "title": "Dunaf\u00f6ldv\u00e1r",
+      "module": "dunanett_hu",
+      "default_params": {
+        "municipality": "Dunaf\u00f6ldv\u00e1r"
+      },
+      "id": "dunanett_hu"
+    },
+    {
+      "title": "Dunanett Nonprofit Kft.",
+      "module": "dunanett_hu",
+      "default_params": {},
+      "id": "dunanett_hu"
+    },
+    {
       "title": "FKF Buda\u00f6rs",
       "module": "fkf_bo_hu",
       "default_params": {},
@@ -23912,6 +23926,38 @@
       "module": "mohu_bp_hu",
       "default_params": {},
       "id": "mohu_bp_hu"
+    },
+    {
+      "title": "Nagyvenyim",
+      "module": "dunanett_hu",
+      "default_params": {
+        "municipality": "Nagyvenyim"
+      },
+      "id": "dunanett_hu"
+    },
+    {
+      "title": "Perk\u00e1ta",
+      "module": "dunanett_hu",
+      "default_params": {
+        "municipality": "Perk\u00e1ta"
+      },
+      "id": "dunanett_hu"
+    },
+    {
+      "title": "Pusztaszabolcs",
+      "module": "dunanett_hu",
+      "default_params": {
+        "municipality": "Pusztaszabolcs"
+      },
+      "id": "dunanett_hu"
+    },
+    {
+      "title": "R\u00e1calm\u00e1s",
+      "module": "dunanett_hu",
+      "default_params": {
+        "municipality": "R\u00e1calm\u00e1s"
+      },
+      "id": "dunanett_hu"
     },
     {
       "title": "Si\u00f3kom Nonprofit Kft.",
@@ -35005,6 +35051,12 @@
         "service_provider": "stenungsund-kommun"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Stockholm Vatten och Avfall",
+      "module": "stockholmvattenochavfall_se",
+      "default_params": {},
+      "id": "stockholmvattenochavfall_se"
     },
     {
       "title": "Sysav Soph\u00e4mntning",
