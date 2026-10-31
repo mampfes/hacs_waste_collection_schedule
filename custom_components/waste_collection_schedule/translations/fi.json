@@ -20282,6 +20282,29 @@
           "village": "Kaupunkisi tai paikkakuntasi."
         }
       },
+      "args_nkom_lt": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "location": "Kaupunki"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "location": "Kaupunkisi tai paikkakuntasi."
+        }
+      },
+      "reconfigure_nkom_lt": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "location": "Kaupunki"
+        },
+        "data_description": {
+          "location": "Kaupunkisi tai paikkakuntasi."
+        }
+      },
       "args_tkeliai_lt": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",

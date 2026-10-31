@@ -4310,6 +4310,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gargždų švara](/doc/source/gargzdusvara_eu.md) / gargzdusvara.eu
 - [Kauno švara](/doc/source/grafikai_svara_lt.md) / grafikai.svara.lt
 - [Nemenčinės komunalininkas](/doc/source/nemenkom_lt.md) / nemenkom.lt
+- [Nemėžio komunalininkas](/doc/source/nkom_lt.md) / nkom.lt/kita.html
 - [Telšių keliai](/doc/source/tkeliai_lt.md) / tkeliai.lt
 - [Šiaulių regiono atliekų tvarkymo centras (Šiauliai city)](/doc/source/sratc_lt.md) / sratc.lt
 </details>

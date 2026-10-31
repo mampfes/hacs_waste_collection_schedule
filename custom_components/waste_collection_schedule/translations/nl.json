@@ -20277,6 +20277,29 @@
           "village": "Uw stad of dorp."
         }
       },
+      "args_nkom_lt": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "location": "Plaats"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "location": "Uw stad of dorp."
+        }
+      },
+      "reconfigure_nkom_lt": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "location": "Plaats"
+        },
+        "data_description": {
+          "location": "Uw stad of dorp."
+        }
+      },
       "args_tkeliai_lt": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",

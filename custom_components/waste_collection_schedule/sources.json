@@ -31812,6 +31812,12 @@
       "id": "nemenkom_lt"
     },
     {
+      "title": "Nem\u0117\u017eio komunalininkas",
+      "module": "nkom_lt",
+      "default_params": {},
+      "id": "nkom_lt"
+    },
+    {
       "title": "Tel\u0161i\u0173 keliai",
       "module": "tkeliai_lt",
       "default_params": {},

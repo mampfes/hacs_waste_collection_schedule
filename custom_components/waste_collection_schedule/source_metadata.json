@@ -4614,6 +4614,13 @@
     },
     "urls": {}
   },
+  "nkom_lt": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/nkom_lt.md",
+    "howto": {
+      "en": "Open https://www.nkom.lt/kita.html and use a town, village, or street name as it appears in the 'Vietovė' column of the schedule."
+    },
+    "urls": {}
+  },
   "tkeliai_lt": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tkeliai_lt.md",
     "howto": {},

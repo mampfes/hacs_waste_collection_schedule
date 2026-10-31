@@ -20326,6 +20326,29 @@
           "village": "Your city or town."
         }
       },
+      "args_nkom_lt": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "location": "City"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "location": "Your city or town."
+        }
+      },
+      "reconfigure_nkom_lt": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "location": "City"
+        },
+        "data_description": {
+          "location": "Your city or town."
+        }
+      },
       "args_tkeliai_lt": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

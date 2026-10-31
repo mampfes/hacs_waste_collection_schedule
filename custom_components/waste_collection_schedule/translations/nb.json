@@ -20277,6 +20277,29 @@
           "village": "Byen eller tettstedet ditt."
         }
       },
+      "args_nkom_lt": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "location": "Sted"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "location": "Byen eller tettstedet ditt."
+        }
+      },
+      "reconfigure_nkom_lt": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "location": "Sted"
+        },
+        "data_description": {
+          "location": "Byen eller tettstedet ditt."
+        }
+      },
       "args_tkeliai_lt": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
