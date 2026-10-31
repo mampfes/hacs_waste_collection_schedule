@@ -197,6 +197,10 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
     ``allow_unmarked_missing_days``, blank holiday cells are accepted only when
     their inferred position carries no collection marker.
 
+    stroke_colors optionally separates outlined symbols from filled symbols.
+    max_duplicate_day_repairs permits a bounded number of duplicated numerals
+    to use their complete weekday-grid position when that number is missing.
+
     Set row_bands=True for filled week rows spanning several day cells.
     heading_year accepts a year suffix on each month heading. day_font_size
     restricts the numeral height in PDF points, for files carrying invisible
@@ -211,11 +215,13 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         year_pattern: str,
         colors: Mapping[str, Sequence[tuple[float, ...]]],
         font_colors: Mapping[str, Sequence[tuple[float, ...]]] | None = None,
+        stroke_colors: Mapping[str, Sequence[tuple[float, ...]]] | None = None,
         alignment: str = "center",
         tolerance: float = 0.12,
         allow_unmarked_missing_days: bool = False,
         pages: Sequence[int] | None = None,
         cancelled_colors: Sequence[tuple[float, ...]] = (),
+        max_duplicate_day_repairs: int = 0,
         row_bands: bool = False,
         heading_year: bool = False,
         day_font_size: tuple[float, float] | None = None,
@@ -225,6 +231,9 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         self.year_pattern = re.compile(year_pattern)
         self.colors = dict(colors)
         self.font_colors = dict(font_colors or {})
+        self.stroke_colors = (
+            dict(stroke_colors) if stroke_colors is not None else self.colors
+        )
         if alignment not in ("left", "center"):
             raise ValueError("Unknown month-heading alignment")
         self.alignment = alignment
@@ -232,6 +241,9 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         self.allow_unmarked_missing_days = allow_unmarked_missing_days
         self.pages = frozenset(pages) if pages is not None else None
         self.cancelled_colors = {"cancelled": tuple(cancelled_colors)}
+        if max_duplicate_day_repairs < 0:
+            raise ValueError("Duplicate-day repair limit cannot be negative")
+        self.max_duplicate_day_repairs = max_duplicate_day_repairs
         self.row_bands = row_bands
         self.heading_year = heading_year
         self.day_font_size = day_font_size
@@ -294,6 +306,7 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         seen_months: set[int] = set()
         cancelled: set[datetime.date] = set()
         results: dict[tuple[datetime.date, str], dict[str, Any]] = {}
+        repaired_days = 0
         for words, headings, shapes in pages:
             heading_rows = _rows(headings)
             row_steps = [
@@ -381,6 +394,7 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
                         )
                     ]
                     day_rows = _rows(numbers)
+                    printed_days = [int(w.text) for w in numbers if w.text != "X"]
                     first_weekday = datetime.date(year, month, 1).weekday()
                     read_days: set[int] = set()
                     row_offset = (
@@ -408,9 +422,18 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
                                 read_days.add(day)
                                 continue
                             if int(word.text) != day:
-                                raise ValueError(
-                                    f"Printed day {word.text} differs from grid date {date}"
-                                )
+                                if (
+                                    repaired_days >= self.max_duplicate_day_repairs
+                                    or printed_days.count(int(word.text)) < 2
+                                    or day in printed_days
+                                ):
+                                    raise ValueError(
+                                        f"Printed day {word.text} differs from grid date {date}"
+                                    )
+                                # One duplicated numeral can be dated from the
+                                # complete weekday grid and its missing number.
+                                # Never repair an arbitrary or shifted layout.
+                                repaired_days += 1
                             read_days.add(day)
                             keys = self._keys(word.color, self.font_colors)
                             candidates = [
@@ -439,7 +462,9 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
                                     )
                                 if shape.stroke:
                                     keys.update(
-                                        self._keys(shape.stroking_color, self.colors)
+                                        self._keys(
+                                            shape.stroking_color, self.stroke_colors
+                                        )
                                     )
                             for key in sorted(keys):
                                 results[(date, key)] = {
@@ -489,7 +514,7 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
                                         or (
                                             shape.stroke
                                             and self._keys(
-                                                shape.stroking_color, self.colors
+                                                shape.stroking_color, self.stroke_colors
                                             )
                                         )
                                     )

@@ -48,6 +48,59 @@ from waste_collection_schedule.service.PdfTextCalendar import (
 D = datetime.date
 
 
+def test_marked_pdf_distinguishes_stroke_and_fill_palettes():
+    response = SimpleNamespace(content=_marked_calendar_pdf())
+    rows = _marked_parser(stroke_colors={"outlined": ((1, 0, 0),)})(response)
+    assert {(r["date"], r["type"]) for r in rows} == {
+        (D(2026, 1, 26), "general"),
+        (D(2026, 1, 26), "outlined"),
+    }
+
+
+def test_marked_pdf_duplicate_day_repair_requires_an_explicit_limit_and_a_missing_number():
+    response = SimpleNamespace(
+        content=_marked_calendar_pdf(marked_day=(1, 16), duplicate_days={(1, 16): 17})
+    )
+    with pytest.raises(ValueError, match="differs from grid"):
+        _marked_parser()(response)
+    rows = _marked_parser(max_duplicate_day_repairs=1)(response)
+    assert {r["date"] for r in rows} == {D(2026, 1, 16)}
+    two_errors = SimpleNamespace(
+        content=_marked_calendar_pdf(duplicate_days={(1, 16): 17, (2, 10): 11})
+    )
+    with pytest.raises(ValueError, match="differs from grid"):
+        _marked_parser(max_duplicate_day_repairs=1)(two_errors)
+    with pytest.raises(ValueError, match="Incomplete printed grid"):
+        _marked_parser(max_duplicate_day_repairs=1)(
+            SimpleNamespace(content=_marked_calendar_pdf(bad_day=(1, 16)))
+        )
+
+
+def test_edinburgh_printed_markers_keep_christmas_shift_and_the_january_grid_date():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.source.edinburgh_gov_uk import Source
+
+    case = "Princess Mary Road"
+    with cassette.replaying(fixture_path("edinburgh_gov_uk", case)):
+        rows = Source(**Source.TEST_CASES[case]).fetch()
+    pairs = {(r.date, r.waste_type.id) for r in rows}
+    assert len(rows) == 78
+    assert (D(2026, 1, 16), wt.RECYCLABLES.id) in pairs
+    assert (D(2026, 1, 16), wt.GLASS.id) in pairs
+    assert not any(day == D(2026, 1, 17) for day, _ in pairs)
+    assert (D(2026, 12, 26), wt.GENERAL_WASTE.id) in pairs
+    assert (D(2026, 12, 25), wt.GENERAL_WASTE.id) not in pairs
+
+
+def test_edinburgh_rejects_an_expired_calendar():
+    from waste_collection_schedule.source.edinburgh_gov_uk import _current_year
+
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="this year"):
+        list(_current_year([{"date": D(2026, 12, 26)}], None))
+
+
 def _grand_lieu_calendar():
     """A complete synthetic published table, with a retained holiday pickup."""
     import calendar
@@ -1437,6 +1490,7 @@ def _marked_calendar_pdf(
     year=2026,
     columns=7,
     omitted=None,
+    duplicate_days=None,
     bad_day=None,
     year_label=True,
     hidden_blue=False,
@@ -1497,6 +1551,8 @@ def _marked_calendar_pdf(
                     commands.append(f"q 1 0 0 RG 2 w {x - 2} {y - 4} {width} 14 re S Q")
                 if (month, day) != omitted:
                     value = 32 if (month, day) == bad_day else day
+                    if duplicate_days:
+                        value = duplicate_days.get((month, day), value)
                     text(value, x, y, "1 1 1" if marked else "0 0 0")
         stream = DecodedStreamObject()
         stream.set_data("\n".join(commands).encode("ascii"))
