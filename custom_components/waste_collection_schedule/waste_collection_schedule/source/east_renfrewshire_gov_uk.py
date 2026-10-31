@@ -1,180 +1,126 @@
-from urllib.parse import parse_qs, urlparse
+"""East Renfrewshire Council (Scotland) bin collection dates."""
+
+from typing import ClassVar, final
 
 from bs4 import BeautifulSoup
-from curl_cffi import requests
-from dateutil import parser
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.service.GossForm import GossFormRetriever, GossStep
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "East Renfrewshire Council"
-DESCRIPTION = "Source for eastrenfrewshire.gov.uk services for East Renfrewshire"
-URL = "https://eastrenfrewshire.gov.uk"  # apex host (no www)
-FORM_PAGE = f"{URL}/bin-days"
-
-TEST_CASES = {
-    "Test_001": {"postcode": "G78 2TJ", "uprn": "131016859"},
-    "Test_002": {"postcode": "g775ar", "uprn": 131019331},
-    "Test_003": {"postcode": "g78 3er", "uprn": "000131020112"},
-}
-
-ICON_MAP = {
-    "Grey": Icons.GENERAL_WASTE,
-    "Brown": Icons.ORGANIC,
-    "Green": Icons.GLASS,
-    "Blue": Icons.EVENT,
-}
+# A GOSS form: page one takes the postcode, page two offers that postcode's
+# addresses (option values are 12-digit UPRNs) and answers with a table of the
+# next collections, one <img alt="Green bin icon"> per bin due that day.
+FORM_URL = "https://eastrenfrewshire.gov.uk/bin-days"
+_FORM = "BINDAYSV2"
+_STATE = (
+    "PAGESESSIONID",
+    "SESSIONID",
+    "NONCE",
+    "VARIABLES",
+    "PAGENAME",
+    "PAGEINSTANCE",
+)
+_NO_VARIABLES = "e30="  # base64 of "{}"
 
 
-class Source:
-    def __init__(self, postcode, uprn):
-        if not postcode or not uprn:
-            raise ValueError("Both 'postcode' and 'uprn' must be provided.")
-        self._postcode = postcode
-        self._uprn = str(uprn).zfill(12)
+def _uprn(value) -> str:
+    return str(value).strip().zfill(12)
 
-    def fetch(self):
-        # Cloudflare-aware session
-        session = requests.Session(impersonate="chrome124")
-        session.headers.update(
-            {
-                "User-Agent": (
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/129.0.0.0 Safari/537.36"
-                ),
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                "Accept-Language": "en-GB,en;q=0.9",
-            }
-        )
 
-        address_page = self.__get_address_page(session, self._postcode)
-        bin_collection_info_page = self.__get_bin_collection_info_page(
-            session, address_page, self._uprn
-        )
-        return self.__get_bin_collection_info(bin_collection_info_page)
+def _choose_address(response, *, uprn, **_) -> dict[str, str]:
+    """Page two's answer: the UPRN, checked against the postcode's addresses."""
+    soup = BeautifulSoup(response.text, "html.parser")
+    offered = [
+        str(option["value"])
+        for option in soup.select(f"select[name={_FORM}_PAGE2_UPRN] option[value]")
+        if option["value"]
+    ]
+    if offered and _uprn(uprn) not in offered:
+        raise SourceArgumentNotFoundWithSuggestions("uprn", uprn, offered)
+    return {
+        "VARIABLES": _NO_VARIABLES,
+        "PAGE2_FIELD293": "true",
+        "PAGE2_UPRN": _uprn(uprn),
+        "PAGE2_FIELD295": "false",
+        "PAGE2_FIELD297": "false",
+    }
 
-    def __get_address_page(self, s, postcode):
-        r = s.get(FORM_PAGE, timeout=30)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        form = soup.find(id="BINDAYSV2_FORM")
-        if not form or not form.has_attr("action"):
-            raise Exception(
-                "Form with id 'BINDAYSV2_FORM' and 'action' attribute not found on PAGE1."
-            )
 
-        # Prefer hidden inputs if present; fallback to action query params
-        def _val(name):
-            el = form.find("input", attrs={"name": name})
-            return el["value"] if el and el.has_attr("value") else ""
+def _bin(img) -> str:
+    """The bin colour from the icon's alt text ("Green bin icon")."""
+    return str(img.get("alt", "")).split(" ")[0]
 
-        page_session_id = _val("BINDAYSV2_PAGESESSIONID")
-        session_id = _val("BINDAYSV2_SESSIONID")
-        nonce = _val("BINDAYSV2_NONCE")
-        if not (page_session_id and session_id and nonce):
-            goss_ids = self.__get_goss_form_ids(form["action"])
-            page_session_id = page_session_id or goss_ids["page_session_id"]
-            session_id = session_id or goss_ids["session_id"]
-            nonce = nonce or goss_ids["nonce"]
 
-        r = s.post(
-            form["action"],
-            headers={"Origin": URL, "Referer": FORM_PAGE},
-            data={
-                "BINDAYSV2_PAGESESSIONID": page_session_id,
-                "BINDAYSV2_SESSIONID": session_id,
-                "BINDAYSV2_NONCE": nonce,
-                "BINDAYSV2_VARIABLES": "e30=",
-                "BINDAYSV2_PAGENAME": "PAGE1",
-                "BINDAYSV2_PAGEINSTANCE": "0",
-                "BINDAYSV2_PAGE1_POSTCODE": postcode,
-                "BINDAYSV2_FORMACTION_NEXT": "BINDAYSV2_PAGE1_FIELD290",
-            },
-            timeout=30,
-        )
-        r.raise_for_status()
-        return r.text
+@final
+class Source(BaseSource):
+    TITLE = "East Renfrewshire Council"
+    DESCRIPTION = "Source for eastrenfrewshire.gov.uk services for East Renfrewshire"
+    URL = "https://eastrenfrewshire.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-    def __get_bin_collection_info_page(self, session, address_page, uprn):
-        soup = BeautifulSoup(address_page, "html.parser")
-        form = soup.find(id="BINDAYSV2_FORM")
-        if not form or not form.has_attr("action"):
-            raise Exception(
-                "Form with id 'BINDAYSV2_FORM' and 'action' attribute not found on PAGE2."
-            )
+    TEST_CASES: ClassVar[dict] = {
+        "Test_001": {"postcode": "G78 2TJ", "uprn": "131016859"},
+        "Test_002": {"postcode": "g775ar", "uprn": 131019331},
+        "Test_003": {"postcode": "g78 3er", "uprn": "000131020112"},
+    }
 
-        def _val(name):
-            el = form.find("input", attrs={"name": name})
-            return el["value"] if el and el.has_attr("value") else ""
+    PARAMS = (postcode(), uprn())
 
-        page_session_id = _val("BINDAYSV2_PAGESESSIONID")
-        session_id = _val("BINDAYSV2_SESSIONID")
-        nonce = _val("BINDAYSV2_NONCE")
-        if not (page_session_id and session_id and nonce):
-            goss_ids = self.__get_goss_form_ids(form["action"])
-            page_session_id = page_session_id or goss_ids["page_session_id"]
-            session_id = session_id or goss_ids["session_id"]
-            nonce = nonce or goss_ids["nonce"]
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your postcode and the Unique Property Reference Number (UPRN) "
+            "of your property. You can find your UPRN at "
+            "https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, "
+            "waste types use canonical, localised names. Update filters, "
+            "automations and customisations using the old labels."
+        ),
+    }
 
-        r = session.post(
-            form["action"],
-            headers={"Origin": URL, "Referer": FORM_PAGE},
-            data={
-                "BINDAYSV2_PAGESESSIONID": page_session_id,
-                "BINDAYSV2_SESSIONID": session_id,
-                "BINDAYSV2_NONCE": nonce,
-                "BINDAYSV2_VARIABLES": "e30=",
-                "BINDAYSV2_PAGENAME": "PAGE2",
-                "BINDAYSV2_PAGEINSTANCE": "0",
-                "BINDAYSV2_PAGE2_FIELD293": "true",
-                "BINDAYSV2_PAGE2_UPRN": uprn,
-                "BINDAYSV2_FORMACTION_NEXT": "BINDAYSV2_PAGE2_FIELD294",
-                "BINDAYSV2_PAGE2_FIELD295": "false",
-                "BINDAYSV2_PAGE2_FIELD297": "false",
-            },
-            timeout=30,
-        )
-        r.raise_for_status()
-        return r.text
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.ORGANIC,
+        wt.PAPER,
+        wt.RECYCLABLES,
+    ]
 
-    def __get_bin_collection_info(self, html_page):
-        soup = BeautifulSoup(html_page, "html.parser")
-        table_div = soup.find("div", id="BINDAYSV2_RESULTS_NEXTCOLLECTIONLISTV4")
-        if not table_div:
-            raise Exception("Could not find bin collection results table.")
+    retrieve = GossFormRetriever(
+        FORM_URL,
+        form=_FORM,
+        state_fields=_STATE,
+        steps=(
+            GossStep(
+                "PAGE1_FIELD290",
+                fields=lambda response, postcode, **_: {
+                    "VARIABLES": _NO_VARIABLES,
+                    "PAGE1_POSTCODE": postcode,
+                },
+                argument="postcode",
+            ),
+            GossStep("PAGE2_FIELD294", fields=_choose_address),
+        ),
+    )
 
-        rows = table_div.find_all("tr")[1:]  # skip header
-        entries = []
+    parse = parsers.ArgumentGuard(
+        parsers.HtmlParser(f"#{_FORM}_RESULTS_NEXTCOLLECTIONLISTV4 tr td img"),
+        argument="uprn",
+        contains=f"{_FORM}_RESULTS_NEXTCOLLECTIONLISTV4",
+    )
 
-        for row in rows:
-            cols = row.find_all("td")
-            if len(cols) < 3:
-                continue
-
-            date_str = cols[0].get_text(strip=True)
-            bin_types_html = cols[2]
-
-            try:
-                date = parser.parse(date_str, dayfirst=True).date()
-            except Exception:
-                continue
-
-            for img in bin_types_html.find_all("img"):
-                color = img.get("alt", "").split()[0]
-                entries.append(
-                    Collection(
-                        date=date,
-                        t=color,
-                        icon=ICON_MAP.get(color),
-                    )
-                )
-
-        return entries
-
-    def __get_goss_form_ids(self, url):
-        parsed = urlparse(url)
-        qs = parse_qs(parsed.query)
-        return {
-            "page_session_id": qs.get("pageSessionId", [""])[0],
-            "session_id": qs.get("fsid", [""])[0],
-            "nonce": qs.get("fsn", [""])[0],
-        }
+    # Each icon is followed by its label ("Green - Plastic recycling").
+    transform = HtmlTransformer(
+        date_getter=lambda img: img.find_parent("tr").find("td").get_text(strip=True),
+        type_getter=_bin,
+        description_getter=lambda img: str(img.next_sibling or "").strip(),
+        parse_date=date_parsers.for_format("%d/%m/%Y"),
+        type_value_map={
+            "Grey": wt.GENERAL_WASTE,
+            "Brown": wt.ORGANIC,
+            "Blue": wt.PAPER,
+            "Green": wt.RECYCLABLES,
+        },
+    )
