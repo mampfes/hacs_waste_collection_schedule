@@ -300,12 +300,6 @@ def test_request_step_uses_aia(seams):
     assert calls[0] is True and calls[1].endswith(".pem")
 
 
-def test_ca_bundle_reexported_for_aura_sources():
-    from waste_collection_schedule.service import SalesforceAuraApex
-
-    assert SalesforceAuraApex.ca_bundle is tls.ca_bundle
-
-
 def test_send_evicts_stale_cached_bundle_and_repairs_once(seams):
     url = f"https://{HOST}/api"
     stale = tls.aia_bundle(HOST)

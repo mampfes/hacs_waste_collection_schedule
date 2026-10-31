@@ -885,10 +885,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street_address": "Din fullständiga adress."
         }
       },
       "reconfigure_casey_vic_gov_au": {
@@ -896,9 +897,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Din fullständiga adress."
+        }
       },
       "args_cockburn_wa_gov_au": {
         "title": "Konfigurera källa",
@@ -3683,10 +3686,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street_address": "Din fullständiga adress."
         }
       },
       "reconfigure_warrnambool_vic_gov_au": {
@@ -3694,9 +3698,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Din fullständiga adress."
+        }
       },
       "args_waverley_nsw_gov_au": {
         "title": "Konfigurera källa",
@@ -21218,7 +21224,7 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "area_number": "Area Number"
+          "area_number": "Plats-ID"
         },
         "data_description": {
           "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
@@ -21229,7 +21235,7 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "area_number": "Area Number"
+          "area_number": "Plats-ID"
         },
         "data_description": {}
       },
@@ -21286,7 +21292,8 @@
           "address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress."
         }
       },
       "reconfigure_ccc_govt_nz": {
@@ -21296,7 +21303,9 @@
           "calendar_title": "Kalendernamn",
           "address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fullständiga adress."
+        }
       },
       "args_dunedin_govt_nz": {
         "title": "Konfigurera källa",
@@ -24013,7 +24022,8 @@
           "address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress."
         }
       },
       "reconfigure_komunala_kranj_si": {
@@ -24023,7 +24033,9 @@
           "calendar_title": "Kalendernamn",
           "address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fullständiga adress."
+        }
       },
       "args_komunala_slb_si": {
         "title": "Konfigurera källa",

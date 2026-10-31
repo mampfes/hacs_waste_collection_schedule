@@ -2,20 +2,33 @@
 
 Support for schedules provided by [Komunala Kranj](https://www.komunala-kranj.si/).
 
-## Configuration via `configuration.yaml`
+Source for Komunala Kranj.
+
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: komunala_kranj_si
       args:
-        address: "Rakovica 31, Rakovica"
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
 
-Full address as accepted by the Komunala Kranj search (street name and house number). If the address lookup returns multiple
-matches, refine the value until a single match is returned.
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: komunala_kranj_si
+      args:
+        address: "Koro\u0161ka cesta 1, Kranj, 4000 Kranj"
+```
+
+## How to get the source arguments
+
+Enter the address exactly as the Komunala Kranj address search shows it, e.g. 'Koroška cesta 1, Kranj, 4000 Kranj'. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.

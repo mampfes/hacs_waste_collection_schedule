@@ -1,143 +1,83 @@
-import datetime
-import re
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import location_id
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Auckland Council"
-DESCRIPTION = "Source for Auckland Council."
-URL = "https://www.aucklandcouncil.govt.nz"
+API_URL = (
+    "https://www.aucklandcouncil.govt.nz/en/rubbish-recycling/"
+    "rubbish-recycling-collections/rubbish-recycling-collection-days/{}.html"
+)
+SEARCH_URL = (
+    "https://www.aucklandcouncil.govt.nz/en/rubbish-recycling/"
+    "rubbish-recycling-collections/rubbish-recycling-collection-days.html"
+)
 
-TEST_CASES = {
-    "429 Sea View Road": {"area_number": "12342453293"},  # Monday
-    "8 Dickson Road": {"area_number": 12342306525},  # Thursday
-    "with Food Scraps": {"area_number": 12341998652},
-    "3 Andrew Road": {"area_number": "12345375455"},  # friday with foodscraps
-}
-
-API_URL = "https://www.aucklandcouncil.govt.nz/en/rubbish-recycling/rubbish-recycling-collections/rubbish-recycling-collection-days/{}.html"
-
-MONTH = {
-    "January": 1,
-    "February": 2,
-    "March": 3,
-    "April": 4,
-    "May": 5,
-    "June": 6,
-    "July": 7,
-    "August": 8,
-    "September": 9,
-    "October": 10,
-    "November": 11,
-    "December": 12,
-}
-
-# icon class used on the page -> waste type reported by this source
-COLLECTION_TYPES = {
-    "rubbish": "rubbish",
-    "recycle": "recycling",
-    "food-waste": "food scraps",
-}
+# Only the household card: the page repeats the dates for commercial bins.
+_HOUSEHOLD_LINES = (
+    "div.acpl-schedule-card:has(h4.card-title:-soup-contains('Household collection')) "
+    "p.mb-0.lead:has(i.acpl-icon):has(b)"
+)
+# The round is named by the icon's class, not by the (translatable) text.
+_ICON_CLASSES = ("rubbish", "recycle", "food-waste")
 
 
-def toDate(formattedDate: str, year: int | None = None) -> datetime.date:
-    # formattedDate looks like "Wednesday, 8 October"
-    parts = formattedDate.replace(",", "").split()
-    # ["Wednesday", "8", "October"]
-    day = int(parts[1])
-    month = MONTH[parts[2]]
-    if year is None:
-        today = datetime.date.today()
-        year = today.year
-        # Handle December rollover into January
-        if month == 1 and today.month == 12:
-            year += 1
-    return datetime.date(year, month, day)
+def _round(element):
+    icon = element.find("i", class_="acpl-icon")
+    classes = icon.get("class") or [] if icon is not None else []
+    return next((cls for cls in classes if cls in _ICON_CLASSES), "")
 
 
-def parse_page(html: str) -> list[Collection]:
-    soup = BeautifulSoup(html, "html.parser")
-    entries: list[Collection] = []
-
-    # Find only the household collection section
-    # Look for the card with "Household collection" title
-    household_section = None
-    schedule_cards = soup.find_all("div", class_="acpl-schedule-card")
-
-    for card in schedule_cards:
-        title_element = card.find("h4", class_="card-title")
-        if title_element and "Household collection" in title_element.get_text():
-            household_section = card
-            break
-
-    if not household_section:
-        return entries
-
-    # Look for collection information only within the household section
-    collection_paragraphs = household_section.find_all("p", class_="mb-0 lead")
-
-    for p in collection_paragraphs:
-        # Look for icon elements
-        icon = p.find("i", class_=lambda x: x and "acpl-icon" in x)
-        if not icon:
-            continue
-
-        # Extract the collection type from icon classes
-        collection_type = None
-        for cls in icon.get("class") or []:
-            if cls in COLLECTION_TYPES:
-                collection_type = COLLECTION_TYPES[cls]
-                break
-
-        if not collection_type:
-            continue
-
-        # Look for date in bold text within the paragraph
-        # (absent when this address has no such collection)
-        date_bold = p.find("b")
-        if not date_bold:
-            continue
-
-        date_text = date_bold.get_text(strip=True)
-
-        # Extract date from text using regex
-        date_match = re.search(r"([A-Za-z]+,\s+\d+\s+[A-Za-z]+)", date_text)
-        if not date_match:
-            continue
-
-        try:
-            collection_date = toDate(date_match.group(1))
-        except (ValueError, KeyError):
-            continue
-
-        entries.append(Collection(collection_date, collection_type))
-
-    return entries
+def _date_text(element):
+    # "Monday, 2 November" -> "2 November"; the page gives no year. An empty
+    # <b> is a round this address does not have (food scraps in most areas).
+    text = element.find("b").get_text(strip=True)
+    return text.split(",", 1)[-1].strip() or None
 
 
-class Source:
-    def __init__(self, area_number: str | int):
-        self._area_number = str(area_number)
+@final
+class Source(BaseSource):
+    TITLE = "Auckland Council"
+    DESCRIPTION = "Source for Auckland Council."
+    URL = "https://www.aucklandcouncil.govt.nz"
+    COUNTRY = "nz"
+    RAISE_ON_EMPTY = True
 
-    def fetch(self) -> list[Collection]:
-        # The site's WAF answers HTTP 406 to plain requests/urllib clients, so
-        # impersonate a real browser (TLS fingerprint included).
-        session = requests.Session(impersonate="chrome")
-        r = session.get(API_URL.format(self._area_number), timeout=30)
-        r.raise_for_status()
+    TEST_CASES: ClassVar[dict] = {
+        "429 Sea View Road": {"area_number": "12342453293"},  # Monday
+        "8 Dickson Road": {"area_number": 12342306525},  # Thursday
+        "with Food Scraps": {"area_number": 12341998652},
+        "3 Andrew Road": {"area_number": "12345375455"},  # friday with foodscraps
+    }
+    PARAMS = (location_id("area_number"),)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            f"Search for your address on the council's collection-day page ({SEARCH_URL}). "
+            "The area number is the number in the address of the result page, e.g. "
+            "12342453293 in .../rubbish-recycling-collection-days/12342453293.html. "
+            "Since the v3 pipeline migration, waste types use canonical, localised "
+            "names. Update filters, automations and customisations using the old labels."
+        ),
+    }
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.FOOD_WASTE]
 
-        entries = parse_page(r.text)
-
-        if not entries:
-            # An unknown area number still returns HTTP 200, but with empty
-            # collection dates. Fail loudly instead of reporting an empty
-            # schedule as a successful fetch.
-            raise SourceArgumentNotFound(
-                "area_number",
-                self._area_number,
-                "no collection dates were found on the Auckland Council page, please check the area number.",
-            )
-
-        return entries
+    # The site's WAF answers HTTP 406 to plain clients; the pipeline session
+    # impersonates a browser.
+    retrieve = retrievers.Request(
+        lambda area_number, **_: API_URL.format(str(area_number).strip())
+    )
+    # An unknown area number still returns HTTP 200, with no dates in the
+    # household card: RAISE_ON_EMPTY reports it against the argument.
+    parse = parsers.HtmlParser(_HOUSEHOLD_LINES)
+    transform = HtmlTransformer(
+        date_getter=_date_text,
+        type_getter=_round,
+        parse_date=date_parsers.nearest_year("%d %B"),
+        type_value_map={
+            "rubbish": wt.GENERAL_WASTE,
+            "recycle": wt.RECYCLABLES,
+            "food-waste": wt.FOOD_WASTE,
+        },
+    )

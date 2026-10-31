@@ -885,11 +885,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street_address": "Full street address including suburb, state and postal code without separating commas."
+          "street_address": "Your full address."
         }
       },
       "reconfigure_casey_vic_gov_au": {
@@ -897,10 +897,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
-          "street_address": "Full street address including suburb, state and postal code without separating commas."
+          "street_address": "Your full address."
         }
       },
       "args_cockburn_wa_gov_au": {
@@ -3695,11 +3695,11 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "street_address": "Full street address including suburb and postcode, e.g. '3 Kiama Ave WARRNAMBOOL VIC 3280'"
+          "street_address": "Your full address."
         }
       },
       "reconfigure_warrnambool_vic_gov_au": {
@@ -3707,10 +3707,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "street_address": "Street Address"
+          "street_address": "Address"
         },
         "data_description": {
-          "street_address": "Full street address including suburb and postcode, e.g. '3 Kiama Ave WARRNAMBOOL VIC 3280'"
+          "street_address": "Your full address."
         }
       },
       "args_waverley_nsw_gov_au": {
@@ -20201,11 +20201,10 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "waste_object_ids": "e.g. 13-L-115261, 13-P-505460"
+          "waste_object_ids": "Container inventory numbers"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "waste_object_ids": "Waste object ID, or IDs separated by commas."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
       "reconfigure_ecoapp_ecoservice_lt": {
@@ -20213,11 +20212,9 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "waste_object_ids": "e.g. 13-L-115261, 13-P-505460"
+          "waste_object_ids": "Container inventory numbers"
         },
-        "data_description": {
-          "waste_object_ids": "Waste object ID, or IDs separated by commas."
-        }
+        "data_description": {}
       },
       "args_ekonovus_lt": {
         "title": "Configure Source",
@@ -21276,7 +21273,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area_number": "Area Number"
+          "area_number": "Location ID"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
@@ -21287,7 +21284,7 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "area_number": "Area Number"
+          "area_number": "Location ID"
         },
         "data_description": {}
       },
@@ -21344,7 +21341,8 @@
           "address": "Address"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Your full address."
         }
       },
       "reconfigure_ccc_govt_nz": {
@@ -21354,7 +21352,9 @@
           "calendar_title": "Calendar Title",
           "address": "Address"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Your full address."
+        }
       },
       "args_dunedin_govt_nz": {
         "title": "Configure Source",
@@ -24072,7 +24072,7 @@
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "address": "Address as accepted by the Komunala Kranj address search (e.g. 'Street 1, City')."
+          "address": "Your full address."
         }
       },
       "reconfigure_komunala_kranj_si": {
@@ -24083,7 +24083,7 @@
           "address": "Address"
         },
         "data_description": {
-          "address": "Address as accepted by the Komunala Kranj address search (e.g. 'Street 1, City')."
+          "address": "Your full address."
         }
       },
       "args_komunala_slb_si": {

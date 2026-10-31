@@ -7,9 +7,11 @@ is needed once the address is found. The pages are walked until the one whose
 address starts with the house number or name is found; one past the last page
 the API answers 404 with ``{"result": false}``.
 
-The host sends its leaf certificate without the intermediate, so no default
-trust store can build a chain to it; the requests are made with
-``verify=False``, as the legacy source did. Without an ``Accept`` header
+The host sends its leaf certificate without the "GlobalSign GCC R46 DV TLS CA
+2025" intermediate, so no default trust store can build a chain to it. The
+requests use ``verify=tls.AIA``, which completes the chain from the leaf's AIA
+URL (see :mod:`waste_collection_schedule.tls`) instead of the legacy source's
+``verify=False``. Without an ``Accept`` header
 naming JSON the API answers a browser-impersonating client with its HTML
 browsable view.
 
@@ -20,6 +22,7 @@ response, ready for ``parsers.HtmlTextParser``.
 import re
 from typing import TYPE_CHECKING, Any
 
+from waste_collection_schedule import tls
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 
 if TYPE_CHECKING:
@@ -64,11 +67,12 @@ class LiveAddressesRetriever:
         self.timeout = timeout
 
     def _page(self, source: "BaseSource", postcode: str, page: int) -> Any:
-        return source.session.get(
+        return tls.send(
+            source.session.get,
             self.api + postcode,
+            tls.AIA,
             params={"page": page},
             headers={"Accept": "application/json"},
-            verify=False,  # the server does not send its intermediate CA cert
             timeout=self.timeout,
         )
 

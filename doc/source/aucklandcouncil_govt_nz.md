@@ -1,6 +1,8 @@
 # Auckland Council
 
-Support for schedules provided by [Auckland Council](https://www.aucklandcouncil.govt.nz/).
+Support for schedules provided by [Auckland Council](https://www.aucklandcouncil.govt.nz).
+
+Source for Auckland Council.
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: aucklandcouncil_govt_nz
       args:
-        area_number: AREA_NUMBER_FROM_COLLECTION_PAGE # see 'How to get the source argument below'
+        area_number: AREA_NUMBER
 ```
 
 ### Configuration Variables
@@ -24,13 +26,9 @@ waste_collection_schedule:
   sources:
     - name: aucklandcouncil_govt_nz
       args:
-        area_number: 12342306525
+        area_number: '12342453293'
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-The source argument is the area number from Auckland Council site:
-
-- Open your collection days page by entering your address [on the Auckland Council collection day finder](https://www.aucklandcouncil.govt.nz/en/rubbish-recycling/rubbish-recycling-collections/rubbish-recycling-collection-days.html)
-- Once an address is selected, you will see a line such as: `Assessment number: 12342306525`
-- In this example the area number is `12342306525`.
+Search for your address on the council's collection-day page (https://www.aucklandcouncil.govt.nz/en/rubbish-recycling/rubbish-recycling-collections/rubbish-recycling-collection-days.html). The area number is the number in the address of the result page, e.g. 12342453293 in .../rubbish-recycling-collection-days/12342453293.html. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.
