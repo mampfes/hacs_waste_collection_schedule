@@ -193,6 +193,7 @@ def _sensor(cls, refreshtime=None):
         day_switch_time = time(23, 59)
 
     sensor = object.__new__(cls)
+    sensor._record = {}
     sensor._aggregator = Aggregator()
     sensor._api = None
     sensor._coordinator = Coordinator()

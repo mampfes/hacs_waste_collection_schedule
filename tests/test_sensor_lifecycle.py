@@ -1,0 +1,564 @@
+"""Sensor migrations and lifecycle edits against real Home Assistant registries."""
+
+import sys
+from datetime import date
+from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
+from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers import issue_registry as ir
+
+sys.path.insert(0, str(Path(__file__).parents[1]))
+sys.path.append(
+    str(Path(__file__).parents[1] / "custom_components/waste_collection_schedule")
+)
+
+from sensor_fixtures import entry_for
+from waste_collection_schedule.waste_types import GLASS, PAPER
+
+from custom_components.waste_collection_schedule.const import DOMAIN
+from custom_components.waste_collection_schedule.default_sensors import (
+    LEGACY_VALUE_TEMPLATE,
+    catalogue,
+)
+from custom_components.waste_collection_schedule.init_ui import async_migrate_entry
+
+
+@pytest.mark.asyncio
+async def test_v3_migration_preserves_registry_identity_disabled_state_and_orphans(ha):
+    options = {
+        "sensors": [
+            {
+                "name": "My blue bin",
+                "types": [PAPER.names["en"]],
+                "value_template": LEGACY_VALUE_TEMPLATE,
+                "details_format": "upcoming",
+            },
+            {
+                "name": "Just my provider bin",
+                "types": ["Small paper bin"],
+                "value_template": "{{ value.daysTo + 2 }}",
+            },
+        ]
+    }
+    entry = entry_for(ha, options, version=3)
+    registry = er.async_get(ha)
+    old = registry.async_get_or_create(
+        "sensor",
+        DOMAIN,
+        entry.entry_id + "_ui_sensor_My blue bin",
+        suggested_object_id="my_blue_bin",
+        config_entry=entry,
+        disabled_by=er.RegistryEntryDisabler.USER,
+    )
+    orphan = registry.async_get_or_create(
+        "sensor", DOMAIN, entry.entry_id + "_ui_sensor_Old name", config_entry=entry
+    )
+    assert await async_migrate_entry(ha, entry)
+    assert entry.version == 4
+    assert (
+        registry.async_get(old.entity_id).unique_id
+        == entry.entry_id + "_sensor_type_paper"
+    )
+    assert (
+        registry.async_get(old.entity_id).disabled_by == er.RegistryEntryDisabler.USER
+    )
+    assert entry.options["sensors"][0]["enabled"] is False
+    assert entry.options["sensors"][1]["types"] == ["Small paper bin"]
+    assert registry.async_get(orphan.entity_id) is not None
+    assert (
+        ir.async_get(ha).async_get_issue(DOMAIN, "legacy_sensors_" + entry.entry_id)
+        is not None
+    )
+    migrated = list(entry.options["sensors"])
+    assert await async_migrate_entry(ha, entry)
+    assert entry.options["sensors"] == migrated
+
+
+@pytest.mark.asyncio
+async def test_v2_registry_migrates_source_and_sensor_identity_in_one_pass(ha):
+    from custom_components.waste_collection_schedule.init_ui import (
+        _get_source_unique_id,
+    )
+
+    entry = entry_for(
+        ha,
+        {
+            "sensors": [
+                {
+                    "name": "Paper",
+                    "types": [PAPER.names["en"]],
+                    "value_template": LEGACY_VALUE_TEMPLATE,
+                }
+            ]
+        },
+        version=2,
+    )
+    registry = er.async_get(ha)
+    old = registry.async_get_or_create(
+        "sensor",
+        DOMAIN,
+        _get_source_unique_id(entry.data) + "_ui_sensor_Paper",
+        config_entry=entry,
+    )
+    assert await async_migrate_entry(ha, entry)
+    assert (
+        registry.async_get(old.entity_id).unique_id
+        == entry.entry_id + "_sensor_type_paper"
+    )
+    assert entry.version == 4
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("frozen", [False, True])
+async def test_published_device_preview_sensor_identity_is_migrated(ha, frozen):
+    old = {
+        "name": "Renamed preview sensor",
+        "sensor_id": "previewid",
+        "types": ["Small paper bin"],
+    }
+    if frozen:
+        old["sensor_legacy_unique_id"] = "old_source_ui_sensor_Original name"
+    entry = entry_for(ha, {"sensors": [old]}, version=3)
+    suffix = "Original name" if frozen else "previewid"
+    registry = er.async_get(ha)
+    registered = registry.async_get_or_create(
+        "sensor", DOMAIN, f"{entry.entry_id}_ui_sensor_{suffix}", config_entry=entry
+    )
+    assert await async_migrate_entry(ha, entry)
+    record = entry.options["sensors"][0]
+    assert (
+        registry.async_get(registered.entity_id).unique_id
+        == f"{entry.entry_id}_sensor_{record['id']}"
+    )
+    assert record["types"] == ["Small paper bin"]
+
+
+@pytest.mark.asyncio
+async def test_future_entry_version_is_rejected_without_changing_data(ha):
+    entry = entry_for(ha, {"sensors": [{"future": "record"}]}, version=5)
+    assert not await async_migrate_entry(ha, entry)
+    assert entry.version == 5
+    assert entry.options["sensors"] == [{"future": "record"}]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("source_name", ["ics", "static"])
+async def test_raw_source_migration_keeps_literal_filters(ha, source_name):
+    from waste_collection_schedule.collection_aggregator import CollectionAggregator
+    from waste_collection_schedule.source.ics import Source as IcsSource
+
+    entry = entry_for(
+        ha,
+        {
+            "sensors": [
+                {
+                    "name": "My paper",
+                    "types": ["Paper"],
+                    "exclude_types": ["Glass"],
+                    "value_template": LEGACY_VALUE_TEMPLATE,
+                }
+            ]
+        },
+        version=3,
+    )
+    ha.config_entries.async_update_entry(entry, data={"name": source_name, "args": {}})
+    assert await async_migrate_entry(ha, entry)
+    record = entry.options["sensors"][0]
+    event = IcsSource.__new__(IcsSource).classify(
+        SimpleNamespace(
+            date=date(2099, 1, 1), title="Paper", location=None, description=None
+        )
+    )
+    assert record["types"] == ["Paper"]
+    assert record["exclude_types"] == ["Glass"]
+    assert CollectionAggregator.matches_type(event, record["types"][0])
+    assert record["origin"] == "custom"
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("custom", [False, True])
+async def test_interrupted_migration_recovers_identity_and_disabled_state(ha, custom):
+    from custom_components.waste_collection_schedule.sensor_migration import (
+        async_migrate_sensors,
+    )
+
+    old = {
+        "name": "My renamed bin",
+        "types": ["Small bin"] if custom else [PAPER.names["en"]],
+        "value_template": LEGACY_VALUE_TEMPLATE,
+    }
+    entry = entry_for(ha, {"sensors": [old]}, version=3)
+    registry = er.async_get(ha)
+    registered = registry.async_get_or_create(
+        "sensor",
+        DOMAIN,
+        f"{entry.entry_id}_ui_sensor_{old['name']}",
+        suggested_object_id="kept_history",
+        config_entry=entry,
+        disabled_by=er.RegistryEntryDisabler.USER,
+    )
+    registry.async_update_entity(registered.entity_id, name="User override")
+    first = await async_migrate_sensors(ha, entry)
+    # Model the crash window: registry writes survived, old options/version did too.
+    assert entry.version == 3 and entry.options["sensors"] == [old]
+    retried = await async_migrate_sensors(ha, entry)
+    assert retried["sensors"] == first["sensors"]
+    record = retried["sensors"][0]
+    assert record["enabled"] is False
+    assert (
+        registry.async_get_entity_id(
+            "sensor", DOMAIN, f"{entry.entry_id}_sensor_{record['id']}"
+        )
+        == registered.entity_id
+    )
+    assert registry.async_get(registered.entity_id).name == "User override"
+
+
+@pytest.mark.asyncio
+async def test_manager_edits_keep_entity_id_and_do_not_fetch(running_entry, ha):
+    entry, source = running_entry
+    manager = ha.data[DOMAIN][entry.entry_id].sensor_manager
+    record = entry.options["sensors"][0]
+    registry = er.async_get(ha)
+    entity_id = registry.async_get_entity_id(
+        "sensor", DOMAIN, entry.entry_id + "_sensor_" + record["id"]
+    )
+    assert ha.states.get(entity_id) is not None
+    assert source.fetch_count == 1
+    await manager.async_update(
+        record["id"],
+        {"name": "Renamed paper", "state_format": "days", "color": "#123456"},
+    )
+    await ha.async_block_till_done()
+    assert (
+        registry.async_get_entity_id(
+            "sensor", DOMAIN, entry.entry_id + "_sensor_" + record["id"]
+        )
+        == entity_id
+    )
+    assert registry.async_get(entity_id).original_name == "Renamed paper"
+    assert ha.states.get(entity_id).attributes["color"] == "#123456"
+    for key in ("collections", "upcoming"):
+        assert all(
+            item["color"] == "#123456" and item["color_source"] == "sensor"
+            for item in ha.states.get(entity_id).attributes[key]
+        )
+    assert source.fetch_count == 1
+
+
+@pytest.mark.asyncio
+async def test_manager_disable_mirrors_registry_and_delete_removes_custom_identity(
+    running_entry, ha, caplog
+):
+    entry, source = running_entry
+    manager = ha.data[DOMAIN][entry.entry_id].sensor_manager
+    registry = er.async_get(ha)
+    custom = next(r for r in entry.options["sensors"] if r["origin"] == "custom")
+    uid = entry.entry_id + "_sensor_" + custom["id"]
+    entity_id = registry.async_get_entity_id("sensor", DOMAIN, uid)
+    await manager.async_set_enabled(custom["id"], False)
+    await ha.async_block_till_done()
+    assert registry.async_get(entity_id).disabled_by is not None
+    assert ha.states.get(entity_id) is None
+    registry.async_update_entity(entity_id, disabled_by=None)
+    await ha.async_block_till_done()
+    assert (
+        next(r for r in entry.options["sensors"] if r["id"] == custom["id"])["enabled"]
+        is True
+    )
+    assert await ha.config_entries.async_reload(entry.entry_id)
+    await ha.async_block_till_done()
+    assert registry.async_get_entity_id("sensor", DOMAIN, uid) == entity_id
+    assert ha.states.get(entity_id) is not None
+    manager = ha.data[DOMAIN][entry.entry_id].sensor_manager
+    await manager.async_delete(custom["id"])
+    await ha.async_block_till_done()
+    assert registry.async_get(entity_id) is None
+    assert source.fetch_count == 1
+    assert (
+        "incorrectly being triggered for updates while it is disabled"
+        not in caplog.text
+    )
+
+
+@pytest.mark.asyncio
+async def test_options_and_native_controls_edit_the_same_saved_record(
+    running_entry, ha
+):
+    from custom_components.waste_collection_schedule.sensor_options import (
+        SensorOptionsFlow,
+    )
+
+    entry, source = running_entry
+    flow = SensorOptionsFlow(entry)
+    flow.hass = ha
+    selected = [
+        r["origin"] for r in entry.options["sensors"] if r["origin"] != "custom"
+    ]
+    form = await flow.async_step_sensors(
+        {"predefined": selected, "edit_sensor": "add_custom", "device_controls": True}
+    )
+    assert form["step_id"] == "edit_sensor"
+    result = await flow.async_step_edit_sensor(
+        {
+            "name": "My second paper sensor",
+            "types": ["paper"],
+            "state_format": "relative",
+            "language": "en",
+            "date_format": "dmy",
+            "details_format": "generic",
+            "kind": "schedule",
+            "enabled": True,
+        }
+    )
+    ha.config_entries.async_update_entry(entry, options=result["data"])
+    await ha.async_block_till_done()
+    record = next(
+        r for r in entry.options["sensors"] if r["name"] == "My second paper sensor"
+    )
+    registry = er.async_get(ha)
+    select_id = registry.async_get_entity_id(
+        "select", DOMAIN, f"{entry.entry_id}_control_{record['id']}_state_format"
+    )
+    assert ha.states.get(select_id) is not None
+    await ha.services.async_call(
+        "select",
+        "select_option",
+        {"entity_id": select_id, "option": "days"},
+        blocking=True,
+    )
+    await ha.async_block_till_done()
+    updated = next(r for r in entry.options["sensors"] if r["id"] == record["id"])
+    assert updated["state_format"] == "days"
+    sensor_id = registry.async_get_entity_id(
+        "sensor", DOMAIN, f"{entry.entry_id}_sensor_{record['id']}"
+    )
+    assert ha.states.get(sensor_id).state.isdigit()
+    assert source.fetch_count == 1
+    manager = ha.data[DOMAIN][entry.entry_id].sensor_manager
+    leadtime_id = registry.async_get_entity_id(
+        "number", DOMAIN, f"{entry.entry_id}_control_{record['id']}_leadtime"
+    )
+    assert ha.states.get(leadtime_id).state == "-1"
+    for requested, expected in ((5, 5), (0, 0), (-1, None)):
+        await ha.services.async_call(
+            "number",
+            "set_value",
+            {"entity_id": leadtime_id, "value": requested},
+            blocking=True,
+        )
+        await ha.async_block_till_done()
+        assert (
+            next(r for r in entry.options["sensors"] if r["id"] == record["id"])[
+                "leadtime"
+            ]
+            == expected
+        )
+    await manager.async_update(record["id"], {"kind": "last_update"})
+    await ha.async_block_till_done()
+    assert (
+        registry.async_get_entity_id(
+            "sensor", DOMAIN, f"{entry.entry_id}_sensor_{record['id']}"
+        )
+        == sensor_id
+    )
+    assert ha.states.get(sensor_id).attributes["device_class"] == "timestamp"
+    assert (
+        registry.async_get_entity_id(
+            "select", DOMAIN, f"{entry.entry_id}_control_{record['id']}_state_format"
+        )
+        is None
+    )
+    await manager.async_update(record["id"], {"kind": "schedule"})
+    await ha.async_block_till_done()
+    assert ha.states.get(select_id) is not None
+    await manager.async_delete(record["id"])
+    await ha.async_block_till_done()
+    assert registry.async_get(sensor_id) is None
+    assert not any(
+        e.unique_id.startswith(f"{entry.entry_id}_control_{record['id']}_")
+        for e in er.async_entries_for_config_entry(registry, entry.entry_id)
+    )
+    retained = {
+        e.unique_id: e.entity_id
+        for e in er.async_entries_for_config_entry(registry, entry.entry_id)
+        if e.domain == "sensor"
+    }
+    ha.config_entries.async_update_entry(
+        entry, options={**entry.options, "device_controls": False}
+    )
+    await ha.async_block_till_done()
+    assert not any(
+        e.unique_id.startswith(
+            (entry.entry_id + "_control_", entry.entry_id + "_create_")
+        )
+        for e in er.async_entries_for_config_entry(registry, entry.entry_id)
+    )
+    assert {
+        e.unique_id: e.entity_id
+        for e in er.async_entries_for_config_entry(registry, entry.entry_id)
+        if e.domain == "sensor"
+    } == retained
+    assert source.fetch_count == 1
+
+
+@pytest.mark.asyncio
+async def test_discovered_types_materialize_once_and_vanished_types_keep_identity(
+    running_entry, ha
+):
+    entry, source = running_entry
+    coordinator = ha.data[DOMAIN][entry.entry_id]
+    registry = er.async_get(ha)
+    paper_id = registry.async_get_entity_id(
+        "sensor", DOMAIN, entry.entry_id + "_sensor_type_paper"
+    )
+    ha.config_entries.async_update_entry(
+        entry, options={**entry.options, "auto_add_types": True}
+    )
+    await ha.async_block_till_done()
+    source.types = [PAPER, GLASS]
+    coordinator._last_fetch_date = None
+    # The daily timer calls this method directly, rather than async_refresh.
+    await coordinator._fetch_now()
+    await ha.async_block_till_done()
+    assert (
+        len([r for r in entry.options["sensors"] if r["origin"] == "type:glass"]) == 1
+    )
+    assert (
+        registry.async_get_entity_id(
+            "sensor", DOMAIN, entry.entry_id + "_sensor_type_paper"
+        )
+        == paper_id
+    )
+    source.types = [GLASS]
+    coordinator._last_fetch_date = None
+    await ha.services.async_call(DOMAIN, "fetch_data", {}, blocking=True)
+    await ha.async_block_till_done()
+    assert (
+        len([r for r in entry.options["sensors"] if r["origin"] == "type:glass"]) == 1
+    )
+    assert ha.states.get(paper_id).state == "unknown"
+    assert any(r["origin"] == "type:paper" for r in entry.options["sensors"])
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "running_entry", [{"types": [PAPER, GLASS], "auto_add_types": True}], indirect=True
+)
+async def test_startup_materializes_types_discovered_while_offline(running_entry, ha):
+    entry, source = running_entry
+    records = [r for r in entry.options["sensors"] if r["origin"] == "type:glass"]
+    assert len(records) == 1
+    entity_id = er.async_get(ha).async_get_entity_id(
+        "sensor", DOMAIN, f"{entry.entry_id}_sensor_{records[0]['id']}"
+    )
+    assert ha.states.get(entity_id).state != "unknown"
+    assert source.fetch_count == 1
+
+
+@pytest.mark.asyncio
+async def test_options_remain_editable_without_a_running_provider(ha):
+    from custom_components.waste_collection_schedule.sensor_options import (
+        SensorOptionsFlow,
+    )
+
+    record = catalogue({"paper": "Paper"})["type:paper"]
+    entry = entry_for(ha, {"sensors": [record]})
+    flow = SensorOptionsFlow(entry)
+    flow.hass = ha
+    source = await flow.async_step_source_settings()
+    assert "calendar_title" not in source["data_schema"]({})
+    title = next(k for k in source["data_schema"].schema if str(k) == "calendar_title")
+    assert title.description["suggested_value"] is None
+    saved_source = await flow.async_step_source_settings(source["data_schema"]({}))
+    assert "calendar_title" not in saved_source["data"]
+    await flow.async_step_waste_types()
+    await flow.async_step_sensors(
+        {"predefined": ["type:paper"], "edit_sensor": record["id"]}
+    )
+    saved = await flow.async_step_edit_sensor(
+        {"name": "Renamed offline", "enabled": True}
+    )
+    assert saved["data"]["sensors"][0]["id"] == record["id"]
+    assert saved["data"]["sensors"][0]["name"] == "Renamed offline"
+
+
+@pytest.mark.asyncio
+async def test_yaml_formats_kinds_and_unique_ids_work_in_both_configuration_paths(
+    ha, tmp_path
+):
+    from homeassistant.setup import async_setup_component
+
+    components = tmp_path / "custom_components"
+    components.mkdir()
+    (components / DOMAIN).symlink_to(
+        Path(__file__).parents[1] / "custom_components" / DOMAIN,
+        target_is_directory=True,
+    )
+    config = {
+        DOMAIN: {
+            "sources": [
+                {
+                    "name": "static",
+                    "args": {
+                        "type": "Paper",
+                        "frequency": "YEARLY",
+                        "start": "2099-01-01",
+                        "until": "2099-12-31",
+                    },
+                }
+            ],
+            "sensors": [
+                {
+                    "name": "German paper",
+                    "unique_id": "old_paper_name",
+                    "state_format": "relative",
+                    "language": "de",
+                    "date_format": "dmy",
+                    "types": ["legacy_Paper"],
+                    "exclude_types": ["glass"],
+                    "unique_types": True,
+                    "color": "#123456",
+                    "details_format": "generic",
+                    "count": 1,
+                },
+                {"name": "Numeric paper", "kind": "days_to"},
+                {"name": "Fetched paper", "kind": "last_update"},
+                {
+                    "name": "Legacy text",
+                    "value_template": '{{ value.types|join(", ") }}:{{ value.daysTo }}',
+                    "date_template": '{{ value.date.strftime("%d/%m/%Y") }}',
+                },
+            ],
+        },
+        "sensor": [
+            {
+                "platform": DOMAIN,
+                "name": "Classic paper",
+                "unique_id": "classic_old_name",
+                "state_format": "types",
+                "value_template": '{{ value.types|join(", ")|lower }}',
+                "unique_types": True,
+            }
+        ],
+    }
+    assert await async_setup_component(ha, DOMAIN, config)
+    await ha.async_block_till_done()
+    registry = er.async_get(ha)
+    german_id = registry.async_get_entity_id("sensor", DOMAIN, "old_paper_name")
+    german = ha.states.get(german_id)
+    days = (date(2099, 1, 1) - date.today()).days
+    assert german.state == f"in {days} Tagen"
+    assert german.attributes["color"] == "#123456"
+    assert german.attributes["upcoming"][0]["type_id"] == "legacy_Paper"
+    assert german.attributes["upcoming"][0]["color"] == "#123456"
+    assert ha.states.get("sensor.numeric_paper").state == str(days)
+    assert (
+        ha.states.get("sensor.fetched_paper").attributes["device_class"] == "timestamp"
+    )
+    assert ha.states.get("sensor.legacy_text").state == f"Paper:{days}"
+    assert ha.states.get("sensor.legacy_text").attributes["01/01/2099"] == "Paper"
+    classic_id = registry.async_get_entity_id("sensor", DOMAIN, "classic_old_name")
+    assert ha.states.get(classic_id).state == "paper"
