@@ -33465,6 +33465,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina W\u0142odowice",
+      "module": "tamax_wlodowice_pl",
+      "default_params": {},
+      "id": "tamax_wlodowice_pl"
+    },
+    {
       "title": "Gmina Zaleszany",
       "module": "sims_pl",
       "default_params": {
@@ -34069,6 +34075,12 @@
       "module": "tamax_szczekociny_pl",
       "default_params": {},
       "id": "tamax_szczekociny_pl"
+    },
+    {
+      "title": "TAMAX (Gmina W\u0142odowice)",
+      "module": "tamax_wlodowice_pl",
+      "default_params": {},
+      "id": "tamax_wlodowice_pl"
     },
     {
       "title": "Trzebownisko",

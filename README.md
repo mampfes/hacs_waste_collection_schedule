@@ -4571,6 +4571,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Wołów](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Wąchock](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Władysławowo](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Włodowice](/doc/source/tamax_wlodowice_pl.md) / tamax.net.pl
 - [Gmina Zaleszany](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Zbrosławice](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Zduńska Wola](/doc/source/sims_pl.md) / sisms.pl
@@ -4654,6 +4655,7 @@ If you already have enough information for your municipality/region, you are ver
 - [TAMAX (Gmina Lelów)](/doc/source/tamax_lelow_pl.md) / tamax.net.pl
 - [TAMAX (Gmina Radziemice)](/doc/source/tamax_net_pl.md) / tamax.net.pl
 - [TAMAX (Gmina Szczekociny)](/doc/source/tamax_szczekociny_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Włodowice)](/doc/source/tamax_wlodowice_pl.md) / tamax.net.pl
 - [Trzebownisko](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
 - [Wieliczka](/doc/source/kiedyodpady_pl.md) / wieliczka.kiedyodpady.pl

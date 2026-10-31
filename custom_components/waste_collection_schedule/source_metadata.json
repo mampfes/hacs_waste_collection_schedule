@@ -5270,6 +5270,13 @@
     },
     "urls": {}
   },
+  "tamax_wlodowice_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_wlodowice_pl.md",
+    "howto": {
+      "en": "Find Gmina Włodowice (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. Select your exact village group, including the street exceptions in Włodowice and Rudniki. Use Trudne wjazdy only if the council assigned your property to that route. Yellow cells collect mixed waste and bio. Red cells collect mixed waste and all listed segregated fractions, including recycling, bio and ash. Ash is Other with the original Popiół label. The dated bulky collection is also read from the PDF, even though it is operated separately by Przedsiębiorstwo Komunalne Ogrodzieniec. Collection-centre opening days (PSZOK), apartment-block and business schedules are not household collection events."
+    },
+    "urls": {}
+  },
   "gmina_zgierz_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_zgierz_pl.md",
     "howto": {
