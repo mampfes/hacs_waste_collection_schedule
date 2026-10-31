@@ -200,6 +200,8 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
     stroke_colors optionally separates outlined symbols from filled symbols.
     max_duplicate_day_repairs permits a bounded number of duplicated numerals
     to use their complete weekday-grid position when that number is missing.
+    month_heading_pattern optionally reads numeric headings via a named month
+    group (and an optional year group, checked against the printed year).
 
     Set row_bands=True for filled week rows spanning several day cells.
     heading_year accepts a year suffix on each month heading. day_font_size
@@ -216,6 +218,7 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         colors: Mapping[str, Sequence[tuple[float, ...]]],
         font_colors: Mapping[str, Sequence[tuple[float, ...]]] | None = None,
         stroke_colors: Mapping[str, Sequence[tuple[float, ...]]] | None = None,
+        month_heading_pattern: str | None = None,
         alignment: str = "center",
         tolerance: float = 0.12,
         allow_unmarked_missing_days: bool = False,
@@ -227,6 +230,9 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         day_font_size: tuple[float, float] | None = None,
     ):
         self.months = {_normal(name): i + 1 for i, name in enumerate(months)}
+        self.month_heading_pattern = (
+            re.compile(month_heading_pattern) if month_heading_pattern else None
+        )
         self.weekdays = tuple(_normal(name) for name in weekdays)
         self.year_pattern = re.compile(year_pattern)
         self.colors = dict(colors)
@@ -273,6 +279,7 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         from pdfminer.layout import LTCurve, LTTextLine
 
         pages = []
+        heading_years: set[int] = set()
         for page in extract_pages(BytesIO(response.content), page_numbers=self.pages):
             objects = list(_walk(page))
             lines = [obj for obj in objects if isinstance(obj, LTTextLine)]
@@ -280,12 +287,24 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
             headings = []
             for line in lines:
                 heading_text = _normal(line.get_text())
-                if self.heading_year:
-                    heading_text = re.sub(r"\s+20\d{2}$", "", heading_text)
-                month = self.months.get(heading_text)
-                if month is not None:
+                match = (
+                    self.month_heading_pattern.fullmatch(heading_text)
+                    if self.month_heading_pattern
+                    else None
+                )
+                if match:
+                    heading_month: int | None = int(match["month"])
+                    if match.groupdict().get("year"):
+                        heading_years.add(int(match["year"]))
+                else:
+                    if self.heading_year:
+                        heading_text = re.sub(r"\s+20\d{2}$", "", heading_text)
+                    heading_month = self.months.get(heading_text)
+                if heading_month is not None:
                     headings.append(
-                        _Word(str(month), line.x0, line.y0, line.x1, line.y1, None)
+                        _Word(
+                            str(heading_month), line.x0, line.y0, line.x1, line.y1, None
+                        )
                     )
             pages.append(
                 (
@@ -303,6 +322,8 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         if match is None:
             raise ValueError("Printed calendar year not found")
         year = int(match.group(1))
+        if heading_years and heading_years != {year}:
+            raise ValueError("Month headings disagree with the printed calendar year")
         seen_months: set[int] = set()
         cancelled: set[datetime.date] = set()
         results: dict[tuple[datetime.date, str], dict[str, Any]] = {}
