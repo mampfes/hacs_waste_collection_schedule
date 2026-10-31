@@ -187,6 +187,7 @@ def customize_function(entry: Collection, customize: dict[str, Customize]):
     keys = _customize_keys(entry)
     c = _match_customize_keys(customize, keys)
     if c is not None:
+        entry._customize_key = c.waste_type
         if c.alias is not None:
             entry.set_type(c.alias)
         if c.icon is not None:

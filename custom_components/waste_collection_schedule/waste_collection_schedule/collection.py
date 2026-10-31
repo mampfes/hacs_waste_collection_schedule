@@ -75,6 +75,7 @@ class Collection:
         self._color_override: str | None = None
         self._color_override_source = "customize"
         self._type_override: str | None = None
+        self._customize_key: str | None = None
         self._icon_override: str | None = None
         self._picture: str | None = None
         self._location: str | None = None

@@ -115,8 +115,13 @@ class CollectionAggregator:
 
     @staticmethod
     def matches_type(entry: Collection, value: str) -> bool:
-        """Match canonical ids first, then the displayed or retained provider label."""
-        return value in (entry.waste_type.id, entry.type, entry.original_label)
+        """Match type identity, display labels and the applied customization key."""
+        return value in (
+            entry.waste_type.id,
+            entry.type,
+            entry.original_label,
+            entry._customize_key,
+        )
 
     def _filter_entries(
         self, include_types, exclude_types, unique_types, preserve_bins=False

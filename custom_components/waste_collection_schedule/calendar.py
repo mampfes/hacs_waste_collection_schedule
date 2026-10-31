@@ -31,6 +31,17 @@ from .init_yaml import WasteCollectionApi
 _LOGGER = logging.getLogger(__name__)
 
 
+def _calendar_filter_types(keys: set[str] | None, records: list[Collection]):
+    """Keep saved keys and resolve pre-alias names against current records."""
+    if keys is None:
+        return None
+    return keys | {
+        event.waste_type.id
+        for event in records
+        if any(key in event.waste_type.names.values() for key in keys)
+    }
+
+
 class WasteCollectionCalendar(CalendarEntity):
     """Calendar entity class."""
 
@@ -79,12 +90,7 @@ class WasteCollectionCalendar(CalendarEntity):
     @property
     def event(self):
         """Return next collection event."""
-        collections = self._aggregator.get_upcoming(
-            count=1,
-            include_today=True,
-            include_types=self._include_types,
-            exclude_types=self._exclude_types,
-        )
+        collections = self._get_upcoming(count=1)
 
         if len(collections) == 0:
             return None
@@ -96,11 +102,7 @@ class WasteCollectionCalendar(CalendarEntity):
         """Return all events within specified time span."""
         events: list[CalendarEvent] = []
 
-        for collection in self._aggregator.get_upcoming(
-            include_today=True,
-            include_types=self._include_types,
-            exclude_types=self._exclude_types,
-        ):
+        for collection in self._get_upcoming():
             event = self._convert(collection)
 
             if (
@@ -111,6 +113,15 @@ class WasteCollectionCalendar(CalendarEntity):
                 events.append(event)
 
         return events
+
+    def _get_upcoming(self, count: int | None = None):
+        records = self._aggregator.get_upcoming(include_today=True, preserve_bins=True)
+        return self._aggregator.get_upcoming(
+            count=count,
+            include_today=True,
+            include_types=_calendar_filter_types(self._include_types, records),
+            exclude_types=_calendar_filter_types(self._exclude_types, records),
+        )
 
     def _convert(self, collection: Collection) -> CalendarEvent:
         """Convert an collection into a Home Assistant calendar event."""
@@ -134,9 +145,8 @@ def create_calendar_entries(
     for shell in shells:
         aggregator = CollectionAggregator([shell])
         dedicated_types = shell.get_dedicated_calendar_types()
-        dedicated_calendar_types = {
-            shell.get_collection_type_name(type) for type in dedicated_types
-        }
+        records = shell._sensor_entries or shell._entries
+        dedicated_filters = _calendar_filter_types(dedicated_types, records)
 
         # UI entries key entity identity on the config entry id, which survives
         # a reconfigure; YAML setups have no entry and keep the source-derived
@@ -151,19 +161,31 @@ def create_calendar_entries(
                     coordinator=coordinator,
                     aggregator=aggregator,
                     name=shell.get_calendar_title_for_type(type),
-                    include_types={shell.get_collection_type_name(type)},
+                    include_types={type},
                     unique_id=calc_unique_calendar_id(shell, type, base_id=base_id),
                 )
             )
 
-        if aggregator.types != dedicated_calendar_types:
+        # Display aliases can be shared by separate categories or provider bins.
+        # Check the pre-merge records so a shared alias cannot hide a remainder.
+        if any(
+            not any(
+                aggregator.matches_type(event, key)
+                for key in _calendar_filter_types({saved_key}, records)
+                for event in records
+            )
+            for saved_key in dedicated_types
+        ) or any(
+            not any(aggregator.matches_type(event, key) for key in dedicated_filters)
+            for event in records
+        ):
             entities.append(
                 WasteCollectionCalendar(
                     api=api,
                     coordinator=coordinator,
                     aggregator=aggregator,
                     name=shell.calendar_title,
-                    exclude_types=dedicated_calendar_types,
+                    exclude_types=dedicated_types,
                     unique_id=calc_unique_calendar_id(shell, base_id=base_id),
                 )
             )

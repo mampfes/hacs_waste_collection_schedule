@@ -2,7 +2,7 @@
 
 import asyncio
 import json
-from datetime import date, timedelta
+from datetime import UTC, date, datetime, timedelta
 from threading import Event
 
 import pytest
@@ -13,10 +13,14 @@ from homeassistant.helpers.template import Template
 from sensor_fixtures import entry_for
 from waste_collection_schedule import Collection
 from waste_collection_schedule.collection_aggregator import CollectionAggregator
-from waste_collection_schedule.source_shell import SourceShell
+from waste_collection_schedule.source_shell import Customize, SourceShell
 from waste_collection_schedule.transformers import JsonTransformer
-from waste_collection_schedule.waste_types import GLASS, PAPER
+from waste_collection_schedule.waste_types import GLASS, ORGANIC, PAPER
 
+from custom_components.waste_collection_schedule.calendar import (
+    calc_unique_calendar_id,
+    create_calendar_entries,
+)
 from custom_components.waste_collection_schedule.const import DOMAIN
 from custom_components.waste_collection_schedule.init_ui import async_migrate_entry
 from custom_components.waste_collection_schedule.sensor_model import SensorConfig
@@ -28,6 +32,168 @@ def sensor_id(ha, entry, record_id, domain="sensor", suffix=""):
     return er.async_get(ha).async_get_entity_id(
         domain, DOMAIN, f"{entry.entry_id}_{kind}_{record_id}{suffix}"
     )
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("initial", ["empty", "partial-dedicated"])
+async def test_dedicated_calendar_resolves_aliased_legacy_type_after_incomplete_fetch(
+    ha, initial
+):
+    class Source:
+        def __init__(self):
+            self.events = (
+                []
+                if initial == "empty"
+                else [Collection(date=date(2099, 1, 1), t="Legacy paper")]
+            )
+
+        def fetch(self):
+            return self.events
+
+    source = Source()
+    shell = SourceShell(
+        source,
+        {
+            "Legacy paper": Customize(
+                "Legacy paper", alias="Recycling", use_dedicated_calendar=True
+            ),
+            "Legacy glass": Customize("Legacy glass", alias="Recycling"),
+            "Legacy organic": Customize("Legacy organic", use_dedicated_calendar=True),
+        },
+        "Provider",
+        "Offline calendar fixture",
+        None,
+        "General",
+        "seasonal",
+        0,
+    )
+    assert shell.fetch()
+    calendars = {
+        entity.unique_id: entity for entity in create_calendar_entries([shell])
+    }
+    calendar = calendars[calc_unique_calendar_id(shell, "Legacy paper")]
+    general = calendars[calc_unique_calendar_id(shell)]
+    assert calendar.unique_id == calc_unique_calendar_id(shell, "Legacy paper")
+    assert (calendar.event is None) == (initial == "empty")
+    assert general.event is None
+    source.events = [
+        Collection(date=date(2099, 1, 1), t="Legacy paper"),
+        Collection(date=date(2099, 1, 2), t="Legacy glass"),
+    ]
+    assert shell.fetch()
+    events = await calendar.async_get_events(
+        ha, datetime(2099, 1, 1, tzinfo=UTC), datetime(2099, 1, 3, tzinfo=UTC)
+    )
+    assert [(event.summary, event.start) for event in events] == [
+        ("Recycling", date(2099, 1, 1))
+    ]
+    events = await general.async_get_events(
+        ha, datetime(2099, 1, 1, tzinfo=UTC), datetime(2099, 1, 3, tzinfo=UTC)
+    )
+    assert [(event.summary, event.start) for event in events] == [
+        ("Recycling", date(2099, 1, 2))
+    ]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "keys",
+    [
+        ("paper", "glass"),
+        (PAPER.names["en"], GLASS.names["en"]),
+        ("Blue bin", "Green bin"),
+        ("Legacy paper", "Legacy glass"),
+        ("Trimmed paper", "Trimmed glass"),
+        ("Description small bin", "Description large bin"),
+    ],
+)
+@pytest.mark.parametrize(
+    "partition", ["remaining", "third", "all-dedicated", "same-day"]
+)
+async def test_dedicated_calendars_keep_membership_when_aliases_collide(
+    ha, keys, partition
+):
+    class Source:
+        def fetch(self):
+            second_date = date(2099, 1, 1 if partition == "same-day" else 2)
+            events = [
+                Collection(
+                    date=date(2099, 1, 1),
+                    t=keys[0] + (" " if keys[0].startswith("Trimmed") else ""),
+                    location="Paper curb",
+                )
+                if keys[0].startswith(("Legacy", "Trimmed"))
+                else Collection(
+                    date=date(2099, 1, 1), waste_type=PAPER, location="Paper curb"
+                ),
+                Collection(
+                    date=second_date,
+                    t=keys[1] + (" " if keys[0].startswith("Trimmed") else ""),
+                    location="Glass depot",
+                )
+                if keys[0].startswith(("Legacy", "Trimmed"))
+                else Collection(
+                    date=second_date,
+                    waste_type=PAPER if keys[0].startswith("Description") else GLASS,
+                    location="Glass depot",
+                ),
+            ]
+            for event, label, key in zip(
+                events, ("Blue bin", "Green bin"), keys, strict=True
+            ):
+                if keys[0].startswith("Description"):
+                    event.set_description(key)
+                elif not keys[0].startswith("Trimmed"):
+                    event.set_original_label(label)
+            if partition == "third":
+                events.append(Collection(date=date(2099, 1, 3), waste_type=ORGANIC))
+            return events
+
+    shell = SourceShell(
+        source=Source(),
+        customize={
+            keys[0]: Customize(keys[0], alias="Recycling", use_dedicated_calendar=True),
+            keys[1]: Customize(
+                keys[1],
+                alias="Recycling",
+                use_dedicated_calendar=partition == "all-dedicated",
+            ),
+        },
+        title="Provider",
+        description="Offline calendar fixture",
+        url=None,
+        calendar_title="General",
+        unique_id="calendar-fixture",
+        day_offset=0,
+        ignore_duplicates=True,
+    )
+    assert shell.fetch()
+    calendars = {
+        entity.unique_id: entity for entity in create_calendar_entries([shell])
+    }
+    start = datetime(2099, 1, 1, tzinfo=UTC)
+    end = datetime(2099, 1, 4, tzinfo=UTC)
+    dedicated = calendars[calc_unique_calendar_id(shell, keys[0])]
+    assert [
+        event.start for event in await dedicated.async_get_events(ha, start, end)
+    ] == [date(2099, 1, 1)]
+    assert dedicated.event.location == "Paper curb"
+    if partition == "all-dedicated":
+        other = calendars[calc_unique_calendar_id(shell, keys[1])]
+        assert [
+            event.start for event in await other.async_get_events(ha, start, end)
+        ] == [date(2099, 1, 2)]
+        assert calc_unique_calendar_id(shell) not in calendars
+    else:
+        general = calendars[calc_unique_calendar_id(shell)]
+        assert [
+            event.start for event in await general.async_get_events(ha, start, end)
+        ] == (
+            [date(2099, 1, 2), date(2099, 1, 3)]
+            if partition == "third"
+            else [date(2099, 1, 1 if partition == "same-day" else 2)]
+        )
+        assert general.event.location == "Glass depot"
 
 
 @pytest.mark.asyncio

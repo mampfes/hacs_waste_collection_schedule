@@ -8,6 +8,7 @@ Releases are listed in reverse chronological order.
 
 ### Changed
 
+- Dedicated calendars retain their category or provider-bin membership when types share a display alias, including description keys and trimmed legacy labels. The general calendar keeps non-dedicated collections and remains available when only part of the dedicated schedule is present; saved keys and calendar identities remain unchanged.
 - UI sensors use stable internal IDs, retain entity IDs and history through edits, and can be disabled without deleting their configuration. Configure separates source settings, sensors, and waste-type customization.
 - Built-in state/date formats support English, German, French, Italian, Dutch, Slovenian, Danish, Finnish, Swedish, and Norwegian Bokmål without writing templates. YAML supports the same formatting and filtering options, optional `unique_id`, and `kind: days_to` / `last_update`.
 - Optional native device pages edit the same sensor records. Sensor-only changes do not fetch the provider again. **Next collection** remains the combined overview sensor.
