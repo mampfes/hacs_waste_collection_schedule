@@ -19,3 +19,4 @@ pdfminer.six>=20221105
 Babel>=2.12.0
 holidays>=0.40
 homeassistant>=2024.4.0
+cryptography>=42.0.0

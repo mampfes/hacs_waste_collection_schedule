@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-10-31",
+  "interactions": [
+    {
+      "key": "POST https://portal.waste.dover.gov.uk/api/getCalendarData 41e3ce19a6",
+      "method": "POST",
+      "url": "https://portal.waste.dover.gov.uk/api/getCalendarData",
+      "final_url": "https://portal.waste.dover.gov.uk/api/getCalendarData",
+      "body": "{\"body\":{\"councilId\":\"39\",\"uprn\":\"999999999999\"}}",
+      "status": 404,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json",
+        "date": "Sat, 31 Oct 2026 09:01:18 GMT",
+        "x-content-type-options": "nosniff",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch",
+        "x-frame-options": "DENY",
+        "content-security-policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; connect-src 'self' https:; frame-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://secure.emandates.co.uk; object-src 'none';",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "x-xss-protection": "1; mode=block",
+        "x-cache": "Error from cloudfront",
+        "via": "1.1 c7904a191557d069faf4e0ae7f35d0b2.cloudfront.net (CloudFront)",
+        "x-amz-cf-pop": "IAD12-P5",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "x-amz-cf-id": "UWMRajgQMBxHAwgQ3mFu-DSGfemnPpKNVcFA5ZSb_1aR_6CVzkdDOw=="
+      },
+      "content_b64": "eyJtZXNzYWdlIjoiTm8gY2FsZW5kYXIgZGF0YSBmb3VuZCBmb3IgdGhlIHByb3ZpZGVkIGNyaXRlcmlhIn0="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'uprn' with the value '999999999999'"
+  }
+}

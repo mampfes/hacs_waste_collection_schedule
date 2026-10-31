@@ -1,16 +1,18 @@
 # East Renfrewshire Council
 
-Support for schedules provided by [East Renfrewshire Council](https://www.eastrenfrewshire.gov.uk/bin-days).
+Support for schedules provided by [East Renfrewshire Council](https://eastrenfrewshire.gov.uk).
+
+Source for eastrenfrewshire.gov.uk services for East Renfrewshire
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: east_renfrewshire_gov_uk
       args:
         postcode: POSTCODE
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
@@ -25,13 +27,13 @@ waste_collection_schedule:
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: east_renfrewshire_gov_uk
       args:
-        postcode: "G78 2TJ"
-        uprn: "131016859"
+        postcode: G78 2TJ
+        uprn: '131016859'
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Enter your postcode and the Unique Property Reference Number (UPRN) of your property. You can find your UPRN at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.

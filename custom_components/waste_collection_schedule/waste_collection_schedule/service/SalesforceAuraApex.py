@@ -18,49 +18,26 @@ reads the answer into ``(timestamp, task name)`` rows.
 The host sends its leaf certificate without the issuing intermediate, so no
 default trust store can build a chain to it. :func:`ca_bundle` completes
 certifi's roots with the missing intermediate instead of disabling
-verification.
+verification. It lives in :mod:`waste_collection_schedule.tls` now and is
+re-exported here for existing imports.
 """
 
 from __future__ import annotations
 
-import hashlib
 import json
-import os
-import tempfile
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Any
-
-import certifi
 
 from waste_collection_schedule import response_shape
 from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
+from waste_collection_schedule.tls import ca_bundle
+
+__all__ = ["AuraApexRetriever", "AuraServiceUnitsParser", "ca_bundle"]
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
     from waste_collection_schedule.retrievers import Response
-
-_bundles: dict[str, str] = {}
-
-
-def ca_bundle(extra_pem: str) -> str:
-    """Path of a CA bundle: certifi's roots plus ``extra_pem`` (a PEM text).
-
-    Written once per process to a temp file and reused.
-    """
-    key = hashlib.sha1(extra_pem.encode("ascii")).hexdigest()
-    path = _bundles.get(key)
-    if path is not None and os.path.exists(path):
-        return path
-    with open(certifi.where(), encoding="ascii") as f:
-        roots = f.read()
-    fd, path = tempfile.mkstemp(prefix="wcs_ca_", suffix=".pem")
-    with os.fdopen(fd, "w", encoding="ascii") as f:
-        f.write(roots)
-        f.write("\n")
-        f.write(extra_pem)
-    _bundles[key] = path
-    return path
 
 
 class AuraApexRetriever(RetrieverFunc):

@@ -1,103 +1,44 @@
-# Mid-Sussex District Council
+# Mid Sussex District Council (Whitespace WRP)
 
-Support for schedules provided by [Mid-Sussex District Council](https://www.midsussex.gov.uk/waste-recycling/bin-collection/), UK.
+Support for schedules provided by [Mid Sussex District Council (Whitespace WRP)](https://www.midsussex.gov.uk/waste-and-recycling/).
+
+Source script for midsussex.gov.uk
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: midsussex_gov_uk
       args:
-        address: ADDRESS
-        house_name: NAME
-        house_number: NUMBER
-        street: STREET
         postcode: POSTCODE
+        street: STREET
+        number: NUMBER
 ```
 
 ### Configuration Variables
 
-#### Preferred Method
-**address**  
+**postcode**  
 *(string) (required)*
-
-The address as it appears on the midsussex.gov.uk website.
-
-This is the preferred approach, if this is not used then the following legacy methods can be used.
-
-#### Legacy Methods
-
-**house_name**  
-*(string) (optional)*
-
-**house_number**  
-*(string) (optional)*
-
-If house_name is not provided then house_number becomes *(required)*
 
 **street**  
 *(string) (required)*
 
-**postcode**  
+**number**  
 *(string) (required)*
 
 ## Example
 
 ```yaml
-# Preferred method
 waste_collection_schedule:
-    sources:
+  sources:
     - name: midsussex_gov_uk
       args:
-        address: HAZELMERE REST HOME, 21, BOLNORE ROAD, RH16 4AB
-```
-
-```yaml
-# legacy method: house name, but no house number
-waste_collection_schedule:
-    sources:
-    - name: midsussex_gov_uk
-      args:
-        house_name: Oaklands
-        street: Oaklands Road
-        postcode: RH16 1SS
-```
-
-```yaml
-# legacy method: house number, but no house name
-waste_collection_schedule:
-    sources:
-    - name: midsussex_gov_uk
-      args:
-        house_number: 6
-        street: Withypitts
-        postcode: RH10 4PJ
-```
-
-```yaml
-# legacy method: house name used instead of house number
-waste_collection_schedule:
-    sources:
-    - name: midsussex_gov_uk
-      args:
-        house_number: Lamedos
-        street: Withypitts
-        postcode: RH11 4XY
-```
-```yaml
-
-# legacy method: house name and house number
-waste_collection_schedule:
-    sources:
-    - name: midsussex_gov_uk
-      args:
-        house_name: Tireggub
-        house_number: Lamedos
-        street: Widdershins
-        postcode: RH14 8BX
+        number: '23'
+        street: HIGH STREET
+        postcode: RH17 6TB
 ```
 
 ## How to get the source arguments
 
-Search for your collection schedule on the address on the [Mid-Sussex District Council](https://www.midsussex.gov.uk/waste-recycling/bin-collection/) site to see how they format your address. Preferred approach is to copy the address as displayed. If that doesn't work, the individual components can be supplied. General rule seems to be `HOUSE_NAME, HOUSE_NUMBER, STREET, POSTCODE` but it can vary for multi-occupancy buildings, house names where there are no numbers, house names where there are also house numbers, etc, so you may need to adjust which parts of the address are used for each argument.
+Enter your property's postcode, street name and house name or number (or business name) as they appear in the council's collection search. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels. The old `house_number` argument is gone; use `number` instead.

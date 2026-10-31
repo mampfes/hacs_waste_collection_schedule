@@ -107,7 +107,7 @@ Notes:
 | `FanOutRetriever(targets, prepare=..., fetch=...)` | curl_cffi | One response per target, for a provider that publishes a separate feed per waste type (or any other split). `prepare` resolves the address once; pair with `parsers.EachResponse`. `include_prepared=True` also returns the `prepare` response (first in the list), for a lookup reply that carries data the later targets do not. |
 | `Lookup(url, pick, params=..., data=..., json=..., method="GET", given=..., when=...)` | curl_cffi | One lookup step with its request declared and a pure `pick(response, *keys, **params)` that reads the reply and raises the argument errors. The step for `LookupChainRetriever(steps=...)`, a `prepare`, or a `Request(before=...)`. `given` short-circuits when the user supplied the id; `when` skips an optional level. |
 | `Chain(*lookups)` | curl_cffi | Several lookups as one `prepare` for `YearlyRetriever` / `FanOutRetriever`; the context is the tuple of their keys. |
-| `Request(url, params=..., data=..., method="GET", before=..., when=..., retry_if=...)` | curl_cffi | One declared request, as a `YearlyRetriever` / `FanOutRetriever` `fetch` (fields called with the year or target, then the context). `before` runs lookups first (a per-year download token); `when=False` returns `None`, which a fan-out drops. |
+| `Request(url, params=..., data=..., method="GET", before=..., when=..., retry_if=..., verify=...)` | curl_cffi | One declared request, as a `YearlyRetriever` / `FanOutRetriever` `fetch` (fields called with the year or target, then the context). `before` runs lookups first (a per-year download token); `when=False` returns `None`, which a fan-out drops. `verify=tls.AIA` for a host that omits its intermediate certificate (see below). |
 | `Suggestions(url, pick, fallback=None)` | curl_cffi | The `suggestions=` hook of `ArgumentGuard` / `RequireRecords` / `IcsFeedsParser`: the provider's list of valid values, fetched only on the error path. |
 | `FirstMatchRetriever(candidates, url, accept, method="GET", params=..., data=...)` | curl_cffi | Interchangeable candidates tried in order, keeping the first response `accept` recognises as the calendar: a load-balanced pair of hosts, a per-year path published at its own time, or both. The opposite of `FanOutRetriever`, which fetches every target. |
 | `AthosWasteManagementRetriever(url, steps=[...], fallback_url=..., encoding=...)` | curl_cffi | The "WasteManagementServlet" (Athos) multi-step wizard shared by ~15 DE/AT councils: GET, scrape the response's hidden inputs, POST each configured step, download the ICS. Steps are pure data (`{submit_action, fields(**params), remove}`), no per-source control flow. |
@@ -129,6 +129,18 @@ Override `retrieve` as a method only for a genuinely irregular flow a configured
 def retrieve(self, source):
     return source.session.get(self.API_URL, params={...})
 ```
+
+#### A host that omits its intermediate certificate
+
+Some council hosts send only their leaf certificate. Browsers complete the chain themselves, so the site works for its users, but our clients fail with `unable to get local issuer certificate`. Do not use `verify=False`. Declare the request with `verify=tls.AIA` instead:
+
+```python
+from waste_collection_schedule import retrievers, tls
+
+retrieve = retrievers.Request(API_URL, method="POST", json=..., verify=tls.AIA)
+```
+
+The request is sent with normal verification first. Only when that fails because the chain is incomplete does `tls` read the leaf, download the issuer from its AIA `caIssuers` URL, check that leaf plus intermediate chain to one of certifi's roots for that host name (`cryptography`'s verifier), and retry once with certifi's roots plus that intermediate. The bundle is cached per host for the process. Any other TLS error (expired, wrong host, self-signed) is raised unchanged, and a failed repair raises `tls.IncompleteChainError` naming the host and the reason; there is no unverified fallback. `Lookup` takes the same `verify=` (it forwards it to its `Request`). `tls.ca_bundle(pem)` (certifi plus a shipped PEM, passed as `verify=<path>`) remains for a host whose issuer cannot be fetched, at the cost of replacing the PEM when the host renews under another intermediate. The cassettes never see any of this: replay does no TLS.
 
 ### Parsers (`waste_collection_schedule.parsers`)
 

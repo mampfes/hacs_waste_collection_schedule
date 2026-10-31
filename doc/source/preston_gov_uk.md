@@ -1,7 +1,8 @@
 # Preston City Council
 
-Support for schedules provided by [Preston City Council](https://www.preston.gov.uk/bins), serving the
-city of Preston, UK.
+Support for schedules provided by [Preston City Council](https://preston.gov.uk).
+
+Source for preston.gov.uk services for Preston City Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -10,16 +11,16 @@ waste_collection_schedule:
   sources:
     - name: preston_gov_uk
       args:
-        street: NUMBER_AND_STREET
+        street: STREET
         uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**street**
-*(string) (optional)*
+**street**  
+*(string) (required)*
 
-**uprn**
+**uprn**  
 *(string) (optional)*
 
 ## Example
@@ -30,13 +31,8 @@ waste_collection_schedule:
     - name: preston_gov_uk
       args:
         street: town hall, lancaster road
-        uprn: 10002220003
 ```
 
-## Exported Bins
+## How to get the source arguments
 
-  - Commercial Waste (including Recycling)
-  - Domestic Waste
-  - Garden Waste
-  - Recycling (Paper)
-  - Recycling (Glass, Plastics, Cans)
+Enter your street name or postcode as you would on https://selfservice.preston.gov.uk/service/Forms/FindMyNearest.aspx?Service=bins. If it matches more than one property, also enter your Unique Property Reference Number (UPRN), which you can find at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.
