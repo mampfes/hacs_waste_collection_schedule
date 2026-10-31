@@ -213,8 +213,10 @@ async def test_unmaterialized_seasonal_create_button_becomes_unavailable(
 
 
 @pytest.mark.parametrize("same_day", [False, True])
+@pytest.mark.parametrize("aliased", [False, True])
 def test_noncarried_provider_labels_remain_filterable_with_type_based_uniqueness(
     same_day,
+    aliased,
 ):
     from waste_collection_schedule.source.ecoharmonogram_pl import Source as EcoSource
 
@@ -231,13 +233,21 @@ def test_noncarried_provider_labels_remain_filterable_with_type_based_uniqueness
 
     shell = SourceShell(
         source=Source(),
-        customize={},
+        customize={
+            label: Customize(label, alias=f"Bin {index}", color=color)
+            for index, (label, color) in enumerate(
+                zip(labels, ("#123456", "#654321"), strict=True), 1
+            )
+        }
+        if aliased
+        else {},
         title="Fixture",
         description="Bins",
         url=None,
         calendar_title=None,
         unique_id="fixture",
         day_offset=0,
+        ignore_duplicates=True,
     )
     shell.fetch()
     aggregator = CollectionAggregator([shell])
@@ -245,8 +255,15 @@ def test_noncarried_provider_labels_remain_filterable_with_type_based_uniqueness
     assert [event.date for event in selected] == [date(2099, 1, 1 if same_day else 2)]
     assert selected[0].original_label == labels[1]
     assert selected[0].description is None
-    shell._ignore_duplicates = True
-    assert len(aggregator.get_upcoming(preserve_bins=True)) == (1 if same_day else 2)
+    expected = 1 if same_day and not aliased else 2
+    assert len(shell._entries) == expected
+    assert len(aggregator.get_upcoming(preserve_bins=True)) == expected
+    grouped = aggregator.get_upcoming_group_by_day()
+    assert sum(len(day.as_dict()["collections"]) for day in grouped) == expected
+    if aliased:
+        assert {
+            event.type for event in aggregator.get_upcoming(preserve_bins=True)
+        } == {"Bin 1", "Bin 2"}
     assert [event.date for event in aggregator.get_upcoming(unique_types=True)] == [
         date(2099, 1, 1)
     ]

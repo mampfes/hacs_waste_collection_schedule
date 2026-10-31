@@ -528,13 +528,13 @@ class ScheduleSensor(SensorEntity):
     def _type_label(self, type_id):
         """Keep legacy attribute names in display vocabulary, with ID filters."""
         for event in self._aggregator._entries:
-            if event.waste_type.id == type_id:
+            if type_id in (event.type, event.waste_type.id):
                 return event.type
-        from waste_collection_schedule.waste_types import ALL_TYPES, display_name
-
-        if self._coordinator:
-            return self._coordinator.shell.get_collection_type_name(type_id)
-        return next((display_name(t) for t in ALL_TYPES if t.id == type_id), type_id)
+        for shell in self._aggregator._shells:
+            label = shell.get_collection_type_name(type_id)
+            if label != type_id:
+                return label
+        return type_id
 
 
 class DaysToSensor(ScheduleSensor):

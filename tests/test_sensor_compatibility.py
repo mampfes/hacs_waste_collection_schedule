@@ -4,10 +4,70 @@ from datetime import date
 
 import pytest
 from homeassistant.helpers import entity_registry as er
+from waste_collection_schedule import Collection
 from waste_collection_schedule.waste_types import PAPER
 
 from custom_components.waste_collection_schedule.const import DOMAIN
 from custom_components.waste_collection_schedule.sensor_options import SensorOptionsFlow
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("details", ["appointment_types", "generic"])
+@pytest.mark.parametrize(
+    "running_entry",
+    [
+        {
+            "types": [Collection(date=date(2099, 1, 1), t="paper").waste_type],
+            "records": [
+                {
+                    "id": "raw",
+                    "name": "Raw paper",
+                    "origin": "custom",
+                    "types": ["paper"],
+                }
+            ],
+            "options": {"customize": {"paper": {"use_dedicated_calendar": True}}},
+        }
+    ],
+    indirect=True,
+)
+async def test_raw_label_matching_canonical_id_keeps_calendar_and_detail_output(
+    running_entry, ha, details
+):
+    from custom_components.waste_collection_schedule.calendar import (
+        create_calendar_entries,
+    )
+
+    entry, source = running_entry
+    coordinator = ha.data[DOMAIN][entry.entry_id]
+    calendar = next(
+        c
+        for c in create_calendar_entries([coordinator.shell], coordinator=coordinator)
+        if c.unique_id == entry.entry_id + "_paper_calendar"
+    )
+    assert calendar.event is not None
+    assert calendar.event.summary == "paper"
+    await coordinator.sensor_manager.async_update("raw", {"details_format": details})
+    await ha.async_block_till_done()
+    eid = er.async_get(ha).async_get_entity_id(
+        "sensor", DOMAIN, entry.entry_id + "_sensor_raw"
+    )
+    attrs = ha.states.get(eid).attributes
+    assert (
+        attrs["paper"] == "2099-01-01"
+        if details == "appointment_types"
+        else attrs["types"] == ["paper"]
+    )
+    source.types = []
+    coordinator._last_fetch_date = None
+    await coordinator._fetch_now()
+    await ha.async_block_till_done()
+    attrs = ha.states.get(eid).attributes
+    assert (
+        attrs["paper"] == ""
+        if details == "appointment_types"
+        else attrs["types"] == ["paper"]
+    )
 
 
 @pytest.mark.asyncio

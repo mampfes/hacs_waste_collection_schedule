@@ -144,7 +144,7 @@ class CollectionAggregator:
                 # Filter before merging. A retained label is also the identity
                 # for next-of-each lists, including bins collected on one day.
                 identity = (
-                    (entry.waste_type.id, entry._bin_identity)
+                    (entry._identity_key, entry._bin_identity)
                     if preserve_bins
                     else entry._bin_identity
                     if unique_types
