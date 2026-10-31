@@ -197,13 +197,14 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
     ``allow_unmarked_missing_days``, blank holiday cells are accepted only when
     their inferred position carries no collection marker.
 
+    stroke_colors optionally separates outlined symbols from filled symbols.
+    max_duplicate_day_repairs permits a bounded number of duplicated numerals
+    to use their complete weekday-grid position when that number is missing.
+
     Set row_bands=True for filled week rows spanning several day cells.
     heading_year accepts a year suffix on each month heading. day_font_size
     restricts the numeral height in PDF points, for files carrying invisible
     editing text in a different font size; all expected days are still required.
-    stroke_colors optionally separates outlined symbols from filled symbols.
-    max_duplicate_day_repairs permits a bounded number of duplicated numerals
-    to use their complete weekday-grid position when that number is missing.
     """
 
     def __init__(
@@ -220,10 +221,10 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         allow_unmarked_missing_days: bool = False,
         pages: Sequence[int] | None = None,
         cancelled_colors: Sequence[tuple[float, ...]] = (),
+        max_duplicate_day_repairs: int = 0,
         row_bands: bool = False,
         heading_year: bool = False,
         day_font_size: tuple[float, float] | None = None,
-        max_duplicate_day_repairs: int = 0,
     ):
         self.months = {_normal(name): i + 1 for i, name in enumerate(months)}
         self.weekdays = tuple(_normal(name) for name in weekdays)
@@ -240,12 +241,12 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         self.allow_unmarked_missing_days = allow_unmarked_missing_days
         self.pages = frozenset(pages) if pages is not None else None
         self.cancelled_colors = {"cancelled": tuple(cancelled_colors)}
-        self.row_bands = row_bands
-        self.heading_year = heading_year
-        self.day_font_size = day_font_size
         if max_duplicate_day_repairs < 0:
             raise ValueError("Duplicate-day repair limit cannot be negative")
         self.max_duplicate_day_repairs = max_duplicate_day_repairs
+        self.row_bands = row_bands
+        self.heading_year = heading_year
+        self.day_font_size = day_font_size
 
     def _keys(
         self, color: Any, palette: Mapping[str, Sequence[tuple[float, ...]]]
