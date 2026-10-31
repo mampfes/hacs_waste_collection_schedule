@@ -2708,6 +2708,8 @@ class TestRecurrence:
         assert recurrence.weekday("火曜日") == 1 and recurrence.weekday("火") == 1
         assert recurrence.weekday("日") == 6
         assert recurrence.month("12月") == 12
+        # Austrian German January.
+        assert recurrence.month("Jänner") == 1 and recurrence.month("jaenner") == 1
         # Unknown input is still a clean miss.
         assert recurrence.month("not-a-month") is None
 
@@ -6509,6 +6511,69 @@ class TestPdfTableParser:
         pages = self._pages([("only", 10, 20, 100.0)])
         with pytest.raises(ResponseShapeError):
             self._run(pages, min_words=5)
+
+    def test_decode_and_x_range(self):
+        pages = self._pages(
+            [
+                ("(cid:53)(cid:48)", 10, 30, 100.0),
+                ("Legende", 700, 760, 100.0),
+            ]
+        )
+        rows = self._run(
+            pages,
+            decode=lambda text: text.replace("(cid:53)(cid:48)", "RM"),
+            x_range=(0.0, 650.0),
+        )
+        assert [[w.text for w in row.words] for row in rows] == [["RM"]]
+
+    def test_char_margin_reaches_pdfminer(self):
+        from waste_collection_schedule.parsers import PdfTableParser
+
+        with (
+            patch("pdfminer.high_level.extract_pages", return_value=[]) as extract,
+            patch("pdfminer.layout.LTTextContainer", self._FakeContainer),
+            patch("pdfminer.layout.LTTextLineHorizontal", self._FakeLine),
+        ):
+            PdfTableParser(char_margin=1.0)(SimpleNamespace(content=b"%PDF-"))
+            PdfTableParser()(SimpleNamespace(content=b"%PDF-"))
+        assert extract.call_args_list[0].kwargs["laparams"].char_margin == 1.0
+        assert extract.call_args_list[1].kwargs["laparams"].char_margin == 2.0
+
+    def test_figure_text_reads_form_xobjects_inside_the_page(self):
+        from waste_collection_schedule.parsers import PdfTableParser
+
+        class FakeFigure(list):
+            pass
+
+        class FakePage(list):
+            bbox = (0.0, 0.0, 800.0, 600.0)
+
+        def line(text, y):
+            fake = self._FakeLine(text, 10, 30, y)
+            fake.y0 = y - 8
+            return fake
+
+        figure = FakeFigure(
+            [
+                self._FakeContainer([line("inside", 100.0)]),
+                # Drawn below the page box: not visible, dropped.
+                self._FakeContainer([line("outside", -50.0)]),
+            ]
+        )
+        page = FakePage([figure])
+
+        def run(**kwargs):
+            with (
+                patch("pdfminer.high_level.extract_pages", return_value=[page]),
+                patch("pdfminer.layout.LTTextContainer", self._FakeContainer),
+                patch("pdfminer.layout.LTTextLineHorizontal", self._FakeLine),
+                patch("pdfminer.layout.LTFigure", FakeFigure),
+            ):
+                return PdfTableParser(**kwargs)(SimpleNamespace(content=b"%PDF-"))
+
+        assert run() == []
+        rows = run(figure_text=True)
+        assert [[w.text for w in row.words] for row in rows] == [["inside"]]
 
 
 class TestPdfMonthColumns:
