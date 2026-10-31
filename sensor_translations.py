@@ -380,12 +380,13 @@ def apply_sensor_translations(translations, language):
     translations["config"]["step"].pop("sensor", None)
     translations.setdefault("issues", {})["legacy_sensors"] = {
         "title": ui["repair_title"],
-        "description": ui["repair_description"],
         "fix_flow": {
             "step": {
                 "confirm": {
                     "title": ui["confirm_title"],
-                    "description": ui["confirm_description"],
+                    "description": (
+                        ui["repair_description"] + "\n\n" + ui["confirm_description"]
+                    ),
                 }
             }
         },

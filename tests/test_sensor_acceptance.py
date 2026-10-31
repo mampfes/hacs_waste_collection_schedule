@@ -437,6 +437,9 @@ async def test_legacy_sensor_repair_remains_fixable_after_version4_reload(
     assert issue.is_fixable
     flow = LegacySensorsRepairFlow(entry.entry_id)
     flow.hass = ha
+    confirmation = await flow.async_step_init()
+    assert confirmation["description_placeholders"] == {"entities": orphan.entity_id}
+    assert registry.async_get(orphan.entity_id) is not None
     await flow.async_step_confirm({})
     assert registry.async_get(orphan.entity_id) is None
     assert await ha.config_entries.async_reload(entry.entry_id)
