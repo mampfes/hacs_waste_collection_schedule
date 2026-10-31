@@ -1398,48 +1398,6 @@ def _recorded_pdf_response(module, case):
     return cassette.CassetteResponse(item)
 
 
-def test_eko_region_outlined_table_keeps_ash_and_seasonal_collection_changes():
-    from collections import Counter
-
-    from waste_collection_schedule.service.EkoRegionCalendar import CalendarParser
-
-    response = _recorded_pdf_response("eko_region_pl", "Bednarze")
-    with freeze_time("2026-10-30"):
-        rows = set(CalendarParser()(response))
-    assert len(rows) == 61
-    assert Counter(label for _, label in rows) == {
-        "Metale i tworzywa sztuczne": 12,
-        "Papier": 4,
-        "Szkło": 4,
-        "Bio": 15,
-        "Popiół": 6,
-        "Zmieszane odpady komunalne": 20,
-    }
-    assert (D(2026, 1, 10), "Popiół") in rows
-    assert (D(2026, 1, 10), "Bio") not in rows
-    assert (D(2026, 4, 3), "Popiół") in rows
-    assert (D(2026, 4, 17), "Bio") in rows
-    assert (D(2026, 11, 2), "Zmieszane odpady komunalne") in rows
-    assert (D(2026, 11, 9), "Zmieszane odpady komunalne") not in rows
-
-
-def test_eko_region_unknown_outlined_glyphs_fail_instead_of_dropping_days(monkeypatch):
-    from waste_collection_schedule.service import EkoRegionCalendar
-
-    response = _recorded_pdf_response("eko_region_pl", "Bednarze")
-    monkeypatch.delitem(EkoRegionCalendar._GLYPHS, "2")
-    with freeze_time("2026-10-30"), pytest.raises(ValueError, match="Unknown outlined"):
-        EkoRegionCalendar.CalendarParser()(response)
-
-
-def test_eko_region_rejects_last_years_calendar():
-    from waste_collection_schedule.service.EkoRegionCalendar import CalendarParser
-
-    response = _recorded_pdf_response("eko_region_pl", "Bednarze")
-    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="current-year"):
-        CalendarParser()(response)
-
-
 def test_marked_pdf_preserves_ritl_combined_rounds_and_ignores_padding_days():
     from collections import Counter
 
@@ -1678,3 +1636,45 @@ def test_paczkow_joins_day_lists_wrapped_onto_their_own_lines():
     # A row genuinely missing a month still fails loudly.
     with pytest.raises(ValueError):
         _tables(header + "Odpady BIO 09, 23, 30 06, 20\n" + footer)
+
+
+def test_eko_region_outlined_table_keeps_ash_and_seasonal_collection_changes():
+    from collections import Counter
+
+    from waste_collection_schedule.service.EkoRegionCalendar import CalendarParser
+
+    response = _recorded_pdf_response("eko_region_pl", "Bednarze")
+    with freeze_time("2026-10-30"):
+        rows = set(CalendarParser()(response))
+    assert len(rows) == 61
+    assert Counter(label for _, label in rows) == {
+        "Metale i tworzywa sztuczne": 12,
+        "Papier": 4,
+        "Szkło": 4,
+        "Bio": 15,
+        "Popiół": 6,
+        "Zmieszane odpady komunalne": 20,
+    }
+    assert (D(2026, 1, 10), "Popiół") in rows
+    assert (D(2026, 1, 10), "Bio") not in rows
+    assert (D(2026, 4, 3), "Popiół") in rows
+    assert (D(2026, 4, 17), "Bio") in rows
+    assert (D(2026, 11, 2), "Zmieszane odpady komunalne") in rows
+    assert (D(2026, 11, 9), "Zmieszane odpady komunalne") not in rows
+
+
+def test_eko_region_unknown_outlined_glyphs_fail_instead_of_dropping_days(monkeypatch):
+    from waste_collection_schedule.service import EkoRegionCalendar
+
+    response = _recorded_pdf_response("eko_region_pl", "Bednarze")
+    monkeypatch.delitem(EkoRegionCalendar._GLYPHS, "2")
+    with freeze_time("2026-10-30"), pytest.raises(ValueError, match="Unknown outlined"):
+        EkoRegionCalendar.CalendarParser()(response)
+
+
+def test_eko_region_rejects_last_years_calendar():
+    from waste_collection_schedule.service.EkoRegionCalendar import CalendarParser
+
+    response = _recorded_pdf_response("eko_region_pl", "Bednarze")
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="current-year"):
+        CalendarParser()(response)
