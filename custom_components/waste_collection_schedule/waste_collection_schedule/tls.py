@@ -237,19 +237,24 @@ def _subject(host: str) -> Any:
 
 def _validate(
     host: str, leaf: x509.Certificate, intermediates: list[x509.Certificate]
-) -> None:
-    """Raise unless ``leaf`` chains to a trusted root for ``host``."""
+) -> list[x509.Certificate]:
+    """The verified chain (leaf first, root last); raise unless ``leaf`` chains
+    to a trusted root for ``host``."""
     from cryptography.x509 import verification
 
     store = verification.Store(trust_roots())
     verifier = (
         verification.PolicyBuilder().store(store).build_server_verifier(_subject(host))
     )
-    verifier.verify(leaf, intermediates)
+    return verifier.verify(leaf, intermediates)
 
 
 def _complete_chain(host: str, port: int) -> list[x509.Certificate]:
-    """The intermediates that complete ``host``'s chain, validated."""
+    """The intermediates on ``host``'s verified chain (no leaf, no root).
+
+    Only certificates of the chain the verifier built are returned; extra
+    certificates in a download never reach the bundle.
+    """
     try:
         from cryptography import x509
         from cryptography.x509 import verification
@@ -288,12 +293,12 @@ def _complete_chain(host: str, port: int) -> list[x509.Certificate]:
             break
         intermediates.extend(fetched)
         try:
-            _validate(host, leaf, intermediates)
+            chain = _validate(host, leaf, intermediates)
         except verification.VerificationError as exc:
             last_error = f"the chain does not validate ({exc})"
             current = fetched[0]
             continue
-        return intermediates
+        return list(chain[1:-1])
     raise IncompleteChainError(host, last_error)
 
 
@@ -345,7 +350,16 @@ def send(
     port = parts.port or 443
     cached = _aia_bundles.get((host.lower(), port))
     if cached is not None and os.path.exists(cached):
-        return send_request(url, verify=cached, **kwargs)
+        try:
+            return send_request(url, verify=cached, **kwargs)
+        except Exception as exc:
+            if parts.scheme != "https" or not is_incomplete_chain(exc):
+                raise
+            # Stale bundle (the host renewed under another intermediate):
+            # evict it and run the normal repair path once.
+            with _aia_lock:
+                if _aia_bundles.get((host.lower(), port)) == cached:
+                    del _aia_bundles[(host.lower(), port)]
     try:
         return send_request(url, **kwargs)
     except Exception as exc:

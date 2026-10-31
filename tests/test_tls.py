@@ -210,6 +210,15 @@ def test_aia_bundle_is_cached_per_host(seams):
     assert seams.downloads == [AIA_URL]
 
 
+def test_aia_bundle_ignores_extra_certificates_in_download(pki, seams):
+    seams.payload = pkcs7.serialize_certificates(
+        [pki.inter, pki.other_root], serialization.Encoding.PEM
+    )
+    certs = _bundle_certs(tls.aia_bundle(HOST))
+    assert pki.inter in certs
+    assert pki.other_root not in certs
+
+
 class _Chain(Exception):
     pass
 
@@ -295,3 +304,32 @@ def test_ca_bundle_reexported_for_aura_sources():
     from waste_collection_schedule.service import SalesforceAuraApex
 
     assert SalesforceAuraApex.ca_bundle is tls.ca_bundle
+
+
+def test_send_evicts_stale_cached_bundle_and_repairs_once(seams):
+    url = f"https://{HOST}/api"
+    stale = tls.aia_bundle(HOST)
+    calls = []
+
+    def send(url, **kwargs):
+        calls.append(kwargs.get("verify", True))
+        if len(calls) <= 2:  # stale bundle, then the plain attempt
+            raise _Chain("unable to get local issuer certificate (20)")
+        return SimpleNamespace(status_code=200, url=url, raise_for_status=lambda: None)
+
+    assert tls.send(send, url, tls.AIA).status_code == 200
+    assert calls[:2] == [stale, True] and len(calls) == 3
+    assert seams.downloads == [AIA_URL, AIA_URL]
+    assert tls._aia_bundles[(HOST, 443)] == calls[2]
+
+
+def test_send_cached_branch_propagates_non_chain_errors(seams):
+    stale = tls.aia_bundle(HOST)
+
+    def send(url, **kwargs):
+        raise _Chain("certificate has expired")
+
+    with pytest.raises(_Chain, match="expired"):
+        tls.send(send, f"https://{HOST}/", tls.AIA)
+    assert tls._aia_bundles[(HOST, 443)] == stale
+    assert seams.downloads == [AIA_URL]
