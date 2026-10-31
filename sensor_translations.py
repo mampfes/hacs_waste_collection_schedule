@@ -317,6 +317,9 @@ CHOICE_LABELS = {
 def apply_sensor_translations(translations, language):
     """Update common UI strings without editing generated provider translations."""
     ui = COMMON_LABELS.get(language, COMMON_LABELS["en"])
+    translations.setdefault("options", {}).setdefault("abort", {})["sensor_removed"] = (
+        ui["sensor_removed"]
+    )
     choice_labels = {key: ui.get(key, value) for key, value in CHOICE_LABELS.items()}
     for key, pattern in (
         ("weekday_dmy", "DD.MM.YYYY"),

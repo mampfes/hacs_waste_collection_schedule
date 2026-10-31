@@ -1,6 +1,7 @@
 """Sensor platform support for Waste Collection Schedule."""
 
 import logging
+from copy import copy
 from enum import Enum
 from typing import Any
 
@@ -39,6 +40,7 @@ from .const import (
 )
 
 # fmt: on
+from .sensor_format import async_prepare_formats
 from .sensor_schema import yaml_sensor_fields
 from .waste_collection_api import WasteCollectionApi
 
@@ -80,8 +82,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 # Config flow setup
 async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
-    from .sensor_format import async_prepare_formats
-
     await async_prepare_formats(hass)
     coordinator = hass.data[DOMAIN][config.entry_id]
     from .sensor_manager import SensorManager
@@ -112,8 +112,6 @@ def create_sensor(hass, coordinator, record):
 
 # YAML setup (via discovery from waste_collection_schedule: sensors: or legacy sensor platform)
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    from .sensor_format import async_prepare_formats
-
     await async_prepare_formats(hass)
     if discovery_info is not None:
         # New method: sensor loaded via discovery from waste_collection_schedule: sensors:
@@ -433,9 +431,10 @@ class ScheduleSensor(SensorEntity):
         attributes = {}
 
         collection_types = (
-            sorted(self._aggregator.types)
-            if self._collection_types is None
-            else self._collection_types
+            self._detail_types()
+            if self._details_format
+            in (DetailsFormat.appointment_types, DetailsFormat.generic)
+            else []
         )
 
         if self._details_format == DetailsFormat.upcoming:
@@ -478,7 +477,7 @@ class ScheduleSensor(SensorEntity):
                 start_index=self._event_index,
                 **self._filter_options(),
             )
-            attributes["upcoming"] = [self._collection_dict(c) for c in records]
+            attributes["upcoming"] = [self._collection_for_sensor(c) for c in records]
             refreshtime = ""
             if self._aggregator.refreshtime is not None:
                 refreshtime = self._aggregator.refreshtime.isoformat(timespec="seconds")
@@ -518,12 +517,38 @@ class ScheduleSensor(SensorEntity):
         if self.hass is not None:
             self.async_write_ha_state()
 
-    def _collection_dict(self, collection):
-        record = collection.as_dict()
+    def _collection_for_sensor(self, collection):
         if self._record.get("color"):
-            record["color"] = self._record["color"]
-            record["color_source"] = "sensor"
-        return record
+            collection = copy(collection)
+            collection.set_color(self._record["color"], source="sensor")
+        return collection
+
+    def _detail_types(self):
+        candidates = (
+            sorted(self._aggregator.types)
+            if self._collection_types is None
+            else self._collection_types
+        )
+        excluded = self._record.get("exclude_types")
+        if not excluded:
+            return candidates
+        eligible = self._aggregator._filter_entries(
+            self._collection_types, excluded, False
+        )
+        if self._collection_types is None:
+            return sorted({e.type for e in eligible})
+        return [
+            t
+            for t in candidates
+            if t not in excluded
+            and (
+                not any(
+                    self._aggregator.matches_type(e, t)
+                    for e in self._aggregator._entries
+                )
+                or any(self._aggregator.matches_type(e, t) for e in eligible)
+            )
+        ]
 
     def _type_label(self, type_id):
         """Keep legacy attribute names in display vocabulary, with ID filters."""

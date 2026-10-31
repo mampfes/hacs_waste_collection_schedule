@@ -471,7 +471,9 @@ async def test_options_remain_editable_without_a_running_provider(ha):
     source = await flow.async_step_source_settings()
     assert "calendar_title" not in source["data_schema"]({})
     title = next(k for k in source["data_schema"].schema if str(k) == "calendar_title")
-    assert title.description["suggested_value"] == entry.title
+    assert title.description["suggested_value"] is None
+    saved_source = await flow.async_step_source_settings(source["data_schema"]({}))
+    assert "calendar_title" not in saved_source["data"]
     await flow.async_step_waste_types()
     await flow.async_step_sensors(
         {"predefined": ["type:paper"], "edit_sensor": record["id"]}

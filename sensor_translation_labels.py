@@ -2,6 +2,7 @@
 
 COMMON_LABELS = {
     "en": {
+        "sensor_removed": "This sensor was removed while the editor was open. Reopen sensor options.",
         "types_in_days": "Types and countdown",
         "in_days": "Countdown",
         "relative": "Today / Tomorrow / in N days",
@@ -43,6 +44,7 @@ COMMON_LABELS = {
         "weekday": "Weekday",
     },
     "de": {
+        "sensor_removed": "Dieser Sensor wurde während der Bearbeitung entfernt. Sensoroptionen erneut öffnen.",
         "types_in_days": "Arten und Countdown",
         "in_days": "Countdown",
         "relative": "Heute / Morgen / in N Tagen",
@@ -85,6 +87,7 @@ COMMON_LABELS = {
         "weekday": "Wochentag",
     },
     "fr": {
+        "sensor_removed": "Ce capteur a été supprimé pendant la modification. Rouvrez les options du capteur.",
         "types_in_days": "Types et compte à rebours",
         "in_days": "Compte à rebours",
         "relative": "Aujourd’hui / Demain / dans N jours",
@@ -127,6 +130,7 @@ COMMON_LABELS = {
         "weekday": "Jour de la semaine",
     },
     "it": {
+        "sensor_removed": "Questo sensore è stato rimosso durante la modifica. Riapri le opzioni del sensore.",
         "types_in_days": "Tipi e conto alla rovescia",
         "in_days": "Conto alla rovescia",
         "relative": "Oggi / Domani / tra N giorni",
@@ -168,6 +172,7 @@ COMMON_LABELS = {
         "weekday": "Giorno della settimana",
     },
     "nl": {
+        "sensor_removed": "Deze sensor is tijdens het bewerken verwijderd. Open de sensoropties opnieuw.",
         "types_in_days": "Typen en aftelling",
         "in_days": "Aftelling",
         "relative": "Vandaag / Morgen / over N dagen",
@@ -209,6 +214,7 @@ COMMON_LABELS = {
         "weekday": "Weekdag",
     },
     "sl": {
+        "sensor_removed": "Ta senzor je bil med urejanjem odstranjen. Znova odprite možnosti senzorja.",
         "types_in_days": "Vrste in odštevanje",
         "in_days": "Odštevanje",
         "relative": "Danes / Jutri / čez N dni",
@@ -249,6 +255,7 @@ COMMON_LABELS = {
         "weekday": "Dan v tednu",
     },
     "da": {
+        "sensor_removed": "Denne sensor blev fjernet under redigering. Åbn sensorindstillingerne igen.",
         "types_in_days": "Typer og nedtælling",
         "in_days": "Nedtælling",
         "relative": "I dag / I morgen / om N dage",
@@ -291,6 +298,7 @@ COMMON_LABELS = {
         "weekday": "Ugedag",
     },
     "fi": {
+        "sensor_removed": "Anturi poistettiin muokkauksen aikana. Avaa anturin asetukset uudelleen.",
         "types_in_days": "Tyypit ja lähtölaskenta",
         "in_days": "Lähtölaskenta",
         "relative": "Tänään / Huomenna / N päivän kuluttua",
@@ -331,6 +339,7 @@ COMMON_LABELS = {
         "weekday": "Viikonpäivä",
     },
     "sv": {
+        "sensor_removed": "Sensorn togs bort under redigeringen. Öppna sensorinställningarna igen.",
         "types_in_days": "Typer och nedräkning",
         "in_days": "Nedräkning",
         "relative": "I dag / I morgon / om N dagar",
@@ -372,6 +381,7 @@ COMMON_LABELS = {
         "weekday": "Veckodag",
     },
     "nb": {
+        "sensor_removed": "Denne sensoren ble fjernet under redigering. Åpne sensorinnstillingene igjen.",
         "types_in_days": "Typer og nedtelling",
         "in_days": "Nedtelling",
         "relative": "I dag / I morgen / om N dager",

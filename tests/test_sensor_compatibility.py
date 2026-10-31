@@ -135,7 +135,7 @@ async def test_invalid_stored_template_isolated_and_recovers(
 
 
 @pytest.mark.asyncio
-async def test_legacy_negative_limits_do_not_block_migration(ha):
+async def test_legacy_negative_limits_do_not_block_migration(ha, caplog):
     from sensor_fixtures import entry_for
 
     from custom_components.waste_collection_schedule.init_ui import async_migrate_entry
@@ -151,7 +151,8 @@ async def test_legacy_negative_limits_do_not_block_migration(ha):
     )
     assert await async_migrate_entry(ha, entry)
     r = entry.options["sensors"][0]
-    assert (r["leadtime"], r["event_index"], r["count"]) == (None, 0, None)
+    assert (r["leadtime"], r["event_index"], r["count"]) == (0, 0, None)
+    assert "Old limits" in caplog.text and "negative legacy limits" in caplog.text
 
 
 @pytest.mark.asyncio
@@ -379,7 +380,7 @@ async def test_source_title_and_customize_overrides_can_be_cleared(running_entry
     flow.hass = ha
     form = await flow.async_step_source_settings()
     title = next(k for k in form["data_schema"].schema if str(k) == "calendar_title")
-    assert title.description["suggested_value"] == "Synthetic provider"
+    assert title.description["suggested_value"] is None
     ha.config_entries.async_update_entry(
         entry,
         options={

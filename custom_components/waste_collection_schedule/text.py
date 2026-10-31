@@ -2,17 +2,25 @@
 
 import homeassistant.helpers.config_validation as cv
 from homeassistant.components.text import TextEntity
+from homeassistant.const import MAX_LENGTH_STATE_STATE
 
 from .sensor_controls import CONTROL_KEYS, SensorControl, setup_controls
 from .waste_collection_schedule.colors import validate_color
 
 
 class SensorText(SensorControl, TextEntity):
-    _attr_native_max = 4096
+    _attr_native_max = MAX_LENGTH_STATE_STATE
+
+    @property
+    def available(self):
+        return (
+            super().available
+            and len(self.record.get(self.key) or "") <= self.native_max
+        )
 
     @property
     def native_value(self):
-        return (self.record.get(self.key) or "") if self.record else None
+        return (self.record.get(self.key) or "") if self.available else None
 
     async def async_set_value(self, value):
         patch = {self.key: value or None}

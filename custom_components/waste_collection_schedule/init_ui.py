@@ -129,7 +129,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     if reuse_schedule:
         coordinator._last_fetch_date = previous._last_fetch_date
-    await coordinator.async_config_entry_first_refresh()
+        coordinator.async_set_updated_data(previous.data or {})
+        coordinator._async_track_timers()
+    else:
+        await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(const.DOMAIN, {})[entry.entry_id] = coordinator
 

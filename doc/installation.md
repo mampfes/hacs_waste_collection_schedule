@@ -72,6 +72,8 @@ State text, language, date format, details, count, lead time, include/exclude fi
 
 On the device page, a count of `0` means unlimited. Lead time uses `-1` for unlimited and `0` for today only; positive values limit the number of days shown.
 
+Home Assistant limits native text controls to 255 characters. Longer saved templates or names remain intact; their native text control is unavailable until the value is shortened through **Configure → Sensors**. The options editor and YAML support longer templates.
+
 For new entries that choose per-type sensors, newly discovered types are added automatically. Migrated entries keep this off; the setting is available under **Configure → Sensors**. A seasonal type disappearing does not delete its sensor.
 
 ### Sensor migration
@@ -79,6 +81,8 @@ For new entries that choose per-type sensors, newly discovered types are added a
 Existing UI sensors migrate automatically to config-entry version 4. Names, entity IDs, custom templates, and registry-disabled states are retained. Recognized built-in templates keep their existing English output; new sensors use the selected language. Old sensors left behind by earlier renames are listed in **Repairs** for explicit removal after checking dashboard and automation references.
 
 Older integration versions cannot load a version-4 entry. Restore a backup before downgrading. YAML configuration does not require migration.
+
+Negative legacy lead time and pickup indexes normalize to zero and produce a warning naming the affected sensor. Negative indexes previously selected from the end of the schedule; review those sensors after migration. Conflicting customization keys retain their separate settings and calendar identities. Default localized text saved by the older device-controls preview is retained as a custom template.
 
 ### GUI limitations
 

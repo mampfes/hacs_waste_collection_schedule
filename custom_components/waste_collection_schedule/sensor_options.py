@@ -1,6 +1,7 @@
 """Native options forms over the shared sensor record and manager."""
 
 from copy import deepcopy
+from importlib import import_module
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -54,9 +55,53 @@ def choices(values, *, multiple=False, custom_value=False):
     )
 
 
+def _merge_fields(before, draft, current):
+    """Keep newer fields unless this form changed or cleared them."""
+    result = dict(current)
+    missing = object()
+    for key in before.keys() | draft.keys():
+        if before.get(key, missing) == draft.get(key, missing):
+            continue
+        if key in draft:
+            result[key] = draft[key]
+        else:
+            result.pop(key, None)
+    return result
+
+
 class SensorOptionsFlow(OptionsFlow):
     def __init__(self, entry):
         self._entry = entry
+        self._base_options = deepcopy(dict(entry.options))
+
+    def _finish_sensor_options(self):
+        """Apply this form's delta to current records, preserving newer edits."""
+        before = {r["id"]: r for r in self._base_options.get("sensors", [])}
+        draft = {r["id"]: r for r in self._records}
+        current = {r["id"]: dict(r) for r in self._entry.options.get("sensors", [])}
+        editing = getattr(self, "_editing", {})
+        if editing.get("id") in before and editing["id"] not in current:
+            return self.async_abort(reason="sensor_removed")
+        for sensor_id in before.keys() - draft.keys():
+            current.pop(sensor_id, None)
+        for sensor_id, record in draft.items():
+            if sensor_id not in before:
+                current.setdefault(sensor_id, record)
+            elif sensor_id in current:
+                current[sensor_id].update(
+                    {
+                        key: value
+                        for key, value in record.items()
+                        if value != before[sensor_id].get(key)
+                        or sensor_id == getattr(self, "_reset_id", None)
+                    }
+                )
+        options = {**self._entry.options, "sensors": list(current.values())}
+        for key in ("device_controls", "auto_add_types"):
+            value = self._pending_options[key]
+            if value != self._base_options.get(key, False):
+                options[key] = value
+        return self.async_create_entry(data=options)
 
     @property
     def manager(self):
@@ -88,9 +133,10 @@ class SensorOptionsFlow(OptionsFlow):
     async def async_step_init(self, user_input=None):
         from homeassistant.helpers.translation import async_get_translations
 
-        from .sensor_format import async_prepare_formats
-
-        await async_prepare_formats(self.hass)
+        formats = await self.hass.async_add_executor_job(
+            import_module, f"{__package__}.sensor_format"
+        )
+        await formats.async_prepare_formats(self.hass)
         self._translations = await async_get_translations(
             self.hass, self.hass.config.language, "selector", {DOMAIN}
         )
@@ -120,14 +166,7 @@ class SensorOptionsFlow(OptionsFlow):
         schema = {
             vol.Optional(
                 "calendar_title",
-                description={
-                    "suggested_value": options.get("calendar_title")
-                    or (
-                        self.manager.coordinator.shell.title
-                        if self.manager
-                        else self._entry.title
-                    )
-                },
+                description={"suggested_value": options.get("calendar_title")},
             ): str,
             vol.Required(
                 "separator",
@@ -181,7 +220,7 @@ class SensorOptionsFlow(OptionsFlow):
         )
 
     async def async_step_sensors(self, user_input=None):
-        self._records = deepcopy(self._entry.options.get("sensors", []))
+        self._records = deepcopy(self._base_options.get("sensors", []))
         offered = self.catalogue
         for record in self._records:
             if record["origin"] != "custom":
@@ -209,7 +248,7 @@ class SensorOptionsFlow(OptionsFlow):
                         name="", state_format="relative", language="auto"
                     ).__dict__.copy()
                 return await self.async_step_edit_sensor()
-            return self.async_create_entry(data=self._pending_options)
+            return self._finish_sensor_options()
         schema = {
             vol.Optional(
                 "predefined",
@@ -304,7 +343,7 @@ class SensorOptionsFlow(OptionsFlow):
             advanced = user_input.pop("advanced", False)
             if action == "delete" and custom:
                 self._records[:] = [r for r in self._records if r["id"] != record["id"]]
-                return self.async_create_entry(data=self._pending_options)
+                return self._finish_sensor_options()
             if action == "duplicate":
                 duplicate = {
                     **record,
@@ -317,6 +356,7 @@ class SensorOptionsFlow(OptionsFlow):
             if action == "reset" and not custom:
                 default = self.catalogue.get(record["origin"])
                 if default:
+                    self._reset_id = record["id"]
                     self._editing = {**default, "enabled": record["enabled"]}
                     return self._save_sensor()
             try:
@@ -459,7 +499,7 @@ class SensorOptionsFlow(OptionsFlow):
         ]
         if not any(r["id"] == record["id"] for r in self._records):
             self._records.append(record)
-        return self.async_create_entry(data=self._pending_options)
+        return self._finish_sensor_options()
 
     async def async_step_waste_types(self, user_input=None):
         labels = {**self.type_labels}
@@ -467,6 +507,7 @@ class SensorOptionsFlow(OptionsFlow):
         labels.update({key: key for key in self._entry.options.get("customize", {})})
         if user_input is not None:
             self._options = deepcopy(dict(self._entry.options))
+            self._customize_base = deepcopy(self._options.get("customize", {}))
             self._customize_select = user_input.get("types", [])
             self._customize_select_idx = 0
             return await self.async_step_customize()
@@ -487,7 +528,19 @@ class SensorOptionsFlow(OptionsFlow):
         from .waste_collection_schedule.colors import validate_color
 
         if self._customize_select_idx >= len(self._customize_select):
-            return self.async_create_entry(data=self._options)
+            current = deepcopy(dict(self._entry.options.get("customize", {})))
+            for key in self._customize_select:
+                if key in self._options.get("customize", {}):
+                    current[key] = _merge_fields(
+                        self._customize_base.get(key, {}),
+                        self._options["customize"][key],
+                        current.get(key, {}),
+                    )
+                else:
+                    current.pop(key, None)
+            return self.async_create_entry(
+                data={**self._entry.options, "customize": current}
+            )
         key = self._customize_select[self._customize_select_idx]
         current = self._options.get("customize", {}).get(key, {})
         errors = {}

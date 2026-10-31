@@ -114,12 +114,18 @@ class SensorManager:
                 )
 
     async def async_apply(self):
+        async with self._lock:
+            await self._async_apply_locked()
+
+    async def _async_apply_locked(self):
         from .sensor import create_sensor
         from .sensor_controls import CONTROL_KEYS
 
+        options = deepcopy(dict(self.entry.options))
+        previous = {r["id"]: r for r in self.options.get("sensors", [])}
+        initializing = not self.entities
         records = [
-            SensorConfig.from_dict(s).as_dict()
-            for s in self.entry.options.get("sensors", [])
+            SensorConfig.from_dict(s).as_dict() for s in options.get("sensors", [])
         ]
         registry = er.async_get(self.hass)
         wanted = {s["id"] for s in records}
@@ -197,7 +203,11 @@ class SensorManager:
                     if record["enabled"]
                     else registered.disabled_by or er.RegistryEntryDisabler.INTEGRATION
                 )
-                if disabled != registered.disabled_by:
+                if disabled != registered.disabled_by and (
+                    initializing
+                    or record["enabled"]
+                    != previous.get(record["id"], {}).get("enabled")
+                ):
                     registry.async_update_entity(entity_id, disabled_by=disabled)
                 registry.async_update_entity(entity_id, original_name=record["name"])
                 if registered.device_id and self.entry.options.get("device_controls"):
@@ -209,7 +219,7 @@ class SensorManager:
         if additions:
             self.add_entities(additions)
         cleanup_sensor_devices(self.hass, self.entry, wanted)
-        self.options = deepcopy(dict(self.entry.options))
+        self.options = options
         async_dispatcher_send(self.hass, SENSOR_CONFIG_SIGNAL + self.entry.entry_id)
 
     async def async_update(self, sensor_id, patch):

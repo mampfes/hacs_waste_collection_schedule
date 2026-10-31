@@ -1,5 +1,6 @@
 """Upgrade name-based sensors without replacing their registry entities."""
 
+import json
 import logging
 from hashlib import sha256
 
@@ -13,6 +14,31 @@ from .waste_collection_schedule.source_shell import _load_source_class
 from .waste_collection_schedule.waste_types import ALL_TYPES
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _preview_default_template(language, separator):
+    """Retain shipped preview text without adding a supported UI locale."""
+    today, tomorrow, prefix, suffix = {
+        "en": ("today", "tomorrow", "in ", " days"),
+        "de": ("heute", "morgen", "in ", " Tagen"),
+        "fr": ("aujourd'hui", "demain", "dans ", " jours"),
+        "it": ("oggi", "domani", "tra ", " giorni"),
+        "nl": ("vandaag", "morgen", "over ", " dagen"),
+        "pl": ("dzisiaj", "jutro", "za ", " dni"),
+    }.get(language, ("today", "tomorrow", "in ", " days"))
+    return (
+        "{{ value.types | join("
+        + json.dumps(separator)
+        + ") }} {{ "
+        + json.dumps(today)
+        + " if value.daysTo == 0 else "
+        + json.dumps(tomorrow)
+        + " if value.daysTo == 1 else "
+        + json.dumps(prefix)
+        + " ~ value.daysTo ~ "
+        + json.dumps(suffix)
+        + " }}"
+    )
 
 
 def migrate_records(
@@ -32,10 +58,22 @@ def migrate_records(
     origins = set()
     customize = options.get("customize", {})
     # Older UI flows saved canonical display names as customization keys.
-    # Normalize those alongside their sensor filters; explicit ids win collisions.
+    # Ambiguous keys retain their settings and calendar identities for review.
+    targets = {key: migrate_filter(key, {}, type_ids) for key in customize}
+    collisions = {
+        target
+        for target in targets.values()
+        if list(targets.values()).count(target) > 1
+    }
+    for target in collisions:
+        _LOGGER.warning(
+            "Retaining separate customization keys for %s: %s",
+            target,
+            ", ".join(key for key, value in targets.items() if value == target),
+        )
     customize = {
-        migrate_filter(key, {}, type_ids): customize[key]
-        for key in sorted(customize, key=lambda key: key in type_ids)
+        (key if targets[key] in collisions else targets[key]): value
+        for key, value in customize.items()
     }
     if "customize" in options:
         result["customize"] = customize
@@ -81,7 +119,9 @@ def migrate_records(
             types=types,
             details_format=details,
             count=old.get("count") if (old.get("count") or 0) > 0 else None,
-            leadtime=old.get("leadtime") if (old.get("leadtime") or 0) >= 0 else None,
+            leadtime=max(0, old["leadtime"])
+            if old.get("leadtime") is not None
+            else None,
             event_index=max(0, old.get("event_index") or 0),
             exclude_types=[
                 migrate_filter(t, customize, type_ids)
@@ -89,6 +129,24 @@ def migrate_records(
             ],
             unique_types=old.get("unique_types", False),
         )
+        normalized = {
+            key: (old[key], getattr(record, key))
+            for key in ("leadtime", "event_index")
+            if old.get(key) is not None and old[key] < 0
+        }
+        if normalized:
+            _LOGGER.warning(
+                "Sensor %s migrated negative legacy limits %s; review the limits in sensor options",
+                old["name"],
+                normalized,
+            )
+        if "preset_language" in old and not value:
+            record.state_format = "custom"
+            record.value_template = _preview_default_template(
+                old["preset_language"], options.get("separator", ", ")
+            )
+            if old["preset_language"] in ("en", "de", "fr", "it", "nl"):
+                record.language = old["preset_language"]
         if origin != "custom":
             record.id = catalogue_id(origin)
         else:
@@ -160,7 +218,11 @@ async def async_migrate_sensors(hass, entry, *, source_name=None) -> dict:
     options = migrate_records(dict(entry.options), type_ids)
     registry = er.async_get(hass)
     for old_key, customization in entry.options.get("customize", {}).items():
-        new_key = migrate_filter(old_key, {}, type_ids)
+        new_key = (
+            old_key
+            if old_key in options.get("customize", {})
+            else migrate_filter(old_key, {}, type_ids)
+        )
         if new_key == old_key or not customization.get("use_dedicated_calendar"):
             continue
         old_uid = f"{entry.entry_id}_{old_key}_calendar"

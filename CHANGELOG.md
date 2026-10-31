@@ -14,7 +14,10 @@ Releases are listed in reverse chronological order.
 - Type filters accept canonical IDs and retained provider labels before duplicate merging. `unique_types` keeps the next collection of each retained provider bin, or each category when labels are not retained. `exclude_types` is available in UI and YAML.
 - Structured collection records retain provider labels and resolved colors even when labels are hidden. Waste-type colors can be edited in the UI. Generic detail lists honor the pickup index.
 - Existing UI configurations migrate to entry version 4, preserving identities and custom templates. Older integration versions cannot load migrated entries; restore a backup before downgrading. Repairs lists legacy sensors left behind by earlier renames for explicit cleanup.
-- Migration retains dedicated calendar identities and normalizes legacy unlimited limits. Invalid stored templates make only the affected sensor unavailable. Rich collection lists remain available to cards while recorder history retains the small date and day attributes.
+- Migration retains dedicated calendar identities and preserves conflicting customization keys instead of discarding their settings. Negative legacy lead time and pickup indexes normalize to zero with a per-sensor warning; negative indexes previously selected from the end, so review those sensors after upgrading. Preview display languages retain their text through custom templates.
+- Invalid stored templates make only the affected sensor unavailable. Generic `upcoming` retains its date-object and `daysTo` interface for local templates. Rich `upcoming` and `collections` lists stay available live but are excluded from new recorder history rows, including generic details; date and day attributes remain recorded.
+- Raw provider labels participate in customization matching even on sources without `carry_raw_label`; existing glob customizations can therefore match more events. Combined rounds retain all categories of the selected bin's earliest pickup.
+- Options saves preserve concurrent native-control edits and discovered sensors. Display-only reloads reuse the cached schedule even when a provider fetch is due. Native text controls follow HA's 255-character limit; longer saved values remain intact and can be edited in integration options.
 
 ### Deprecated
 

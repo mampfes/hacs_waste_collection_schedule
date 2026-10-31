@@ -145,9 +145,7 @@ class CollectionAggregator:
                 # for next-of-each lists, including bins collected on one day.
                 identity = (
                     (entry._identity_key, entry._bin_identity)
-                    if preserve_bins
-                    else entry._bin_identity
-                    if unique_types
+                    if preserve_bins or unique_types
                     else entry._identity_key
                 )
                 key = (entry.date, identity or entry.waste_type.id)
@@ -206,12 +204,15 @@ class CollectionAggregator:
         entries.sort(key=lambda e: e.date)
 
         if unique_types:
+            first_dates: dict[str, date] = {}
             seen = set()
             unique = []
             for entry in entries:
                 key = entry._bin_identity
-                if key not in seen:
-                    seen.add(key)
+                first_date = first_dates.setdefault(key, entry.date)
+                constituent = (key, entry.waste_type.id)
+                if entry.date == first_date and constituent not in seen:
+                    seen.add(constituent)
                     unique.append(entry)
             entries = unique
 

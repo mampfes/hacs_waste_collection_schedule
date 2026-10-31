@@ -73,6 +73,7 @@ class Collection:
         self._waste_type = waste_type
         self._source_color = normalize_color(color)
         self._color_override: str | None = None
+        self._color_override_source = "customize"
         self._type_override: str | None = None
         self._icon_override: str | None = None
         self._picture: str | None = None
@@ -117,16 +118,17 @@ class Collection:
     @property
     def color_source(self) -> str:
         if self._color_override is not None:
-            return "customize"
+            return self._color_override_source
         return "source" if self._source_color is not None else "default"
 
     def set_source_color(self, color: str | None):
         """Attach a provider's display color without changing the global type."""
         self._source_color = normalize_color(color)
 
-    def set_color(self, color: str | None):
+    def set_color(self, color: str | None, *, source: str = "customize"):
         """Set or clear a user customization, preserving the source default."""
         self._color_override = normalize_color(color)
+        self._color_override_source = source
 
     @property
     def picture(self):
