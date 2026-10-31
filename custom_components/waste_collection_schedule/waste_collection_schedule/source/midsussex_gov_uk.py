@@ -8,12 +8,7 @@ from bs4 import BeautifulSoup
 from waste_collection_schedule import date_parsers, parsers, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
-from waste_collection_schedule.config_params import (
-    alternatives,
-    house_number,
-    postcode,
-    street,
-)
+from waste_collection_schedule.config_params import house_number, postcode, street
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.transformers import HtmlTransformer
 
@@ -26,7 +21,7 @@ START_URL = urljoin(BASE_URL, "mop.php")
 
 
 def _number(params: dict) -> str:
-    return (params.get("number") or params.get("house_number") or "").strip()
+    return (params.get("number") or "").strip()
 
 
 def _track(response, *_, **__) -> str:
@@ -53,9 +48,8 @@ def _property(response, track, **params) -> str:
     for link in links:
         if wanted in link.get_text(strip=True).upper():
             return urljoin(BASE_URL, link["href"])
-    argument = "number" if params.get("number") else "house_number"
     raise SourceArgumentNotFoundWithSuggestions(
-        argument, _number(params), [link.get_text(strip=True) for link in links]
+        "number", _number(params), [link.get_text(strip=True) for link in links]
     )
 
 
@@ -88,8 +82,7 @@ class Source(BaseSource):
     PARAMS = (
         postcode(),
         street(),
-        # ``house_number`` is the older name of ``number``; both still work.
-        alternatives([house_number("number")], [house_number("house_number")]),
+        house_number("number"),
     )
 
     HOWTO: ClassVar[dict] = {
@@ -98,7 +91,8 @@ class Source(BaseSource):
             "number (or business name) as they appear in the council's "
             "collection search. Since the v3 pipeline migration, waste types "
             "use canonical, localised names. Update filters, automations and "
-            "customisations using the old labels."
+            "customisations using the old labels. The old `house_number` "
+            "argument is gone; use `number` instead."
         ),
     }
 
