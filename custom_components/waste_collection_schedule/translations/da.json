@@ -19121,6 +19121,28 @@
         },
         "data_description": {}
       },
+      "args_raywhelan_ie": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "calendar": "Calendar",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_raywhelan_ie": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "calendar": "Calendar",
+          "day": "Day"
+        },
+        "data_description": {}
+      },
       "args_junker_app": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",

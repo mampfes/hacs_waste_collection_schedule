@@ -3198,6 +3198,7 @@ If you already have enough information for your municipality/region, you are ver
 
 - [Greyhound Recycling](/doc/source/greyhound_ie.md) / greyhound.ie
 - [Panda Waste](/doc/source/panda_ie.md) / panda.ie
+- [Ray Whelan](/doc/source/raywhelan_ie.md) / raywhelan.ie
 </details>
 
 <details>

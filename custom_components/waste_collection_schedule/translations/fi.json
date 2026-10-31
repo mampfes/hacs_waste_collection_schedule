@@ -19126,6 +19126,28 @@
         },
         "data_description": {}
       },
+      "args_raywhelan_ie": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "calendar": "Calendar",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_raywhelan_ie": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "calendar": "Calendar",
+          "day": "Day"
+        },
+        "data_description": {}
+      },
       "args_junker_app": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",

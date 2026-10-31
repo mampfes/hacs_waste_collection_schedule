@@ -23802,6 +23802,12 @@
       "module": "panda_ie",
       "default_params": {},
       "id": "panda_ie"
+    },
+    {
+      "title": "Ray Whelan",
+      "module": "raywhelan_ie",
+      "default_params": {},
+      "id": "raywhelan_ie"
     }
   ],
   "Italy": [

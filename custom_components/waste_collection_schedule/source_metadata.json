@@ -4269,6 +4269,13 @@
     },
     "urls": {}
   },
+  "raywhelan_ie": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/raywhelan_ie.md",
+    "howto": {
+      "en": "Open https://www.raywhelan.ie/ and choose Collection Calendars. Select the GB or T calendar assigned to your route and enter your usual collection day. Ask Ray Whelan if you do not know your route. Only the recycling dates in the blue weeks are supported. The PDFs do not give dated general-waste or organic collections, or specific holiday replacements; check provider notices for changes."
+    },
+    "urls": {}
+  },
   "junker_app": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/junker_app.md",
     "howto": {},
