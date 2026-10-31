@@ -47,6 +47,8 @@ import requests as _plain_requests
 from bs4 import BeautifulSoup, Tag
 from curl_cffi.requests import RequestsError as _CurlRequestsError
 
+from waste_collection_schedule import tls
+
 if TYPE_CHECKING:
     from curl_cffi import requests as _cffi_requests
 
@@ -1867,6 +1869,13 @@ class Request(_BaseRetriever):
         raise_for_status: raise on an error status (default). Off for a
             provider whose error status is itself the answer a ``pick`` reads.
         timeout: request timeout in seconds.
+        verify: TLS verification. ``True`` (default) verifies against the
+            session's trust store; a path uses that CA bundle
+            (:func:`tls.ca_bundle`); :data:`tls.AIA` verifies normally and,
+            for a host that omits its intermediate certificate, completes the
+            chain from the leaf's AIA ``caIssuers`` URL and retries once (see
+            :mod:`waste_collection_schedule.tls`). Never ``False`` in a new
+            source.
     """
 
     def __init__(
@@ -1890,6 +1899,7 @@ class Request(_BaseRetriever):
         encoding: str | None = None,
         raise_for_status: bool = True,
         timeout: int = 30,
+        verify: tls.Verify = True,
     ):
         if method.upper() not in ("GET", "POST"):
             raise ValueError(f"unknown Request method {method!r}: expected GET or POST")
@@ -1913,6 +1923,7 @@ class Request(_BaseRetriever):
         self.encoding = encoding
         self.raise_for_status = raise_for_status
         self.timeout = timeout
+        self.verify = verify
 
     def __call__(self, source: BaseSource, *args: Any) -> Any:
         """The response, or ``None`` when ``when`` ruled the request out."""
@@ -1943,14 +1954,16 @@ class Request(_BaseRetriever):
         }
         url = _with(self.url, args, params)
         if self.method == "POST":
-            response = source.session.post(
+            response = tls.send(
+                source.session.post,
                 url,
+                self.verify,
                 data=_with(self.data, args, params),
                 json=_with(self.json, args, params),
                 **kwargs,
             )
         else:
-            response = source.session.get(url, **kwargs)
+            response = tls.send(source.session.get, url, self.verify, **kwargs)
         if self.raise_for_status:
             response.raise_for_status()
         return response
@@ -2027,7 +2040,7 @@ class Lookup:
         **request: the remaining :class:`Request` arguments (``method``,
             ``params``, ``data``, ``json``, ``headers``, ``cookies``,
             ``allow_redirects``, ``retry_if``, ``retries``, ``retry_delay``,
-            ``encoding``, ``raise_for_status``, ``timeout``).
+            ``encoding``, ``raise_for_status``, ``timeout``, ``verify``).
     """
 
     def __init__(

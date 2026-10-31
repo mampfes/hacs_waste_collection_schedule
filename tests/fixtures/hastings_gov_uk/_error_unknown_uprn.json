@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-10-31",
+  "interactions": [
+    {
+      "key": "POST https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService 91130aa6f4",
+      "method": "POST",
+      "url": "https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService",
+      "final_url": "https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService",
+      "body": "{\"body\":{\"Uprn\":\"999999999999\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private, max-age=0",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET,POST",
+        "access-control-allow-headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+        "date": "Sat, 31 Oct 2026 07:45:54 GMT",
+        "content-length": "10"
+      },
+      "content_b64": "eyJkIjpudWxsfQ=="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'uprn' with the value '999999999999', no collections found, please check this value is correct."
+  }
+}
