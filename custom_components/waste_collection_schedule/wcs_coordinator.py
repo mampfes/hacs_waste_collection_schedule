@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 import logging
 from random import randrange
 from typing import Any
@@ -12,13 +13,21 @@ from homeassistant.helpers.event import (
     async_call_later,
     async_track_time_change,
 )
+from homeassistant.helpers.storage import Store
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from . import const
-from .waste_collection_schedule import CollectionAggregator, SourceShell
+from .waste_collection_schedule import Collection, CollectionAggregator, SourceShell
 from .waste_collection_schedule.service.DeviceKeyStore import get_device_key_store
 
 _LOGGER = logging.getLogger(__name__)
+
+CACHE_STORAGE_VERSION = 1
+
+
+def cache_store(hass: HomeAssistant, entry_id: str) -> Store:
+    """Return the store holding the last successfully fetched entries."""
+    return Store(hass, CACHE_STORAGE_VERSION, f"{const.DOMAIN}.cache.{entry_id}")
 
 
 class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
@@ -48,6 +57,7 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     ):
         self._hass = hass
         self._shell = source_shell
+        self._store = cache_store(hass, config_entry.entry_id)
         self._aggregator = CollectionAggregator([source_shell])
         self._separator = separator
         fetch_time_new = (
@@ -84,11 +94,38 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""
         if not await self._fetch_now():
-            raise UpdateFailed(
-                f"Unable to fetch waste collection data from {self.shell.title}"
+            if not await self._async_restore_cache():
+                raise UpdateFailed(
+                    f"Unable to fetch waste collection data from {self.shell.title}"
+                )
+            _LOGGER.warning(
+                "Unable to fetch waste collection data from %s, using cached data from %s",
+                self.shell.title,
+                self.shell.refreshtime,
             )
         self._async_track_timers()
         return {}
+
+    async def _async_restore_cache(self) -> bool:
+        """Restore the entries of the last successful fetch, e.g. after a restart."""
+        data = await self._store.async_load()
+        # a reconfigured entry keeps its ID; never show the old address's dates
+        if not data or data.get("source_hash") != self._source_hash:
+            return False
+        # cached entries already have customize and day offset applied
+        self._shell._refreshtime = datetime.datetime.fromisoformat(data["refreshtime"])
+        self._shell._entries = [
+            Collection(
+                date=datetime.date.fromisoformat(e["date"]),
+                t=e["type"],
+                icon=e.get("icon"),
+                picture=e.get("picture"),
+                location=e.get("location"),
+                description=e.get("description"),
+            )
+            for e in data["entries"]
+        ]
+        return True
 
     async def async_shutdown(self) -> None:
         """Cancel scheduled coordinator callbacks."""
@@ -148,6 +185,11 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         return self._shell
 
     @property
+    def _source_hash(self) -> str:
+        # hashed, as source args can contain credentials
+        return hashlib.sha256(self.shell.unique_id.encode()).hexdigest()
+
+    @property
     def separator(self):
         return self._separator
 
@@ -198,6 +240,13 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             fetch_succeeded = await self._hass.async_add_executor_job(self.shell.fetch)
             if fetch_succeeded:
                 self._last_fetch_date = today
+                await self._store.async_save(
+                    {
+                        "source_hash": self._source_hash,
+                        "refreshtime": self.shell.refreshtime.isoformat(),
+                        "entries": self.shell._entries,
+                    }
+                )
 
                 # Save device keys to storage after fetch
                 device_store = get_device_key_store()

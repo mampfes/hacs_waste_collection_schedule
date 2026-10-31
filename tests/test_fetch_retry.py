@@ -1,7 +1,8 @@
 import asyncio
+import json
 import os
 import sys
-from datetime import date
+from datetime import date, datetime
 from typing import Any, cast
 from unittest.mock import AsyncMock, Mock, patch
 
@@ -67,6 +68,9 @@ def test_coordinator_allows_same_day_retry_after_failed_fetch() -> None:
         def __init__(self) -> None:
             self.fetch_results = iter((False, True))
             self.fetch_count = 0
+            self.refreshtime = datetime.now()
+            self._entries: list = []
+            self.unique_id = "test-source"
 
         def fetch(self) -> bool:
             self.fetch_count += 1
@@ -79,6 +83,7 @@ def test_coordinator_allows_same_day_retry_after_failed_fetch() -> None:
         coordinator._last_fetch_date = None
         coordinator._fetch_interval_days = 1
         coordinator._update_sensors_callback = lambda *_: asyncio.sleep(0)
+        coordinator._store = AsyncMock()
 
         with patch.object(wcs_coordinator, "get_device_key_store", return_value=None):
             await coordinator._fetch_now()
@@ -102,6 +107,8 @@ def test_coordinator_first_refresh_reports_failed_fetch() -> None:
 
     coordinator = object.__new__(wcs_coordinator.WCSCoordinator)
     coordinator._shell = cast(Any, type("Shell", (), {"title": "Test source"})())
+    coordinator._store = AsyncMock()
+    coordinator._store.async_load.return_value = None
 
     async def _run() -> None:
         with (
@@ -121,6 +128,8 @@ def test_coordinator_starts_timers_only_after_successful_fetch() -> None:
 
     coordinator = object.__new__(wcs_coordinator.WCSCoordinator)
     coordinator._shell = cast(Any, type("Shell", (), {"title": "Test source"})())
+    coordinator._store = AsyncMock()
+    coordinator._store.async_load.return_value = None
     coordinator._async_track_timers = Mock()
 
     async def _run() -> None:
@@ -134,6 +143,84 @@ def test_coordinator_starts_timers_only_after_successful_fetch() -> None:
         with patch.object(coordinator, "_fetch_now", AsyncMock(return_value=True)):
             await coordinator._async_update_data()
         coordinator._async_track_timers.assert_called_once_with()
+
+    asyncio.run(_run())
+
+
+def test_coordinator_restores_cached_entries_when_first_fetch_fails() -> None:
+    from custom_components.waste_collection_schedule import wcs_coordinator
+
+    class _Hass:
+        @staticmethod
+        async def async_add_executor_job(target):
+            return target()
+
+    class _Store:
+        data = None
+
+        async def async_save(self, data) -> None:
+            self.data = json.loads(json.dumps(data))
+
+        async def async_load(self):
+            return self.data
+
+    class _Source:
+        def __init__(self) -> None:
+            self.should_fail = False
+
+        def fetch(self):
+            if self.should_fail:
+                raise RuntimeError("503 Service Unavailable")
+            return [
+                Collection(date=date(2026, 7, 20), t="Paper", location="Main St"),
+                Collection(date=date(2026, 7, 27), t="Glass", icon="mdi:bottle-wine"),
+            ]
+
+    def _coordinator(source, store, unique_id="test[('password', 'hunter2')]"):
+        coordinator = object.__new__(wcs_coordinator.WCSCoordinator)
+        coordinator._hass = _Hass()
+        coordinator._shell = SourceShell(
+            source=source,
+            customize={},
+            title="Test source",
+            description="Test source",
+            url=None,
+            calendar_title=None,
+            unique_id=unique_id,
+            day_offset=0,
+        )
+        coordinator._store = store
+        coordinator._last_fetch_date = None
+        coordinator._fetch_interval_days = 1
+        coordinator._update_sensors_callback = lambda *_: asyncio.sleep(0)
+        coordinator._async_track_timers = Mock()
+        return coordinator
+
+    async def _run() -> None:
+        store = _Store()
+        source = _Source()
+        with patch.object(wcs_coordinator, "get_device_key_store", return_value=None):
+            first = _coordinator(source, store)
+            await first._async_update_data()
+            assert "hunter2" not in json.dumps(store.data)
+
+            # simulate a restart while the provider is down
+            source.should_fail = True
+            restarted = _coordinator(source, store)
+            await restarted._async_update_data()
+
+            # a cache written for other source args must not be used
+            reconfigured = _coordinator(source, store, unique_id="other-address")
+            with pytest.raises(wcs_coordinator.UpdateFailed):
+                await reconfigured._async_update_data()
+
+        assert restarted.shell._entries == first.shell._entries
+        assert [e.date for e in restarted.shell._entries] == [
+            date(2026, 7, 20),
+            date(2026, 7, 27),
+        ]
+        assert restarted.shell.refreshtime == first.shell.refreshtime
+        restarted._async_track_timers.assert_called_once_with()
 
     asyncio.run(_run())
 
