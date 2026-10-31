@@ -32,6 +32,7 @@ sys.path.insert(
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from doc_generator import render_source_doc
+from sensor_translations import apply_sensor_translations
 
 
 def _load_source(source_id: str):
@@ -76,6 +77,10 @@ def test_ui_template_has_all_common_keys_and_matching_placeholders(lang):
     translated = json.loads(
         (root / f"translation_templates/{lang}.json").read_text(encoding="utf-8")
     )
+    # Compare the generated common UI on both sides, rather than a generated
+    # English file against a seed which has not had the sensor strings applied.
+    apply_sensor_translations(english, "en")
+    apply_sensor_translations(translated, lang)
     english["config"]["step"] = {
         key: value
         for key, value in english["config"]["step"].items()

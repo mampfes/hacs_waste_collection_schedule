@@ -426,8 +426,11 @@ def test_generated_common_translations_cover_project_language_contract():
         apply_sensor_translations(content, path.stem)
         assert "pl" not in content["selector"]["language"]["options"]
         assert content["entity"]["button"]["create_sensor"]["name"].count("{name}") == 1
-        assert (
-            content["issues"]["legacy_sensors"]["description"].count("{entities}") == 1
-        )
+        repair = content["issues"]["legacy_sensors"]
+        # HA's issue schema makes description and fix_flow mutually exclusive.
+        assert "description" not in repair
+        confirmation = repair["fix_flow"]["step"]["confirm"]["description"]
+        assert confirmation.count("{entities}") == 1
+        assert COMMON_LABELS[path.stem]["confirm_description"] in confirmation
         assert content["exceptions"]["type_unavailable"]["message"]
         json.dumps(content)
