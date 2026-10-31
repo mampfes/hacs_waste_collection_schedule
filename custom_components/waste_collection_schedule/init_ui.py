@@ -168,6 +168,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         const.DOMAIN, "fetch_data", get_fetch_all_service(hass), schema=vol.Schema({})
     )
 
+    if reuse_schedule:
+        # Keep cached entities available while retrying any due fetch. The entry
+        # owns cancellation on unload; _fetch_now honors the fetch interval.
+        entry.async_create_background_task(
+            hass, coordinator._fetch_now(), "Waste collection refresh after reload"
+        )
+
     return True
 
 

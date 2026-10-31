@@ -1,6 +1,5 @@
 """Upgrade name-based sensors without replacing their registry entities."""
 
-import json
 import logging
 from hashlib import sha256
 
@@ -14,31 +13,6 @@ from .waste_collection_schedule.source_shell import _load_source_class
 from .waste_collection_schedule.waste_types import ALL_TYPES
 
 _LOGGER = logging.getLogger(__name__)
-
-
-def _preview_default_template(language, separator):
-    """Retain shipped preview text without adding a supported UI locale."""
-    today, tomorrow, prefix, suffix = {
-        "en": ("today", "tomorrow", "in ", " days"),
-        "de": ("heute", "morgen", "in ", " Tagen"),
-        "fr": ("aujourd'hui", "demain", "dans ", " jours"),
-        "it": ("oggi", "domani", "tra ", " giorni"),
-        "nl": ("vandaag", "morgen", "over ", " dagen"),
-        "pl": ("dzisiaj", "jutro", "za ", " dni"),
-    }.get(language, ("today", "tomorrow", "in ", " days"))
-    return (
-        "{{ value.types | join("
-        + json.dumps(separator)
-        + ") }} {{ "
-        + json.dumps(today)
-        + " if value.daysTo == 0 else "
-        + json.dumps(tomorrow)
-        + " if value.daysTo == 1 else "
-        + json.dumps(prefix)
-        + " ~ value.daysTo ~ "
-        + json.dumps(suffix)
-        + " }}"
-    )
 
 
 def migrate_records(
@@ -140,13 +114,6 @@ def migrate_records(
                 old["name"],
                 normalized,
             )
-        if "preset_language" in old and not value:
-            record.state_format = "custom"
-            record.value_template = _preview_default_template(
-                old["preset_language"], options.get("separator", ", ")
-            )
-            if old["preset_language"] in ("en", "de", "fr", "it", "nl"):
-                record.language = old["preset_language"]
         if origin != "custom":
             record.id = catalogue_id(origin)
         else:

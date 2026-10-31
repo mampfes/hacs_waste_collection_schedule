@@ -68,7 +68,7 @@ Open **Configure → Sensors** to enable or disable predefined sensors, edit a s
 
 State text, language, date format, details, count, lead time, include/exclude filters, and **Each type only once** are ordinary settings. **Advanced settings** opens a separate form for pickup index, custom templates, and a sensor color override. Existing templates remain custom until you explicitly replace them. Clearing a template or color restores built-in behavior.
 
-**Device controls** is optional and off by default. It adds a device for each sensor and native select, number, switch, text, and button controls. These edit the same saved records as the options editor. The source device offers creation buttons for predefined sensors. Sensor-only edits update in place. When Home Assistant reloads an entry after enabling an entity, an unchanged source reuses its in-memory fetched schedule.
+**Device controls** is optional and off by default. It adds a device for each sensor and native select, number, switch, text, and button controls. These edit the same saved records as the options editor. The source device offers creation buttons for predefined sensors. Sensor-only edits update in place. Reloading an unchanged source reuses its in-memory schedule and retries a due fetch in the background. A failed attempt leaves cached sensors available. This also applies after re-enabling an entry or an entity.
 
 On the device page, a count of `0` means unlimited. Lead time uses `-1` for unlimited and `0` for today only; positive values limit the number of days shown.
 
@@ -82,7 +82,7 @@ Existing UI sensors migrate automatically to config-entry version 4. Names, enti
 
 Older integration versions cannot load a version-4 entry. Restore a backup before downgrading. YAML configuration does not require migration.
 
-Negative legacy lead time and pickup indexes normalize to zero and produce a warning naming the affected sensor. Negative indexes previously selected from the end of the schedule; review those sensors after migration. Conflicting customization keys retain their separate settings and calendar identities. Default localized text saved by the older device-controls preview is retained as a custom template.
+Negative legacy lead time and pickup indexes normalize to zero and produce a warning naming the affected sensor. Negative indexes previously selected from the end of the schedule; review those sensors after migration. Conflicting customization keys retain their separate settings and calendar identities.
 
 ### GUI limitations
 
@@ -315,6 +315,10 @@ If you want to trigger a manual update of the sources, you can call the service:
 `waste_collection_schedule.fetch_data`
 
 Normally the configuration option 'fetch_time' is used to do this periodically.
+
+Manual Reload and `fetch_data` honor `fetch_interval_days`: they skip the provider request if the last successful fetch is still inside that interval. When a fetch is due, reloading an unchanged UI source starts the request in the background while its cached schedule remains available. A failed request does not advance the last successful fetch date, so a later Reload or `fetch_data` can retry.
+
+Generic `upcoming` attributes contain `Collection` objects for local templates such as `.daysTo` and `.date.strftime(...)`. Jinja's `to_json` filter cannot serialize those objects directly; use the REST API for JSON records or select the required scalar fields in your template.
 
 You can also configure `fetch_interval_days` in the Home Assistant UI:
 `Settings` → `Devices & Services` → `Waste Collection Schedule` → `Configure`.

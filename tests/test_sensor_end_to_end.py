@@ -1,9 +1,12 @@
 """Consumer and concurrent-edit contracts across the complete sensor workflow."""
 
+import asyncio
 import json
 from datetime import date, timedelta
+from threading import Event
 
 import pytest
+from homeassistant.config_entries import ConfigEntryDisabler
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.json import json_bytes
 from homeassistant.helpers.template import Template
@@ -16,7 +19,6 @@ from waste_collection_schedule.waste_types import GLASS, PAPER
 
 from custom_components.waste_collection_schedule.const import DOMAIN
 from custom_components.waste_collection_schedule.init_ui import async_migrate_entry
-from custom_components.waste_collection_schedule.sensor_migration import migrate_records
 from custom_components.waste_collection_schedule.sensor_model import SensorConfig
 from custom_components.waste_collection_schedule.sensor_options import SensorOptionsFlow
 
@@ -248,55 +250,85 @@ async def test_long_saved_template_is_preserved_and_native_control_recovers(
 
 
 @pytest.mark.asyncio
-async def test_due_display_reload_reuses_schedule_while_provider_is_down(
-    running_entry, ha
+@pytest.mark.parametrize("trigger", ["reload", "re-enable", "controls"])
+@pytest.mark.parametrize("fetch_state", ["fresh", "due-success", "due-failure"])
+async def test_cached_reload_retries_due_fetch_without_losing_sensors(
+    running_entry, ha, trigger, fetch_state
 ):
     entry, source = running_entry
     coordinator = ha.data[DOMAIN][entry.entry_id]
-    coordinator._last_fetch_date = date.today() - timedelta(days=2)
+    last_fetch = date.today() - timedelta(days=2 if fetch_state != "fresh" else 0)
+    coordinator._last_fetch_date = last_fetch
+    eid = sensor_id(ha, entry, "type_paper")
+    assert ha.states.get(eid).attributes["date"] == "2099-01-01"
 
-    def fail():
+    def fetch():
         source.fetch_count += 1
-        raise RuntimeError("Synthetic provider outage")
+        if fetch_state == "due-failure":
+            raise RuntimeError("Synthetic provider outage")
+        return [Collection(date=date(2099, 1, 2), waste_type=PAPER)]
 
-    source.fetch = fail
-    ha.config_entries.async_update_entry(
-        entry, options={**entry.options, "device_controls": True}
-    )
-    await ha.async_block_till_done()
-    assert source.fetch_count == 1
+    source.fetch = fetch
+    if trigger == "reload":
+        assert await ha.config_entries.async_reload(entry.entry_id)
+    elif trigger == "re-enable":
+        await ha.config_entries.async_set_disabled_by(
+            entry.entry_id, ConfigEntryDisabler.USER
+        )
+        await ha.config_entries.async_set_disabled_by(entry.entry_id, None)
+    else:
+        ha.config_entries.async_update_entry(
+            entry, options={**entry.options, "device_controls": True}
+        )
+    await ha.async_block_till_done(wait_background_tasks=True)
+    assert source.fetch_count == (1 if fetch_state == "fresh" else 2)
     assert entry.state.value == "loaded"
     current = ha.data[DOMAIN][entry.entry_id]
-    assert current._last_fetch_date == date.today() - timedelta(days=2)
+    assert sensor_id(ha, entry, "type_paper") == eid
+    assert ha.states.get(eid).attributes["date"] == (
+        "2099-01-02" if fetch_state == "due-success" else "2099-01-01"
+    )
+    assert current._last_fetch_date == (
+        date.today() if fetch_state == "due-success" else last_fetch
+    )
     assert current._fetch_tracker is not None
-    assert await current._fetch_now() is False
-    assert source.fetch_count == 2
+    if fetch_state == "due-failure":
+        assert await current._fetch_now() is False
+        assert source.fetch_count == 3
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("days", [0, 1, 3])
-@pytest.mark.parametrize(
-    "language,expected",
-    [
-        ("de", ("Paper heute", "Paper morgen", "Paper in 3 Tagen")),
-        ("pl", ("Paper dzisiaj", "Paper jutro", "Paper za 3 dni")),
-    ],
-)
-async def test_preview_default_language_retains_exact_text(
-    ha, language, expected, days
+async def test_due_reload_fetch_does_not_block_setup_and_is_cancelled_on_unload(
+    running_entry, ha
 ):
-    from waste_collection_schedule.collection import CollectionGroup
+    entry, source = running_entry
+    ha.data[DOMAIN][entry.entry_id]._last_fetch_date = date.today() - timedelta(days=2)
+    eid = sensor_id(ha, entry, "type_paper")
+    started = asyncio.Event()
+    release = Event()
 
-    record = migrate_records(
-        {"sensors": [{"name": "Preview", "preset_language": language}]}
-    )["sensors"][0]
-    group = CollectionGroup.create(
-        [Collection(date=date.today() + timedelta(days=days), waste_type=PAPER)]
-    )
-    result = Template(
-        record["value_template"], ha
-    ).async_render_with_possible_json_value(group, None)
-    assert result == expected[(0, 1, 3).index(days)].replace("Paper", PAPER.names["en"])
+    def fetch():
+        source.fetch_count += 1
+        ha.loop.call_soon_threadsafe(started.set)
+        if not release.wait(10):
+            raise TimeoutError("Test did not release provider")
+        return [Collection(date=date(2099, 1, 2), waste_type=PAPER)]
+
+    source.fetch = fetch
+    try:
+        assert await asyncio.wait_for(ha.config_entries.async_reload(entry.entry_id), 5)
+        await asyncio.wait_for(started.wait(), 5)
+        current = ha.data[DOMAIN][entry.entry_id]
+        assert ha.states.get(eid).attributes["date"] == "2099-01-01"
+        assert source.fetch_count == 2
+        assert await ha.config_entries.async_unload(entry.entry_id)
+    finally:
+        release.set()
+        await ha.async_block_till_done(wait_background_tasks=True)
+    # An unloaded background fetch cannot advance the old coordinator's state.
+    assert current._last_fetch_date == date.today() - timedelta(days=2)
+    assert current._fetch_tracker is None
+    assert ha.states.get(eid).state == "unavailable"
 
 
 @pytest.mark.asyncio
