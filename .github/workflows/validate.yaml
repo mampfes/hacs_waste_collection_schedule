@@ -92,7 +92,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest pytest-xdist freezegun -r requirements.txt "${{ matrix.homeassistant_spec }}" "${{ matrix.josepy_spec }}"
+          pip install pytest pytest-asyncio pytest-xdist freezegun -r requirements.txt "${{ matrix.homeassistant_spec }}" "${{ matrix.josepy_spec }}"
       - name: Test components with pytest
         run: |
           python -c "from custom_components.waste_collection_schedule import config_flow"

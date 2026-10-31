@@ -42,26 +42,17 @@ from waste_collection_schedule.config_params import (  # isort:skip
 from waste_collection_schedule.source_shell import SourceShell  # isort:skip
 from custom_components.waste_collection_schedule.config_flow import (  # isort:skip
     WasteCollectionConfigFlow,
-    WasteCollectionOptionsFlow,
     _build_schema_from_params,
     _is_new_style_source,
 )
 from custom_components.waste_collection_schedule.const import (  # isort:skip
-    CONF_COLLECTION_TYPES,
-    CONF_CUSTOMIZE,
-    CONF_SENSOR_MODE,
     CONF_SENSORS,
     CONF_SOURCE_CALENDAR_TITLE,
-    SENSOR_MODE_DAYS_TO,
-    SENSOR_MODE_LAST_UPDATE,
 )
 from custom_components.waste_collection_schedule.default_sensors import (  # isort:skip
-    DAYS_TO_NAME,
     KIND_LEGACY,
     KIND_NEW,
-    LAST_UPDATE_NAME,
     NEW_SENSOR_NAMES,
-    NEXT_COLLECTION_NAME,
     build_default_sensors,
 )
 
@@ -141,31 +132,6 @@ def test_alternatives_group_members_render_their_widgets() -> None:
     assert schema({}) == {}
     assert schema({"region": "A"}) == {"region": "A"}
     assert schema({"flag": True}) == {"flag": True}
-
-
-def test_options_flow_gathers_sensor_collection_types() -> None:
-    # #6944: sensors store waste types under CONF_COLLECTION_TYPES, but the
-    # options flow read CONF_TYPE, so configured sensor types were never
-    # gathered for the edit-sensor list (only customisation keys were).
-    class _Entry:
-        def __init__(self) -> None:
-            self.options = {
-                CONF_CUSTOMIZE: {"Glass": {}},
-                CONF_SENSORS: [
-                    {
-                        CONF_NAME: "s1",
-                        CONF_COLLECTION_TYPES: ["General Waste", "Recycling"],
-                    }
-                ],
-            }
-
-    flow = object.__new__(WasteCollectionOptionsFlow)
-    flow._entry = cast(Any, _Entry())
-
-    types = set(flow.get_types_of_sensors_and_customizations())
-
-    assert {"General Waste", "Recycling"} <= types  # sensor types now included
-    assert "Glass" in types  # customisation keys still included
 
 
 # --- #7142: a zero-argument pipeline source must render an empty form ---------
@@ -337,48 +303,6 @@ def test_shell_exposes_raw_labels_but_not_genuine_descriptions() -> None:
         assert shell.raw_labels == ["Container Restmuell"]
 
 
-def test_options_customize_dropdown_includes_raw_labels_not_sensors() -> None:
-    from custom_components.waste_collection_schedule import const
-    from custom_components.waste_collection_schedule.config_flow import (
-        WCSCoordinator,
-    )
-
-    shell = _shell(False)
-    shell.fetch()
-
-    coordinator = object.__new__(WCSCoordinator)
-    coordinator._shell = shell  # type: ignore[attr-defined]
-    coordinator._aggregator = type(  # type: ignore[attr-defined]
-        "_Agg", (), {"types": {"Restmuell", "Papier"}}
-    )()
-
-    from types import SimpleNamespace
-
-    entry = SimpleNamespace(entry_id="e1", options={}, data={})
-    hass = SimpleNamespace(
-        config=SimpleNamespace(language="en"),
-        data={const.DOMAIN: {"e1": coordinator}},
-    )
-
-    flow = object.__new__(WasteCollectionOptionsFlow)
-    flow._entry = cast(Any, entry)
-    flow.hass = cast(Any, hass)
-
-    result = asyncio.run(flow.async_step_init())
-    schema = result.get("data_schema")
-    assert schema is not None
-    selector = next(
-        v for k, v in schema.schema.items() if str(k.schema) == "customize_select"
-    )
-    values = {o["value"] for o in selector.config["options"]}
-    assert "Container Restmuell" in values
-    assert "Real ICS DESCRIPTION" not in values
-    assert {"Restmuell", "Papier"} <= values
-
-    # Sensor types come from the aggregator only: no raw labels.
-    assert "Container Restmuell" not in flow.get_types_of_sensors_and_customizations()
-
-
 # --- default sensors are optional and combine with custom sensors --------------
 
 
@@ -387,7 +311,7 @@ def _finish_options(kinds: list[str] | None, custom: list[dict]) -> list[dict]:
     flow._title = "t"
     flow._args_data = {}
     flow._options = {CONF_SENSORS: custom} if custom else {}
-    flow._auto_sensor_types = ["Paper", "Glass"]
+    flow._sensor_type_labels = {"paper": "Paper", "glass": "Glass"}
     if kinds is not None:
         flow._default_sensor_kinds = kinds
     captured: dict[str, Any] = {}
@@ -396,7 +320,7 @@ def _finish_options(kinds: list[str] | None, custom: list[dict]) -> list[dict]:
         captured.update(kwargs)
         return kwargs
 
-    flow.async_create_entry = _create_entry  # type: ignore[method-assign]
+    flow.async_create_entry = _create_entry  # type: ignore[method-assign,assignment]
     asyncio.run(flow.finish())
     return captured["options"].get(CONF_SENSORS, [])
 
@@ -424,23 +348,6 @@ def test_only_the_new_default_sensors() -> None:
 
 def test_default_sensors_can_be_switched_off() -> None:
     assert _finish_options([], []) == []
-
-
-def test_default_sensors_are_added_next_to_custom_sensors() -> None:
-    custom = [{CONF_NAME: "Mine", CONF_COLLECTION_TYPES: ["Paper"]}]
-    names = [s[CONF_NAME] for s in _finish_options([KIND_LEGACY], custom)]
-    assert names == ["Mine", "Paper", "Glass"]
-
-
-def test_custom_sensors_only_when_defaults_are_off() -> None:
-    custom = [{CONF_NAME: "Mine", CONF_COLLECTION_TYPES: ["Paper"]}]
-    assert [s[CONF_NAME] for s in _finish_options([], custom)] == ["Mine"]
-
-
-def test_a_custom_sensor_named_like_a_type_replaces_that_default() -> None:
-    custom = [{CONF_NAME: "Paper", CONF_COLLECTION_TYPES: ["Paper"]}]
-    names = [s[CONF_NAME] for s in _finish_options([KIND_LEGACY], custom)]
-    assert names == ["Paper", "Glass"]
 
 
 # ---------------------------------------------------------------------------
@@ -490,7 +397,7 @@ def _cascade_flow(source_name: str):
         shown.append(kwargs)
         return kwargs
 
-    flow.async_show_form = _show_form  # type: ignore[method-assign]
+    flow.async_show_form = _show_form  # type: ignore[method-assign,assignment]
     return flow, shown
 
 
@@ -595,7 +502,7 @@ def test_settled_cascade_levels_are_merged_back_into_the_submission() -> None:
         return {}, {}, {}
 
     flow._WasteCollectionConfigFlow__validate_args_user_input = _validate  # type: ignore[attr-defined]
-    flow.async_step_flow_type = lambda user_input=None: _done()  # type: ignore[method-assign]
+    flow.async_step_flow_type = lambda user_input=None: _done()  # type: ignore[method-assign,assignment]
 
     async def _done():
         return {"type": "done"}
@@ -999,130 +906,12 @@ def test_the_closing_step_labels_every_field_it_can_show() -> None:
         )
 
 
-def _options_flow(existing: list[dict]) -> tuple[WasteCollectionOptionsFlow, dict]:
-    """An options flow of an existing entry that already has ``existing`` sensors."""
-    from types import SimpleNamespace
-
-    from custom_components.waste_collection_schedule import const
-    from custom_components.waste_collection_schedule.config_flow import (
-        WCSCoordinator,
-    )
-
-    coordinator = object.__new__(WCSCoordinator)
-    coordinator._shell = cast(  # type: ignore[attr-defined]
-        Any, SimpleNamespace(calendar_title="Calendar", raw_labels=[])
-    )
-    coordinator._aggregator = type(  # type: ignore[attr-defined]
-        "_Agg", (), {"types": {"Restmuell", "Papier"}}
-    )()
-    entry = SimpleNamespace(
-        entry_id="e1", options={CONF_SENSORS: existing} if existing else {}, data={}
-    )
-    hass = SimpleNamespace(
-        config=SimpleNamespace(language="en"),
-        data={const.DOMAIN: {"e1": coordinator}},
-    )
-    flow = object.__new__(WasteCollectionOptionsFlow)
-    flow._entry = cast(Any, entry)
-    flow.hass = cast(Any, hass)
-    saved: dict[str, Any] = {}
-
-    def _create_entry(**kwargs: Any) -> dict:
-        saved.update(kwargs["data"])
-        return kwargs
-
-    flow.async_create_entry = _create_entry  # type: ignore[method-assign]
-    return flow, saved
-
-
-def _submit_options(existing: list[dict], **extra: Any) -> dict:
-    flow, saved = _options_flow(existing)
-    form = {
-        "calendar_title": "Calendar",
-        "separator": ", ",
-        "fetch_time": "01:00:00",
-        "fetch_interval_days": 1,
-        "random_fetch_time_offset": {"hours": 0, "minutes": 0, "seconds": 0},
-        "day_switch_time": "10:00:00",
-        "day_offset": 0,
-        "ignore_duplicates": False,
-        **extra,
-    }
-    asyncio.run(flow.async_step_init(form))
-    # Picking a sensor to edit shows its form first, so nothing is saved yet:
-    # the options built so far are what the next steps continue from.
-    return saved or flow._options
-
-
-def test_options_flow_adds_no_default_sensors_unless_asked() -> None:
-    flow, _ = _options_flow([])
-    result = asyncio.run(flow.async_step_init())
-    assert "data_schema" in result
-    schema = result["data_schema"]
-    assert schema is not None
-    marker, validator = _marker_and_validator(schema, "default_sensors")
-    assert marker.default() == []  # opening the options changes nothing
-    assert validator.config["multiple"] is True
-
-    saved = _submit_options([{CONF_NAME: "Mine", CONF_COLLECTION_TYPES: ["Papier"]}])
-    assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == ["Mine"]
-
-
-def test_options_flow_adds_only_the_missing_default_sensors() -> None:
-    per_type = build_default_sensors([KIND_LEGACY], ["Papier"])
-    saved = _submit_options(per_type, default_sensors=[KIND_LEGACY, KIND_NEW])
-    # Papier exists and stays untouched; the rest of the sets is added.
-    assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == [
-        "Papier",
-        "Restmuell",
-        *NEW_SENSOR_NAMES,
-    ]
-    assert saved[CONF_SENSORS][0] == per_type[0]
-    assert "default_sensors" not in saved  # a choice, not a stored option
-
-
-def test_options_flow_does_not_duplicate_a_sensor_picked_for_editing() -> None:
-    existing = build_default_sensors([KIND_NEW], [])
-    saved = _submit_options(
-        existing, default_sensors=[KIND_NEW], sensor_select=[NEXT_COLLECTION_NAME]
-    )
-    # The sensor is being edited (removed and re-added by the next step), so
-    # ticking the set must not add a second one under the same name.
-    assert [s[CONF_NAME] for s in saved[CONF_SENSORS]] == [
-        DAYS_TO_NAME,
-        LAST_UPDATE_NAME,
-    ]
-
-
-def test_editing_an_overview_sensor_keeps_its_mode() -> None:
-    existing = build_default_sensors([KIND_NEW], [])
-    flow, saved = _options_flow(existing)
-    form = {
-        "calendar_title": "Calendar",
-        "separator": ", ",
-        "fetch_time": "01:00:00",
-        "fetch_interval_days": 1,
-        "random_fetch_time_offset": {"hours": 0, "minutes": 0, "seconds": 0},
-        "day_switch_time": "10:00:00",
-        "day_offset": 0,
-        "ignore_duplicates": False,
-        "sensor_select": [DAYS_TO_NAME],
-    }
-    asyncio.run(flow.async_step_init(form))
-    # The sensor form has no mode field: submitting it must not turn the
-    # sensor into a plain one.
-    asyncio.run(flow.async_step_sensor({CONF_NAME: DAYS_TO_NAME}))
-
-    edited = next(s for s in saved[CONF_SENSORS] if s[CONF_NAME] == DAYS_TO_NAME)
-    assert edited[CONF_SENSOR_MODE] == SENSOR_MODE_DAYS_TO
-
-
 def _flow_type_schema_and_choice(submitted: dict | None):
     flow = object.__new__(WasteCollectionConfigFlow)
     flow._title = "t"
     flow._args_data = {}
     flow._options = {}
-    flow._auto_sensor_types = ["Paper"]
+    flow._sensor_type_labels = {"paper": "Paper"}
     captured: dict[str, Any] = {}
 
     def _show_form(**kwargs: Any) -> dict:
@@ -1133,8 +922,8 @@ def _flow_type_schema_and_choice(submitted: dict | None):
         captured["options"] = kwargs["options"]
         return kwargs
 
-    flow.async_show_form = _show_form  # type: ignore[method-assign]
-    flow.async_create_entry = _create_entry  # type: ignore[method-assign]
+    flow.async_show_form = _show_form  # type: ignore[method-assign,assignment]
+    flow.async_create_entry = _create_entry  # type: ignore[method-assign,assignment]
     asyncio.run(flow.async_step_flow_type(submitted))
     return captured
 
@@ -1157,61 +946,32 @@ def test_flow_type_choice_decides_which_default_sets_are_created() -> None:
     assert names({}) == ["Paper", *NEW_SENSOR_NAMES]  # untouched = both
 
 
-# --- build_default_sensors: one place decides what a default sensor is ---------
+# Catalogue creation is shared by setup and later enablement.
 
 
-def test_legacy_default_sensors_keep_their_exact_shape() -> None:
-    assert build_default_sensors([KIND_LEGACY], ["Paper"]) == [
-        {
-            CONF_NAME: "Paper",
-            "details_format": "upcoming",
-            CONF_COLLECTION_TYPES: ["Paper"],
-            "value_template": 'on {{value.date.strftime("%a")}}, {{value.date.strftime("%d.%m.%Y")}}',
-        }
-    ]
-
-
-def test_no_kind_builds_no_default_sensors() -> None:
-    assert build_default_sensors([], ["Paper", "Glass"]) == []
-
-
-def test_new_defaults_are_the_three_overview_sensors_over_all_types() -> None:
-    from jinja2 import Environment  # isort:skip
-
-    sensors = {s[CONF_NAME]: s for s in build_default_sensors([KIND_NEW], ["Paper"])}
-    assert list(sensors) == list(NEW_SENSOR_NAMES)
-    assert NEXT_COLLECTION_NAME == "Next collection"
-    for sensor in sensors.values():
-        assert CONF_COLLECTION_TYPES not in sensor  # no filter: every type counts
-        assert sensor["details_format"] == "hidden"
-
-    # Syntax only: HA's cv.template needs a running event loop on current HA.
-    Environment().parse(sensors[NEXT_COLLECTION_NAME]["value_template"])
-    assert CONF_SENSOR_MODE not in sensors[NEXT_COLLECTION_NAME]
-    assert sensors[DAYS_TO_NAME][CONF_SENSOR_MODE] == SENSOR_MODE_DAYS_TO
-    assert sensors[LAST_UPDATE_NAME][CONF_SENSOR_MODE] == SENSOR_MODE_LAST_UPDATE
-
-
-def test_new_defaults_do_not_depend_on_the_fetched_types() -> None:
-    assert [s[CONF_NAME] for s in build_default_sensors([KIND_NEW], [])] == list(
-        NEW_SENSOR_NAMES
+def test_predefined_sensors_have_stable_origins_and_semantic_defaults():
+    sensors = build_default_sensors([KIND_LEGACY, KIND_NEW], {"paper": "Paper"})
+    paper, upcoming, days, fetched = sensors
+    assert (
+        paper["id"],
+        paper["origin"],
+        paper["types"],
+        paper["state_format"],
+        paper["language"],
+    ) == ("type_paper", "type:paper", ["paper"], "relative", "auto")
+    assert (upcoming["id"], upcoming["state_format"], upcoming["types"]) == (
+        "next_collection",
+        "types",
+        [],
     )
+    assert days["kind"] == "days_to"
+    assert fetched["kind"] == "last_update"
 
 
-def test_legacy_and_new_defaults_combine() -> None:
-    names = [
-        s[CONF_NAME]
-        for s in build_default_sensors([KIND_LEGACY, KIND_NEW], ["Paper", "Glass"])
-    ]
-    assert names == ["Paper", "Glass", *NEW_SENSOR_NAMES]
-
-
-def test_an_existing_overview_sensor_is_not_duplicated() -> None:
-    existing = [{CONF_NAME: NEXT_COLLECTION_NAME}]
-    names = [s[CONF_NAME] for s in build_default_sensors([KIND_NEW], [], existing)]
-    assert names == [DAYS_TO_NAME, LAST_UPDATE_NAME]  # only the missing ones
-
-
-def test_building_defaults_twice_never_duplicates_a_sensor() -> None:
-    first = build_default_sensors([KIND_LEGACY], ["Paper", "Glass"])
-    assert build_default_sensors([KIND_LEGACY], ["Paper", "Glass"], first) == []
+def test_renamed_catalogue_sensor_is_not_created_again():
+    existing = build_default_sensors([KIND_LEGACY], {"paper": "Paper"})
+    existing[0]["name"] = "My blue bin"
+    assert build_default_sensors(
+        [KIND_LEGACY], {"paper": "Paper", "glass": "Glass"}, existing
+    )[0]["types"] == ["glass"]
+    assert build_default_sensors([KIND_LEGACY], {"paper": "Paper"}, existing) == []

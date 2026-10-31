@@ -10,6 +10,7 @@ happens in the same release as the deprecation.
 
 | Item | Kind | Deprecated in | Replacement | Target removal | Ref |
 |---|---|---|---|---|---|
+| `add_days_to` | sensor option | 3.0.0 | `daysTo` is always available; remove the option | next major | [#7705](https://github.com/mampfes/hacs_waste_collection_schedule/issues/7705) |
 | `newcastle_gov_uk` | source | 2.30.0 | shared ReCollect ICS source (area `NewcastleUponTyneUK`) | next major | [#6753](https://github.com/mampfes/hacs_waste_collection_schedule/pull/6753) |
 | `byron_nsw_gov_au` | source | 3.0.0 | shared `recyclecoach_com` source (`project_id: 592`, `district_id: BYSC`) | next major | n/a |
 | `east_ayrshire_gov_uk` | source | 3.0.0 | shared `recollect_net` source (area `EastAyrshireUK`, `service_id: waste`, `locale: en-GB`) | next major | n/a |
