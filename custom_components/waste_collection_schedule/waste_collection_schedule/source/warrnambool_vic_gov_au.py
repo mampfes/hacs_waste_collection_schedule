@@ -1,116 +1,83 @@
-import logging
-import re
-from datetime import datetime
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule import date_parsers, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import Compose, ExplodeList, RequireRecords
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Warrnambool City Council"
-DESCRIPTION = "Source for Warrnambool City Council waste collection."
-URL = "https://www.warrnambool.vic.gov.au"
-TEST_CASES = {
-    "Kiama Ave": {"street_address": "3 Kiama Ave WARRNAMBOOL VIC 3280"},
-    "Henna St": {"street_address": "13 Henna St WARRNAMBOOL VIC 3280"},
-}
+PAGE_URL = "https://www.warrnambool.vic.gov.au/kerbside-bin-collection"
+# The address field's own autocomplete, as declared on the page.
+AUTOCOMPLETE_URL = (
+    "https://www.warrnambool.vic.gov.au/views-autocomplete-filters/"
+    "wcc_bins_data/block_1/address/0"
+)
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "street_address": "Full street address including suburb and postcode, e.g. '3 Kiama Ave WARRNAMBOOL VIC 3280'",
+
+def _rounds(row, _source):
+    """``Wednesday 04 November - `` / ``Recycling, Glass`` -> one row per bin."""
+    date_text = row.select_one(".pickup_date").get_text(" ", strip=True)
+    date_text = date_text.rstrip(" -").split(" ", 1)[-1]  # drop the weekday
+    labels = row.select_one(".pickup_type").get_text(" ", strip=True)
+    return [(date_text, label.strip()) for label in labels.split(",") if label.strip()]
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Warrnambool City Council"
+    DESCRIPTION = "Source for Warrnambool City Council waste collection."
+    URL = "https://www.warrnambool.vic.gov.au"
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Kiama Ave": {"street_address": "3 Kiama Ave WARRNAMBOOL VIC 3280"},
+        "Henna St": {"street_address": "13 Henna St WARRNAMBOOL VIC 3280"},
     }
-}
+    PARAMS = (street_address("street_address"),)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            f"Search for your address on {PAGE_URL} and enter it exactly as the "
+            "address field suggests it, e.g. 3 Kiama Ave WARRNAMBOOL VIC 3280. Since "
+            "the v3 pipeline migration, waste types use canonical, localised names. "
+            "Update filters, automations and customisations using the old labels."
+        ),
+    }
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.GLASS,
+        wt.ORGANIC,
+    ]
 
-_LOGGER = logging.getLogger(__name__)
-
-BASE_URL = "https://wcdm-public.warrnambool.vic.gov.au"
-
-ICON_MAP = {
-    "Landfill": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "FOGO": Icons.BIO_KITCHEN,
-    "Glass": Icons.GLASS,
-}
-
-
-class Source:
-    def __init__(self, street_address: str):
-        self._street_address = street_address
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session(impersonate="chrome")
-
-        # Step 1: Search for address to get the zone code
-        r = session.get(
-            f"{BASE_URL}/wc_te_combine_cust_datalist.php",
-            params={
-                "cmd": "search",
-                "t": "wc_te_combine_cust_data",
-                "z_FORMATTED_ADDRESS": "LIKE",
-                "x_FORMATTED_ADDRESS": self._street_address,
-            },
-        )
-        r.raise_for_status()
-
-        zone_match = re.search(r"fk_zonecode=([^&\"]+)", r.text)
-        if not zone_match:
-            raise SourceArgumentNotFound(
-                "street_address",
-                self._street_address,
-                "Check your address at https://www.warrnambool.vic.gov.au/kerbside-bin-collection",
-            )
-
-        zone_code = zone_match.group(1)
-        _LOGGER.debug("Zone code for %s: %s", self._street_address, zone_code)
-
-        # Step 2: Get collection dates for the zone
-        r = session.get(
-            f"{BASE_URL}/autodates.php",
-            params={
-                "showmaster": "wc_te_combine_cust_data",
-                "fk_zonecode": zone_code,
-            },
-        )
-        r.raise_for_status()
-
-        # Step 3: Parse HTML for collection dates
-        soup = BeautifulSoup(r.text, "html.parser")
-        entries: list[Collection] = []
-
-        for ul in soup.find_all("ul"):
-            li_items = ul.find_all("li", recursive=False)
-            if not li_items:
-                continue
-
-            date_text = li_items[0].get_text(strip=True)
-            if not date_text:
-                continue
-
-            # Parse date like "Wednesday, 15 April, 2026"
-            try:
-                date = datetime.strptime(date_text, "%A, %d %B, %Y").date()
-            except ValueError:
-                continue
-
-            # Get waste types from nested <ul>
-            sub_ul = ul.find("ul")
-            if not sub_ul:
-                continue
-
-            types_text = sub_ul.get_text(strip=True)
-            if not types_text:
-                continue
-
-            # Split comma-separated types (e.g. "Landfill,FOGO")
-            for waste_type in types_text.split(","):
-                waste_type = waste_type.strip()
-                if waste_type:
-                    entries.append(
-                        Collection(
-                            date=date,
-                            t=waste_type,
-                            icon=ICON_MAP.get(waste_type, "mdi:trash-can"),
-                        )
-                    )
-
-        return entries
+    # The council's own bin-day search: the page answers the address with the
+    # next two collection days of its zone.
+    retrieve = retrievers.Request(
+        PAGE_URL, params=lambda street_address, **_: {"address": street_address}
+    )
+    parse = parsers.HtmlParser(
+        "div.bin-dates", require=["#views-exposed-form-wcc-bins-data-block-1"]
+    )
+    preprocess = Compose(
+        RequireRecords(
+            argument="street_address",
+            suggestions=retrievers.Suggestions(
+                AUTOCOMPLETE_URL,
+                params=lambda street_address, **_: {"q": street_address},
+                pick=lambda response, **_: [item["value"] for item in response.json()],
+            ),
+            hint=f"Check the address on {PAGE_URL}",
+        ),
+        ExplodeList(_rounds),
+    )
+    transform = RowTransformer(
+        # The page gives no year and lists the next fortnight only.
+        parse_date=date_parsers.nearest_year("%d %B"),
+        type_value_map={
+            "Landfill": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Glass": wt.GLASS,
+            "FOGO": wt.ORGANIC,
+        },
+    )
