@@ -93,7 +93,10 @@ class SensorOptionsFlow(OptionsFlow):
                         key: value
                         for key, value in record.items()
                         if value != before[sensor_id].get(key)
-                        or sensor_id == getattr(self, "_reset_id", None)
+                        or (
+                            sensor_id == getattr(self, "_reset_id", None)
+                            and key != "enabled"
+                        )
                     }
                 )
         options = {**self._entry.options, "sensors": list(current.values())}

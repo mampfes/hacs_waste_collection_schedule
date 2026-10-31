@@ -178,6 +178,31 @@ async def test_open_sensor_editor_does_not_resurrect_concurrently_deleted_record
 
 
 @pytest.mark.asyncio
+async def test_reset_in_open_editor_keeps_a_new_registry_disable(running_entry, ha):
+    entry, _ = running_entry
+    record = entry.options["sensors"][0]
+    flow = SensorOptionsFlow(entry)
+    flow.hass = ha
+    await flow.async_step_sensors(
+        {
+            "predefined": [
+                r["origin"] for r in entry.options["sensors"] if r["origin"] != "custom"
+            ],
+            "edit_sensor": record["id"],
+        }
+    )
+    er.async_get(ha).async_update_entity(
+        sensor_id(ha, entry, record["id"]), disabled_by=er.RegistryEntryDisabler.USER
+    )
+    await ha.async_block_till_done()
+    result = await flow.async_step_edit_sensor({"action": "reset"})
+    assert (
+        next(r for r in result["data"]["sensors"] if r["id"] == record["id"])["enabled"]
+        is False
+    )
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "running_entry",
     [
