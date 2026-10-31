@@ -1,186 +1,113 @@
-import base64
-import json
-import re
-from datetime import date
-from urllib.parse import parse_qs, urlparse
+"""Powys County Council (Wales) bin collection dates."""
 
-import requests
-from bs4 import BeautifulSoup
-from dateutil import parser as dateutil_parser
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from typing import ClassVar, final
 
-TITLE = "Powys County Council"
-DESCRIPTION = "Source for en.powys.gov.uk services for Powys"
-URL = "https://en.powys.gov.uk"
-FORM_PAGE = f"{URL}/binday"
-COUNTRY = "uk"
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, uprn
+from waste_collection_schedule.service.GossForm import (
+    GossFormDataParser,
+    GossFormRetriever,
+    GossStep,
+)
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TEST_CASES = {
-    "15 Market Street, Newtown": {
-        "postcode": "SY16 2PQ",
-        "uprn": "100100307820",
-    },
-    "3 Brookfields, Llandrindod Wells": {
-        "postcode": "LD1 5LF",
-        "uprn": "10011732434",
-    },
-}
+# A GOSS form that takes the postcode and UPRN on one page. The answer carries
+# the schedule as HTML in the page's FormData (COLLECTIONDATES_1 /
+# COLLECTIONDATES): one card per round, its class naming the round
+# ("bdl-card--refuse"), with an <li> per date ("Thursday 19th November 2026").
+FORM_URL = "https://en.powys.gov.uk/binday"
+_FORM = "BINDAYLOOKUP"
+_STATE = (
+    "PAGESESSIONID",
+    "SESSIONID",
+    "NONCE",
+    "VARIABLES",
+    "PAGENAME",
+    "PAGEINSTANCE",
+)
+_ROUNDS = ("bdl-card--refuse", "bdl-card--recycling", "bdl-card--garden")
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "postcode": "Postcode",
-        "uprn": "Unique Property Reference Number (UPRN)",
+
+def _round(item) -> str:
+    card = item.find_parent("div", class_="bdl-card")
+    classes = card.get("class", []) if card else []
+    return next((name for name in classes if name in _ROUNDS), "")
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Powys County Council"
+    DESCRIPTION = "Source for en.powys.gov.uk services for Powys"
+    URL = "https://en.powys.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "15 Market Street, Newtown": {
+            "postcode": "SY16 2PQ",
+            "uprn": "100100307820",
+        },
+        "3 Brookfields, Llandrindod Wells": {
+            "postcode": "LD1 5LF",
+            "uprn": "10011732434",
+        },
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "postcode": "Your property postcode, e.g. SY16 2PQ",
-        "uprn": "Your Unique Property Reference Number. Find it at https://www.findmyaddress.co.uk/",
+    PARAMS = (postcode(), uprn())
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter your postcode (e.g. SY16 2PQ) and the Unique Property "
+            "Reference Number (UPRN) of your property. You can find your UPRN at "
+            "https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, "
+            "waste types use canonical, localised names, and the weekly "
+            "recycling and food waste round is reported as two collections. "
+            "Update filters, automations and customisations using the old labels."
+        ),
     }
-}
 
-ICON_MAP = {
-    "bdl-card--refuse": Icons.GENERAL_WASTE,
-    "bdl-card--recycling": Icons.RECYCLING,
-    "bdl-card--garden": Icons.GARDEN,
-}
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-WASTE_TYPE_MAP = {
-    "bdl-card--refuse": "General Rubbish",
-    "bdl-card--recycling": "Recycling and Food Waste",
-    "bdl-card--garden": "Garden Waste",
-}
-
-
-class Source:
-    def __init__(self, postcode: str, uprn: str):
-        self._postcode = postcode
-        self._uprn = str(uprn)
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session()
-        session.headers.update(
-            {
-                "User-Agent": (
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/120.0.0.0 Safari/537.36"
-                ),
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                "Accept-Language": "en-GB,en;q=0.9",
-            }
-        )
-
-        # Step 1: GET the form page to obtain session tokens and form action
-        r = session.get(FORM_PAGE, timeout=30)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        form = soup.find("form", id="BINDAYLOOKUP_FORM")
-        if not form or not form.get("action"):
-            raise ValueError(
-                "Could not find BINDAYLOOKUP_FORM on the Powys bin day page."
-            )
-
-        action = form["action"]
-
-        def _val(name: str) -> str:
-            el = form.find("input", attrs={"name": name})
-            return el["value"] if el and el.has_attr("value") else ""
-
-        page_session_id = _val("BINDAYLOOKUP_PAGESESSIONID")
-        session_id = _val("BINDAYLOOKUP_SESSIONID")
-        nonce = _val("BINDAYLOOKUP_NONCE")
-
-        # Fallback: extract IDs from action URL query string
-        if not (page_session_id and session_id and nonce):
-            parsed = urlparse(action)
-            qs = parse_qs(parsed.query)
-            page_session_id = page_session_id or qs.get("pageSessionId", [""])[0]
-            session_id = session_id or qs.get("fsid", [""])[0]
-            nonce = nonce or qs.get("fsn", [""])[0]
-
-        # Step 2: POST address lookup with UPRN to get collection dates
-        data = {
-            "BINDAYLOOKUP_PAGESESSIONID": page_session_id,
-            "BINDAYLOOKUP_SESSIONID": session_id,
-            "BINDAYLOOKUP_NONCE": nonce,
-            "BINDAYLOOKUP_VARIABLES": "",
-            "BINDAYLOOKUP_PAGENAME": "ADDRESSLOOKUP",
-            "BINDAYLOOKUP_PAGEINSTANCE": "0",
-            "BINDAYLOOKUP_ADDRESSLOOKUP_ADDRESSLOOKUPPOSTCODE": self._postcode,
-            "BINDAYLOOKUP_ADDRESSLOOKUP_ADDRESSLOOKUP": "0",
-            "BINDAYLOOKUP_ADDRESSLOOKUP_POSTALADDRESS": "",
-            "BINDAYLOOKUP_ADDRESSLOOKUP_UPRN": self._uprn,
-            "BINDAYLOOKUP_FORMACTION_NEXT": (
-                "BINDAYLOOKUP_ADDRESSLOOKUP_ADDRESSLOOKUPBUTTONS"
+    retrieve = GossFormRetriever(
+        FORM_URL,
+        form=_FORM,
+        state_fields=_STATE,
+        steps=(
+            GossStep(
+                "ADDRESSLOOKUP_ADDRESSLOOKUPBUTTONS",
+                fields=lambda response, postcode, uprn, **_: {
+                    "VARIABLES": "",
+                    "ADDRESSLOOKUP_ADDRESSLOOKUPPOSTCODE": postcode,
+                    "ADDRESSLOOKUP_ADDRESSLOOKUP": "0",
+                    "ADDRESSLOOKUP_POSTALADDRESS": "",
+                    "ADDRESSLOOKUP_UPRN": str(uprn).strip(),
+                },
             ),
-        }
+        ),
+    )
 
-        r2 = session.post(
-            action,
-            data=data,
-            headers={
-                "Origin": URL,
-                "Referer": FORM_PAGE,
-            },
-            timeout=30,
-        )
-        r2.raise_for_status()
+    parse = GossFormDataParser(
+        "COLLECTIONDATES",
+        pages=["COLLECTIONDATES_1"],
+        parser=parsers.HtmlParser("div.bdl-card ul > li"),
+    )
 
-        # Step 3: Extract collection dates from embedded FormData blob
-        match = re.search(r'BINDAYLOOKUPFormData = "([^"]+)"', r2.text)
-        if not match:
-            raise ValueError(
-                "Could not find BINDAYLOOKUPFormData in the response. "
-                "Check that the postcode and UPRN are correct."
-            )
-
-        form_data = json.loads(base64.b64decode(match.group(1)).decode())
-        collection_html = form_data.get("COLLECTIONDATES_1", {}).get(
-            "COLLECTIONDATES", ""
-        )
-
-        if not collection_html:
-            raise ValueError(
-                "No collection dates found in the response. "
-                "Check that the postcode and UPRN are correct."
-            )
-
-        return self._parse_collections(collection_html)
-
-    @staticmethod
-    def _parse_collections(html: str) -> list[Collection]:
-        soup = BeautifulSoup(html, "html.parser")
-        entries: list[Collection] = []
-
-        for card_class, waste_type in WASTE_TYPE_MAP.items():
-            card = soup.find(
-                "div", class_=lambda c, cc=card_class: c and cc in c if c else False
-            )
-            if not card:
-                continue
-
-            for li in card.find_all("li"):
-                text = li.get_text(strip=True)
-                # Remove any trailing link text in parentheses
-                text = re.sub(r"\(.*?\)", "", text).strip()
-                # Strip ordinal suffixes: 14th -> 14, 21st -> 21, etc.
-                text = re.sub(r"(\d+)(st|nd|rd|th)\b", r"\1", text)
-                try:
-                    collection_date: date = dateutil_parser.parse(
-                        text, dayfirst=True
-                    ).date()
-                except Exception:
-                    continue
-
-                entries.append(
-                    Collection(
-                        date=collection_date,
-                        t=waste_type,
-                        icon=ICON_MAP.get(card_class),
-                    )
-                )
-
-        return entries
+    transform = HtmlTransformer(
+        date_getter=lambda item: item.get_text(strip=True),
+        type_getter=_round,
+        parse_date=date_parsers.without_ordinals(
+            date_parsers.for_format("%A %d %B %Y")
+        ),
+        type_value_map={
+            "bdl-card--refuse": wt.GENERAL_WASTE,
+            "bdl-card--recycling": [wt.RECYCLABLES, wt.FOOD_WASTE],
+            "bdl-card--garden": wt.GARDEN_WASTE,
+        },
+    )

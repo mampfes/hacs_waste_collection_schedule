@@ -26,12 +26,10 @@
         "description": "Vælg hvordan du vil konfigurere denne integration. Lad den være tom hvis du bare vil konfigurere en standard kalender.",
         "data": {
           "show_customize_config": "Vis Afhentnings Tilpasnings Indstillinger",
-          "show_sensor_config": "Vis Sensor Indstillinger",
           "default_sensors": "Standard sensorer"
         },
         "data_description": {
           "show_customize_config": "Vælg dette hvis du vil tilpasse dine afhentnings typer.",
-          "show_sensor_config": "Vælg dette hvis du vil indstille sensorer.",
           "default_sensors": "Vælg hvilke standard sensorer du vil oprette. De kan kombineres med dine egne sensorer."
         }
       },
@@ -54,7 +52,8 @@
           "icon": "Ikon",
           "picture": "Billede",
           "use_dedicated_calendar": "Brug dedikeret kalender",
-          "dedicated_calendar_title": "Dedikeret kalender titel"
+          "dedicated_calendar_title": "Dedikeret kalender titel",
+          "color": "Farve (#RRGGBB; tom = standard)"
         },
         "data_description": {
           "alias": "Det nye navn for afhentnings typen. (kun hvis du vil ændre det)",
@@ -93,35 +92,6 @@
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
           "f_abfallarten": "Valgfrit filter: affaldstyperne du vil inkludere."
-        }
-      },
-      "sensor": {
-        "title": "Tilføj Sensor \"{sensor_number}\"",
-        "description": "Konfigurer en sensor ad gangen.",
-        "data": {
-          "name": "Navnet På Sensoren",
-          "details_format": "Detalje Format",
-          "count": "Antal",
-          "leadtime": "Varslingstid",
-          "value_template": "Værdi Skabelon",
-          "date_template": "Dato Skabelon",
-          "add_days_to": "Tilføj Dage Til",
-          "event_index": "Begivenhedsindeks",
-          "types": "Typer",
-          "skip": "Tilføj ikke sensor",
-          "additional": "Tilføj flere sensorer"
-        },
-        "data_description": {
-          "details_format": "Angiver formatet der bruges til at vise information i Home Assistants mere info pop-up. 'upcoming': viser en liste af kommende afhentninger, 'appointment_types': viser en liste af affaldstyper og deres næste afhentningsdato, 'generic': tilgængeliggør alle egenskaber som generiske Python data typer, 'hidden': gem egenskaberne for kommende afhentninger",
-          "count": "Begrænser Home Assistants more info popup til at vise de næste antal afhentninger",
-          "leadtime": "Begrænser Home Assistants more info popup til at kun vise de afhentninger der sker indenfor de næste varslingstid dage",
-          "value_template": "Bruger Home Assistant-skabeloner til at formatere statusoplysningerne for en enhed. Du kan bruge 'value.date', 'value.daysTo', 'value.types'",
-          "date_template": "Bruger Home Assistant-skabeloner til at formatere datoerne der fremgår i popup informationer om en entitet. f.eks. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Tilføjer en 'daysTo' egenskab til en kilde entitets tilstand der indeholder antallet af dage indtil næste afhentning",
-          "event_index": "Bruges til at knytte en sensor til et bestemt indeks for en afhentnings index. Den næste afhentningsdato har event_index 0. Det er nyttigt, hvis du vil have separate sensorer til næste afhentning, anden afhentning, tredje afhentning osv.",
-          "types": "Bruges til at filtrere affaldstyper. Sensoren viser kun afhentninger, der matcher disse affaldstyper. Du skal bruge aliaset, hvis du har brugt et alias i konfigurationen af kilden.",
-          "skip": "Hvis dette er markeret, bliver sensoren ikke oprettet, og al din ovenstående konfiguration ignoreres.",
-          "additional": "Hvis dette er markeret, bliver du bedt om at tilføje endnu en sensor, efter at du har gemt denne."
         }
       },
       "reconfigure": {
@@ -885,10 +855,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street_address": "Din fulde adresse"
         }
       },
       "reconfigure_casey_vic_gov_au": {
@@ -896,9 +867,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Din fulde adresse"
+        }
       },
       "args_cockburn_wa_gov_au": {
         "title": "Konfigurer Kilde",
@@ -950,10 +923,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street_address": "Din fulde adresse"
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -961,9 +935,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Din fulde adresse"
+        }
       },
       "args_gosnells_wa_gov_au": {
         "title": "Konfigurer Kilde",
@@ -1801,11 +1777,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Gade",
+          "street_number": "Husnummer"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street_and_suburb": "Dit gadenavn",
+          "street_number": "Dit husnummer"
         }
       },
       "reconfigure_fairfieldcity_nsw_gov_au": {
@@ -1813,10 +1791,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Gade",
+          "street_number": "Husnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "street_and_suburb": "Dit gadenavn",
+          "street_number": "Dit husnummer"
+        }
       },
       "args_frankston_vic_gov_au": {
         "title": "Konfigurer Kilde",
@@ -3675,10 +3656,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street_address": "Din fulde adresse"
         }
       },
       "reconfigure_warrnambool_vic_gov_au": {
@@ -3686,9 +3668,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Din fulde adresse"
+        }
       },
       "args_waverley_nsw_gov_au": {
         "title": "Konfigurer Kilde",
@@ -4491,6 +4475,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kommune"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "region": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kommune"
+        },
+        "data_description": {
+          "region": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -4886,26 +4899,6 @@
           "district": "Dit distrikt eller del af kommunen",
           "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Konfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "region": "Region"
-        },
-        "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Omkonfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "region": "Region"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Konfigurer Kilde",
@@ -7051,6 +7044,26 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel"
+        },
+        "data_description": {}
+      },
+      "args_ovwrc_com": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_ovwrc_com": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "day": "Day"
         },
         "data_description": {}
       },
@@ -19121,6 +19134,28 @@
         },
         "data_description": {}
       },
+      "args_raywhelan_ie": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "calendar": "Calendar",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_raywhelan_ie": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "calendar": "Calendar",
+          "day": "Day"
+        },
+        "data_description": {}
+      },
       "args_junker_app": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -19946,6 +19981,30 @@
         },
         "data_description": {}
       },
+      "args_selargiusostenibile_it": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "paper_area": "Paper Area",
+          "url": "Url",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_selargiusostenibile_it": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "paper_area": "Paper Area",
+          "url": "Url",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_silea_it": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -20141,6 +20200,8 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
+          "city": "City",
+          "containers": "Containers",
           "district": "District",
           "house_number": "House Number",
           "region": "Region",
@@ -20156,6 +20217,8 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
+          "city": "City",
+          "containers": "Containers",
           "district": "District",
           "house_number": "House Number",
           "region": "Region",
@@ -21131,7 +21194,7 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "area_number": "Area Number"
+          "area_number": "Lokations-ID"
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
@@ -21142,7 +21205,7 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "area_number": "Area Number"
+          "area_number": "Lokations-ID"
         },
         "data_description": {}
       },
@@ -21196,10 +21259,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_ccc_govt_nz": {
@@ -21207,9 +21271,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       },
       "args_dunedin_govt_nz": {
         "title": "Konfigurer Kilde",
@@ -22481,6 +22547,26 @@
           "street": "Dit gadenavn"
         }
       },
+      "args_eko_region_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "village": "Village"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_eko_region_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "village": "Village"
+        },
+        "data_description": {}
+      },
       "args_ekolandpolska_com_pl": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -22564,6 +22650,26 @@
           "street": "Dit gadenavn"
         }
       },
+      "args_tamax_imielno_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_imielno_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_jaktorow_pl": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -22581,6 +22687,46 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "region": "Region"
+        },
+        "data_description": {}
+      },
+      "args_tamax_janow_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_janow_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
+      "args_tamax_koniusza_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_koniusza_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
         },
         "data_description": {}
       },
@@ -22615,6 +22761,46 @@
           "street": "Dit gadenavn"
         }
       },
+      "args_tamax_ksiaz_wielki_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_ksiaz_wielki_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
+      "args_tamax_lelow_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_lelow_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_maslow_pl": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -22637,6 +22823,26 @@
         "data_description": {
           "district": "Dit distrikt eller del af kommunen"
         }
+      },
+      "args_tamax_bochnia_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_bochnia_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
       },
       "args_gmina_miekinia_pl": {
         "title": "Konfigurer Kilde",
@@ -22792,6 +22998,26 @@
           "street": "Dit gadenavn"
         }
       },
+      "args_tamax_net_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_net_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_gmina_radlow_pl": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -22812,6 +23038,46 @@
         },
         "data_description": {}
       },
+      "args_tamax_szczekociny_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_szczekociny_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
+      "args_tamax_sedziszow_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_sedziszow_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_gmina_trzebnica_pl": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -22829,6 +23095,26 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "region_id": "Region Id"
+        },
+        "data_description": {}
+      },
+      "args_tamax_wlodowice_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_wlodowice_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
         },
         "data_description": {}
       },
@@ -23175,6 +23461,26 @@
         "data_description": {
           "street": "Dit gadenavn"
         }
+      },
+      "args_tamax_wieliczka_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+        }
+      },
+      "reconfigure_tamax_wieliczka_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area"
+        },
+        "data_description": {}
       },
       "args_zywiec_pl": {
         "title": "Konfigurer Kilde",
@@ -23783,10 +24089,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
         }
       },
       "reconfigure_komunala_kranj_si": {
@@ -23794,9 +24101,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address"
+          "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       },
       "args_komunala_slb_si": {
         "title": "Konfigurer Kilde",
@@ -24506,6 +24815,29 @@
           "street_address": "Street Address"
         },
         "data_description": {}
+      },
+      "args_ljusdalenergi_se": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse"
+        }
+      },
+      "reconfigure_ljusdalenergi_se": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "address": "Din fulde adresse"
+        }
       },
       "args_lumire_se": {
         "title": "Konfigurer Kilde",
@@ -27940,6 +28272,29 @@
           "postcode": "Dit postnummer"
         }
       },
+      "args_edinburgh_gov_uk": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Gade"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street": "Dit gadenavn"
+        }
+      },
+      "reconfigure_edinburgh_gov_uk": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "street": "Gade"
+        },
+        "data_description": {
+          "street": "Dit gadenavn"
+        }
+      },
       "args_lincoln_gov_uk": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -28425,7 +28780,7 @@
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_dover_gov_uk": {
@@ -28436,7 +28791,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_dudley_gov_uk": {
@@ -28764,7 +29119,8 @@
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_east_renfrewshire_gov_uk": {
@@ -28776,7 +29132,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_eastriding_gov_uk": {
@@ -29301,7 +29658,7 @@
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_gateshead_gov_uk": {
@@ -29312,7 +29669,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Din Unique Property Reference Number du kan finde den ved at gå ind på {url_www_findmyaddress_co_uk} og indtaste dine adressedetaljer."
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_ics_gedling_gov_uk": {
@@ -29440,7 +29797,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_great_yarmouth_gov_uk": {
@@ -29450,7 +29808,9 @@
           "calendar_title": "Kalender Titel",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_guildford_gov_uk": {
         "title": "Konfigurer Kilde",
@@ -29595,12 +29955,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "postcode": "Postnummer",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "house_number": "Dit husnummer",
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hastings_gov_uk": {
@@ -29608,11 +29971,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "postcode": "Postnummer",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Dit husnummer",
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_waste_havant_gov_uk": {
         "title": "Konfigurer Kilde",
@@ -29839,7 +30206,7 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location_id": "Location Id"
+          "location_id": "Lokations-ID"
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
@@ -29850,7 +30217,7 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location_id": "Location Id"
+          "location_id": "Lokations-ID"
         },
         "data_description": {}
       },
@@ -30810,13 +31177,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
-          "number": "Number",
+          "number": "Husnummer",
           "postcode": "Postnummer",
-          "street": "Street"
+          "street": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "number": "Dit husnummer",
+          "postcode": "Dit postnummer",
+          "street": "Dit gadenavn"
         }
       },
       "reconfigure_midsussex_gov_uk": {
@@ -30824,12 +31193,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
-          "number": "Number",
+          "number": "Husnummer",
           "postcode": "Postnummer",
-          "street": "Street"
+          "street": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Dit husnummer",
+          "postcode": "Dit postnummer",
+          "street": "Dit gadenavn"
+        }
       },
       "args_midulstercouncil_org": {
         "title": "Konfigurer Kilde",
@@ -31010,7 +31382,9 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_newforest_gov_uk": {
@@ -31021,7 +31395,10 @@
           "postcode": "Postnummer",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_newark_sherwooddc_gov_uk": {
         "title": "Konfigurer Kilde",
@@ -31090,6 +31467,35 @@
         },
         "data_description": {
           "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "args_newrymournedown_org": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Husnummer",
+          "postcode": "Postnummer",
+          "url": "Url"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "house_number": "Dit husnummer",
+          "postcode": "Dit postnummer"
+        }
+      },
+      "reconfigure_newrymournedown_org": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "house_number": "Husnummer",
+          "postcode": "Postnummer",
+          "url": "Url"
+        },
+        "data_description": {
+          "house_number": "Dit husnummer",
+          "postcode": "Dit postnummer"
         }
       },
       "args_north_ayrshire_gov_uk": {
@@ -31904,7 +32310,9 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_powys_gov_uk": {
@@ -31915,18 +32323,23 @@
           "postcode": "Postnummer",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_preston_gov_uk": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Street",
+          "street": "Adresse",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "street": "Din fulde adresse",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_preston_gov_uk": {
@@ -31934,10 +32347,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "street": "Street",
+          "street": "Adresse",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Din fulde adresse",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_reading_gov_uk": {
         "title": "Konfigurer Kilde",
@@ -33181,11 +33597,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "post_code": "Postnummer",
-          "street_name": "Street Name",
+          "street_name": "Gade",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "post_code": "Dit postnummer",
+          "street_name": "Dit gadenavn",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_swansea_gov_uk": {
@@ -33194,10 +33613,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "post_code": "Postnummer",
-          "street_name": "Street Name",
+          "street_name": "Gade",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "post_code": "Dit postnummer",
+          "street_name": "Dit gadenavn",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_swindon_gov_uk": {
         "title": "Konfigurer Kilde",
@@ -35656,11 +36079,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
-          "municipality": "Municipality"
+          "address": "Adresse",
+          "municipality": "Kommune"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "address": "Din fulde adresse",
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
         }
       },
       "reconfigure_vogeldisposal_com": {
@@ -35668,10 +36093,13 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "address": "Address",
-          "municipality": "Municipality"
+          "address": "Adresse",
+          "municipality": "Kommune"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fulde adresse",
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
       },
       "args_wm_com": {
         "title": "Konfigurer Kilde",
@@ -35745,40 +36173,18 @@
       "name_exists": "Sensor navnet findes allerede. Vælg venligst et andet navn.",
       "preset_selected": "Du kan ikke vælge en forudindstilling og angive en tilpasset værdi på samme tid.",
       "sensor_name_empty": "Sensor navnet må ikke være tomt. Angiv venligst et navn.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke angive en dedikeret kalender titel uden at slå den dedikerede kalender til."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke angive en dedikeret kalender titel uden at slå den dedikerede kalender til.",
+      "invalid_sensor": "Kontrollér sensorindstillinger, skabeloner og farven #RRGGBB."
     }
   },
   "options": {
     "step": {
       "init": {
-        "description": "Opdater Waste Collection Schedule detaljer.",
-        "data": {
-          "sensor_select": "Sensorer At Ændre",
-          "default_sensors": "Tilføj Standard Sensorer",
-          "customize_select": "Tilpasninger At Ændre",
-          "calendar_title": "Kalender Titel",
-          "separator": "Separator",
-          "fetch_time": "Tidspunkt For Datahentning",
-          "random_fetch_time_offset": "Tilfældig Forskydning Af Tidspunktet For Datahentning",
-          "day_switch_time": "Tidspunkt For Skift Af Dag",
-          "fetch_interval_days": "Dage Mellem Datahentning",
-          "day_offset": "Dagsforskydning",
-          "ignore_duplicates": "Ignorer Dubletter Pr. Dag",
-          "show_original_label": "Vis Den Oprindelige Udbyder Etiket"
-        },
-        "data_description": {
-          "sensor_select": "Vælg den sensor du vil ændre. (vælg 'Add new sensor' for at lave en ny sensor)",
-          "default_sensors": "Tilføjer de valgte standard sensorer der mangler. Eksisterende sensorer forbliver uændrede.",
-          "customize_select": "Vælg den tilpasning du vil ændre. (eller vælg en ny tilpasning for at tilføje en ny)",
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "separator": "Bruges til at samle afhentninger, hvis kilden returnerer flere værdier for den samme dag.",
-          "fetch_time": "Angiver tidspunktet på dagen i formatet 'HH:MM', hvor Home Assistant henter den seneste afhentningsplan fra udbyderen.",
-          "random_fetch_time_offset": "Forskydder tilfældigt tidspunktet for datahentning med op til x minutter. Kan bruges til at fordele Home Assistants datahentning over et længere tidsrum for at undgå spidsbelastning hos udbyderne.",
-          "day_switch_time": "Tidspunktet på dagen i formatet HH:MM, hvor Home Assistant afslutter den aktuelle afhentning og går videre til den næste.",
-          "fetch_interval_days": "Angiver, hvor ofte Home Assistant henter data fra denne kilde. Standardværdien er 1 dag. Med en værdi på 2 hentes data hver anden dag.",
-          "day_offset": "Forskydning i dage, der skal lægges til afhentningsdatoen (kan være negativ). Hvis der ikke angives en værdi, bruges standardværdien 0.",
-          "ignore_duplicates": "Når denne funktion er aktiveret, fjernes dubletter af afhentninger med samme affaldstype på samme dag, så der kun er én post pr. affaldstype pr. dag.",
-          "show_original_label": "Når denne funktion er aktiveret (standard), bevarer nogle kilder den oprindelige udbyder etiket (f.eks. det præcise navn på beholderen) i afhentningens etiket, selv efter at den er blevet knyttet til en standardiseret affaldstype. Deaktivér funktionen for at skjule den oprindelige etiket."
+        "title": "Waste Collection Schedule",
+        "menu_options": {
+          "source_settings": "Kildeindstillinger",
+          "sensors": "Sensorer",
+          "waste_types": "Affaldstyper"
         }
       },
       "customize": {
@@ -35791,7 +36197,8 @@
           "icon": "Ikon",
           "picture": "Billede",
           "use_dedicated_calendar": "Brug dedikeret kalender",
-          "dedicated_calendar_title": "Dedikeret kalender titel"
+          "dedicated_calendar_title": "Dedikeret kalender titel",
+          "color": "Farve (#RRGGBB; tom = standard)"
         },
         "data_description": {
           "delete": "Fjern denne tilpasning.",
@@ -35803,35 +36210,73 @@
           "dedicated_calendar_title": "Titlen til den dedikerede kalender entitet."
         }
       },
-      "sensor": {
-        "title": "Ændre/Tilføj Sensor \"{sensor_number}\"",
-        "description": "Konfigurer en sensor ad gangen.",
+      "source_settings": {
+        "description": "Opdater Waste Collection Schedule detaljer.",
         "data": {
-          "delete": "Fjern",
-          "name": "Navnet På Sensoren",
-          "details_format": "Detalje Format",
-          "count": "Antal",
-          "leadtime": "Varslingstid",
-          "value_template": "Værdi Skabelon",
-          "date_template": "Dato Skabelon",
-          "add_days_to": "Tilføj Dage Til",
-          "event_index": "Begivenhedsindeks",
-          "types": "Typer",
-          "skip": "Tilføj ikke sensor",
-          "additional": "Tilføj flere sensorer"
+          "calendar_title": "Kalender Titel",
+          "separator": "Separator",
+          "fetch_time": "Tidspunkt For Datahentning",
+          "random_fetch_time_offset": "Tilfældigt hentningsoffset (minutter)",
+          "day_switch_time": "Tidspunkt For Skift Af Dag",
+          "fetch_interval_days": "Dage Mellem Datahentning",
+          "day_offset": "Dagsforskydning",
+          "ignore_duplicates": "Ignorer Dubletter Pr. Dag",
+          "show_original_label": "Vis Den Oprindelige Udbyder Etiket"
         },
         "data_description": {
-          "delete": "Fjern denne tilpasning.",
-          "details_format": "Angiver formatet der bruges til at vise information i Home Assistants mere info pop-up. 'upcoming': viser en liste af kommende afhentninger, 'appointment_types': viser en liste af affaldstyper og deres næste afhentningsdato, 'generic': tilgængeliggør alle egenskaber som generiske Python data typer, 'hidden': gem egenskaberne for kommende afhentninger",
-          "count": "Begrænser Home Assistants more info popup til at vise de næste antal afhentninger",
-          "leadtime": "Begrænser Home Assistants more info popup til at kun vise de afhentninger der sker indenfor de næste varslingstid dage",
-          "value_template": "Bruger Home Assistant-skabeloner til at formatere statusoplysningerne for en enhed. Du kan bruge 'value.date', 'value.daysTo', 'value.types'",
-          "date_template": "Bruger Home Assistant-skabeloner til at formatere datoerne der fremgår i popup informationer om en entitet. f.eks. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Tilføjer en 'daysTo' egenskab til en kilde entitets tilstand der indeholder antallet af dage indtil næste afhentning",
-          "event_index": "Bruges til at knytte en sensor til et bestemt indeks for en afhentnings index. Den næste afhentningsdato har event_index 0. Det er nyttigt, hvis du vil have separate sensorer til næste afhentning, anden afhentning, tredje afhentning osv.",
-          "types": "Bruges til at filtrere affaldstyper. Sensoren viser kun afhentninger, der matcher disse affaldstyper. Du skal bruge aliaset, hvis du har brugt et alias i konfigurationen af kilden.",
-          "skip": "Hvis dette er markeret, bliver sensoren ikke oprettet, og al din ovenstående konfiguration ignoreres.",
-          "additional": "Hvis dette er markeret, bliver du bedt om at tilføje endnu en sensor, efter at du har gemt denne."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "separator": "Bruges til at samle afhentninger, hvis kilden returnerer flere værdier for den samme dag.",
+          "fetch_time": "Angiver tidspunktet på dagen i formatet 'HH:MM', hvor Home Assistant henter den seneste afhentningsplan fra udbyderen.",
+          "random_fetch_time_offset": "Forskydder tilfældigt tidspunktet for datahentning med op til x minutter. Kan bruges til at fordele Home Assistants datahentning over et længere tidsrum for at undgå spidsbelastning hos udbyderne.",
+          "day_switch_time": "Tidspunktet på dagen i formatet HH:MM, hvor Home Assistant afslutter den aktuelle afhentning og går videre til den næste.",
+          "fetch_interval_days": "Angiver, hvor ofte Home Assistant henter data fra denne kilde. Standardværdien er 1 dag. Med en værdi på 2 hentes data hver anden dag.",
+          "day_offset": "Forskydning i dage, der skal lægges til afhentningsdatoen (kan være negativ). Hvis der ikke angives en værdi, bruges standardværdien 0.",
+          "ignore_duplicates": "Når denne funktion er aktiveret, fjernes dubletter af afhentninger med samme affaldstype på samme dag, så der kun er én post pr. affaldstype pr. dag.",
+          "show_original_label": "Når denne funktion er aktiveret (standard), bevarer nogle kilder den oprindelige udbyder etiket (f.eks. det præcise navn på beholderen) i afhentningens etiket, selv efter at den er blevet knyttet til en standardiseret affaldstype. Deaktivér funktionen for at skjule den oprindelige etiket."
+        },
+        "title": "Kildeindstillinger"
+      },
+      "sensors": {
+        "title": "Sensorer",
+        "data": {
+          "predefined": "Foruddefinerede sensorer",
+          "edit_sensor": "Rediger sensor",
+          "device_controls": "Enhedsstyring",
+          "auto_add_types": "Tilføj automatisk nye typer"
+        }
+      },
+      "edit_sensor": {
+        "title": "Rediger sensor",
+        "data": {
+          "name": "Navn",
+          "enabled": "Aktiveret",
+          "state_format": "Statustekst",
+          "language": "Sprog",
+          "date_format": "Datoformat",
+          "details_format": "Detaljeformat",
+          "count": "Antal",
+          "leadtime": "Fremtidig periode (dage)",
+          "unique_types": "Hver type kun én gang",
+          "exclude_types": "Udelad typer",
+          "advanced": "Avancerede indstillinger",
+          "action": "Handling",
+          "types": "Affaldstyper",
+          "kind": "Sensortype"
+        }
+      },
+      "sensor_advanced": {
+        "title": "Avancerede indstillinger",
+        "data": {
+          "event_index": "Afhentningsindeks",
+          "value_template": "Brugerdefineret tilstandsskabelon",
+          "date_template": "Brugerdefineret datoskabelon",
+          "color": "Farve (#RRGGBB; tom = standard)"
+        }
+      },
+      "waste_types": {
+        "title": "Affaldstyper",
+        "data": {
+          "types": "Affaldstyper"
         }
       }
     },
@@ -35841,17 +36286,52 @@
       "name_exists": "Sensor navnet findes allerede. Vælg venligst et andet navn.",
       "preset_selected": "Du kan ikke vælge en forudindstilling og angive en tilpasset værdi på samme tid.",
       "sensor_name_empty": "Sensor navnet må ikke være tomt. Angiv venligst et navn.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke angive en dedikeret kalender titel uden at slå den dedikerede kalender til."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke angive en dedikeret kalender titel uden at slå den dedikerede kalender til.",
+      "invalid_sensor": "Kontrollér sensorindstillinger, skabeloner og farven #RRGGBB."
     },
-    "abort": {}
+    "abort": {
+      "sensor_removed": "Denne sensor blev fjernet under redigering. Åbn sensorindstillingerne igen."
+    }
   },
   "selector": {
     "details_format": {
       "options": {
-        "upcoming": "Kommende",
-        "appointment_types": "Aftaletyper",
-        "generic": "Generisk",
-        "hidden": "Skjult"
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
       }
     },
     "default_sensors": {
@@ -35872,7 +36352,439 @@
       "options": {
         "sensor_select_add_new": "Tilføj ny sensor"
       }
+    },
+    "state_format": {
+      "options": {
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
+      }
+    },
+    "date_format": {
+      "options": {
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
+      }
+    },
+    "language": {
+      "options": {
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
+      }
+    },
+    "kind": {
+      "options": {
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
+      }
+    },
+    "action": {
+      "options": {
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
+      }
     }
   },
-  "issues": {}
+  "issues": {
+    "legacy_sensors": {
+      "title": "Sensorer fra tidligere omdøbninger",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Fjern gamle sensorposter",
+            "description": "Disse gamle sensorer har ingen gemt konfiguration: {entities}. Kontrollér automatiseringer og dashboards før fjernelse.\n\nFjern de viste gamle registerposter? Aktive migrerede sensorer bevares."
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "state_format": {
+        "name": "Statustekst",
+        "state": {
+          "types_in_days": "Typer og nedtælling",
+          "in_days": "Nedtælling",
+          "relative": "I dag / I morgen / om N dage",
+          "date": "Afhentningsdato",
+          "types": "Affaldstyper",
+          "days": "Antal dage",
+          "custom": "Brugerdefineret skabelon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ugedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ugedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ugedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Næste dato pr. type",
+          "generic": "Strukturerede poster",
+          "hidden": "Skjul detaljer",
+          "schedule": "Afhentningsplan",
+          "days_to": "Dage til afhentning",
+          "last_update": "Seneste opdatering",
+          "auto": "Home Assistant-sprog",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Tilføj brugerdefineret sensor",
+          "save": "Gem",
+          "reset": "Gendan standarder",
+          "duplicate": "Dupliker som brugerdefineret sensor",
+          "delete": "Slet brugerdefineret sensor"
+        }
+      },
+      "language": {
+        "name": "Sprog",
+        "state": {
+          "types_in_days": "Typer og nedtælling",
+          "in_days": "Nedtælling",
+          "relative": "I dag / I morgen / om N dage",
+          "date": "Afhentningsdato",
+          "types": "Affaldstyper",
+          "days": "Antal dage",
+          "custom": "Brugerdefineret skabelon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ugedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ugedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ugedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Næste dato pr. type",
+          "generic": "Strukturerede poster",
+          "hidden": "Skjul detaljer",
+          "schedule": "Afhentningsplan",
+          "days_to": "Dage til afhentning",
+          "last_update": "Seneste opdatering",
+          "auto": "Home Assistant-sprog",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Tilføj brugerdefineret sensor",
+          "save": "Gem",
+          "reset": "Gendan standarder",
+          "duplicate": "Dupliker som brugerdefineret sensor",
+          "delete": "Slet brugerdefineret sensor"
+        }
+      },
+      "date_format": {
+        "name": "Datoformat",
+        "state": {
+          "types_in_days": "Typer og nedtælling",
+          "in_days": "Nedtælling",
+          "relative": "I dag / I morgen / om N dage",
+          "date": "Afhentningsdato",
+          "types": "Affaldstyper",
+          "days": "Antal dage",
+          "custom": "Brugerdefineret skabelon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ugedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ugedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ugedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Næste dato pr. type",
+          "generic": "Strukturerede poster",
+          "hidden": "Skjul detaljer",
+          "schedule": "Afhentningsplan",
+          "days_to": "Dage til afhentning",
+          "last_update": "Seneste opdatering",
+          "auto": "Home Assistant-sprog",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Tilføj brugerdefineret sensor",
+          "save": "Gem",
+          "reset": "Gendan standarder",
+          "duplicate": "Dupliker som brugerdefineret sensor",
+          "delete": "Slet brugerdefineret sensor"
+        }
+      },
+      "details_format": {
+        "name": "Detaljeformat",
+        "state": {
+          "types_in_days": "Typer og nedtælling",
+          "in_days": "Nedtælling",
+          "relative": "I dag / I morgen / om N dage",
+          "date": "Afhentningsdato",
+          "types": "Affaldstyper",
+          "days": "Antal dage",
+          "custom": "Brugerdefineret skabelon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ugedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ugedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ugedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Næste dato pr. type",
+          "generic": "Strukturerede poster",
+          "hidden": "Skjul detaljer",
+          "schedule": "Afhentningsplan",
+          "days_to": "Dage til afhentning",
+          "last_update": "Seneste opdatering",
+          "auto": "Home Assistant-sprog",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Tilføj brugerdefineret sensor",
+          "save": "Gem",
+          "reset": "Gendan standarder",
+          "duplicate": "Dupliker som brugerdefineret sensor",
+          "delete": "Slet brugerdefineret sensor"
+        }
+      }
+    },
+    "number": {
+      "count": {
+        "name": "Antal (0 = ∞)"
+      },
+      "leadtime": {
+        "name": "Fremtidig periode (dage) (-1 = ∞)"
+      },
+      "event_index": {
+        "name": "Afhentningsindeks"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Aktiveret"
+      },
+      "unique_types": {
+        "name": "Hver type kun én gang"
+      },
+      "advanced": {
+        "name": "Avancerede indstillinger"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Navn"
+      },
+      "value_template": {
+        "name": "Brugerdefineret tilstandsskabelon"
+      },
+      "date_template": {
+        "name": "Brugerdefineret datoskabelon"
+      },
+      "color": {
+        "name": "Farve (#RRGGBB; tom = standard)"
+      }
+    },
+    "button": {
+      "create_sensor": {
+        "name": "Opret sensoren {name}"
+      },
+      "delete": {
+        "name": "Slet brugerdefineret sensor"
+      }
+    }
+  },
+  "exceptions": {
+    "type_unavailable": {
+      "message": "Denne affaldstype findes ikke længere i den aktuelle plan."
+    },
+    "custom_template_required": {
+      "message": "Angiv først en brugerdefineret tilstandsskabelon under avancerede indstillinger."
+    }
+  }
 }

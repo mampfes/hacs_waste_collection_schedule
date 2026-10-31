@@ -4,6 +4,7 @@
   "reportMissingImports": false,
   "reportMissingModuleSource": false,
   "include": [
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/stockholmvattenochavfall_se.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/awb_mainz_bingen_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/wieliczka_kiedyodpady_pl.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/wuerzburg_de.py",

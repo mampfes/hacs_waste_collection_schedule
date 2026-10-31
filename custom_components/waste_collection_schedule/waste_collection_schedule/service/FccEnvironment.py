@@ -12,9 +12,13 @@ in two dialects keyed by a UPRN:
   service (an ``h3`` naming it, and a bold "next scheduled collection" date such
   as ``tomorrow, Thursday, 01 October 2026``).
 
-The hosts send their leaf certificate without the intermediate, so no default
-trust store can build a chain to it; the requests are made with
-``verify=False``, as the legacy source did.
+Harborough's host sends its leaf certificate (RapidSSL TLS RSA CA G1) with a
+stale, unrelated Sectigo chain instead of its own intermediate, so no default
+trust store can build a chain to it. The requests use ``verify=tls.AIA``: they
+verify normally and, for such a host, complete the chain from the leaf's AIA
+URL (see :mod:`waste_collection_schedule.tls`). West Devon and South Hams
+currently send complete chains, so for them that is plain verification. The
+legacy source and the first pipeline version used ``verify=False``.
 
 :class:`FccEnvironmentRetriever` issues the region's request and
 :class:`FccEnvironmentParser` reads either reply into ``(date, label)`` rows.
@@ -28,7 +32,7 @@ from typing import TYPE_CHECKING, Any, NamedTuple
 
 from bs4 import BeautifulSoup
 
-from waste_collection_schedule import date_parsers
+from waste_collection_schedule import date_parsers, tls
 from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.parsers import Parser
 
@@ -77,14 +81,15 @@ class FccEnvironmentRetriever:
         uprn = source.params["uprn"]
         session = source.session
         if service.home is None:
-            response = session.post(
+            response = tls.send(
+                session.post,
                 service.endpoint,
+                tls.AIA,
                 data={"Uprn": uprn},
-                verify=False,
                 timeout=self.timeout,
             )
         else:
-            home = session.get(service.home, verify=False, timeout=self.timeout)
+            home = tls.send(session.get, service.home, tls.AIA, timeout=self.timeout)
             home.raise_for_status()
             # Read off the Set-Cookie header (not a cookie jar) so the token is
             # the one this very reply carried.
@@ -92,11 +97,12 @@ class FccEnvironmentRetriever:
             if match is None:
                 raise ValueError("FCC Environment sent no session token")
             token = match.group(1)
-            response = session.post(
+            response = tls.send(
+                session.post,
                 service.endpoint,
+                tls.AIA,
                 data={"fcc_session_token": token, "uprn": uprn},
                 headers={"x-requested-with": "XMLHttpRequest"},
-                verify=False,
                 timeout=self.timeout,
             )
         response.raise_for_status()

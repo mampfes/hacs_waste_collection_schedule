@@ -1,12 +1,14 @@
 # Gateshead Council
 
-Support for schedules provided by [Gateshead Council](https://www.gateshead.gov.uk/article/3150/Bin-collection-day-checker).
+Support for schedules provided by [Gateshead Council](https://www.gateshead.gov.uk).
+
+Source for gateshead.gov.uk services for Gateshead
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: gateshead_gov_uk
       args:
         uprn: UPRN
@@ -17,17 +19,16 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: gateshead_gov_uk
       args:
-        uprn: 010070837598
+        uprn: 100000058404
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Search for your address on the [FindMyAddress service](https://www.findmyaddress.co.uk/) which displays the UPRN in the result.
-Residential Addresses only. Some flat blocks are managed by trade waste companies. 
+Enter the Unique Property Reference Number (UPRN) of your property. You can find it at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.

@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 import logging
 from random import randrange
@@ -61,6 +62,7 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self._fetch_interval_days = max(1, fetch_interval_days)
         self._random_fetch_time_offset = random_fetch_time_offset
         self._last_fetch_date = None
+        self._fetch_lock = asyncio.Lock()
         self._fetch_tracker: CALLBACK_TYPE | None = None
         self._day_switch_tracker: CALLBACK_TYPE | None = None
         self._midnight_tracker: CALLBACK_TYPE | None = None
@@ -159,7 +161,7 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     def device_info(self):
         return DeviceInfo(
             identifiers={(const.DOMAIN, self.config_entry.entry_id)},
-            name="Waste Collection Schedule",
+            name=self.config_entry.title,
             manufacturer=self.shell.title,
             model="Waste Collection Schedule",
             entry_type=DeviceEntryType.SERVICE,
@@ -186,23 +188,39 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         dispatcher_send(self._hass, const.UPDATE_SENSORS_SIGNAL)
 
     async def _fetch_now(self, *_) -> bool:
-        today = datetime.date.today()
-        if (
-            self._last_fetch_date is not None
-            and (today - self._last_fetch_date).days < self._fetch_interval_days
-        ):
+        # Cancelling an entry task cannot stop a running executor worker. Keep
+        # its lock until completion so a reloaded entry cannot race that worker.
+        return await asyncio.shield(
+            self._hass.async_create_background_task(
+                self._async_fetch_locked(), "Waste collection provider fetch"
+            )
+        )
+
+    async def _async_fetch_locked(self) -> bool:
+        async with self._fetch_lock:
+            if self._shutdown_requested:
+                return False
+            today = datetime.date.today()
+            if (
+                self._last_fetch_date is not None
+                and (today - self._last_fetch_date).days < self._fetch_interval_days
+            ):
+                await self._update_sensors_callback()
+                return True
+
+            if self.shell:
+                fetch_succeeded = await self._hass.async_add_executor_job(
+                    self.shell.fetch
+                )
+                if self._shutdown_requested:
+                    return False
+                if fetch_succeeded:
+                    self._last_fetch_date = today
+
+                    # Save device keys to storage after fetch
+                    device_store = get_device_key_store()
+                    if device_store:
+                        await device_store.async_save()
+
             await self._update_sensors_callback()
-            return True
-
-        if self.shell:
-            fetch_succeeded = await self._hass.async_add_executor_job(self.shell.fetch)
-            if fetch_succeeded:
-                self._last_fetch_date = today
-
-                # Save device keys to storage after fetch
-                device_store = get_device_key_store()
-                if device_store:
-                    await device_store.async_save()
-
-        await self._update_sensors_callback()
-        return fetch_succeeded if self.shell else True
+            return fetch_succeeded if self.shell else True

@@ -26,12 +26,10 @@
         "description": "Välj hur detaljerat du vill konfigurera integrationen. Lämna tomt om du bara vill konfigurera en enkel kalender.",
         "data": {
           "show_customize_config": "Visa anpassning av hämtningstyper",
-          "show_sensor_config": "Visa sensorkonfiguration",
           "default_sensors": "Standardsensorer"
         },
         "data_description": {
           "show_customize_config": "Välj detta om du vill anpassa hämtningstyperna.",
-          "show_sensor_config": "Välj detta om du vill konfigurera sensorer.",
           "default_sensors": "Välj vilka standardsensorer som ska skapas. De kan kombineras med dina egna sensorer."
         }
       },
@@ -54,7 +52,8 @@
           "icon": "Ikon",
           "picture": "Bild",
           "use_dedicated_calendar": "Använd egen kalender",
-          "dedicated_calendar_title": "Namn på egen kalender"
+          "dedicated_calendar_title": "Namn på egen kalender",
+          "color": "Färg (#RRGGBB; tomt = standard)"
         },
         "data_description": {
           "alias": "Nytt namn på hämtningstypen (bara om du vill ändra det).",
@@ -93,35 +92,6 @@
         "data_description": {
           "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
           "f_abfallarten": "Valfritt filter: de avfallstyper som ska tas med."
-        }
-      },
-      "sensor": {
-        "title": "Skapa sensor \"{sensor_number}\"",
-        "description": "Konfigurera en sensor i taget.",
-        "data": {
-          "name": "Sensorns namn",
-          "details_format": "Detaljformat",
-          "count": "Antal",
-          "leadtime": "Framförhållning",
-          "value_template": "Värdemall",
-          "date_template": "Datummall",
-          "add_days_to": "Lägg till dagar kvar",
-          "event_index": "Händelseindex",
-          "types": "Typer",
-          "skip": "Skapa inte sensorn",
-          "additional": "Lägg till fler sensorer"
-        },
-        "data_description": {
-          "details_format": "Anger formatet för informationen i Home Assistants informationsfönster. 'upcoming': lista över kommande hämtningar, 'appointment_types': lista över avfallstyper och deras nästa hämtningsdatum, 'generic': alla attribut som generiska Python-datatyper, 'hidden': döljer attributen för kommande hämtningar",
-          "count": "Begränsar Home Assistants informationsfönster till de närmaste int hämtningarna",
-          "leadtime": "Begränsar Home Assistants informationsfönster till hämtningar inom de närmaste leadtime dagarna",
-          "value_template": "Formaterar entitetens tillstånd med Home Assistants mallar. Du kan använda 'value.date', 'value.daysTo', 'value.types",
-          "date_template": "Formaterar datumen i entitetens informationsfönster med Home Assistants mallar, t.ex. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Lägger till attributet 'daysTo' i källentitetens tillstånd med antalet dagar till nästa hämtning",
-          "event_index": "Kopplar sensorn till ett visst hämtningsdatum. Nästa hämtning har event_index 0. Användbart om du vill ha separata sensorer för nästa hämtning, den andra, den tredje …",
-          "types": "Filtrerar avfallstyper. Sensorn visar bara hämtningar av dessa avfallstyper. Har du angett alias i källans konfiguration måste du använda aliaset.",
-          "skip": "Om markerad skapas inte sensorn och inställningarna ovan ignoreras.",
-          "additional": "Om markerad får du lägga till ytterligare en sensor när den här har sparats."
         }
       },
       "reconfigure": {
@@ -885,10 +855,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street_address": "Din fullständiga adress."
         }
       },
       "reconfigure_casey_vic_gov_au": {
@@ -896,9 +867,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Din fullständiga adress."
+        }
       },
       "args_cockburn_wa_gov_au": {
         "title": "Konfigurera källa",
@@ -950,10 +923,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street_address": "Din fullständiga adress."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -961,9 +935,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Din fullständiga adress."
+        }
       },
       "args_gosnells_wa_gov_au": {
         "title": "Konfigurera källa",
@@ -1801,11 +1777,13 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Gata",
+          "street_number": "Husnummer"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street_and_suburb": "Ditt gatunamn.",
+          "street_number": "Ditt husnummer."
         }
       },
       "reconfigure_fairfieldcity_nsw_gov_au": {
@@ -1813,10 +1791,13 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Gata",
+          "street_number": "Husnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "street_and_suburb": "Ditt gatunamn.",
+          "street_number": "Ditt husnummer."
+        }
       },
       "args_frankston_vic_gov_au": {
         "title": "Konfigurera källa",
@@ -3675,10 +3656,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street_address": "Din fullständiga adress."
         }
       },
       "reconfigure_warrnambool_vic_gov_au": {
@@ -3686,9 +3668,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street_address": "Street Address"
+          "street_address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Din fullständiga adress."
+        }
       },
       "args_waverley_nsw_gov_au": {
         "title": "Konfigurera källa",
@@ -4491,6 +4475,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kommun"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "region": "Namnet på din kommun, som det visas på leverantörens webbplats."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kommun"
+        },
+        "data_description": {
+          "region": "Namnet på din kommun, som det visas på leverantörens webbplats."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -4886,26 +4899,6 @@
           "district": "Ditt distrikt eller del av kommunen.",
           "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Konfigurera källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "region": "Region"
-        },
-        "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Konfigurera om källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "region": "Region"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Konfigurera källa",
@@ -7051,6 +7044,26 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn"
+        },
+        "data_description": {}
+      },
+      "args_ovwrc_com": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_ovwrc_com": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "day": "Day"
         },
         "data_description": {}
       },
@@ -19121,6 +19134,28 @@
         },
         "data_description": {}
       },
+      "args_raywhelan_ie": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "calendar": "Calendar",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_raywhelan_ie": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "calendar": "Calendar",
+          "day": "Day"
+        },
+        "data_description": {}
+      },
       "args_junker_app": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -19946,6 +19981,30 @@
         },
         "data_description": {}
       },
+      "args_selargiusostenibile_it": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Zon"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_selargiusostenibile_it": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Zon"
+        },
+        "data_description": {}
+      },
       "args_silea_it": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -20141,6 +20200,8 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
+          "city": "Ort",
+          "containers": "Containers",
           "district": "Distrikt",
           "house_number": "Husnummer",
           "region": "Region",
@@ -20156,6 +20217,8 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
+          "city": "Ort",
+          "containers": "Containers",
           "district": "Distrikt",
           "house_number": "Husnummer",
           "region": "Region",
@@ -21131,7 +21194,7 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "area_number": "Area Number"
+          "area_number": "Plats-ID"
         },
         "data_description": {
           "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
@@ -21142,7 +21205,7 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "area_number": "Area Number"
+          "area_number": "Plats-ID"
         },
         "data_description": {}
       },
@@ -21199,7 +21262,8 @@
           "address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress."
         }
       },
       "reconfigure_ccc_govt_nz": {
@@ -21209,7 +21273,9 @@
           "calendar_title": "Kalendernamn",
           "address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fullständiga adress."
+        }
       },
       "args_dunedin_govt_nz": {
         "title": "Konfigurera källa",
@@ -22481,6 +22547,26 @@
           "street": "Ditt gatunamn."
         }
       },
+      "args_eko_region_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "village": "Village"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_eko_region_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "village": "Village"
+        },
+        "data_description": {}
+      },
       "args_ekolandpolska_com_pl": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -22564,6 +22650,26 @@
           "street": "Ditt gatunamn."
         }
       },
+      "args_tamax_imielno_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_imielno_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_jaktorow_pl": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -22581,6 +22687,46 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "region": "Region"
+        },
+        "data_description": {}
+      },
+      "args_tamax_janow_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_janow_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
+      "args_tamax_koniusza_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_koniusza_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
         },
         "data_description": {}
       },
@@ -22615,6 +22761,46 @@
           "street": "Ditt gatunamn."
         }
       },
+      "args_tamax_ksiaz_wielki_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_ksiaz_wielki_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
+      "args_tamax_lelow_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_lelow_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_maslow_pl": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -22637,6 +22823,26 @@
         "data_description": {
           "district": "Ditt distrikt eller del av kommunen."
         }
+      },
+      "args_tamax_bochnia_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_bochnia_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {}
       },
       "args_gmina_miekinia_pl": {
         "title": "Konfigurera källa",
@@ -22792,6 +22998,26 @@
           "street": "Ditt gatunamn."
         }
       },
+      "args_tamax_net_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_net_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_gmina_radlow_pl": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -22812,6 +23038,46 @@
         },
         "data_description": {}
       },
+      "args_tamax_szczekociny_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_szczekociny_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
+      "args_tamax_sedziszow_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_sedziszow_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_gmina_trzebnica_pl": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -22829,6 +23095,26 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "region_id": "Region Id"
+        },
+        "data_description": {}
+      },
+      "args_tamax_wlodowice_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_wlodowice_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
         },
         "data_description": {}
       },
@@ -23175,6 +23461,26 @@
         "data_description": {
           "street": "Ditt gatunamn."
         }
+      },
+      "args_tamax_wieliczka_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_wieliczka_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {}
       },
       "args_zywiec_pl": {
         "title": "Konfigurera källa",
@@ -23786,7 +24092,8 @@
           "address": "Adress"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress."
         }
       },
       "reconfigure_komunala_kranj_si": {
@@ -23796,7 +24103,9 @@
           "calendar_title": "Kalendernamn",
           "address": "Adress"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fullständiga adress."
+        }
       },
       "args_komunala_slb_si": {
         "title": "Konfigurera källa",
@@ -24506,6 +24815,29 @@
           "street_address": "Street Address"
         },
         "data_description": {}
+      },
+      "args_ljusdalenergi_se": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "address": "Adress"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress."
+        }
+      },
+      "reconfigure_ljusdalenergi_se": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "address": "Adress"
+        },
+        "data_description": {
+          "address": "Din fullständiga adress."
+        }
       },
       "args_lumire_se": {
         "title": "Konfigurera källa",
@@ -27940,6 +28272,29 @@
           "postcode": "Ditt postnummer."
         }
       },
+      "args_edinburgh_gov_uk": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "street": "Gata"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street": "Ditt gatunamn."
+        }
+      },
+      "reconfigure_edinburgh_gov_uk": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "street": "Gata"
+        },
+        "data_description": {
+          "street": "Ditt gatunamn."
+        }
+      },
       "args_lincoln_gov_uk": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -28421,11 +28776,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
-          "uprn": "Ett enkelt sätt att hitta ditt Unique Property Reference Number (UPRN) är att gå till {url_www_findmyaddress_co_uk} och ange dina adressuppgifter."
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_dover_gov_uk": {
@@ -28433,10 +28788,10 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Ett enkelt sätt att hitta ditt Unique Property Reference Number (UPRN) är att gå till {url_www_findmyaddress_co_uk} och ange dina adressuppgifter."
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_dudley_gov_uk": {
@@ -28760,11 +29115,12 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
-          "uprn": "Ett enkelt sätt att hitta ditt Unique Property Reference Number (UPRN) är att gå till {url_www_findmyaddress_co_uk} och ange dina adressuppgifter."
+          "postcode": "Ditt postnummer.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_east_renfrewshire_gov_uk": {
@@ -28773,10 +29129,11 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Ett enkelt sätt att hitta ditt Unique Property Reference Number (UPRN) är att gå till {url_www_findmyaddress_co_uk} och ange dina adressuppgifter."
+          "postcode": "Ditt postnummer.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_eastriding_gov_uk": {
@@ -29297,11 +29654,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
-          "uprn": "Ett enkelt sätt att hitta ditt Unique Property Reference Number (UPRN) är att gå till {url_www_findmyaddress_co_uk} och ange dina adressuppgifter."
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_gateshead_gov_uk": {
@@ -29309,10 +29666,10 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Ett enkelt sätt att hitta ditt Unique Property Reference Number (UPRN) är att gå till {url_www_findmyaddress_co_uk} och ange dina adressuppgifter."
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_ics_gedling_gov_uk": {
@@ -29437,10 +29794,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_great_yarmouth_gov_uk": {
@@ -29448,9 +29806,11 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_guildford_gov_uk": {
         "title": "Konfigurera källa",
@@ -29597,10 +29957,13 @@
           "calendar_title": "Kalendernamn",
           "house_number": "Husnummer",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "house_number": "Ditt husnummer.",
+          "postcode": "Ditt postnummer.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hastings_gov_uk": {
@@ -29610,9 +29973,13 @@
           "calendar_title": "Kalendernamn",
           "house_number": "Husnummer",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ditt husnummer.",
+          "postcode": "Ditt postnummer.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_waste_havant_gov_uk": {
         "title": "Konfigurera källa",
@@ -29839,7 +30206,7 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "location_id": "Location Id"
+          "location_id": "Plats-ID"
         },
         "data_description": {
           "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
@@ -29850,7 +30217,7 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "location_id": "Location Id"
+          "location_id": "Plats-ID"
         },
         "data_description": {}
       },
@@ -30810,13 +31177,15 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "house_number": "Husnummer",
-          "number": "Number",
+          "number": "Husnummer",
           "postcode": "Postnummer",
           "street": "Gata"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "number": "Ditt husnummer.",
+          "postcode": "Ditt postnummer.",
+          "street": "Ditt gatunamn."
         }
       },
       "reconfigure_midsussex_gov_uk": {
@@ -30824,12 +31193,15 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "house_number": "Husnummer",
-          "number": "Number",
+          "number": "Husnummer",
           "postcode": "Postnummer",
           "street": "Gata"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Ditt husnummer.",
+          "postcode": "Ditt postnummer.",
+          "street": "Ditt gatunamn."
+        }
       },
       "args_midulstercouncil_org": {
         "title": "Konfigurera källa",
@@ -31007,10 +31379,12 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "postcode": "Ditt postnummer.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_newforest_gov_uk": {
@@ -31019,9 +31393,12 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Ditt postnummer.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_newark_sherwooddc_gov_uk": {
         "title": "Konfigurera källa",
@@ -31090,6 +31467,35 @@
         },
         "data_description": {
           "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "args_newrymournedown_org": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "house_number": "Husnummer",
+          "postcode": "Postnummer",
+          "url": "Url"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "house_number": "Ditt husnummer.",
+          "postcode": "Ditt postnummer."
+        }
+      },
+      "reconfigure_newrymournedown_org": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "house_number": "Husnummer",
+          "postcode": "Postnummer",
+          "url": "Url"
+        },
+        "data_description": {
+          "house_number": "Ditt husnummer.",
+          "postcode": "Ditt postnummer."
         }
       },
       "args_north_ayrshire_gov_uk": {
@@ -31901,10 +32307,12 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "postcode": "Ditt postnummer.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_powys_gov_uk": {
@@ -31913,20 +32321,25 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Ditt postnummer.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_preston_gov_uk": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street": "Gata",
-          "uprn": "Uprn"
+          "street": "Adress",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "street": "Din fullständiga adress.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_preston_gov_uk": {
@@ -31934,10 +32347,13 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "street": "Gata",
-          "uprn": "Uprn"
+          "street": "Adress",
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Din fullständiga adress.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_reading_gov_uk": {
         "title": "Konfigurera källa",
@@ -33180,12 +33596,15 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "post_code": "Post Code",
-          "street_name": "Street Name",
-          "uprn": "Uprn"
+          "post_code": "Postnummer",
+          "street_name": "Gata",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "post_code": "Ditt postnummer.",
+          "street_name": "Ditt gatunamn.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_swansea_gov_uk": {
@@ -33193,11 +33612,15 @@
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "post_code": "Post Code",
-          "street_name": "Street Name",
-          "uprn": "Uprn"
+          "post_code": "Postnummer",
+          "street_name": "Gata",
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "post_code": "Ditt postnummer.",
+          "street_name": "Ditt gatunamn.",
+          "uprn": "Ditt Unique Property Reference Number. Hitta det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_swindon_gov_uk": {
         "title": "Konfigurera källa",
@@ -35660,7 +36083,9 @@
           "municipality": "Kommun"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress.",
+          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats."
         }
       },
       "reconfigure_vogeldisposal_com": {
@@ -35671,7 +36096,10 @@
           "address": "Adress",
           "municipality": "Kommun"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Din fullständiga adress.",
+          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats."
+        }
       },
       "args_wm_com": {
         "title": "Konfigurera källa",
@@ -35745,40 +36173,18 @@
       "name_exists": "Sensornamnet finns redan. Välj ett annat namn.",
       "preset_selected": "Du kan inte välja en förinställning och samtidigt ange egna värden.",
       "sensor_name_empty": "Sensornamnet får inte vara tomt. Ange ett namn.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan inte ange ett namn på en egen kalender utan att aktivera egen kalender."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan inte ange ett namn på en egen kalender utan att aktivera egen kalender.",
+      "invalid_sensor": "Kontrollera sensorinställningar, mallar och färgen #RRGGBB."
     }
   },
   "options": {
     "step": {
       "init": {
-        "description": "Uppdatera inställningarna för Waste Collection Schedule.",
-        "data": {
-          "sensor_select": "Sensorer att ändra",
-          "default_sensors": "Lägg till standardsensorer",
-          "customize_select": "Anpassningar att ändra",
-          "calendar_title": "Kalendernamn",
-          "separator": "Avgränsare",
-          "fetch_time": "Hämtningstid",
-          "random_fetch_time_offset": "Slumpmässig förskjutning av hämtningstid",
-          "day_switch_time": "Tid för dagsbyte",
-          "fetch_interval_days": "Dagar mellan hämtningar",
-          "day_offset": "Dagsförskjutning",
-          "ignore_duplicates": "Ignorera dubbletter per dag",
-          "show_original_label": "Visa leverantörens ursprungliga etikett"
-        },
-        "data_description": {
-          "sensor_select": "Välj sensorn du vill ändra (välj 'Lägg till ny sensor' för att skapa en ny).",
-          "default_sensors": "Lägger till de valda standardsensorer som saknas. Befintliga sensorer lämnas orörda.",
-          "customize_select": "Välj anpassningen du vill ändra (eller välj en ny för att skapa den).",
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
-          "separator": "Används för att sammanfoga posterna när källan ger flera värden för samma dag.",
-          "fetch_time": "Klockslag i formatet 'HH:MM' då Home Assistant hämtar det senaste hämtschemat från leverantören.",
-          "random_fetch_time_offset": "Förskjuter hämtningstiden slumpmässigt med upp till x minuter. Sprider Home Assistants hämtningar över en längre tid så att leverantörerna slipper toppbelastning.",
-          "day_switch_time": "Klockslag i formatet 'HH:MM' då Home Assistant släpper dagens post och går vidare till nästa.",
-          "fetch_interval_days": "Hur ofta Home Assistant hämtar hämtningstillfällen från den här kalenderkällan. Standard är 1 dag; med värdet 2 hämtas de varannan dag.",
-          "day_offset": "Antal dagar att lägga till hämtningsdatumet (kan vara negativt). Anges inget värde används standardvärdet 0",
-          "ignore_duplicates": "När aktiverad tas dubbletter med samma avfallstyp samma dag bort, så att bara en post per typ och dag finns kvar.",
-          "show_original_label": "När aktiverad (standard) behåller vissa källor leverantörens ursprungliga etikett (t.ex. kärlets exakta namn) i hämtningens beskrivning, även när den har mappats till en standardavfallstyp. Avaktivera för att dölja den ursprungliga etiketten."
+        "title": "Waste Collection Schedule",
+        "menu_options": {
+          "source_settings": "Källinställningar",
+          "sensors": "Sensorer",
+          "waste_types": "Avfallstyper"
         }
       },
       "customize": {
@@ -35791,7 +36197,8 @@
           "icon": "Ikon",
           "picture": "Bild",
           "use_dedicated_calendar": "Använd egen kalender",
-          "dedicated_calendar_title": "Namn på egen kalender"
+          "dedicated_calendar_title": "Namn på egen kalender",
+          "color": "Färg (#RRGGBB; tomt = standard)"
         },
         "data_description": {
           "delete": "Ta bort den här anpassningen.",
@@ -35803,35 +36210,73 @@
           "dedicated_calendar_title": "Namnet på den egna kalenderentiteten."
         }
       },
-      "sensor": {
-        "title": "Ändra/skapa sensor \"{sensor_number}\"",
-        "description": "Konfigurera en sensor i taget.",
+      "source_settings": {
+        "description": "Uppdatera inställningarna för Waste Collection Schedule.",
         "data": {
-          "delete": "Ta bort",
-          "name": "Sensorns namn",
-          "details_format": "Detaljformat",
-          "count": "Antal",
-          "leadtime": "Framförhållning",
-          "value_template": "Värdemall",
-          "date_template": "Datummall",
-          "add_days_to": "Lägg till dagar kvar",
-          "event_index": "Händelseindex",
-          "types": "Typer",
-          "skip": "Skapa inte sensorn",
-          "additional": "Lägg till fler sensorer"
+          "calendar_title": "Kalendernamn",
+          "separator": "Avgränsare",
+          "fetch_time": "Hämtningstid",
+          "random_fetch_time_offset": "Slumpmässig hämtningsförskjutning (minuter)",
+          "day_switch_time": "Tid för dagsbyte",
+          "fetch_interval_days": "Dagar mellan hämtningar",
+          "day_offset": "Dagsförskjutning",
+          "ignore_duplicates": "Ignorera dubbletter per dag",
+          "show_original_label": "Visa leverantörens ursprungliga etikett"
         },
         "data_description": {
-          "delete": "Ta bort den här sensorn.",
-          "details_format": "Anger formatet för informationen i Home Assistants informationsfönster. 'upcoming': lista över kommande hämtningar, 'appointment_types': lista över avfallstyper och deras nästa hämtningsdatum, 'generic': alla attribut som generiska Python-datatyper, 'hidden': döljer attributen för kommande hämtningar",
-          "count": "Begränsar Home Assistants informationsfönster till de närmaste int hämtningarna",
-          "leadtime": "Begränsar Home Assistants informationsfönster till hämtningar inom de närmaste leadtime dagarna",
-          "value_template": "Formaterar entitetens tillstånd med Home Assistants mallar. Du kan använda 'value.date', 'value.daysTo', 'value.types",
-          "date_template": "Formaterar datumen i entitetens informationsfönster med Home Assistants mallar, t.ex. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Lägger till attributet 'daysTo' i källentitetens tillstånd med antalet dagar till nästa hämtning",
-          "event_index": "Kopplar sensorn till ett visst hämtningsdatum. Nästa hämtning har event_index 0. Användbart om du vill ha separata sensorer för nästa hämtning, den andra, den tredje …",
-          "types": "Filtrerar avfallstyper. Sensorn visar bara hämtningar av dessa avfallstyper. Har du angett alias i källans konfiguration måste du använda aliaset.",
-          "skip": "Om markerad skapas inte sensorn och inställningarna ovan ignoreras.",
-          "additional": "Om markerad får du lägga till ytterligare en sensor när den här har sparats."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "separator": "Används för att sammanfoga posterna när källan ger flera värden för samma dag.",
+          "fetch_time": "Klockslag i formatet 'HH:MM' då Home Assistant hämtar det senaste hämtschemat från leverantören.",
+          "random_fetch_time_offset": "Förskjuter hämtningstiden slumpmässigt med upp till x minuter. Sprider Home Assistants hämtningar över en längre tid så att leverantörerna slipper toppbelastning.",
+          "day_switch_time": "Klockslag i formatet 'HH:MM' då Home Assistant släpper dagens post och går vidare till nästa.",
+          "fetch_interval_days": "Hur ofta Home Assistant hämtar hämtningstillfällen från den här kalenderkällan. Standard är 1 dag; med värdet 2 hämtas de varannan dag.",
+          "day_offset": "Antal dagar att lägga till hämtningsdatumet (kan vara negativt). Anges inget värde används standardvärdet 0",
+          "ignore_duplicates": "När aktiverad tas dubbletter med samma avfallstyp samma dag bort, så att bara en post per typ och dag finns kvar.",
+          "show_original_label": "När aktiverad (standard) behåller vissa källor leverantörens ursprungliga etikett (t.ex. kärlets exakta namn) i hämtningens beskrivning, även när den har mappats till en standardavfallstyp. Avaktivera för att dölja den ursprungliga etiketten."
+        },
+        "title": "Källinställningar"
+      },
+      "sensors": {
+        "title": "Sensorer",
+        "data": {
+          "predefined": "Fördefinierade sensorer",
+          "edit_sensor": "Redigera sensor",
+          "device_controls": "Enhetskontroller",
+          "auto_add_types": "Lägg automatiskt till nya typer"
+        }
+      },
+      "edit_sensor": {
+        "title": "Redigera sensor",
+        "data": {
+          "name": "Namn",
+          "enabled": "Aktiverad",
+          "state_format": "Tillståndstext",
+          "language": "Språk",
+          "date_format": "Datumformat",
+          "details_format": "Detaljformat",
+          "count": "Antal",
+          "leadtime": "Framförhållning (dagar)",
+          "unique_types": "Varje typ endast en gång",
+          "exclude_types": "Uteslut typer",
+          "advanced": "Avancerade inställningar",
+          "action": "Åtgärd",
+          "types": "Avfallstyper",
+          "kind": "Sensortyp"
+        }
+      },
+      "sensor_advanced": {
+        "title": "Avancerade inställningar",
+        "data": {
+          "event_index": "Hämtningsindex",
+          "value_template": "Egen tillståndsmall",
+          "date_template": "Egen datummall",
+          "color": "Färg (#RRGGBB; tomt = standard)"
+        }
+      },
+      "waste_types": {
+        "title": "Avfallstyper",
+        "data": {
+          "types": "Avfallstyper"
         }
       }
     },
@@ -35841,17 +36286,52 @@
       "name_exists": "Sensornamnet finns redan. Välj ett annat namn.",
       "preset_selected": "Du kan inte välja en förinställning och samtidigt ange egna värden.",
       "sensor_name_empty": "Sensornamnet får inte vara tomt. Ange ett namn.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan inte ange ett namn på en egen kalender utan att aktivera egen kalender."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan inte ange ett namn på en egen kalender utan att aktivera egen kalender.",
+      "invalid_sensor": "Kontrollera sensorinställningar, mallar och färgen #RRGGBB."
     },
-    "abort": {}
+    "abort": {
+      "sensor_removed": "Sensorn togs bort under redigeringen. Öppna sensorinställningarna igen."
+    }
   },
   "selector": {
     "details_format": {
       "options": {
-        "upcoming": "Kommande",
-        "appointment_types": "Hämtningstyper",
-        "generic": "Generisk",
-        "hidden": "Dold"
+        "types_in_days": "Typer och nedräkning",
+        "in_days": "Nedräkning",
+        "relative": "I dag / I morgon / om N dagar",
+        "date": "Hämtningsdatum",
+        "types": "Avfallstyper",
+        "days": "Antal dagar",
+        "custom": "Egen mall",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Veckodag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Veckodag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Veckodag, YYYY-MM-DD",
+        "upcoming": "Kommande datum",
+        "appointment_types": "Nästa datum per typ",
+        "generic": "Strukturerade poster",
+        "hidden": "Dölj detaljer",
+        "schedule": "Hämtningsschema",
+        "days_to": "Dagar till hämtning",
+        "last_update": "Senaste uppdatering",
+        "auto": "Home Assistants språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lägg till egen sensor",
+        "save": "Spara",
+        "reset": "Återställ standardvärden",
+        "duplicate": "Duplicera som egen sensor",
+        "delete": "Ta bort egen sensor"
       }
     },
     "default_sensors": {
@@ -35872,7 +36352,439 @@
       "options": {
         "sensor_select_add_new": "Lägg till ny sensor"
       }
+    },
+    "state_format": {
+      "options": {
+        "types_in_days": "Typer och nedräkning",
+        "in_days": "Nedräkning",
+        "relative": "I dag / I morgon / om N dagar",
+        "date": "Hämtningsdatum",
+        "types": "Avfallstyper",
+        "days": "Antal dagar",
+        "custom": "Egen mall",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Veckodag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Veckodag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Veckodag, YYYY-MM-DD",
+        "upcoming": "Kommande datum",
+        "appointment_types": "Nästa datum per typ",
+        "generic": "Strukturerade poster",
+        "hidden": "Dölj detaljer",
+        "schedule": "Hämtningsschema",
+        "days_to": "Dagar till hämtning",
+        "last_update": "Senaste uppdatering",
+        "auto": "Home Assistants språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lägg till egen sensor",
+        "save": "Spara",
+        "reset": "Återställ standardvärden",
+        "duplicate": "Duplicera som egen sensor",
+        "delete": "Ta bort egen sensor"
+      }
+    },
+    "date_format": {
+      "options": {
+        "types_in_days": "Typer och nedräkning",
+        "in_days": "Nedräkning",
+        "relative": "I dag / I morgon / om N dagar",
+        "date": "Hämtningsdatum",
+        "types": "Avfallstyper",
+        "days": "Antal dagar",
+        "custom": "Egen mall",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Veckodag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Veckodag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Veckodag, YYYY-MM-DD",
+        "upcoming": "Kommande datum",
+        "appointment_types": "Nästa datum per typ",
+        "generic": "Strukturerade poster",
+        "hidden": "Dölj detaljer",
+        "schedule": "Hämtningsschema",
+        "days_to": "Dagar till hämtning",
+        "last_update": "Senaste uppdatering",
+        "auto": "Home Assistants språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lägg till egen sensor",
+        "save": "Spara",
+        "reset": "Återställ standardvärden",
+        "duplicate": "Duplicera som egen sensor",
+        "delete": "Ta bort egen sensor"
+      }
+    },
+    "language": {
+      "options": {
+        "types_in_days": "Typer och nedräkning",
+        "in_days": "Nedräkning",
+        "relative": "I dag / I morgon / om N dagar",
+        "date": "Hämtningsdatum",
+        "types": "Avfallstyper",
+        "days": "Antal dagar",
+        "custom": "Egen mall",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Veckodag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Veckodag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Veckodag, YYYY-MM-DD",
+        "upcoming": "Kommande datum",
+        "appointment_types": "Nästa datum per typ",
+        "generic": "Strukturerade poster",
+        "hidden": "Dölj detaljer",
+        "schedule": "Hämtningsschema",
+        "days_to": "Dagar till hämtning",
+        "last_update": "Senaste uppdatering",
+        "auto": "Home Assistants språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lägg till egen sensor",
+        "save": "Spara",
+        "reset": "Återställ standardvärden",
+        "duplicate": "Duplicera som egen sensor",
+        "delete": "Ta bort egen sensor"
+      }
+    },
+    "kind": {
+      "options": {
+        "types_in_days": "Typer och nedräkning",
+        "in_days": "Nedräkning",
+        "relative": "I dag / I morgon / om N dagar",
+        "date": "Hämtningsdatum",
+        "types": "Avfallstyper",
+        "days": "Antal dagar",
+        "custom": "Egen mall",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Veckodag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Veckodag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Veckodag, YYYY-MM-DD",
+        "upcoming": "Kommande datum",
+        "appointment_types": "Nästa datum per typ",
+        "generic": "Strukturerade poster",
+        "hidden": "Dölj detaljer",
+        "schedule": "Hämtningsschema",
+        "days_to": "Dagar till hämtning",
+        "last_update": "Senaste uppdatering",
+        "auto": "Home Assistants språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lägg till egen sensor",
+        "save": "Spara",
+        "reset": "Återställ standardvärden",
+        "duplicate": "Duplicera som egen sensor",
+        "delete": "Ta bort egen sensor"
+      }
+    },
+    "action": {
+      "options": {
+        "types_in_days": "Typer och nedräkning",
+        "in_days": "Nedräkning",
+        "relative": "I dag / I morgon / om N dagar",
+        "date": "Hämtningsdatum",
+        "types": "Avfallstyper",
+        "days": "Antal dagar",
+        "custom": "Egen mall",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Veckodag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Veckodag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Veckodag, YYYY-MM-DD",
+        "upcoming": "Kommande datum",
+        "appointment_types": "Nästa datum per typ",
+        "generic": "Strukturerade poster",
+        "hidden": "Dölj detaljer",
+        "schedule": "Hämtningsschema",
+        "days_to": "Dagar till hämtning",
+        "last_update": "Senaste uppdatering",
+        "auto": "Home Assistants språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lägg till egen sensor",
+        "save": "Spara",
+        "reset": "Återställ standardvärden",
+        "duplicate": "Duplicera som egen sensor",
+        "delete": "Ta bort egen sensor"
+      }
     }
   },
-  "issues": {}
+  "issues": {
+    "legacy_sensors": {
+      "title": "Sensorer från tidigare namnbyten",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Ta bort gamla sensorposter",
+            "description": "Dessa gamla sensorer saknar sparad konfiguration: {entities}. Kontrollera automationer och instrumentpaneler före borttagning.\n\nTa bort de angivna gamla registerposterna? Aktiva migrerade sensorer behålls."
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "state_format": {
+        "name": "Tillståndstext",
+        "state": {
+          "types_in_days": "Typer och nedräkning",
+          "in_days": "Nedräkning",
+          "relative": "I dag / I morgon / om N dagar",
+          "date": "Hämtningsdatum",
+          "types": "Avfallstyper",
+          "days": "Antal dagar",
+          "custom": "Egen mall",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Veckodag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Veckodag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Veckodag, YYYY-MM-DD",
+          "upcoming": "Kommande datum",
+          "appointment_types": "Nästa datum per typ",
+          "generic": "Strukturerade poster",
+          "hidden": "Dölj detaljer",
+          "schedule": "Hämtningsschema",
+          "days_to": "Dagar till hämtning",
+          "last_update": "Senaste uppdatering",
+          "auto": "Home Assistants språk",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Lägg till egen sensor",
+          "save": "Spara",
+          "reset": "Återställ standardvärden",
+          "duplicate": "Duplicera som egen sensor",
+          "delete": "Ta bort egen sensor"
+        }
+      },
+      "language": {
+        "name": "Språk",
+        "state": {
+          "types_in_days": "Typer och nedräkning",
+          "in_days": "Nedräkning",
+          "relative": "I dag / I morgon / om N dagar",
+          "date": "Hämtningsdatum",
+          "types": "Avfallstyper",
+          "days": "Antal dagar",
+          "custom": "Egen mall",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Veckodag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Veckodag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Veckodag, YYYY-MM-DD",
+          "upcoming": "Kommande datum",
+          "appointment_types": "Nästa datum per typ",
+          "generic": "Strukturerade poster",
+          "hidden": "Dölj detaljer",
+          "schedule": "Hämtningsschema",
+          "days_to": "Dagar till hämtning",
+          "last_update": "Senaste uppdatering",
+          "auto": "Home Assistants språk",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Lägg till egen sensor",
+          "save": "Spara",
+          "reset": "Återställ standardvärden",
+          "duplicate": "Duplicera som egen sensor",
+          "delete": "Ta bort egen sensor"
+        }
+      },
+      "date_format": {
+        "name": "Datumformat",
+        "state": {
+          "types_in_days": "Typer och nedräkning",
+          "in_days": "Nedräkning",
+          "relative": "I dag / I morgon / om N dagar",
+          "date": "Hämtningsdatum",
+          "types": "Avfallstyper",
+          "days": "Antal dagar",
+          "custom": "Egen mall",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Veckodag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Veckodag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Veckodag, YYYY-MM-DD",
+          "upcoming": "Kommande datum",
+          "appointment_types": "Nästa datum per typ",
+          "generic": "Strukturerade poster",
+          "hidden": "Dölj detaljer",
+          "schedule": "Hämtningsschema",
+          "days_to": "Dagar till hämtning",
+          "last_update": "Senaste uppdatering",
+          "auto": "Home Assistants språk",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Lägg till egen sensor",
+          "save": "Spara",
+          "reset": "Återställ standardvärden",
+          "duplicate": "Duplicera som egen sensor",
+          "delete": "Ta bort egen sensor"
+        }
+      },
+      "details_format": {
+        "name": "Detaljformat",
+        "state": {
+          "types_in_days": "Typer och nedräkning",
+          "in_days": "Nedräkning",
+          "relative": "I dag / I morgon / om N dagar",
+          "date": "Hämtningsdatum",
+          "types": "Avfallstyper",
+          "days": "Antal dagar",
+          "custom": "Egen mall",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Veckodag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Veckodag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Veckodag, YYYY-MM-DD",
+          "upcoming": "Kommande datum",
+          "appointment_types": "Nästa datum per typ",
+          "generic": "Strukturerade poster",
+          "hidden": "Dölj detaljer",
+          "schedule": "Hämtningsschema",
+          "days_to": "Dagar till hämtning",
+          "last_update": "Senaste uppdatering",
+          "auto": "Home Assistants språk",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Lägg till egen sensor",
+          "save": "Spara",
+          "reset": "Återställ standardvärden",
+          "duplicate": "Duplicera som egen sensor",
+          "delete": "Ta bort egen sensor"
+        }
+      }
+    },
+    "number": {
+      "count": {
+        "name": "Antal (0 = ∞)"
+      },
+      "leadtime": {
+        "name": "Framförhållning (dagar) (-1 = ∞)"
+      },
+      "event_index": {
+        "name": "Hämtningsindex"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Aktiverad"
+      },
+      "unique_types": {
+        "name": "Varje typ endast en gång"
+      },
+      "advanced": {
+        "name": "Avancerade inställningar"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Namn"
+      },
+      "value_template": {
+        "name": "Egen tillståndsmall"
+      },
+      "date_template": {
+        "name": "Egen datummall"
+      },
+      "color": {
+        "name": "Färg (#RRGGBB; tomt = standard)"
+      }
+    },
+    "button": {
+      "create_sensor": {
+        "name": "Skapa sensorn {name}"
+      },
+      "delete": {
+        "name": "Ta bort egen sensor"
+      }
+    }
+  },
+  "exceptions": {
+    "type_unavailable": {
+      "message": "Denna avfallstyp finns inte längre i det aktuella schemat."
+    },
+    "custom_template_required": {
+      "message": "Ange först en egen tillståndsmall under avancerade inställningar."
+    }
+  }
 }

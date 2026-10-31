@@ -237,8 +237,8 @@ class BaseTransformer(ABC, Generic[T]):
         )
         return location, description, color
 
-    @staticmethod
     def _collections(
+        self,
         date: datetime.date,
         resolved: TypeMapValue | None,
         location: Any = None,
@@ -256,8 +256,9 @@ class BaseTransformer(ABC, Generic[T]):
 
         ``raw_label`` is the provider's own label for the record (before
         ``type_value_map``/the shared vocabulary collapsed it to a canonical
-        WasteType). When the source hasn't supplied its own ``description``,
-        it becomes the Collection's description instead of being discarded —
+        WasteType). It is always retained for filtering and metadata. With
+        ``carry_raw_label``, it also defines bin identity and, when the source
+        hasn't supplied its own ``description``, becomes the description —
         so a ``type_value_map`` that maps several distinct provider labels
         (e.g. "Restmülltonne" and "Spartonne Restmüll", the same
         residual-waste stream on different cycles) onto one WasteType doesn't
@@ -270,11 +271,12 @@ class BaseTransformer(ABC, Generic[T]):
 
         def build(waste_type: WasteType) -> Collection:
             collection = Collection(date=date, waste_type=waste_type, color=color)
+            collection.set_original_label(raw_label, for_identity=self._carry_raw_label)
             if location is not None:
                 collection.set_location(location)
             if description is not None:
                 collection.set_description(description)
-            elif raw_label:
+            elif raw_label and self._carry_raw_label:
                 candidate = " ".join(str(raw_label).split())
                 if candidate and candidate != display_name(waste_type):
                     collection.set_description_from_raw_label(candidate)
@@ -361,7 +363,7 @@ class JsonTransformer(BaseTransformer[Mapping[str, Any]]):
             location,
             description,
             color,
-            raw_label=raw_type if self._carry_raw_label else None,
+            raw_label=raw_type,
         )
 
         if self._picture_key is not None and result is not None:
@@ -442,7 +444,7 @@ class KeyValueTransformer(BaseTransformer[Iterable[Mapping[str, str]]]):
             location,
             description,
             color,
-            raw_label=raw_type if self._carry_raw_label else None,
+            raw_label=raw_type,
         )
 
 
@@ -518,7 +520,7 @@ class ICSTransformer(BaseTransformer["tuple[datetime.date, str] | IcsEvent"]):
             location,
             description,
             color,
-            raw_label=summary if self._carry_raw_label else None,
+            raw_label=summary,
         )
 
 
@@ -574,7 +576,7 @@ class RowTransformer(BaseTransformer[tuple[Any, str]]):
             location,
             description,
             color,
-            raw_label=raw_label if self._carry_raw_label else None,
+            raw_label=raw_label,
         )
 
 
@@ -659,7 +661,7 @@ class HtmlTransformer(BaseTransformer[Tag]):
             location,
             description,
             color,
-            raw_label=str(raw_type) if self._carry_raw_label else None,
+            raw_label=str(raw_type),
         )
 
 

@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-10-24",
+  "interactions": [
+    {
+      "key": "GET https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/Search ff2a4d3b41",
+      "method": "GET",
+      "url": "https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/Search",
+      "final_url": "https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/Search?query=Kyrkogatan",
+      "body": "{\"params\":[[\"query\",\"Kyrkogatan\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Server": "Microsoft-IIS/10.0",
+        "Date": "Sat, 24 Oct 2026 07:18:55 GMT"
+      },
+      "content_b64": "W3siU2VydmljZUlkIjoxMDM0MzQ0Mzk0LCJTdHJlZXROYW1lIjoiS3lya29nYXRhbiAyIiwiWmlwQ29kZSI6IjgyNzMwIiwiQ2l0eU5hbWUiOiJMSlVTREFMIn0seyJTZXJ2aWNlSWQiOjEwMzQzNDQzMjQsIlN0cmVldE5hbWUiOiJLeXJrb2dhdGFuIDUiLCJaaXBDb2RlIjoiODI3MzAiLCJDaXR5TmFtZSI6IkxKVVNEQUwifSx7IlNlcnZpY2VJZCI6MTAzNDM0NDMxNCwiU3RyZWV0TmFtZSI6Ikt5cmtvZ2F0YW4gNyIsIlppcENvZGUiOiI4MjczMCIsIkNpdHlOYW1lIjoiTEpVU0RBTCJ9LHsiU2VydmljZUlkIjoxMzI5NzYwMDQ3LCJTdHJlZXROYW1lIjoiS3lya29nYXRhbiA5IiwiWmlwQ29kZSI6IjgyNzMwIiwiQ2l0eU5hbWUiOiJMSlVTREFMIn0seyJTZXJ2aWNlSWQiOjEwMzQzNDQzMjAsIlN0cmVldE5hbWUiOiJLeXJrb2dhdGFuIDktMTEiLCJaaXBDb2RlIjoiODI3MzAiLCJDaXR5TmFtZSI6IkxKVVNEQUwifSx7IlNlcnZpY2VJZCI6MTAzNDM0NDQwMiwiU3RyZWV0TmFtZSI6Ikt5cmtvZ2F0YW4gMTIiLCJaaXBDb2RlIjoiODI3MzAiLCJDaXR5TmFtZSI6IkxKVVNEQUwifSx7IlNlcnZpY2VJZCI6MTAzNjY4NTQwNCwiU3RyZWV0TmFtZSI6Ikt5cmtvZ2F0YW4gMTMtMTciLCJaaXBDb2RlIjoiODI3MzAiLCJDaXR5TmFtZSI6IkxKVVNEQUwifSx7IlNlcnZpY2VJZCI6MTAzNDM0Mjc3MSwiU3RyZWV0TmFtZSI6Ikt5cmtvZ2F0YW4gMTgiLCJaaXBDb2RlIjoiODI3MzAiLCJDaXR5TmFtZSI6IkxKVVNEQUwifSx7IlNlcnZpY2VJZCI6MTAzNDM0Mjc3NSwiU3RyZWV0TmFtZSI6Ikt5cmtvZ2F0YW4gMTgiLCJaaXBDb2RlIjoiODI3MzAiLCJDaXR5TmFtZSI6IkxKVVNEQUwifSx7IlNlcnZpY2VJZCI6MTAzNDM0NDI5NiwiU3RyZWV0TmFtZSI6Ikt5cmtvZ2F0YW4gMTkiLCJaaXBDb2RlIjoiODI3MzAiLCJDaXR5TmFtZSI6IkxKVVNEQUwifV0="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgAmbiguousWithSuggestions",
+    "message": "Multiple values found for the argument 'address' with the value 'Kyrkogatan', please specify one of: ['Kyrkogatan 2, Ljusdal', 'Kyrkogatan 5, Ljusdal', 'Kyrkogatan 7, Ljusdal', 'Kyrkogatan 9, Ljusdal', 'Kyrkogatan 9-11, Ljusdal', 'Kyrkogatan 12, Ljusdal', 'Kyrkogatan 13-17, Ljusdal', 'Kyrkogatan 18, Ljusdal', 'Kyrkogatan 19, Ljusdal']"
+  }
+}

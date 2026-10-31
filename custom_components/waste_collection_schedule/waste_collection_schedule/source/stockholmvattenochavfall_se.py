@@ -1,3 +1,5 @@
+"""House and townhouse collections from Stockholm Vatten och Avfall."""
+
 import re
 from typing import ClassVar, TypedDict, final
 
@@ -5,20 +7,25 @@ from waste_collection_schedule import date_parsers, field_terms, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import cascading_select
-from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.parsers import JsonParser
 from waste_collection_schedule.transformers import JsonTransformer
 
 API_URL = "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen"
+AUTOCOMPLETE_URL = f"{API_URL}/AutoCompleteMe"
 
 
 # The autocomplete answers at most this many addresses per query.
 _AUTOCOMPLETE_LIMIT = 5
+# Bound dropdown discovery on long streets; users can still type an address.
 _MAX_QUERIES = 60
 _STREET_OF = re.compile(r"^(.*?)\s+\d+\w*,")
 
 _AUTOCOMPLETE = retrievers.Request(
-    f"{API_URL}/AutoCompleteMe",
+    AUTOCOMPLETE_URL,
     params=lambda query, *args, **kwargs: {"query": query},
 )
 
@@ -40,6 +47,8 @@ def _address(response, *keys, address=None, street=None, **params) -> str:
     """
     address = address or street or ""
     values = [str(r["value"]) for r in response.json() or [] if r.get("value")]
+    if not values:
+        raise SourceArgumentNotFound("address", address)
     wanted = _normalise(address)
     exact = [v for v in values if _normalise(v) == wanted]
     if len(exact) == 1:
@@ -78,7 +87,9 @@ class Source(BaseSource):
             "I gränssnittet skriver du gatunamnet och väljer sedan din adress i listan. "
             "Ange adressen till en villa eller ett radhus som på "
             "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, "
-            "t.ex. `Hjortronvägen 3, Bromma`. Postnumret är valfritt."
+            "t.ex. `Hjortronvägen 3, Bromma`. Postnumret är valfritt. "
+            "Webbplatsen visar bara nästa tömning av varje kärl, så schemat "
+            "uppdateras en gång om dagen (standardintervallet)."
         ),
     }
 
@@ -109,7 +120,15 @@ class Source(BaseSource):
 
     ERROR_TEST_CASES: ClassVar[dict] = {
         "Unknown address": {"address": "Ingen gata 999, Stockholm"},
+        "Uncovered apartment address": {"address": "Drottninggatan 1"},
     }
+
+    def _raise_empty(self) -> None:
+        raise SourceArgumentNotFound(
+            "address",
+            self.params.get("address") or self.params.get("street"),
+            "only house and townhouse (villa och radhus) addresses are covered.",
+        )
 
     @classmethod
     def get_choices(cls, field: str, selections: dict) -> list[str]:
@@ -157,7 +176,7 @@ class Source(BaseSource):
         params=lambda full_address, **kwargs: {"address": full_address},
         before=(
             retrievers.Lookup(
-                f"{API_URL}/AutoCompleteMe",
+                AUTOCOMPLETE_URL,
                 params=lambda address=None, street=None, **kwargs: {
                     "query": address or street
                 },
@@ -175,8 +194,6 @@ class Source(BaseSource):
             "Kärl 1 - restavfall och matavfall": [wt.GENERAL_WASTE, wt.FOOD_WASTE],
             "Kärl 2 - papper och plast": [wt.PAPER, wt.PLASTIC],
             "Kärl 3 - glas och metall": [wt.GLASS, wt.METAL],
-            "Restavfall, villa": wt.GENERAL_WASTE,
-            "Matavfall, villa": wt.FOOD_WASTE,
             "Trädgårdsavfall, villa": wt.GARDEN_WASTE,
         },
         carry_raw_label=True,

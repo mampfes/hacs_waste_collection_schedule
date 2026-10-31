@@ -1,0 +1,111 @@
+{
+  "recorded_at": "2026-10-31",
+  "interactions": [
+    {
+      "key": "GET https://opendata.ccc.govt.nz/CCCSearch/rest/address/suggest decc3449a8",
+      "method": "GET",
+      "url": "https://opendata.ccc.govt.nz/CCCSearch/rest/address/suggest",
+      "final_url": "https://opendata.ccc.govt.nz/CCCSearch/rest/address/suggest?q=53+Hereford+Street&status=current&crs=epsg%3A4326&limit=1",
+      "body": "{\"params\":[[\"crs\",\"epsg:4326\"],[\"limit\",\"1\"],[\"q\",\"53 Hereford Street\"],[\"status\",\"current\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Content-Length": "494",
+        "Content-Type": "application/json; charset=utf-8",
+        "Expires": "-1",
+        "Date": "Sat, 31 Oct 2026 13:16:44 GMT"
+      },
+      "content_b64": "Ww0KICB7DQogICAgIlN0cmVldEFkZHJlc3NJRCI6IDE0NTEyMSwNCiAgICAiRnVsbFN0cmVldEFkZHJlc3MiOiAiNTMgSGVyZWZvcmQgU3RyZWV0LCBDZW50cmFsIENpdHksIENocmlzdGNodXJjaCA4MDEzIiwNCiAgICAiRnVsbFBvc3RhbEFkZHJlc3MiOiAiNTMgSGVyZWZvcmQgU3RyZWV0LCBDZW50cmFsIENpdHksIENocmlzdGNodXJjaCA4MDEzIiwNCiAgICAiUmF0aW5nVW5pdElEIjogODYwODksDQogICAgIkdlb21ldHJ5Ijogew0KICAgICAgImNvb3JkaW5hdGVzIjogWw0KICAgICAgICAxNzIuNjMxODY0LA0KICAgICAgICAtNDMuNTMxNzUNCiAgICAgIF0sDQogICAgICAiY3JzIjogew0KICAgICAgICAicHJvcGVydGllcyI6IHsNCiAgICAgICAgICAibmFtZSI6ICJ1cm46b2djOmRlZjpjcnM6RVBTRzo6NDMyNiINCiAgICAgICAgfSwNCiAgICAgICAgInR5cGUiOiAiTmFtZSINCiAgICAgIH0sDQogICAgICAidHlwZSI6ICJQb2ludCINCiAgICB9DQogIH0NCl0="
+    },
+    {
+      "key": "GET https://ccc-data-citizen-api-v1-prod.au-s1.cloudhub.io/api/v1/properties/86089 ",
+      "method": "GET",
+      "url": "https://ccc-data-citizen-api-v1-prod.au-s1.cloudhub.io/api/v1/properties/86089",
+      "final_url": "https://ccc-data-citizen-api-v1-prod.au-s1.cloudhub.io/api/v1/properties/86089",
+      "body": "",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "age": "21042",
+        "Content-Type": "application/json; charset=UTF-8",
+        "Date": "Sat, 31 Oct 2026 13:16:45 GMT",
+        "Server": "nginx",
+        "Content-Length": "3120",
+        "Connection": "keep-alive"
+      },
+      "content_b64": "ewogICJpZCI6ICI4NjA4OSIsCiAgImFkZHJlc3MiOiAiNTMgSGVyZWZvcmQgU3RyZWV0IENlbnRyYWwgQ2l0eSBDaHJpc3RjaHVyY2giLAogICJsYXRpdHVkZSI6IC00My41MzE5MiwKICAibG9uZ2l0dWRlIjogMTcyLjYzMTQzLAogICJiaW5zIjogewogICAgImNvbnRhaW5lcnMiOiBbCiAgICAgIHsKICAgICAgICAiY29udGFpbmVyX3R5cGUiOiAiODBMIFdCIiwKICAgICAgICAibWF0ZXJpYWwiOiAiT3JnYW5pYyIsCiAgICAgICAgInNlcmlhbF9ubyI6ICJDMDQwMTIzNiIsCiAgICAgICAgInRhZyI6ICJDMDQwMTIzNiIsCiAgICAgICAgInN0YXR1cyI6ICJBY3RpdmUiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAiY29udGFpbmVyX3R5cGUiOiAiMTQwTCBXQiIsCiAgICAgICAgIm1hdGVyaWFsIjogIkdhcmJhZ2UiLAogICAgICAgICJzZXJpYWxfbm8iOiAiRzAxMjE0NyIsCiAgICAgICAgInRhZyI6ICJFMjAwMDAxOTE1MDUwMTkwMjgyMDAzNjgiLAogICAgICAgICJzdGF0dXMiOiAiQWN0aXZlIgogICAgICB9LAogICAgICB7CiAgICAgICAgImNvbnRhaW5lcl90eXBlIjogIjgwTCBXQiIsCiAgICAgICAgIm1hdGVyaWFsIjogIk9yZ2FuaWMiLAogICAgICAgICJzZXJpYWxfbm8iOiAiQzA0NTM5MDEiLAogICAgICAgICJ0YWciOiAiRTIwMDMwNzQyMjBCMDA3MjA4ODBDMDhEIiwKICAgICAgICAic3RhdHVzIjogIkFjdGl2ZSIKICAgICAgfSwKICAgICAgewogICAgICAgICJjb250YWluZXJfdHlwZSI6ICIyNDBMIFdCIiwKICAgICAgICAibWF0ZXJpYWwiOiAiUmVjeWNsZSIsCiAgICAgICAgInNlcmlhbF9ubyI6ICJSMDU4NzUzMCIsCiAgICAgICAgInRhZyI6ICJFMjAwMDAxOTE1MDUwMTg5MDgxMEM4OEMiLAogICAgICAgICJzdGF0dXMiOiAiQWN0aXZlIgogICAgICB9CiAgICBdLAogICAgInJvdXRlcyI6IFsKICAgICAgewogICAgICAgICJtYXRlcmlhbCI6ICJHYXJiYWdlIiwKICAgICAgICAiZGF5X29mX3dlZWsiOiAiVHVlc2RheSIsCiAgICAgICAgImN1c3RvbWVyX2dyb3VwIjogIldLMiBUVUUiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibWF0ZXJpYWwiOiAiT3JnYW5pYyIsCiAgICAgICAgImRheV9vZl93ZWVrIjogIlR1ZXNkYXkiLAogICAgICAgICJjdXN0b21lcl9ncm91cCI6ICJXSzIgVFVFIgogICAgICB9LAogICAgICB7CiAgICAgICAgIm1hdGVyaWFsIjogIlJlY3ljbGUiLAogICAgICAgICJkYXlfb2Zfd2VlayI6ICJUdWVzZGF5IiwKICAgICAgICAiY3VzdG9tZXJfZ3JvdXAiOiAiV0syIFRVRSIKICAgICAgfQogICAgXSwKICAgICJjb2xsZWN0aW9ucyI6IFsKICAgICAgewogICAgICAgICJuZXh0X3BsYW5uZWRfZGF0ZSI6ICIyMDIyLTA5LTA2IiwKICAgICAgICAibmV4dF9wbGFubmVkX2RhdGVfYXBwIjogIjIwMjItMDktMjAiLAogICAgICAgICJtYXRlcmlhbCI6ICJSZWN5Y2xlIiwKICAgICAgICAicGlja191cF9ncm91cCI6ICIxMDUiLAogICAgICAgICJvdXRfb2ZfZGF0ZSI6ICJUcnVlIgogICAgICB9LAogICAgICB7CiAgICAgICAgIm5leHRfcGxhbm5lZF9kYXRlIjogIjIwMjItMDktMTMiLAogICAgICAgICJuZXh0X3BsYW5uZWRfZGF0ZV9hcHAiOiAiMjAyMi0wOS0yNyIsCiAgICAgICAgIm1hdGVyaWFsIjogIkdhcmJhZ2UiLAogICAgICAgICJwaWNrX3VwX2dyb3VwIjogIjIwNSIsCiAgICAgICAgIm91dF9vZl9kYXRlIjogIlRydWUiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibmV4dF9wbGFubmVkX2RhdGUiOiAiMjAyMi0wOS0wNiIsCiAgICAgICAgIm5leHRfcGxhbm5lZF9kYXRlX2FwcCI6ICIyMDIyLTA5LTEzIiwKICAgICAgICAibWF0ZXJpYWwiOiAiT3JnYW5pYyIsCiAgICAgICAgInBpY2tfdXBfZ3JvdXAiOiAiV2Vla2x5IiwKICAgICAgICAib3V0X29mX2RhdGUiOiAiVHJ1ZSIKICAgICAgfSwKICAgICAgewogICAgICAgICJuZXh0X3BsYW5uZWRfZGF0ZSI6ICIyMDIyLTEwLTExIiwKICAgICAgICAibmV4dF9wbGFubmVkX2RhdGVfYXBwIjogIjIwMjItMTAtMTgiLAogICAgICAgICJtYXRlcmlhbCI6ICJPcmdhbmljIiwKICAgICAgICAicGlja191cF9ncm91cCI6ICJXZWVrbHkiLAogICAgICAgICJvdXRfb2ZfZGF0ZSI6ICJUcnVlIgogICAgICB9LAogICAgICB7CiAgICAgICAgIm5leHRfcGxhbm5lZF9kYXRlIjogIjIwMjItMTAtMTgiLAogICAgICAgICJuZXh0X3BsYW5uZWRfZGF0ZV9hcHAiOiAiMjAyMi0xMS0wMSIsCiAgICAgICAgIm1hdGVyaWFsIjogIlJlY3ljbGUiLAogICAgICAgICJwaWNrX3VwX2dyb3VwIjogIjEwNSIsCiAgICAgICAgIm91dF9vZl9kYXRlIjogIlRydWUiCiAgICAgIH0sCiAgICAgIHsKICAgICAgICAibmV4dF9wbGFubmVkX2RhdGUiOiAiMjAyMi0xMC0xMSIsCiAgICAgICAgIm5leHRfcGxhbm5lZF9kYXRlX2FwcCI6ICIyMDIyLTEwLTI1IiwKICAgICAgICAibWF0ZXJpYWwiOiAiR2FyYmFnZSIsCiAgICAgICAgInBpY2tfdXBfZ3JvdXAiOiAiMjA1IiwKICAgICAgICAib3V0X29mX2RhdGUiOiAiVHJ1ZSIKICAgICAgfSwKICAgICAgewogICAgICAgICJuZXh0X3BsYW5uZWRfZGF0ZSI6ICIyMDI1LTEyLTAyIiwKICAgICAgICAibmV4dF9wbGFubmVkX2RhdGVfYXBwIjogIjIwMjUtMTItMDkiLAogICAgICAgICJtYXRlcmlhbCI6ICJPcmdhbmljIiwKICAgICAgICAicGlja191cF9ncm91cCI6ICJXZWVrbHkiLAogICAgICAgICJvdXRfb2ZfZGF0ZSI6ICJUcnVlIgogICAgICB9LAogICAgICB7CiAgICAgICAgIm5leHRfcGxhbm5lZF9kYXRlIjogIjIwMjYtMTEtMDMiLAogICAgICAgICJuZXh0X3BsYW5uZWRfZGF0ZV9hcHAiOiAiMjAyNi0xMS0wMyIsCiAgICAgICAgIm1hdGVyaWFsIjogIkdhcmJhZ2UiLAogICAgICAgICJwaWNrX3VwX2dyb3VwIjogIjIwNSIsCiAgICAgICAgIm91dF9vZl9kYXRlIjogIkZhbHNlIgogICAgICB9LAogICAgICB7CiAgICAgICAgIm5leHRfcGxhbm5lZF9kYXRlIjogIjIwMjYtMTEtMTAiLAogICAgICAgICJuZXh0X3BsYW5uZWRfZGF0ZV9hcHAiOiAiMjAyNi0xMS0xMCIsCiAgICAgICAgIm1hdGVyaWFsIjogIlJlY3ljbGUiLAogICAgICAgICJwaWNrX3VwX2dyb3VwIjogIjEwNSIsCiAgICAgICAgIm91dF9vZl9kYXRlIjogIkZhbHNlIgogICAgICB9CiAgICBdCiAgfQp9"
+    },
+    {
+      "key": "GET https://ccc.govt.nz/api/kerbsidedateoverrides ",
+      "method": "GET",
+      "url": "https://ccc.govt.nz/api/kerbsidedateoverrides",
+      "final_url": "https://ccc.govt.nz/api/kerbsidedateoverrides",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Server": "nginx",
+        "Date": "Sat, 31 Oct 2026 13:16:47 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "219",
+        "Connection": "keep-alive",
+        "Strict-Transport-Security": "max-age=31536000;",
+        "Set-Cookie": "FluentLocale=deleted; expires=Thu, 01 Jan 1970 00:00:01 GMT; Max-Age=0; path=/; secure; HttpOnly; SameSite=Strict, visid_incap_347624=AuY3w3JfT0u1fkgGr5FNMj/q5WoAAAAAQUIPAAAAAAA4UOujAqfnd77ZW/Ku1Ely; expires=Sun, 31 Oct 2027 06:32:10 GMT; HttpOnly; path=/; Domain=.ccc.govt.nz, nlbi_347624=xPDID8XRIkZesMFZwhhmXgAAAAC6NjhSHqWCCpL2Eiwn3V5D; HttpOnly; path=/; Domain=.ccc.govt.nz, incap_ses_1838_347624=H3zLLabdG1n+Fs+o8eOBGT/q5WoAAAAAr4Md2+3Qg3Yq2qlL5lRltQ==; path=/; Domain=.ccc.govt.nz",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "allow",
+        "access-control-allow-methods": "OPTIONS, POST, GET, PUT, DELETE",
+        "access-control-max-age": "86400",
+        "vary": "X-Forwarded-Protocol,Accept-Encoding",
+        "cache-control": "no-cache, must-revalidate",
+        "etag": "\"c440084be8c889206f5b02cda124d7fc-gzip\"",
+        "Content-Encoding": "gzip",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-XSS-Protection": "0",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "Content-Security-Policy": "default-src 'none'; base-uri 'self'; connect-src 'self' blob: createsend.com www.createsend.com *.clarity.ms tm-cachedresources.trafficmanager.net *.google-analytics.com *.google.com *.googletagmanager.com tagmanager.google.com *.googleapis.com *.gstatic.com *.monsido.com *.fontawesome.com *.doubleclick.net googleads.g.doubleclick.net ad.doubleclick.net www.google.co.nz opendata.ccc.govt.nz gis.ccc.govt.nz *.adsrvr.org *.siteintercept.qualtrics.com siteintercept.qualtrics.com christchurchcc.syd1.qualtrics.com *.qualtrics.com www.facebook.com cdn.jsdelivr.net *.googleadservices.com ccc-search.funnelback.squiz.cloud; frame-src 'self' www.youtube.com www.youtube-nocookie.com www.google.com www.facebook.com *.fontawesome.com *.doubleclick.net *.googletagmanager.com *.adsrvr.org ccc.tfaforms.net ratesinfoprod.ccc.govt.nz app.powerbi.com player.vimeo.com gis.ccc.govt.nz letstalk.ccc.govt.nz radian.mintdesign.co.nz meetingfinder.ccc.govt.nz https://staticcdn.co.nz/ christchurchcc.syd1.qualtrics.com *.qualtrics.com https://*.qualtrics.com; frame-ancestors 'self'; font-src 'self' fonts.gstatic.com *.fontawesome.com data:; form-action 'self' www.googletagmanager.com www.facebook.com createsend.com www.createsend.com *.createsend.com https://createsend.com https://www.createsend.com https://*.createsend.com https://publicapi.paymentmanager.co.nz https://uat-publicapi.paymentmanager.co.nz https://christchurchcc.syd1.qualtrics.com *.qualtrics.com https://*.qualtrics.com; img-src 'self' blob: *.clarity.ms *.google-analytics.com *.analytics.google.com www.googletagmanager.com www.facebook.com *.doubleclick.net www.google.com www.google.co.nz *.monsido.com shielded.co.nz via.placeholder.com ccc.govt.nz www.ccc.govt.nz www.newsline.ccc.govt.nz maps.googleapis.com *.gstatic.com gis.ccc.govt.nz *.tile.openstreetmap.org tile.openstreetmap.org *.tile.openstreetmap.fr c.bing.com letstalk.ccc.govt.nz hdp-au-prod-app-ccc-letstalk-files.s3.ap-southeast-2.amazonaws.com siteintercept.qualtrics.com *.siteintercept.qualtrics.com *.qualtrics.com data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.clarity.ms *.google-analytics.com *.analytics.google.com www.googletagmanager.com tagmanager.google.com www.google.com www.gstatic.com maps.googleapis.com www.youtube.com www.youtube-nocookie.com s.ytimg.com connect.facebook.net s.yimg.com code.jquery.com *.monsido.com *.fontawesome.com *.funnelback.squiz.cloud staticcdn.co.nz cdn.jsdelivr.net *.doubleclick.net *.googleadservices.com *.adsrvr.org *.siteintercept.qualtrics.com siteintercept.qualtrics.com *.qualtrics.com address.nzpost.co.nz js.createsend1.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' fonts.googleapis.com *.funnelback.squiz.cloud *.fontawesome.com",
+        "Permissions-Policy": "accelerometer=(self \"https://ratesinfoprod.ccc.govt.nz\" \"https://gis.ccc.govt.nz\" \"https://www.google.com\"), autoplay=(self), camera=(), cross-origin-isolated=(self), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(self), gyroscope=(self \"https://ratesinfoprod.ccc.govt.nz\" \"https://gis.ccc.govt.nz\" \"https://www.google.com\"), keyboard-map=(), magnetometer=(self \"https://ratesinfoprod.ccc.govt.nz\" \"https://gis.ccc.govt.nz\" \"https://www.google.com\"), microphone=(), midi=(), payment=(), picture-in-picture=(self \"https://www.youtube.com\" \"https://www.youtube-nocookie.com\"), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(*), usb=(), xr-spatial-tracking=(), clipboard-read=(self), clipboard-write=(self), unload=*",
+        "X-CDN": "Imperva",
+        "X-Iinfo": "17-2851366-2851410 NNNN CT(141 154 0) RT(1793452607078 419) q(0 0 3 1) r(5 5) U4"
+      },
+      "content_b64": "W3siSUQiOjQ0LCJUaXRsZSI6IkNocmlzdG1hcyBEYXkgMjAyNSIsIk9yaWdpbmFsRGF0ZSI6IjIwMjUtMTItMjUiLCJOZXdEYXRlIjoiMjAyNS0xMi0yNiIsIkV4cGlyZWQiOjB9LHsiSUQiOjQ1LCJUaXRsZSI6IkJveGluZyBEYXkgMjAyNSIsIk9yaWdpbmFsRGF0ZSI6IjIwMjUtMTItMjYiLCJOZXdEYXRlIjoiMjAyNS0xMi0yNyIsIkV4cGlyZWQiOjB9LHsiSUQiOjQ2LCJUaXRsZSI6Ik5ldyBZZWFyJ3MgRGF5IDIwMjYiLCJPcmlnaW5hbERhdGUiOiIyMDI2LTAxLTAxIiwiTmV3RGF0ZSI6IjIwMjYtMDEtMDIiLCJFeHBpcmVkIjowfSx7IklEIjo0NywiVGl0bGUiOiIybmQgSmFudWFyeSAyMDI2IiwiT3JpZ2luYWxEYXRlIjoiMjAyNi0wMS0wMiIsIk5ld0RhdGUiOiIyMDI2LTAxLTAzIiwiRXhwaXJlZCI6MH0seyJJRCI6NDgsIlRpdGxlIjoiR29vZCBGcmlkYXkgMjAyNiIsIk9yaWdpbmFsRGF0ZSI6IjIwMjYtMDQtMDMiLCJOZXdEYXRlIjoiMjAyNi0wNC0wNCIsIkV4cGlyZWQiOjB9LHsiSUQiOjQ5LCJUaXRsZSI6IkNocmlzdG1hcyBEYXkgMjAyNiIsIk9yaWdpbmFsRGF0ZSI6IjIwMjYtMTItMjUiLCJOZXdEYXRlIjoiMjAyNi0xMi0yNiIsIkV4cGlyZWQiOjB9LHsiSUQiOjUwLCJUaXRsZSI6Ik5ldyBZZWFyJ3MgRGF5IDIwMjciLCJPcmlnaW5hbERhdGUiOiIyMDI3LTAxLTAxIiwiTmV3RGF0ZSI6IjIwMjctMDEtMDIiLCJFeHBpcmVkIjowfV0="
+    },
+    {
+      "key": "GET https://ccc.govt.nz/api/kerbsidedateoverrides ",
+      "method": "GET",
+      "url": "https://ccc.govt.nz/api/kerbsidedateoverrides",
+      "final_url": "https://ccc.govt.nz/api/kerbsidedateoverrides",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Server": "nginx",
+        "Date": "Sat, 31 Oct 2026 13:16:48 GMT",
+        "Content-Type": "application/json; charset=utf-8",
+        "Content-Length": "219",
+        "Connection": "keep-alive",
+        "Strict-Transport-Security": "max-age=31536000;",
+        "Set-Cookie": "FluentLocale=deleted; expires=Thu, 01 Jan 1970 00:00:01 GMT; Max-Age=0; path=/; secure; HttpOnly; SameSite=Strict",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "allow",
+        "access-control-allow-methods": "OPTIONS, POST, GET, PUT, DELETE",
+        "access-control-max-age": "86400",
+        "vary": "X-Forwarded-Protocol,Accept-Encoding",
+        "cache-control": "no-cache, must-revalidate",
+        "etag": "\"c440084be8c889206f5b02cda124d7fc-gzip\"",
+        "Content-Encoding": "gzip",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-XSS-Protection": "0",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "Content-Security-Policy": "default-src 'none'; base-uri 'self'; connect-src 'self' blob: createsend.com www.createsend.com *.clarity.ms tm-cachedresources.trafficmanager.net *.google-analytics.com *.google.com *.googletagmanager.com tagmanager.google.com *.googleapis.com *.gstatic.com *.monsido.com *.fontawesome.com *.doubleclick.net googleads.g.doubleclick.net ad.doubleclick.net www.google.co.nz opendata.ccc.govt.nz gis.ccc.govt.nz *.adsrvr.org *.siteintercept.qualtrics.com siteintercept.qualtrics.com christchurchcc.syd1.qualtrics.com *.qualtrics.com www.facebook.com cdn.jsdelivr.net *.googleadservices.com ccc-search.funnelback.squiz.cloud; frame-src 'self' www.youtube.com www.youtube-nocookie.com www.google.com www.facebook.com *.fontawesome.com *.doubleclick.net *.googletagmanager.com *.adsrvr.org ccc.tfaforms.net ratesinfoprod.ccc.govt.nz app.powerbi.com player.vimeo.com gis.ccc.govt.nz letstalk.ccc.govt.nz radian.mintdesign.co.nz meetingfinder.ccc.govt.nz https://staticcdn.co.nz/ christchurchcc.syd1.qualtrics.com *.qualtrics.com https://*.qualtrics.com; frame-ancestors 'self'; font-src 'self' fonts.gstatic.com *.fontawesome.com data:; form-action 'self' www.googletagmanager.com www.facebook.com createsend.com www.createsend.com *.createsend.com https://createsend.com https://www.createsend.com https://*.createsend.com https://publicapi.paymentmanager.co.nz https://uat-publicapi.paymentmanager.co.nz https://christchurchcc.syd1.qualtrics.com *.qualtrics.com https://*.qualtrics.com; img-src 'self' blob: *.clarity.ms *.google-analytics.com *.analytics.google.com www.googletagmanager.com www.facebook.com *.doubleclick.net www.google.com www.google.co.nz *.monsido.com shielded.co.nz via.placeholder.com ccc.govt.nz www.ccc.govt.nz www.newsline.ccc.govt.nz maps.googleapis.com *.gstatic.com gis.ccc.govt.nz *.tile.openstreetmap.org tile.openstreetmap.org *.tile.openstreetmap.fr c.bing.com letstalk.ccc.govt.nz hdp-au-prod-app-ccc-letstalk-files.s3.ap-southeast-2.amazonaws.com siteintercept.qualtrics.com *.siteintercept.qualtrics.com *.qualtrics.com data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.clarity.ms *.google-analytics.com *.analytics.google.com www.googletagmanager.com tagmanager.google.com www.google.com www.gstatic.com maps.googleapis.com www.youtube.com www.youtube-nocookie.com s.ytimg.com connect.facebook.net s.yimg.com code.jquery.com *.monsido.com *.fontawesome.com *.funnelback.squiz.cloud staticcdn.co.nz cdn.jsdelivr.net *.doubleclick.net *.googleadservices.com *.adsrvr.org *.siteintercept.qualtrics.com siteintercept.qualtrics.com *.qualtrics.com address.nzpost.co.nz js.createsend1.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' fonts.googleapis.com *.funnelback.squiz.cloud *.fontawesome.com",
+        "Permissions-Policy": "accelerometer=(self \"https://ratesinfoprod.ccc.govt.nz\" \"https://gis.ccc.govt.nz\" \"https://www.google.com\"), autoplay=(self), camera=(), cross-origin-isolated=(self), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(self), gyroscope=(self \"https://ratesinfoprod.ccc.govt.nz\" \"https://gis.ccc.govt.nz\" \"https://www.google.com\"), keyboard-map=(), magnetometer=(self \"https://ratesinfoprod.ccc.govt.nz\" \"https://gis.ccc.govt.nz\" \"https://www.google.com\"), microphone=(), midi=(), payment=(), picture-in-picture=(self \"https://www.youtube.com\" \"https://www.youtube-nocookie.com\"), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(*), usb=(), xr-spatial-tracking=(), clipboard-read=(self), clipboard-write=(self), unload=*",
+        "X-CDN": "Imperva",
+        "X-Iinfo": "17-2851366-2851410 SNNN RT(1793452607078 1354) q(0 0 0 -1) r(2 2) U4"
+      },
+      "content_b64": "W3siSUQiOjQ0LCJUaXRsZSI6IkNocmlzdG1hcyBEYXkgMjAyNSIsIk9yaWdpbmFsRGF0ZSI6IjIwMjUtMTItMjUiLCJOZXdEYXRlIjoiMjAyNS0xMi0yNiIsIkV4cGlyZWQiOjB9LHsiSUQiOjQ1LCJUaXRsZSI6IkJveGluZyBEYXkgMjAyNSIsIk9yaWdpbmFsRGF0ZSI6IjIwMjUtMTItMjYiLCJOZXdEYXRlIjoiMjAyNS0xMi0yNyIsIkV4cGlyZWQiOjB9LHsiSUQiOjQ2LCJUaXRsZSI6Ik5ldyBZZWFyJ3MgRGF5IDIwMjYiLCJPcmlnaW5hbERhdGUiOiIyMDI2LTAxLTAxIiwiTmV3RGF0ZSI6IjIwMjYtMDEtMDIiLCJFeHBpcmVkIjowfSx7IklEIjo0NywiVGl0bGUiOiIybmQgSmFudWFyeSAyMDI2IiwiT3JpZ2luYWxEYXRlIjoiMjAyNi0wMS0wMiIsIk5ld0RhdGUiOiIyMDI2LTAxLTAzIiwiRXhwaXJlZCI6MH0seyJJRCI6NDgsIlRpdGxlIjoiR29vZCBGcmlkYXkgMjAyNiIsIk9yaWdpbmFsRGF0ZSI6IjIwMjYtMDQtMDMiLCJOZXdEYXRlIjoiMjAyNi0wNC0wNCIsIkV4cGlyZWQiOjB9LHsiSUQiOjQ5LCJUaXRsZSI6IkNocmlzdG1hcyBEYXkgMjAyNiIsIk9yaWdpbmFsRGF0ZSI6IjIwMjYtMTItMjUiLCJOZXdEYXRlIjoiMjAyNi0xMi0yNiIsIkV4cGlyZWQiOjB9LHsiSUQiOjUwLCJUaXRsZSI6Ik5ldyBZZWFyJ3MgRGF5IDIwMjciLCJPcmlnaW5hbERhdGUiOiIyMDI3LTAxLTAxIiwiTmV3RGF0ZSI6IjIwMjctMDEtMDIiLCJFeHBpcmVkIjowfV0="
+    }
+  ]
+}

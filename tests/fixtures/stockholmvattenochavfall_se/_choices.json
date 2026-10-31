@@ -1,5 +1,5 @@
 {
-  "recorded_at": "2026-10-29",
+  "recorded_at": "2026-10-31",
   "interactions": [
     {
       "key": "GET https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe 4f6100a9de",
@@ -12,14 +12,15 @@
       "headers": {
         "cache-control": "private",
         "content-type": "application/json; charset=utf-8",
-        "server": "Microsoft-IIS/10.0",
-        "set-cookie": "ASP.NET_SessionId=3lg3fcp55a20jcc2noargrzh; path=/; HttpOnly; SameSite=Lax",
+        "server": "envoy",
+        "set-cookie": "ASP.NET_SessionId=pcy4dx00xiq4dfvqlcxokcvt; path=/; HttpOnly; SameSite=Lax",
         "x-aspnetmvc-version": "5.2",
         "x-aspnet-version": "4.0.30319",
         "x-powered-by": "ASP.NET",
         "access-control-allow-origin": "fonts.gstatic.com",
-        "date": "Thu, 29 Oct 2026 19:41:56 GMT",
-        "content-length": "306"
+        "date": "Sat, 31 Oct 2026 22:11:16 GMT",
+        "content-length": "306",
+        "x-envoy-upstream-service-time": "375"
       },
       "content_b64": "W3sidmFsdWUiOiJIam9ydHJvbnbDpGdlbiAxLCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifSx7InZhbHVlIjoiSGpvcnRyb252w6RnZW4gMiwgQnJvbW1hLCAxNjggNTkiLCJkYXRhIjoiMTY4IDU5In0seyJ2YWx1ZSI6Ikhqb3J0cm9udsOkZ2VuIDMsIEJyb21tYSwgMTY4IDU5IiwiZGF0YSI6IjE2OCA1OSJ9LHsidmFsdWUiOiJIam9ydHJvbnbDpGdlbiA0LCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifSx7InZhbHVlIjoiSGpvcnRyb252w6RnZW4gNSwgQnJvbW1hLCAxNjggNTkiLCJkYXRhIjoiMTY4IDU5In1d"
     },
@@ -34,13 +35,14 @@
       "headers": {
         "cache-control": "private",
         "content-type": "application/json; charset=utf-8",
-        "server": "Microsoft-IIS/10.0",
+        "server": "envoy",
         "x-aspnetmvc-version": "5.2",
         "x-aspnet-version": "4.0.30319",
         "x-powered-by": "ASP.NET",
         "access-control-allow-origin": "fonts.gstatic.com",
-        "date": "Thu, 29 Oct 2026 19:41:56 GMT",
-        "content-length": "186"
+        "date": "Sat, 31 Oct 2026 22:11:16 GMT",
+        "content-length": "186",
+        "x-envoy-upstream-service-time": "375"
       },
       "content_b64": "W3sidmFsdWUiOiJIam9ydHJvbnbDpGdlbiAxLCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifSx7InZhbHVlIjoiSGpvcnRyb252w6RnZW4gMTAsIEJyb21tYSwgMTY4IDU5IiwiZGF0YSI6IjE2OCA1OSJ9LHsidmFsdWUiOiJIam9ydHJvbnbDpGdlbiAxNCwgQnJvbW1hLCAxNjggNTkiLCJkYXRhIjoiMTY4IDU5In1d"
     },
@@ -55,13 +57,14 @@
       "headers": {
         "cache-control": "private",
         "content-type": "application/json; charset=utf-8",
-        "server": "Microsoft-IIS/10.0",
+        "server": "envoy",
         "x-aspnetmvc-version": "5.2",
         "x-aspnet-version": "4.0.30319",
         "x-powered-by": "ASP.NET",
         "access-control-allow-origin": "fonts.gstatic.com",
-        "date": "Thu, 29 Oct 2026 19:41:56 GMT",
-        "content-length": "62"
+        "date": "Sat, 31 Oct 2026 22:11:17 GMT",
+        "content-length": "62",
+        "x-envoy-upstream-service-time": "376"
       },
       "content_b64": "W3sidmFsdWUiOiJIam9ydHJvbnbDpGdlbiAyLCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifV0="
     },
@@ -76,13 +79,14 @@
       "headers": {
         "cache-control": "private",
         "content-type": "application/json; charset=utf-8",
-        "server": "Microsoft-IIS/10.0",
+        "server": "envoy",
         "x-aspnetmvc-version": "5.2",
         "x-aspnet-version": "4.0.30319",
         "x-powered-by": "ASP.NET",
         "access-control-allow-origin": "fonts.gstatic.com",
-        "date": "Thu, 29 Oct 2026 19:41:56 GMT",
-        "content-length": "62"
+        "date": "Sat, 31 Oct 2026 22:11:18 GMT",
+        "content-length": "62",
+        "x-envoy-upstream-service-time": "384"
       },
       "content_b64": "W3sidmFsdWUiOiJIam9ydHJvbnbDpGdlbiAzLCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifV0="
     },
@@ -97,13 +101,14 @@
       "headers": {
         "cache-control": "private",
         "content-type": "application/json; charset=utf-8",
-        "server": "Microsoft-IIS/10.0",
+        "server": "envoy",
         "x-aspnetmvc-version": "5.2",
         "x-aspnet-version": "4.0.30319",
         "x-powered-by": "ASP.NET",
         "access-control-allow-origin": "fonts.gstatic.com",
-        "date": "Thu, 29 Oct 2026 19:41:56 GMT",
-        "content-length": "62"
+        "date": "Sat, 31 Oct 2026 22:11:18 GMT",
+        "content-length": "62",
+        "x-envoy-upstream-service-time": "368"
       },
       "content_b64": "W3sidmFsdWUiOiJIam9ydHJvbnbDpGdlbiA0LCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifV0="
     },
@@ -118,13 +123,14 @@
       "headers": {
         "cache-control": "private",
         "content-type": "application/json; charset=utf-8",
-        "server": "Microsoft-IIS/10.0",
+        "server": "envoy",
         "x-aspnetmvc-version": "5.2",
         "x-aspnet-version": "4.0.30319",
         "x-powered-by": "ASP.NET",
         "access-control-allow-origin": "fonts.gstatic.com",
-        "date": "Thu, 29 Oct 2026 19:41:56 GMT",
-        "content-length": "62"
+        "date": "Sat, 31 Oct 2026 22:11:20 GMT",
+        "content-length": "62",
+        "x-envoy-upstream-service-time": "378"
       },
       "content_b64": "W3sidmFsdWUiOiJIam9ydHJvbnbDpGdlbiA1LCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifV0="
     },
@@ -139,13 +145,14 @@
       "headers": {
         "cache-control": "private",
         "content-type": "application/json; charset=utf-8",
-        "server": "Microsoft-IIS/10.0",
+        "server": "envoy",
         "x-aspnetmvc-version": "5.2",
         "x-aspnet-version": "4.0.30319",
         "x-powered-by": "ASP.NET",
         "access-control-allow-origin": "fonts.gstatic.com",
-        "date": "Thu, 29 Oct 2026 19:41:56 GMT",
-        "content-length": "62"
+        "date": "Sat, 31 Oct 2026 22:11:20 GMT",
+        "content-length": "62",
+        "x-envoy-upstream-service-time": "379"
       },
       "content_b64": "W3sidmFsdWUiOiJIam9ydHJvbnbDpGdlbiA2LCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifV0="
     },
@@ -160,13 +167,14 @@
       "headers": {
         "cache-control": "private",
         "content-type": "application/json; charset=utf-8",
-        "server": "Microsoft-IIS/10.0",
+        "server": "envoy",
         "x-aspnetmvc-version": "5.2",
         "x-aspnet-version": "4.0.30319",
         "x-powered-by": "ASP.NET",
         "access-control-allow-origin": "fonts.gstatic.com",
-        "date": "Thu, 29 Oct 2026 19:41:56 GMT",
-        "content-length": "62"
+        "date": "Sat, 31 Oct 2026 22:11:21 GMT",
+        "content-length": "62",
+        "x-envoy-upstream-service-time": "378"
       },
       "content_b64": "W3sidmFsdWUiOiJIam9ydHJvbnbDpGdlbiA3LCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifV0="
     },
@@ -181,13 +189,14 @@
       "headers": {
         "cache-control": "private",
         "content-type": "application/json; charset=utf-8",
-        "server": "Microsoft-IIS/10.0",
+        "server": "envoy",
         "x-aspnetmvc-version": "5.2",
         "x-aspnet-version": "4.0.30319",
         "x-powered-by": "ASP.NET",
         "access-control-allow-origin": "fonts.gstatic.com",
-        "date": "Thu, 29 Oct 2026 19:41:56 GMT",
-        "content-length": "62"
+        "date": "Sat, 31 Oct 2026 22:11:21 GMT",
+        "content-length": "62",
+        "x-envoy-upstream-service-time": "373"
       },
       "content_b64": "W3sidmFsdWUiOiJIam9ydHJvbnbDpGdlbiA4LCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifV0="
     },
@@ -202,13 +211,14 @@
       "headers": {
         "cache-control": "private",
         "content-type": "application/json; charset=utf-8",
-        "server": "Microsoft-IIS/10.0",
+        "server": "envoy",
         "x-aspnetmvc-version": "5.2",
         "x-aspnet-version": "4.0.30319",
         "x-powered-by": "ASP.NET",
         "access-control-allow-origin": "fonts.gstatic.com",
-        "date": "Thu, 29 Oct 2026 19:41:56 GMT",
-        "content-length": "62"
+        "date": "Sat, 31 Oct 2026 22:11:21 GMT",
+        "content-length": "62",
+        "x-envoy-upstream-service-time": "378"
       },
       "content_b64": "W3sidmFsdWUiOiJIam9ydHJvbnbDpGdlbiA5LCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifV0="
     }

@@ -26,12 +26,10 @@
         "description": "Kies hoe gedetailleerd je deze integratie wilt configureren. Laat leeg als je alleen een basiskalender wilt.",
         "data": {
           "show_customize_config": "Aanpassingen van ophaaltypes tonen",
-          "show_sensor_config": "Sensorconfiguraties tonen",
           "default_sensors": "Standaardsensoren"
         },
         "data_description": {
           "show_customize_config": "Selecteer dit als je de ophaaltypes wilt aanpassen.",
-          "show_sensor_config": "Selecteer dit als je sensoren wilt configureren.",
           "default_sensors": "Kies welke standaardsensoren worden aangemaakt. Ze kunnen worden gecombineerd met eigen sensoren."
         }
       },
@@ -54,7 +52,8 @@
           "icon": "Icoon",
           "picture": "Afbeelding",
           "use_dedicated_calendar": "Eigen kalender gebruiken",
-          "dedicated_calendar_title": "Titel van eigen kalender"
+          "dedicated_calendar_title": "Titel van eigen kalender",
+          "color": "Kleur (#RRGGBB; leeg = standaard)"
         },
         "data_description": {
           "alias": "De nieuwe naam van het ophaaltype. (alleen invullen als je deze wilt wijzigen)",
@@ -93,35 +92,6 @@
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
           "f_abfallarten": "Optioneel filter: de op te nemen afvalsoorten."
-        }
-      },
-      "sensor": {
-        "title": "Sensor aanmaken \"{sensor_number}\"",
-        "description": "Configureer een sensor tegelijk.",
-        "data": {
-          "name": "Naam van de sensor",
-          "details_format": "Detailsformaat",
-          "count": "Aantal",
-          "leadtime": "Voorlooptijd",
-          "value_template": "Waarde-template",
-          "date_template": "Datumtemplate",
-          "add_days_to": "Dagen toevoegen aan",
-          "event_index": "Evenementindex",
-          "types": "Types",
-          "skip": "Geen sensor aanmaken",
-          "additional": "Extra sensoren toevoegen"
-        },
-        "data_description": {
-          "details_format": "Geeft het formaat aan dat wordt gebruikt voor de weergave van informatie in het 'meer info'-popup van Home Assistant. 'Komend': toont een lijst met komende ophalingen, 'Afvaltypes': toont een lijst met afvaltypes en hun volgende ophaaldatum, 'Generisch': toont alle attributen als generieke Python-gegevens, 'Verborgen': verbergt attributen van komende ophalingen",
-          "count": "Beperkt het 'meer info'-popup van Home Assistant tot het tonen van de volgende X ophalingen",
-          "leadtime": "Beperkt het 'meer info'-popup van Home Assistant tot ophalingen die binnen de aangegeven voorlooptijd (in dagen) plaatsvinden",
-          "value_template": "Gebruikt Home Assistant templating om de statusinformatie van een entity op te maken. Je kunt 'value.date', 'value.daysTo' en 'value.types' gebruiken",
-          "date_template": "Gebruikt Home Assistant templating om de datums in het 'meer info'-popup van een entity op te maken, bijv. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Voegt een 'daysTo'-attribuut toe aan de status van de brone-entity met het aantal dagen tot de volgende ophaling",
-          "event_index": "Wordt gebruikt om een sensor aan een specifiek ophaaldatum-index toe te wijzen. De volgende ophaaldatum heeft index 0. Handig als je aparte sensoren wilt voor de volgende ophaling, de tweede ophaling, de derde ophaling, ...",
-          "types": "Wordt gebruikt om afvaltypes te filteren. De sensor toont alleen ophalingen die met deze afvaltypes overeenkomen. Gebruik de alias als je een alias hebt ingesteld in de bronconfiguratie.",
-          "skip": "Indien aangevinkt, wordt de sensor niet aangemaakt en wordt alle configuratie hierboven genegeerd.",
-          "additional": "Indien aangevinkt, word je na het opslaan van deze sensor gevraagd om een volgende sensor toe te voegen."
         }
       },
       "reconfigure": {
@@ -885,10 +855,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "street_address": "Straatadres"
+          "street_address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "street_address": "Uw volledige adres."
         }
       },
       "reconfigure_casey_vic_gov_au": {
@@ -896,9 +867,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "street_address": "Straatadres"
+          "street_address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Uw volledige adres."
+        }
       },
       "args_cockburn_wa_gov_au": {
         "title": "Bron configureren",
@@ -950,10 +923,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "street_address": "Straatadres"
+          "street_address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "street_address": "Uw volledige adres."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -961,9 +935,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "street_address": "Straatadres"
+          "street_address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Uw volledige adres."
+        }
       },
       "args_gosnells_wa_gov_au": {
         "title": "Bron configureren",
@@ -1801,11 +1777,13 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Straatnummer"
+          "street_and_suburb": "Straat",
+          "street_number": "Huisnummer"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "street_and_suburb": "Uw straatnaam.",
+          "street_number": "Uw huisnummer."
         }
       },
       "reconfigure_fairfieldcity_nsw_gov_au": {
@@ -1813,10 +1791,13 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Straatnummer"
+          "street_and_suburb": "Straat",
+          "street_number": "Huisnummer"
         },
-        "data_description": {}
+        "data_description": {
+          "street_and_suburb": "Uw straatnaam.",
+          "street_number": "Uw huisnummer."
+        }
       },
       "args_frankston_vic_gov_au": {
         "title": "Bron configureren",
@@ -3675,10 +3656,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "street_address": "Straatadres"
+          "street_address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "street_address": "Uw volledige adres."
         }
       },
       "reconfigure_warrnambool_vic_gov_au": {
@@ -3686,9 +3668,11 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "street_address": "Straatadres"
+          "street_address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Uw volledige adres."
+        }
       },
       "args_waverley_nsw_gov_au": {
         "title": "Bron configureren",
@@ -4491,6 +4475,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Gemeente"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "region": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Gemeente"
+        },
+        "data_description": {
+          "region": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -4886,26 +4899,6 @@
           "district": "Uw wijk of deel van de gemeente.",
           "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Bron configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "region": "Regio"
-        },
-        "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Bron opnieuw configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "region": "Regio"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Bron configureren",
@@ -7051,6 +7044,26 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel"
+        },
+        "data_description": {}
+      },
+      "args_ovwrc_com": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_ovwrc_com": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "day": "Day"
         },
         "data_description": {}
       },
@@ -19121,6 +19134,28 @@
         },
         "data_description": {}
       },
+      "args_raywhelan_ie": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "calendar": "Kalender",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_raywhelan_ie": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "calendar": "Kalender",
+          "day": "Day"
+        },
+        "data_description": {}
+      },
       "args_junker_app": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -19946,6 +19981,30 @@
         },
         "data_description": {}
       },
+      "args_selargiusostenibile_it": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_selargiusostenibile_it": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_silea_it": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -20141,6 +20200,8 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
+          "city": "Stad",
+          "containers": "Containers",
           "district": "Wijk",
           "house_number": "Huisnummer",
           "region": "Regio",
@@ -20156,6 +20217,8 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
+          "city": "Stad",
+          "containers": "Containers",
           "district": "Wijk",
           "house_number": "Huisnummer",
           "region": "Regio",
@@ -21131,7 +21194,7 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "area_number": "Area Number"
+          "area_number": "Locatie-ID"
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
@@ -21142,7 +21205,7 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "area_number": "Area Number"
+          "area_number": "Locatie-ID"
         },
         "data_description": {}
       },
@@ -21199,7 +21262,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_ccc_govt_nz": {
@@ -21209,7 +21273,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_dunedin_govt_nz": {
         "title": "Bron configureren",
@@ -22481,6 +22547,26 @@
           "street": "Uw straatnaam."
         }
       },
+      "args_eko_region_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "village": "Dorp"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_eko_region_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "village": "Dorp"
+        },
+        "data_description": {}
+      },
       "args_ekolandpolska_com_pl": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -22564,6 +22650,26 @@
           "street": "Uw straatnaam."
         }
       },
+      "args_tamax_imielno_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_tamax_imielno_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {}
+      },
       "args_jaktorow_pl": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -22581,6 +22687,46 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "region": "Regio"
+        },
+        "data_description": {}
+      },
+      "args_tamax_janow_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_tamax_janow_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {}
+      },
+      "args_tamax_koniusza_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_tamax_koniusza_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
         },
         "data_description": {}
       },
@@ -22615,6 +22761,46 @@
           "street": "Uw straatnaam."
         }
       },
+      "args_tamax_ksiaz_wielki_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_tamax_ksiaz_wielki_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {}
+      },
+      "args_tamax_lelow_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_tamax_lelow_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {}
+      },
       "args_maslow_pl": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -22637,6 +22823,26 @@
         "data_description": {
           "district": "Uw wijk of deel van de gemeente."
         }
+      },
+      "args_tamax_bochnia_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_tamax_bochnia_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {}
       },
       "args_gmina_miekinia_pl": {
         "title": "Bron configureren",
@@ -22792,6 +22998,26 @@
           "street": "Uw straatnaam."
         }
       },
+      "args_tamax_net_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_tamax_net_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {}
+      },
       "args_gmina_radlow_pl": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -22812,6 +23038,46 @@
         },
         "data_description": {}
       },
+      "args_tamax_szczekociny_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_tamax_szczekociny_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {}
+      },
+      "args_tamax_sedziszow_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_tamax_sedziszow_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {}
+      },
       "args_gmina_trzebnica_pl": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -22829,6 +23095,26 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "region_id": "Region Id"
+        },
+        "data_description": {}
+      },
+      "args_tamax_wlodowice_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_tamax_wlodowice_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
         },
         "data_description": {}
       },
@@ -23175,6 +23461,26 @@
         "data_description": {
           "street": "Uw straatnaam."
         }
+      },
+      "args_tamax_wieliczka_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+        }
+      },
+      "reconfigure_tamax_wieliczka_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "area": "Gebied"
+        },
+        "data_description": {}
       },
       "args_zywiec_pl": {
         "title": "Bron configureren",
@@ -23786,7 +24092,8 @@
           "address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
         }
       },
       "reconfigure_komunala_kranj_si": {
@@ -23796,7 +24103,9 @@
           "calendar_title": "Kalendertitel",
           "address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_komunala_slb_si": {
         "title": "Bron configureren",
@@ -24506,6 +24815,29 @@
           "street_address": "Straatadres"
         },
         "data_description": {}
+      },
+      "args_ljusdalenergi_se": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
+        }
+      },
+      "reconfigure_ljusdalenergi_se": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres"
+        },
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
       },
       "args_lumire_se": {
         "title": "Bron configureren",
@@ -27940,6 +28272,29 @@
           "postcode": "Uw postcode."
         }
       },
+      "args_edinburgh_gov_uk": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "street": "Straat"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "street": "Uw straatnaam."
+        }
+      },
+      "reconfigure_edinburgh_gov_uk": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "street": "Straat"
+        },
+        "data_description": {
+          "street": "Uw straatnaam."
+        }
+      },
       "args_lincoln_gov_uk": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -28425,7 +28780,7 @@
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_dover_gov_uk": {
@@ -28436,7 +28791,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_dudley_gov_uk": {
@@ -28764,7 +29119,8 @@
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_east_renfrewshire_gov_uk": {
@@ -28776,7 +29132,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_eastriding_gov_uk": {
@@ -29301,7 +29658,7 @@
         },
         "data_description": {
           "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_gateshead_gov_uk": {
@@ -29312,7 +29669,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Een eenvoudige manier om je Unique Property Reference Number (UPRN) te vinden is om naar {url_www_findmyaddress_co_uk} te gaan en je adresgegevens in te voeren."
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "args_ics_gedling_gov_uk": {
@@ -29440,7 +29797,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_great_yarmouth_gov_uk": {
@@ -29450,7 +29808,9 @@
           "calendar_title": "Kalendertitel",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_guildford_gov_uk": {
         "title": "Bron configureren",
@@ -29600,7 +29960,10 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "house_number": "Uw huisnummer.",
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hastings_gov_uk": {
@@ -29612,7 +29975,11 @@
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Uw huisnummer.",
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_waste_havant_gov_uk": {
         "title": "Bron configureren",
@@ -30810,13 +31177,15 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "house_number": "Huisnummer",
-          "number": "Nummer",
+          "number": "Huisnummer",
           "postcode": "Postcode",
           "street": "Straat"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "number": "Uw huisnummer.",
+          "postcode": "Uw postcode.",
+          "street": "Uw straatnaam."
         }
       },
       "reconfigure_midsussex_gov_uk": {
@@ -30824,12 +31193,15 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "house_number": "Huisnummer",
-          "number": "Nummer",
+          "number": "Huisnummer",
           "postcode": "Postcode",
           "street": "Straat"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Uw huisnummer.",
+          "postcode": "Uw postcode.",
+          "street": "Uw straatnaam."
+        }
       },
       "args_midulstercouncil_org": {
         "title": "Bron configureren",
@@ -31010,7 +31382,9 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_newforest_gov_uk": {
@@ -31021,7 +31395,10 @@
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_newark_sherwooddc_gov_uk": {
         "title": "Bron configureren",
@@ -31090,6 +31467,35 @@
         },
         "data_description": {
           "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "args_newrymournedown_org": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "house_number": "Huisnummer",
+          "postcode": "Postcode",
+          "url": "Url"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "house_number": "Uw huisnummer.",
+          "postcode": "Uw postcode."
+        }
+      },
+      "reconfigure_newrymournedown_org": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "house_number": "Huisnummer",
+          "postcode": "Postcode",
+          "url": "Url"
+        },
+        "data_description": {
+          "house_number": "Uw huisnummer.",
+          "postcode": "Uw postcode."
         }
       },
       "args_north_ayrshire_gov_uk": {
@@ -31904,7 +32310,9 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_powys_gov_uk": {
@@ -31915,18 +32323,23 @@
           "postcode": "Postcode",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Uw postcode.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_preston_gov_uk": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "street": "Straat",
+          "street": "Adres",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "street": "Uw volledige adres.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_preston_gov_uk": {
@@ -31934,10 +32347,13 @@
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
         "data": {
           "calendar_title": "Kalendertitel",
-          "street": "Straat",
+          "street": "Adres",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Uw volledige adres.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_reading_gov_uk": {
         "title": "Bron configureren",
@@ -33181,11 +33597,14 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "post_code": "Postcode",
-          "street_name": "Straatnaam",
+          "street_name": "Straat",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "post_code": "Uw postcode.",
+          "street_name": "Uw straatnaam.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_swansea_gov_uk": {
@@ -33194,10 +33613,14 @@
         "data": {
           "calendar_title": "Kalendertitel",
           "post_code": "Postcode",
-          "street_name": "Straatnaam",
+          "street_name": "Straat",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "post_code": "Uw postcode.",
+          "street_name": "Uw straatnaam.",
+          "uprn": "Uw Unique Property Reference Number (UPRN). Vind het op {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_swindon_gov_uk": {
         "title": "Bron configureren",
@@ -35660,7 +36083,9 @@
           "municipality": "Gemeente"
         },
         "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
         }
       },
       "reconfigure_vogeldisposal_com": {
@@ -35671,7 +36096,10 @@
           "address": "Adres",
           "municipality": "Gemeente"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Uw volledige adres.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder."
+        }
       },
       "args_wm_com": {
         "title": "Bron configureren",
@@ -35745,40 +36173,18 @@
       "name_exists": "De sensornaam bestaat al. Kies een andere naam.",
       "preset_selected": "Je kunt geen preset selecteren en tegelijk eigen waarden opgeven.",
       "sensor_name_empty": "De sensornaam mag niet leeg zijn. Geef een naam op.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Je kunt geen titel voor een eigen kalender opgeven zonder de eigen kalender te activeren."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Je kunt geen titel voor een eigen kalender opgeven zonder de eigen kalender te activeren.",
+      "invalid_sensor": "Controleer sensorinstellingen, sjablonen en de kleur #RRGGBB."
     }
   },
   "options": {
     "step": {
       "init": {
-        "description": "Waste Collection Schedule details bijwerken.",
-        "data": {
-          "sensor_select": "Sensoren aanpassen",
-          "default_sensors": "Standaardsensoren toevoegen",
-          "customize_select": "Aanpassingen aanpassen",
-          "calendar_title": "Kalendertitel",
-          "separator": "Scheidingsteken",
-          "fetch_time": "Ophaaltijd",
-          "random_fetch_time_offset": "Willekeurige ophaaltijd-afwijking",
-          "day_switch_time": "Dagwisselingstijd",
-          "fetch_interval_days": "Dagen tussen ophalingen",
-          "day_offset": "Dagverschuiving",
-          "ignore_duplicates": "Duplicaten per dag negeren",
-          "show_original_label": "Oorspronkelijk label van de aanbieder tonen"
-        },
-        "data_description": {
-          "sensor_select": "Selecteer de sensor die je wilt aanpassen. (selecteer 'Nieuwe sensor toevoegen' om een nieuwe sensor te maken)",
-          "default_sensors": "Voegt de gekozen standaardsensoren toe die nog ontbreken. Bestaande sensoren blijven ongewijzigd.",
-          "customize_select": "Selecteer de aanpassing die je wilt wijzigen. (of selecteer een nieuwe aanpassing om een nieuwe te maken)",
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "separator": "Wordt gebruikt om invoeritems te verbinden als de bron meerdere waarden voor één dag teruggeeft.",
-          "fetch_time": "Weergave van de tijd van de dag in 'HH:MM' waarop Home Assistant de serviceprovider afvraagt voor het nieuwste ophaalschema.",
-          "random_fetch_time_offset": "Verschuift de ophaaltijd willekeurig met maximaal x minuten. Kan gebruikt worden om Home Assistant-afvragingen over een langere periode te spreiden en piekbelasting bij serviceproviders te vermijden.",
-          "day_switch_time": "Tijd van de dag in 'HH:MM' waarop Home Assistant de huidige entry negeert en overgaat naar de volgende.",
-          "fetch_interval_days": "Geeft aan hoe vaak Home Assistant afvalophalingen van deze kalenderbron ophaalt. De standaardwaarde is 1 dag. Met een waarde van 2 worden afvalophalingen elke 2 dagen opgehaald.",
-          "day_offset": "Verschuiving in dagen die aan de ophaaldatum wordt toegevoegd (kan negatief zijn). Als er geen waarde wordt opgegeven, wordt de standaardwaarde 0 gebruikt.",
-          "ignore_duplicates": "Wanneer ingeschakeld, worden dubbele ophaalitems met hetzelfde afvaltype op dezelfde dag verwijderd, waarbij per type per dag slechts één item blijft.",
-          "show_original_label": "Indien ingeschakeld (standaard), behouden sommige bronnen het oorspronkelijke label van de aanbieder (bijv. de exacte naam van de container/bak) in de beschrijving van de inzameling, ook na toewijzing aan een standaard afvaltype. Schakel uit om dat oorspronkelijke label te verbergen."
+        "title": "Waste Collection Schedule",
+        "menu_options": {
+          "source_settings": "Broninstellingen",
+          "sensors": "Sensoren",
+          "waste_types": "Afvaltypen"
         }
       },
       "customize": {
@@ -35791,7 +36197,8 @@
           "icon": "Icoon",
           "picture": "Afbeelding",
           "use_dedicated_calendar": "Eigen kalender gebruiken",
-          "dedicated_calendar_title": "Titel van eigen kalender"
+          "dedicated_calendar_title": "Titel van eigen kalender",
+          "color": "Kleur (#RRGGBB; leeg = standaard)"
         },
         "data_description": {
           "delete": "Verwijder deze aanpassing.",
@@ -35803,35 +36210,73 @@
           "dedicated_calendar_title": "De titel van de eigen kalenderentity."
         }
       },
-      "sensor": {
-        "title": "Sensor wijzigen/aanmaken \"{sensor_number}\"",
-        "description": "Configureer een sensor tegelijk.",
+      "source_settings": {
+        "description": "Waste Collection Schedule details bijwerken.",
         "data": {
-          "delete": "Verwijderen",
-          "name": "Naam van de sensor",
-          "details_format": "Detailsformaat",
-          "count": "Aantal",
-          "leadtime": "Voorlooptijd",
-          "value_template": "Waarde-template",
-          "date_template": "Datumtemplate",
-          "add_days_to": "Dagen toevoegen aan",
-          "event_index": "Evenementindex",
-          "types": "Types",
-          "skip": "Geen sensor aanmaken",
-          "additional": "Extra sensoren toevoegen"
+          "calendar_title": "Kalendertitel",
+          "separator": "Scheidingsteken",
+          "fetch_time": "Ophaaltijd",
+          "random_fetch_time_offset": "Willekeurige ophaalverschuiving (minuten)",
+          "day_switch_time": "Dagwisselingstijd",
+          "fetch_interval_days": "Dagen tussen ophalingen",
+          "day_offset": "Dagverschuiving",
+          "ignore_duplicates": "Duplicaten per dag negeren",
+          "show_original_label": "Oorspronkelijk label van de aanbieder tonen"
         },
         "data_description": {
-          "delete": "Verwijder deze sensor.",
-          "details_format": "Geeft het formaat aan dat wordt gebruikt voor de weergave van informatie in het 'meer info'-popup van Home Assistant. 'Komend': toont een lijst met komende ophalingen, 'Afvaltypes': toont een lijst met afvaltypes en hun volgende ophaaldatum, 'Generisch': toont alle attributen als generieke Python-gegevens, 'Verborgen': verbergt attributen van komende ophalingen",
-          "count": "Beperkt het 'meer info'-popup van Home Assistant tot het tonen van de volgende X ophalingen",
-          "leadtime": "Beperkt het 'meer info'-popup van Home Assistant tot ophalingen die binnen de aangegeven voorlooptijd (in dagen) plaatsvinden",
-          "value_template": "Gebruikt Home Assistant templating om de statusinformatie van een entity op te maken. Je kunt 'value.date', 'value.daysTo' en 'value.types' gebruiken",
-          "date_template": "Gebruikt Home Assistant templating om de datums in het 'meer info'-popup van een entity op te maken, bijv. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Voegt een 'daysTo'-attribuut toe aan de status van de brone-entity met het aantal dagen tot de volgende ophaling",
-          "event_index": "Wordt gebruikt om een sensor aan een specifiek ophaaldatum-index toe te wijzen. De volgende ophaaldatum heeft index 0. Handig als je aparte sensoren wilt voor de volgende ophaling, de tweede ophaling, de derde ophaling, ...",
-          "types": "Wordt gebruikt om afvaltypes te filteren. De sensor toont alleen ophalingen die met deze afvaltypes overeenkomen. Gebruik de alias als je een alias hebt ingesteld in de bronconfiguratie.",
-          "skip": "Indien aangevinkt, wordt de sensor niet aangemaakt en wordt alle configuratie hierboven genegeerd.",
-          "additional": "Indien aangevinkt, word je na het opslaan van deze sensor gevraagd om een volgende sensor toe te voegen."
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "separator": "Wordt gebruikt om invoeritems te verbinden als de bron meerdere waarden voor één dag teruggeeft.",
+          "fetch_time": "Weergave van de tijd van de dag in 'HH:MM' waarop Home Assistant de serviceprovider afvraagt voor het nieuwste ophaalschema.",
+          "random_fetch_time_offset": "Verschuift de ophaaltijd willekeurig met maximaal x minuten. Kan gebruikt worden om Home Assistant-afvragingen over een langere periode te spreiden en piekbelasting bij serviceproviders te vermijden.",
+          "day_switch_time": "Tijd van de dag in 'HH:MM' waarop Home Assistant de huidige entry negeert en overgaat naar de volgende.",
+          "fetch_interval_days": "Geeft aan hoe vaak Home Assistant afvalophalingen van deze kalenderbron ophaalt. De standaardwaarde is 1 dag. Met een waarde van 2 worden afvalophalingen elke 2 dagen opgehaald.",
+          "day_offset": "Verschuiving in dagen die aan de ophaaldatum wordt toegevoegd (kan negatief zijn). Als er geen waarde wordt opgegeven, wordt de standaardwaarde 0 gebruikt.",
+          "ignore_duplicates": "Wanneer ingeschakeld, worden dubbele ophaalitems met hetzelfde afvaltype op dezelfde dag verwijderd, waarbij per type per dag slechts één item blijft.",
+          "show_original_label": "Indien ingeschakeld (standaard), behouden sommige bronnen het oorspronkelijke label van de aanbieder (bijv. de exacte naam van de container/bak) in de beschrijving van de inzameling, ook na toewijzing aan een standaard afvaltype. Schakel uit om dat oorspronkelijke label te verbergen."
+        },
+        "title": "Broninstellingen"
+      },
+      "sensors": {
+        "title": "Sensoren",
+        "data": {
+          "predefined": "Voorgedefinieerde sensoren",
+          "edit_sensor": "Sensor bewerken",
+          "device_controls": "Apparaatbediening",
+          "auto_add_types": "Nieuwe typen automatisch toevoegen"
+        }
+      },
+      "edit_sensor": {
+        "title": "Sensor bewerken",
+        "data": {
+          "name": "Naam",
+          "enabled": "Ingeschakeld",
+          "state_format": "Statustekst",
+          "language": "Taal",
+          "date_format": "Datumnotatie",
+          "details_format": "Detailnotatie",
+          "count": "Aantal",
+          "leadtime": "Vooruitblik (dagen)",
+          "unique_types": "Elk type één keer",
+          "exclude_types": "Typen uitsluiten",
+          "advanced": "Geavanceerde instellingen",
+          "action": "Actie",
+          "types": "Afvaltypen",
+          "kind": "Sensortype"
+        }
+      },
+      "sensor_advanced": {
+        "title": "Geavanceerde instellingen",
+        "data": {
+          "event_index": "Ophaalindex",
+          "value_template": "Eigen statussjabloon",
+          "date_template": "Eigen datumsjabloon",
+          "color": "Kleur (#RRGGBB; leeg = standaard)"
+        }
+      },
+      "waste_types": {
+        "title": "Afvaltypen",
+        "data": {
+          "types": "Afvaltypen"
         }
       }
     },
@@ -35841,17 +36286,52 @@
       "name_exists": "De sensornaam bestaat al. Kies een andere naam.",
       "preset_selected": "Je kunt geen preset selecteren en tegelijk eigen waarden opgeven.",
       "sensor_name_empty": "De sensornaam mag niet leeg zijn. Geef een naam op.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Je kunt geen titel voor een eigen kalender opgeven zonder de eigen kalender te activeren."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Je kunt geen titel voor een eigen kalender opgeven zonder de eigen kalender te activeren.",
+      "invalid_sensor": "Controleer sensorinstellingen, sjablonen en de kleur #RRGGBB."
     },
-    "abort": {}
+    "abort": {
+      "sensor_removed": "Deze sensor is tijdens het bewerken verwijderd. Open de sensoropties opnieuw."
+    }
   },
   "selector": {
     "details_format": {
       "options": {
-        "upcoming": "Komend",
-        "appointment_types": "Afvaltypes",
-        "generic": "Generisch",
-        "hidden": "Verborgen"
+        "types_in_days": "Typen en aftelling",
+        "in_days": "Aftelling",
+        "relative": "Vandaag / Morgen / over N dagen",
+        "date": "Ophaaldatum",
+        "types": "Afvaltypen",
+        "days": "Aantal dagen",
+        "custom": "Eigen sjabloon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Weekdag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Weekdag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Weekdag, YYYY-MM-DD",
+        "upcoming": "Komende datums",
+        "appointment_types": "Volgende datum per type",
+        "generic": "Gestructureerde gegevens",
+        "hidden": "Details verbergen",
+        "schedule": "Ophaalschema",
+        "days_to": "Dagen tot ophalen",
+        "last_update": "Laatste update",
+        "auto": "Taal van Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Eigen sensor toevoegen",
+        "save": "Opslaan",
+        "reset": "Standaardwaarden herstellen",
+        "duplicate": "Dupliceren als eigen sensor",
+        "delete": "Eigen sensor verwijderen"
       }
     },
     "default_sensors": {
@@ -35872,7 +36352,439 @@
       "options": {
         "sensor_select_add_new": "Nieuwe sensor toevoegen"
       }
+    },
+    "state_format": {
+      "options": {
+        "types_in_days": "Typen en aftelling",
+        "in_days": "Aftelling",
+        "relative": "Vandaag / Morgen / over N dagen",
+        "date": "Ophaaldatum",
+        "types": "Afvaltypen",
+        "days": "Aantal dagen",
+        "custom": "Eigen sjabloon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Weekdag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Weekdag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Weekdag, YYYY-MM-DD",
+        "upcoming": "Komende datums",
+        "appointment_types": "Volgende datum per type",
+        "generic": "Gestructureerde gegevens",
+        "hidden": "Details verbergen",
+        "schedule": "Ophaalschema",
+        "days_to": "Dagen tot ophalen",
+        "last_update": "Laatste update",
+        "auto": "Taal van Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Eigen sensor toevoegen",
+        "save": "Opslaan",
+        "reset": "Standaardwaarden herstellen",
+        "duplicate": "Dupliceren als eigen sensor",
+        "delete": "Eigen sensor verwijderen"
+      }
+    },
+    "date_format": {
+      "options": {
+        "types_in_days": "Typen en aftelling",
+        "in_days": "Aftelling",
+        "relative": "Vandaag / Morgen / over N dagen",
+        "date": "Ophaaldatum",
+        "types": "Afvaltypen",
+        "days": "Aantal dagen",
+        "custom": "Eigen sjabloon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Weekdag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Weekdag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Weekdag, YYYY-MM-DD",
+        "upcoming": "Komende datums",
+        "appointment_types": "Volgende datum per type",
+        "generic": "Gestructureerde gegevens",
+        "hidden": "Details verbergen",
+        "schedule": "Ophaalschema",
+        "days_to": "Dagen tot ophalen",
+        "last_update": "Laatste update",
+        "auto": "Taal van Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Eigen sensor toevoegen",
+        "save": "Opslaan",
+        "reset": "Standaardwaarden herstellen",
+        "duplicate": "Dupliceren als eigen sensor",
+        "delete": "Eigen sensor verwijderen"
+      }
+    },
+    "language": {
+      "options": {
+        "types_in_days": "Typen en aftelling",
+        "in_days": "Aftelling",
+        "relative": "Vandaag / Morgen / over N dagen",
+        "date": "Ophaaldatum",
+        "types": "Afvaltypen",
+        "days": "Aantal dagen",
+        "custom": "Eigen sjabloon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Weekdag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Weekdag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Weekdag, YYYY-MM-DD",
+        "upcoming": "Komende datums",
+        "appointment_types": "Volgende datum per type",
+        "generic": "Gestructureerde gegevens",
+        "hidden": "Details verbergen",
+        "schedule": "Ophaalschema",
+        "days_to": "Dagen tot ophalen",
+        "last_update": "Laatste update",
+        "auto": "Taal van Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Eigen sensor toevoegen",
+        "save": "Opslaan",
+        "reset": "Standaardwaarden herstellen",
+        "duplicate": "Dupliceren als eigen sensor",
+        "delete": "Eigen sensor verwijderen"
+      }
+    },
+    "kind": {
+      "options": {
+        "types_in_days": "Typen en aftelling",
+        "in_days": "Aftelling",
+        "relative": "Vandaag / Morgen / over N dagen",
+        "date": "Ophaaldatum",
+        "types": "Afvaltypen",
+        "days": "Aantal dagen",
+        "custom": "Eigen sjabloon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Weekdag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Weekdag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Weekdag, YYYY-MM-DD",
+        "upcoming": "Komende datums",
+        "appointment_types": "Volgende datum per type",
+        "generic": "Gestructureerde gegevens",
+        "hidden": "Details verbergen",
+        "schedule": "Ophaalschema",
+        "days_to": "Dagen tot ophalen",
+        "last_update": "Laatste update",
+        "auto": "Taal van Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Eigen sensor toevoegen",
+        "save": "Opslaan",
+        "reset": "Standaardwaarden herstellen",
+        "duplicate": "Dupliceren als eigen sensor",
+        "delete": "Eigen sensor verwijderen"
+      }
+    },
+    "action": {
+      "options": {
+        "types_in_days": "Typen en aftelling",
+        "in_days": "Aftelling",
+        "relative": "Vandaag / Morgen / over N dagen",
+        "date": "Ophaaldatum",
+        "types": "Afvaltypen",
+        "days": "Aantal dagen",
+        "custom": "Eigen sjabloon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Weekdag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Weekdag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Weekdag, YYYY-MM-DD",
+        "upcoming": "Komende datums",
+        "appointment_types": "Volgende datum per type",
+        "generic": "Gestructureerde gegevens",
+        "hidden": "Details verbergen",
+        "schedule": "Ophaalschema",
+        "days_to": "Dagen tot ophalen",
+        "last_update": "Laatste update",
+        "auto": "Taal van Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Eigen sensor toevoegen",
+        "save": "Opslaan",
+        "reset": "Standaardwaarden herstellen",
+        "duplicate": "Dupliceren als eigen sensor",
+        "delete": "Eigen sensor verwijderen"
+      }
     }
   },
-  "issues": {}
+  "issues": {
+    "legacy_sensors": {
+      "title": "Sensoren van eerdere naamswijzigingen",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Oude sensorvermeldingen verwijderen",
+            "description": "Deze oude sensoren hebben geen opgeslagen configuratie: {entities}. Controleer automatiseringen en dashboards voordat u ze verwijdert.\n\nDe vermelde oude registervermeldingen verwijderen? Actieve gemigreerde sensoren blijven behouden."
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "state_format": {
+        "name": "Statustekst",
+        "state": {
+          "types_in_days": "Typen en aftelling",
+          "in_days": "Aftelling",
+          "relative": "Vandaag / Morgen / over N dagen",
+          "date": "Ophaaldatum",
+          "types": "Afvaltypen",
+          "days": "Aantal dagen",
+          "custom": "Eigen sjabloon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Weekdag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Weekdag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Weekdag, YYYY-MM-DD",
+          "upcoming": "Komende datums",
+          "appointment_types": "Volgende datum per type",
+          "generic": "Gestructureerde gegevens",
+          "hidden": "Details verbergen",
+          "schedule": "Ophaalschema",
+          "days_to": "Dagen tot ophalen",
+          "last_update": "Laatste update",
+          "auto": "Taal van Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Eigen sensor toevoegen",
+          "save": "Opslaan",
+          "reset": "Standaardwaarden herstellen",
+          "duplicate": "Dupliceren als eigen sensor",
+          "delete": "Eigen sensor verwijderen"
+        }
+      },
+      "language": {
+        "name": "Taal",
+        "state": {
+          "types_in_days": "Typen en aftelling",
+          "in_days": "Aftelling",
+          "relative": "Vandaag / Morgen / over N dagen",
+          "date": "Ophaaldatum",
+          "types": "Afvaltypen",
+          "days": "Aantal dagen",
+          "custom": "Eigen sjabloon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Weekdag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Weekdag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Weekdag, YYYY-MM-DD",
+          "upcoming": "Komende datums",
+          "appointment_types": "Volgende datum per type",
+          "generic": "Gestructureerde gegevens",
+          "hidden": "Details verbergen",
+          "schedule": "Ophaalschema",
+          "days_to": "Dagen tot ophalen",
+          "last_update": "Laatste update",
+          "auto": "Taal van Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Eigen sensor toevoegen",
+          "save": "Opslaan",
+          "reset": "Standaardwaarden herstellen",
+          "duplicate": "Dupliceren als eigen sensor",
+          "delete": "Eigen sensor verwijderen"
+        }
+      },
+      "date_format": {
+        "name": "Datumnotatie",
+        "state": {
+          "types_in_days": "Typen en aftelling",
+          "in_days": "Aftelling",
+          "relative": "Vandaag / Morgen / over N dagen",
+          "date": "Ophaaldatum",
+          "types": "Afvaltypen",
+          "days": "Aantal dagen",
+          "custom": "Eigen sjabloon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Weekdag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Weekdag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Weekdag, YYYY-MM-DD",
+          "upcoming": "Komende datums",
+          "appointment_types": "Volgende datum per type",
+          "generic": "Gestructureerde gegevens",
+          "hidden": "Details verbergen",
+          "schedule": "Ophaalschema",
+          "days_to": "Dagen tot ophalen",
+          "last_update": "Laatste update",
+          "auto": "Taal van Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Eigen sensor toevoegen",
+          "save": "Opslaan",
+          "reset": "Standaardwaarden herstellen",
+          "duplicate": "Dupliceren als eigen sensor",
+          "delete": "Eigen sensor verwijderen"
+        }
+      },
+      "details_format": {
+        "name": "Detailnotatie",
+        "state": {
+          "types_in_days": "Typen en aftelling",
+          "in_days": "Aftelling",
+          "relative": "Vandaag / Morgen / over N dagen",
+          "date": "Ophaaldatum",
+          "types": "Afvaltypen",
+          "days": "Aantal dagen",
+          "custom": "Eigen sjabloon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Weekdag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Weekdag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Weekdag, YYYY-MM-DD",
+          "upcoming": "Komende datums",
+          "appointment_types": "Volgende datum per type",
+          "generic": "Gestructureerde gegevens",
+          "hidden": "Details verbergen",
+          "schedule": "Ophaalschema",
+          "days_to": "Dagen tot ophalen",
+          "last_update": "Laatste update",
+          "auto": "Taal van Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Eigen sensor toevoegen",
+          "save": "Opslaan",
+          "reset": "Standaardwaarden herstellen",
+          "duplicate": "Dupliceren als eigen sensor",
+          "delete": "Eigen sensor verwijderen"
+        }
+      }
+    },
+    "number": {
+      "count": {
+        "name": "Aantal (0 = ∞)"
+      },
+      "leadtime": {
+        "name": "Vooruitblik (dagen) (-1 = ∞)"
+      },
+      "event_index": {
+        "name": "Ophaalindex"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Ingeschakeld"
+      },
+      "unique_types": {
+        "name": "Elk type één keer"
+      },
+      "advanced": {
+        "name": "Geavanceerde instellingen"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Naam"
+      },
+      "value_template": {
+        "name": "Eigen statussjabloon"
+      },
+      "date_template": {
+        "name": "Eigen datumsjabloon"
+      },
+      "color": {
+        "name": "Kleur (#RRGGBB; leeg = standaard)"
+      }
+    },
+    "button": {
+      "create_sensor": {
+        "name": "Sensor {name} maken"
+      },
+      "delete": {
+        "name": "Eigen sensor verwijderen"
+      }
+    }
+  },
+  "exceptions": {
+    "type_unavailable": {
+      "message": "Dit afvaltype staat niet meer in het huidige schema."
+    },
+    "custom_template_required": {
+      "message": "Stel eerst een eigen statussjabloon in bij de geavanceerde instellingen."
+    }
+  }
 }
