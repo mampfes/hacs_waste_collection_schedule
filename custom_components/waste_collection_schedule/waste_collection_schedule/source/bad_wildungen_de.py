@@ -308,7 +308,7 @@ class Source(BaseSource):
     retrieve = retrievers.PdfLinkRetriever(
         index_url=_WASTE_PAGE, pattern=r"abfallkalender-(20\d\d)"
     )
-    parse = parsers.PdfWordLayoutParser(min_words=1000)
+    parse = parsers.PdfWordLayoutParser(min_words=1000, reading_order=False)
     preprocess = staticmethod(_collections)
     transform = ICSTransformer(
         type_value_map={

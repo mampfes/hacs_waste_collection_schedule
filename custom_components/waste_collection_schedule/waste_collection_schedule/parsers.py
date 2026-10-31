@@ -2434,8 +2434,15 @@ def _pdf_word_layout(
     include_form_text: bool = False,
     include_strokes: bool = False,
     include_points: bool = False,
+    reading_order: bool = True,
 ) -> PdfWordLayout:
-    """Retain individual word centres even when lines span several grid cells."""
+    """Retain individual word centres even when lines span several grid cells.
+
+    ``reading_order=False`` skips pdfminer's text-box reading-order grouping
+    (``boxes_flow=None``). Words, lines and vectors keep their coordinates; only
+    the order of ``lines`` and ``words`` can change, and on a page dense with
+    text boxes the grouping is most of the parse time.
+    """
     from io import BytesIO
 
     from pdfminer.high_level import extract_pages
@@ -2517,10 +2524,11 @@ def _pdf_word_layout(
                 )
             )
 
+    laparams: dict[str, Any] = {"all_texts": include_form_text}
+    if not reading_order:
+        laparams["boxes_flow"] = None
     for page, layout in enumerate(
-        extract_pages(
-            BytesIO(response.content), laparams=LAParams(all_texts=include_form_text)
-        )
+        extract_pages(BytesIO(response.content), laparams=LAParams(**laparams))
     ):
         visit(layout, page)
     return PdfWordLayout(lines, words, vectors)
@@ -2541,6 +2549,9 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
     The one-item list composes with ``parsers.EachResponse``.
     ``include_points`` retains filled polygon vertices for matching labels on
     a coloured service-area map; bounding boxes alone overlap across areas.
+    Set ``reading_order=False`` when the source reads words by their
+    coordinates only: it skips pdfminer's reading-order grouping of text boxes,
+    which dominates the parse time of a text-dense page.
     """
 
     def __init__(
@@ -2551,12 +2562,14 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
         include_form_text: bool = False,
         include_strokes: bool = False,
         include_points: bool = False,
+        reading_order: bool = True,
     ):
         self.min_words = min_words
         self.min_vectors = min_vectors
         self.include_form_text = include_form_text
         self.include_strokes = include_strokes
         self.include_points = include_points
+        self.reading_order = reading_order
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -2566,6 +2579,7 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
             include_form_text=self.include_form_text,
             include_strokes=self.include_strokes,
             include_points=self.include_points,
+            reading_order=self.reading_order,
         )
         response_shape.expect(
             len(layout.words) >= self.min_words
