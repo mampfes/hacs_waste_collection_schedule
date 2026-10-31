@@ -1,0 +1,50 @@
+{
+  "recorded_at": "2026-10-31",
+  "interactions": [
+    {
+      "key": "GET https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe 77f53a305f",
+      "method": "GET",
+      "url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe",
+      "final_url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe?query=Gamla+Tyres%C3%B6v%C3%A4gen+305%2C+Enskededalen",
+      "body": "{\"params\":[[\"query\",\"Gamla Tyres\u00f6v\u00e4gen 305, Enskededalen\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=utf-8",
+        "server": "envoy",
+        "set-cookie": "ASP.NET_SessionId=kc4h0q12lz3lwxuundzhftmg; path=/; HttpOnly; SameSite=Lax",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "access-control-allow-origin": "fonts.gstatic.com",
+        "date": "Sat, 31 Oct 2026 22:11:15 GMT",
+        "content-length": "75",
+        "x-envoy-upstream-service-time": "382"
+      },
+      "content_b64": "W3sidmFsdWUiOiJHYW1sYSBUeXJlc8O2dsOkZ2VuIDMwNSwgRW5za2VkZWRhbGVuLCAxMjEgMzMiLCJkYXRhIjoiMTIxIDMzIn1d"
+    },
+    {
+      "key": "GET https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/Search 92b7eeda64",
+      "method": "GET",
+      "url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/Search",
+      "final_url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/Search?address=Gamla+Tyres%C3%B6v%C3%A4gen+305%2C+Enskededalen%2C+121+33",
+      "body": "{\"params\":[[\"address\",\"Gamla Tyres\u00f6v\u00e4gen 305, Enskededalen, 121 33\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=utf-8",
+        "server": "envoy",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "access-control-allow-origin": "fonts.gstatic.com",
+        "date": "Sat, 31 Oct 2026 22:11:15 GMT",
+        "content-length": "503",
+        "x-envoy-upstream-service-time": "632"
+      },
+      "content_b64": "W3siZ3JvdXAiOiJLw6RybCAxIC0gcmVzdGF2ZmFsbCBvY2ggbWF0YXZmYWxsIiwiZmV0Y2hGcmVxdWVuY3kiOiJWYXJhbm5hbiB2ZWNrYSIsImV4ZWN1dGlvbkRhdGUiOiIyMDI2LTExLTA0Iiwid2Vla2RheSI6Ik9uc2RhZyJ9LHsiZ3JvdXAiOiJLw6RybCAyIC0gcGFwcGVyIG9jaCBwbGFzdCIsImZldGNoRnJlcXVlbmN5IjoiVmFyYW5uYW4gdmVja2EiLCJleGVjdXRpb25EYXRlIjoiMjAyNi0xMS0wNCIsIndlZWtkYXkiOiJPbnNkYWcifSx7Imdyb3VwIjoiS8OkcmwgMyAtIGdsYXMgb2NoIG1ldGFsbCIsImZldGNoRnJlcXVlbmN5IjoiVmFyIDQ6ZSB2ZWNrYSIsImV4ZWN1dGlvbkRhdGUiOiIyMDI2LTExLTA1Iiwid2Vla2RheSI6IlRvcnNkYWcifSx7Imdyb3VwIjoiVHLDpGRnw6VyZHNhdmZhbGwsIHZpbGxhIiwiZmV0Y2hGcmVxdWVuY3kiOiJWYXJhbm5hbiB2ZWNrYSAoYXByaWwtbm92KSIsImV4ZWN1dGlvbkRhdGUiOiIyMDI2LTExLTA1Iiwid2Vla2RheSI6IlRvcnNkYWcifV0="
+    }
+  ]
+}
