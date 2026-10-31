@@ -383,6 +383,41 @@ def _row(page, y, *words):
     return PdfRow(page, y, tuple(PdfWord(text, x0, x1) for text, x0, x1 in words))
 
 
+def test_tamax_janow_reads_independent_recycling_and_bio_dates():
+    from waste_collection_schedule.source.tamax_janow_pl import Source
+
+    response = _recorded_pdf_response("tamax_janow_pl", "Janów")
+    with freeze_time("2026-10-31"):
+        rows = set(Source.preprocess(Source.parse(response)))
+    assert len(rows) == 36
+    assert (D(2026, 5, 28), "komunalne") in rows
+    assert (D(2026, 5, 28), "segregowane") in rows
+    assert (D(2026, 5, 22), "biodegradowalne") in rows
+    assert (D(2026, 12, 21), "komunalne") in rows
+    assert (D(2026, 12, 23), "biodegradowalne") in rows
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="current year"):
+        Source.preprocess(Source.parse(response))
+
+
+def test_tamax_route_discovery_keeps_identical_filenames_in_their_municipality():
+    from waste_collection_schedule.service.Tamax import CalendarLink
+
+    response = _page(
+        '<div class="elementor-tab-title" aria-controls="janow">Gmina Janów (mieszkańcy)</div>'
+        '<div id="janow"><p>2026 <a href="/a/2026-TRUDNE-WJAZDY.pdf">PDF</a></p></div>'
+        '<div class="elementor-tab-title" aria-controls="lelow">Gmina Lelów (mieszkańcy)</div>'
+        '<div id="lelow"><p>2026 <a href="/b/2026-TRUDNE-WJAZDY.pdf">PDF</a></p></div>'
+    )
+    selector = CalendarLink("Janów", {"Difficult access": "-TRUDNE-WJAZDY.pdf"})
+    with freeze_time("2026-10-31"):
+        assert (
+            selector(response, area="Difficult access")
+            == "https://example.org/a/2026-TRUDNE-WJAZDY.pdf"
+        )
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="current-year"):
+        selector(response, area="Difficult access")
+
+
 class TestPdfMonthRows:
     LABELS: ClassVar[dict] = {"zmieszane": 1, "metale": 1, "szkło": 1, "bio": 1}
 
