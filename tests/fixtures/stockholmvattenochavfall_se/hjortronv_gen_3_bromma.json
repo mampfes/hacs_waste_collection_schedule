@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-10-29",
+  "interactions": [
+    {
+      "key": "GET https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe 3a58d9304d",
+      "method": "GET",
+      "url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe",
+      "final_url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/AutoCompleteMe?query=Hjortronv%C3%A4gen+3%2C+Bromma",
+      "body": "{\"params\":[[\"query\",\"Hjortronv\u00e4gen 3, Bromma\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "set-cookie": "ASP.NET_SessionId=k135xanh4gh1l2nlbx1nckfa; path=/; HttpOnly; SameSite=Lax",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "access-control-allow-origin": "fonts.gstatic.com",
+        "date": "Thu, 29 Oct 2026 19:41:52 GMT",
+        "content-length": "62"
+      },
+      "content_b64": "W3sidmFsdWUiOiJIam9ydHJvbnbDpGdlbiAzLCBCcm9tbWEsIDE2OCA1OSIsImRhdGEiOiIxNjggNTkifV0="
+    },
+    {
+      "key": "GET https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/Search cb7765f033",
+      "method": "GET",
+      "url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/Search",
+      "final_url": "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/Search?address=Hjortronv%C3%A4gen+3%2C+Bromma%2C+168+59",
+      "body": "{\"params\":[[\"address\",\"Hjortronv\u00e4gen 3, Bromma, 168 59\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "access-control-allow-origin": "fonts.gstatic.com",
+        "date": "Thu, 29 Oct 2026 19:41:53 GMT",
+        "content-length": "503"
+      },
+      "content_b64": "W3siZ3JvdXAiOiJLw6RybCAyIC0gcGFwcGVyIG9jaCBwbGFzdCIsImZldGNoRnJlcXVlbmN5IjoiVmFyYW5uYW4gdmVja2EiLCJleGVjdXRpb25EYXRlIjoiMjAyNi0xMC0yOSIsIndlZWtkYXkiOiJUb3JzZGFnIn0seyJncm91cCI6IkvDpHJsIDEgLSByZXN0YXZmYWxsIG9jaCBtYXRhdmZhbGwiLCJmZXRjaEZyZXF1ZW5jeSI6IlZhcmFubmFuIHZlY2thIiwiZXhlY3V0aW9uRGF0ZSI6IjIwMjYtMTEtMDQiLCJ3ZWVrZGF5IjoiT25zZGFnIn0seyJncm91cCI6IlRyw6RkZ8OlcmRzYXZmYWxsLCB2aWxsYSIsImZldGNoRnJlcXVlbmN5IjoiVmFyYW5uYW4gdmVja2EgKGFwcmlsLW5vdikiLCJleGVjdXRpb25EYXRlIjoiMjAyNi0xMS0xMSIsIndlZWtkYXkiOiJPbnNkYWcifSx7Imdyb3VwIjoiS8OkcmwgMyAtIGdsYXMgb2NoIG1ldGFsbCIsImZldGNoRnJlcXVlbmN5IjoiVmFyIDQ6ZSB2ZWNrYSIsImV4ZWN1dGlvbkRhdGUiOiIyMDI2LTExLTE5Iiwid2Vla2RheSI6IlRvcnNkYWcifV0="
+    }
+  ]
+}
