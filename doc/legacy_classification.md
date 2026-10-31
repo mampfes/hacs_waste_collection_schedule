@@ -14,12 +14,12 @@ when the count reaches zero.
 | # | Class | Sources | What it means |
 |---|---|---:|---|
 | 1 | Special / not a provider | 4 | Not a provider. Decide per module whether it stays a utility or gets a pipeline form. |
-| 2 | Retire (deprecated shim or broken stub) | 2 left (of 8) | Delete, or reduce to an alias, in the major release following the deprecation lifecycle in `versioning.md`. Migrating them is wasted work. |
+| 2 | Retire (deprecated shim or broken stub) | 3 left (of 9, +1 from class 7) | Delete, or reduce to an alias, in the major release following the deprecation lifecycle in `versioning.md`. Migrating them is wasted work. |
 | 3 | Login required | 10 | `CLAUDE.md` allows login-required endpoints only when the account holder is a code owner or provides a test account. Decide per source: keep (owner or test account available), or remove. |
 | 4 | Migrate onto an existing platform component | 1 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
 | 5 | Shared backend, build one component for the cluster | 0 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 1 left (of 14) | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
-| 7 | Singleton, small (<150 lines, <=2 requests) | 10 left (of 58) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
+| 7 | Singleton, small (<150 lines, <=2 requests) | 9 left (of 58, -1 to class 2) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
 | 8 | Singleton, medium | 17 left (of 78) | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
 | 9 | Singleton, large (>=350 lines or >=5 requests) | 2 left (of 24, +1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
 | | **Total** | **47** (281 when this file was written; equals `Legacy fetch() sources` in `python tools/arch_coverage.py`. See the notes in class 5 to 8 and the reconciliation below) | |
@@ -34,6 +34,7 @@ when the count reaches zero.
 ## 2. Retire (deprecated shim or broken stub)
 
 - `east_ayrshire_gov_uk`: runtime deprecation warning (ReCollect covers it)
+- `hygea_be`: runtime deprecation warning (moved from class 7; Hygea's relaunched site embeds the Recycle! calendar, so `recycleapp_be` covers it)
 - `lrasha_de`: raises on init, points to app_abfallplus_de
 
 The other six (`awb_mainz_bingen_de`, `byron_nsw_gov_au`, `chiltern_gov_uk`, `grenchen_ch`, `wieliczka_kiedyodpady_pl`, `wuerzburg_de`) are pipeline sources now, see the reconciliation below.
@@ -101,10 +102,10 @@ Done in the UK block (9, recorded through a GB connection because most of these 
 
 Blocked in the fifth block (not migrated): `silea_it` (the provider's `get_calendar` API returns nothing for every municipality and month; retry later), `api_golemio_cz` (needs a Golemio API key), `komunala_kranj_si` (the GIS host refuses the German exit; may need a Slovenian IP).
 
-Found broken upstream, not migrated (3): `hygea_be` (the JSON calendar is gone after a site relaunch and the server sends an incomplete certificate chain), `grosswangen_ch` (the page no longer carries dates, only a yearly PDF and prose rules since the collection changed hands), `araccolta_it` (serves a maintenance page for every URL; the legacy source also has a bug: its waste-type generator is exhausted after the first weekday of a card). They stay legacy until a decision (fix, rewrite or remove). The second block found three more providers gone: `odenserenovation_dk` (API removed, 404), `ecoapp_ecoservice_lt` (API host no longer resolves) and `tkeliai_lt` (the calendar feature was removed from the site). Also not migrated: `wolverhampton_gov_uk` (the page no longer carries any bin content); `blackpool_gov_uk` was unreachable from the UK exit (TLS closed / no response) and is deferred. (`dover_gov_uk` and `swansea_gov_uk`, listed here before, are migrated in the UK block above.) `merton_gov_uk` (the old portal returns 404) and `newcastle_gov_uk` (the lookup was retired) are dead; both councils are already covered by shared ICS entries ("London Borough of Merton (New)", and ReCollect area `NewcastleUponTyneUK` in `recollect.yaml`), so they are removal candidates for the next major release. `hastings_gov_uk` is deferred: its server omits the intermediate certificate (the pipeline verifies TLS strictly; the legacy source disables verification), a decision on shipping the intermediate certificate is open. `vestfor_dk` is deferred: its self-service host is unreachable from the German exit and needs a Danish IP.
+Found broken upstream, not migrated (3): `hygea_be` (the JSON calendar is gone after a site relaunch and the server sends an incomplete certificate chain; deprecated since in favour of `recycleapp_be`, see class 2), `grosswangen_ch` (the page no longer carries dates, only a yearly PDF and prose rules since the collection changed hands), `araccolta_it` (serves a maintenance page for every URL; the legacy source also has a bug: its waste-type generator is exhausted after the first weekday of a card). They stay legacy until a decision (fix, rewrite or remove). The second block found three more providers gone: `odenserenovation_dk` (API removed, 404), `ecoapp_ecoservice_lt` (API host no longer resolves) and `tkeliai_lt` (the calendar feature was removed from the site). Also not migrated: `wolverhampton_gov_uk` (the page no longer carries any bin content); `blackpool_gov_uk` was unreachable from the UK exit (TLS closed / no response) and is deferred. (`dover_gov_uk` and `swansea_gov_uk`, listed here before, are migrated in the UK block above.) `merton_gov_uk` (the old portal returns 404) and `newcastle_gov_uk` (the lookup was retired) are dead; both councils are already covered by shared ICS entries ("London Borough of Merton (New)", and ReCollect area `NewcastleUponTyneUK` in `recollect.yaml`), so they are removal candidates for the next major release. `hastings_gov_uk` is deferred: its server omits the intermediate certificate (the pipeline verifies TLS strictly; the legacy source disables verification), a decision on shipping the intermediate certificate is open. `vestfor_dk` is deferred: its self-service host is unreachable from the German exit and needs a Danish IP.
 
 - **html** (2): `apps_ci_minneapolis_mn_us`, `araccolta_it`
-- **json** (5): `hygea_be`, `odenserenovation_dk`, `panda_ie`, `tkeliai_lt`, `vestfor_dk`
+- **json** (4): `odenserenovation_dk`, `panda_ie`, `tkeliai_lt`, `vestfor_dk`
 - **ics/json** (1): `ecoapp_ecoservice_lt`
 - **ics/html** (1): `merton_gov_uk`
 - **ics** (1): `newcastle_gov_uk`
