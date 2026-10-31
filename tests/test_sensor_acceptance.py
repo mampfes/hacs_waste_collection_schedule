@@ -417,3 +417,28 @@ async def test_legacy_sensor_repair_remains_fixable_after_version4_reload(
     assert await ha.config_entries.async_reload(entry.entry_id)
     await ha.async_block_till_done()
     assert ir.async_get(ha).async_get_issue(DOMAIN, issue_id) is None
+
+
+@pytest.mark.asyncio
+async def test_remove_entry_clears_only_its_legacy_repair(running_entry, ha):
+    from homeassistant.helpers import issue_registry as ir
+
+    entry, _ = running_entry
+    issue_id = "legacy_sensors_" + entry.entry_id
+    for key in (issue_id, "legacy_sensors_other_entry"):
+        ir.async_create_issue(
+            ha,
+            DOMAIN,
+            key,
+            is_fixable=True,
+            severity=ir.IssueSeverity.WARNING,
+            translation_key="legacy_sensors",
+        )
+    assert await ha.config_entries.async_remove(entry.entry_id)
+    await ha.async_block_till_done()
+    assert ir.async_get(ha).async_get_issue(DOMAIN, issue_id) is None
+    assert (
+        ir.async_get(ha).async_get_issue(DOMAIN, "legacy_sensors_other_entry")
+        is not None
+    )
+    assert entry.entry_id not in ha.data[DOMAIN]

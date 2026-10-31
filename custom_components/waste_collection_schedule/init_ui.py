@@ -204,8 +204,11 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
 
 
 async def async_remove_entry(hass: HomeAssistant, entry: ConfigEntry):
-    """Release the in-memory reload schedule when its entry is removed."""
+    """Release the reload schedule and repair belonging to the removed entry."""
+    from homeassistant.helpers import issue_registry as ir
+
     hass.data.get(const.DOMAIN, {}).pop(entry.entry_id, None)
+    ir.async_delete_issue(hass, const.DOMAIN, "legacy_sensors_" + entry.entry_id)
 
 
 async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:

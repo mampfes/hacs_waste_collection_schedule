@@ -149,5 +149,6 @@ async def running_entry(ha, tmp_path, request):
         assert await ha.config_entries.async_setup(entry.entry_id)
         await ha.async_block_till_done()
         yield entry, source
-        await ha.config_entries.async_unload(entry.entry_id)
+        if ha.config_entries.async_get_entry(entry.entry_id) is not None:
+            await ha.config_entries.async_unload(entry.entry_id)
         await ha.async_block_till_done()
