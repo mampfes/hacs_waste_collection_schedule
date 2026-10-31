@@ -147,6 +147,14 @@ class Collection:
     def set_original_label(self, label: str | None) -> None:
         self._original_label = _clean_optional_str(label)
 
+    def _merge_description(self, other: "Collection") -> None:
+        if other.description and other.description != self.description:
+            self.set_description(
+                ", ".join(
+                    dict.fromkeys(filter(None, [self.description, other.description]))
+                )
+            )
+
     @property
     def description_is_raw_label_fallback(self) -> bool:
         """True when ``description`` came from a transformer's carry_raw_label
@@ -162,7 +170,8 @@ class Collection:
         ``description_is_raw_label_fallback`` before clearing it.
         """
         self._description = _clean_optional_str(description)
-        self.set_original_label(description)
+        if self._original_label is None:
+            self.set_original_label(description)
         self._description_is_raw_label_fallback = True
 
     def set_type(self, t: str):

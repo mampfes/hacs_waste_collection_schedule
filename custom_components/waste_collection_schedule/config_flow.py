@@ -919,7 +919,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             # path (#6937): a type the source could produce but did not fetch
             # here would otherwise become a permanently empty sensor.
             fetched_types = list({x.type.strip() for x in resp})
-            self._auto_sensor_types = list(fetched_types)
             self._sensor_type_labels = {x.waste_type.id: x.type for x in resp}
             self._provider_labels = {x.original_label for x in resp if x.original_label}
             self._customize_key_ids = {x.type: x.waste_type.id for x in resp}
@@ -1434,14 +1433,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
     async def finish(self) -> ConfigFlowResult:
         from .default_sensors import KIND_LEGACY, build_default_sensors
-        from .sensor_model import migrate_filter
 
         kinds = getattr(self, "_default_sensor_kinds", list(DEFAULT_SENSOR_KINDS))
-        labels = getattr(
-            self,
-            "_sensor_type_labels",
-            {migrate_filter(t, {}): t for t in getattr(self, "_auto_sensor_types", [])},
-        )
+        labels = getattr(self, "_sensor_type_labels", {})
         category_customizations = {
             getattr(self, "_customize_key_ids", {}).get(k, k): v
             for k, v in self._options.get(CONF_CUSTOMIZE, {}).items()

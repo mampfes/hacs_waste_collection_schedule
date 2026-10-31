@@ -1,4 +1,4 @@
-"""Native numeric sensor settings; zero removes an optional limit."""
+"""Native numeric sensor settings, including distinct unlimited values."""
 
 from homeassistant.components.number import NumberEntity, NumberMode
 
@@ -11,15 +11,27 @@ class SensorNumber(SensorControl, NumberEntity):
     _attr_native_step = 1
     _attr_mode = NumberMode.BOX
 
+    def __init__(self, manager, sensor_id, key, label):
+        super().__init__(manager, sensor_id, key, label)
+        self._attr_native_min_value = -1 if key == "leadtime" else 0
+
     @property
     def native_value(self):
-        return (self.record.get(self.key) or 0) if self.record else None
+        if not self.record:
+            return None
+        value = self.record.get(self.key)
+        return (-1 if self.key == "leadtime" else 0) if value is None else value
 
     async def async_set_native_value(self, value):
         value = int(value)
         await self.manager.async_update(
             self.sensor_id,
-            {self.key: None if self.key == "count" and value == 0 else value},
+            {
+                self.key: None
+                if (self.key == "count" and value == 0)
+                or (self.key == "leadtime" and value == -1)
+                else value
+            },
         )
 
 
@@ -32,7 +44,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
             SensorNumber(manager, record["id"], key, label)
             for key, label in (
                 ("count", "Count (0 = unlimited)"),
-                ("leadtime", "Lead time in days"),
+                ("leadtime", "Lead time (-1 = unlimited, 0 = today)"),
                 ("event_index", "Pickup index"),
             )
             if key in CONTROL_KEYS[record["kind"]]

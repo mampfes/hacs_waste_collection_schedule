@@ -95,13 +95,15 @@ def catalogue_id(origin: str) -> str:
     return "type_x" + sha256(type_id.encode()).hexdigest()[:8]
 
 
-def migrate_filter(value: str, customize: dict) -> str:
+def migrate_filter(
+    value: str, customize: dict, type_ids: set[str] | frozenset[str]
+) -> str:
     """Resolve only statically unambiguous canonical names and aliases on ids.
 
     Provider-label and wildcard customizations remain literal: converting them
     to a category could widen an existing filter to a second bin.
     """
-    by_id = {wt.id: wt for wt in ALL_TYPES}
+    by_id = {wt.id: wt for wt in ALL_TYPES if wt.id in type_ids}
     if value in by_id or value.startswith("preserved:"):
         return value
     aliases = [key for key, c in customize.items() if c.get("alias") == value]
@@ -109,5 +111,5 @@ def migrate_filter(value: str, customize: dict) -> str:
         return aliases[0] if len(aliases) == 1 and aliases[0] in by_id else value
     if value in customize:
         return value
-    ids = {wt.id for wt in ALL_TYPES if value in wt.names.values()}
+    ids = {wt.id for wt in by_id.values() if value in wt.names.values()}
     return next(iter(ids)) if len(ids) == 1 else value

@@ -84,7 +84,7 @@ def test_migration_recognizes_renamed_defaults_and_keeps_ambiguous_bin_filters()
             },
         ],
     }
-    result = migrate_records(options)
+    result = migrate_records(options, {"paper"})
     first, duplicate, custom = result["sensors"]
     assert (first["id"], first["origin"], first["types"], first["state_format"]) == (
         "type_paper",
@@ -107,8 +107,12 @@ def test_migration_keeps_separator_sensitive_and_unknown_templates():
         {"separator": " / ", "sensors": [{"name": "Next", "value_template": value}]}
     )["sensors"][0]
     assert result["state_format"] == "custom" and result["value_template"] == value
-    assert migrate_filter("Restmüll 4-wöchentlich", {}) == "Restmüll 4-wöchentlich"
-    assert migrate_filter("Papier", {}) == "paper"
+    assert (
+        migrate_filter("Restmüll 4-wöchentlich", {}, {"paper"})
+        == "Restmüll 4-wöchentlich"
+    )
+    assert migrate_filter("Papier", {}, {"paper"}) == "paper"
+    assert migrate_filter("Paper", {}, set()) == "Paper"
 
 
 @pytest.mark.parametrize(
@@ -266,3 +270,59 @@ def test_unique_types_keeps_earliest_bin_before_index_and_group_limits():
         ] == ["Small", "Large"]
     finally:
         set_display_language("en")
+
+
+def test_filtered_duplicates_merge_descriptions_without_mutating_bin_records():
+    shell = SourceShell(
+        source=BinsSource(),
+        customize={},
+        title="Fixture",
+        description="Bins",
+        url=None,
+        calendar_title=None,
+        unique_id="fixture",
+        day_offset=0,
+        ignore_duplicates=True,
+    )
+    shell.fetch()
+    aggregator = CollectionAggregator([shell])
+    grouped = aggregator.get_upcoming_group_by_day(include_types=["recyclables"])[0]
+    assert grouped.description == "Small, Large"
+    assert [r["description"] for r in grouped.as_dict()["collections"]] == [
+        "Small",
+        "Large",
+    ]
+    assert aggregator.get_upcoming(include_types=["Small"])[0].description == "Small"
+    assert [e.description for e in shell._sensor_entries[:2]] == ["Small", "Large"]
+
+
+@pytest.mark.parametrize("show_original_label", [False, True])
+def test_raw_label_identity_keeps_internal_whitespace(show_original_label):
+    class Source:
+        def fetch(self):
+            return [
+                JsonTransformer(
+                    date_key="date",
+                    type_key="bin",
+                    carry_raw_label=True,
+                    type_value_map={"Small  bin": RECYCLABLES},
+                )({"date": "2099-01-01", "bin": "Small  bin"})
+            ]
+
+    shell = SourceShell(
+        source=Source(),
+        customize={"Small  bin": Customize("Small  bin", color="#123456")},
+        title="Fixture",
+        description="Bins",
+        url=None,
+        calendar_title=None,
+        unique_id="fixture",
+        day_offset=0,
+        show_original_label=show_original_label,
+    )
+    shell.fetch()
+    selected = CollectionAggregator([shell]).get_upcoming(include_types=["Small  bin"])
+    assert len(selected) == 1
+    assert selected[0].original_label == "Small  bin"
+    assert selected[0].color == "#123456"
+    assert selected[0].description == ("Small bin" if show_original_label else None)

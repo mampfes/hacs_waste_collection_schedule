@@ -360,11 +360,8 @@ class SourceShell:
                 if kept is None:
                     by_key[key] = e
                     order.append(key)
-                elif e.description and e.description != kept.description:
-                    merged = ", ".join(
-                        dict.fromkeys(filter(None, [kept.description, e.description]))
-                    )
-                    kept.set_description(merged)
+                else:
+                    kept._merge_description(e)
             result = [by_key[key] for key in order]
 
         self._entries = result

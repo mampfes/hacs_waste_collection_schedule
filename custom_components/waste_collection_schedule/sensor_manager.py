@@ -5,9 +5,12 @@ from copy import deepcopy
 
 from homeassistant.core import callback
 from homeassistant.helpers import entity_registry as er
-from homeassistant.helpers.dispatcher import async_dispatcher_send
+from homeassistant.helpers.dispatcher import (
+    async_dispatcher_connect,
+    async_dispatcher_send,
+)
 
-from .const import DOMAIN
+from .const import DOMAIN, UPDATE_SENSORS_SIGNAL
 from .default_sensors import catalogue
 from .sensor_model import SensorConfig
 
@@ -70,8 +73,12 @@ class SensorManager:
             )
         )
         self.entry.async_on_unload(
-            self.coordinator.async_add_listener(self._schedule_changed)
+            async_dispatcher_connect(
+                self.hass, UPDATE_SENSORS_SIGNAL, self._schedule_changed
+            )
         )
+        if self.entry.options.get("auto_add_types"):
+            await self.async_add_discovered_types()
         await self.async_apply()
 
     @callback

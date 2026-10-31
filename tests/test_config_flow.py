@@ -311,7 +311,7 @@ def _finish_options(kinds: list[str] | None, custom: list[dict]) -> list[dict]:
     flow._title = "t"
     flow._args_data = {}
     flow._options = {CONF_SENSORS: custom} if custom else {}
-    flow._auto_sensor_types = ["Paper", "Glass"]
+    flow._sensor_type_labels = {"paper": "Paper", "glass": "Glass"}
     if kinds is not None:
         flow._default_sensor_kinds = kinds
     captured: dict[str, Any] = {}
@@ -911,7 +911,7 @@ def _flow_type_schema_and_choice(submitted: dict | None):
     flow._title = "t"
     flow._args_data = {}
     flow._options = {}
-    flow._auto_sensor_types = ["Paper"]
+    flow._sensor_type_labels = {"paper": "Paper"}
     captured: dict[str, Any] = {}
 
     def _show_form(**kwargs: Any) -> dict:

@@ -1,6 +1,7 @@
 """Upgrade name-based sensors without replacing their registry entities."""
 
 import logging
+from hashlib import sha256
 
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers import issue_registry as ir
@@ -8,12 +9,15 @@ from homeassistant.helpers import issue_registry as ir
 from .const import DOMAIN
 from .default_sensors import LEGACY_VALUE_TEMPLATE
 from .sensor_model import SensorConfig, catalogue_id, migrate_filter
+from .waste_collection_schedule.source_shell import _load_source_class
 from .waste_collection_schedule.waste_types import ALL_TYPES
 
 _LOGGER = logging.getLogger(__name__)
 
 
-def migrate_records(options: dict) -> dict:
+def migrate_records(
+    options: dict, type_ids: set[str] | frozenset[str] = frozenset()
+) -> dict:
     """Convert legacy sensor dictionaries; never guess at custom Jinja or bin labels."""
     from .config_flow import EXAMPLE_DATE_TEMPLATES, EXAMPLE_VALUE_TEMPLATES
 
@@ -35,7 +39,7 @@ def migrate_records(options: dict) -> dict:
         details = old.get("details_format", "upcoming")
         details = getattr(details, "value", details)
         kind = old.get("mode") or "schedule"
-        types = [migrate_filter(t, customize) for t in old.get("types") or []]
+        types = [migrate_filter(t, customize, type_ids) for t in old.get("types") or []]
         value = (old.get("value_template") or "").strip()
         date = (old.get("date_template") or "").strip()
         origin = "custom"
@@ -72,12 +76,22 @@ def migrate_records(options: dict) -> dict:
             leadtime=old.get("leadtime"),
             event_index=old.get("event_index") or 0,
             exclude_types=[
-                migrate_filter(t, customize) for t in old.get("exclude_types") or []
+                migrate_filter(t, customize, type_ids)
+                for t in old.get("exclude_types") or []
             ],
             unique_types=old.get("unique_types", False),
         )
         if origin != "custom":
             record.id = catalogue_id(origin)
+        else:
+            # A registry write can survive a crash before the options write.
+            # Reconstruct the same custom id when migrating those old options again.
+            identity = (
+                old.get("sensor_id")
+                or old.get("sensor_legacy_unique_id")
+                or old["name"]
+            )
+            record.id = "c_" + sha256(identity.encode()).hexdigest()[:8]
         formats = {
             "in .. days": "in_days",
             ".. in .. days": "types_in_days",
@@ -125,7 +139,13 @@ def migrate_records(options: dict) -> dict:
 
 
 async def async_migrate_sensors(hass, entry) -> dict:
-    options = migrate_records(dict(entry.options))
+    source_cls, _ = await hass.async_add_executor_job(
+        _load_source_class, entry.data.get("name", "")
+    )
+    # Raw-string sources such as ICS/static do not declare canonical categories.
+    # A matching vocabulary name alone cannot prove their provider label is an id.
+    type_ids = {wt.id for wt in getattr(source_cls, "WASTE_TYPES", ())}
+    options = migrate_records(dict(entry.options), type_ids)
     registry = er.async_get(hass)
     for old, record in zip(
         entry.options.get("sensors", []), options["sensors"], strict=True
@@ -149,12 +169,14 @@ async def async_migrate_sensors(hass, entry) -> dict:
             ),
             None,
         )
-        if not entity_id:
+        target = registry.async_get_entity_id("sensor", DOMAIN, new_uid)
+        if not entity_id and not target:
             continue
-        registered = registry.async_get(entity_id)
+        registered = registry.async_get(target or entity_id)
         if registered is not None and registered.disabled_by is not None:
             record["enabled"] = False
-        target = registry.async_get_entity_id("sensor", DOMAIN, new_uid)
+        if not entity_id:
+            continue
         if target is not None and target != entity_id:
             _LOGGER.warning(
                 "Sensor migration retained %s: target identity already exists",

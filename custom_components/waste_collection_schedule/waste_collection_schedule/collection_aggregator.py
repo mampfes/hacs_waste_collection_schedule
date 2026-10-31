@@ -1,6 +1,7 @@
 import itertools
 import logging
 from collections.abc import Iterable, Sequence
+from copy import copy
 from datetime import date, datetime, timedelta
 
 from . import CollectionGroup
@@ -130,7 +131,7 @@ class CollectionAggregator:
         result = []
         for shell in self._shells:
             entries = getattr(shell, "_sensor_entries", None) or shell._entries
-            seen = set()
+            seen = {}
             for entry in entries:
                 if include_types and not any(
                     self.matches_type(entry, t) for t in include_types
@@ -150,9 +151,13 @@ class CollectionAggregator:
                     else entry._identity_key
                 )
                 key = (entry.date, identity or entry.waste_type.id)
-                if getattr(shell, "_ignore_duplicates", False) and key in seen:
-                    continue
-                seen.add(key)
+                if getattr(shell, "_ignore_duplicates", False):
+                    if key in seen:
+                        kept = seen[key]
+                        kept._merge_description(entry)
+                        continue
+                    entry = copy(entry)
+                    seen[key] = entry
                 result.append(entry)
         return result
 

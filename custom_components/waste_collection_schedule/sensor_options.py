@@ -13,6 +13,8 @@ from homeassistant.helpers.selector import (
 )
 
 from .config_flow import get_customize_schema
+from .const import DOMAIN
+from .default_sensors import catalogue
 from .sensor_model import (
     DATE_FORMATS,
     DETAILS_FORMATS,
@@ -55,9 +57,29 @@ class SensorOptionsFlow(OptionsFlow):
 
     @property
     def manager(self):
-        return self.hass.data["waste_collection_schedule"][
-            self._entry.entry_id
-        ].sensor_manager
+        coordinator = self.hass.data.get(DOMAIN, {}).get(self._entry.entry_id)
+        return getattr(coordinator, "sensor_manager", None)
+
+    @property
+    def type_labels(self):
+        if self.manager:
+            return self.manager.type_labels
+        from .waste_collection_schedule.waste_types import ALL_TYPES, display_name
+
+        known = {wt.id: display_name(wt) for wt in ALL_TYPES}
+        return {
+            key: known.get(key, key)
+            for record in self._entry.options.get("sensors", [])
+            for key in record["types"]
+        }
+
+    @property
+    def raw_labels(self):
+        return self.manager.coordinator.shell.raw_labels if self.manager else []
+
+    @property
+    def catalogue(self):
+        return self.manager.catalogue if self.manager else catalogue(self.type_labels)
 
     async def async_step_init(self, user_input=None):
         return self.async_show_menu(
@@ -80,9 +102,7 @@ class SensorOptionsFlow(OptionsFlow):
         schema = {
             vol.Optional(
                 "calendar_title",
-                default=options.get(
-                    "calendar_title", self.manager.coordinator.shell.calendar_title
-                ),
+                default=options.get("calendar_title", self._entry.title),
             ): str,
             vol.Required("separator", default=options.get("separator", ", ")): str,
             vol.Required(
@@ -119,7 +139,7 @@ class SensorOptionsFlow(OptionsFlow):
 
     async def async_step_sensors(self, user_input=None):
         self._records = deepcopy(self._entry.options.get("sensors", []))
-        offered = self.manager.catalogue
+        offered = self.catalogue
         for record in self._records:
             if record["origin"] != "custom":
                 offered.setdefault(record["origin"], record)
@@ -175,12 +195,11 @@ class SensorOptionsFlow(OptionsFlow):
         return self.async_show_form(step_id="sensors", data_schema=vol.Schema(schema))
 
     def _filter_choices(self):
-        labels = {
-            key: f"{label} ({key})" for key, label in self.manager.type_labels.items()
-        }
-        labels.update(
-            {label: label for label in self.manager.coordinator.shell.raw_labels}
-        )
+        labels = {key: f"{label} ({key})" for key, label in self.type_labels.items()}
+        labels.update({label: label for label in self.raw_labels})
+        for record in self._entry.options.get("sensors", []):
+            for label in (*record["types"], *record["exclude_types"]):
+                labels.setdefault(label, label)
         return [{"value": key, "label": label} for key, label in labels.items()]
 
     def _format_choices(self, record, *, date_only=False):
@@ -192,8 +211,8 @@ class SensorOptionsFlow(OptionsFlow):
         from .sensor_format import language_for, render_date, render_state
 
         language = language_for(record["language"], self.hass.config.language)
-        labels = [self.manager.type_labels.get(t, t) for t in record["types"]] or list(
-            self.manager.type_labels.values()
+        labels = [self.type_labels.get(t, t) for t in record["types"]] or list(
+            self.type_labels.values()
         )
         example = SimpleNamespace(
             date=dt_util.now().date() + timedelta(days=3), daysTo=3, types=labels[:2]
@@ -215,7 +234,7 @@ class SensorOptionsFlow(OptionsFlow):
                             style,
                             record["date_format"],
                             language,
-                            self.manager.coordinator.separator,
+                            self._entry.options.get("separator", ", "),
                         )
                     ),
                 }
@@ -246,7 +265,7 @@ class SensorOptionsFlow(OptionsFlow):
                 self._editing = duplicate
                 return self._save_sensor()
             if action == "reset" and not custom:
-                default = self.manager.catalogue.get(record["origin"])
+                default = self.catalogue.get(record["origin"])
                 if default:
                     self._editing = {**default, "enabled": record["enabled"]}
                     return self._save_sensor()
@@ -389,10 +408,8 @@ class SensorOptionsFlow(OptionsFlow):
         return self.async_create_entry(data=self._pending_options)
 
     async def async_step_waste_types(self, user_input=None):
-        labels = {**self.manager.type_labels}
-        labels.update(
-            {label: label for label in self.manager.coordinator.shell.raw_labels}
-        )
+        labels = {**self.type_labels}
+        labels.update({label: label for label in self.raw_labels})
         labels.update({key: key for key in self._entry.options.get("customize", {})})
         if user_input is not None:
             self._options = deepcopy(dict(self._entry.options))

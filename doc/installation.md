@@ -70,6 +70,8 @@ State text, language, date format, details, count, lead time, include/exclude fi
 
 **Device controls** is optional and off by default. It adds a device for each sensor and native select, number, switch, text, and button controls. These edit the same saved records as the options editor. The source device offers creation buttons for predefined sensors. Sensor-only edits update in place. When Home Assistant reloads an entry after enabling an entity, an unchanged source reuses its in-memory fetched schedule.
 
+On the device page, a count of `0` means unlimited. Lead time uses `-1` for unlimited and `0` for today only; positive values limit the number of days shown.
+
 For new entries that choose per-type sensors, newly discovered types are added automatically. Migrated entries keep this off; the setting is available under **Configure → Sensors**. A seasonal type disappearing does not delete its sensor.
 
 ### Sensor migration
