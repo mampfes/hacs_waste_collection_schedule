@@ -2046,6 +2046,99 @@ class TestPdfRoundMonthGrid:
             self.grid()([self.table(self.MONTHS, extra_words=impossible)])
 
 
+class TestPdfMonthDayGrid:
+    @staticmethod
+    def layout(lines, words, page=0):
+        fragment = parsers.PdfTextFragment
+        return parsers.PdfWordLayout(
+            [fragment(page, text, x, y) for text, x, y in lines],
+            [fragment(page, text, x, y) for text, x, y in words],
+            [],
+        )
+
+    def test_reads_three_month_columns_and_collects_the_row_label(self):
+        layout = self.layout(
+            [
+                ("Calendar 2026", 300, 800),
+                ("Nemėžis and nearby villages", 100, 700),
+            ],
+            [
+                ("Spalis", 200, 750),
+                ("Lapkritis", 250, 750),
+                ("Gruodis", 300, 750),
+                ("7,", 200, 700),
+                ("21", 210, 700),
+                ("4", 250, 700),
+                ("2,16,30", 300, 700),
+            ],
+        )
+
+        rows = preprocessors.PdfMonthDayGrid(
+            year_pattern=r"\b(20\d{2})\b",
+            month_locale="lt",
+            column_counts=(3,),
+        )([layout])
+
+        assert len(rows) == 1
+        assert rows[0].label == "Nemėžis and nearby villages"
+        assert rows[0].column_count == 3
+        assert rows[0].cells == [
+            (0, D(2026, 10, 7)),
+            (0, D(2026, 10, 21)),
+            (1, D(2026, 11, 4)),
+            (2, D(2026, 12, 2)),
+            (2, D(2026, 12, 16)),
+            (2, D(2026, 12, 30)),
+        ]
+
+    def test_keeps_repeated_month_headings_as_distinct_columns(self):
+        layout = self.layout(
+            [
+                ("Calendar 2026", 300, 800),
+                ("Location one", 100, 700),
+                ("Location two", 100, 650),
+            ],
+            [
+                ("Spalis", 200, 750),
+                ("Lapkritis", 250, 750),
+                ("Gruodis", 300, 750),
+                ("Spalis", 350, 750),
+                ("Lapkritis", 400, 750),
+                ("Gruodis", 450, 750),
+                ("9", 200, 700),
+                ("1", 350, 700),
+                ("11", 400, 700),
+                ("8", 450, 650),
+            ],
+        )
+
+        rows = preprocessors.PdfMonthDayGrid(
+            year_pattern=r"\b(20\d{2})\b",
+            month_locale="lt",
+            column_counts=(6,),
+        )([layout])
+
+        assert [row.label for row in rows] == ["Location one", "Location two"]
+        assert rows[0].cells == [
+            (0, D(2026, 10, 9)),
+            (3, D(2026, 10, 1)),
+            (4, D(2026, 11, 11)),
+        ]
+        assert rows[1].cells == [(5, D(2026, 12, 8))]
+
+    def test_changed_month_grid_shape_raises(self):
+        layout = self.layout(
+            [("Calendar 2026", 300, 800)],
+            [("Spalis", 200, 750), ("Lapkritis", 250, 750)],
+        )
+        with pytest.raises(ResponseShapeError, match="month-heading"):
+            preprocessors.PdfMonthDayGrid(
+                year_pattern=r"\b(20\d{2})\b",
+                month_locale="lt",
+                column_counts=(3,),
+            )([layout])
+
+
 def test_marker_calendar_half_cell_bar_reaches_its_day_numbers():
     from waste_collection_schedule.parsers import PdfVector
     from waste_collection_schedule.service.PdfMarkerCalendar import (
@@ -2906,3 +2999,96 @@ def test_eko_region_rejects_last_years_calendar():
     response = _recorded_pdf_response("eko_region_pl", "Bednarze")
     with freeze_time("2027-01-01"), pytest.raises(ValueError, match="current-year"):
         CalendarParser()(response)
+
+
+def test_nkom_source_selects_the_configured_locality_and_maps_columns():
+    from waste_collection_schedule.preprocessors import PdfMonthGridRow
+    from waste_collection_schedule.source.nkom_lt import Source
+
+    rows = [
+        PdfMonthGridRow(
+            2026,
+            0,
+            400,
+            3,
+            "Nemėžis, Kuprioniškės",
+            [(0, D(2026, 10, 7))],
+        ),
+        PdfMonthGridRow(
+            2026,
+            0,
+            350,
+            6,
+            "Nemėžis, Kuprioniškės",
+            [
+                (0, D(2026, 10, 9)),
+                (3, D(2026, 10, 1)),
+            ],
+        ),
+        PdfMonthGridRow(
+            2026,
+            0,
+            325,
+            6,
+            "Nemėžis, another route",
+            [
+                (0, D(2026, 10, 9)),
+                (3, D(2026, 10, 1)),
+            ],
+        ),
+        PdfMonthGridRow(
+            2026,
+            0,
+            300,
+            6,
+            "Other village",
+            [(0, D(2026, 10, 10))],
+        ),
+    ]
+
+    events = Source.preprocess(rows, Source(location="Nemėžis"))
+
+    assert events == [
+        {"date": D(2026, 10, 7), "type": "mixed"},
+        {"date": D(2026, 10, 9), "type": "packaging"},
+        {"date": D(2026, 10, 1), "type": "glass"},
+    ]
+
+
+def test_nkom_source_reports_a_location_not_present_in_the_schedule():
+    from waste_collection_schedule.exceptions import SourceArgumentNotFound
+    from waste_collection_schedule.preprocessors import PdfMonthGridRow
+    from waste_collection_schedule.source.nkom_lt import Source
+
+    with pytest.raises(SourceArgumentNotFound, match="Missing"):
+        Source.preprocess(
+            [PdfMonthGridRow(2026, 0, 400, 3, "Nemėžis", [(0, D(2026, 10, 7))])],
+            Source(location="Missing"),
+        )
+
+
+def test_nkom_schedule_lookup_selects_the_latest_pdf_for_each_waste_group():
+    from waste_collection_schedule.source.nkom_lt import _schedule_links
+
+    page = SimpleNamespace(
+        text="""
+        <a href="/grafikai/Grafikas-misriu-2025-(10-12).pdf">old mixed</a>
+        <a href="/grafikai/Grafikas-misriu-2026-(10-12).pdf">new mixed</a>
+        <a href="/grafikai/Grafikas-pakuociu-2026-(10-12).pdf">packaging</a>
+        """,
+        url="https://www.nkom.lt/kita.html",
+    )
+
+    assert _schedule_links(page) == [
+        "https://www.nkom.lt/grafikai/Grafikas-misriu-2026-(10-12).pdf",
+        "https://www.nkom.lt/grafikai/Grafikas-pakuociu-2026-(10-12).pdf",
+    ]
+
+
+def test_nkom_schedule_lookup_reports_missing_pdf_links_as_shape_error():
+    from waste_collection_schedule.source.nkom_lt import _schedule_links
+
+    page = SimpleNamespace(text="<html></html>", url="https://www.nkom.lt/kita.html")
+
+    with pytest.raises(ResponseShapeError, match="schedule PDF"):
+        _schedule_links(page)
