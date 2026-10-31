@@ -20,9 +20,9 @@ when the count reaches zero.
 | 5 | Shared backend, build one component for the cluster | 1 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 1 left (of 14) | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
 | 7 | Singleton, small (<150 lines, <=2 requests) | 24 left (of 58) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
-| 8 | Singleton, medium | 78 | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
+| 8 | Singleton, medium | 74 left (of 78) | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
 | 9 | Singleton, large (>=350 lines or >=5 requests) | 24 (+1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
-| | **Total** | **151** (281 before class 4; the clusters, thirteen PDF sources and sixty-seven singletons are migrated, see the notes in class 5, 6 and 7) | |
+| | **Total** | **147** (281 before class 4; the clusters, thirteen PDF sources and seventy-one singletons are migrated, see the notes in class 5, 6, 7 and 8) | |
 
 ## 1. Special / not a provider
 
@@ -112,9 +112,11 @@ Found broken upstream, not migrated (3): `hygea_be` (the JSON calendar is gone a
 
 ## 8. Standalone, medium
 
+Done in the first block (4): `fairfieldcity_nsw_gov_au` (the council's autocomplete switched to spelled-out street types, which broke every saved "Dawson ST" value; the source now maps the typed street onto the autocomplete list and suggests streets when none matches), `gleneira_vic_gov_au` (the address autocomplete is a declared `Lookup`; street sweeping stays excluded, it is a weekday rule, not a date), `vogeldisposal_com` (`YearlyRetriever` over the city, address and pickup-info calls; recycling days are both general waste and recycling), `newforest_gov_uk` (the Ebase UFS form as two `Lookup`s and a `Request` in one session, no hand-rolled `http.client`). The other medium candidates checked in this block stay legacy: `newham_gov_uk` has the same missing-intermediate problem as `hastings_gov_uk`, and most of the remaining UK, AU and NZ councils refuse or geoblock the test exit, need credentials, or compute dates from a cadence.
+
 - **json** (20): `aksd_hu`, `apricaspa_it`, `bristol_gov_uk`, `casey_vic_gov_au`, `ccc_govt_nz`, `cockburn_wa_gov_au`, `enfield_gov_uk`, `fcc_group_eu`, `grafikai_svara_lt`, `hastings_gov_uk`, `joondalup_wa_gov_au`, `komunala_kranj_si`, `lacity_gov`, `nwrrr_com_au`, `silea_it`, `sivom_com`, `sunshinecoast_qld_gov_au`, `thehills_nsw_gov_au`, `vattenmiljoresurs_se`, `waikato_district_council_govt_nz`
-- **html** (24): `adur_worthing_gov_uk`, `antrimandnewtownabbey_gov_uk`, `aucklandcouncil_govt_nz`, `belfast_city_gov_uk`, `chichester_gov_uk`, `coeur_yvelines_fr`, `dardanup_wa_gov_au`, `east_renfrewshire_gov_uk`, `environmentfirst_co_uk`, `fairfieldcity_nsw_gov_au`, `gardenbags_co_nz`, `ipswich_gov_uk`, `islington_gov_uk`, `midsussex_gov_uk`, `newforest_gov_uk`, `newham_gov_uk`, `northumberland_gov_uk`, `stamford_ct_us`, `swale_gov_uk`, `teignbridge_gov_uk`, `terrestouloises_com`, `ville_quebec_qc_ca`, `warrnambool_vic_gov_au`, `wigan_gov_uk`
-- **json/html** (15): `gateshead_gov_uk`, `gleneira_vic_gov_au`, `goldenplains_vic_gov_au`, `gosport_gov_uk`, `great_yarmouth_gov_uk`, `greyhound_ie`, `hastingsdc_govt_nz`, `iris_salten_no`, `lewisham_gov_uk`, `powys_gov_uk`, `rfd_no`, `royalgreenwich_gov_uk`, `south_ayrshire_gov_uk`, `stockton_gov_uk`, `vogeldisposal_com`
+- **html** (22): `adur_worthing_gov_uk`, `antrimandnewtownabbey_gov_uk`, `aucklandcouncil_govt_nz`, `belfast_city_gov_uk`, `chichester_gov_uk`, `coeur_yvelines_fr`, `dardanup_wa_gov_au`, `east_renfrewshire_gov_uk`, `environmentfirst_co_uk`, `gardenbags_co_nz`, `ipswich_gov_uk`, `islington_gov_uk`, `midsussex_gov_uk`, `newham_gov_uk`, `northumberland_gov_uk`, `stamford_ct_us`, `swale_gov_uk`, `teignbridge_gov_uk`, `terrestouloises_com`, `ville_quebec_qc_ca`, `warrnambool_vic_gov_au`, `wigan_gov_uk`
+- **json/html** (13): `gateshead_gov_uk`, `goldenplains_vic_gov_au`, `gosport_gov_uk`, `great_yarmouth_gov_uk`, `greyhound_ie`, `hastingsdc_govt_nz`, `iris_salten_no`, `lewisham_gov_uk`, `powys_gov_uk`, `rfd_no`, `royalgreenwich_gov_uk`, `south_ayrshire_gov_uk`, `stockton_gov_uk`
 - **ics/json** (8): `airdrie_ca`, `api_golemio_cz`, `ekonovus_lt`, `greatershepparton_com_au`, `maitland_nsw_gov_au`, `npdc_govt_nz`, `republicservices_com`, `sanantonio_gov`
 - **?** (2): `eth_erd_hu`, `southampton_gov_uk`
 - **ics/json/html** (2): `barrie_ca`, `rir_no`
