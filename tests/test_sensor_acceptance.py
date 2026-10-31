@@ -318,7 +318,9 @@ async def test_migration_collision_requires_confirmation_before_removing_legacy(
     assert entry.options["sensors"][0]["enabled"] is False
     repair = LegacySensorsRepairFlow(entry.entry_id)
     repair.hass = ha
-    prompt = await repair.async_step_init()
+    prompt = await repair.async_step_init(
+        {"issue_id": "legacy_sensors_" + entry.entry_id}
+    )
     assert prompt["type"] == "form"
     assert registry.async_get(legacy.entity_id) is not None
     result = await repair.async_step_confirm({})
@@ -378,3 +380,40 @@ async def test_customization_form_serializes_and_validates_color(
     saved = await flow.async_step_customize({"color": "#abcdef"})
     options = saved["data"] if surface == "options" else saved["options"]
     assert options["customize"]["paper"]["color"] == "#ABCDEF"
+
+
+@pytest.mark.asyncio
+async def test_legacy_sensor_repair_remains_fixable_after_version4_reload(
+    running_entry, ha
+):
+    from homeassistant.helpers import issue_registry as ir
+
+    from custom_components.waste_collection_schedule.repairs import (
+        LegacySensorsRepairFlow,
+    )
+
+    entry, _ = running_entry
+    registry = er.async_get(ha)
+    orphan = registry.async_get_or_create(
+        "sensor", DOMAIN, entry.entry_id + "_ui_sensor_Earlier name", config_entry=entry
+    )
+    issue_id = "legacy_sensors_" + entry.entry_id
+    ir.async_create_issue(
+        ha,
+        DOMAIN,
+        issue_id,
+        is_fixable=False,
+        severity=ir.IssueSeverity.WARNING,
+        translation_key="legacy_sensors",
+    )
+    assert await ha.config_entries.async_reload(entry.entry_id)
+    await ha.async_block_till_done()
+    issue = ir.async_get(ha).async_get_issue(DOMAIN, issue_id)
+    assert issue.is_fixable
+    flow = LegacySensorsRepairFlow(entry.entry_id)
+    flow.hass = ha
+    await flow.async_step_confirm({})
+    assert registry.async_get(orphan.entity_id) is None
+    assert await ha.config_entries.async_reload(entry.entry_id)
+    await ha.async_block_till_done()
+    assert ir.async_get(ha).async_get_issue(DOMAIN, issue_id) is None

@@ -220,3 +220,5 @@ def report_legacy_orphans(hass, entry):
             translation_placeholders={"entities": ", ".join(entities)},
             data={"entry_id": entry.entry_id},
         )
+    else:
+        ir.async_delete_issue(hass, DOMAIN, "legacy_sensors_" + entry.entry_id)

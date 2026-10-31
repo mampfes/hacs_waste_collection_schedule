@@ -12,7 +12,8 @@ class LegacySensorsRepairFlow(RepairsFlow):
         self.entry_id = entry_id
 
     async def async_step_init(self, user_input=None):
-        return await self.async_step_confirm(user_input)
+        # HA can supply issue metadata here; opening a repair is not confirmation.
+        return await self.async_step_confirm()
 
     async def async_step_confirm(self, user_input=None):
         if user_input is not None:

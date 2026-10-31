@@ -50,6 +50,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     device_store = initialize_device_key_store(hass)
     await device_store.async_load()
 
+    from .sensor_migration import report_legacy_orphans
+
+    # HA restores persisted repairs as nonfixable until their owner reports them.
+    report_legacy_orphans(hass, entry)
+
     customize_dicts: dict[str, dict[str, Any]] = options.get(const.CONF_CUSTOMIZE, {})
 
     customize: dict[str, Customize] = {}
