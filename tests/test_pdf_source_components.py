@@ -1162,6 +1162,24 @@ def test_pisz_missing_flat_number_must_not_return_a_partial_calendar():
             Source(**args).fetch()
 
 
+def test_tamax_wlodowice_includes_bio_and_ash_on_red_dates_and_single_digit_bulky_day():
+    from waste_collection_schedule.source.tamax_wlodowice_pl import Source
+
+    response = _recorded_pdf_response("tamax_wlodowice_pl", "Zdów, Hucisko")
+    with freeze_time("2026-10-31"):
+        rows = Source.parse(response)
+    bulky = [r["date"] for r in rows if r["type"] == "Wielkogabarytowe"]
+    assert bulky == [D(2026, 10, 2)]
+    by_date = {}
+    for row in rows:
+        by_date.setdefault(row["date"], set()).add(row["type"])
+    assert sum(r["type"] == "Popiół" for r in rows) == 12
+    for types in by_date.values():
+        if "Segregowane" in types:
+            assert {"Zmieszane", "Segregowane", "Bio", "Popiół"} <= types
+    assert len(rows) == 65
+
+
 class TestPdfRoundMonthGrid:
     """One row per round, one column per month, blocks per area."""
 
