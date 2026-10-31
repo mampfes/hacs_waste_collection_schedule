@@ -56,16 +56,11 @@ _TOWNS_PDF_MAP = {
     "Zawada": "Zawada.pdf",
 }
 
-_PL_TRANS = str.maketrans("ąćęłńóśźżĄĆĘŁŃÓŚŹŻ", "acelnoszzACELNOSZZ")
-
-
-def _fold(value: object) -> str:
-    """Match a village regardless of case, whitespace and Polish diacritics."""
-    return lookups.normalize_text(str(value).translate(_PL_TRANS))
-
 
 def _pdf_url(town: str, **_) -> str:
-    pdf_file = lookups.resolve(_TOWNS_PDF_MAP, town, argument="town", normalize=_fold)
+    pdf_file = lookups.resolve(
+        _TOWNS_PDF_MAP, town, argument="town", normalize=lookups.normalize_loose
+    )
     return _UPLOADS_URL + urllib.parse.quote(pdf_file)
 
 

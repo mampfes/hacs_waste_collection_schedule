@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-10-24",
+  "interactions": [
+    {
+      "key": "GET https://itouchvision.app/portal/itouchvision/kmbd/collectionDay ",
+      "method": "GET",
+      "url": "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
+      "final_url": "https://itouchvision.app/portal/itouchvision/kmbd/collectionDay",
+      "body": "",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Sat, 24 Oct 2026 17:31:41 GMT",
+        "server": "Apache",
+        "vary": "Origin",
+        "access-control-allow-methods": "GET, POST, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Authorization",
+        "access-control-allow-credentials": "true",
+        "strict-transport-security": "max-age=31536000;includeSubdomains",
+        "x-content-type-options": "nosniff",
+        "content-security-policy": "default-src 'self' blob: https://itouchvision.app https://iweb.itouchvision.com https://*.mycouncilservices.com https://itouch.vision https://fonts.googleapis.com https://fonts.gstatic.com https://itouchvision.freshdesk.com https://*.gov.uk https://*.co.uk https://*.ie; script-src 'self' 'unsafe-inline' 'unsafe-eval' data: https://itouchvision.app https://iweb.itouchvision.com https://itouch.vision https://unpkg.com https://cdn.jsdelivr.net https://*.googleapis.com https://*.amazonaws.com https://maps.google.com https://euc-widget.freshworks.com https://*.cloudflare.com https://*.gov.uk https://*.co.uk https://*.ie; style-src 'self' 'unsafe-inline' data: https://itouchvision.app https://iweb.itouchvision.com https://itouch.vision https://unpkg.com https://cdn.jsdelivr.net https://euc-widget.freshworks.com https://fonts.googleapis.com https://*.gov.uk https://*.co.uk https://*.ie; img-src 'self' data: blob: https://itouchvision.app https://iweb.itouchvision.com https://itouch.vision https://server.arcgisonline.com https://unpkg.com https://*.openstreetmap.org https://cdn.jsdelivr.net https://*.amazonaws.com https://*.googleapis.com https://maps.google.com https://*.gstatic.com https://*.ggpht.com https://datamap.gov.wales https://euc-widget.freshworks.com https://itouchvision.freshdesk.com https://*.gov.uk https://*.co.uk https://*.ie; connect-src 'self' https://itouchvision.app https://iweb.itouchvision.com https://itouch.vision https://unpkg.com https://*.what3words.com https://*.googleapis.com https://*.amazonaws.com https://euc-widget.freshworks.com https://itouchvision.freshdesk.com https://*.gov.uk https://*.co.uk https://*.ie; frame-ancestors 'self' https://itouchvision.app https://iweb.itouchvision.com https://itouch.vision https://*.google.com https://*.gov.uk https://*.co.uk https://*.ie;",
+        "content-type": "text/html; charset=UTF-8",
+        "x-oracle-dms-ecid": "6c3c98d9-21e2-432a-91f6-24334556549b-0004222f",
+        "x-oracle-dms-rid": "0",
+        "x-ords_debug": "false",
+        "etag": "\"4mG21wogAYWz6cu0+s7rg+EgQJxcEMB3K4SgV0E+BeMg8mf7Wp7bnX5aGVLAiOSm21xBTCSGvDTZASgmeOGfSA==\""
+      },
+      "content_b64": "QTg1RDQxNzMzMjQyQ0EyRjg3M0QzQjBGQjI3N0QyNEQ4RTk5NkJGQjgwNTE5REMxMThDM0ZGNUE2QTAxRUU5QjI0RjdFOEM3QkMzRjlENjhCOUYwNjJBQ0Q0NzUzNDEzMEZFNEJENkVCNTZEMjQwMzI1M0YwMURDM0EyQ0Q0NzcyMTNEOTQ5OEJERDE2QTVDRTQ2QzQ1Rjc5N0M3N0I2RjU1MkVBQjA4OEI2MTgyN0NDMzc4OUYxRUVCOURCQjFGODFDNjBBMjY4NTExNzYxRUZCMzY0QTY1NzAzQUQ2MUI0NDQ5OTFGNEQ2MDcxNEFEODYxQUUwRUIzQUIxRkI3Qjc5QzIwNzMzOTRFQkZGOEMzRkVCRTI2MUFFNENBQjAzRTc5NTYwMjE5RjI3QjUxN0ZGQjg3REU3M0MwNzYxNEEwRTk0NkEwN0M2NDEwRUVGNTNCNDMyMTUzRkExMkUxODg2MEYxMjkyNEIwQkQ4RkVFN0U0MEM2MTQ2QjE2QTIzNjZGMDUwN0E2RTUzMjkyRDRBREEwM0FDNkRBRDA4MUNCMEY0M0M3OTBFNzU5RTA5ODBEQUM0MkY4OThDQThDNEI3M0IxNDk0RjUzQzRCMjdGRUQ2QjlBRUIyOEU1NDgyODVBRjVBQkEzM0VERjBCNUU1MzAzNjdBRDMxMzc4Qjc5MjcwODVBRDJBMDAwMDIwN0M1NjVENEU1NTgyQ0IwRjU2QzJFMDFCRDcxRTg5QzBBNjk0RkZBNTMwMUM2QTYzNTlEQ0VDNTNGNkRGODE3QjJENDBERjYxNDYxMTRBNUYyOTJDQTg1MjcwQjU5MzRGMjg1Njc4NjZCM0VCOEIyMkVCNkM2NjU5MzRFQUQ2M0I4NzcwMTAxQzVDOTU5MjhGNTFFRDAxRjZEMDJGRkZEM0I5OURGMTJEQzIwNDVFMUFFMDkyRDVFODFBMUMwNjFBQkI5NEFCMkQzQTg0QTkwNTcyOERGOUZGQTgxQjBDNDUwOUUzQUFFQ0ZENERDODA0RDI4MTE3MTY1MUJCNUVFNDc2NjRGNjE4ODhGOThEMzcxMDMxQ0U4Q0Q5MTlFMTY2NzRGRjkzMDI1QkEyNTMyM0Y1RjY1RUVDQzUwRUY1OTg1MzAyRTFFNjlCNEI0RTJDQzFCQjZEMEQxNzQyRTUxRDE3OUZBMTc4QTU1RUNFQ0VDMTY1M0ZFRjE3OTE3QzczMzJBOEJCNUM4RkYzQzM3QTAxRDU3QTc2MUMwMkYwQzcxNzkxNjU5OTk0QTFDMEU3RTlFRUU4QzkxQzY2MURDRUJDODM4NEY1QTYyN0REN0U5QjRCOEYyQjIyMjA2OUI0RkI3NTkyQjU1Q0I5QkEyRjBCRjJFQ0FBRTA3RDZERDk0MTUyQjI0RUM0NUUxRkE0NTgwNUY1QUZBMDhENDk0OEQ3Mjc2MThGRkMzQ0NCMkY3MTQ4OTZCMzFFMjM5NDk2MjBEMTgwQTRBNkM5MTlERkVDRDJDRkI0RDAxNDY3MkE4QjVGQTEwQ0QwNjBGMjM1REE2ODNEQzU0RUZEQTNBMkU0Njc0OTk5RjhBQUFBRDIzMkFFRUY4ODU0OEUxRjQ5MkFBQkI1NjU3MTM5QkI1MjM4NUY2NkIwQTQzNjhBNjY0NzBDQUU0N0E4RTA5QkFGOEQ3Q0Q4MUM1OUI2RTk2RTdFNDNGQjQ1MjQwRUNGQUFDM0I3QjI5RDlCMDVBMDA1RTZCNUY4N0EyQkY4NUQ0MkI4MzI0RjAyNUQwMTgzMDdBRDU3ODBGNUE1QURDOUVBOUMwRTI0MDlCQUE3RkM4OUMwOEE5Q0EyQzNDNEQ5ODE2NzZBNzBENkE4MDRGNDAxMTdENzM2QkQ0OEZFRDZEM0Q1OUQ0NzFGM0M2NTMwNDY1MURCNzgzMzJGNThFMjBBRkE3MjAzODQ4REYyQUYzQjEyMDQ2ODc0REQ4MjM3NzY4MzYxNkExNUFDMEI1OEJFMEY0MDkyRTAwMzlEMzUwQjk3MEQ1MjBERkI0NkI2RTAxODdCNTI5MzkxRjIyOThERkEyMUMzMjAwQzY2NERDRUI5OUVGRjlDRkQ2OENDNDgyQzBCQjE0Qzc5OTlCQkFFQ0RDQ0QxNzI5MzRCNjU3RUM2OTBERTExREI2OTY3RTdEMUE3RUMxRjUxNEQ3QzUyNEU3NkZGRTZDMUU2QTc5RkVCRjM3QjJDQzhGMTY0NTc="
+    }
+  ]
+}

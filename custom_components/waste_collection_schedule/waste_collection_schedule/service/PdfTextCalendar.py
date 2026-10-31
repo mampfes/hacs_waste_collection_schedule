@@ -49,7 +49,7 @@ import re
 from datetime import date
 from typing import TYPE_CHECKING, Any, NamedTuple
 
-from waste_collection_schedule import response_shape
+from waste_collection_schedule import recurrence, response_shape
 from waste_collection_schedule.parsers import Parser
 
 if TYPE_CHECKING:
@@ -63,12 +63,17 @@ DEFAULT_LINE_PATTERN = r"^(\d{1,2})([A-Za-z]{2,3})\s*(.*)"
 # A full date in an info-text section, e.g. "17.02.2026".
 DEFAULT_DATE_PATTERN = r"(\d{2})\.(\d{2})\.(\d{4})"
 
-# German weekday abbreviations, the usual set for a DE/LU/AT printed calendar.
-GERMAN_WEEKDAYS = frozenset({"MO", "DI", "MI", "DO", "FR", "SA", "SO"})
+# Weekday abbreviations Monday first, upper-cased, for ``weekday_order``:
+# ("MO", "DI", ..., "SO") and ("LUN", "MAR", ..., "DIM").
+GERMAN_WEEKDAY_ORDER = tuple(
+    name.upper() for name in recurrence.weekday_names("de", abbreviated=True)
+)
+FRENCH_WEEKDAY_ORDER = tuple(
+    name.upper() for name in recurrence.weekday_names("fr", abbreviated=True)
+)
 
-# The same abbreviations Monday first, for ``weekday_order``.
-GERMAN_WEEKDAY_ORDER = ("MO", "DI", "MI", "DO", "FR", "SA", "SO")
-FRENCH_WEEKDAY_ORDER = ("LUN", "MAR", "MER", "JEU", "VEN", "SAM", "DIM")
+# The German set, the usual one for a DE/LU/AT printed calendar.
+GERMAN_WEEKDAYS = frozenset(GERMAN_WEEKDAY_ORDER)
 
 # A cell token that looks like a code (upper-case letters, digits after the
 # first) but is not made of known codes is preserved verbatim, so a code the
@@ -140,11 +145,22 @@ class DayGridCalendarParser(Parser["list[tuple[date, str]]"]):
             split backtracks, so "PSMPS" reads as P, SM, PS) and each yields its
             label. A code-like token that does not split is yielded verbatim.
             Combines with ``labels``; either may be empty but not both.
+        layout: build each grid row from the positioned words of the page
+            (pdfminer) instead of pypdf's text: for a calendar whose round
+            labels are drawn apart from their day row, so plain text lists them
+            after the days. A word joins the day row whose day number sits
+            nearest it vertically.
+        year_text_pattern: optional regex searched in the document text
+            before ``year_pattern`` is tried on the URL, for a calendar
+            published under a URL without a year.
         weekday_order: optional weekday abbreviations, Monday first. When set,
             it replaces ``weekdays`` as the row filter and each run of day
             numbers (a month block) is dated by matching its printed weekdays
             against the months its page covers, so blocks emitted out of order
-            land in the right month. A block that fits no month raises
+            land in the right month. With ``months_per_page=None`` the blocks
+            are read in calendar order wherever the pages put them (a calendar
+            with a cover or info pages, or one running into the next year);
+            runs shorter than a month are then ignored. A block that fits no month raises
             ``ResponseShapeError``: the year read off the URL is wrong or the
             layout changed.
     """
@@ -153,7 +169,7 @@ class DayGridCalendarParser(Parser["list[tuple[date, str]]"]):
         self,
         *,
         labels: Sequence[LabelRule],
-        months_per_page: int = 6,
+        months_per_page: int | None = 6,
         year_pattern: str = r"(20\d\d)",
         line_pattern: str = DEFAULT_LINE_PATTERN,
         weekdays: Iterable[str] | None = None,
@@ -161,11 +177,17 @@ class DayGridCalendarParser(Parser["list[tuple[date, str]]"]):
         date_pattern: str = DEFAULT_DATE_PATTERN,
         codes: Mapping[str, str] | None = None,
         weekday_order: Sequence[str] | None = None,
+        layout: bool = False,
+        year_text_pattern: str | None = None,
     ):
         if not labels and not codes:
             raise ValueError("DayGridCalendarParser needs labels or codes")
         self._labels = [(rule.label, re.compile(rule.pattern)) for rule in labels]
         self._months_per_page = months_per_page
+        if months_per_page is None and weekday_order is None:
+            raise ValueError("months_per_page=None needs weekday_order")
+        self._layout = layout
+        self._year_text = re.compile(year_text_pattern) if year_text_pattern else None
         self._year = re.compile(year_pattern)
         self._line = re.compile(line_pattern)
         self._codes = dict(codes or {})
@@ -269,6 +291,8 @@ class DayGridCalendarParser(Parser["list[tuple[date, str]]"]):
     def _grid_records(
         self, page_texts: list[str], year: int, source: BaseSource | None = None
     ) -> list[tuple[date, str]]:
+        if self._months_per_page is None:
+            return self._sequential_records(page_texts, year, source)
         records: list[tuple[date, str]] = []
         for page_num, page_text in enumerate(page_texts):
             first = 1 + page_num * self._months_per_page
@@ -289,13 +313,59 @@ class DayGridCalendarParser(Parser["list[tuple[date, str]]"]):
                     remaining.remove(month)
                 else:
                     month = first + index
-                for day, _, content in run:
-                    for label in self._labels_in(content):
-                        try:
-                            records.append((date(year, month, day), label))
-                        except ValueError:
-                            # Past December, or a day the month does not have.
-                            pass
+                records.extend(self._run_records(run, year, month))
+        return records
+
+    def _sequential_records(
+        self, page_texts: list[str], year: int, source: BaseSource | None
+    ) -> list[tuple[date, str]]:
+        """Month blocks in calendar order, wherever the pages put them.
+
+        The first block is dated by its weekdays within ``year``, every later
+        one is the month after the previous, rolling into the next year, and
+        must fit its weekdays too. Runs shorter than a month (dated lines of an
+        info page) are skipped.
+        """
+        order = self._weekday_order or []
+        records: list[tuple[date, str]] = []
+        current: tuple[int, int] | None = None
+        for page_text in page_texts:
+            for run in self._runs(page_text):
+                if len(run) < 28:
+                    continue
+                if current is None:
+                    current = (
+                        year,
+                        self._month_of_run(
+                            run, year, list(range(1, 13)), order, source
+                        ),
+                    )
+                else:
+                    y, m = current
+                    current = (y + 1, 1) if m == 12 else (y, m + 1)
+                    response_shape.expect(
+                        self._fits(run, current[0], current[1], order),
+                        source_name=response_shape.source_name(source),
+                        detail=(
+                            f"the month block after {y}-{m:02d} does not fit "
+                            f"{current[0]}-{current[1]:02d}; changed layout"
+                        ),
+                        raw=" | ".join(f"{d} {w} {c}" for d, w, c in run[:10]),
+                    )
+                records.extend(self._run_records(run, *current))
+        return records
+
+    def _run_records(
+        self, run: list[tuple[int, str, str]], year: int, month: int
+    ) -> list[tuple[date, str]]:
+        records: list[tuple[date, str]] = []
+        for day, _, content in run:
+            for label in self._labels_in(content):
+                try:
+                    records.append((date(year, month, day), label))
+                except ValueError:
+                    # Past December, or a day the month does not have.
+                    pass
         return records
 
     def _extra_records(
@@ -327,10 +397,74 @@ class DayGridCalendarParser(Parser["list[tuple[date, str]]"]):
         from pypdf import PdfReader
 
         reader = PdfReader(BytesIO(response.content))
-        page_texts = [(page.extract_text() or "") for page in reader.pages]
-
-        records = self._grid_records(
-            page_texts, self._year_of(getattr(response, "url", "") or ""), source
+        plain_texts = [(page.extract_text() or "") for page in reader.pages]
+        full_text = "\n".join(plain_texts)
+        page_texts = (
+            _layout_page_texts(response, source, self._weekdays)
+            if self._layout
+            else plain_texts
         )
-        records.extend(self._extra_records("\n".join(page_texts), records))
+
+        year = self._year_of(getattr(response, "url", "") or "")
+        if self._year_text is not None and (match := self._year_text.search(full_text)):
+            year = int(match.group(1))
+        records = self._grid_records(page_texts, year, source)
+        records.extend(self._extra_records(full_text, records))
         return records
+
+
+def _layout_page_texts(
+    response: Any, source: BaseSource | None, weekdays: frozenset[str] | None = None
+) -> list[str]:
+    """Each page's day rows rebuilt from positioned words, one line per day.
+
+    A day row starts with a day number followed by a word on the same line (its
+    weekday, one of ``weekdays`` when given); every other word of the page joins
+    the day row nearest it vertically, within half the spacing of two rows, in
+    reading order.
+    """
+    from waste_collection_schedule.parsers import PdfWordLayoutParser
+
+    layout = PdfWordLayoutParser()(response, source)[0]
+    pages = max((w.page for w in layout.words), default=-1) + 1
+    texts: list[str] = []
+    for page in range(pages):
+        words = [w for w in layout.words if w.page == page]
+        anchors = []
+        for word in words:
+            if not re.fullmatch(r"\d{1,2}", word.text):
+                continue
+            beside = [
+                w
+                for w in words
+                if w is not word
+                and abs(w.y - word.y) < 2.5
+                and 0 < w.x - word.x < 60
+                and w.text.isalpha()
+                and (weekdays is None or w.text.upper() in weekdays)
+            ]
+            if beside:
+                weekday = min(beside, key=lambda w: w.x - word.x)
+                anchors.append((word, weekday))
+        if len(anchors) < 2:
+            texts.append("")
+            continue
+        anchors.sort(key=lambda pair: -pair[0].y)
+        gaps = [anchors[i][0].y - anchors[i + 1][0].y for i in range(len(anchors) - 1)]
+        reach = sorted(gaps)[len(gaps) // 2] / 2
+        rows: dict[int, list[Any]] = {i: [] for i in range(len(anchors))}
+        used = {id(w) for pair in anchors for w in pair}
+        for word in words:
+            if id(word) in used:
+                continue
+            index = min(
+                range(len(anchors)), key=lambda i: abs(anchors[i][0].y - word.y)
+            )
+            if abs(anchors[index][0].y - word.y) <= reach:
+                rows[index].append(word)
+        lines = []
+        for index, (day, weekday) in enumerate(anchors):
+            rest = " ".join(w.text for w in sorted(rows[index], key=lambda w: w.x))
+            lines.append(f"{day.text} {weekday.text} {rest}".rstrip())
+        texts.append("\n".join(lines))
+    return texts

@@ -2,67 +2,26 @@
 
 Montreal publishes its collection schedule as English prose in the
 Info-Collecte GeoJSON feeds, so the whole source hinges on
-``Source.parse_collection``. The MESSAGE_EN strings below are verbatim
+``MontrealCollectes.parse_collection``. The MESSAGE_EN strings below are verbatim
 captures from the live feeds for the 2026 season, which lets these run
 without touching the network.
 """
 
+import calendar  # noqa: F401 - load stdlib before adding the integration path
 import os
 import sys
-import types
 from datetime import date
-from unittest.mock import MagicMock
 
 import pytest
 
-wcs = types.ModuleType("waste_collection_schedule")
-
-
-class Collection:
-    """Minimal stand-in for the real Collection dataclass."""
-
-    def __init__(self, date, t, icon=None, picture=None):
-        self.date = date
-        self.t = t
-        self.icon = icon
-
-
-wcs.Collection = Collection  # type: ignore[attr-defined]
-wcs.Icons = MagicMock()  # type: ignore[attr-defined]
-
-# Stub the real package just long enough to import the module under test in
-# isolation, then put sys.path/sys.modules back — otherwise this stub leaks
-# into every test file collected afterwards and shadows the real package.
-_prev_wcs = sys.modules.get("waste_collection_schedule")
-_prev_wcs_exceptions = sys.modules.get("waste_collection_schedule.exceptions")
-_source_dir = os.path.abspath(
+sys.path.insert(
+    0,
     os.path.join(
-        os.path.dirname(__file__),
-        "..",
-        "custom_components",
-        "waste_collection_schedule",
-        "waste_collection_schedule",
-    )
+        os.path.dirname(__file__), "../custom_components/waste_collection_schedule"
+    ),
 )
 
-sys.modules["waste_collection_schedule"] = wcs
-sys.modules["waste_collection_schedule.exceptions"] = types.ModuleType(
-    "waste_collection_schedule.exceptions"
-)
-sys.path.insert(0, _source_dir)
-
-try:
-    from source import montreal_ca
-finally:
-    sys.path.remove(_source_dir)
-    if _prev_wcs is not None:
-        sys.modules["waste_collection_schedule"] = _prev_wcs
-    else:
-        del sys.modules["waste_collection_schedule"]
-    if _prev_wcs_exceptions is not None:
-        sys.modules["waste_collection_schedule.exceptions"] = _prev_wcs_exceptions
-    else:
-        del sys.modules["waste_collection_schedule.exceptions"]
+from waste_collection_schedule.service.MontrealCollectes import parse_collection
 
 # Anjou sector ANJ-1: seasonal ranges either side of a biweekly summer list.
 ANJ1_GREEN = " Collection days in 2026 :   \n  - Spring : from April 1 to May 27, every week on Wednesday  \n  -  Summer : June 10 and 24; July 8 and 22; August 5 and 19; September 2 and 16 (every two weeks on Wednesday)  - Autumn: from September 30 to November 25, every week on Wednesday  \n   \n Hours :  Take out containers between 7 p.m. the evening before and 7 a.m. the day of collection  \nContainers accepted : \n - Reusable rigid containers \n - Paper bags \n - Cardboard boxes\n *The use of plastic bags as containers is prohibited"
@@ -97,8 +56,7 @@ MHM_GREEN = "Collection day(s) 2026 :  the following tuesdays :\n - April 21 and
 
 def parse(message):
     """Return the set of dates the parser produces for a MESSAGE_EN string."""
-    source = montreal_ca.Source(sector="TEST")
-    return {c.date for c in source.parse_collection("Green", message)}
+    return {day for day, _ in parse_collection("Green", message)}
 
 
 @pytest.fixture

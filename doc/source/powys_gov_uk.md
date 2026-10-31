@@ -1,41 +1,39 @@
 # Powys County Council
 
-Support for schedules provided by [Powys County Council](https://en.powys.gov.uk/binday).
+Support for schedules provided by [Powys County Council](https://en.powys.gov.uk).
+
+Source for en.powys.gov.uk services for Powys
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: powys_gov_uk
       args:
         postcode: POSTCODE
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
-Your property postcode, e.g. `SY16 2PQ`.
-
-**uprn**
+**uprn**  
 *(string) (required)*
-
-Your Unique Property Reference Number (UPRN).
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: powys_gov_uk
       args:
-        postcode: "SY16 2PQ"
-        uprn: "100100307820"
+        postcode: SY16 2PQ
+        uprn: '100100307820'
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Enter your postcode (e.g. SY16 2PQ) and the Unique Property Reference Number (UPRN) of your property. You can find your UPRN at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names, and the weekly recycling and food waste round is reported as two collections. Update filters, automations and customisations using the old labels.

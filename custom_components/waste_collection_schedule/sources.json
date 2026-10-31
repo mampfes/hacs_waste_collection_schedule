@@ -75,6 +75,12 @@
       "id": "banyule_vic_gov_au"
     },
     {
+      "title": "Bass Coast Shire Council",
+      "module": "basscoast_vic_gov_au",
+      "default_params": {},
+      "id": "basscoast_vic_gov_au"
+    },
+    {
       "title": "Bathurst Regional Council",
       "module": "bathurst_nsw_gov_au",
       "default_params": {},
@@ -396,6 +402,12 @@
       "module": "manningham_vic_gov_au",
       "default_params": {},
       "id": "manningham_vic_gov_au"
+    },
+    {
+      "title": "City of Marion",
+      "module": "marion_sa_gov_au",
+      "default_params": {},
+      "id": "marion_sa_gov_au"
     },
     {
       "title": "City of Melbourne",
@@ -915,6 +927,12 @@
       "id": "lanecove_nsw_gov_au"
     },
     {
+      "title": "Latrobe City Council",
+      "module": "latrobe_vic_gov_au",
+      "default_params": {},
+      "id": "latrobe_vic_gov_au"
+    },
+    {
       "title": "Launceston City Council",
       "module": "launceston_tas_gov_au",
       "default_params": {},
@@ -1371,6 +1389,12 @@
       "id": "thehills_nsw_gov_au"
     },
     {
+      "title": "Toowoomba Regional Council",
+      "module": "tr_qld_gov_au",
+      "default_params": {},
+      "id": "tr_qld_gov_au"
+    },
+    {
       "title": "Town of Bassendean",
       "module": "bassendean_wa_gov_au",
       "default_params": {},
@@ -1435,6 +1459,12 @@
       "module": "wastetrack_net",
       "default_params": {},
       "id": "wastetrack_net"
+    },
+    {
+      "title": "Waverley Council",
+      "module": "waverley_nsw_gov_au",
+      "default_params": {},
+      "id": "waverley_nsw_gov_au"
     },
     {
       "title": "Wellington Shire Council",
@@ -2249,6 +2279,14 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Gaming",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Gaming"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Gattendorf",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2471,6 +2509,22 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Gresten",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Gresten"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
+      "title": "Gresten-Land",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Gresten-Land"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Gro\u00dfkirchheim",
       "module": "ics",
       "default_params": {},
@@ -2567,6 +2621,12 @@
       "id": "umweltverbaende_at"
     },
     {
+      "title": "GVA Tulln",
+      "module": "gvatulln_at",
+      "default_params": {},
+      "id": "gvatulln_at"
+    },
+    {
       "title": "GVA Waidhofen/Thaya",
       "module": "umweltverbaende_at",
       "default_params": {
@@ -2609,6 +2669,14 @@
       "module": "gaenserndorf_city_at",
       "default_params": {},
       "id": "gaenserndorf_city_at"
+    },
+    {
+      "title": "G\u00f6stling an der Ybbs",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "G\u00f6stling an der Ybbs"
+      },
+      "id": "scheibbs_umweltverbaende_at"
     },
     {
       "title": "G\u00fcssing",
@@ -3245,6 +3313,14 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Lunz am See",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Lunz am See"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Lurnfeld",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3563,6 +3639,12 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Nestelbach bei Graz",
+      "module": "nestelbach_graz_gv_at",
+      "default_params": {},
+      "id": "nestelbach_graz_gv_at"
+    },
+    {
       "title": "Neudau",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3627,6 +3709,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Oberndorf an der Melk",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Oberndorf an der Melk"
+      },
+      "id": "scheibbs_umweltverbaende_at"
     },
     {
       "title": "Oberndorf bei Schwanenstadt",
@@ -3857,6 +3947,22 @@
       "id": "puchbeihallein_gv_at"
     },
     {
+      "title": "Puchenstuben",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Puchenstuben"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
+      "title": "Purgstall an der Erlauf",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Purgstall an der Erlauf"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "P\u00f6chlarn",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3923,6 +4029,14 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Randegg",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Randegg"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Rangersdorf",
       "module": "ics",
       "default_params": {},
@@ -3957,6 +4071,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Reinsberg",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Reinsberg"
+      },
+      "id": "scheibbs_umweltverbaende_at"
     },
     {
       "title": "Reith im Alpbachtal",
@@ -4043,6 +4165,22 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Sankt Anton an der Je\u00dfnitz",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Sankt Anton an der Je\u00dfnitz"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
+      "title": "Sankt Georgen an der Leys",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Sankt Georgen an der Leys"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Sankt Georgen an der Stiefing",
       "module": "citiesapps_com",
       "default_params": {},
@@ -4071,6 +4209,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_gem2go_dev"
+    },
+    {
+      "title": "Scheibbs",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Scheibbs"
+      },
+      "id": "scheibbs_umweltverbaende_at"
     },
     {
       "title": "Schiefling am W\u00f6rthersee",
@@ -4459,6 +4605,14 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Steinakirchen am Forst",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Steinakirchen am Forst"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Steinbrunn",
       "module": "citiesapps_com",
       "default_params": {},
@@ -4771,6 +4925,14 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Wang",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Wang"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Wartberg ob der Aist",
       "module": "citiesapps_com",
       "default_params": {},
@@ -4849,6 +5011,22 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Wieselburg",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Wieselburg"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
+      "title": "Wieselburg-Land",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Wieselburg-Land"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Wiesen",
       "module": "citiesapps_com",
       "default_params": {},
@@ -4895,6 +5073,14 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Wolfpassing",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Wolfpassing"
+      },
+      "id": "scheibbs_umweltverbaende_at"
     },
     {
       "title": "Wolfsberg",
@@ -5427,6 +5613,15 @@
       "id": "recollect_net"
     },
     {
+      "title": "Ivry-sur-le-Lac",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Ivry-sur-le-Lac",
+        "sector": null
+      },
+      "id": "ritl_ca"
+    },
+    {
       "title": "Kawartha Lakes (ON)",
       "module": "recyclecoach_com",
       "default_params": {
@@ -5445,6 +5640,24 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Lac-Sup\u00e9rieur Secteur 1",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Lac-Sup\u00e9rieur",
+        "sector": "Secteur 1"
+      },
+      "id": "ritl_ca"
+    },
+    {
+      "title": "Lac-Sup\u00e9rieur Secteur 2",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Lac-Sup\u00e9rieur",
+        "sector": "Secteur 2"
+      },
+      "id": "ritl_ca"
+    },
+    {
       "title": "Lakeshore (ON)",
       "module": "recyclecoach_com",
       "default_params": {
@@ -5452,6 +5665,15 @@
         "project_id": "583"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Lantier",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Lantier",
+        "sector": null
+      },
+      "id": "ritl_ca"
     },
     {
       "title": "LaSalle (ON)",
@@ -5534,10 +5756,34 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Mont-Blanc Secteur Est",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Mont-Blanc",
+        "sector": "Secteur Est"
+      },
+      "id": "ritl_ca"
+    },
+    {
+      "title": "Mont-Blanc Secteur Ouest",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Mont-Blanc",
+        "sector": "Secteur Ouest"
+      },
+      "id": "ritl_ca"
+    },
+    {
       "title": "Montreal (QC)",
       "module": "montreal_ca",
       "default_params": {},
       "id": "montreal_ca"
+    },
+    {
+      "title": "MRC de La Vall\u00e9e-du-Richelieu",
+      "module": "mrcvr_ca",
+      "default_params": {},
+      "id": "mrcvr_ca"
     },
     {
       "title": "MRC de Roussillon (QC)",
@@ -5570,6 +5816,15 @@
         "split_at": "\\, (?:and )?|(?: and )"
       },
       "id": "ics_recollect"
+    },
+    {
+      "title": "Newmarket (ON)",
+      "module": "recyclecoach_com",
+      "default_params": {
+        "district_id": "NEW",
+        "project_id": "530"
+      },
+      "id": "recyclecoach_com"
     },
     {
       "title": "Niagara Region",
@@ -5620,6 +5875,12 @@
         "state": "Ontario"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Ottawa Valley Waste Recovery Centre (Petawawa)",
+      "module": "ovwrc_com",
+      "default_params": {},
+      "id": "ovwrc_com"
     },
     {
       "title": "Ottawa, Canada",
@@ -5750,6 +6011,42 @@
       "id": "ics_vsj_ca"
     },
     {
+      "title": "Sainte-Agathe-des-Monts Secteur Centre-ville",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Sainte-Agathe-des-Monts",
+        "sector": "Secteur Centre-ville"
+      },
+      "id": "ritl_ca"
+    },
+    {
+      "title": "Sainte-Agathe-des-Monts Secteur Nord",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Sainte-Agathe-des-Monts",
+        "sector": "Secteur Nord"
+      },
+      "id": "ritl_ca"
+    },
+    {
+      "title": "Sainte-Agathe-des-Monts Secteur Sud / Fatima",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Sainte-Agathe-des-Monts",
+        "sector": "Secteur Sud / Fatima"
+      },
+      "id": "ritl_ca"
+    },
+    {
+      "title": "Sainte-Lucie-des-Laurentides",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Sainte-Lucie-des-Laurentides",
+        "sector": null
+      },
+      "id": "ritl_ca"
+    },
+    {
       "title": "Saskatoon, SK",
       "module": "ics",
       "default_params": {
@@ -5818,6 +6115,15 @@
       "id": "recyclecoach_com"
     },
     {
+      "title": "Val-des-Lacs",
+      "module": "ritl_ca",
+      "default_params": {
+        "municipality": "Val-des-Lacs",
+        "sector": null
+      },
+      "id": "ritl_ca"
+    },
+    {
       "title": "Valleyfield, Qu\u00e9bec",
       "module": "ics",
       "default_params": {},
@@ -5831,6 +6137,18 @@
         "state": "Ontario"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Ville de Blainville",
+      "module": "blainville_ca",
+      "default_params": {},
+      "id": "blainville_ca"
+    },
+    {
+      "title": "Ville de Chambly",
+      "module": "chambly_ca",
+      "default_params": {},
+      "id": "chambly_ca"
     },
     {
       "title": "Ville de Saguenay",
@@ -5954,12 +6272,36 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "Albertslund Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Albertslund"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Aller\u00f8d Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Aller\u00f8d"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Assens Forsyning",
       "module": "affaldonline_dk",
       "default_params": {
         "municipality": "assens"
       },
       "id": "affaldonline_dk"
+    },
+    {
+      "title": "Ballerup Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Ballerup"
+      },
+      "id": "perfectwaste_dk"
     },
     {
       "title": "Faaborg Forsynings Virksomhed",
@@ -5986,6 +6328,14 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "Faxe Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Faxe"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Fors (Holb\u00e6k)",
       "module": "affaldonline_dk",
       "default_params": {
@@ -6002,10 +6352,128 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "Frederiksberg Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Frederiksberg"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Frederikshavn Forsyning",
+      "module": "forsyningen_dk",
+      "default_params": {},
+      "id": "forsyningen_dk"
+    },
+    {
+      "title": "Frederikssund Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Frederikssund"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Gladsaxe Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Gladsaxe"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Greve Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Greve"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Gribskov Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Gribskov"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Guldborgsund Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Guldborgsund"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Halsn\u00e6s Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Halsn\u00e6s"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Helsing\u00f8r Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Helsing\u00f8r"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Hiller\u00f8d Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Hiller\u00f8d"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Horsens Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Horsens"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Hvidovre Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Hvidovre"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "H\u00f8je-Taastrup Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "H\u00f8je-Taastrup"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "H\u00f8rsholm Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "H\u00f8rsholm"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Kalundborg Kommune",
       "module": "kalundborg_dk",
       "default_params": {},
       "id": "kalundborg_dk"
+    },
+    {
+      "title": "Kalundborg Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Kalundborg"
+      },
+      "id": "perfectwaste_dk"
     },
     {
       "title": "Kolding Kommune",
@@ -6020,12 +6488,36 @@
       "id": "ics_kredslob_dk"
     },
     {
+      "title": "K\u00f8ge Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "K\u00f8ge"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Langeland Forsyning",
       "module": "affaldonline_dk",
       "default_params": {
         "municipality": "langeland"
       },
       "id": "affaldonline_dk"
+    },
+    {
+      "title": "Lejre Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Lejre"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Lolland Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Lolland"
+      },
+      "id": "perfectwaste_dk"
     },
     {
       "title": "Middelfart Kommune",
@@ -6058,6 +6550,14 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "N\u00e6stved Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "N\u00e6stved"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Odense Renovation",
       "module": "odenserenovation_dk",
       "default_params": {},
@@ -6071,6 +6571,20 @@
         "split_at": ",\\s*"
       },
       "id": "ics_odense_renovation_dk"
+    },
+    {
+      "title": "Odsherred Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Odsherred"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Perfect Waste",
+      "module": "perfectwaste_dk",
+      "default_params": {},
+      "id": "perfectwaste_dk"
     },
     {
       "title": "Rebild Kommune",
@@ -6113,12 +6627,84 @@
       "id": "affaldonline_dk"
     },
     {
+      "title": "Ringk\u00f8bing-Skjern Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Ringk\u00f8bing-Skjern"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Roskilde Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Roskilde"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Rudersdal Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Rudersdal"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
       "title": "Silkeborg Forsyning",
       "module": "affaldonline_dk",
       "default_params": {
         "municipality": "silkeborg"
       },
       "id": "affaldonline_dk"
+    },
+    {
+      "title": "Slagelse Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Slagelse"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Solr\u00f8d Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Solr\u00f8d"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Stevns Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Stevns"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "T\u00e5rnby Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "T\u00e5rnby"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Varde Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Varde"
+      },
+      "id": "perfectwaste_dk"
+    },
+    {
+      "title": "Vejen Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Vejen"
+      },
+      "id": "perfectwaste_dk"
     },
     {
       "title": "Vejle Kommune",
@@ -6133,6 +6719,14 @@
       "module": "vestfor_dk",
       "default_params": {},
       "id": "vestfor_dk"
+    },
+    {
+      "title": "Vordingborg Kommune",
+      "module": "perfectwaste_dk",
+      "default_params": {
+        "municipality": "Vordingborg"
+      },
+      "id": "perfectwaste_dk"
     },
     {
       "title": "\u00c6r\u00f8 Kommune",
@@ -6257,6 +6851,22 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Argences",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Argences"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Audignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Audignies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Auteuil-le-Roi",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -6305,6 +6915,22 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Banneville-la-Campagne",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Banneville-la-Campagne"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Bantanges",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Bantzenheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -6329,12 +6955,36 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Bavay",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Bavay"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Bazoches-sur-Guyonne",
       "module": "coeur_yvelines_fr",
       "default_params": {
         "commune": "Bazoches-sur-Guyonne"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Beaudignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Beaudignies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Beaurepaire-en-Bresse",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Beautiran",
@@ -6351,6 +7001,22 @@
         "commune": "Behoust"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Bellengreville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Bellengreville"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Bellignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Bellignies"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Berch\u00e8res-les-Pierres",
@@ -6383,6 +7049,14 @@
         "commune": "Betton"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Bettrechies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Bettrechies"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Beynes",
@@ -6487,6 +7161,14 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "Bousies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Bousies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Boussay",
       "module": "clissonsevremaine_fr",
       "default_params": {
@@ -6503,12 +7185,36 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Branges",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Briconville",
       "module": "chartres_metropole_fr",
       "default_params": {
         "commune": "Briconville"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Brienne",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Bruailles",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Bruebach",
@@ -6541,6 +7247,14 @@
         "commune": "Bruz"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Bry",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Bry"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Br\u00e9c\u00e9",
@@ -6591,12 +7305,36 @@
       "id": "cc-montesquieu_fr"
     },
     {
+      "title": "Cagny",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Cagny"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Canteloup",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Canteloup"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
       "title": "Castres-Gironde",
       "module": "cc-montesquieu_fr",
       "default_params": {
         "commune": "Castres-Gironde"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Cesny-aux-Vignes",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Cesny-aux-Vignes"
+      },
+      "id": "valesdunes_fr"
     },
     {
       "title": "Cesson-S\u00e9vign\u00e9",
@@ -6621,6 +7359,14 @@
         "commune": "Challet"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Champagnat",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Champhol",
@@ -6781,6 +7527,12 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "Circular City",
+      "module": "circularcity_world",
+      "default_params": {},
+      "id": "circularcity_world"
+    },
+    {
       "title": "Clayes",
       "module": "metropole_rennes_fr",
       "default_params": {
@@ -6809,6 +7561,14 @@
         "commune": "Clisson, rue Saint-Antoine"
       },
       "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Cl\u00e9ville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Cl\u00e9ville"
+      },
+      "id": "valesdunes_fr"
     },
     {
       "title": "Cl\u00e9villiers",
@@ -6851,12 +7611,40 @@
       "id": "paysdecraon_fr"
     },
     {
+      "title": "Communaut\u00e9 de Communes du Pays de Mormal",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {},
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Communaut\u00e9 de Communes du Pays des Sources",
+      "module": "cc_pays_sources_fr",
+      "default_params": {},
+      "id": "cc_pays_sources_fr"
+    },
+    {
       "title": "Communaut\u00e9 de Communes P\u00e9v\u00e8le Carembault",
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 1141
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Condal",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Cond\u00e9-sur-Ifs",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Cond\u00e9-sur-Ifs"
+      },
+      "id": "valesdunes_fr"
     },
     {
       "title": "Corancez",
@@ -6875,12 +7663,36 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "Croix-Caluyau",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Croix-Caluyau"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Cr\u00e9teil",
       "module": "sudestavenir_fr",
       "default_params": {
         "commune": "Cr\u00e9teil"
       },
       "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Cuiseaux",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Cuisery",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Cyclad",
@@ -6929,6 +7741,14 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Dommartin-l\u00e8s-Cuiseaux",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Dommartin-l\u00e8s-Toul",
       "module": "terrestouloises_com",
       "default_params": {
@@ -6943,6 +7763,12 @@
         "commune": "Dom\u00e8vre-en-Haye"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Douaisis Agglo",
+      "module": "douaisis_agglo_com",
+      "default_params": {},
+      "id": "douaisis_agglo_com"
     },
     {
       "title": "Dreux Agglom\u00e9ration",
@@ -6961,6 +7787,22 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Emi\u00e9ville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Emi\u00e9ville"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Englefontaine",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Englefontaine"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Ermenonville-la-Grande",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -6977,12 +7819,28 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Eth",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Eth"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Feldkirch",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Feldkirch"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Flacey-en-Bresse",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Flaxlanden",
@@ -7001,6 +7859,14 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Fontaine-au-Bois",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Fontaine-au-Bois"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Fontenay-sur-Eure",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -7015,6 +7881,14 @@
         "commune": "Fontenoy-sur-Moselle"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Forest-en-Cambr\u00e9sis",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Forest-en-Cambr\u00e9sis"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Foug",
@@ -7041,6 +7915,14 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Frasnoy",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Frasnoy"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Fresnay-le-Comte",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -7055,6 +7937,22 @@
         "commune": "Fresnay-le-Gilmert"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Frontenaud",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Fr\u00e9nouville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Fr\u00e9nouville"
+      },
+      "id": "valesdunes_fr"
     },
     {
       "title": "Galfingue",
@@ -7105,6 +8003,28 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Ghissignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Ghissignies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Golfe du Morbihan - Vannes agglom\u00e9ration",
+      "module": "gmvagglo_bzh",
+      "default_params": {},
+      "id": "gmvagglo_bzh"
+    },
+    {
+      "title": "Gommegnies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Gommegnies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Gondreville",
       "module": "terrestouloises_com",
       "default_params": {
@@ -7129,10 +8049,22 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Grand Belfort",
+      "module": "grandbelfort_fr",
+      "default_params": {},
+      "id": "grandbelfort_fr"
+    },
+    {
       "title": "Grand Besan\u00e7on M\u00e9tropole",
       "module": "grandbesancon_fr",
       "default_params": {},
       "id": "grandbesancon_fr"
+    },
+    {
+      "title": "Grand Bourg Agglom\u00e9ration",
+      "module": "grandbourg_fr",
+      "default_params": {},
+      "id": "grandbourg_fr"
     },
     {
       "title": "Grand Calais Terres et Mers",
@@ -7141,6 +8073,12 @@
         "instance_id": 679
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Grand Lieu Communaut\u00e9",
+      "module": "grandlieu_fr",
+      "default_params": {},
+      "id": "grandlieu_fr"
     },
     {
       "title": "Grand Paris Seine et Oise",
@@ -7179,6 +8117,14 @@
         "commune": "Grosrouvres"
       },
       "id": "terrestouloises_com"
+    },
+    {
+      "title": "Gussignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Gussignies"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Gye",
@@ -7221,12 +8167,28 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Hargnies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Hargnies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Haute-Goulaine",
       "module": "clissonsevremaine_fr",
       "default_params": {
         "commune": "Haute-Goulaine"
       },
       "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "Hecq",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Hecq"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Heimsbrunn",
@@ -7245,6 +8207,22 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Hon-Hergies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Hon-Hergies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Houdain-lez-Bavay",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Houdain-lez-Bavay"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Houville-la-Branche",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -7259,6 +8237,14 @@
         "commune": "Houx"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Huilly-sur-Seille",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Illzach",
@@ -7285,12 +8271,52 @@
       "id": "terrestouloises_com"
     },
     {
+      "title": "Janville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Janville"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Jenlain",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Jenlain"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Jolimetz",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Jolimetz"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Jouars-Pontchartrain",
       "module": "coeur_yvelines_fr",
       "default_params": {
         "commune": "Jouars-Pontchartrain"
       },
       "id": "coeur_yvelines_fr"
+    },
+    {
+      "title": "Joudes",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Jouven\u00e7on",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Jouy",
@@ -7309,12 +8335,36 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "L'Abergement-de-Cuisery",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "L'Hermitage",
       "module": "metropole_rennes_fr",
       "default_params": {
         "commune": "L'Hermitage"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "L'Or\u00e9e de Mormal (ex Amfroipret)",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "L'Or\u00e9e de Mormal (ex Amfroipret)"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "L'Or\u00e9e de Mormal (ex Bermeries)",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "L'Or\u00e9e de Mormal (ex Bermeries)"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "La Bourdini\u00e8re-Saint-Loup",
@@ -7349,12 +8399,52 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "La Chapelle-Naude",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "La Chapelle-Thouarault",
       "module": "metropole_rennes_fr",
       "default_params": {
         "commune": "La Chapelle-Thouarault"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "La Chapelle-Th\u00e8cle",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "La Flamengrie",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "La Flamengrie"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "La Frette",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "La Gen\u00eate",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "La Haye-Fouassi\u00e8re - Zone A",
@@ -7371,6 +8461,14 @@
         "commune": "La Haye-Fouassi\u00e8re - Zone B"
       },
       "id": "clissonsevremaine_fr"
+    },
+    {
+      "title": "La Longueville",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "La Longueville"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "La Planche",
@@ -7413,6 +8511,14 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "Landrecies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Landrecies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Laneuveville-derri\u00e8re-Foug",
       "module": "terrestouloises_com",
       "default_params": {
@@ -7453,6 +8559,22 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Le Favril",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Le Favril"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Le Fay",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Le Havre Seine M\u00e9tropole",
       "module": "publidata_fr",
       "default_params": {
@@ -7461,12 +8583,28 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Le Miroir",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Le Plessis-Tr\u00e9vise",
       "module": "sudestavenir_fr",
       "default_params": {
         "commune": "Le Plessis-Tr\u00e9vise"
       },
       "id": "sudestavenir_fr"
+    },
+    {
+      "title": "Le Quesnoy",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Le Quesnoy"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Le Rheu",
@@ -7509,6 +8647,30 @@
       "id": "sudestavenir_fr"
     },
     {
+      "title": "Locquignol",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Locquignol"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Loisy",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Louvignies-Quesnoy",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Louvignies-Quesnoy"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Lucey",
       "module": "terrestouloises_com",
       "default_params": {
@@ -7531,6 +8693,14 @@
         "commune": "Luisant"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Lunel Agglo",
+      "module": "circularcity_world",
+      "default_params": {
+        "customer": "lunel"
+      },
+      "id": "circularcity_world"
     },
     {
       "title": "Lutterbach",
@@ -7635,12 +8805,36 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Maresches",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Maresches"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Maroilles",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Maroilles"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Martillac",
       "module": "cc-montesquieu_fr",
       "default_params": {
         "commune": "Martillac"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Mecquignies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Mecquignies"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Meslay-le-Grenet",
@@ -7715,6 +8909,22 @@
       "id": "clissonsevremaine_fr"
     },
     {
+      "title": "Montagny-pr\u00e8s-Louhans",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Montcony",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Montfort-l'Amaury",
       "module": "coeur_yvelines_fr",
       "default_params": {
@@ -7735,6 +8945,22 @@
       "module": "data_montpellier3m_fr",
       "default_params": {},
       "id": "data_montpellier3m_fr"
+    },
+    {
+      "title": "Montpont-en-Bresse",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Montret",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Montri",
@@ -7767,6 +8993,14 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Moult-Chicheboville",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Moult-Chicheboville"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
       "title": "Mulhouse",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -7786,6 +9020,14 @@
       "module": "memotri_agglo_pau_fr",
       "default_params": {},
       "id": "memotri_agglo_pau_fr"
+    },
+    {
+      "title": "M\u00e9netreuil",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "M\u00e9nil-la-Tour",
@@ -7854,6 +9096,14 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Neuville-en-Avesnois",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Neuville-en-Avesnois"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Niffer",
       "module": "mulhouse_alsace_fr",
       "default_params": {
@@ -7910,6 +9160,14 @@
       "id": "metropole_rennes_fr"
     },
     {
+      "title": "Obies",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Obies"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Oinville-sous-Auneau",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -7942,6 +9200,14 @@
       "id": "publidata_fr"
     },
     {
+      "title": "Ormes",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Ormesson-sur-Marne",
       "module": "sudestavenir_fr",
       "default_params": {
@@ -7950,12 +9216,28 @@
       "id": "sudestavenir_fr"
     },
     {
+      "title": "Orsinval",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Orsinval"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Ottmarsheim",
       "module": "mulhouse_alsace_fr",
       "default_params": {
         "commune": "Ottmarsheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Ou\u00e9zy",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Ou\u00e9zy"
+      },
+      "id": "valesdunes_fr"
     },
     {
       "title": "Pac\u00e9",
@@ -8014,12 +9296,44 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Poix-du-Nord",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Poix-du-Nord"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Pont-P\u00e9an",
       "module": "metropole_rennes_fr",
       "default_params": {
         "commune": "Pont-P\u00e9an"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Potelle",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Potelle"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Preux-au-Bois",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Preux-au-Bois"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Preux-au-Sart",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Preux-au-Sart"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Prunay-le-Gillon",
@@ -8042,6 +9356,38 @@
         "commune": "Pulversheim"
       },
       "id": "mulhouse_alsace_fr"
+    },
+    {
+      "title": "Rancy",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Ratenelle",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Ratte",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Raucourt-au-Bois",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Raucourt-au-Bois"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Reiningue",
@@ -8178,12 +9524,28 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Robersart",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Robersart"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Roinville-sous-Auneau",
       "module": "chartres_metropole_fr",
       "default_params": {
         "commune": "Roinville-sous-Auneau"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Romenay",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Romill\u00e9",
@@ -8216,12 +9578,44 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Ruesnes",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Ruesnes"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Sagy",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Saillenard",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Saint Quentin en Yvelines",
       "module": "publidata_fr",
       "default_params": {
         "instance_id": 701
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Saint-Andr\u00e9",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Saint-Armel",
@@ -8328,6 +9722,14 @@
       "id": "chartres_metropole_fr"
     },
     {
+      "title": "Saint-Martin-du-Mont",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Saint-Michel-de-la-Ro\u00eb",
       "module": "paysdecraon_fr",
       "default_params": {
@@ -8351,6 +9753,30 @@
         "commune": "Saint-M\u00e9dard-d'Eyrans"
       },
       "id": "cc-montesquieu_fr"
+    },
+    {
+      "title": "Saint-Ouen-du-Mesnil-Oger",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Saint-Ouen-du-Mesnil-Oger"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Saint-Pair",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Saint-Pair"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Saint-Pierre-du-Jonquet",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Saint-Pierre-du-Jonquet"
+      },
+      "id": "valesdunes_fr"
     },
     {
       "title": "Saint-Prest",
@@ -8383,6 +9809,54 @@
         "commune": "Saint-Sulpice-la-For\u00eat"
       },
       "id": "metropole_rennes_fr"
+    },
+    {
+      "title": "Saint-Sylvain",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Saint-Sylvain"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Saint-Usuge",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Saint-Vincent-en-Bresse",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Jeudi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Saint-Waast-la-Vall\u00e9e",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Saint-Waast-la-Vall\u00e9e"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Sainte-Croix",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Salesches",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Salesches"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Sandarville",
@@ -8441,6 +9915,36 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Savigny-en-Revermont",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Savigny-sur-Seille",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Select'om",
+      "module": "select_om_com",
+      "default_params": {},
+      "id": "select_om_com"
+    },
+    {
+      "title": "Sepmeries",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Sepmeries"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "SIAVED (Valenciennes M\u00e9tropole)",
       "module": "publidata_fr",
       "default_params": {
@@ -8469,10 +9973,30 @@
       "id": "sictomvds_com"
     },
     {
+      "title": "Simandre",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Lundi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "SIRTOM de Courville-sur-Eure",
+      "module": "sirtom_courville_fr",
+      "default_params": {},
+      "id": "sirtom_courville_fr"
+    },
+    {
       "title": "SIVOM de la Vall\u00e9e de l'Yerres et des S\u00e9narts",
       "module": "sivom_com",
       "default_params": {},
       "id": "sivom_com"
+    },
+    {
+      "title": "SIVOM du Louhannais",
+      "module": "sivom_louhannais_fr",
+      "default_params": {},
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "SIVOM Rive Droite",
@@ -8487,6 +10011,14 @@
       "module": "sivom_rivedroite_fr",
       "default_params": {},
       "id": "sivom_rivedroite_fr"
+    },
+    {
+      "title": "Sornay",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mardi"
+      },
+      "id": "sivom_louhannais_fr"
     },
     {
       "title": "Sours",
@@ -8535,6 +10067,28 @@
         "instance_id": 1483
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Syndicat \u00c9meraude",
+      "module": "circularcity_world",
+      "default_params": {
+        "customer": "emeraude"
+      },
+      "id": "circularcity_world"
+    },
+    {
+      "title": "SYVALORM Loir & Sarthe",
+      "module": "syvalorm_fr",
+      "default_params": {},
+      "id": "syvalorm_fr"
+    },
+    {
+      "title": "Taisni\u00e8res-sur-Hon",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Taisni\u00e8res-sur-Hon"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Terres Touloises",
@@ -8629,6 +10183,20 @@
       "id": "mulhouse_alsace_fr"
     },
     {
+      "title": "Val \u00e8s Dunes",
+      "module": "valesdunes_fr",
+      "default_params": {},
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Valambray",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Valambray"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
       "title": "Valcobreizh",
       "module": "publidata_fr",
       "default_params": {
@@ -8659,6 +10227,22 @@
         "instance_id": 1619
       },
       "id": "publidata_fr"
+    },
+    {
+      "title": "Varennes-Saint-Sauveur",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Vendredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
+      "title": "Vendegies-au-Bois",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Vendegies-au-Bois"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Ver-l\u00e8s-Chartres",
@@ -8709,6 +10293,22 @@
       "id": "clissonsevremaine_fr"
     },
     {
+      "title": "Villereau",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Villereau"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Villers-Pol",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Villers-Pol"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
       "title": "Villey-le-Sec",
       "module": "terrestouloises_com",
       "default_params": {
@@ -8741,6 +10341,22 @@
       "id": "coeur_yvelines_fr"
     },
     {
+      "title": "Vimont",
+      "module": "valesdunes_fr",
+      "default_params": {
+        "commune": "Vimont"
+      },
+      "id": "valesdunes_fr"
+    },
+    {
+      "title": "Vincelles",
+      "module": "sivom_louhannais_fr",
+      "default_params": {
+        "jour": "Mercredi"
+      },
+      "id": "sivom_louhannais_fr"
+    },
+    {
       "title": "Vitray-en-Beauce",
       "module": "chartres_metropole_fr",
       "default_params": {
@@ -8755,6 +10371,22 @@
         "commune": "Voise"
       },
       "id": "chartres_metropole_fr"
+    },
+    {
+      "title": "Wargnies-le-Grand",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Wargnies-le-Grand"
+      },
+      "id": "cc_paysdemormal_fr"
+    },
+    {
+      "title": "Wargnies-le-Petit",
+      "module": "cc_paysdemormal_fr",
+      "default_params": {
+        "commune": "Wargnies-le-Petit"
+      },
+      "id": "cc_paysdemormal_fr"
     },
     {
       "title": "Wittelsheim",
@@ -9096,6 +10728,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_awhas_de"
+    },
+    {
+      "title": "Abfallwirtschaft Landkreis Neuwied",
+      "module": "abfall_io_graphql",
+      "default_params": {
+        "key": "de4957b006c53e47f8b9c21bc2c768f0"
+      },
+      "id": "abfall_io_graphql"
     },
     {
       "title": "Abfallwirtschaft Landkreis Nordhausen",
@@ -13911,22 +15551,6 @@
       "id": "ics_gelsendienste_de"
     },
     {
-      "title": "Gemeinde Blankenheim",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 415
-      },
-      "id": "cmcitymedia_de"
-    },
-    {
-      "title": "Gemeinde Deggenhausertal",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 225
-      },
-      "id": "cmcitymedia_de"
-    },
-    {
       "title": "Gemeinde Gro\u00df Pankow (Landkreis Prignitz)",
       "module": "abfall_io",
       "default_params": {
@@ -13979,14 +15603,6 @@
       "module": "ismaning_de",
       "default_params": {},
       "id": "ismaning_de"
-    },
-    {
-      "title": "Gemeinde Kalletal",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 426
-      },
-      "id": "cmcitymedia_de"
     },
     {
       "title": "Gemeinde Karst\u00e4dt (Landkreis Prignitz)",
@@ -14043,14 +15659,6 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_abfall_export_vcal"
-    },
-    {
-      "title": "Gemeinde Schutterwald",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 331
-      },
-      "id": "cmcitymedia_de"
     },
     {
       "title": "Gemeinde Unterhaching",
@@ -20102,12 +21710,24 @@
       "id": "abfallnavi_de"
     },
     {
+      "title": "Stadt Ansbach",
+      "module": "stadt_ansbach_de",
+      "default_params": {},
+      "id": "stadt_ansbach_de"
+    },
+    {
       "title": "Stadt Arnsberg",
       "module": "c_trace_de",
       "default_params": {
         "service": "arnsberg-abfallkalender"
       },
       "id": "c_trace_de"
+    },
+    {
+      "title": "Stadt Bad Wildungen",
+      "module": "bad_wildungen_de",
+      "default_params": {},
+      "id": "bad_wildungen_de"
     },
     {
       "title": "Stadt Bayreuth",
@@ -20170,14 +21790,6 @@
         "service": "dorsten"
       },
       "id": "abfallnavi_de"
-    },
-    {
-      "title": "Stadt Emmendingen",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 424
-      },
-      "id": "cmcitymedia_de"
     },
     {
       "title": "Stadt Enger",
@@ -20328,14 +21940,6 @@
         "customer": "memmingen"
       },
       "id": "awido_de"
-    },
-    {
-      "title": "Stadt Messstetten",
-      "module": "cmcitymedia_de",
-      "default_params": {
-        "hpid": 441
-      },
-      "id": "cmcitymedia_de"
     },
     {
       "title": "Stadt Norderstedt",
@@ -22286,6 +23890,12 @@
       "id": "deponia_hu"
     },
     {
+      "title": "DTKH Nonprofit Kft.",
+      "module": "dtkh_hu",
+      "default_params": {},
+      "id": "dtkh_hu"
+    },
+    {
       "title": "FKF Buda\u00f6rs",
       "module": "fkf_bo_hu",
       "default_params": {},
@@ -22342,6 +23952,12 @@
       "module": "panda_ie",
       "default_params": {},
       "id": "panda_ie"
+    },
+    {
+      "title": "Ray Whelan",
+      "module": "raywhelan_ie",
+      "default_params": {},
+      "id": "raywhelan_ie"
     }
   ],
   "Italy": [
@@ -22378,6 +23994,49 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Acquafredda",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Acquafredda"
+      },
+      "id": "cbbo_it"
+    },
+    {
+      "title": "Acquanegra sul Chiese",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Acquanegra sul Chiese"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Acqui Terme (Centro Storico)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Acqui Terme",
+        "zona": "Centro Storico"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Acqui Terme (Citt\u00e0)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Acqui Terme",
+        "zona": "Citt\u00e0"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Acqui Terme (Standard)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Acqui Terme",
+        "zona": "Standard"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "AET Ambiente Energia Territorio S.p.A.",
@@ -22484,6 +24143,14 @@
       "module": "aliaserviziambientali_it",
       "default_params": {},
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Alice bel Colle",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Alice bel Colle"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Alife - CZETA Spa",
@@ -22758,6 +24425,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Asola",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Asola"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Assago - San Germano - Gruppo Iren",
       "module": "junker_app",
       "default_params": {},
@@ -22786,6 +24461,15 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Aulla (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Aulla",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Avellino - Grande Srl",
@@ -22818,6 +24502,23 @@
         "municipality": "Bagno a Ripoli"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Bagnolo San Vito",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Bagnolo San Vito"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Bagnone (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Bagnone",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Ballabio",
@@ -22906,6 +24607,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Bassano del Grappa",
+      "module": "etraspa_it",
+      "default_params": {
+        "municipality": "Bassano del Grappa"
+      },
+      "id": "etraspa_it"
+    },
+    {
       "title": "Bassano Romano",
       "module": "junker_app",
       "default_params": {},
@@ -22924,6 +24633,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Belforte Monferrato",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Belforte Monferrato"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Bellano",
@@ -23026,6 +24743,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Bistagno",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Bistagno"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Bitti, Luna e Onan\u00ec - Formula Ambiente Spa",
       "module": "junker_app",
       "default_params": {},
@@ -23084,6 +24809,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Borgo Mantovano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Borgo Mantovano"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Borgo San Giovanni",
       "module": "cem_ambiente_it",
       "default_params": {
@@ -23114,6 +24847,14 @@
         "municipality": "Borgo Ticino"
       },
       "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Borgocarbonara",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Borgocarbonara"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Borgomanero (zona A)",
@@ -23152,6 +24893,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Bosio",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Bosio"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Bosisio Parini",
       "module": "siunet_it",
       "default_params": {
@@ -23174,6 +24923,14 @@
         "comune": "BOVOLONE"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Bozzolo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Bozzolo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Brandizzo",
@@ -23338,6 +25095,12 @@
       "id": "siunet_it"
     },
     {
+      "title": "C.B.B.O.",
+      "module": "cbbo_it",
+      "default_params": {},
+      "id": "cbbo_it"
+    },
+    {
       "title": "C.C.S. - Consorzio Campale Stabile",
       "module": "junker_app",
       "default_params": {},
@@ -23418,6 +25181,23 @@
       "id": "junker_app"
     },
     {
+      "title": "Calvisano",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Calvisano"
+      },
+      "id": "cbbo_it"
+    },
+    {
+      "title": "Camaiore (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Camaiore",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Cambiago",
       "module": "cem_ambiente_it",
       "default_params": {
@@ -23478,6 +25258,15 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Campo nell'Elba (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Campo nell'Elba",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Campobasso - S.E.A. Servizi e Ambiente SPA",
       "module": "junker_app",
       "default_params": {},
@@ -23494,6 +25283,12 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Candia Lomellina",
+      "module": "castelnovetto_pv_it",
+      "default_params": {},
+      "id": "castelnovetto_pv_it"
     },
     {
       "title": "Canegrate",
@@ -23524,6 +25319,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Capoliveri (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Capoliveri",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Caponago",
       "module": "cem_ambiente_it",
       "default_params": {
@@ -23546,6 +25350,14 @@
         "municipality": "Capraia e Limite"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Capriano del Colle",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Capriano del Colle"
+      },
+      "id": "cbbo_it"
     },
     {
       "title": "Capua - CZETA Spa - Ciclat",
@@ -23614,6 +25426,22 @@
       "id": "siunet_it"
     },
     {
+      "title": "Carpenedolo",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Carpenedolo"
+      },
+      "id": "cbbo_it"
+    },
+    {
+      "title": "Carpeneto",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Carpeneto"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Carpiano",
       "module": "cem_ambiente_it",
       "default_params": {
@@ -23672,6 +25500,23 @@
       "id": "junker_app"
     },
     {
+      "title": "Casale Marittimo (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Casale Marittimo",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Casaleggio Boiro",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Casaleggio Boiro"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Casaleone",
       "module": "siunet_it",
       "default_params": {
@@ -23710,6 +25555,30 @@
         "comune": "CASALMAIOCCO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Casalmoro",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Casalmoro"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Casaloldo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Casaloldo"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Casalromano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Casalromano"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Casargo",
@@ -23756,6 +25625,15 @@
         "comune": "CASELLE LURANI"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Casola (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Casola",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Cassago Brianza",
@@ -23806,6 +25684,22 @@
       "id": "siunet_it"
     },
     {
+      "title": "Cassine",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Cassine"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Cassinelle",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Cassinelle"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Castagnaro",
       "module": "siunet_it",
       "default_params": {
@@ -23822,10 +25716,26 @@
       "id": "siunet_it"
     },
     {
+      "title": "Castel d'Ario",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castel d'Ario"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Castel Gandolfo - Coop 134",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Castel Goffredo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castel Goffredo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Castel Maggiore",
@@ -23840,6 +25750,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Castelbelforte",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castelbelforte"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Castelbuono - Castelbuono Ambiente srl",
@@ -23876,6 +25794,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Castelletto d'Orba",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Castelletto d'Orba"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Castelletto Sopra Ticino (zona A)",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -23892,12 +25818,47 @@
       "id": "consorziomedionovarese_it"
     },
     {
+      "title": "Castellina Marittima (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Castellina Marittima",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Castello d'Agogna",
+      "module": "castelnovetto_pv_it",
+      "default_params": {},
+      "id": "castelnovetto_pv_it"
+    },
+    {
       "title": "Castello Di Brianza",
       "module": "siunet_it",
       "default_params": {
         "comune": "CASTELLO DI BRIANZA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Castellucchio",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Castellucchio"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Castelnovetto",
+      "module": "castelnovetto_pv_it",
+      "default_params": {},
+      "id": "castelnovetto_pv_it"
+    },
+    {
+      "title": "Castelnovetto, Candia Lomellina, Castello d'Agogna, Rosasco, Sant'Angelo Lomellina, Zeme",
+      "module": "castelnovetto_pv_it",
+      "default_params": {},
+      "id": "castelnovetto_pv_it"
     },
     {
       "title": "Castelnuovo di Porto",
@@ -23916,6 +25877,23 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Castenedolo",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Castenedolo"
+      },
+      "id": "cbbo_it"
+    },
+    {
+      "title": "Castiglioncello (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Castiglioncello",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Castiglione in Teverina - Cosp Tecno Service",
@@ -23964,10 +25942,27 @@
       "id": "siunet_it"
     },
     {
+      "title": "Cecina (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Cecina",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "CEM Ambiente",
       "module": "cem_ambiente_it",
       "default_params": {},
       "id": "cem_ambiente_it"
+    },
+    {
+      "title": "Ceresara",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Ceresara"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Ceriano Laghetto",
@@ -24204,6 +26199,12 @@
       "id": "junker_app"
     },
     {
+      "title": "CoABSeR",
+      "module": "coabser_it",
+      "default_params": {},
+      "id": "coabser_it"
+    },
+    {
       "title": "Cogliate",
       "module": "siunet_it",
       "default_params": {
@@ -24234,6 +26235,15 @@
         "comune": "COLLE BRIANZA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Collesalvetti (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Collesalvetti",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Collinas",
@@ -24278,6 +26288,15 @@
         "comune": "COLTURANO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Comano (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Comano",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Comazzo",
@@ -24508,6 +26527,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Cremolino",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Cremolino"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Cressa",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -24708,6 +26735,12 @@
       "id": "ics_ecolan_it"
     },
     {
+      "title": "Econet",
+      "module": "econetsrl_eu",
+      "default_params": {},
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Econova Srl",
       "module": "junker_app",
       "default_params": {},
@@ -24824,6 +26857,15 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Filattiera (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Filattiera",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Finale Emilia",
       "module": "geovest_it",
       "default_params": {
@@ -24844,6 +26886,23 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Fivizzano (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Fivizzano",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Flero",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Flero"
+      },
+      "id": "cbbo_it"
     },
     {
       "title": "Floridia - IGM rifiuti industriali",
@@ -24882,6 +26941,24 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Forte dei Marmi (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Forte dei Marmi",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Fosdinovo (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Fosdinovo",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Frosinone - De Vizia Transfer Spa",
@@ -25002,10 +27079,24 @@
       "id": "siunet_it"
     },
     {
+      "title": "Gazzuolo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Gazzuolo"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "GEA Srl",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Gelsia Ambiente (Giussano)",
+      "module": "gelsiambiente_it",
+      "default_params": {},
+      "id": "gelsiambiente_it"
     },
     {
       "title": "Genova",
@@ -25050,6 +27141,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Ghedi",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Ghedi"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Ghemme",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -25082,18 +27181,26 @@
       "id": "junker_app"
     },
     {
-      "title": "Giussano",
-      "module": "siunet_it",
+      "title": "Goito",
+      "module": "mantovaambiente_it",
       "default_params": {
-        "comune": "GIUSSANO"
+        "comune": "Goito"
       },
-      "id": "siunet_it"
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Gonnesa - De Vizia Transfer Spa",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Gonzaga",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Gonzaga"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Gorgonzola",
@@ -25178,6 +27285,24 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Guardistallo (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Guardistallo",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Guasticce (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Guasticce",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Gudo Visconti",
@@ -25496,6 +27621,14 @@
       "id": "isontinambiente_it"
     },
     {
+      "title": "Isorella",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Isorella"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Ispica - Impregico Srl",
       "module": "junker_app",
       "default_params": {},
@@ -25618,6 +27751,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Lerma",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Lerma"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Lesa",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -25660,6 +27801,15 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Licciana Nardi (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Licciana Nardi",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Lierna",
@@ -25750,6 +27900,18 @@
       "id": "junker_app"
     },
     {
+      "title": "Lozzolo",
+      "module": "lozzolo_roasio_it",
+      "default_params": {},
+      "id": "lozzolo_roasio_it"
+    },
+    {
+      "title": "Lozzolo, Roasio (COVEVAR)",
+      "module": "lozzolo_roasio_it",
+      "default_params": {},
+      "id": "lozzolo_roasio_it"
+    },
+    {
       "title": "Lu e Cuccaro Monferrato",
       "module": "junker_app",
       "default_params": {},
@@ -25800,6 +27962,14 @@
       "id": "consorziomedionovarese_it"
     },
     {
+      "title": "Magnacavallo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Magnacavallo"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Magnago",
       "module": "siunet_it",
       "default_params": {
@@ -25838,6 +28008,20 @@
       "id": "siunet_it"
     },
     {
+      "title": "Mantova",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Mantova"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Mantova Ambiente",
+      "module": "mantovaambiente_it",
+      "default_params": {},
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Maracalagonis - Formula Ambiente Spa",
       "module": "junker_app",
       "default_params": {},
@@ -25858,10 +28042,36 @@
       "id": "siunet_it"
     },
     {
+      "title": "Marcaria",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Marcaria"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Marche Multiservizi Falconara",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Marciana (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Marciana",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Marciana Marina (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Marciana Marina",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Margherita Di Savoia",
@@ -25880,12 +28090,28 @@
       "id": "siunet_it"
     },
     {
+      "title": "Mariana Mantovana",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Mariana Mantovana"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Marliana",
       "module": "aliaserviziambientali_it",
       "default_params": {
         "municipality": "Marliana"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Marmirolo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Marmirolo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Marsala, Trapani e Misiliscemi- Formula Ambiente Spa",
@@ -25926,6 +28152,15 @@
       "id": "siunet_it"
     },
     {
+      "title": "Massa (ASMIU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Massa",
+        "gestore": "asmiu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Massa e Cozzile",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -25956,12 +28191,29 @@
       "id": "siunet_it"
     },
     {
+      "title": "Massarosa (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Massarosa",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Massino Visconti",
       "module": "consorziomedionovarese_it",
       "default_params": {
         "municipality": "Massino Visconti"
       },
       "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Mazzano",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Mazzano"
+      },
+      "id": "cbbo_it"
     },
     {
       "title": "Meda",
@@ -25984,6 +28236,14 @@
         "comune": "MEDIGLIA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Medole",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Medole"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Meina",
@@ -26142,6 +28402,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Molare",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Molare"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Molteno",
       "module": "siunet_it",
       "default_params": {
@@ -26182,6 +28450,22 @@
         "municipality": "Montaione"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Montaldeo",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Montaldeo"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Montaldo Bormida",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Montaldo Bormida"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Montale",
@@ -26334,6 +28618,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Montescudaio (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Montescudaio",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Montespertoli",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -26356,6 +28649,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Monteverdi Marittimo (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Monteverdi Marittimo",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Monticello Brianza",
       "module": "siunet_it",
       "default_params": {
@@ -26372,10 +28674,35 @@
       "id": "siunet_it"
     },
     {
+      "title": "Montichiari",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Montichiari"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Monticiano",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Montignoso (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Montignoso",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Montirone",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Montirone"
+      },
+      "id": "cbbo_it"
     },
     {
       "title": "Monza - Impresa Sangalli",
@@ -26384,12 +28711,36 @@
       "id": "junker_app"
     },
     {
+      "title": "Monzambano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Monzambano"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Morciano Di Leuca",
       "module": "siunet_it",
       "default_params": {
         "comune": "MORCIANO DI LEUCA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Mornese",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Mornese"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Morsasco",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Morsasco"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Morterone",
@@ -26404,6 +28755,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Motteggiana",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Motteggiana"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Mottola e Laterza - Meridionale Servizi Ambientali Srl",
@@ -26426,6 +28785,15 @@
         "comune": "MULAZZANO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Mulazzo (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Mulazzo",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Municipium",
@@ -26534,6 +28902,22 @@
       "id": "junker_app"
     },
     {
+      "title": "Nuvolento",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Nuvolento"
+      },
+      "id": "cbbo_it"
+    },
+    {
+      "title": "Nuvolera",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Nuvolera"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Oggiono",
       "module": "siunet_it",
       "default_params": {
@@ -26588,6 +28972,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Orciano Pisano (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Orciano Pisano",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Oristano - Formula Ambiente Spa",
       "module": "junker_app",
       "default_params": {},
@@ -26614,6 +29007,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Orsara",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Orsara"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Orta San Giulio",
@@ -26650,6 +29051,33 @@
         "comune": "OSSONA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Ovada (Centro Storico)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Ovada",
+        "zona": "Centro Storico"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Ovada (Citt\u00e0)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Ovada",
+        "zona": "Citt\u00e0"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Ovada (Standard)",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Ovada",
+        "zona": "Standard"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Paderno D'Adda",
@@ -26770,6 +29198,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Pegognaga",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Pegognaga"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Pella",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -26850,6 +29286,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Pietrasanta (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Pietrasanta",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Pieve a Nievole",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -26888,6 +29333,15 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Podenzana (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Podenzana",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Poggiardo",
       "module": "siunet_it",
       "default_params": {
@@ -26902,6 +29356,14 @@
         "municipality": "Poggio a Caiano"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Poggio Rusco",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Poggio Rusco"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Pogno",
@@ -26926,6 +29388,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Pomarance (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Pomarance",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Pombia",
       "module": "consorziomedionovarese_it",
       "default_params": {
@@ -26934,12 +29405,60 @@
       "id": "consorziomedionovarese_it"
     },
     {
+      "title": "Poncarale",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Poncarale"
+      },
+      "id": "cbbo_it"
+    },
+    {
       "title": "Ponte Buggianese",
       "module": "aliaserviziambientali_it",
       "default_params": {
         "municipality": "Ponte Buggianese"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "Ponti sul Mincio",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Ponti sul Mincio"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Pontremoli (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Pontremoli",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "PortAPPorta (ERSU, ASMIU, REA, ESA)",
+      "module": "portapporta_it",
+      "default_params": {},
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Porto Mantovano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Porto Mantovano"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Portoferraio (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Portoferraio",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Posada - Formula Ambiente Spa",
@@ -26984,6 +29503,14 @@
         "comune": "POZZUOLO MARTESANA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Prasco",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Prasco"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Prato",
@@ -27064,12 +29591,28 @@
       "id": "junker_app"
     },
     {
+      "title": "Quingentole",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Quingentole"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Quinto Vicentino",
       "module": "siunet_it",
       "default_params": {
         "comune": "QUINTO VICENTINO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Quistello",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Quistello"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Racale",
@@ -27092,6 +29635,22 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Redondesco",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Redondesco"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Remedello",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Remedello"
+      },
+      "id": "cbbo_it"
     },
     {
       "title": "Renate (1)",
@@ -27130,6 +29689,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Ricaldone",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Ricaldone"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Rieco - Abruzzo",
       "module": "junker_app",
       "default_params": {},
@@ -27162,6 +29729,15 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Rio (ESA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Rio",
+        "gestore": "esa"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Riola Sardo - EffeAmbiente",
       "module": "junker_app",
       "default_params": {},
@@ -27180,12 +29756,43 @@
       "id": "junker_app"
     },
     {
+      "title": "Riparbella (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Riparbella",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Rivalta Bormida",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Rivalta Bormida"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
+      "title": "Rivarolo Mantovano",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Rivarolo Mantovano"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Rivolta D'Adda",
       "module": "siunet_it",
       "default_params": {
         "comune": "RIVOLTA D'ADDA"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Roasio",
+      "module": "lozzolo_roasio_it",
+      "default_params": {},
+      "id": "lozzolo_roasio_it"
     },
     {
       "title": "Robbiate",
@@ -27216,6 +29823,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Rocca Grimalda",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Rocca Grimalda"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Roccella Ionica - Jonica Multiservizi Spa",
       "module": "junker_app",
       "default_params": {},
@@ -27236,6 +29851,14 @@
         "comune": "RODANO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Rodigo",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Rodigo"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Rogeno",
@@ -27302,12 +29925,35 @@
       "id": "siunet_it"
     },
     {
+      "title": "Roncoferraro",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Roncoferraro"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "Rosasco",
+      "module": "castelnovetto_pv_it",
+      "default_params": {},
+      "id": "castelnovetto_pv_it"
+    },
+    {
       "title": "Rosate",
       "module": "siunet_it",
       "default_params": {
         "comune": "ROSATE"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Rosignano Marittimo (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Rosignano Marittimo",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Rosora",
@@ -27330,6 +29976,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Roverbella",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Roverbella"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Roverchiara",
       "module": "siunet_it",
       "default_params": {
@@ -27348,6 +30002,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Sabbioneta",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Sabbioneta"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Sala Bolognese",
@@ -27444,6 +30106,14 @@
       "id": "junker_app"
     },
     {
+      "title": "San Cristoforo",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "San Cristoforo"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "San Ferdinando Di Puglia",
       "module": "siunet_it",
       "default_params": {
@@ -27452,12 +30122,36 @@
       "id": "siunet_it"
     },
     {
+      "title": "San Giacomo delle Segnate",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Giacomo delle Segnate"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "San Giorgio Bigarello",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Giorgio Bigarello"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "San Giorgio Su Legnano",
       "module": "siunet_it",
       "default_params": {
         "comune": "SAN GIORGIO SU LEGNANO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "San Giovanni del Dosso",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Giovanni del Dosso"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "San Giovanni in Persiceto",
@@ -27488,6 +30182,22 @@
         "municipality": "San Marcello Piteglio"
       },
       "id": "aliaserviziambientali_it"
+    },
+    {
+      "title": "San Martino dall'Argine",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "San Martino dall'Argine"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
+      "title": "San Martino di Lupari",
+      "module": "etraspa_it",
+      "default_params": {
+        "municipality": "San Martino di Lupari"
+      },
+      "id": "etraspa_it"
     },
     {
       "title": "San Maurizio d'Opaglio",
@@ -27568,6 +30278,21 @@
       "id": "siunet_it"
     },
     {
+      "title": "Sant'Angelo Lomellina",
+      "module": "castelnovetto_pv_it",
+      "default_params": {},
+      "id": "castelnovetto_pv_it"
+    },
+    {
+      "title": "Santa Luce (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Santa Luce",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Santa Lucia del Mela",
       "module": "junker_app",
       "default_params": {},
@@ -27624,6 +30349,12 @@
       "id": "junker_app"
     },
     {
+      "title": "Savno Servizi",
+      "module": "savnoservizi_it",
+      "default_params": {},
+      "id": "savnoservizi_it"
+    },
+    {
       "title": "Scalea",
       "module": "junker_app",
       "default_params": {},
@@ -27652,6 +30383,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Schivenoglia",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Schivenoglia"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "SEAB Biella",
       "module": "seab_biella_it",
       "default_params": {},
@@ -27664,10 +30403,25 @@
       "id": "junker_app"
     },
     {
+      "title": "Selargius Sostenibile",
+      "module": "selargiusostenibile_it",
+      "default_params": {},
+      "id": "selargiusostenibile_it"
+    },
+    {
       "title": "Sennori e Sorso - Gesenu Spa",
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Seravezza (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Seravezza",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Seregno",
@@ -27676,6 +30430,14 @@
         "comune": "SEREGNO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Sermide e Felonica",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Sermide e Felonica"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Sermoneta - Del Prete Srl",
@@ -27722,6 +30484,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Settimo Milanese",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Settimo Milanese"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Seveso",
       "module": "siunet_it",
       "default_params": {
@@ -27754,6 +30524,14 @@
       "module": "silea_it",
       "default_params": {},
       "id": "silea_it"
+    },
+    {
+      "title": "Silvano d'Orba",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Silvano d'Orba"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Silvi - Diodoro Ecologia",
@@ -27810,6 +30588,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Solferino",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Solferino"
+      },
+      "id": "mantovaambiente_it"
     },
     {
       "title": "Solza",
@@ -27878,6 +30664,24 @@
       "id": "junker_app"
     },
     {
+      "title": "Stagno (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Stagno",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
+      "title": "Stazzema (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Stazzema",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Stefanaconi",
       "module": "junker_app",
       "default_params": {},
@@ -27896,6 +30700,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Strevi",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Strevi"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Sueglio",
@@ -27944,12 +30756,28 @@
       "id": "junker_app"
     },
     {
+      "title": "Suzzara",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Suzzara"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Taceno",
       "module": "siunet_it",
       "default_params": {
         "comune": "TACENO"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Tagliolo Monferrato",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Tagliolo Monferrato"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Taranto (araccolta.it)",
@@ -28004,6 +30832,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Terzo",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Terzo"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Testico",
@@ -28090,6 +30926,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Tresana (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Tresana",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Trevenzuolo",
       "module": "siunet_it",
       "default_params": {
@@ -28172,6 +31017,14 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Trisobbio",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Trisobbio"
+      },
+      "id": "econetsrl_eu"
     },
     {
       "title": "Triuggio",
@@ -28482,6 +31335,15 @@
       "id": "junker_app"
     },
     {
+      "title": "Vicarello (REA)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Vicarello",
+        "gestore": "rea"
+      },
+      "id": "portapporta_it"
+    },
+    {
       "title": "Vicchio",
       "module": "aliaserviziambientali_it",
       "default_params": {
@@ -28534,6 +31396,14 @@
       "id": "siunet_it"
     },
     {
+      "title": "Vigonza",
+      "module": "etraspa_it",
+      "default_params": {
+        "municipality": "Vigonza"
+      },
+      "id": "etraspa_it"
+    },
+    {
       "title": "Villa Cortese",
       "module": "siunet_it",
       "default_params": {
@@ -28548,6 +31418,15 @@
         "comune": "VILLA FARALDI"
       },
       "id": "siunet_it"
+    },
+    {
+      "title": "Villafranca (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Villafranca",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Villanterio",
@@ -28638,6 +31517,22 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Visano",
+      "module": "cbbo_it",
+      "default_params": {
+        "comune": "Visano"
+      },
+      "id": "cbbo_it"
+    },
+    {
+      "title": "Visone",
+      "module": "econetsrl_eu",
+      "default_params": {
+        "comune": "Visone"
+      },
+      "id": "econetsrl_eu"
+    },
+    {
       "title": "Vitorchiano",
       "module": "junker_app",
       "default_params": {},
@@ -28672,6 +31567,14 @@
       "id": "junker_app"
     },
     {
+      "title": "Volta Mantovana",
+      "module": "mantovaambiente_it",
+      "default_params": {
+        "comune": "Volta Mantovana"
+      },
+      "id": "mantovaambiente_it"
+    },
+    {
       "title": "Volterra",
       "module": "junker_app",
       "default_params": {},
@@ -28688,6 +31591,21 @@
       "module": "junker_app",
       "default_params": {},
       "id": "junker_app"
+    },
+    {
+      "title": "Zeme",
+      "module": "castelnovetto_pv_it",
+      "default_params": {},
+      "id": "castelnovetto_pv_it"
+    },
+    {
+      "title": "Zeri (ERSU)",
+      "module": "portapporta_it",
+      "default_params": {
+        "comune": "Zeri",
+        "gestore": "ersu"
+      },
+      "id": "portapporta_it"
     },
     {
       "title": "Zevio",
@@ -28842,10 +31760,22 @@
       "id": "grafikai_svara_lt"
     },
     {
+      "title": "Nemen\u010din\u0117s komunalininkas",
+      "module": "nemenkom_lt",
+      "default_params": {},
+      "id": "nemenkom_lt"
+    },
+    {
       "title": "Tel\u0161i\u0173 keliai",
       "module": "tkeliai_lt",
       "default_params": {},
       "id": "tkeliai_lt"
+    },
+    {
+      "title": "\u0160iauli\u0173 regiono atliek\u0173 tvarkymo centras (\u0160iauliai city)",
+      "module": "sratc_lt",
+      "default_params": {},
+      "id": "sratc_lt"
     }
   ],
   "Luxembourg": [
@@ -29436,6 +32366,12 @@
       "id": "aucklandcouncil_govt_nz"
     },
     {
+      "title": "Carterton District Council",
+      "module": "cdc_govt_nz",
+      "default_params": {},
+      "id": "cdc_govt_nz"
+    },
+    {
       "title": "Central Otago District Council",
       "module": "codc_govt_nz",
       "default_params": {},
@@ -29849,6 +32785,18 @@
       "id": "ecoszczecin_pl"
     },
     {
+      "title": "EKO-REGION (Gmina Szczerc\u00f3w)",
+      "module": "eko_region_pl",
+      "default_params": {},
+      "id": "eko_region_pl"
+    },
+    {
+      "title": "Ekoland Polska (Kra\u015bnik area)",
+      "module": "ekolandpolska_com_pl",
+      "default_params": {},
+      "id": "ekolandpolska_com_pl"
+    },
+    {
       "title": "Gaw\u0142\u00f3w",
       "module": "bochnia_gmina_pl",
       "default_params": {
@@ -29887,6 +32835,12 @@
         "town": "Gierczyce"
       },
       "id": "bochnia_gmina_pl"
+    },
+    {
+      "title": "Gliwice",
+      "module": "segreguj_gliwice_eu",
+      "default_params": {},
+      "id": "segreguj_gliwice_eu"
     },
     {
       "title": "Gmina Bardo",
@@ -30071,12 +33025,30 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Imielno",
+      "module": "tamax_imielno_pl",
+      "default_params": {},
+      "id": "tamax_imielno_pl"
+    },
+    {
       "title": "Gmina Inowroc\u0142aw",
       "module": "sims_pl",
       "default_params": {
         "owner": "Gmina Inowroc\u0142aw"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Jaktor\u00f3w",
+      "module": "jaktorow_pl",
+      "default_params": {},
+      "id": "jaktorow_pl"
+    },
+    {
+      "title": "Gmina Jan\u00f3w",
+      "module": "tamax_janow_pl",
+      "default_params": {},
+      "id": "tamax_janow_pl"
     },
     {
       "title": "Gmina Je\u017cewo",
@@ -30111,12 +33083,24 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Koniusza",
+      "module": "tamax_koniusza_pl",
+      "default_params": {},
+      "id": "tamax_koniusza_pl"
+    },
+    {
       "title": "Gmina Kozy",
       "module": "sims_pl",
       "default_params": {
         "owner": "Gmina Kozy"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Ko\u0142baskowo",
+      "module": "kolbaskowo_pl",
+      "default_params": {},
+      "id": "kolbaskowo_pl"
     },
     {
       "title": "Gmina Krotoszyce",
@@ -30143,12 +33127,24 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Ksi\u0105\u017c Wielki",
+      "module": "tamax_ksiaz_wielki_pl",
+      "default_params": {},
+      "id": "tamax_ksiaz_wielki_pl"
+    },
+    {
       "title": "Gmina Legnickie Pole",
       "module": "sims_pl",
       "default_params": {
         "owner": "Gmina Legnickie Pole"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Lel\u00f3w",
+      "module": "tamax_lelow_pl",
+      "default_params": {},
+      "id": "tamax_lelow_pl"
     },
     {
       "title": "Gmina Lubrza",
@@ -30163,6 +33159,12 @@
       "module": "maslow_pl",
       "default_params": {},
       "id": "maslow_pl"
+    },
+    {
+      "title": "Gmina Miasto Bochnia",
+      "module": "tamax_bochnia_pl",
+      "default_params": {},
+      "id": "tamax_bochnia_pl"
     },
     {
       "title": "Gmina Miedziana G\u00f3ra",
@@ -30235,6 +33237,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Nawojowa",
+      "module": "nawojowa_pl",
+      "default_params": {},
+      "id": "nawojowa_pl"
+    },
+    {
       "title": "Gmina Nowa Ruda",
       "module": "sims_pl",
       "default_params": {
@@ -30283,12 +33291,30 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Osielsko",
+      "module": "osielsko_pl",
+      "default_params": {},
+      "id": "osielsko_pl"
+    },
+    {
       "title": "Gmina Ostrowiec \u015awi\u0119tokrzyski",
       "module": "sims_pl",
       "default_params": {
         "owner": "Gmina Ostrowiec \u015awi\u0119tokrzyski"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina O\u015bwi\u0119cim",
+      "module": "gmina_oswiecim_pl",
+      "default_params": {},
+      "id": "gmina_oswiecim_pl"
+    },
+    {
+      "title": "Gmina Paczk\u00f3w",
+      "module": "paczkow_pl",
+      "default_params": {},
+      "id": "paczkow_pl"
     },
     {
       "title": "Gmina Paj\u0119czno",
@@ -30305,6 +33331,12 @@
         "owner": "Gmina Paw\u0142owice"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Pisz",
+      "module": "pisz_pl",
+      "default_params": {},
+      "id": "pisz_pl"
     },
     {
       "title": "Gmina Polanica-Zdr\u00f3j",
@@ -30361,6 +33393,18 @@
         "owner": "Gmina Radoszyce"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Radziemice",
+      "module": "tamax_net_pl",
+      "default_params": {},
+      "id": "tamax_net_pl"
+    },
+    {
+      "title": "Gmina Rad\u0142\u00f3w",
+      "module": "gmina_radlow_pl",
+      "default_params": {},
+      "id": "gmina_radlow_pl"
     },
     {
       "title": "Gmina Reda",
@@ -30435,6 +33479,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Szczekociny",
+      "module": "tamax_szczekociny_pl",
+      "default_params": {},
+      "id": "tamax_szczekociny_pl"
+    },
+    {
       "title": "Gmina Szczytna",
       "module": "sims_pl",
       "default_params": {
@@ -30457,6 +33507,12 @@
         "owner": "Gmina Szumowo"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina S\u0119dzisz\u00f3w",
+      "module": "tamax_sedziszow_pl",
+      "default_params": {},
+      "id": "tamax_sedziszow_pl"
     },
     {
       "title": "Gmina S\u0142upca",
@@ -30577,6 +33633,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina W\u0142odowice",
+      "module": "tamax_wlodowice_pl",
+      "default_params": {},
+      "id": "tamax_wlodowice_pl"
+    },
+    {
       "title": "Gmina Zaleszany",
       "module": "sims_pl",
       "default_params": {
@@ -30651,6 +33713,12 @@
         "owner": "Gmina \u017bmigr\u00f3d"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina \u017bukowo (ELWOZ ECO)",
+      "module": "elwozeco_pl",
+      "default_params": {},
+      "id": "elwozeco_pl"
     },
     {
       "title": "Gminne Przedsi\u0119biorstwo Komunalne Sp. z o.o. w Skarszewach",
@@ -30797,6 +33865,12 @@
       "id": "bochnia_gmina_pl"
     },
     {
+      "title": "Legionowo",
+      "module": "legionowo_pl",
+      "default_params": {},
+      "id": "legionowo_pl"
+    },
+    {
       "title": "Legnica",
       "module": "ecoharmonogram_pl",
       "default_params": {
@@ -30869,6 +33943,18 @@
       "id": "sims_pl"
     },
     {
+      "title": "Miasto Wieliczka",
+      "module": "tamax_wieliczka_pl",
+      "default_params": {},
+      "id": "tamax_wieliczka_pl"
+    },
+    {
+      "title": "Miasto \u017bywiec",
+      "module": "zywiec_pl",
+      "default_params": {},
+      "id": "zywiec_pl"
+    },
+    {
       "title": "Mierz\u0119cice",
       "module": "ecoharmonogram_pl",
       "default_params": {
@@ -30895,6 +33981,12 @@
       "module": "mpo_krakow_pl",
       "default_params": {},
       "id": "mpo_krakow_pl"
+    },
+    {
+      "title": "MPO Toru\u0144",
+      "module": "mpo_torun_pl",
+      "default_params": {},
+      "id": "mpo_torun_pl"
     },
     {
       "title": "Niemce",
@@ -31027,6 +34119,12 @@
       "id": "bochnia_gmina_pl"
     },
     {
+      "title": "PROWOD",
+      "module": "prowod_pl",
+      "default_params": {},
+      "id": "prowod_pl"
+    },
+    {
       "title": "Przedsi\u0119biorstwo Gospodarki Komunalnej w Wo\u0142owie Sp. z o.o.",
       "module": "sims_pl",
       "default_params": {
@@ -31121,6 +34219,72 @@
         "app": "slupsk"
       },
       "id": "ecoharmonogram_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Imielno)",
+      "module": "tamax_imielno_pl",
+      "default_params": {},
+      "id": "tamax_imielno_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Jan\u00f3w)",
+      "module": "tamax_janow_pl",
+      "default_params": {},
+      "id": "tamax_janow_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Koniusza)",
+      "module": "tamax_koniusza_pl",
+      "default_params": {},
+      "id": "tamax_koniusza_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Ksi\u0105\u017c Wielki)",
+      "module": "tamax_ksiaz_wielki_pl",
+      "default_params": {},
+      "id": "tamax_ksiaz_wielki_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Lel\u00f3w)",
+      "module": "tamax_lelow_pl",
+      "default_params": {},
+      "id": "tamax_lelow_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Miasto Bochnia)",
+      "module": "tamax_bochnia_pl",
+      "default_params": {},
+      "id": "tamax_bochnia_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Radziemice)",
+      "module": "tamax_net_pl",
+      "default_params": {},
+      "id": "tamax_net_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Szczekociny)",
+      "module": "tamax_szczekociny_pl",
+      "default_params": {},
+      "id": "tamax_szczekociny_pl"
+    },
+    {
+      "title": "TAMAX (Gmina S\u0119dzisz\u00f3w)",
+      "module": "tamax_sedziszow_pl",
+      "default_params": {},
+      "id": "tamax_sedziszow_pl"
+    },
+    {
+      "title": "TAMAX (Gmina W\u0142odowice)",
+      "module": "tamax_wlodowice_pl",
+      "default_params": {},
+      "id": "tamax_wlodowice_pl"
+    },
+    {
+      "title": "TAMAX (Miasto Wieliczka)",
+      "module": "tamax_wieliczka_pl",
+      "default_params": {},
+      "id": "tamax_wieliczka_pl"
     },
     {
       "title": "Trzebownisko",
@@ -31293,6 +34457,12 @@
       "id": "komunala_kranj_si"
     },
     {
+      "title": "Komunala Slovenska Bistrica",
+      "module": "komunala_slb_si",
+      "default_params": {},
+      "id": "komunala_slb_si"
+    },
+    {
       "title": "Kostak Kr\u0161ko",
       "module": "kostak_si",
       "default_params": {},
@@ -31339,6 +34509,12 @@
       "module": "pup_si",
       "default_params": {},
       "id": "pup_si"
+    },
+    {
+      "title": "Saubermacher - Komunala",
+      "module": "saubermacher_komunala_si",
+      "default_params": {},
+      "id": "saubermacher_komunala_si"
     },
     {
       "title": "Simbio",
@@ -31569,6 +34745,12 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Kretslopp Sydost",
+      "module": "kretsloppsydost_se",
+      "default_params": {},
+      "id": "kretsloppsydost_se"
+    },
+    {
       "title": "Kristianstad Renh\u00e5llning",
       "module": "renhallningen_kristianstad_se",
       "default_params": {},
@@ -31621,6 +34803,12 @@
         "service_provider": "ljungby-kommun"
       },
       "id": "edpevent_se"
+    },
+    {
+      "title": "Ljusdal Energi",
+      "module": "ljusdalenergi_se",
+      "default_params": {},
+      "id": "ljusdalenergi_se"
     },
     {
       "title": "Lule\u00e5",
@@ -31677,6 +34865,12 @@
         "service_provider": "nodra"
       },
       "id": "avfallsapp_se"
+    },
+    {
+      "title": "Nordmaling",
+      "module": "vakin_se",
+      "default_params": {},
+      "id": "vakin_se"
     },
     {
       "title": "Norrt\u00e4lje Vatten & Avfall",
@@ -31847,10 +35041,22 @@
       "id": "timra_se"
     },
     {
+      "title": "Trollh\u00e4ttan Energi",
+      "module": "trollhattanenergi_se",
+      "default_params": {},
+      "id": "trollhattanenergi_se"
+    },
+    {
       "title": "Uddevalla Energi",
       "module": "uddevallaenergi_se",
       "default_params": {},
       "id": "uddevallaenergi_se"
+    },
+    {
+      "title": "Ume\u00e5",
+      "module": "vakin_se",
+      "default_params": {},
+      "id": "vakin_se"
     },
     {
       "title": "Upplands-Bro",
@@ -31897,6 +35103,12 @@
       "id": "edpevent_se"
     },
     {
+      "title": "Vakin",
+      "module": "vakin_se",
+      "default_params": {},
+      "id": "vakin_se"
+    },
+    {
       "title": "Vallentuna",
       "module": "avfallsapp_se",
       "default_params": {
@@ -31909,6 +35121,12 @@
       "module": "vattenmiljoresurs_se",
       "default_params": {},
       "id": "vattenmiljoresurs_se"
+    },
+    {
+      "title": "Vindeln",
+      "module": "vakin_se",
+      "default_params": {},
+      "id": "vakin_se"
     },
     {
       "title": "VIVAB Soph\u00e4mtning",
@@ -32388,6 +35606,12 @@
         "municipality": "Gasel"
       },
       "id": "koeniz_ch"
+    },
+    {
+      "title": "Gemeinde Arlesheim",
+      "module": "arlesheim_ch",
+      "default_params": {},
+      "id": "arlesheim_ch"
     },
     {
       "title": "Gemeinde Feuerthalen",
@@ -33042,6 +36266,15 @@
       "id": "a_region_ch"
     },
     {
+      "title": "Rupperswil",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "rupperswil",
+        "municipality_id": "5525"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Salenstein",
       "module": "kvatg_ch",
       "default_params": {
@@ -33104,6 +36337,15 @@
       "id": "kvatg_ch"
     },
     {
+      "title": "Seegr\u00e4ben",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "seegraeben",
+        "municipality_id": "349"
+      },
+      "id": "localcities_ch"
+    },
+    {
       "title": "Seon",
       "module": "ics",
       "default_params": {},
@@ -33116,6 +36358,15 @@
         "municipality": "Sirnach"
       },
       "id": "zab_ch"
+    },
+    {
+      "title": "Solothurn",
+      "module": "localcities_ch",
+      "default_params": {
+        "municipality": "solothurn",
+        "municipality_id": "3625"
+      },
+      "id": "localcities_ch"
     },
     {
       "title": "Sommeri",
@@ -33146,6 +36397,12 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_buelach_ch"
+    },
+    {
+      "title": "Staffelbach",
+      "module": "staffelbach_ch",
+      "default_params": {},
+      "id": "staffelbach_ch"
     },
     {
       "title": "Steckborn",
@@ -33792,6 +37049,12 @@
       "id": "bridgend_gov_uk"
     },
     {
+      "title": "Brighton & Hove City Council",
+      "module": "brighton_hove_gov_uk",
+      "default_params": {},
+      "id": "brighton_hove_gov_uk"
+    },
+    {
       "title": "Bristol City Council",
       "module": "bristol_gov_uk",
       "default_params": {},
@@ -33892,6 +37155,12 @@
       "id": "castlepoint_gov_uk"
     },
     {
+      "title": "Causeway Coast and Glens Borough Council",
+      "module": "causewaycoastandglens_gov_uk",
+      "default_params": {},
+      "id": "causewaycoastandglens_gov_uk"
+    },
+    {
       "title": "Central Bedfordshire Council",
       "module": "centralbedfordshire_gov_uk",
       "default_params": {},
@@ -33956,6 +37225,12 @@
       "module": "doncaster_gov_uk",
       "default_params": {},
       "id": "doncaster_gov_uk"
+    },
+    {
+      "title": "City of Edinburgh Council",
+      "module": "edinburgh_gov_uk",
+      "default_params": {},
+      "id": "edinburgh_gov_uk"
     },
     {
       "title": "City Of Lincoln Council",
@@ -34854,6 +38129,12 @@
       "id": "iapp_itouchvision_com"
     },
     {
+      "title": "Newry, Mourne and Down District Council",
+      "module": "newrymournedown_org",
+      "default_params": {},
+      "id": "newrymournedown_org"
+    },
+    {
       "title": "North Ayrshire Council",
       "module": "north_ayrshire_gov_uk",
       "default_params": {},
@@ -35106,6 +38387,12 @@
       "module": "rochford_gov_uk",
       "default_params": {},
       "id": "rochford_gov_uk"
+    },
+    {
+      "title": "Rossendale Borough Council",
+      "module": "rossendale_gov_uk",
+      "default_params": {},
+      "id": "rossendale_gov_uk"
     },
     {
       "title": "Rother District Council",
@@ -36066,6 +39353,12 @@
       "id": "ics_recollect"
     },
     {
+      "title": "City of Saint Paul, MN",
+      "module": "stpaul_gov",
+      "default_params": {},
+      "id": "stpaul_gov"
+    },
+    {
       "title": "City of San Antonio",
       "module": "sanantonio_gov",
       "default_params": {},
@@ -36157,6 +39450,12 @@
       "id": "kansas_city_mo_us"
     },
     {
+      "title": "Lakeshore Recycling Systems (LRS)",
+      "module": "lrsrecycles_com",
+      "default_params": {},
+      "id": "lrsrecycles_com"
+    },
+    {
       "title": "Lincoln, CA",
       "module": "lincoln_ca_us",
       "default_params": {},
@@ -36176,6 +39475,12 @@
       "module": "marysville_wa_us",
       "default_params": {},
       "id": "marysville_wa_us"
+    },
+    {
+      "title": "McNamara Waste Services",
+      "module": "mcwaste_com",
+      "default_params": {},
+      "id": "mcwaste_com"
     },
     {
       "title": "Miami-Dade County",
@@ -36373,6 +39678,12 @@
         "state": "Washington"
       },
       "id": "recyclecoach_com"
+    },
+    {
+      "title": "Town of Huntington, NY",
+      "module": "huntington_ny_us",
+      "default_params": {},
+      "id": "huntington_ny_us"
     },
     {
       "title": "TrashDayNow",

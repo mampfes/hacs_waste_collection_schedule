@@ -1,12 +1,14 @@
 # Chichester District Council
 
-Support for schedules provided by [Chichester District Council](https://www.chichester.gov.uk/checkyourbinday), serving the borough of Chichester, UK.
+Support for schedules provided by [Chichester District Council](https://www.chichester.gov.uk).
+
+Source for chichester.gov.uk services for Chichester
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: chichester_gov_uk
       args:
         uprn: UPRN
@@ -17,16 +19,16 @@ waste_collection_schedule:
 **uprn**  
 *(string) (required)*
 
-## Examples
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: chichester_gov_uk
       args:
         uprn: 010002476348
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Search for your address on the [FindMyAddress service](https://www.findmyaddress.co.uk/) which displays the UPRN in the result.
+Open https://www.chichester.gov.uk/checkyourbinday, search your address, and copy the UPRN.

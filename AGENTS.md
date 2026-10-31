@@ -29,7 +29,7 @@ Optional but recommended:
 
 - `COUNTRY: str` (ISO-3166-1 alpha-2, lower-case).
 - `EXTRA_INFO: list[dict]` for sources that cover multiple municipalities.
-- `PARAM_DESCRIPTIONS`, `PARAM_TRANSLATIONS`, `HOW_TO_GET_ARGUMENTS_DESCRIPTION` keyed by language code. **Only `en`, `de`, `it`, `fr`, `nl`, `sl`, `da`, `fi` are supported** — other codes (e.g. `lt`, `pl`, `cs`) will fail `test_source_has_necessary_parameters`. See the [HOW_TO_GET_ARGUMENTS_DESCRIPTION rules](#how_to_get_arguments_description-rules) section below.
+- `PARAM_DESCRIPTIONS`, `PARAM_TRANSLATIONS`, `HOW_TO_GET_ARGUMENTS_DESCRIPTION` keyed by language code. **Only `en`, `de`, `it`, `fr`, `nl`, `sl`, `da`, `fi`, `sv`, `nb` are supported** — other codes (e.g. `lt`, `pl`, `cs`) will fail `test_source_has_necessary_parameters`. See the [HOW_TO_GET_ARGUMENTS_DESCRIPTION rules](#how_to_get_arguments_description-rules) section below.
 
 `Collection(date, t, icon=None, picture=None)` is the data model. Return one per collection event. For `icon`, use a member of the canonical `Icons` enum (`from waste_collection_schedule import Icons` — full catalogue at `custom_components/waste_collection_schedule/waste_collection_schedule/icons.py`) rather than a raw `"mdi:..."` string.
 
@@ -103,7 +103,7 @@ Things the maintainers consistently bounce in code review — avoid these from t
 - **Generic `Exception`.** Use `SourceArgumentNotFound` or `SourceArgumentNotFoundWithSuggestions` from `waste_collection_schedule.exceptions` for missing/invalid user input. Bubble up `requests.HTTPError` for upstream failures.
 - **`if __name__ == "__main__"` blocks.** Sources are libraries; no standalone entry points.
 - **Dummy parameters** added solely to satisfy the config GUI. If a parameter has no use, drop it.
-- **Unsupported language codes in `PARAM_DESCRIPTIONS`, `PARAM_TRANSLATIONS`, or `HOW_TO_GET_ARGUMENTS_DESCRIPTION`.** Only `en`, `de`, `it`, `fr`, `nl`, `sl`, `da`, `fi` are valid keys. Including any other code (e.g. `lt`, `cs`, `pl`) fails `test_source_has_necessary_parameters`. If a contributor wrote their `HOW_TO_GET_ARGUMENTS_DESCRIPTION` in only one language (e.g. `{"en": "..."}`) that is fine — do not add translations for the other languages. See the [HOW_TO_GET_ARGUMENTS_DESCRIPTION rules](#how_to_get_arguments_description-rules) section.
+- **Unsupported language codes in `PARAM_DESCRIPTIONS`, `PARAM_TRANSLATIONS`, or `HOW_TO_GET_ARGUMENTS_DESCRIPTION`.** Only `en`, `de`, `it`, `fr`, `nl`, `sl`, `da`, `fi`, `sv`, `nb` are valid keys. Including any other code (e.g. `lt`, `cs`, `pl`) fails `test_source_has_necessary_parameters`. If a contributor wrote their `HOW_TO_GET_ARGUMENTS_DESCRIPTION` in only one language (e.g. `{"en": "..."}`) that is fine — do not add translations for the other languages. See the [HOW_TO_GET_ARGUMENTS_DESCRIPTION rules](#how_to_get_arguments_description-rules) section.
 - **Editing files in the "must not hand-edit" list above** — they get overwritten by CI after merge.
 - **Suppressing failures silently.** Returning `[]` on an HTTP error masks problems as "no upcoming collections".
 - **Unformatted code.** Run `ruff check --fix` and `ruff format` before committing (see Commands below).
@@ -114,7 +114,7 @@ Things the maintainers consistently bounce in code review — avoid these from t
 
 `HOW_TO_GET_ARGUMENTS_DESCRIPTION` is an optional dict shown in the Home Assistant config flow above the input fields. It explains to users how to find the required parameter values (e.g. "Visit https://example.com and note the ID from the URL").
 
-**Valid language keys:** only `"en"`, `"de"`, `"it"`, `"fr"`, `"nl"`, `"sl"`, `"da"`, `"fi"` — the same set as `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS`. Any other key (e.g. `"pl"`, `"sk"`, `"lt"`, `"cs"`) will cause `test_source_has_necessary_parameters` to fail.
+**Valid language keys:** only `"en"`, `"de"`, `"it"`, `"fr"`, `"nl"`, `"sl"`, `"da"`, `"fi"`, `"sv"`, `"nb"` — the same set as `PARAM_TRANSLATIONS` and `PARAM_DESCRIPTIONS`. Any other key (e.g. `"pl"`, `"sk"`, `"lt"`, `"cs"`) will cause `test_source_has_necessary_parameters` to fail.
 
 **It does not need to be provided in every language.** A contributor who only writes English or only writes their native language is perfectly valid:
 

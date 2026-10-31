@@ -7,13 +7,15 @@ case. A scrubber registered here is run by ``record_fixtures.py`` on the live
 interactions before they are written, and cuts such a response down to what the
 test case actually reads, so re-recording reproduces the same trimmed cassette.
 
-A scrubber only *removes* records from a recorded response; it never edits or
-invents one. Register one only for a feed that cannot be filtered server side.
+A scrubber only *removes* records or unused document pages from a recorded
+response; it never invents collection data. Register one only for a feed that
+cannot be filtered server side.
 """
 
 from __future__ import annotations
 
 import base64
+import datetime
 import json
 import re
 from collections.abc import Callable
@@ -29,6 +31,98 @@ def _json(interaction: dict) -> Any:
 def _set_json(interaction: dict, value: Any) -> None:
     raw = json.dumps(value, ensure_ascii=False, separators=(",", ":"))
     interaction["content_b64"] = base64.b64encode(raw.encode("utf-8")).decode("ascii")
+
+
+def _dardanup_wa_gov_au(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Retain all calendar pages and their dated colour grids, without photos."""
+    from io import BytesIO
+
+    from pypdf import PdfReader, PdfWriter
+    from pypdf.constants import ImageType
+
+    for interaction in interactions:
+        if ".pdf" not in interaction["url"].lower():
+            continue
+        reader = PdfReader(BytesIO(base64.b64decode(interaction["content_b64"])))
+        writer = PdfWriter()
+        for page in reader.pages:
+            text = page.extract_text() or ""
+            if re.search(r"[23]-BIN SERVICE", text) and "202" in text:
+                writer.add_page(page)
+        if len(writer.pages) != 5:
+            raise ValueError(
+                "Expected all five Dardanup calendar pages before trimming"
+            )
+        writer.remove_images(ImageType.XOBJECT_IMAGES | ImageType.INLINE_IMAGES)
+        for page in writer.pages:
+            page.compress_content_streams()
+        writer.compress_identical_objects()
+        output = BytesIO()
+        writer.write(output)
+        interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
+
+
+def _cbcity_nsw_gov_au(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep address matches and the first suggestions from the city-wide feed."""
+    import gzip
+
+    from waste_collection_schedule.service.CanterburyBankstown import _normalise
+
+    wanted = _normalise(args["address"])
+    for interaction in interactions:
+        if not interaction["url"].endswith("streetData.json.gz"):
+            continue
+        rows = json.loads(gzip.decompress(base64.b64decode(interaction["content_b64"])))
+        matching = [
+            row for row in rows if wanted in _normalise(row.get("fullAddress", ""))
+        ][:10]
+        retained = [row for row in rows if row in matching or row in rows[:5]]
+        payload = json.dumps(
+            retained, ensure_ascii=False, separators=(",", ":")
+        ).encode()
+        interaction["content_b64"] = base64.b64encode(
+            gzip.compress(payload, mtime=0)
+        ).decode("ascii")
+
+
+def _sunshinecoast_qld_gov_au(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Discard unused framework code from asset discovery, keeping its prefix."""
+    for interaction in interactions:
+        if not interaction["url"].endswith(".js"):
+            continue
+        raw = base64.b64decode(interaction["content_b64"])
+        if b'__name:"BinCollection"' not in raw or b"/streets/" not in raw:
+            interaction["content_b64"] = base64.b64encode(raw[:64]).decode("ascii")
+
+
+def _strathfield_nsw_gov_au(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep the dated calendar page and its vector colours, dropping the guide."""
+    from io import BytesIO
+
+    from pypdf import PdfReader, PdfWriter
+    from pypdf.constants import ImageType
+
+    for interaction in interactions:
+        if not interaction["url"].lower().endswith(".pdf"):
+            continue
+        raw = base64.b64decode(interaction["content_b64"])
+        reader = PdfReader(BytesIO(raw))
+        writer = PdfWriter()
+        writer.add_page(reader.pages[0])
+        writer.remove_images(ImageType.XOBJECT_IMAGES | ImageType.INLINE_IMAGES)
+        writer.pages[0].compress_content_streams()
+        writer.compress_identical_objects()
+        output = BytesIO()
+        writer.write(output)
+        interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
 
 
 def _sica_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None:
@@ -354,7 +448,242 @@ def _nwrrr_com_au(interactions: list[dict], args: dict[str, Any], today: str) ->
             _set_json(interaction, payload)
 
 
+def _awb_bad_kreuznach_de(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep the configured address's options and the calendars' rules, not the lists.
+
+    Every ``filterRegion`` answer lists all 121 cities; the calendar answer
+    carries the stations and holidays lists besides the rules the source reads.
+    """
+
+    def same(name: Any, wanted: Any) -> bool:
+        def norm(value: Any) -> str:
+            return str(value).lower().replace(" ", "").replace("-", "")
+
+        return norm(name) == norm(wanted)
+
+    levels = {
+        "citys": "ort",
+        "partOfCitys": "stadtteil",
+        "streets": "strasse",
+        "houseNumbers": "nummer",
+    }
+    for interaction in interactions:
+        if "filterRegion" in interaction["url"]:
+            payload = _json(interaction)
+            for key, argument in levels.items():
+                options = payload["data"].get(key)
+                if not options:
+                    continue
+                # An unset level is not read at that step (the city answer
+                # also lists up to 1000 streets and house numbers).
+                payload["data"][key] = [
+                    option
+                    for option in options
+                    if args.get(argument) is not None
+                    and same(option["name"], args[argument])
+                ]
+            _set_json(interaction, payload)
+        elif "getAllGarbageCalendar" in interaction["url"]:
+            payload = _json(interaction)
+            for key in ("stations", "holidays"):
+                payload["data"].pop(key, None)
+            # The source reads moves within its one-year window; the list repeats
+            # each holiday once per tour (the shift is the same for every tour).
+            first = datetime.date.fromisoformat(today) - datetime.timedelta(days=3)
+            last = first + datetime.timedelta(days=370)
+            kept: dict[tuple, dict] = {}
+            for view in payload["data"].get("holidayViews", []):
+                day = datetime.datetime.fromtimestamp(
+                    view["holiday"] / 1000, datetime.UTC
+                ).date()
+                if first <= day <= last:
+                    kept.setdefault((view["holiday"], view["shiftTo"]), view)
+            payload["data"]["holidayViews"] = list(kept.values())
+            _set_json(interaction, payload)
+
+
+def _segreguj_gliwice_eu(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep the download page's file links and the configured street's rows.
+
+    The page is ~120 KB of site chrome around the links ``yearly_links`` reads;
+    the workbook has a row per street (~600) on each of its sheets. Each sheet
+    keeps its header row and the rows of the configured street, or of the
+    streets it is the bare name of ("Rolników" for "Rolników od nr 237 ...").
+    """
+    import io
+    import zipfile
+
+    from lxml import etree
+
+    ns = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+    wanted = " ".join(str(args.get("street", "")).split()).casefold()
+
+    def keep(name: str) -> bool:
+        name = " ".join(name.split()).casefold()
+        return name == wanted or name.startswith(wanted + " ")
+
+    for interaction in interactions:
+        content = base64.b64decode(interaction["content_b64"])
+        if not zipfile.is_zipfile(io.BytesIO(content)):
+            links = re.findall(
+                r"<a\b[^>]*\.(?:xlsx|pdf)\"[^>]*>.*?</a>", content.decode("utf-8"), re.S
+            )
+            raw = ("<html><body>" + "\n".join(links) + "</body></html>").encode("utf-8")
+        else:
+            out = io.BytesIO()
+            with (
+                zipfile.ZipFile(io.BytesIO(content)) as src,
+                zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as dst,
+            ):
+                shared = [
+                    "".join(t.text or "" for t in si.iter(f"{ns}t"))
+                    for si in etree.fromstring(src.read("xl/sharedStrings.xml"))
+                ]
+                for info in src.infolist():
+                    data = src.read(info)
+                    if info.filename.startswith("xl/worksheets/sheet"):
+                        sheet = etree.fromstring(data)
+                        for row in list(sheet.iter(f"{ns}row")):
+                            first = row.find(f"{ns}c")
+                            value = first.find(f"{ns}v") if first is not None else None
+                            name = (
+                                shared[int(value.text)]
+                                if value is not None and first.get("t") == "s"
+                                else ""
+                            )
+                            if row.get("r") != "1" and not keep(name):
+                                row.getparent().remove(row)
+                        data = etree.tostring(
+                            sheet,
+                            xml_declaration=True,
+                            encoding="UTF-8",
+                            standalone=True,
+                        )
+                    dst.writestr(info, data)
+            raw = out.getvalue()
+        interaction["content_b64"] = base64.b64encode(raw).decode("ascii")
+
+
+def _montreal_ca(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep the configured sectors' features, without their geometry.
+
+    The five city-wide GeoJSON files hold every sector with its map polygon.
+    """
+    sectors = {
+        args[field]
+        for field in ("sector", "recycling", "bulky", "food", "green")
+        if args.get(field)
+    }
+    for interaction in interactions:
+        if interaction["url"].endswith(".geojson"):
+            payload = _json(interaction)
+            payload["features"] = [
+                {key: value for key, value in feature.items() if key != "geometry"}
+                for feature in payload["features"]
+                if feature["properties"]["SECTEUR"] in sectors
+            ]
+            _set_json(interaction, payload)
+
+
+def _wastenet_org_nz(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep address matches and the fallback suggestions, not the whole registry."""
+    wanted = (
+        str(args["address"]).replace(" INVERCARGILL", ", Invercargill").strip().lower()
+    )
+    for interaction in interactions:
+        if interaction["url"].endswith("/address-list"):
+            rows = _json(interaction)
+            _set_json(
+                interaction,
+                [
+                    row
+                    for index, row in enumerate(rows)
+                    if index < 5 or wanted in row["address"].lower()
+                ],
+            )
+
+
+def _portapporta_it(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Drop zone polygons and the per-day copies of each trash type's guide.
+
+    The calendar repeats every trash type's full sorting guide (what goes in,
+    what does not) on every collection day, and the operator record carries its
+    app styling; only the zone list and the slugs are read.
+    """
+    for interaction in interactions:
+        if interaction["status"] != 200:
+            continue
+        if interaction["url"].endswith("/zones.geojson"):
+            payload = _json(interaction)
+            payload["features"] = [
+                {key: value for key, value in feature.items() if key != "geometry"}
+                for feature in payload["features"]
+            ]
+            _set_json(interaction, payload)
+        elif "/calendar/z/" in interaction["url"]:
+            payload = _json(interaction)
+            data = payload.get("data") or {}
+            for key in ("zone", "company"):
+                if isinstance(data.get(key), dict):
+                    data[key] = {
+                        field: data[key][field]
+                        for field in ("id", "name", "label", "comune")
+                        if field in data[key]
+                    }
+            calendar = data.get("calendar")
+            for entries in calendar.values() if isinstance(calendar, dict) else []:
+                for entry in entries:
+                    entry["trash_types"] = [
+                        {
+                            field: trash_type[field]
+                            for field in ("id", "slug", "name")
+                            if field in trash_type
+                        }
+                        for trash_type in entry.get("trash_types") or []
+                    ]
+            _set_json(interaction, payload)
+
+
+def _ritl_ca(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep the annual calendar page; remove the unrelated information pages.
+
+    The source's PDF parser is explicitly configured for page zero. Preserve
+    its vector marks, fonts and printed dates rather than rasterising the PDF.
+    """
+    from io import BytesIO
+
+    from pypdf import PdfReader, PdfWriter
+
+    for interaction in interactions:
+        if ".pdf" not in interaction["url"].lower():
+            continue
+        reader = PdfReader(BytesIO(base64.b64decode(interaction["content_b64"])))
+        writer = PdfWriter()
+        writer.add_page(reader.pages[0])
+        writer.compress_identical_objects()
+        writer.pages[0].compress_content_streams()
+        output = BytesIO()
+        writer.write(output)
+        interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "portapporta_it": _portapporta_it,
+    "ritl_ca": _ritl_ca,
+    "wastenet_org_nz": _wastenet_org_nz,
+    "montreal_ca": _montreal_ca,
+    "strathfield_nsw_gov_au": _strathfield_nsw_gov_au,
+    "sunshinecoast_qld_gov_au": _sunshinecoast_qld_gov_au,
+    "cbcity_nsw_gov_au": _cbcity_nsw_gov_au,
+    "dardanup_wa_gov_au": _dardanup_wa_gov_au,
+    "awb_bad_kreuznach_de": _awb_bad_kreuznach_de,
+    "segreguj_gliwice_eu": _segreguj_gliwice_eu,
     "eth_erd_hu": _eth_erd_hu,
     "aksd_hu": _aksd_hu,
     "vattenmiljoresurs_se": _vattenmiljoresurs_se,

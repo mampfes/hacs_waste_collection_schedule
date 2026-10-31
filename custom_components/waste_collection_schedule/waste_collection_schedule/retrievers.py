@@ -45,6 +45,9 @@ from weakref import WeakKeyDictionary
 
 import requests as _plain_requests
 from bs4 import BeautifulSoup, Tag
+from curl_cffi.requests import RequestsError as _CurlRequestsError
+
+from waste_collection_schedule import tls
 
 if TYPE_CHECKING:
     from curl_cffi import requests as _cffi_requests
@@ -474,6 +477,55 @@ class FanOutRetriever(_BaseRetriever):
         return fetched
 
 
+class SelectRetriever(RetrieverFunc):
+    """Select one configured retrieval flow from the source's parameters.
+
+    Only the chosen flow runs. Errors propagate without trying another input
+    mode, so an upstream failure cannot be mistaken for an invalid address.
+    """
+
+    def __init__(
+        self,
+        choose: Callable[[BaseSource], str],
+        choices: Mapping[str, RetrieverFunc],
+    ):
+        self.choose = choose
+        self.choices = dict(choices)
+
+    def __call__(self, source: BaseSource) -> Any:
+        return self.choices[self.choose(source)](source)
+
+
+class LinkedAssetRetriever(RetrieverFunc):
+    """Fetch an asset linked by a page, with a known fallback asset URL.
+
+    ``pattern`` captures the asset URL in group 1. A missing link or a page
+    transport failure uses ``fallback_url``; failures of the asset itself
+    propagate. The page need not be accessible when the static asset is.
+    """
+
+    def __init__(
+        self, page_url: str, *, pattern: str, fallback_url: str, timeout: int = 30
+    ):
+        self.page_url = page_url
+        self.pattern = re.compile(pattern)
+        self.fallback_url = fallback_url
+        self.timeout = timeout
+
+    def __call__(self, source: BaseSource) -> Response:
+        asset_url = self.fallback_url
+        try:
+            page = source.session.get(self.page_url, timeout=self.timeout)
+            match = self.pattern.search(page.text)
+            if match:
+                asset_url = urljoin(str(page.url), match.group(1))
+        except (_plain_requests.RequestException, _CurlRequestsError):
+            pass
+        response = source.session.get(asset_url, timeout=self.timeout)
+        response.raise_for_status()
+        return response
+
+
 class FirstMatchRetriever(_BaseRetriever):
     """Try interchangeable candidate requests; keep the first that answers.
 
@@ -773,10 +825,12 @@ class FallbackRetriever(_BaseRetriever):
         return self._attempts(source, context)
 
 
-#: Default pattern for the JS chunks a Next.js page loads. Group 1 is the
+#: Default pattern for the JS chunks a Next.js page loads. Chunks have lived
+#: under both ``/_next/static/chunks/`` and ``/_next/static/immutable/chunks/``,
+#: so this accepts any ``.js`` path below ``/_next/static/``. Group 1 is the
 #: chunk's href, resolved against the page URL; any ``?v=`` cache-buster after
 #: the ``.js`` is dropped so the same chunk is only fetched once.
-NEXT_CHUNK_PATTERN = r'src="([^"]*/_next/static/chunks/[^"?]+\.js)(?:\?[^"]*)?"'
+NEXT_CHUNK_PATTERN = r'src="([^"]*/_next/static/[^"?]+\.js)(?:\?[^"]*)?"'
 
 
 class NextActionRetriever(_BaseRetriever):
@@ -976,7 +1030,8 @@ class PdfLinkRetriever(_BaseRetriever):
     stable landing page under a URL that rotates -- usually per year, often on
     an opaque host or hashed path. Rather than hardcode a URL that breaks every
     January, this fetches the index page, scans its ``<a href>`` values for
-    ``pattern``, picks one, resolves it against the index URL, and GETs it. Both
+    ``pattern``, picks one, resolves it against the index URL (or the page's
+    ``<base href>``), and GETs it. Both
     requests use the shared curl_cffi session.
 
     Like :class:`TwoStepRetriever` this reads the first response's body (to find
@@ -1066,7 +1121,10 @@ class PdfLinkRetriever(_BaseRetriever):
                 "the page layout may have changed."
             )
 
-        pdf_url = urljoin(index_url, self._choose(matches).string)
+        # Relative links resolve against the page's <base href> when it has one.
+        base = soup.find("base", href=True)
+        page_url = urljoin(index_url, str(base["href"])) if base else index_url
+        pdf_url = urljoin(page_url, self._choose(matches).string)
         pdf = source.session.get(pdf_url, headers=headers, timeout=self.timeout)
         pdf.raise_for_status()
         return pdf
@@ -1356,13 +1414,12 @@ class AthosWasteManagementRetriever(_BaseRetriever):
               sits inside a TYPO3 page whose hidden inputs are login-form
               tokens).
 
-        verify: TLS verification for every request, passed straight to the
-            session (default ``True``). ``False`` disables it; a path to a CA
-            bundle uses that bundle instead. Needed by a deployment whose
-            certificate is itself valid but whose server omits the issuing
-            intermediate, so the chain cannot be built from the default trust
-            store (awg_de). Prefer a completed bundle over ``False`` where the
-            missing intermediate is known and stable.
+        verify: TLS verification for every request (default ``True``). A
+            path to a CA bundle uses that bundle instead; :data:`tls.AIA`
+            completes the chain of a host whose server omits its issuing
+            intermediate from the leaf's AIA URL (awg_de), see
+            :mod:`waste_collection_schedule.tls`. ``False`` disables
+            verification and is not for new deployments.
         initial_validate: optional ``callable(response, source)``, run on the
             response to the initial GET before any step. Raise a
             ``SourceArgument*`` exception to reject a value the site's own
@@ -1385,7 +1442,7 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         encoding: str | None = "utf-8",
         submit_action_field: str = "SubmitAction",
         state: str = "accumulate",
-        verify: bool | str = True,
+        verify: tls.Verify = True,
         initial_validate: Callable[[Response, BaseSource], None] | None = None,
         iterate_field: str | None = None,
     ):
@@ -1452,11 +1509,12 @@ class AthosWasteManagementRetriever(_BaseRetriever):
                 source,
             )
 
-            response = source.session.post(
+            response = tls.send(
+                source.session.post,
                 url,
+                self.verify,
                 data=dict(state),
                 headers=headers,
-                verify=self.verify,
             )
 
             response.raise_for_status()
@@ -1471,20 +1529,22 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         headers = self._resolve(self.headers, source)
         url = self._resolve(self.url, source)
 
-        initial = source.session.get(
+        initial = tls.send(
+            source.session.get,
             url,
+            self.verify,
             params=self.initial_params,
             headers=headers,
-            verify=self.verify,
         )
 
         if initial.status_code == 404 and self.fallback_url is not None:
             url = self._resolve(self.fallback_url, source)
-            initial = source.session.get(
+            initial = tls.send(
+                source.session.get,
                 url,
+                self.verify,
                 params=self.initial_params,
                 headers=headers,
-                verify=self.verify,
             )
 
         initial.raise_for_status()
@@ -1801,10 +1861,23 @@ class Request(_BaseRetriever):
             flags is requested once more, in the same session: for a page that
             answers the first hit with an interstitial or consent overlay and
             the real content on the second.
+        retries: how many times a flagged response is requested again
+            (default 1). The last response is returned whether or not it is
+            still flagged, so the ``pick`` or parser reports what came back.
+        retry_delay: seconds to wait before each repeat (default 0), for an
+            interstitial that only lets the client through after a pause
+            ("One moment, please...", reloading itself after 5 s).
         encoding: forced on the response before its ``.text`` is read.
         raise_for_status: raise on an error status (default). Off for a
             provider whose error status is itself the answer a ``pick`` reads.
         timeout: request timeout in seconds.
+        verify: TLS verification. ``True`` (default) verifies against the
+            session's trust store; a path uses that CA bundle
+            (:func:`tls.ca_bundle`); :data:`tls.AIA` verifies normally and,
+            for a host that omits its intermediate certificate, completes the
+            chain from the leaf's AIA ``caIssuers`` URL and retries once (see
+            :mod:`waste_collection_schedule.tls`). Never ``False`` in a new
+            source.
     """
 
     def __init__(
@@ -1823,12 +1896,17 @@ class Request(_BaseRetriever):
         before: Sequence[Callable[[BaseSource, tuple], Any]] = (),
         when: Callable[..., bool] | None = None,
         retry_if: Callable[[Response], bool] | None = None,
+        retries: int = 1,
+        retry_delay: float = 0,
         encoding: str | None = None,
         raise_for_status: bool = True,
         timeout: int = 30,
+        verify: tls.Verify = True,
     ):
         if method.upper() not in ("GET", "POST"):
             raise ValueError(f"unknown Request method {method!r}: expected GET or POST")
+        if retries < 0:
+            raise ValueError("Request retries must not be negative")
         if (data is not None or json is not None) and method.upper() != "POST":
             raise ValueError("Request data/json requires method='POST'")
         self.url = url
@@ -1842,9 +1920,12 @@ class Request(_BaseRetriever):
         self.before = tuple(before)
         self.when = when
         self.retry_if = retry_if
+        self.retries = retries
+        self.retry_delay = retry_delay
         self.encoding = encoding
         self.raise_for_status = raise_for_status
         self.timeout = timeout
+        self.verify = verify
 
     def __call__(self, source: BaseSource, *args: Any) -> Any:
         """The response, or ``None`` when ``when`` ruled the request out."""
@@ -1853,8 +1934,13 @@ class Request(_BaseRetriever):
         if self.when is not None and not self.when(*args, **source.params):
             return None
         response = self._send(source, args)
-        if self.retry_if is not None and self.retry_if(response):
-            response = self._send(source, args)
+        if self.retry_if is not None:
+            for _ in range(self.retries):
+                if not self.retry_if(response):
+                    break
+                if self.retry_delay:
+                    time.sleep(self.retry_delay)
+                response = self._send(source, args)
         if self.encoding is not None:
             response.encoding = self.encoding
         return response
@@ -1870,14 +1956,16 @@ class Request(_BaseRetriever):
         }
         url = _with(self.url, args, params)
         if self.method == "POST":
-            response = source.session.post(
+            response = tls.send(
+                source.session.post,
                 url,
+                self.verify,
                 data=_with(self.data, args, params),
                 json=_with(self.json, args, params),
                 **kwargs,
             )
         else:
-            response = source.session.get(url, **kwargs)
+            response = tls.send(source.session.get, url, self.verify, **kwargs)
         if self.raise_for_status:
             response.raise_for_status()
         return response
@@ -1953,8 +2041,8 @@ class Lookup:
             optional level the user left out.
         **request: the remaining :class:`Request` arguments (``method``,
             ``params``, ``data``, ``json``, ``headers``, ``cookies``,
-            ``allow_redirects``, ``encoding``, ``raise_for_status``,
-            ``timeout``).
+            ``allow_redirects``, ``retry_if``, ``retries``, ``retry_delay``,
+            ``encoding``, ``raise_for_status``, ``timeout``, ``verify``).
     """
 
     def __init__(
@@ -2285,3 +2373,24 @@ class _DefaultHttpPostRetriever(RetrieverFunc):
 # Zero-config default instances (used by BaseSource and simple sources).
 http_get = _DefaultHttpGetRetriever()
 http_post = _DefaultHttpPostRetriever()
+
+
+class WithParams(RetrieverFunc):
+    """Bind provider configuration without adding an unused config-form field.
+
+    A shallow source view keeps the shared HTTP session and component context;
+    the caller's params are never changed. Bound values take precedence.
+    """
+
+    def __init__(self, retrieve: RetrieverFunc, **params: Any):
+        self.retrieve = retrieve
+        self.params = params
+
+    def __call__(self, source: BaseSource) -> Any:
+        from copy import copy
+
+        session = source.session
+        view = copy(source)
+        view.params = {**source.params, **self.params}
+        view._session = session
+        return self.retrieve(view)

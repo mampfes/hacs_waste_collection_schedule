@@ -1,6 +1,7 @@
 """Sensor platform support for Waste Collection Schedule."""
 
 import logging
+from copy import copy
 from enum import Enum
 from typing import Any
 
@@ -15,6 +16,7 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE, UnitOfTime
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.exceptions import TemplateError
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.template import Template
@@ -32,23 +34,20 @@ from .const import (
     CONF_DETAILS_FORMAT,
     CONF_EVENT_INDEX,
     CONF_LEADTIME,
-    CONF_SENSOR_MODE,
-    CONF_SENSORS,
     CONF_SOURCE_INDEX,
     DOMAIN,
-    SENSOR_MODE_DAYS_TO,
-    SENSOR_MODE_LAST_UPDATE,
     UPDATE_SENSORS_SIGNAL,
 )
+
+# fmt: on
+from .sensor_format import async_prepare_formats
+from .sensor_schema import yaml_sensor_fields
 from .waste_collection_api import WasteCollectionApi
 
 # CollectionBase is the real Collection class; the exported `Collection` is a
 # factory instance (not valid as a type annotation).
 from .waste_collection_schedule import CollectionBase, CollectionGroup, Icons
 from .wcs_coordinator import WCSCoordinator
-
-# fmt: on
-
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -64,6 +63,7 @@ class DetailsFormat(Enum):
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
+        **yaml_sensor_fields(),
         vol.Required(CONF_NAME): cv.string,
         vol.Optional(CONF_SOURCE_INDEX, default=0): vol.Any(
             cv.positive_int, vol.All(cv.ensure_list, [cv.positive_int])
@@ -82,51 +82,37 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 # Config flow setup
 async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
+    await async_prepare_formats(hass)
     coordinator = hass.data[DOMAIN][config.entry_id]
-    aggregator = CollectionAggregator([coordinator.shell])
-    _LOGGER.debug("Adding sensors for %s", coordinator.shell.calendar_title)
-    _LOGGER.debug("Config: %s", config)
+    from .sensor_manager import SensorManager
 
-    entities = []
-    for sensor in config.options.get(CONF_SENSORS, []):
-        _LOGGER.debug("Adding sensor %s", sensor)
-        value_template = sensor.get(CONF_VALUE_TEMPLATE)
-        date_template = sensor.get(CONF_DATE_TEMPLATE)
-        try:
-            value_template = cv.template(value_template)
-        except vol.Invalid:  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
-            value_template = None
-        try:
-            date_template = cv.template(date_template)
-        except vol.Invalid:  # should only happen if value_template = None, as it is already validated in the config flow if it is not None
-            date_template = None
-        details_format = sensor.get(CONF_DETAILS_FORMAT)
-        if isinstance(details_format, str):
-            details_format = DetailsFormat(details_format)
+    manager = SensorManager(hass, coordinator, async_add_entities)
+    coordinator.sensor_manager = manager
+    await manager.async_setup()
 
-        entities.append(
-            SENSOR_CLASSES.get(sensor.get(CONF_SENSOR_MODE), ScheduleSensor)(
-                hass=hass,
-                api=None,
-                coordinator=coordinator,
-                name=sensor.get(CONF_NAME, coordinator.shell.calendar_title),
-                aggregator=aggregator,
-                details_format=details_format,
-                count=sensor.get(CONF_COUNT),
-                leadtime=sensor.get(CONF_LEADTIME),
-                collection_types=sensor.get(CONF_COLLECTION_TYPES),
-                value_template=value_template,
-                date_template=date_template,
-                add_days_to=sensor.get(CONF_ADD_DAYS_TO, False),
-                event_index=sensor.get(CONF_EVENT_INDEX),
-            )
-        )
 
-    async_add_entities(entities, update_before_add=True)
+def create_sensor(hass, coordinator, record):
+    return SENSOR_CLASSES.get(record["kind"], ScheduleSensor)(
+        hass=hass,
+        api=None,
+        coordinator=coordinator,
+        name=record["name"],
+        aggregator=coordinator._aggregator,
+        details_format=DetailsFormat(record["details_format"]),
+        count=record.get("count"),
+        leadtime=record.get("leadtime"),
+        collection_types=record.get("types"),
+        value_template=None,
+        date_template=None,
+        add_days_to=False,
+        event_index=record.get("event_index", 0),
+        record=record,
+    )
 
 
 # YAML setup (via discovery from waste_collection_schedule: sensors: or legacy sensor platform)
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
+    await async_prepare_formats(hass)
     if discovery_info is not None:
         # New method: sensor loaded via discovery from waste_collection_schedule: sensors:
         api = discovery_info["api"]
@@ -154,6 +140,13 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
                 "Waste Collection Schedule YAML configuration not found, please check you have configured sources under waste_collection_schedule: in your configuration.yaml"
             )
 
+    if sensor_config.get(CONF_ADD_DAYS_TO) and not hass.data.setdefault(DOMAIN, {}).get(
+        "_warned_add_days_to"
+    ):
+        _LOGGER.warning(
+            "add_days_to is deprecated and ignored; daysTo is always available"
+        )
+        hass.data[DOMAIN]["_warned_add_days_to"] = True
     value_template = sensor_config.get(CONF_VALUE_TEMPLATE)
     if value_template is not None:
         if not isinstance(value_template, Template):
@@ -189,7 +182,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     entities = []
 
     entities.append(
-        ScheduleSensor(
+        SENSOR_CLASSES.get(sensor_config.get("kind"), ScheduleSensor)(
             hass=hass,
             api=api,
             coordinator=None,
@@ -203,6 +196,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             date_template=date_template,
             add_days_to=sensor_config.get(CONF_ADD_DAYS_TO, False),
             event_index=sensor_config.get(CONF_EVENT_INDEX, 0),
+            record=sensor_config,
         )
     )
 
@@ -211,6 +205,8 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
 class ScheduleSensor(SensorEntity):
     """Base for sensors."""
+
+    _unrecorded_attributes = frozenset({"collections", "upcoming"})
 
     def __init__(
         self,
@@ -227,6 +223,7 @@ class ScheduleSensor(SensorEntity):
         date_template: Template | None,
         add_days_to: bool,
         event_index: int | None,
+        record: dict | None = None,
     ):
         """Initialize the entity."""
         self._api = api
@@ -253,17 +250,88 @@ class ScheduleSensor(SensorEntity):
             self._attr_unique_id = name
         self._attr_should_poll = False
 
-        async_dispatcher_connect(hass, UPDATE_SENSORS_SIGNAL, self._update_sensor)
+        self._record: dict[str, Any] = {}
+        if record is not None:
+            self.apply_config(record)
+
+    def apply_config(self, record):
+        """Apply a shared saved record without replacing the entity or fetching."""
+        self._record = record
+        self._attr_name = record["name"]
+        self._details_format = DetailsFormat(record.get("details_format", "upcoming"))
+        self._count = record.get("count")
+        self._leadtime = record.get("leadtime")
+        self._collection_types = record.get("types") or None
+        self._event_index = record.get("event_index", 0)
+        self._template_error = False
+        self._attr_available = True
+        for key in ("value_template", "date_template"):
+            value = record.get(key)
+            try:
+                template = (
+                    value
+                    if isinstance(value, Template)
+                    else cv.template(value)
+                    if value
+                    else None
+                )
+                if template is not None:
+                    template.ensure_valid()
+            except (vol.Invalid, TemplateError) as err:
+                _LOGGER.error("Invalid %s for sensor %s: %s", key, record["name"], err)
+                template = None
+                self._template_error = True
+                self._attr_available = False
+            if template is not None:
+                template.hass = self.hass
+            setattr(self, "_" + key, template)
+        self._attr_entity_registry_enabled_default = record.get("enabled", True)
+        if self._coordinator:
+            entry_id = self._coordinator.config_entry.entry_id
+            self._attr_unique_id = f"{entry_id}_sensor_{record['id']}"
+            if self._coordinator.config_entry.options.get("device_controls"):
+                from homeassistant.helpers.device_registry import DeviceInfo
+
+                self._attr_device_info = DeviceInfo(
+                    identifiers={(DOMAIN, self._attr_unique_id)},
+                    name=record["name"],
+                    via_device=(DOMAIN, entry_id),
+                    manufacturer=self._coordinator.shell.title,
+                )
+        else:
+            self._attr_unique_id = record.get("unique_id", record["name"])
+
+    def _filter_options(self):
+        return {
+            "exclude_types": self._record.get("exclude_types") or None,
+            "unique_types": self._record.get("unique_types", False),
+        }
+
+    @property
+    def _display_language(self):
+        from .sensor_format import language_for
+
+        return language_for(
+            self._record.get("language", "en"),
+            self.hass.config.language if self.hass else "en",
+        )
 
     async def async_added_to_hass(self) -> None:
         """When entity is added to hass."""
         await super().async_added_to_hass()
+        self.async_on_remove(
+            async_dispatcher_connect(
+                self.hass, UPDATE_SENSORS_SIGNAL, self._update_sensor
+            )
+        )
 
         if self._coordinator:
             self.async_on_remove(
                 self._coordinator.async_add_listener(self._update_sensor, None)
             )
 
+        if self._record:
+            self.apply_config(self._record)
         self._update_sensor()
 
     @property
@@ -308,8 +376,14 @@ class ScheduleSensor(SensorEntity):
                 collection, None
             )
         else:
-            self._value = (
-                f"{self._separator.join(collection.types)} in {collection.daysTo} days"
+            from .sensor_format import render_state
+
+            self._value = render_state(
+                collection,
+                self._record.get("state_format", "types_in_days"),
+                self._record.get("date_format", "iso"),
+                self._display_language,
+                self._separator,
             )
 
         self._attr_icon = collection.icon or Icons.GENERAL_WASTE
@@ -320,7 +394,13 @@ class ScheduleSensor(SensorEntity):
             return self._date_template.async_render_with_possible_json_value(
                 collection, None
             )
-        return collection.date.isoformat()
+        from .sensor_format import render_date
+
+        return render_date(
+            collection.date,
+            self._record.get("date_format", "iso"),
+            self._display_language,
+        )
 
     @callback
     def _update_sensor(self):
@@ -331,11 +411,19 @@ class ScheduleSensor(SensorEntity):
         if self._aggregator is None:
             return
 
+        if getattr(self, "_template_error", False):
+            self._value = None
+            self._attr_extra_state_attributes = {}
+            if self.hass is not None and self.enabled:
+                self.async_write_ha_state()
+            return
+
         upcoming1 = self._aggregator.get_upcoming_group_by_day(
             count=1,
             include_types=self._collection_types,
             include_today=self._include_today,
             start_index=self._event_index,
+            **self._filter_options(),
         )
 
         self._set_state(upcoming1)
@@ -343,9 +431,10 @@ class ScheduleSensor(SensorEntity):
         attributes = {}
 
         collection_types = (
-            sorted(self._aggregator.types)
-            if self._collection_types is None
-            else self._collection_types
+            self._detail_types()
+            if self._details_format
+            in (DetailsFormat.appointment_types, DetailsFormat.generic)
+            else []
         )
 
         if self._details_format == DetailsFormat.upcoming:
@@ -356,6 +445,7 @@ class ScheduleSensor(SensorEntity):
                 include_types=self._collection_types,
                 include_today=self._include_today,
                 start_index=self._event_index,
+                **self._filter_options(),
             )
             for collection in upcoming:
                 attributes[self._render_date(collection)] = self._separator.join(
@@ -369,20 +459,27 @@ class ScheduleSensor(SensorEntity):
                     include_types=[t],
                     include_today=self._include_today,
                     start_index=self._event_index,
+                    **self._filter_options(),
                 )
                 date = (
                     "" if len(collections) == 0 else self._render_date(collections[0])
                 )
-                attributes[t] = date
+                attributes[self._type_label(t)] = date
         elif self._details_format == DetailsFormat.generic:
             # insert generic attributes into details
-            attributes["types"] = collection_types
-            attributes["upcoming"] = self._aggregator.get_upcoming(
-                count=self._count,
+            attributes["types"] = [self._type_label(t) for t in collection_types]
+            records = self._aggregator.get_upcoming(
+                preserve_bins=True,
                 leadtime=self._leadtime,
                 include_types=self._collection_types,
                 include_today=self._include_today,
+                **self._filter_options(),
             )
+            selected_dates = set(sorted({e.date for e in records})[self._event_index :])
+            records = [e for e in records if e.date in selected_dates]
+            if self._count is not None:
+                records = records[: self._count]
+            attributes["upcoming"] = [self._collection_for_sensor(c) for c in records]
             refreshtime = ""
             if self._aggregator.refreshtime is not None:
                 refreshtime = self._aggregator.refreshtime.isoformat(timespec="seconds")
@@ -392,16 +489,79 @@ class ScheduleSensor(SensorEntity):
             # Language-neutral raw values of the next collection, so cards and
             # templates can render them in the user's own language. `daysTo`
             # used to need add_days_to; that option is still accepted.
-            attributes["color"] = upcoming1[0].color
+            attributes["color"] = self._record.get("color") or upcoming1[0].color
+            attributes["collections"] = upcoming1[0].as_dict()["collections"]
             attributes["daysTo"] = upcoming1[0].daysTo
             attributes["date"] = upcoming1[0].date.isoformat()
             attributes["next_types"] = list(upcoming1[0].types)
 
+        if self._details_format == DetailsFormat.upcoming:
+            attributes["upcoming"] = [
+                {
+                    **record,
+                    **(
+                        {"color": self._record["color"], "color_source": "sensor"}
+                        if self._record.get("color")
+                        else {}
+                    ),
+                }
+                for group in upcoming
+                for record in group.as_dict()["collections"]
+            ]
+        if "collections" in attributes and self._record.get("color"):
+            attributes["collections"] = [
+                {**c, "color": self._record["color"], "color_source": "sensor"}
+                for c in attributes["collections"]
+            ]
         self._attr_extra_state_attributes = attributes
         self._add_refreshtime()
 
         if self.hass is not None:
             self.async_write_ha_state()
+
+    def _collection_for_sensor(self, collection):
+        if self._record.get("color"):
+            collection = copy(collection)
+            collection.set_color(self._record["color"], source="sensor")
+        return collection
+
+    def _detail_types(self):
+        candidates = (
+            sorted(self._aggregator.types)
+            if self._collection_types is None
+            else self._collection_types
+        )
+        excluded = self._record.get("exclude_types")
+        if not excluded:
+            return candidates
+        eligible = self._aggregator._filter_entries(
+            self._collection_types, excluded, False
+        )
+        if self._collection_types is None:
+            return sorted({e.type for e in eligible})
+        return [
+            t
+            for t in candidates
+            if t not in excluded
+            and (
+                not any(
+                    self._aggregator.matches_type(e, t)
+                    for e in self._aggregator._entries
+                )
+                or any(self._aggregator.matches_type(e, t) for e in eligible)
+            )
+        ]
+
+    def _type_label(self, type_id):
+        """Keep legacy attribute names in display vocabulary, with ID filters."""
+        for event in self._aggregator._entries:
+            if type_id in (event.type, event.waste_type.id):
+                return event.type
+        for shell in self._aggregator._shells:
+            label = shell.get_collection_type_name(type_id)
+            if label != type_id:
+                return label
+        return type_id
 
 
 class DaysToSensor(ScheduleSensor):
@@ -431,6 +591,6 @@ class LastUpdateSensor(ScheduleSensor):
 
 
 SENSOR_CLASSES: dict[str | None, type[ScheduleSensor]] = {
-    SENSOR_MODE_DAYS_TO: DaysToSensor,
-    SENSOR_MODE_LAST_UPDATE: LastUpdateSensor,
+    "days_to": DaysToSensor,
+    "last_update": LastUpdateSensor,
 }

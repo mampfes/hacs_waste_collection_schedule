@@ -1,6 +1,8 @@
 # City of Greater Geelong
 
-Support for schedules provided by [City of Greater Geelong](https://www.geelongaustralia.com.au/recycling/calendar.aspx).
+Support for schedules provided by [City of Greater Geelong](https://www.geelongcity.vic.gov.au/).
+
+Source City of Greater Geelong rubbish collection
 
 ## Configuration via configuration.yaml
 
@@ -14,7 +16,7 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**address**
+**address**  
 *(string) (required)*
 
 ## Example
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-The address needs to be an exact match for what the City of Greater Geelong website expects. You can attempt to search your address on the [website](https://www.geelongaustralia.com.au/recycling/calendar.aspx) to find the expected format for your address.
+Enter your address exactly as accepted by the council's calendar search: https://www.geelongaustralia.com.au/recycling/calendar.aspx. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.

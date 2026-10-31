@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-10-26",
+  "interactions": [
+    {
+      "key": "GET https://stamfordapps.org/garbagerecycling/StreetMultipleResults.asp 0d59643062",
+      "method": "GET",
+      "url": "https://stamfordapps.org/garbagerecycling/StreetMultipleResults.asp",
+      "final_url": "https://stamfordapps.org/garbagerecycling/StreetMultipleResults.asp?STREET=zzzznotreal&CHECKED=TRUE",
+      "body": "{\"params\":[[\"CHECKED\",\"TRUE\"],[\"STREET\",\"zzzznotreal\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private",
+        "content-type": "text/html",
+        "server": "envoy",
+        "set-cookie": "ASPSESSIONIDCUCTCABD=LHCBGCLDJLKJIPKNNCFPKHID; secure; path=/",
+        "x-powered-by": "ASP.NET",
+        "date": "Mon, 26 Oct 2026 15:03:39 GMT",
+        "content-length": "1026",
+        "x-envoy-upstream-service-time": "307"
+      },
+      "content_b64": "DQo8aHRtbD4NCjxoZWFkPg0KPE1FVEEgTkFNRT0iUk9CT1RTIiBDT05URU5UPSJOT0lOREVYIj4NCjx0aXRsZT5DaXR5IG9mIFN0YW1mb3JkLCBDVDogR2FyYmFnZSBhbmQgUmVjeWNsaW5nIExvb2t1cDogU3RyZWV0IFNlYXJjaCBSZXN1bHRzPC90aXRsZT4NCjwvaGVhZD4NCjxib2R5Pg0KPHRhYmxlIGJvcmRlcj0iMSIgY2VsbHNwYWNpbmc9IjAiIGNlbGxwYWRkaW5nPSIyIj4NCiAgICAgICAgICAgICAgICAgICAgPHRyPiANCiAgICAgICAgICAgICAgICAgICAgICA8dGQgYmdjb2xvcj0iI0VGRUZFRiI+IDxkaXYgYWxpZ249ImNlbnRlciI+PGZvbnQgc2l6ZT0iNCIgZmFjZT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiI+PHN0cm9uZz5TZWFyY2ggDQogICAgICAgICAgICAgICAgICAgICAgICAgIGZvciBZb3VyIEdhcmJhZ2UgYW5kIFJlY3ljbGluZyBQaWNrdXAgRGF5czwvc3Ryb25nPjwvZm9udD48L2Rpdj48L3RkPg0KICAgICAgICAgICAgICAgICAgICA8L3RyPg0KICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgICAgPHRyPiANCiAgICAgICAgICAgICAgICAgICAgICA8dGQ+PGZvbnQgc2l6ZT0iMiIgZmFjZT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiI+PGI+VGhlcmUgDQogICAgICAgICAgICAgICAgICAgICAgICB3ZXJlIG5vIHJlc3VsdHMgbWF0Y2hpbmcgeW91ciBzZWFyY2ggY3JpdGVyaWEuPC9iPjwvZm9udD48L3RkPg0KICAgICAgICAgICAgICAgICAgICA8L3RyPg0KICAgICAgICAgICAgICAgICAgICA8dHI+IA0KICAgICAgICAgICAgICAgICAgICAgIDx0ZD48Zm9udCBzaXplPSIyIiBmYWNlPSJBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmIj48Yj48YSBocmVmPSJkZWZhdWx0LmFzcCI+U3RhcnQgDQogICAgICAgICAgICAgICAgICAgICAgICBhIG5ldyBzZWFyY2guLi48L2E+PC9iPjwvZm9udD48L3RkPg0KICAgICAgICAgICAgICAgICAgICA8L3RyPg0KICAgICAgICAgICAgICAgICAgICANCiAgICAgICAgICAgICAgICAgIDwvdGFibGU+"
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'street' with the value 'zzzznotreal', We could not find any suggestions. Please also check other arguments."
+  }
+}

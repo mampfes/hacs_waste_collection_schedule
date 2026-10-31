@@ -1,11 +1,13 @@
 import datetime
 from typing import ClassVar, final
+from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
-from waste_collection_schedule import parsers, retrievers
+from waste_collection_schedule import lookups, parsers, retrievers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.exceptions import SourceArgumentNotFoundWithSuggestions
 from waste_collection_schedule.preprocessors import RowFilter
 from waste_collection_schedule.transformers import HtmlTransformer
 
@@ -60,13 +62,28 @@ def _date(item) -> datetime.date | None:
     return datetime.date(int(year), month, int(day_text))
 
 
-def _addresses(response, **_) -> list[str]:
-    """When the search does not hit exactly one address the page lists the candidates."""
+def _calendar_url(response, *_, address, **__) -> str:
+    """The page of the calendar the address search resolves to.
+
+    One hit renders the calendar right away. Zero or several hits render a
+    table of candidate addresses instead; several properties (e.g. sections of
+    one building) can share the exact same address, so picking it from the
+    suggestions would never narrow the search down, and the first exact match
+    is followed instead.
+    """
     soup = BeautifulSoup(response.text, "html.parser")
-    return [
-        a.get_text(strip=True)
-        for a in soup.select("div.table-wrap table tbody tr td a[href]")
-    ]
+    if soup.select_one("table.tommekalender__calendartable"):
+        return response.url
+    candidates = soup.select("div.table-wrap table tbody tr td a[href]")
+    wanted = lookups.normalize_text(address)
+    for a in candidates:
+        if lookups.normalize_text(a.get_text()) == wanted:
+            return urljoin(response.url or CALENDAR_URL, str(a["href"]))
+    raise SourceArgumentNotFoundWithSuggestions(
+        "address",
+        address,
+        list(dict.fromkeys(" ".join(a.get_text().split()) for a in candidates)),
+    )
 
 
 @final
@@ -93,6 +110,8 @@ class Source(BaseSource):
     TEST_CASES: ClassVar[dict] = {
         "Leiv Eirikssons Gate 10": {"address": "Leiv Eirikssons Gate 10"},
         "ØVREGATA 170": {"address": "ØVREGATA 170"},
+        # Several properties share this address
+        "Haraldsgata 100": {"address": "Haraldsgata 100"},
     }
 
     PARAMS = (street_address("address"),)
@@ -104,23 +123,18 @@ class Source(BaseSource):
         ),
     }
 
-    retrieve = retrievers.HttpGetRetriever(
-        url=CALENDAR_URL,
-        params=lambda address, **_: {"adressesok": address},
-    )
-
-    # No calendar table means zero or several matching addresses: the page then
-    # lists the candidates, which are offered as suggestions.
-    parse = parsers.ArgumentGuard(
-        parsers.HtmlParser("li.tommekalender__calendartable__listitem"),
-        argument="address",
-        contains="tommekalender__calendartable",
-        suggestions=retrievers.Suggestions(
-            CALENDAR_URL,
-            params=lambda address, **_: {"adressesok": address},
-            pick=_addresses,
+    retrieve = retrievers.LookupChainRetriever(
+        steps=(
+            retrievers.Lookup(
+                CALENDAR_URL,
+                params=lambda address, **_: {"adressesok": address},
+                pick=_calendar_url,
+            ),
         ),
+        url=lambda *keys, **_: keys[-1],
+        raise_for_status=True,
     )
+    parse = parsers.HtmlParser("li.tommekalender__calendartable__listitem")
 
     preprocess = RowFilter(_is_collection)
 

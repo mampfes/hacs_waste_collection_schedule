@@ -1,64 +1,44 @@
 # Grand Paris Sud Est Avenir (GPSEA)
 
-Support for waste collection schedules provided by [Grand Paris Sud Est Avenir (GPSEA)](https://sudestavenir.fr/), an intercommunal territory in the Val-de-Marne department of France, serving the following communes:
+Support for schedules provided by [Grand Paris Sud Est Avenir (GPSEA)](https://sudestavenir.fr/).
 
-- Alfortville
-- Boissy-Saint-Léger
-- Bonneuil-sur-Marne
-- Chennevières-sur-Marne
-- Créteil
-- Limeil-Brévannes
-- Noiseau
-- Ormesson-sur-Marne
-- Le Plessis-Trévise
-- La Queue-en-Brie
-- Sucy-en-Brie
-
-Collection days depend on the exact address (commune, street and house number) and are looked up live against GPSEA's interactive collection map.
-
-Depending on the waste type and address, the source returns a recurring weekly or bi-weekly schedule (ordures ménagères, emballages), a precomputed list of dates for the current calendar year (verre, encombrants), or a mix of the two (déchets végétaux, which often lists individual winter dates plus a weekly rule bounded to the growing season). This matches what the source website itself provides. Bounded rules are never extrapolated into the following year.
+Source script for sudestavenir.fr, waste collection schedules for the Grand Paris Sud Est Avenir (GPSEA) intercommunal territory
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sudestavenir_fr
       args:
-        commune: Creteil
-        street: Place du Grand Pavois
-        house_number: 1
+        commune: COMMUNE
+        street: STREET
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**commune**
-*(String) (required)*
+**commune**  
+*(string) (required)*
 
-Your commune within the GPSEA territory.
+**street**  
+*(string) (required)*
 
-**street**
-*(String) (required)*
-
-Your street name.
-
-**house_number**
-*(String) (required)*
-
-Your house number.
+**house_number**  
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: sudestavenir_fr
       args:
         commune: Creteil
         street: Place du Grand Pavois
-        house_number: 1
+        house_number: '1'
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Visit [https://sudestavenir.fr/](https://sudestavenir.fr/) and use the "Où jeter ?" / collection map to look up your commune, street and house number, or simply provide the same address details you would type into that map's search box.
+Enter your GPSEA commune, street and house number. French street types such as Place/PL and Avenue/AV are accepted. The infosheet supplies recurring weekdays, date lists, seasons and morning/afternoon details. Dated precision belongs to the year of its published calendar link. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

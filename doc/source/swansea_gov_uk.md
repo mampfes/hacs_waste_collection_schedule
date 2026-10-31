@@ -1,46 +1,43 @@
 # Swansea Council
 
-Support for schedules provided by [Swansea Council](https://swansea.gov.uk/), UK.
+Support for schedules provided by [Swansea Council](https://swansea.gov.uk).
 
-If collection data is available for the address provided, it will return household and recycling waste collection dates.
-
+Source script for swansea.gov.uk
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: swansea_gov_uk
       args:
-        street_name: STREET_NAME
         post_code: POST_CODE
+        street_name: STREET_NAME
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**street_name** 
+**post_code**  
+*(string) (required)*
 
-_(string) (required)_
+**street_name**  
+*(string) (optional)*
 
-Any part of the road/street name
+**uprn**  
+*(string) (optional)*
 
-**post_code**
-
-_(string) (required)_
-
-Full postcode of the property
-
-## Example:
+## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: swansea_gov_uk
       args:
-        street_name: "Oystermouth Road"
-        post_code: "SA1 3SN"
+        street_name: cwmdonkin
+        post_code: SA20RA
 ```
 
-## How to verify that your address works
+## How to get the source arguments
 
-Visit [swansea.gov.uk/recyclingsearch](https://swansea.gov.uk/recyclingsearch) and search for your street name and postcode.
+Enter the full postcode of your property. Collections are scheduled per street, so that is usually enough; to pick one address, also enter part of it (e.g. the street name) or its Unique Property Reference Number (UPRN). Since the v3 pipeline migration, the pink and green collection weeks are reported as the waste types collected in them (as listed for your address), using canonical, localised names. Update filters, automations and customisations using the old labels.

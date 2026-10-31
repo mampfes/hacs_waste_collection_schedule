@@ -1455,6 +1455,21 @@ class TestDeclaredRequests:
         assert request(source) is second
         assert source.session.get.call_count == 2
 
+    def test_request_retries_repeats_a_flagged_response_up_to_n_times(self):
+        from waste_collection_schedule import retrievers
+
+        source = self._source()
+        pages = [MagicMock(text="interstitial") for _ in range(3)]
+        source.session.get.side_effect = [*pages, MagicMock(text="page")]
+        request = retrievers.Request(
+            "https://x",
+            retry_if=lambda response: response.text == "interstitial",
+            retries=2,
+        )
+        # Asked twice more, then the last (still flagged) response is returned.
+        assert request(source) is pages[2]
+        assert source.session.get.call_count == 3
+
     def test_lookup_picks_from_the_response_with_keys_and_params(self):
         from waste_collection_schedule import retrievers
 
@@ -2693,8 +2708,71 @@ class TestRecurrence:
         assert recurrence.weekday("火曜日") == 1 and recurrence.weekday("火") == 1
         assert recurrence.weekday("日") == 6
         assert recurrence.month("12月") == 12
+        # Austrian German January.
+        assert recurrence.month("Jänner") == 1 and recurrence.month("jaenner") == 1
         # Unknown input is still a clean miss.
         assert recurrence.month("not-a-month") is None
+
+    def test_locale_scoped_abbreviations(self):
+        from waste_collection_schedule import recurrence
+
+        # Abbreviations resolve only inside one language...
+        assert recurrence.month("Mär", "de", abbreviated=True) == 3
+        assert recurrence.month("Okt.", "de", abbreviated=True) == 10
+        assert recurrence.month("SEPT", "de", abbreviated=True) == 9
+        assert recurrence.month("Juni", "de", abbreviated=True) == 6  # wide too
+        assert recurrence.weekday("Mo", "de", abbreviated=True) == 0
+        assert recurrence.weekday("So.", "de", abbreviated=True) == 6
+        assert recurrence.weekday("mar", "fr", abbreviated=True) == 1
+        assert recurrence.month("mar", "pl", abbreviated=True) == 3
+        # ...never globally, where "mar" would be both Tuesday and March.
+        assert recurrence.month("mär") is None and recurrence.weekday("mo") is None
+        with pytest.raises(ValueError):
+            recurrence.month("Mär", abbreviated=True)
+        # A locale alone scopes the wide names to that language.
+        assert recurrence.month("März", "de") == 3
+        assert recurrence.month("Mär", "de") is None
+        assert recurrence.month("enero", "de") is None
+        assert recurrence.month("januarja", "sl") == 1  # extra inflected form
+
+    def test_month_and_weekday_names(self):
+        from waste_collection_schedule import recurrence
+
+        assert recurrence.month_names("de", abbreviated=True) == (
+            "Jan", "Feb", "Mär", "Apr", "Mai", "Jun",
+            "Jul", "Aug", "Sep", "Okt", "Nov", "Dez",
+        )  # fmt: skip
+        assert recurrence.month_names("de")[2] == "März"
+        assert recurrence.weekday_names("de") == (
+            "Montag", "Dienstag", "Mittwoch", "Donnerstag",
+            "Freitag", "Samstag", "Sonntag",
+        )  # fmt: skip
+        assert recurrence.weekday_names("de", abbreviated=True) == (
+            "Mo", "Di", "Mi", "Do", "Fr", "Sa", "So",
+        )  # fmt: skip
+        assert recurrence.weekday_names("fr", abbreviated=True) == (
+            "lun", "mar", "mer", "jeu", "ven", "sam", "dim",
+        )  # fmt: skip
+
+    def test_roman_numerals_are_opt_in(self):
+        from waste_collection_schedule import recurrence
+
+        assert [recurrence.roman(t) for t in ("I", "iv", " XII ", "XIX", "MMXXVI")] == [
+            1, 4, 12, 19, 2026,
+        ]  # fmt: skip
+        for text in ("", "IIII", "IIV", "VX", "IC", "12", "Rejon I"):
+            assert recurrence.roman(text) is None, text
+        assert [recurrence.to_roman(n) for n in (1, 4, 9, 14, 20, 1994)] == [
+            "I", "IV", "IX", "XIV", "XX", "MCMXCIV",
+        ]  # fmt: skip
+        assert all(recurrence.roman(recurrence.to_roman(n)) == n for n in range(1, 400))
+        with pytest.raises(ValueError):
+            recurrence.to_roman(0)
+        # month() never reads a Roman numeral unless asked to.
+        assert recurrence.month("I") is None and recurrence.month("V") is None
+        assert recurrence.month("XII", roman=True) == 12
+        assert recurrence.month("xiii", roman=True) is None
+        assert recurrence.month("maj", "pl", roman=True) == 5  # names still work
 
     def test_recurring_within_empty_window(self):
         from waste_collection_schedule import recurrence
@@ -2896,6 +2974,114 @@ class TestToolkitParsers:
         ]
         with pytest.raises(ResponseShapeError):
             parsers.CsvParser(require=["date", "bin"])(self._Resp("date,type\nx,y\n"))
+
+    @staticmethod
+    def _xlsx(sheet_rows: str, *, date1904: bool = False) -> bytes:
+        """A minimal one-sheet workbook; style 1 is a custom date format."""
+        import io
+        import zipfile
+
+        ns = 'xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"'
+        rel_ns = (
+            'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/'
+            'relationships"'
+        )
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, "w") as archive:
+            archive.writestr(
+                "xl/workbook.xml",
+                f"<workbook {ns} {rel_ns}>"
+                f'<workbookPr date1904="{int(date1904)}"/>'
+                '<sheets><sheet name="Plan" sheetId="1" r:id="rId1"/></sheets>'
+                "</workbook>",
+            )
+            archive.writestr(
+                "xl/_rels/workbook.xml.rels",
+                '<Relationships xmlns="http://schemas.openxmlformats.org/package/'
+                '2006/relationships"><Relationship Id="rId1" '
+                'Target="worksheets/sheet1.xml"/></Relationships>',
+            )
+            archive.writestr(
+                "xl/sharedStrings.xml",
+                f"<sst {ns}><si><t>Restmüll</t></si>"
+                "<si><r><t>Gelber </t></r><r><t>Sack</t></r></si></sst>",
+            )
+            archive.writestr(
+                "xl/styles.xml",
+                f"<styleSheet {ns}><numFmts>"
+                '<numFmt numFmtId="164" formatCode="[$-C07]ddd\\,\\ dd/\\ mm;@"/>'
+                '</numFmts><cellXfs><xf numFmtId="0"/><xf numFmtId="164"/>'
+                "</cellXfs></styleSheet>",
+            )
+            archive.writestr(
+                "xl/worksheets/sheet1.xml",
+                f"<worksheet {ns}><sheetData>{sheet_rows}</sheetData></worksheet>",
+            )
+        return buffer.getvalue()
+
+    def test_xlsx_parser_reads_a_grid_with_dates(self):
+        import datetime
+
+        from waste_collection_schedule import parsers
+
+        resp = self._Resp("")
+        resp.content = self._xlsx(
+            '<row r="1"><c r="A1" t="s"><v>0</v></c><c r="C1" t="s"><v>1</v></c>'
+            "</row>"
+            '<row r="3"><c r="A3" s="1"><v>46029</v></c><c r="B3"><v>7</v></c>'
+            '<c r="C3" t="inlineStr"><is><t>Mo, 13.04.</t></is></c></row>'
+        )
+        assert parsers.XlsxParser()(resp) == [
+            ["Restmüll", None, "Gelber Sack"],
+            [None, None, None],
+            [datetime.date(2026, 1, 7), 7, "Mo, 13.04."],
+        ]
+        assert parsers.XlsxParser(dates=False)(resp)[2][0] == 46029
+        assert parsers.XlsxParser("Plan")(resp)[0][0] == "Restmüll"
+
+    def test_xlsx_parser_read_returns_the_sheet_name_and_takes_bytes(self):
+        from waste_collection_schedule import parsers
+
+        content = self._xlsx('<row r="1"><c r="B1"><v>7</v></c></row>')
+        resp = self._Resp("")
+        resp.content = content
+        sheet = parsers.XlsxParser().read(resp)
+        assert sheet == parsers.XlsxSheet("Plan", [[None, 7]])
+        assert sheet.name == "Plan"
+        assert parsers.XlsxParser().read(content) == sheet
+        assert parsers.XlsxParser()(resp) == sheet.rows
+        assert parsers.XlsxParser().read(self._xlsx("")) == ("Plan", [])
+
+    def test_xlsx_parser_honours_the_1904_date_system(self):
+        import datetime
+
+        from waste_collection_schedule import parsers
+
+        resp = self._Resp("")
+        resp.content = self._xlsx(
+            '<row r="1"><c r="A1" s="1"><v>44567</v></c></row>', date1904=True
+        )
+        assert parsers.XlsxParser()(resp) == [[datetime.date(2026, 1, 7)]]
+
+    def test_xlsx_parser_rejects_a_non_workbook(self):
+        from waste_collection_schedule import parsers
+        from waste_collection_schedule.response_shape import ResponseShapeError
+
+        with pytest.raises(ResponseShapeError):
+            parsers.XlsxParser()(self._Resp("<html>moved</html>"))
+        resp = self._Resp("")
+        resp.content = self._xlsx("")
+        with pytest.raises(ResponseShapeError):
+            parsers.XlsxParser(sheet=3)(resp)
+
+    def test_xlsx_date_format_detection(self):
+        from waste_collection_schedule.parsers import _xlsx_is_date_format
+
+        assert _xlsx_is_date_format("dd/mm/yyyy")
+        assert _xlsx_is_date_format("[$-C07]ddd\\,\\ dd/\\ mm;@")
+        assert not _xlsx_is_date_format("0.00")
+        assert not _xlsx_is_date_format('"days" 0')
+        assert not _xlsx_is_date_format("[h]:mm:ss")
 
     def test_xml_parser_selects_and_shape(self):
         from waste_collection_schedule import parsers
@@ -3799,7 +3985,6 @@ class TestAthosWasteManagementRetriever:
             "https://example.com/Servlet",
             params={"SubmitAction": "wasteDisposalServices"},
             headers=None,
-            verify=True,
         )
         assert source.session.post.call_count == 2
         first_call, second_call = source.session.post.call_args_list
@@ -6326,6 +6511,105 @@ class TestPdfTableParser:
         with pytest.raises(ResponseShapeError):
             self._run(pages, min_words=5)
 
+    def test_decode_and_x_range(self):
+        pages = self._pages(
+            [
+                ("(cid:53)(cid:48)", 10, 30, 100.0),
+                ("Legende", 700, 760, 100.0),
+            ]
+        )
+        rows = self._run(
+            pages,
+            decode=lambda text: text.replace("(cid:53)(cid:48)", "RM"),
+            x_range=(0.0, 650.0),
+        )
+        assert [[w.text for w in row.words] for row in rows] == [["RM"]]
+
+    def test_char_margin_reaches_pdfminer(self):
+        from waste_collection_schedule.parsers import PdfTableParser
+
+        with (
+            patch("pdfminer.high_level.extract_pages", return_value=[]) as extract,
+            patch("pdfminer.layout.LTTextContainer", self._FakeContainer),
+            patch("pdfminer.layout.LTTextLineHorizontal", self._FakeLine),
+        ):
+            PdfTableParser(char_margin=1.0)(SimpleNamespace(content=b"%PDF-"))
+            PdfTableParser()(SimpleNamespace(content=b"%PDF-"))
+        assert extract.call_args_list[0].kwargs["laparams"].char_margin == 1.0
+        assert extract.call_args_list[1].kwargs["laparams"].char_margin == 2.0
+
+    def test_figure_text_reads_form_xobjects_inside_the_page(self):
+        from waste_collection_schedule.parsers import PdfTableParser
+
+        class FakeFigure(list):
+            pass
+
+        class FakePage(list):
+            bbox = (0.0, 0.0, 800.0, 600.0)
+
+        def line(text, y):
+            fake = self._FakeLine(text, 10, 30, y)
+            fake.y0 = y - 8
+            return fake
+
+        figure = FakeFigure(
+            [
+                self._FakeContainer([line("inside", 100.0)]),
+                # Drawn below the page box: not visible, dropped.
+                self._FakeContainer([line("outside", -50.0)]),
+            ]
+        )
+        page = FakePage([figure])
+
+        def run(**kwargs):
+            with (
+                patch("pdfminer.high_level.extract_pages", return_value=[page]),
+                patch("pdfminer.layout.LTTextContainer", self._FakeContainer),
+                patch("pdfminer.layout.LTTextLineHorizontal", self._FakeLine),
+                patch("pdfminer.layout.LTFigure", FakeFigure),
+            ):
+                return PdfTableParser(**kwargs)(SimpleNamespace(content=b"%PDF-"))
+
+        assert run() == []
+        rows = run(figure_text=True)
+        assert [[w.text for w in row.words] for row in rows] == [["inside"]]
+
+
+class TestPdfMonthColumns:
+    """PdfMonthColumns bins day rows into the month columns named above them."""
+
+    @staticmethod
+    def _row(y, *words):
+        from waste_collection_schedule.parsers import PdfRow, PdfWord
+
+        return PdfRow(page=0, y=y, words=tuple(PdfWord(t, x, x + 20) for t, x in words))
+
+    def test_two_header_bands_on_one_page(self):
+        import datetime
+
+        from waste_collection_schedule.preprocessors import PdfMonthColumns
+
+        rows = [
+            self._row(800, ("Kalender 2026", 10)),
+            self._row(780, ("Januar", 20), ("Februar", 120)),
+            self._row(770, ("5 Mo", 10), ("Kehricht", 40), ("2 Mo", 110)),
+            self._row(400, ("Juli", 20), ("August", 120)),
+            self._row(390, ("6 Mo", 10), ("Kehricht", 40), ("4 Di", 110)),
+            self._row(380, ("7 Di", 10), ("4 Di", 110), ("Grüngut", 140)),
+        ]
+        records = list(
+            PdfMonthColumns(
+                labels=["Kehricht", "Grüngut"],
+                day_pattern=r"(\d{1,2})\s+[a-z]{2}\b",
+                year_pattern=r"Kalender (\d{4})",
+            )(rows)
+        )
+        assert records == [
+            (datetime.date(2026, 1, 5), "Kehricht"),
+            (datetime.date(2026, 7, 6), "Kehricht"),
+            (datetime.date(2026, 8, 4), "Grüngut"),
+        ]
+
 
 class TestPdfLayoutParser:
     """PdfLayoutParser exposes positioned pypdf text and pdfminer vectors."""
@@ -6425,6 +6709,32 @@ class TestPdfWordLayoutParser:
         assert 20 < layout.words[0].x < layout.words[1].x < 70
         assert layout.words[0].y == layout.words[1].y
         assert layout.vectors[0].fill_color == (0.5, 0.5, 0.5)
+
+    def test_include_strokes_keeps_painted_area_of_stroked_lines(self):
+        from io import BytesIO
+
+        from pypdf import PdfWriter
+        from pypdf.generic import DecodedStreamObject, NameObject
+        from waste_collection_schedule.parsers import PdfWordLayoutParser
+
+        writer = PdfWriter()
+        page = writer.add_blank_page(width=200, height=100)
+        stream = DecodedStreamObject()
+        # A calendar cell painted as a 12 pt wide horizontal stroke, as Latrobe's.
+        stream.set_data(b"0.2 0.4 0.6 RG 12 w 10 50 m 40 50 l S")
+        page[NameObject("/Contents")] = writer._add_object(stream)
+        output = BytesIO()
+        writer.write(output)
+        response = SimpleNamespace(content=output.getvalue(), status_code=200)
+
+        assert PdfWordLayoutParser(min_words=0)(response)[0].vectors == []
+        (vector,) = PdfWordLayoutParser(min_words=0, include_strokes=True)(response)[
+            0
+        ].vectors
+        assert (vector.x0, vector.x1) == pytest.approx((10, 40))
+        assert (vector.y0, vector.y1) == pytest.approx((44, 56))
+        assert vector.stroke_color == pytest.approx((0.2, 0.4, 0.6))
+        assert vector.fill_color is None
 
     def test_minimum_counts_reject_incomplete_layout(self):
         from waste_collection_schedule.parsers import PdfWordLayoutParser
@@ -7670,6 +7980,16 @@ def test_the_hand_rolled_retrieval_backlog_is_not_stale() -> None:
 
 SOURCES_AWAITING_CASSETTE: set[str] = set()
 
+# Not a backlog: sources whose recording would leak personal data, so they can
+# never ship one. Each entry needs its reason. Use it only for a login source
+# whose cassette would hold the account holder's identifiers or session, which
+# ``cassette_scrubbers`` cannot rewrite (it only drops interactions).
+SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY: dict[str, str] = {
+    "gastrikeatervinnare_se": (
+        "Mina sidor login: a recording holds the customer number, address and session"
+    ),
+}
+
 
 @pytest.mark.skipif(
     len(_NEW_STYLE_SOURCES) == 0,
@@ -7682,7 +8002,10 @@ def test_pipeline_sources_ship_a_cassette(stem: str) -> None:
     """Pipeline sources must ship an offline cassette covering their TEST_CASES."""
     from pathlib import Path
 
-    if stem in SOURCES_AWAITING_CASSETTE:
+    if (
+        stem in SOURCES_AWAITING_CASSETTE
+        or stem in SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY
+    ):
         return
     fixture_dir = Path(__file__).resolve().parent / "fixtures" / stem
     assert fixture_dir.is_dir() and any(fixture_dir.glob("*.json")), (
@@ -8594,6 +8917,84 @@ def test_the_source_cassette_backlog_is_not_stale() -> None:
     )
 
 
+def test_privacy_excluded_sources_ship_no_cassette() -> None:
+    """A source excluded for privacy must not commit a recording after all."""
+    from pathlib import Path
+
+    fixtures = Path(__file__).resolve().parent / "fixtures"
+    recorded = sorted(
+        stem
+        for stem in SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY
+        if any((fixtures / stem).glob("*.json"))
+    )
+    assert not recorded, (
+        f"{recorded} ship a cassette. Either it is scrubbed and the entry can leave "
+        "SOURCES_CASSETTE_EXCLUDED_FOR_PRIVACY, or the recording must go."
+    )
+
+
+def test_antrim_checker_keeps_dated_recycling_on_its_separate_weekday():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.antrimandnewtownabbey_gov_uk import Source
+
+    with cassette.replaying(
+        fixture_path("antrimandnewtownabbey_gov_uk", "Recycling on a separate weekday")
+    ):
+        rows = Source(id=58105).fetch()
+    pairs = {(row.date, row.type) for row in rows}
+    assert len(rows) == 27
+    assert (datetime.date(2026, 10, 27), "Recycling") in pairs
+    assert (datetime.date(2026, 10, 29), "General Waste") in pairs
+    assert (datetime.date(2026, 10, 29), "Organic Waste") in pairs
+    assert (datetime.date(2026, 10, 27), "General Waste") not in pairs
+
+
+@pytest.mark.parametrize(
+    "today,weekday,expected",
+    [
+        ("2026-11-26", "THURSDAY", "2026-11-27"),
+        ("2026-11-27", "THURSDAY", "2026-11-27"),
+        ("2026-11-27", "FRIDAY", "2026-11-28"),
+        ("2026-12-25", "FRIDAY", "2026-12-26"),
+        ("2027-01-01", "FRIDAY", "2027-01-02"),
+        ("2026-07-03", "FRIDAY", "2026-07-03"),
+        ("2026-05-25", "MONDAY", "2026-05-25"),
+    ],
+)
+def test_lacity_pipeline_keeps_holiday_delay_and_delayed_collection_today(
+    today, weekday, expected
+):
+    from waste_collection_schedule.source.lacity_gov import Source
+
+    response = MagicMock()
+    response.json.return_value = {
+        "status": "exactMatch",
+        "layers": {"merge": {"day": weekday}},
+    }
+    with freeze_time(today):
+        source = Source(street_address="11050 Pendleton Street")
+        source.session.get = MagicMock(return_value=response)
+        entries = source.fetch()
+    assert len(entries) == (9 if today == "2026-11-27" and weekday == "THURSDAY" else 6)
+    assert sum(e.date.isoformat() == expected for e in entries) == 3
+    assert all(e.date.isoformat() >= today for e in entries)
+
+
+def test_lacity_pipeline_rejects_unrecognized_weekday():
+    from waste_collection_schedule.source.lacity_gov import Source
+
+    response = MagicMock()
+    response.json.return_value = {
+        "status": "exactMatch",
+        "layers": {"merge": {"day": "MAYBE"}},
+    }
+    source = Source(street_address="11050 Pendleton Street")
+    source.session.get = MagicMock(return_value=response)
+    with pytest.raises(ValueError, match="Unknown Los Angeles collection day"):
+        source.fetch()
+
+
 class TestGlobalCalendarMigrations:
     def test_iren_published_iso_dates_are_not_dropped(self):
         """The live Roccavione feed publishes three dates separated by semicolons."""
@@ -8919,3 +9320,930 @@ def test_html_calendar_grid_marker_attributes(
     )
     expected = [(datetime.date(2026, 10, 2), expected_label)] if expected_label else []
     assert parser(response) == expected
+
+
+class TestRollingHtmlCalendarGrid:
+    @staticmethod
+    def _parser():
+        from waste_collection_schedule.parsers import HtmlCalendarGrid
+
+        return HtmlCalendarGrid(
+            table="table",
+            header="th",
+            day=".day",
+            rolling=True,
+            marker=".pickup",
+            attribute=("data-stream", "class"),
+        )
+
+    @staticmethod
+    def _page(header, cells):
+        return SimpleNamespace(
+            text=f"<table><tr><th>{header}</th></tr><tr>{cells}</tr></table>"
+        )
+
+    @pytest.mark.parametrize(
+        "header",
+        [
+            "December - January 2027",
+            "December 2026 - January 2027",
+            "<span>December</span> - <span>January 2027</span>",
+        ],
+    )
+    def test_year_boundary_uses_range_header_even_when_a_day_has_no_pickup(
+        self, header
+    ):
+        response = self._page(
+            header,
+            '<td><div class="day">30</div><span class="pickup red"></span></td><td><div class="day">31</div></td><td><div class="day">1</div><span class="pickup yellow"></span></td>',
+        )
+        assert self._parser()(response) == [
+            (datetime.date(2026, 12, 30), "pickup"),
+            (datetime.date(2027, 1, 1), "pickup"),
+        ]
+
+    def test_single_month_without_year_uses_frozen_current_year(self):
+        with freeze_time("2026-10-25"):
+            assert self._parser()(
+                self._page(
+                    "October",
+                    '<td><div class="day">27</div><span class="pickup"></span></td>',
+                )
+            ) == [(datetime.date(2026, 10, 27), "pickup")]
+
+    def test_multiple_month_boundaries_and_markers_keep_order(self):
+        response = self._page(
+            "October - December 2026",
+            '<td><div class="day">31</div></td><td><div class="day">1</div><span class="pickup" data-stream="first"></span></td><td><div class="day">30</div></td><td><div class="day">1</div><span class="pickup" data-stream="second"></span><img class="pickup" data-stream="third"></td>',
+        )
+        assert self._parser()(response) == [
+            (datetime.date(2026, 11, 1), "first"),
+            (datetime.date(2026, 12, 1), "second"),
+            (datetime.date(2026, 12, 1), "third"),
+        ]
+
+    @pytest.mark.parametrize(
+        "cell, message",
+        [
+            ('<td><span class="pickup"></span></td>', "day number not found"),
+            (
+                '<td><div class="day">unknown</div></td>',
+                "Invalid collection calendar day",
+            ),
+            ('<td><div class="day">32</div></td>', r"day.*range"),
+        ],
+    )
+    def test_explicit_invalid_day_is_not_silently_skipped(self, cell, message):
+        with pytest.raises(ValueError, match=message):
+            self._parser()(self._page("October 2026", cell))
+
+
+class TestAspNetFormRetriever:
+    def test_steps_receive_current_state_and_share_a_verified_neutral_session(self):
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.service.AspNetForms import AspNetFormRetriever
+
+        source = BaseSource()
+        initial = MagicMock(text="initial-state")
+        intermediate = MagicMock(text="updated-state")
+        final = MagicMock(text="calendar")
+        with patch(
+            "waste_collection_schedule.service.AspNetForms.requests.Session"
+        ) as factory:
+            session = factory.return_value.__enter__.return_value
+            session.get.return_value = initial
+            session.post.side_effect = [intermediate, final]
+            retriever = AspNetFormRetriever(
+                "https://council.test/",
+                steps=(lambda response, **_: {"__VIEWSTATE": response.text},) * 2,
+            )
+            assert retriever(source) is final
+            factory.assert_called_once_with()
+            assert [call.kwargs["data"] for call in session.post.call_args_list] == [
+                {"__VIEWSTATE": "initial-state"},
+                {"__VIEWSTATE": "updated-state"},
+            ]
+            assert session.get.call_args.kwargs.get("verify", True) is True
+            assert all(
+                call.kwargs.get("verify", True) is True
+                for call in session.post.call_args_list
+            )
+            factory.return_value.__exit__.assert_called_once()
+
+    def test_http_failure_stops_the_form_flow(self):
+        import requests
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.service.AspNetForms import AspNetFormRetriever
+
+        failure = MagicMock()
+        failure.raise_for_status.side_effect = requests.HTTPError("upstream failure")
+        with patch(
+            "waste_collection_schedule.service.AspNetForms.requests.Session"
+        ) as factory:
+            session = factory.return_value.__enter__.return_value
+            session.post.return_value = failure
+            retriever = AspNetFormRetriever(
+                "https://council.test/", steps=(lambda response, **_: {},) * 2
+            )
+            with pytest.raises(requests.HTTPError, match="upstream failure"):
+                retriever(BaseSource())
+            assert session.post.call_count == 1
+
+
+class TestGossFormComponents:
+    @staticmethod
+    def _encoded_response(variable, value):
+        import base64
+
+        encoded = base64.b64encode(json.dumps(value).encode()).decode()
+        return SimpleNamespace(text=f'var {variable} = "{encoded}";')
+
+    @pytest.mark.parametrize("state_fields", [None, ("NONCE",), ()])
+    def test_selected_state_fields_and_rotating_tokens(self, state_fields):
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.service.GossForm import (
+            GossFormRetriever,
+            GossStep,
+        )
+
+        def page(number):
+            return SimpleNamespace(
+                url="https://council.test/start",
+                text=(
+                    f'<form id="F_FORM" action="/step{number}">'
+                    f'<input name="F_PAGESESSIONID" value="page{number}">'
+                    f'<input name="F_NONCE" value="nonce{number}">'
+                    '<input name="F_OTHER" value="keep-by-default"></form>'
+                ),
+                raise_for_status=MagicMock(),
+            )
+
+        source = BaseSource()
+        source._session = MagicMock()
+        source._session.get.return_value = page(1)
+        final = page(3)
+        source._session.post.side_effect = [page(2), final]
+        retriever = GossFormRetriever(
+            "https://council.test/start",
+            form="F",
+            state_fields=state_fields,
+            steps=(GossStep("NEXT", fields=lambda response, **_: {"ANSWER": "yes"}),)
+            * 2,
+        )
+        assert retriever(source) is final
+        for number, call in enumerate(source._session.post.call_args_list, 1):
+            assert call.args == (f"https://council.test/step{number}",)
+            data = call.kwargs["data"]
+            assert data["F_ANSWER"] == "yes"
+            assert data["F_FORMACTION_NEXT"] == "F_NEXT"
+            expected = {"F_ANSWER", "F_FORMACTION_NEXT"}
+            if state_fields is None:
+                expected |= {"F_PAGESESSIONID", "F_NONCE", "F_OTHER"}
+            else:
+                expected |= {f"F_{name}" for name in state_fields}
+            assert set(data) == expected
+            if "F_NONCE" in data:
+                assert data["F_NONCE"] == f"nonce{number}"
+
+    @pytest.mark.parametrize("wrapped", [False, True])
+    @pytest.mark.parametrize("soap", [False, True])
+    @pytest.mark.parametrize("single", [False, True])
+    def test_whitespace_optional_wrappers_and_single_collection(
+        self, wrapped, soap, single
+    ):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        record = {"Date": "27/10/2026 00:00:00", "Service": "Recycling"}
+        result = {
+            "SuccessFlag": True,
+            "Collections": {"Collection": record if single else [record]},
+        }
+        if soap:
+            result = {"GetCollectionByUprnAndDateResult": result}
+        if wrapped:
+            result = {"value": result, "scope": "SERVERCLIENT"}
+        response = self._encoded_response(
+            "FSerializedVariables", {"Recordset1": result}
+        )
+        assert GossWhitespaceParser("F")(response) == [record]
+
+    @pytest.mark.parametrize("collections", [None, {}, {"Collection": []}])
+    def test_whitespace_empty_successful_calendar(self, collections):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        response = self._encoded_response(
+            "FSerializedVariables",
+            {"Recordset1": {"SuccessFlag": True, "Collections": collections}},
+        )
+        assert GossWhitespaceParser("F")(response) == []
+
+    def test_whitespace_api_error_is_not_an_empty_calendar(self):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        response = self._encoded_response(
+            "FSerializedVariables",
+            {
+                "Recordset1": {
+                    "SuccessFlag": False,
+                    "ErrorDescription": "upstream failed",
+                }
+            },
+        )
+        with pytest.raises(ValueError, match="upstream failed"):
+            GossWhitespaceParser("F")(response)
+
+    def test_whitespace_missing_recordset_is_reported(self):
+        from waste_collection_schedule.service.GossForm import GossWhitespaceParser
+
+        with pytest.raises(ValueError, match="Recordset1"):
+            GossWhitespaceParser("F")(SimpleNamespace(text="<html>redesigned</html>"))
+
+    def test_form_data_follows_page_order_and_ignores_unlisted_pages(self):
+        from waste_collection_schedule.parsers import HtmlParser
+        from waste_collection_schedule.service.GossForm import GossFormDataParser
+
+        response = self._encoded_response(
+            "FFormData",
+            {
+                "_PAGEORDER_": ["SECOND", "FIRST"],
+                "FIRST": {"HTML": "<p>first</p>"},
+                "SECOND": {"HTML": "<p>second</p>"},
+                "UNLISTED": {"HTML": "<p>not a collection</p>"},
+            },
+        )
+        parser = GossFormDataParser("HTML", parser=HtmlParser("p"))
+        assert [tag.get_text() for tag in parser(response)] == ["second", "first"]
+
+    def test_form_data_reads_named_pages_outside_page_order(self):
+        from waste_collection_schedule.parsers import HtmlParser
+        from waste_collection_schedule.service.GossForm import GossFormDataParser
+
+        response = self._encoded_response(
+            "FFormData",
+            {
+                "_PAGEORDER_": ["SEARCH_1"],
+                "SEARCH_1": {"OTHER": "<p>search</p>"},
+                "RESULTS_1": {"HTML": "<p>results</p>"},
+            },
+        )
+        parser = GossFormDataParser("HTML", parser=HtmlParser("p"), pages=["RESULTS_1"])
+        assert [tag.get_text() for tag in parser(response)] == ["results"]
+
+        with pytest.raises(ValueError, match="RESULTS_2"):
+            GossFormDataParser("HTML", parser=HtmlParser("p"), pages=["RESULTS_2"])(
+                response
+            )
+
+    def test_form_data_missing_page_order_is_reported(self):
+        from waste_collection_schedule.parsers import HtmlParser
+        from waste_collection_schedule.service.GossForm import GossFormDataParser
+
+        with pytest.raises(ValueError, match="_PAGEORDER_"):
+            GossFormDataParser("HTML", parser=HtmlParser("p"))(
+                SimpleNamespace(text="no data")
+            )
+
+
+class TestLinkedAssetRetriever:
+    @pytest.mark.parametrize("page_error", [None, "requests", "curl"])
+    def test_missing_link_or_page_transport_error_uses_fallback(self, page_error):
+        import requests
+        from curl_cffi.requests import RequestsError
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.retrievers import LinkedAssetRetriever
+
+        source = BaseSource()
+        source._session = MagicMock()
+        asset = MagicMock(text="calendar")
+        if page_error == "requests":
+            page = requests.Timeout("page unavailable")
+        elif page_error == "curl":
+            page = RequestsError("page unavailable")
+        else:
+            page = SimpleNamespace(
+                text="no script link", url="https://council.test/page"
+            )
+        source._session.get.side_effect = [page, asset]
+        retriever = LinkedAssetRetriever(
+            "https://council.test/page",
+            pattern=r'src="([^"]+)"',
+            fallback_url="https://static.test/calendar.js",
+        )
+        assert retriever(source) is asset
+        assert [call.args[0] for call in source._session.get.call_args_list] == [
+            "https://council.test/page",
+            "https://static.test/calendar.js",
+        ]
+        asset.raise_for_status.assert_called_once()
+
+    def test_relative_discovered_asset_wins_over_fallback(self):
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.retrievers import LinkedAssetRetriever
+
+        source = BaseSource()
+        source._session = MagicMock()
+        source._session.get.side_effect = [
+            SimpleNamespace(
+                text='<script src="../build/calendar.js?v=2"></script>',
+                url="https://council.test/bin/page",
+            ),
+            MagicMock(),
+        ]
+        LinkedAssetRetriever(
+            "https://council.test/bin/page",
+            pattern=r'src="([^"]+)"',
+            fallback_url="https://static.test/old.js",
+        )(source)
+        assert (
+            source._session.get.call_args.args[0]
+            == "https://council.test/build/calendar.js?v=2"
+        )
+
+    def test_asset_http_error_propagates(self):
+        import requests
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.retrievers import LinkedAssetRetriever
+
+        source = BaseSource()
+        source._session = MagicMock()
+        failed = MagicMock()
+        failed.raise_for_status.side_effect = requests.HTTPError("asset unavailable")
+        source._session.get.side_effect = [
+            SimpleNamespace(text="blocked", url="https://council.test/"),
+            failed,
+        ]
+        with pytest.raises(requests.HTTPError, match="asset unavailable"):
+            LinkedAssetRetriever(
+                "https://council.test/",
+                pattern=r'src="([^"]+)"',
+                fallback_url="https://static.test/calendar.js",
+            )(source)
+
+
+class TestJsObjectParser:
+    def test_unquoted_keys_zero_based_months_and_strings_are_decoded_without_execution(
+        self,
+    ):
+        from waste_collection_schedule.parsers import JsObjectParser
+
+        parser = JsObjectParser({"calendar": r"const data=(.*);"})
+        response = SimpleNamespace(
+            text='const data={zone1:[new Date(2026,0,2),new Date(2026,11,31)],label:"key:new Date(2026,0,1)",nested:{items:["glass","mixed"]}};'
+        )
+        assert parser(response) == {
+            "calendar": {
+                "zone1": ["2026-01-02", "2026-12-31"],
+                "label": "key:new Date(2026,0,1)",
+                "nested": {"items": ["glass", "mixed"]},
+            }
+        }
+
+    def test_missing_object_is_an_error(self):
+        from waste_collection_schedule.parsers import JsObjectParser
+
+        with pytest.raises(ValueError, match="not found"):
+            JsObjectParser({"calendar": r"const data=(.*);"})(
+                SimpleNamespace(text="unrelated script")
+            )
+
+    @pytest.mark.parametrize(
+        "literal", ["{day:new Date(2026,12,1)}", "{day:dangerousFunction()}"]
+    )
+    def test_invalid_dates_and_non_json_expressions_are_rejected(self, literal):
+        from waste_collection_schedule.parsers import JsObjectParser
+
+        with pytest.raises(ValueError):
+            JsObjectParser({"calendar": r"const data=(.*);"})(
+                SimpleNamespace(text=f"const data={literal};")
+            )
+
+
+class TestNamedResponses:
+    def test_each_named_parser_receives_its_response_and_source(self):
+        from waste_collection_schedule.parsers import NamedResponses
+
+        first = MagicMock(return_value={"zones": []})
+        second = MagicMock(return_value={"features": []})
+        source = MagicMock()
+        assert NamedResponses({"calendar": first, "address": second})(
+            ["script", "json"], source
+        ) == [{"calendar": {"zones": []}, "address": {"features": []}}]
+        first.assert_called_once_with("script", source)
+        second.assert_called_once_with("json", source)
+
+    @pytest.mark.parametrize("responses", [[], ["one", "extra"]])
+    def test_missing_or_extra_response_is_an_error(self, responses):
+        from waste_collection_schedule.parsers import NamedResponses
+
+        with pytest.raises(ValueError, match="number of responses"):
+            NamedResponses({"calendar": MagicMock()})(responses)
+
+
+class TestSourceSessionImpersonation:
+    @pytest.mark.parametrize("fingerprint", ["chrome", None, "firefox"])
+    def test_configured_fingerprint_is_used_for_cached_per_source_session(
+        self, fingerprint
+    ):
+        from waste_collection_schedule.base_source import BaseSource
+
+        class ConfiguredSource(BaseSource):
+            IMPERSONATE = fingerprint
+
+        with patch("curl_cffi.requests.Session") as factory:
+            first = ConfiguredSource()
+            second = ConfiguredSource()
+            factory.assert_not_called()
+            assert first.session is first.session
+            factory.assert_called_once_with(impersonate=fingerprint)
+            _ = second.session
+            assert factory.call_count == 2
+
+    def test_default_fingerprint_stays_chrome(self):
+        from waste_collection_schedule.base_source import BaseSource
+
+        with patch("curl_cffi.requests.Session") as factory:
+            _ = BaseSource().session
+            factory.assert_called_once_with(impersonate="chrome")
+
+
+class TestSelectedRetrieval:
+    def test_only_selected_flow_runs(self):
+        from waste_collection_schedule.retrievers import SelectRetriever
+
+        direct, address = MagicMock(return_value="calendar"), MagicMock()
+        source = SimpleNamespace(params={"payload": {"id": 1}})
+        retrieve = SelectRetriever(
+            lambda source: "direct" if source.params.get("payload") else "address",
+            {"direct": direct, "address": address},
+        )
+        assert retrieve(source) == "calendar"
+        direct.assert_called_once_with(source)
+        address.assert_not_called()
+
+    def test_failure_does_not_try_other_input_mode(self):
+        from waste_collection_schedule.retrievers import SelectRetriever
+
+        failed, other = MagicMock(side_effect=ValueError("upstream")), MagicMock()
+        with pytest.raises(ValueError, match="upstream"):
+            SelectRetriever(
+                lambda source: "direct", {"direct": failed, "address": other}
+            )(MagicMock())
+        other.assert_not_called()
+
+
+class TestHtmlFormFlow:
+    @staticmethod
+    def response(html="", *, status=200, url="https://council.test/find", headers=None):
+        return SimpleNamespace(
+            text=html,
+            status_code=status,
+            url=url,
+            headers=headers or {},
+            raise_for_status=MagicMock(),
+        )
+
+    def test_preserves_successful_controls_and_only_selected_button(self):
+        from bs4 import BeautifulSoup
+        from waste_collection_schedule.service.HtmlForms import form_values
+
+        form = BeautifulSoup(
+            """<form><input name="csrf" value="token">
+            <input name="checked" type="checkbox" checked value="yes">
+            <input name="unchecked" type="checkbox" value="no">
+            <select name="address"><option value="1">One</option><option selected value="2">Two</option></select>
+            <textarea name="notes">text</textarea><button name="next" value="go">Next</button>
+            <button name="back" value="previous">Back</button></form>""",
+            "html.parser",
+        ).form
+        assert form_values(form, "next") == {
+            "csrf": "token",
+            "checked": "yes",
+            "address": "2",
+            "notes": "text",
+            "next": "go",
+        }
+
+    def test_missing_action_submits_to_current_url_and_carries_new_tokens(self):
+        from waste_collection_schedule.service.HtmlForms import (
+            FormStep,
+            HtmlFormRetriever,
+        )
+
+        first = self.response(
+            '<form><input name="csrf" value="first"><input name="postcode"></form>'
+        )
+        second = self.response(
+            '<form action="/submit"><input name="csrf" value="second"><select name="address"></select></form>'
+        )
+        final = self.response("calendar")
+        source = SimpleNamespace(
+            params={"postcode": "AB1", "address": "7"}, session=MagicMock()
+        )
+        source.session.get.return_value = first
+        source.session.post.side_effect = [second, final]
+        retrieve = HtmlFormRetriever(
+            "https://council.test/find",
+            steps=(
+                FormStep(
+                    'input[name="postcode"]',
+                    lambda response, postcode, **_: {"postcode": postcode},
+                    "postcode",
+                ),
+                FormStep(
+                    'select[name="address"]',
+                    lambda response, address, **_: {"address": address},
+                    "address",
+                ),
+            ),
+        )
+        assert retrieve(source) is final
+        calls = source.session.post.call_args_list
+        assert calls[0].args == ("https://council.test/find",)
+        assert calls[0].kwargs["data"] == {"csrf": "first", "postcode": "AB1"}
+        assert calls[1].args == ("https://council.test/submit",)
+        assert calls[1].kwargs["data"] == {"csrf": "second", "address": "7"}
+
+    @pytest.mark.parametrize("hops", [1, 10, 11])
+    def test_explicit_relative_redirects_are_bounded(self, hops):
+        from waste_collection_schedule.service.HtmlForms import (
+            FormStep,
+            HtmlFormRetriever,
+        )
+
+        initial = self.response(
+            '<form action="/submit"><input name="token" value="x"></form>'
+        )
+        redirect = self.response(status=303, headers={"Location": "/next"})
+        final = self.response("calendar")
+        source = SimpleNamespace(params={}, session=MagicMock())
+        source.session.get.side_effect = [initial] + [redirect] * (hops - 1) + [final]
+        source.session.post.return_value = redirect
+        retrieve = HtmlFormRetriever(
+            "https://council.test/find",
+            steps=(
+                FormStep("form", lambda response, **_: {}, "address", redirects=True),
+            ),
+        )
+        if hops > 10:
+            with pytest.raises(ValueError, match="Too many"):
+                retrieve(source)
+        else:
+            assert retrieve(source) is final
+            assert source.session.get.call_args.args == ("https://council.test/next",)
+            assert source.session.get.call_args.kwargs["allow_redirects"] is False
+
+    def test_http_error_propagates(self):
+        import requests
+        from waste_collection_schedule.service.HtmlForms import HtmlFormRetriever
+
+        response = self.response(status=503)
+        response.raise_for_status.side_effect = requests.HTTPError("unavailable")
+        source = SimpleNamespace(params={}, session=MagicMock())
+        source.session.get.return_value = response
+        with pytest.raises(requests.HTTPError, match="unavailable"):
+            HtmlFormRetriever("https://council.test/find", steps=())(source)
+        source.session.post.assert_not_called()
+
+    def test_missing_form_is_argument_error(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+        from waste_collection_schedule.service.HtmlForms import (
+            FormStep,
+            HtmlFormRetriever,
+        )
+
+        source = SimpleNamespace(params={"postcode": "missing"}, session=MagicMock())
+        source.session.get.return_value = self.response("no form")
+        with pytest.raises(SourceArgumentNotFound):
+            HtmlFormRetriever(
+                "https://council.test/find",
+                steps=(FormStep("form", lambda response, **_: {}, "postcode"),),
+            )(source)
+
+
+class TestGossJsonResult:
+    def test_nested_formdata_accepts_omitted_base64_padding(self):
+        import base64
+        import json
+
+        from waste_collection_schedule.service.GossForm import GossJsonParser
+
+        value = {
+            "PAGE3_1": {"FIELD15": {"success": True, "calArray": [{"bin": "Blue"}]}}
+        }
+        raw = base64.b64encode(json.dumps(value).encode()).decode().rstrip("=")
+        assert GossJsonParser("PAGE3_1", "FIELD15")(
+            SimpleNamespace(text=f'var BINDAYSFormData = "{raw}";')
+        ) == [value["PAGE3_1"]["FIELD15"]]
+
+    @pytest.mark.parametrize(
+        "value", [{}, {"PAGE3_1": {}}, {"PAGE3_1": {"FIELD15": []}}]
+    )
+    def test_missing_or_invalid_result_raises(self, value):
+        import base64
+        import json
+
+        from waste_collection_schedule.service.GossForm import GossJsonParser
+
+        raw = base64.b64encode(json.dumps(value).encode()).decode()
+        with pytest.raises(ValueError):
+            GossJsonParser("PAGE3_1", "FIELD15")(
+                SimpleNamespace(text=f'var BINDAYSFormData = "{raw}";')
+            )
+
+
+class TestKmlWeekdayZones:
+    @staticmethod
+    def parser():
+        from waste_collection_schedule.service.KmlZones import KmlWeekdayZoneParser
+
+        return KmlWeekdayZoneParser(
+            folder="RESIDUOS",
+            groups={
+                "general": r"MEZCLADOS\s*\(([^)]+)\)",
+                "recycling": r"RECICLABLES\s*\(([^)]+)\)",
+            },
+            weekdays={"MIERCOLES": 2, "DOMINGO": 6, "MARTES": 1},
+        )
+
+    @staticmethod
+    def responses(
+        x=1, y=1, name="MEZCLADOS (MIÉRCOLES - DOMINGOS) RECICLABLES (MARTES)"
+    ):
+        point = MagicMock()
+        point.json.return_value = [{"lon": str(x), "lat": str(y)}]
+        markup = f"""<kml xmlns="http://www.opengis.net/kml/2.2"><Document><Folder><name>RECOLECCIÓN DE RESIDUOS</name>
+            <Placemark><name>{name}</name><Polygon><outerBoundaryIs><LinearRing><coordinates>0,0,0 2,0,0 2,2,0 0,2,0 0,0,0</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+            </Folder></Document></kml>"""
+        return [point, SimpleNamespace(content=markup.encode())]
+
+    def test_reads_only_published_days_from_the_matching_polygon(self):
+        assert self.parser()(self.responses()) == [
+            {"weekday": 2, "type": "general"},
+            {"weekday": 6, "type": "general"},
+            {"weekday": 1, "type": "recycling"},
+        ]
+
+    def test_point_outside_zones_is_an_address_error(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+
+        with pytest.raises(SourceArgumentNotFound):
+            self.parser()(self.responses(x=5))
+
+    def test_unresolved_address_is_an_address_error(self):
+        from waste_collection_schedule.exceptions import SourceArgumentNotFound
+
+        responses = self.responses()
+        responses[0].json.return_value = []
+        with pytest.raises(SourceArgumentNotFound):
+            self.parser()(responses)
+
+    def test_changed_zone_labels_fail_rather_than_returning_an_empty_calendar(self):
+        with pytest.raises(ValueError, match="no recognised collection zones"):
+            self.parser()(self.responses(name="Unrecognised schedule"))
+
+    def test_missing_kml_document_is_an_error(self):
+        responses = self.responses()
+        responses[1].content = b'<kml xmlns="http://www.opengis.net/kml/2.2"/>'
+        with pytest.raises(ValueError, match="no Document"):
+            self.parser()(responses)
+
+
+@freeze_time("2026-10-26")
+def test_canterbury_bankstown_reads_the_published_anchor():
+    import gzip
+
+    from waste_collection_schedule.preprocessors import RecurrenceExpander
+    from waste_collection_schedule.service.CanterburyBankstown import CalendarParser
+    from waste_collection_schedule.source.cbcity_nsw_gov_au import Source
+
+    record = {
+        "fullAddress": "102 Crinan Street, Hurlstone Park 2193",
+        "tab": "1",
+        "zone": "A",
+        "redServiceDay": "Monday",
+        "yellowServiceDay": "Monday",
+    }
+    response = SimpleNamespace(content=gzip.compress(json.dumps([record]).encode()))
+    source = Source(address=record["fullAddress"])
+    dates = []
+    for anchor in (7, 14):
+        parsed = CalendarParser()(
+            [response, SimpleNamespace(text=f"var cycle=new Date(2021,2,{anchor});")],
+            source,
+        )
+        rows = list(RecurrenceExpander(lambda schedule, _: (schedule,))(parsed, source))
+        dates.append({d for d, key in rows if key == "yellow"})
+    assert dates[0] and dates[1]
+    assert not dates[0] & dates[1]
+    with pytest.raises(ValueError, match="anchor is missing"):
+        CalendarParser()(
+            [response, SimpleNamespace(text="changed application")], source
+        )
+
+
+@freeze_time("2026-10-26")
+def test_sunshine_coast_reads_widget_anchor_and_includes_today():
+    from waste_collection_schedule.preprocessors import RecurrenceExpander
+    from waste_collection_schedule.service.SunshineCoast import CalendarParser
+    from waste_collection_schedule.source.sunshinecoast_qld_gov_au import Source
+
+    response = MagicMock()
+    response.json.return_value = [
+        {"street": "Main St", "locality": "Eumundi", "day": "Monday", "week": "1"}
+    ]
+    source = Source(street_name="Main St", locality="Eumundi")
+    dates = []
+    for anchor in ("2021-12-11", "2021-12-18"):
+        widget = SimpleNamespace(
+            text=f'const O=y("{anchor}"),x=s=>y(s).startOf("week").diff(O,"week")%2===0?"1":"2";'
+        )
+        schedules = CalendarParser()((widget, response), source)
+        rows = list(
+            RecurrenceExpander(lambda schedule, _: (schedule,))(schedules, source)
+        )
+        assert (datetime.date(2026, 10, 26), "general") in rows
+        dates.append({d for d, key in rows if key == "recycling"})
+    assert not dates[0] & dates[1]
+
+
+@pytest.mark.parametrize(
+    "number,expected", [(None, "TUESDAY"), (200, "TUESDAY"), (500, "TUESDAY")]
+)
+def test_stamford_all_range_applies_with_or_without_house_number(number, expected):
+    from bs4 import BeautifulSoup
+    from waste_collection_schedule.service.StamfordCalendar import determine_day
+
+    table = BeautifulSoup(
+        "<table><tr><td>ALL</td><td>PARKER AVE</td><td>TUESDAY</td></tr></table>",
+        "html.parser",
+    ).table
+    assert determine_day(table, "Garbage", "Parker Ave", number) == expected
+
+
+def test_stamford_number_ranges_keep_odd_even_and_no_service():
+    from bs4 import BeautifulSoup
+    from waste_collection_schedule.exceptions import (
+        SourceArgumentRequiredWithSuggestions,
+    )
+    from waste_collection_schedule.service.StamfordCalendar import determine_day
+
+    table = BeautifulSoup(
+        "<table><tr><td>1 TO 100 ODD</td><td>MAIN</td><td>MONDAY</td></tr><tr><td>1 TO 100 EVEN</td><td>MAIN</td><td>THURSDAY</td></tr><tr><td>101 TO 200 BOTH</td><td>MAIN</td><td>NO RECYCLING PICKUP</td></tr></table>",
+        "html.parser",
+    ).table
+    assert determine_day(table, "Recycling", "Main", 51) == "MONDAY"
+    assert determine_day(table, "Recycling", "Main", 52) == "THURSDAY"
+    assert determine_day(table, "Recycling", "Main", 150) is None
+    with pytest.raises(SourceArgumentRequiredWithSuggestions):
+        determine_day(table, "Recycling", "Main", None)
+
+
+@freeze_time("2027-01-01")
+def test_gpsea_precision_uses_the_linked_calendar_year_and_keeps_descriptions():
+    from waste_collection_schedule.preprocessors import RecurrenceExpander
+    from waste_collection_schedule.service.GeoSoftware import schedules
+    from waste_collection_schedule.source.sudestavenir_fr import Source
+
+    record = {
+        "Calendrier": '<a href="/2025/12/collectes-2026.pdf">calendar</a>',
+        "ve_frequen": "QUINZAINE",
+        "ve_jour": "lundi",
+        "ve_precisi": "Janv. : 5 - 19",
+        "om_frequen": "HEBDOMADAIRE",
+        "om_jour": "lundi",
+        "om_am_pm": "AM",
+    }
+    rows = list(RecurrenceExpander(schedules)([record]))
+    assert rows and not any(key.startswith("ve|") for _, key in rows)
+    source = Source(commune="Creteil", street="PL DU GRAND PAVOIS", house_number="1")
+    collection = source.transform(rows[0])
+    assert collection.description == "Matin"
+
+
+@freeze_time("2026-03-01")
+def test_gpsea_bounded_season_does_not_expand_into_the_next_year():
+    from waste_collection_schedule.preprocessors import RecurrenceExpander
+    from waste_collection_schedule.service.GeoSoftware import schedules
+
+    record = {
+        "Calendrier": '<a href="/collectes-2026.pdf">calendar</a>',
+        "dv_frequen": "HEBDOMADAIRE",
+        "dv_jour": "lundi",
+        "dv_precisi": "À partir du 1 mars au 30 novembre",
+    }
+    rows = list(RecurrenceExpander(schedules)([record]))
+    assert rows
+    assert min(d for d, _ in rows) == datetime.date(2026, 3, 2)
+    assert max(d for d, _ in rows) == datetime.date(2026, 11, 30)
+
+
+def test_with_params_binds_provider_without_mutating_source_or_session():
+    from waste_collection_schedule.base_source import BaseSource
+    from waste_collection_schedule.retrievers import WithParams
+
+    source = BaseSource()
+    source.params = {"city": "Wieliczka", "municipality": "saved-other-value"}
+    source._session = SimpleNamespace(marker="original session")
+    observed = []
+
+    def retrieve(view):
+        observed.append(view)
+        return dict(view.params), view.session
+
+    params, session = WithParams(retrieve, municipality="wieliczka")(source)
+    assert params == {"city": "Wieliczka", "municipality": "wieliczka"}
+    assert source.params == {"city": "Wieliczka", "municipality": "saved-other-value"}
+    assert observed[0] is not source
+    assert session is source.session
+
+
+def test_log_once_preserves_rows_and_warns_once(caplog):
+    from waste_collection_schedule.preprocessors import LogOnce
+
+    notice = LogOnce("Use the supported replacement", logger="migration-test")
+    rows = [(datetime.date(2026, 10, 26), "paper")]
+    assert notice(rows) is rows
+    assert notice(rows) is rows
+    assert (
+        sum(r.message == "Use the supported replacement" for r in caplog.records) == 1
+    )
+
+
+@pytest.mark.parametrize("picture", ["https://example.org/bin.png", None])
+def test_json_picture_metadata_survives_combined_type_expansion(picture):
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.transformers import JsonTransformer
+
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        picture_key=lambda row: row["thumb"].get("url"),
+        type_value_map={"combined": [wt.PAPER, wt.GLASS]},
+    )
+    entries = transform(
+        {"date": "2026-10-26", "type": "combined", "thumb": {"url": picture}}
+    )
+    assert len(entries) == 2
+    assert all(e.picture == picture for e in entries)
+
+
+def test_wolverhampton_dated_calendar_keeps_all_services_and_year_boundary():
+    from waste_collection_schedule.service.DrupalServiceCalendar import (
+        ServiceCalendarParser,
+    )
+
+    html = '<table class="calendar"><thead><tr><th>January 2027</th></tr></thead><tr><td><table class="services-row"><tr><td class="td-date">Sat, 2 Jan</td><td class="service service-row waste"></td><td class="service service-row recycling"></td><td class="service service-row garden"></td><td class="service service-row food"></td></tr></table></td></tr></table>'
+    response = MagicMock()
+    response.json.return_value = [
+        {
+            "command": "insert",
+            "selector": "#bin-collection-calendar-widget--content",
+            "data": html,
+        }
+    ]
+    rows = ServiceCalendarParser()(response)
+    assert rows == [
+        (datetime.date(2027, 1, 2), kind)
+        for kind in ("food", "garden", "recycling", "waste")
+    ]
+    response.json.return_value[0]["data"] = html.replace("Sat, 2 Jan", "Fri, 2 Jan")
+    with pytest.raises(ValueError, match="disagrees"):
+        ServiceCalendarParser()(response)
+
+
+def test_wolverhampton_rejects_missing_calendar_and_unknown_service():
+    from waste_collection_schedule.service.DrupalServiceCalendar import (
+        ServiceCalendarParser,
+    )
+
+    response = MagicMock()
+    response.json.return_value = []
+    with pytest.raises(ValueError, match="unique dated"):
+        ServiceCalendarParser()(response)
+    response.json.return_value = [
+        {
+            "command": "insert",
+            "selector": "#bin-collection-calendar-widget--content",
+            "data": '<table class="calendar"><thead><tr><th>October 2026</th></tr></thead><tr><td><table class="services-row"><tr><td class="td-date">Wed, 28 Oct</td><td class="service service-row changed-bin"></td></tr></table></td></tr></table>',
+        }
+    ]
+    with pytest.raises(ValueError, match="Unknown collection"):
+        ServiceCalendarParser()(response)
+
+
+def test_awb_mainz_saved_legacy_street_is_accepted_without_unused_form_field():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.awb_mainz_bingen_de import Source
+
+    case = "Stadt Bingen, Bingen-Stadt"
+    args = Source.TEST_CASES[case]
+    path = fixture_path("awb_mainz_bingen_de", case)
+    with cassette.replaying(path):
+        expected = Source(**args).fetch()
+    with cassette.replaying(path):
+        actual = Source(**args, strasse="Hafenstraße").fetch()
+    assert [(e.date, e.waste_type, e.location, e.description) for e in actual] == [
+        (e.date, e.waste_type, e.location, e.description) for e in expected
+    ]
+    assert "strasse" not in {name for param in Source.PARAMS for name in param.fields}

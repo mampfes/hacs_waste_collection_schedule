@@ -57,7 +57,7 @@ Attempt only if ALL are true: publicly accessible without login, structured data
 A PDF with no text layer and no colour grid (or a one-off poster) cannot be derived. Prepare a warm comment: acknowledge the request, explain why, encourage the requester to ask the provider for a structured feed. Leave the issue open — do NOT propose closing.
 
 **Category E — Login-required source**
-The project requires publicly accessible endpoints. Prepare a polite explanation and propose closing as "not planned".
+Login-required sources are accepted only if the account holder maintains the source as a code owner (`SOURCE_CODEOWNERS`) or provides a test account; maintainers never create accounts themselves, and BankID/MitID/2FA flows are not feasible. Prepare a polite comment that explains this and asks the requester whether they can take ownership or provide a test account. If neither is possible (or the login needs BankID/MitID/2FA), propose closing as "not planned".
 
 **Category F — Unclear or out of scope**
 Prepare an appropriate info-request or "not planned" comment.

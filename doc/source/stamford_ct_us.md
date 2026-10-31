@@ -2,8 +2,7 @@
 
 Support for schedules provided by [City of Stamford, CT](https://www.stamfordct.gov/government/operations/recycling-and-sanitation/about/recycling-and-garbage-schedule).
 
-This source is for residential properties in Stamford, Connecticut only. It does not
-cover condominiums.
+Source for the City of Stamford, CT garbage and recycling pickup day lookup.
 
 ## Configuration via configuration.yaml
 
@@ -12,23 +11,17 @@ waste_collection_schedule:
   sources:
     - name: stamford_ct_us
       args:
-        street: STREET_NAME
+        street: STREET
+        house_number: HOUSE_NUMBER
 ```
 
 ### Configuration Variables
 
-**street**
+**street**  
 *(string) (required)*
 
-Street name only, without the house number or street suffix (e.g. `Parker` or
-`Parker Ave` for `123 Parker Ave`).
-
-**house_number**
-*(string or int) (optional)*
-
-Only required if pickup days differ across house-number ranges on this street. If it
-is required but missing, the error message raised by the source will list the
-available house-number ranges and their pickup days.
+**house_number**  
+*(string) (optional)*
 
 ## Example
 
@@ -40,23 +33,6 @@ waste_collection_schedule:
         street: Parker Ave
 ```
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: stamford_ct_us
-      args:
-        street: Washington Blvd
-        house_number: 200
-```
-
 ## How to get the source arguments
 
-Use the [City of Stamford Garbage and Recycling
-Lookup](https://stamfordapps.org/garbagerecycling/default.asp) to find your street.
-Enter just the street name (e.g. `Parker` for `Parker Ave`), leaving out the street
-suffix (Ave, St, Rd, etc.) and the house number. If your street has multiple
-pickup-day ranges, also provide your house number.
-
-Note: `stamfordapps.org` (the underlying data source) has been reported to only be
-reachable from US-based IP addresses. If it appears unreachable, try again from a
-US-based network or VPN.
+Enter your street name without house number. Enter house_number separately when pickup days vary along the street; the error lists the available ranges. Both numbered ranges and the council's ALL designation are supported. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

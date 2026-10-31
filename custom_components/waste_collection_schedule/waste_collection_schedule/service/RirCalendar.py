@@ -22,6 +22,24 @@ MONTHS_AHEAD = 13
 EMPTY_RESULT_RETRIES = 3
 EMPTY_RESULT_RETRY_DELAY = 1.0
 REQUEST_DELAY = 0.3
+CALENDAR_PAGE_URL = "https://www.rir.no/hentekalender"
+
+# The pickup-dates endpoint wants the Norwegian month name as "title"; with the
+# "YYYY-MM" value it used to get, it answers some months with no dates at all.
+MONTH_TITLES = (
+    "Januar",
+    "Februar",
+    "Mars",
+    "April",
+    "Mai",
+    "Juni",
+    "Juli",
+    "August",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+)
 
 
 def _normalize(s: str) -> str:
@@ -58,7 +76,8 @@ class _CalendarClient:
         date_from = f"{year}-{month:02d}"
         date_to = f"{year}-{month:02d}-{last_day:02d}"
         date_param = json.dumps(
-            {"title": date_from, "dateFrom": date_from, "date": date_to}
+            {"title": MONTH_TITLES[month - 1], "dateFrom": date_from, "date": date_to},
+            ensure_ascii=False,
         )
         wrappers = []
         for attempt in range(EMPTY_RESULT_RETRIES + 1):
@@ -73,12 +92,31 @@ class _CalendarClient:
             time.sleep(EMPTY_RESULT_RETRY_DELAY)
         return r
 
+    def _get_calendar_page(self, session: requests.Session, address_id: str):
+        """The address's calendar page, which lists the upcoming collections.
+
+        The monthly endpoint answers some months with no dates although they
+        are published, so the page the website itself shows fills the gap.
+        """
+        for attempt in range(EMPTY_RESULT_RETRIES + 1):
+            r = session.get(
+                CALENDAR_PAGE_URL,
+                params={"location": self._address, "addressId": address_id},
+            )
+            r.raise_for_status()
+            soup = BeautifulSoup(r.text, "html.parser")
+            if soup.select(".collectionCalendar__date-wrapper"):
+                break
+            if attempt < EMPTY_RESULT_RETRIES:
+                time.sleep(EMPTY_RESULT_RETRY_DELAY)
+        return r
+
     def retrieve(self):
         session = self._session
         address_id = self._get_address_id(session)
         today = date.today()
         year, month = today.year, today.month
-        responses = []
+        responses = [self._get_calendar_page(session, address_id)]
         for i in range(MONTHS_AHEAD):
             if i:
                 time.sleep(REQUEST_DELAY)

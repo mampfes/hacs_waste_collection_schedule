@@ -1,6 +1,5 @@
 from typing import ClassVar, final
 
-from waste_collection_schedule import parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import text_field
@@ -25,30 +24,28 @@ class Source(BaseSource):
     ]
 
     TEST_CASES: ClassVar[dict] = {
-        "Parc Hosingen": {"commune": "Parc Hosingen (36777)"},
-        "Mersch": {"commune": "Mersch (2611)"},
+        "Parc Hosingen": {"commune": "Parc Hosingen"},
+        "Mersch (old style with id)": {"commune": "Mersch (2611)"},
     }
 
     PARAMS = (text_field("commune", label="Commune"),)
 
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Enter your commune as listed on the SIDEC calendar page, with its "
-            "number, e.g. 'Mersch (2611)'. Leaving out the number lists the "
-            "valid communes."
+            "Enter your commune as listed on the SIDEC website, e.g. 'Mersch'. "
+            "An unknown commune lists the valid ones."
         ),
     }
 
     retrieve = SidecLu.retriever
-    parse = parsers.EachResponse(SidecLu.SidecParser())
+    parse = SidecLu.SidecParser()
 
     transform = ICSTransformer(
         type_value_map={
-            "dechets menagers": wt.GENERAL_WASTE,
-            "dechets organiques": wt.ORGANIC,
-            "papiers cartons": wt.PAPER,
+            "menager": wt.GENERAL_WASTE,
+            "bio": wt.ORGANIC,
+            "papier": wt.PAPER,
             "verre": wt.GLASS,
             "encombrants": wt.BULKY_WASTE,
-            "encombrants verre": [wt.BULKY_WASTE, wt.GLASS],
         }
     )

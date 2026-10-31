@@ -1,123 +1,88 @@
-import datetime
-import logging
+from datetime import date, timedelta
+from typing import ClassVar, final
 
-import requests
 from bs4 import BeautifulSoup
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, preprocessors, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import district, street
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFoundWithSuggestions,
+    SourceArgumentRequired,
 )
+from waste_collection_schedule.transformers import JsonTransformer
 
-LOGGER = logging.getLogger(__name__)
-TITLE = "Abfallkalender Würzburg (deprecated)"
-DESCRIPTION = "Deprecated: Use the ICS source instead. Source for waste collection in the city of Würzburg, Germany."
-URL = "https://www.wuerzburg.de"
-TEST_CASES = {
-    "District only": {"district": "Altstadt"},
-    "Street only": {"street": "Juliuspromenade"},
-    "District + Street": {"district": "Altstadt", "street": "Juliuspromenade"},
-    "District + Street diff": {"district": "Altstadt", "street": "Oberer Burgweg"},
-}
-
-API_URL = "https://www.wuerzburg.de/themen/umwelt-klima/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html"
-HEADERS = {"user-agent": "Mozilla/5.0 (xxxx Windows NT 10.0; Win64; x64)"}
+_API = "https://www.wuerzburg.de/themen/umwelt-klima/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html"
 
 
-PARAM_TRANSLATIONS = {
-    "de": {
-        "district": "Stadtteil",
-        "street": "Straße",
+def _district_id(response, district=None, street=None, **_):
+    if not district and not street:
+        raise SourceArgumentRequired("district", "Provide district or street")
+    soup = BeautifulSoup(response.text, "html.parser")
+    field, value, select = (
+        ("street", street, "strlist") if street else ("district", district, "reglist")
+    )
+    options = soup.select(f"select#{select} option[value]")
+    choices = {o.get_text(strip=True): str(o["value"]) for o in options}
+    if not choices:
+        raise ValueError(f"Würzburg {field} selector is missing")
+    if value not in choices:
+        raise SourceArgumentNotFoundWithSuggestions(field, value, list(choices))
+    return choices[value]
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Abfallkalender Würzburg (deprecated)"
+    DESCRIPTION = "Deprecated: Use the ICS source instead. Source for waste collection in the city of Würzburg, Germany."
+    URL = "https://www.wuerzburg.de"
+    TEST_CASES: ClassVar[dict] = {
+        "District only": {"district": "Altstadt"},
+        "Street only": {"street": "Juliuspromenade"},
+        "District + Street": {"district": "Altstadt", "street": "Juliuspromenade"},
+        "District + Street diff": {"district": "Altstadt", "street": "Oberer Burgweg"},
     }
-}
-
-
-class Source:
-    def __init__(self, district: str | None = None, street: str | None = None):
-        self._district = district
-        self._street = street
-        self._district_id = None
-
-    @staticmethod
-    def map_district_id(district: str | None = None, street: str | None = None):
-        """Map `street` or `district` to `district_id`, giving priority to `street`.
-
-        Parameters must exactly be the same as visible in dropdowns on `URL`.
-        """
-        if not district and not street:
-            raise ValueError("One of ['district', 'street'] is required.")
-
-        r = requests.get(API_URL, headers=HEADERS)
-        r.raise_for_status()
-        selects = BeautifulSoup(r.content, "html.parser").body.find_all("select")
-
-        if street:
-            strlist = next(iter([s for s in selects if s["id"] == "strlist"]))
-            strdict = {
-                option.text: option.attrs["value"]
-                for option in strlist.children
-                if hasattr(option, "attrs") and "value" in option.attrs
-            }
-
-            hasattr(strlist.contents[2], "attr")
-
-            try:
-                return strdict[street]
-            except KeyError:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "street", street, strdict.keys()
-                ) from None
-
-        if district:
-            reglist = next(iter([s for s in selects if s["id"] == "reglist"]))
-            regdict = {
-                option.text: option.attrs["value"]
-                for option in reglist.children
-                if hasattr(option, "attrs") and "value" in option.attrs
-            }
-
-            try:
-                return regdict[district]
-            except KeyError:
-                raise SourceArgumentNotFoundWithSuggestions(
-                    "district", district, regdict.keys()
-                ) from None
-
-    def fetch(self):
-        LOGGER.warning(
-            "The Abfallkalender Würzburg source is deprecated and might not work with all addresses anymore."
-            " Please use the ICS source instead: https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerzburg_de.md"
-        )
-
-        # Get & parse full HTML only on first call to fetch() to map district or street to district_id
-        if not self._district_id:
-            self._district_id = self.map_district_id(self._district, self._street)
-
-        if not self._district_id:
-            raise ValueError("'_district_id' is not set!")
-
-        now = datetime.datetime.now().date()
-
-        r = requests.get(
-            API_URL,
-            headers=HEADERS,
-            params={
-                "_func": "evList",
-                "_mod": "events",
-                "ev[start]": str(now),
-                "ev[end]": str(now + datetime.timedelta(days=365)),
-                "ev[addr]": self._district_id,
-            },
-        )
-        r.raise_for_status()
-
-        entries = []
-        for event in r.json()["contents"].values():
-            entries.append(
-                Collection(
-                    datetime.datetime.fromisoformat(event["start"]).date(),
-                    event["title"],
-                    picture=event.get("thumb", {}).get("url"),
-                )
-            )
-
-        return entries
+    COUNTRY = "de"
+    ERROR_TEST_CASES: ClassVar[dict] = {
+        "Unknown street": {"street": "zzzznotreal"},
+        "Missing location": {},
+    }
+    PARAMS = (district(optional=True), street(optional=True))
+    HOWTO: ClassVar[dict] = {
+        "en": "This source remains deprecated; the generic ICS configuration is recommended. Enter district or street exactly as listed on the city calendar. Street takes precedence if both are set. The published event API supplies actual dates and collection pictures. Types now use canonical, localised names; update filters and customisations using old labels."
+    }
+    retrieve = retrievers.Request(
+        _API,
+        before=(retrievers.Lookup(_API, pick=_district_id),),
+        params=lambda district_id, **_: {
+            "_func": "evList",
+            "_mod": "events",
+            "ev[start]": str(date.today()),
+            "ev[end]": str(date.today() + timedelta(days=365)),
+            "ev[addr]": district_id,
+        },
+    )
+    parse = parsers.JsonParser("contents")
+    preprocess = preprocessors.Compose(
+        preprocessors.LogOnce(
+            "wuerzburg_de is deprecated; use the Würzburg ICS configuration instead",
+            logger=__name__,
+        ),
+        preprocessors.FlattenGroups(),
+    )
+    transform = JsonTransformer(
+        type_value_map={
+            "Bioabfall": wt.ORGANIC,
+            "Christbaumabfuhr": wt.GARDEN_WASTE,
+            "Gelber Sack": wt.RECYCLABLES,
+            "Papier": wt.PAPER,
+            "Restmüll": wt.GENERAL_WASTE,
+            "Mobile Problemmüll- und Wertstoffsammlung": wt.HAZARDOUS,
+            "Problemmüll- und Wertstoffsammlung": wt.HAZARDOUS,
+        },
+        carry_raw_label=True,
+        date_key="start",
+        type_key="title",
+        parse_date=date_parsers.auto,
+        picture_key=lambda event: event.get("thumb", {}).get("url"),
+    )

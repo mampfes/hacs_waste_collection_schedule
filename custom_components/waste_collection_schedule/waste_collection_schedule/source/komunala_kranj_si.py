@@ -1,43 +1,14 @@
-from __future__ import annotations
+from typing import ClassVar, final
 
-from collections.abc import Iterable
-from dataclasses import dataclass
-from datetime import date, datetime
-
-import requests
-from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, lookups, parsers, retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import (
     SourceArgAmbiguousWithSuggestions,
     SourceArgumentNotFound,
 )
-
-try:
-    # Python 3.11+
-    from datetime import UTC
-except ImportError:
-    # python <= 3.10
-    from datetime import timezone
-
-    UTC = timezone.utc
-
-TITLE = "Komunala Kranj"
-DESCRIPTION = "Source for Komunala Kranj."
-URL = "https://www.komunala-kranj.si/"
-TEST_CASES = {
-    "Kranj": {"address": "Koroška cesta 1, Kranj, 4000 Kranj"},
-    "BESNICA": {"address": "Vogel 10, Spodnja Besnica, 4201 Zgornja Besnica"},
-}
-
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "Enter the street name and house number exactly as shown in the Komunala Kranj address search.",
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "address": "Address as accepted by the Komunala Kranj address search (e.g. 'Street 1, City').",
-    }
-}
-
+from waste_collection_schedule.transformers import JsonTransformer
 
 ADDRESS_URL = "https://gis.komunala-kranj.si/mapguide/KaliopaFDOService/Service.asmx/GetResultsSimplified"
 SCHEDULE_URL = (
@@ -47,133 +18,84 @@ API_HEADERS = {
     "Accept": "application/json",
     "Content-Type": "application/json; charset=utf-8",
 }
-DEFAULT_DAYS_AHEAD = 60
+# How far ahead the calendar service is asked for, as on the provider's map.
+DAYS_AHEAD = 60
+_MAX_SUGGESTIONS = 10
 
 
-@dataclass(frozen=True)
-class _AddressMatch:
-    identifier: str
-    description: str
+def _address_id(response, address, **_):
+    """The house number id of the address; the search matches prefixes."""
+    matches = {
+        str(item.get("Text", "")).strip(): str(item.get("Id", ""))
+        for item in response.json().get("d", [])
+        if item.get("Id")
+    }
+    if not matches:
+        raise SourceArgumentNotFound("address", address)
+    if len(matches) == 1:
+        return next(iter(matches.values()))
+    wanted = lookups.normalize_text(address)
+    for text, identifier in matches.items():
+        if lookups.normalize_text(text) == wanted:
+            return identifier
+    raise SourceArgAmbiguousWithSuggestions(
+        "address", address, sorted(matches)[:_MAX_SUGGESTIONS]
+    )
 
 
-def _parse_date(value: str | date | datetime) -> date:
-    if isinstance(value, date) and not isinstance(value, datetime):
-        return value
-    if isinstance(value, datetime):
-        return value.date()
-    text = str(value).strip()
-    for fmt in ("%d.%m.%Y", "%Y-%m-%d"):
-        try:
-            return datetime.strptime(text, fmt).date()
-        except ValueError:
-            continue
-    if text.startswith("/Date(") and text.endswith(")/"):
-        timestamp_text = text[len("/Date(") : -len(")/")]
-        # remove optional timezone information (e.g. +0200) if present
-        if "+" in timestamp_text or "-" in timestamp_text[1:]:
-            for sep in ("+", "-"):
-                if sep in timestamp_text[1:]:
-                    timestamp_text = timestamp_text.split(sep, 1)[0]
-                    break
-        timestamp = int(timestamp_text)
-        return datetime.fromtimestamp(timestamp / 1000, tz=UTC).date()
-    raise ValueError(f"Cannot parse date from value: {value!r}")
+@final
+class Source(BaseSource):
+    TITLE = "Komunala Kranj"
+    DESCRIPTION = "Source for Komunala Kranj."
+    URL = "https://www.komunala-kranj.si/"
+    COUNTRY = "si"
+    RAISE_ON_EMPTY = True
 
+    TEST_CASES: ClassVar[dict] = {
+        "Kranj": {"address": "Koroška cesta 1, Kranj, 4000 Kranj"},
+        "BESNICA": {"address": "Vogel 10, Spodnja Besnica, 4201 Zgornja Besnica"},
+    }
+    PARAMS = (street_address(),)
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the address exactly as the Komunala Kranj address search shows it, "
+            "e.g. 'Koroška cesta 1, Kranj, 4000 Kranj'. Since the v3 pipeline "
+            "migration, waste types use canonical, localised names. Update filters, "
+            "automations and customisations using the old labels."
+        ),
+    }
+    WASTE_TYPES: ClassVar[list] = [wt.GENERAL_WASTE, wt.RECYCLABLES, wt.ORGANIC]
 
-def _suggestions(matches: Iterable[_AddressMatch]) -> list[str]:
-    return sorted({match.description for match in matches if match.description})
-
-
-def _guess_icon(text: str) -> str | None:
-    lowered = text.lower()
-    if "bio" in lowered:
-        return "mdi:leaf"
-    if "embala" in lowered or "plasti" in lowered:
-        return "mdi:recycle"
-    if "stek" in lowered:
-        return "mdi:glass-fragile"
-    if "papir" in lowered:
-        return "mdi:newspaper"
-    if "kosov" in lowered:
-        return "mdi:sofa"
-    if "mešan" in lowered or "mesan" in lowered:
-        return "mdi:trash-can"
-    return None
-
-
-class Source:
-    def __init__(self, address: str):
-        self._address = address
-
-    def fetch(self) -> list[Collection]:
-        match = self._get_address_match()
-
-        schedule_params = {
+    retrieve = retrievers.Request(
+        SCHEDULE_URL,
+        params=lambda address_id, **_: {
             "a": "komunalakranj",
-            "hsMid": match.identifier,
-            "stDni": str(DEFAULT_DAYS_AHEAD),
-        }
-        response = requests.get(
-            SCHEDULE_URL, params=schedule_params, headers=API_HEADERS, timeout=30
-        )
-        response.raise_for_status()
-
-        entries: list[Collection] = []
-        for item in response.json().get("d", []):
-            raw_date = (
-                item.get("Datum")
-                or item.get("DatumSort")
-                or item.get("DatumSorten")
-                or item.get("DatumSortEn")
-            )
-            if not raw_date:
-                continue
-            collection_date = _parse_date(raw_date)
-
-            waste_type = str(item.get("VrstaOdpadka") or "").strip()
-            container_type = str(item.get("VrstaZabojnika") or "").strip()
-
-            if waste_type and container_type and container_type not in waste_type:
-                type_name = f"{waste_type} ({container_type})"
-            else:
-                type_name = waste_type or container_type or "Waste Collection"
-
-            icon = _guess_icon(waste_type or container_type)
-            entries.append(Collection(date=collection_date, t=type_name, icon=icon))
-
-        return entries
-
-    def _get_address_match(self) -> _AddressMatch:
-        params = {
-            "a": "hisnestevilkekranj",
-            "mapName": "map",
-            "locale": "SI",
-            "query": self._address,
-        }
-        response = requests.get(
-            ADDRESS_URL, params=params, headers=API_HEADERS, timeout=30
-        )
-        response.raise_for_status()
-
-        matches = [
-            _AddressMatch(
-                identifier=str(item.get("Id", "")),
-                description=str(item.get("Text", "")),
-            )
-            for item in response.json().get("d", [])
-        ]
-
-        matches = [m for m in matches if m.identifier]
-        if not matches:
-            raise SourceArgumentNotFound("address", self._address)
-
-        if len(matches) > 1:
-            normalized_query = self._address.strip().casefold()
-            for match in matches:
-                if match.description.strip().casefold() == normalized_query:
-                    return match
-            raise SourceArgAmbiguousWithSuggestions(
-                "address", self._address, _suggestions(matches)
-            )
-
-        return matches[0]
+            "hsMid": address_id,
+            "stDni": str(DAYS_AHEAD),
+        },
+        headers=API_HEADERS,
+        before=(
+            retrievers.Lookup(
+                ADDRESS_URL,
+                params=lambda address, **_: {
+                    "a": "hisnestevilkekranj",
+                    "mapName": "map",
+                    "locale": "SI",
+                    "query": address,
+                },
+                headers=API_HEADERS,
+                pick=_address_id,
+            ),
+        ),
+    )
+    parse = parsers.JsonParser("d")
+    transform = JsonTransformer(
+        date_key="Datum",
+        type_key=lambda item: str(item.get("VrstaOdpadka") or "").strip(),
+        parse_date=date_parsers.for_format("%d.%m.%Y"),
+        type_value_map={
+            "MEŠANI KOMUNALNI ODPADKI": wt.GENERAL_WASTE,
+            "ODPADNA EMBALAŽA": wt.RECYCLABLES,
+            "BIOLOŠKI ODPADKI": wt.ORGANIC,
+        },
+    )

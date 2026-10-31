@@ -1,44 +1,39 @@
 # New Forest District Council
 
-Support for schedules provided by [New Forest District Council](https://www.newforest.gov.uk/findyourcollection), serving New Forest, Hampshire, UK.
+Support for schedules provided by [New Forest District Council](https://www.newforest.gov.uk).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Hampshire, please continue to use the source for your current area as long as it's still working. New sources for the new Mid Hampshire and South West Hampshire councils are not expected to be live until at least April 2028, when the councils themselves officially come into being.
+Source for newforest.gov.uk services for New Forest District Council.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: newforest_gov_uk
       args:
         postcode: POSTCODE
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**postcode**
+**postcode**  
 *(string) (required)*
 
-Your property's postcode, e.g. `SO40 8XX`.
-
-**uprn**
+**uprn**  
 *(string) (required)*
-
-Your Unique Property Reference Number (UPRN).
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
+  sources:
     - name: newforest_gov_uk
       args:
-        postcode: "SO40 8XX"
-        uprn: "100060514912"
+        postcode: SO40 8XX
+        uprn: 100060514912
 ```
 
-## How to find your `UPRN`
+## How to get the source arguments
 
-An easy way to find your Unique Property Reference Number (UPRN) is by going to <https://www.findmyaddress.co.uk/> and entering your address details.
+Enter your postcode (e.g. SO40 8XX) and the Unique Property Reference Number (UPRN) of your property. You can find your UPRN at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.

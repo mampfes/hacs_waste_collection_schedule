@@ -17,6 +17,11 @@ from waste_collection_schedule.retrievers import RetrieverFunc
 
 _LOGGER = logging.getLogger(__name__)
 DTSTART_REGEX = re.compile("DTSTART=\\d*T\\d*Z?;?")
+
+# "Settimana pari/dispari come previsto dalla numerazione del calendario annuale"
+DISPARI_REGEX = re.compile(r"\bdispari\b", re.IGNORECASE)
+PARI_REGEX = re.compile(r"\bpari\b", re.IGNORECASE)
+
 API_URL = "https://servizi.irenambiente.it/bin/iam/api-services"
 COLLECTION_ULR = (
     "https://net.irenambiente.it/restv1/api/cms/calendarioraccoltacivico/{address_id}"
@@ -169,21 +174,27 @@ class _CalendarClient:
         return r
 
     @staticmethod
-    def _fortnightly_dtstart(flag_freq: str, year: int) -> datetime:
-        """Compute DTSTART for fortnightly (2S) schedules.
+    def _fortnightly_parity(item: CollectionItem) -> int:
+        """Return the ISO week parity (1 = odd, 0 = even) of a fortnightly (2S) schedule.
 
-        Iren aligns odd/even weeks to ISO week numbers.
-        FlagFreq 'N' → dispari (odd ISO weeks); FlagFreq 'P' → pari (even ISO weeks).
-        The first Monday of the year may fall in an even or odd ISO week depending
-        on the year, so we check and shift by one week if needed.
+        Iren aligns odd/even weeks to the ISO week numbers of the year and states
+        which one in the notes ("Settimana pari/dispari come previsto dalla
+        numerazione del calendario annuale"). FlagFreq is "N" for both pari and
+        dispari zones, so it is only used as a last resort.
         """
-        jan1 = datetime(year, 1, 1)
-        first_monday = jan1 + timedelta(days=(7 - jan1.weekday()) % 7)
-        first_monday_is_odd = first_monday.isocalendar()[1] % 2 == 1
-        want_odd = flag_freq == "N"
-        if first_monday_is_odd != want_odd:
-            first_monday += timedelta(weeks=1)
-        return first_monday
+        notes = f"{item.get('NotaGenerica') or ''} {item.get('NoteServizio') or ''}"
+        # check "dispari" first: it contains "pari"
+        if DISPARI_REGEX.search(notes):
+            return 1
+        if PARI_REGEX.search(notes):
+            return 0
+        start = item.get("DataInizioValidita")
+        if isinstance(start, str) and start:
+            try:
+                return datetime.fromisoformat(start).isocalendar()[1] % 2
+            except ValueError:
+                pass
+        return 0 if item.get("FlagFreq") == "P" else 1
 
     def _get_collections(self, response) -> list[dict]:
         data: list[CollectionItem] = response.json()
@@ -211,15 +222,19 @@ class _CalendarClient:
                         "%Y%m%dT%H%M%SZ",
                     )
                 rulestr = DTSTART_REGEX.sub("", rulestr).strip(";")
+            # IdFrequenza="2S" is every other week, on odd or even ISO weeks,
+            # though the API returns FREQ=WEEKLY. Keep the weekly rule and
+            # filter by the ISO week number of each date: a fixed INTERVAL=2
+            # drifts after a 53-week year.
+            week_parity = None
             if (
                 item.get("IdFrequenza") == "2S"
                 and "INTERVAL" not in rulestr
                 and rulestr.startswith("RRULE:")
             ):
-                rulestr = rulestr.replace("FREQ=WEEKLY", "FREQ=WEEKLY;INTERVAL=2")
-                start_datetime = self._fortnightly_dtstart(
-                    item.get("FlagFreq", "N"), datetime.now().year
-                )
+                week_parity = self._fortnightly_parity(item)
+                if start_datetime is None:
+                    start_datetime = datetime.now() - timedelta(days=10)
             # The API also publishes semicolon-separated ISO dates.
             if rulestr.startswith("RDATE:"):
                 dates = rulestr.removeprefix("RDATE:").replace(";", ",").split(",")
@@ -243,6 +258,11 @@ class _CalendarClient:
                 datetime.now() - timedelta(days=10),
                 datetime.now() + timedelta(days=365),
             ):
+                if (
+                    week_parity is not None
+                    and date_time.isocalendar()[1] % 2 != week_parity
+                ):
+                    continue
                 date_ = date_time.date()
                 days_moved = {date_}
                 end = False

@@ -746,6 +746,82 @@ class JsVarParser(Parser[Any]):
         return values
 
 
+class JsObjectParser(Parser["dict[str, Any]"]):
+    """Read captured JavaScript object literals without executing code.
+
+    Each named regex captures an object in group 1. The supported JSON subset
+    additionally accepts unquoted object keys and ``new Date(year, month, day)``
+    constructors (JavaScript's zero-based month), returned as ISO dates.
+    Quoted strings are left untouched; other JavaScript expressions fail JSON
+    decoding rather than being evaluated.
+    """
+
+    _TOKENS = re.compile(
+        r'(?P<string>"(?:\\.|[^"\\])*")'
+        r"|new Date\(\s*(?P<year>\d{4})\s*,\s*(?P<month>\d{1,2})\s*,\s*(?P<day>\d{1,2})\s*\)"
+        r"|(?P<key>[A-Za-z_$][\w$]*)(?=\s*:)"
+    )
+
+    def __init__(self, patterns: Mapping[str, str]):
+        self.patterns = {
+            name: re.compile(pattern, re.DOTALL) for name, pattern in patterns.items()
+        }
+
+    @staticmethod
+    def _token(match: re.Match[str]) -> str:
+        import json
+
+        if match.group("string") is not None:
+            return match.group(0)
+        if match.group("key") is not None:
+            return json.dumps(match.group("key"))
+        day = datetime.date(
+            int(match.group("year")),
+            int(match.group("month")) + 1,
+            int(match.group("day")),
+        )
+        return json.dumps(day.isoformat())
+
+    def __call__(
+        self, response: Any, source: "BaseSource | None" = None
+    ) -> dict[str, Any]:
+        import json
+
+        result: dict[str, Any] = {}
+        for name, pattern in self.patterns.items():
+            match = pattern.search(response.text)
+            if match is None:
+                raise ValueError(f"JavaScript object {name!r} not found")
+            result[name] = json.loads(self._TOKENS.sub(self._token, match.group(1)))
+        return result
+
+
+class NamedResponses(Parser["list[dict[str, Any]]"]):
+    """Parse ordered responses with distinct parsers into one named record.
+
+    Pair with ``FanOutRetriever(include_prepared=True)`` when a calendar needs
+    both reference data and an address response in a different format.
+    """
+
+    def __init__(self, parsers: Mapping[str, Parser]):
+        self.parsers = dict(parsers)
+
+    def __call__(
+        self, response: Any, source: "BaseSource | None" = None
+    ) -> list[dict[str, Any]]:
+        responses = list(response)
+        if len(responses) != len(self.parsers):
+            raise ValueError("Unexpected number of responses for named parsers")
+        return [
+            {
+                name: parser(raw, source)
+                for (name, parser), raw in zip(
+                    self.parsers.items(), responses, strict=True
+                )
+            }
+        ]
+
+
 class DateListParser(Parser["list[tuple[str, str]]"]):
     """Parse a JSON payload that is a flat array of date strings.
 
@@ -1694,6 +1770,12 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         attribute: the marker attribute identifying the round (default
             ``"class"``). A tuple tries the next attribute only when the previous one is absent.
             Where an attribute holds several values, the first is used.
+        day: optional selector of the day number within a cell. A missing or
+            invalid explicit day raises rather than silently skipping the cell.
+        rolling: a single table spanning several months. Read the starting
+            month from a range header and advance when the day number drops.
+            A header like ``December - January 2027`` starts in December 2026;
+            a single month without a year uses the current year.
     """
 
     def __init__(
@@ -1703,22 +1785,40 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
         header: str,
         marker: str = "span",
         attribute: str | tuple[str, ...] = "class",
+        day: str | None = None,
+        rolling: bool = False,
     ):
         self.table = table
         self.header = header
         self.marker = marker
         self.attribute = attribute
+        self.day = day
+        self.rolling = rolling
 
     def _month_and_year(self, text: str) -> "tuple[int, int] | None":
         from waste_collection_schedule import recurrence
 
-        year = re.search(r"\d{4}", text)
-        if year is None:
+        if self.rolling:
+            parts = text.split("-")
+            start = parts[0].split()
+            month = recurrence.month(start[0]) if start else None
+            if month is None:
+                return None
+            if len(start) > 1:
+                return month, int(start[1])
+            if len(parts) > 1:
+                end = parts[-1].split()
+                end_month = recurrence.month(end[0])
+                year = int(end[-1])
+                return month, year - int(end_month is not None and month > end_month)
+            return month, datetime.date.today().year
+        year_match = re.search(r"\d{4}", text)
+        if year_match is None:
             return None
         for word in re.findall(r"[^\W\d_]+", text, flags=re.UNICODE):
             month = recurrence.month(word)
             if month is not None:
-                return month, int(year.group(0))
+                return month, int(year_match.group(0))
         return None
 
     def _marker_name(self, element: Tag) -> "str | None":
@@ -1745,27 +1845,49 @@ class HtmlCalendarGrid(Parser["list[tuple[datetime.date, str]]"]):
             header = month_table.select_one(self.header)
             if header is None:
                 continue
-            resolved = self._month_and_year(header.get_text(strip=True))
+            header_text = (
+                header.get_text(" ", strip=True)
+                if self.rolling
+                else header.get_text(strip=True)
+            )
+            resolved = self._month_and_year(header_text)
             if resolved is None:
                 continue
             month, year = resolved
+            previous_day: int | None = None
 
             for day_cell in month_table.find_all("td"):
                 # The markers sit inside the cell, so their own text would run
                 # into the day number if it were read with them still in place.
-                without_markers = BeautifulSoup(
-                    day_cell.decode_contents(), "html.parser"
-                )
-                for element in without_markers.select(self.marker):
-                    element.decompose()
-                stripped = without_markers.get_text(strip=True)
-                day_text = stripped.split()[0] if stripped else ""
+                if self.day is not None:
+                    day_number = day_cell.select_one(self.day)
+                    if day_number is None:
+                        raise ValueError("Collection calendar day number not found")
+                    day_text = day_number.get_text(strip=True)
+                    if not day_text.isdigit():
+                        raise ValueError(
+                            f"Invalid collection calendar day: {day_text!r}"
+                        )
+                else:
+                    without_markers = BeautifulSoup(
+                        day_cell.decode_contents(), "html.parser"
+                    )
+                    for element in without_markers.select(self.marker):
+                        element.decompose()
+                    stripped = without_markers.get_text(strip=True)
+                    day_text = stripped.split()[0] if stripped else ""
                 if not day_text.isdigit():
                     continue
+                day = int(day_text)
+                if self.rolling and previous_day is not None and day < previous_day:
+                    month, year = (1, year + 1) if month == 12 else (month + 1, year)
+                previous_day = day
 
                 try:
-                    collection_date = datetime.date(year, month, int(day_text))
+                    collection_date = datetime.date(year, month, day)
                 except ValueError:
+                    if self.day is not None:
+                        raise
                     continue
 
                 for element in day_cell.select(self.marker):
@@ -2156,6 +2278,17 @@ class PdfVector(NamedTuple):
     fill_color: tuple[float, ...] | None
 
 
+class PdfPolygon(PdfVector):
+    """A vector with vertices, preserving PdfVector's existing tuple interface."""
+
+    points: tuple[tuple[float, float], ...]
+
+    def __new__(cls, *args, points: tuple[tuple[float, float], ...] = ()):
+        polygon = super().__new__(cls, *args)
+        polygon.points = points
+        return polygon
+
+
 class PdfDocumentLayout(NamedTuple):
     """A PDF's text plus positioned fragments and vector paths."""
 
@@ -2296,7 +2429,11 @@ class PdfWordLayout(NamedTuple):
 
 
 def _pdf_word_layout(
-    response: Response, *, include_form_text: bool = False
+    response: Response,
+    *,
+    include_form_text: bool = False,
+    include_strokes: bool = False,
+    include_points: bool = False,
 ) -> PdfWordLayout:
     """Retain individual word centres even when lines span several grid cells."""
     from io import BytesIO
@@ -2346,15 +2483,37 @@ def _pdf_word_layout(
             for child in item:
                 visit(child, page)
         elif isinstance(item, LTCurve) and item.fill:
+            vector = PdfVector(
+                page,
+                item.x0,
+                item.y0,
+                item.x1,
+                item.y1,
+                _pdf_color(item.stroking_color, grayscale_to_rgb=True),
+                _pdf_color(item.non_stroking_color, grayscale_to_rgb=True),
+            )
+            vectors.append(
+                PdfPolygon(*vector, points=tuple(item.pts))
+                if include_points
+                else vector
+            )
+        elif isinstance(item, LTCurve) and item.stroke and include_strokes:
+            # A stroke-only path paints a band around its geometry: report the
+            # painted area and only its stroke colour (the fill colour is just
+            # whatever was last set). A straight horizontal or vertical line is
+            # widened across its direction only, as its butt ends add nothing.
+            half = max(float(getattr(item, "linewidth", 0) or 0), 0.0) / 2
+            dx = 0.0 if item.y1 - item.y0 < 0.01 < item.x1 - item.x0 else half
+            dy = 0.0 if item.x1 - item.x0 < 0.01 < item.y1 - item.y0 else half
             vectors.append(
                 PdfVector(
                     page,
-                    item.x0,
-                    item.y0,
-                    item.x1,
-                    item.y1,
+                    item.x0 - dx,
+                    item.y0 - dy,
+                    item.x1 + dx,
+                    item.y1 + dy,
                     _pdf_color(item.stroking_color, grayscale_to_rgb=True),
-                    _pdf_color(item.non_stroking_color, grayscale_to_rgb=True),
+                    None,
                 )
             )
 
@@ -2375,7 +2534,13 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
     legends. An optional minimum word/vector count detects empty or changed
     documents. Set ``include_form_text`` for text inside Form XObjects, which
     needs pdfminer's ``all_texts`` grouping to become positioned words.
+    Set ``include_strokes`` for a calendar that paints its cells as thick
+    stroked lines rather than filled rectangles: stroke-only paths are then
+    kept too, as the area they paint (widened by half the line width), with
+    ``fill_color`` None and the paint in ``stroke_color``.
     The one-item list composes with ``parsers.EachResponse``.
+    ``include_points`` retains filled polygon vertices for matching labels on
+    a coloured service-area map; bounding boxes alone overlap across areas.
     """
 
     def __init__(
@@ -2384,15 +2549,24 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
         min_words: int = 1,
         min_vectors: int = 0,
         include_form_text: bool = False,
+        include_strokes: bool = False,
+        include_points: bool = False,
     ):
         self.min_words = min_words
         self.min_vectors = min_vectors
         self.include_form_text = include_form_text
+        self.include_strokes = include_strokes
+        self.include_points = include_points
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
     ) -> list[PdfWordLayout]:
-        layout = _pdf_word_layout(response, include_form_text=self.include_form_text)
+        layout = _pdf_word_layout(
+            response,
+            include_form_text=self.include_form_text,
+            include_strokes=self.include_strokes,
+            include_points=self.include_points,
+        )
         response_shape.expect(
             len(layout.words) >= self.min_words
             and len(layout.vectors) >= self.min_vectors,
@@ -2452,11 +2626,40 @@ class PdfTableParser(Parser["list[PdfRow]"]):
         y_tolerance: runs whose baselines differ by at most this many points
             are treated as the same row (default 3.0).
         min_words: minimum total text runs expected across the document.
+        char_margin: pdfminer's ``LAParams.char_margin`` (default 2.0). Lower
+            it when neighbouring grid cells sit so close that pdfminer joins
+            them into one run ("Sonntag 1 So" across two month columns).
+        decode: optional ``callable(text) -> text`` applied to every run
+            before it is clustered, for a PDF whose embedded font has no
+            ``ToUnicode`` map, so pdfminer prints ``(cid:N)`` placeholders the
+            source can map back to letters.
+        figure_text: also read text placed inside form XObjects (pdfminer
+            figures), which some PDF converters wrap the whole page in and
+            which is skipped otherwise. Runs that fall outside the page box
+            (a converter's form drawn larger than the page) are not visible
+            and are dropped in this mode.
+        x_range: optional ``(x_min, x_max)``; runs whose horizontal centre
+            lies outside it are dropped, e.g. a legend printed beside the
+            calendar grid that would otherwise read as part of the last
+            month column.
     """
 
-    def __init__(self, *, y_tolerance: float = 3.0, min_words: "int | None" = None):
+    def __init__(
+        self,
+        *,
+        y_tolerance: float = 3.0,
+        min_words: "int | None" = None,
+        char_margin: "float | None" = None,
+        decode: "Callable[[str], str] | None" = None,
+        figure_text: bool = False,
+        x_range: "tuple[float, float] | None" = None,
+    ):
         self.y_tolerance = y_tolerance
         self.min_words = min_words
+        self.char_margin = char_margin
+        self.decode = decode
+        self.figure_text = figure_text
+        self.x_range = x_range
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -2464,24 +2667,62 @@ class PdfTableParser(Parser["list[PdfRow]"]):
         from io import BytesIO
 
         from pdfminer.high_level import extract_pages
-        from pdfminer.layout import LAParams, LTTextContainer, LTTextLineHorizontal
+        from pdfminer.layout import (
+            LAParams,
+            LTFigure,
+            LTTextContainer,
+            LTTextLineHorizontal,
+        )
+
+        laparams: dict[str, Any] = {"boxes_flow": None}
+        if self.char_margin is not None:
+            laparams["char_margin"] = self.char_margin
+        if self.figure_text:
+            laparams["all_texts"] = True
 
         # (page, y1, x0, x1, text) for every text run on every page.
         runs: list[tuple[int, float, float, float, str]] = []
-        # We sort text runs by coordinates below. Skip pdfminer's expensive
-        # reading-order grouping, which does not affect line text or geometry.
-        for page_no, layout in enumerate(
-            extract_pages(BytesIO(response.content), laparams=LAParams(boxes_flow=None))
-        ):
-            for element in layout:
+
+        def collect(
+            page_no: int,
+            elements: Iterable[Any],
+            page_box: "tuple[float, float, float, float] | None",
+        ) -> None:
+            for element in elements:
+                if self.figure_text and isinstance(element, LTFigure):
+                    collect(page_no, element, page_box)
+                    continue
                 if not isinstance(element, LTTextContainer):
                     continue
                 for line in element:
                     if not isinstance(line, LTTextLineHorizontal):
                         continue
-                    text = line.get_text().strip()
+                    if (
+                        self.figure_text
+                        and page_box is not None
+                        and not (
+                            page_box[0] <= (line.x0 + line.x1) / 2 <= page_box[2]
+                            and page_box[1] <= (line.y0 + line.y1) / 2 <= page_box[3]
+                        )
+                    ):
+                        continue
+                    if self.x_range is not None and not (
+                        self.x_range[0] <= (line.x0 + line.x1) / 2 <= self.x_range[1]
+                    ):
+                        continue
+                    text = line.get_text()
+                    if self.decode is not None:
+                        text = self.decode(text)
+                    text = text.strip()
                     if text:
                         runs.append((page_no, line.y1, line.x0, line.x1, text))
+
+        # We sort text runs by coordinates below. Skip pdfminer's expensive
+        # reading-order grouping, which does not affect line text or geometry.
+        for page_no, layout in enumerate(
+            extract_pages(BytesIO(response.content), laparams=LAParams(**laparams))
+        ):
+            collect(page_no, layout, getattr(layout, "bbox", None))
 
         if self.min_words is not None:
             response_shape.expect(
@@ -2643,3 +2884,234 @@ class CsvParser(Parser["list[dict[str, str]]"]):
                 raw=response.text[:500],
             )
         return rows
+
+
+# Built-in SpreadsheetML number formats that display a date (ECMA-376 18.8.30,
+# plus the East Asian date ids Excel also ships).
+_XLSX_BUILTIN_DATE_FORMATS = frozenset(
+    {*range(14, 18), 22, *range(27, 37), *range(50, 59)}
+)
+_XLSX_NS = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+_XLSX_REL_NS = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}"
+
+
+def _xlsx_is_date_format(code: str) -> bool:
+    """Whether a custom number format code renders a date.
+
+    Quoted literals, ``\\``-escaped characters and ``[...]`` sections (locale,
+    colour, elapsed-time) are removed first, so ``[$-C07]ddd\\, dd/mm`` counts
+    and ``"days" 0`` does not.
+    """
+    stripped = re.sub(r'"[^"]*"|\\.|\[[^\]]*\]', "", code.split(";")[0])
+    return bool(re.search(r"[dy]|m(?!m?:)", stripped, re.IGNORECASE)) and not (
+        re.fullmatch(r"[hms:.\s0#,]*", stripped, re.IGNORECASE)
+    )
+
+
+def _xlsx_column_index(ref: str) -> int:
+    """Zero-based column of an ``A1``-style cell reference (``"C7"`` -> 2)."""
+    index = 0
+    for char in re.match(r"[A-Z]+", ref.upper()).group(0):  # type: ignore[union-attr]
+        index = index * 26 + ord(char) - 64
+    return index - 1
+
+
+class XlsxSheet(NamedTuple):
+    """One worksheet read by :meth:`XlsxParser.read`: its tab name and grid."""
+
+    name: str
+    rows: "list[list[Any]]"
+
+
+class XlsxParser(Parser["list[list[Any]]"]):
+    """Read one worksheet of an XLSX workbook into a grid of cell values.
+
+    For a provider that publishes its calendar as an Excel file. Needs no
+    third-party library: an ``.xlsx`` is a zip of XML parts, read here with the
+    standard library and ``lxml``. Returns the sheet as a list of rows, row 1 of
+    the sheet at index 0, each row a list of cell values padded with ``None`` to
+    the widest row, so ``grid[1][0]`` is cell ``A2``::
+
+        parse = parsers.XlsxParser()
+
+    A cell value is a ``str`` for text (shared or inline strings, formula
+    results typed as strings), a ``bool`` for a boolean, and a number otherwise
+    (``int`` when integral). With ``dates=True`` (default) a number whose cell
+    style is a date format becomes a ``datetime.date`` (``datetime.datetime``
+    when it carries a time of day), honouring the workbook's 1904 date system;
+    pass ``dates=False`` to get the raw serial numbers. Merged cells keep their
+    value in the top-left cell only, as in the file.
+
+    A source that also needs the worksheet's tab name (some providers print the
+    year only there) calls ``XlsxParser().read(response, source)`` from its
+    parser instead, which returns an :class:`XlsxSheet` ``(name, rows)``. The
+    response may also be the raw workbook ``bytes`` (a file the user supplies).
+
+    Args:
+        sheet: the worksheet to read, by zero-based position in the workbook
+            or by name. Default: the first sheet.
+        max_bytes: refuse a download larger than this (default 5 MB), so a
+            changed link that now serves something else fails loudly.
+    """
+
+    def __init__(
+        self,
+        sheet: "int | str" = 0,
+        *,
+        dates: bool = True,
+        max_bytes: int = 5 * 1024 * 1024,
+    ):
+        self.sheet = sheet
+        self.dates = dates
+        self.max_bytes = max_bytes
+
+    def __call__(
+        self, response: Response, source: "BaseSource | None" = None
+    ) -> "list[list[Any]]":
+        return self.read(response, source).rows
+
+    def read(
+        self, response: "Response | bytes", source: "BaseSource | None" = None
+    ) -> XlsxSheet:
+        """Read the configured worksheet as an :class:`XlsxSheet` (name and grid)."""
+        import io
+        import posixpath
+        import zipfile
+
+        import lxml.etree as ET
+
+        content = response if isinstance(response, bytes) else response.content
+        name = response_shape.source_name(source)
+        response_shape.expect(
+            len(content) <= self.max_bytes,
+            source_name=name,
+            detail=f"XLSX larger than {self.max_bytes} bytes",
+        )
+        try:
+            archive = zipfile.ZipFile(io.BytesIO(content))
+        except zipfile.BadZipFile:
+            response_shape.expect(
+                False,
+                source_name=name,
+                detail="response is not an XLSX (zip) file",
+                raw=content[:200].decode("utf-8", errors="replace"),
+            )
+            raise  # unreachable: expect(False) raises
+
+        xml_parser = ET.XMLParser(resolve_entities=False, no_network=True)
+
+        def read(part: str) -> "Any | None":
+            try:
+                return ET.fromstring(archive.read(part), parser=xml_parser)
+            except KeyError:
+                return None
+
+        with archive:
+            workbook = read("xl/workbook.xml")
+            rels = read("xl/_rels/workbook.xml.rels")
+            response_shape.expect(
+                workbook is not None and rels is not None,
+                source_name=name,
+                detail="XLSX has no workbook part",
+            )
+            targets = {
+                rel.get("Id"): rel.get("Target", "")
+                for rel in rels.iter("{*}Relationship")  # type: ignore[union-attr]
+            }
+            sheets = [
+                (s.get("name"), targets.get(s.get(f"{_XLSX_REL_NS}id")))
+                for s in workbook.iter(f"{_XLSX_NS}sheet")  # type: ignore[union-attr]
+            ]
+            if isinstance(self.sheet, int):
+                chosen = sheets[self.sheet] if self.sheet < len(sheets) else None
+            else:
+                chosen = next((s for s in sheets if s[0] == self.sheet), None)
+            response_shape.expect(
+                chosen is not None and bool(chosen[1]),
+                source_name=name,
+                detail=f"XLSX has no sheet {self.sheet!r} "
+                f"(sheets: {[s[0] for s in sheets]})",
+            )
+            target = str(chosen[1])  # type: ignore[index]
+            part = (
+                target.lstrip("/")
+                if target.startswith("/")
+                else posixpath.normpath(posixpath.join("xl", target))
+            )
+            worksheet = read(part)
+            strings_xml = read("xl/sharedStrings.xml")
+            styles = read("xl/styles.xml") if self.dates else None
+
+        strings = (
+            [
+                "".join(t.text or "" for t in si.iter(f"{_XLSX_NS}t"))
+                for si in strings_xml.iter(f"{_XLSX_NS}si")
+            ]
+            if strings_xml is not None
+            else []
+        )
+        date_styles: set[int] = set()
+        if styles is not None:
+            custom = {
+                int(fmt.get("numFmtId", "0")): fmt.get("formatCode", "")
+                for fmt in styles.iter(f"{_XLSX_NS}numFmt")
+            }
+            cell_xfs = styles.find(f"{_XLSX_NS}cellXfs")
+            for index, xf in enumerate(
+                cell_xfs.iter(f"{_XLSX_NS}xf") if cell_xfs is not None else []
+            ):
+                fmt_id = int(xf.get("numFmtId", "0"))
+                if fmt_id in _XLSX_BUILTIN_DATE_FORMATS or (
+                    fmt_id in custom and _xlsx_is_date_format(custom[fmt_id])
+                ):
+                    date_styles.add(index)
+        pr = workbook.find(f"{_XLSX_NS}workbookPr")  # type: ignore[union-attr]
+        epoch = (
+            datetime.datetime(1904, 1, 1)
+            if pr is not None and pr.get("date1904") in ("1", "true")
+            else datetime.datetime(1899, 12, 30)
+        )
+
+        cells: dict[int, dict[int, Any]] = {}
+        for row_index, row in enumerate(worksheet.iter(f"{_XLSX_NS}row")):  # type: ignore[union-attr]
+            r = int(row.get("r", row_index + 1)) - 1
+            for col_index, cell in enumerate(row.iter(f"{_XLSX_NS}c")):
+                ref = cell.get("r")
+                c = _xlsx_column_index(ref) if ref else col_index
+                kind = cell.get("t", "n")
+                value_el = cell.find(f"{_XLSX_NS}v")
+                raw = value_el.text if value_el is not None else None
+                value: Any
+                if kind == "inlineStr":
+                    value = "".join(t.text or "" for t in cell.iter(f"{_XLSX_NS}t"))
+                elif raw is None:
+                    continue
+                elif kind == "s":
+                    value = strings[int(raw)]
+                elif kind in ("str", "e"):
+                    value = raw
+                elif kind == "b":
+                    value = raw == "1"
+                else:
+                    number = float(raw)
+                    if int(cell.get("s", "0")) in date_styles:
+                        moment = epoch + datetime.timedelta(days=number)
+                        value = (
+                            moment.date()
+                            if moment.time() == datetime.time()
+                            else moment
+                        )
+                    else:
+                        value = int(number) if number.is_integer() else number
+                cells.setdefault(r, {})[c] = value
+        sheet_name = str(chosen[0] or "")  # type: ignore[index]
+        if not cells:
+            return XlsxSheet(sheet_name, [])
+        width = max(max(row) for row in cells.values()) + 1
+        return XlsxSheet(
+            sheet_name,
+            [
+                [cells.get(r, {}).get(c) for c in range(width)]
+                for r in range(max(cells) + 1)
+            ],
+        )

@@ -2,8 +2,10 @@
 
 Claude Code passes the tool call as JSON on stdin. Two checks:
 
-- update_docu_links.py is blocked outright: CI runs it post-merge, and a manual
-  run in a PR branch corrupts the generated files.
+- Running update_docu_links.py is blocked outright: CI runs it post-merge, and
+  a manual run in a PR branch corrupts the generated files. A command that only
+  reads or mentions it is allowed, provided every part of it is known not to
+  execute anything; all other commands naming it are blocked.
 - Commands that post or modify content on GitHub (comments, closes, reviews,
   discussion replies, any writing `gh api` call) require an explicit
   confirmation from the user, so a draft is never posted unseen. Reads are
@@ -22,6 +24,24 @@ POSTING = (
     "gh pr review",
     "gh pr comment",
     "addDiscussionComment",
+)
+
+GENERATOR = "update_docu_links.py"
+
+# Commands that can name the generator without running it. `find` and `xargs`
+# stay out, because they can execute it.
+NON_EXECUTING = (
+    "cat",
+    "cd",
+    "gh",
+    "git",
+    "grep",
+    "head",
+    "ls",
+    "rg",
+    "ruff",
+    "tail",
+    "wc",
 )
 
 # `gh api` sends a POST as soon as a field or body is given.
@@ -84,13 +104,26 @@ def _gh_api_writes(command: str) -> bool:
     return False
 
 
+def _runs_generator(command: str) -> bool:
+    if GENERATOR not in command:
+        return False
+    if "$(" in command or "`" in command:
+        return True
+    # Every segment counts, so `cat <generator> | python` stays blocked.
+    return any(
+        segment[0].rsplit("/", 1)[-1] not in NON_EXECUTING
+        for segment in _segments(command)
+        if segment
+    )
+
+
 def main() -> None:
     try:
         command = json.load(sys.stdin).get("tool_input", {}).get("command", "")
     except (ValueError, AttributeError):
         return
 
-    if "update_docu_links.py" in command:
+    if _runs_generator(command):
         print(
             "update_docu_links.py must never be run manually: the Update "
             "Documentation CI workflow runs it after every push to master, and "

@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-10-26",
+  "interactions": [],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'sector' with the value 'unknown', you may want to use one of the following: ['Secteur 1', 'Secteur 2']"
+  }
+}

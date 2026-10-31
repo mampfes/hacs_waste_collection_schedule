@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-10-24",
+  "interactions": [
+    {
+      "key": "GET https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/Search 78469b064e",
+      "method": "GET",
+      "url": "https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/Search",
+      "final_url": "https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/Search?query=Ogiltigv%C3%A4gen%20999",
+      "body": "{\"params\":[[\"query\",\"Ogiltigv\u00e4gen 999\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Server": "Microsoft-IIS/10.0",
+        "Date": "Sat, 24 Oct 2026 07:18:55 GMT"
+      },
+      "content_b64": "W10="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'address' with the value 'Ogiltigv\u00e4gen 999', please check the spelling and try again."
+  }
+}

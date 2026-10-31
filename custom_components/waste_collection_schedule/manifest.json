@@ -14,10 +14,10 @@
     "beautifulsoup4",
     "lxml",
     "pycryptodome",
-    "pypdf",
+    "pypdf>=6.20.0",
     "curl_cffi>=0.7.0",
     "Babel>=2.12.0",
     "holidays>=0.40"
   ],
-  "version": "3.0.0-beta.7"
+  "version": "3.0.0-beta.8"
 }

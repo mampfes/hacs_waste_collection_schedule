@@ -15,6 +15,7 @@ import yaml
 
 from default_translations import default_descriptions, default_translations
 from doc_generator import _is_base_source, render_source_doc
+from sensor_translations import apply_sensor_translations
 
 SECRET_FILENAME = "secrets.yaml"
 SECRET_REGEX = re.compile(r"!secret\s(\w+)")
@@ -44,7 +45,7 @@ END_COUNTRY_SECTION = "<!--End of country section-->"
 START_SERVICE_SECTION = "<!--Begin of service section-->"
 END_SERVICE_SECTION = "<!--End of service section-->"
 
-LANGUAGES = ["en", "de", "it", "fr", "nl", "sl", "da", "fi"]
+LANGUAGES = ["en", "de", "it", "fr", "nl", "sl", "da", "fi", "sv", "nb"]
 ARG_TRANSLATIONS_TO_KEEP = ["calendar_title"]
 ARG_DESCRIPTIONS_TO_KEEP = ["calendar_title"]
 ARG_GENERAL_KEYS_TO_KEEP = ["title", "description"]
@@ -878,6 +879,7 @@ def update_json(
             encoding="utf-8",
         ) as f:
             translations = json.load(f)
+        apply_sensor_translations(translations, lang)
 
         translation_for_all = {}
         description_for_all_args = {}

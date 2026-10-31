@@ -1,6 +1,8 @@
 # Christchurch City Council
 
-Support for schedules provided by [Christchurch City Council](https://ccc.govt.nz/services/rubbish-and-recycling/collections).
+Support for schedules provided by [Christchurch City Council](https://ccc.govt.nz).
+
+Source for Christchurch City Council.
 
 ## Configuration via configuration.yaml
 
@@ -9,7 +11,7 @@ waste_collection_schedule:
   sources:
     - name: ccc_govt_nz
       args:
-        address: STREET_NUMBER_AND_STREET_NAME
+        address: ADDRESS
 ```
 
 ### Configuration Variables
@@ -17,31 +19,16 @@ waste_collection_schedule:
 **address**  
 *(string) (required)*
 
-## Bin Names example - Garbage, Recycle & Organic
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: ccc_govt_nz
       args:
-        address: "53 Hereford Street"
+        address: 53 Hereford Street
 ```
 
-## Bin Colours example - Red, Yellow & Green
+## How to get the source arguments
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: ccc_govt_nz
-      args:
-        address: "53 Hereford Street"
-      customize:
-          - type: Garbage
-            alias: Red
-          - type: Recycle
-            alias: Yellow
-          - type: Organic
-            alias: Green
-      calendar_title: "CCC Bins"
-  separator: " & "
-```
+Enter your street address as the council's bin-day lookup on https://ccc.govt.nz finds it, e.g. 53 Hereford Street. Only the dates the council currently plans are shown; a round the council has no current date for is left out. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.

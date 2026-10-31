@@ -4,6 +4,132 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [Unreleased]
+
+### Changed
+
+- UI sensors use stable internal IDs, retain entity IDs and history through edits, and can be disabled without deleting their configuration. Configure separates source settings, sensors, and waste-type customization.
+- Built-in state/date formats support English, German, French, Italian, Dutch, Slovenian, Danish, Finnish, Swedish, and Norwegian Bokmål without writing templates. YAML supports the same formatting and filtering options, optional `unique_id`, and `kind: days_to` / `last_update`.
+- Optional native device pages edit the same sensor records. Sensor-only changes do not fetch the provider again. **Next collection** remains the combined overview sensor.
+- Type filters accept canonical IDs and retained provider labels before duplicate merging. `unique_types` keeps the next collection of each retained provider bin, or each category when labels are not retained. `exclude_types` is available in UI and YAML.
+- Structured collection records retain provider labels and resolved colors even when labels are hidden. Waste-type colors can be edited in the UI. Generic detail lists honor the pickup index.
+- Existing UI configurations migrate to entry version 4, preserving identities and custom templates. Older integration versions cannot load migrated entries; restore a backup before downgrading. Repairs lists legacy sensors left behind by earlier renames for explicit cleanup.
+- Migration retains dedicated calendar identities and preserves conflicting customization keys instead of discarding their settings. Negative legacy lead time and pickup indexes normalize to zero with a per-sensor warning; negative indexes previously selected from the end, so review those sensors after upgrading.
+- Invalid stored templates make only the affected sensor unavailable. Generic `upcoming` retains its date-object and `daysTo` interface for local templates. Rich `upcoming` and `collections` lists stay available live but are excluded from new recorder history rows, including generic details; date and day attributes remain recorded.
+- Raw provider labels participate in customization matching even on sources without `carry_raw_label`; existing glob customizations can therefore match more events. Combined rounds retain all categories of the selected bin's earliest pickup.
+- Options saves preserve concurrent native-control edits and discovered sensors. Reloads of an unchanged source keep its cached schedule available and retry a due fetch in the background; failure leaves the cache in place. Manual Reload and `fetch_data` skip fetching inside `fetch_interval_days`. Native text controls follow HA's 255-character limit; longer saved values remain intact and can be edited in integration options.
+- Generic `upcoming` retains `Collection` objects for local Jinja access. As before, Jinja's `to_json` filter cannot serialize these objects directly; the REST API serializes their rich records.
+
+### Deprecated
+
+- `add_days_to` is accepted and ignored in YAML; `daysTo` is always exposed. Removal is scheduled for the next major release.
+
+## [3.0.0-beta.8] - 2026-10-26
+
+This is a pre-release (beta) that migrates 202 more legacy sources to the BaseSource pipeline since beta.7, so that 1005 of 1087 source modules now run on it, and adds 62 new sources and a number of new regions, many of them PDF-based and built on new shared PDF building blocks. If you tried an earlier beta, please update; if you haven't yet, opt in via HACS' "show beta versions" toggle. Report problems as regular GitHub issues. Stable installs are unaffected until 3.0.0 ships. Fixes marked "port of" shipped earlier in the stable v2.36.0.
+
+**Breaking changes: please read before updating.**
+
+- **Waste-type labels have changed for every migrated source** (all sources listed under "Other" below, plus those migrated in the earlier betas). Labels are now the canonical, localised waste-type names instead of the provider's own strings. Several sources now also report combined rounds as one collection per waste type, so entry counts per day can grow. Check any automation, template, customisation or card that compares an exact label string.
+- `subiaco_wa_gov_au` now needs an `address` (IntraMaps address lookup); old `area` / `day_of_week` configs must be reconfigured (#7797).
+- `gastrikeatervinnare_se` now logs in to the provider's Mina sidor portal with customer number and password (`address` is only needed if the account has several addresses), because the public search was removed. Existing entries must be reconfigured (#7972).
+- `doncaster_gov_uk` no longer accepts the old `uprn` argument, which had already been ignored (#7787). `awsh_de` and `awr_de` gained an optional `waste_types` selection and now report resolved container-size labels (#7878).
+- Parameter changes from earlier betas still apply (`gotland_se`, `mamirolle_info`, `cheshire_east_gov_uk`, `affaldonline_dk`, see beta.6).
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@andevste and @maureis. 🎉
+Thanks as well to our returning contributors (@bbr111, @capreolusaux, @emiltorp, @matteolel, @stickx) for the fixes, sources and migrations below.
+
+### Removed
+
+- removed allerdale_gov_uk: the source was dead and the area is covered by cumberland_gov_uk. It was not deprecated first because it could no longer return data (#7783)
+- removed Giussano from siunet_it; it moved to the new gelsiambiente_it source (#7984)
+
+### Added Sources
+
+- added Mantova Ambiente (mantovaambiente_it), Italy (thanks @matteolel) (#7845)
+- added Komunala Slovenska Bistrica (komunala_slb_si), Slovenia (thanks @capreolusaux) (#7841)
+- added Vakin (vakin_se), Sweden (thanks @andevste) (#7821)
+- added Gliwice (segreguj_gliwice_eu), Poland (thanks @maureis) (#7925)
+- added Pays de Craon (paysdecraon_fr), France (#7795)
+- added REMONDIS harmonogram (res_remondis_pl), Poland, starting with Sosnowiec (#7802)
+- added Bassano del Grappa and Vigonza to etraspa_it, Italy, with a fallback to last year's PDF (#7883, #7919, #7978)
+- added Gemeinde Arlesheim (arlesheim_ch), Switzerland (#7884)
+- added Stadt Ansbach (stadt_ansbach_de), Germany (#7885)
+- added Ekoland Polska, Kraśnik area (ekolandpolska_com_pl), Poland, later extended to read every yearly PDF and to cover Strzyżewice and Urzędów (#7886, #7920, #7921)
+- added Gmina Paczków (paczkow_pl), Gmina Nawojowa (nawojowa_pl), Gmina Radłów (gmina_radlow_pl), Gmina Osielsko (osielsko_pl), Gmina Jaktorów (jaktorow_pl) and Miasto Żywiec (zywiec_pl), Poland (#7887, #7890, #7891, #7893, #7895, #7898)
+- added Nemenčinės komunalininkas (nemenkom_lt) and ŠRATC Šiauliai city (sratc_lt), Lithuania (#7888, #7896)
+- added MPO Toruń (mpo_torun_pl), Poland (#7894)
+- added DTKH Kiskunfélegyháza (dtkh_hu), Hungary, later extended to all DTKH settlements (#7897, #7977)
+- added Trollhättan Energi (trollhattanenergi_se), Sweden (#7900)
+- added Perfect Waste (perfectwaste_dk) and Frederikshavn Forsyning (forsyningen_dk), Denmark (#7902, #7908)
+- added Nestelbach bei Graz (nestelbach_graz_gv_at) and GVA Tulln (gvatulln_at), Austria, with a new shared `parsers.XlsxParser` (#7904, #7905)
+- added Staffelbach (staffelbach_ch), Switzerland; `PdfMonthColumns` now reads two header bands per page (#7906)
+- added Circular City (circularcity_world), France (#7907)
+- added Rossendale Borough Council (rossendale_gov_uk) and Brighton & Hove City Council (brighton_hove_gov_uk), UK (#7909, #7928)
+- added Latrobe City Council (latrobe_vic_gov_au), Australia (#7910)
+- added Rupperswil, Seegräben and Solothurn to localcities_ch, Switzerland (#7911)
+- added 17 PDF-based sources, with new shared `PdfMarkerCalendar`, `TextMonthColumns` and `TextNamedBlocks` preprocessors:
+  - France: Pays de Mormal (cc_paysdemormal_fr), Val ès Dunes (valesdunes_fr), SIRTOM de Courville-sur-Eure (sirtom_courville_fr), Grand Bourg Agglomération (grandbourg_fr), SIVOM du Louhannais (sivom_louhannais_fr), Douaisis Agglo (douaisis_agglo_com), Grand Belfort (grandbelfort_fr), Golfe du Morbihan - Vannes agglomération (gmvagglo_bzh), Pays des Sources (cc_pays_sources_fr), Select'om (select_om_com) (#7929-#7935, #7939-#7941)
+  - Canada: Ville de Blainville (blainville_ca), Ville de Chambly (chambly_ca), MRC de La Vallée-du-Richelieu (mrcvr_ca) (#7936-#7938)
+  - UK: Causeway Coast and Glens (causewaycoastandglens_gov_uk) (#7942)
+  - Australia and New Zealand: Bass Coast (basscoast_vic_gov_au), City of Marion (marion_sa_gov_au), Carterton District Council (cdc_govt_nz) (#7943, #7944, #7947)
+  - US: McNamara Waste Services (mcwaste_com), Lakeshore Recycling Systems (lrsrecycles_com) (#7945, #7946)
+  - Poland and Italy: PROWOD (prowod_pl), CoABSeR (coabser_it), Savno Servizi (savnoservizi_it), Gmina Pisz (pisz_pl) (#7948-#7951)
+- added Stadt Bad Wildungen (bad_wildungen_de), Germany (#7966)
+- added Toowoomba Regional Council (tr_qld_gov_au) and Waverley Council (waverley_nsw_gov_au), Australia (#7967, #7981)
+- added City of Saint Paul, MN (stpaul_gov), US (#7979)
+- added Legionowo (legionowo_pl), Gmina Żukowo (elwozeco_pl), Gmina Oświęcim (gmina_oswiecim_pl) and Gmina Kołbaskowo (kolbaskowo_pl), Poland (#7969, #7970, #7971, #7973)
+- added Saubermacher - Komunala (saubermacher_komunala_si), Slovenia (#7980)
+- added Gelsia Ambiente Giussano (gelsiambiente_it), Italy (#7983)
+- added Newmarket (ON) to recyclecoach_com, Canada (port of #7876) (#7882)
+- added Finnish (fi) and Swedish (sv) language support: UI templates, canonical waste-type names and common field labels (thanks @emiltorp for Swedish) (#7804, #7987)
+
+### Fixed Sources
+
+- fixed belmont_wa_gov_au, manningham_vic_gov_au, stirling_gov_uk and him_as: an exact address match or a picked suggestion no longer comes back ambiguous or unresolved (port of #7823, #7824, #7825, #7849) (#7867)
+- fixed api_golemio_cz, portenf_sa_gov_au, swansea_gov_uk (new GOSS-based search, optional `uprn`) and casey_vic_gov_au (port of #7860, #7848, #7830, #7822) (#7866)
+- fixed stuttgart_de: added a source owner (port of #7856) (#7868)
+- fixed swan_wa_gov_au: read weekly FOGO collections (port of #7862) (#7869)
+- fixed sidec_lu: read the yearly collection JSON of the new SIDEC website (port of #7864) (#7870)
+- fixed irenambiente_it: read fortnightly week parity from the notes (port of #7840) (#7871)
+- fixed rir_no: fill months the monthly endpoint leaves empty from the calendar page (port of #7836) (#7872)
+- fixed phila_gov: cancel secondary pickup in holiday weeks (port of #7831), and use Chrome impersonation to pass the CloudFront block (port of #7988) (#7873, #7990)
+- fixed wyndham_vic_gov_au: use the council's public ArcGIS bin collection layer (port of #7863) (#7874)
+- fixed sector27_de: read the provider's new Livewire calendar (port of #7857) (#7875)
+- fixed mags_de: set RAISE_ON_EMPTY (port of #7879) (#7880)
+- fixed awsh_de and awr_de: optional waste_types selection and resolved container-size labels (#7878)
+- fixed sevenoaks_gov_uk: follow the council's new collection day page (port of #7889) (#7892)
+- fixed poriruacity_govt_nz: follow the moved calendar script (port of #7916) (#7917)
+- fixed rv_de: follow the move of the API to port 8080 (port of #7922) (#7923)
+- fixed kolding_dk and kalundborg_dk: parse the new Infovision `chainDetails*` response (port of #7954) (#7955)
+- fixed awista_kommunal_de: the shared retriever accepts Next.js chunks under `/_next/static/` (thanks @Zaunei for the original fix, port of #7962) (#7963)
+- fixed great_yarmouth_gov_uk: send the address record so the UPRN is applied (port of #7994) (#7995)
+- fixed rfd_no: keep residual and food waste as separate types (port of #7793) (#7794)
+- fixed random_fetch_time_offset = 0 raising ValueError (port of #7796) (#7798)
+- fixed wastetrack_net: accept abbreviated street types and state/postcode in the address (thanks @stickx) (#7789)
+- fixed sepan_remondis_pl: follow the new report flow (#7785)
+- fixed e_lindsey_gov_uk: read garden collection dates from the published calendar (#7808)
+- fixed ecoharmonogram_pl: offer the Legnica app and provider in the GUI (#7805)
+- fixed gastrikeatervinnare_se: switch to the Mina sidor login after the public search was removed, with a new shared CgiMinaSidor component; no cassette is recorded because it would contain the account holder's data (thanks @emiltorp) (#7972)
+- fixed the unresolved waste-type labels left on release/3.0.0 (affaldonline_dk, kiedysmieci_info and others) (#7810)
+
+### Other
+
+- migrated 202 more legacy sources to the BaseSource pipeline, each with recorded cassettes and canonical waste-type labels (breaking for type-based filters, see above):
+  - 49 sources on shared platforms (Jadu, GOSS, Verint, Aura, ISL Fusion, Infovision, OctoberCMS, Jolioo, Sammelkalender, Publidata, Recycle Coach, Umweltverbände and more), and the rest of the legacy sources classified (#7787)
+  - 13 PDF-based sources: Brimbank, East Hants, Feuerthalen, Hornsby, KVA Thurgau, Rennes, SICTOM VDS, Depónia, Siókom, Smolo, Rybnik, Montesquieu, Sutherland Shire (#7788)
+  - 7 small sources (#7800), 10 small sources (#7806), 20 NL, IT, PL, CZ, SE, LU and DE sources (#7814)
+  - 20 UK council sources (#7809, #7812), 10 French and German sources (#7813), 19 UK and European sources (#7815)
+  - 33 global calendar sources (#7816, #7818)
+  - subiaco_wa_gov_au (#7797)
+  - awido_de, awb_bad_kreuznach_de, montreal_ca, delight_system_com, teignbridge_gov_uk, chichester_gov_uk, geovest_it, iapp_itouchvision_com (#7918, #7924, #7927, #7953, #7956-#7959)
+  - Blackpool, Geelong, Croydon, Porirua, Gosport, Stockton and five more (#7965, #7982, #7975, #7992)
+- new shared building blocks: `parsers.XlsxParser`, `preprocessors.PdfRoundMonthGrid`, `PdfMarkerCalendar`, `TextMonthColumns`, `TextNamedBlocks`, Roman numerals and locale-scoped abbreviations in `recurrence`, and reuse of shared month names, accent folding and `PdfLinkRetriever` in recent sources (#7903, #7913, #7914, #7921, #7929, #7949, #7951)
+- recorded offline cassettes for shawinigan_ca and the US pipeline sources (#7784, #7786)
+- sped up the offline PDF tests and cancel superseded CI runs (#7819)
+- docs: how municipalities can publish collection schedules (#7803); login-required sources are allowed with a code owner or test account (#7899); codespell ignores for the Intradel docs (#7799)
+
 ## [3.0.0-beta.7] - 2026-10-11
 
 This is a pre-release (beta) that migrates 12 more legacy sources to the BaseSource pipeline since beta.6, and adds about 20 new sources and regions, including a generic Swiss i-web source and several PDF-based sources built on new shared building blocks. If you tried an earlier beta, please update and let us know what breaks; if you haven't yet, opt in via HACS' "show beta versions" toggle and report anything you hit on #6561. Stable installs are unaffected until 3.0.0 ships.

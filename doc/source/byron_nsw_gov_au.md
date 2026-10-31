@@ -2,17 +2,7 @@
 
 Support for schedules provided by [Byron Shire Council](https://www.byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules).
 
-**Deprecation notice**: Byron Shire Council's bin lookup runs on the Recycle Coach platform, so this source is deprecated and will be removed in the next major release. Please switch to the shared [Recycle Coach source](recyclecoach_com.md) (`recyclecoach_com`) with `project_id: "592"` and `district_id: "BYSC"`:
-
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: recyclecoach_com
-      args:
-        street: "120 Jonson St, Byron Bay"
-        project_id: "592"
-        district_id: "BYSC"
-```
+Source for Byron Shire Council, NSW, Australia.
 
 ## Configuration via configuration.yaml
 
@@ -21,17 +11,13 @@ waste_collection_schedule:
   sources:
     - name: byron_nsw_gov_au
       args:
-        address: YOUR_FULL_ADDRESS
+        address: ADDRESS
 ```
 
 ### Configuration Variables
 
 **address**  
 *(string) (required)*
-
-Your full street address exactly as it appears in the Byron Shire Council bin collection lookup.
-
-This source is intended for addresses serviced by Byron Shire Council, including localities such as Byron Bay, Bangalow, Suffolk Park, Brunswick Heads, Mullumbimby, Ocean Shores, Federal, Main Arm, and nearby areas within the shire.
 
 ## Example
 
@@ -40,13 +26,9 @@ waste_collection_schedule:
   sources:
     - name: byron_nsw_gov_au
       args:
-        address: "120 Jonson St, Byron Bay"
+        address: 120 Jonson St, Byron Bay
 ```
 
 ## How to get the source arguments
 
-1. Visit the [Byron Shire Council bin collection schedules page](https://www.byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules).
-2. Search for your property address.
-3. Use the full address exactly as shown in the search result.
-
-Example towns/localities were taken from the [Byron Shire Wikipedia page](https://en.wikipedia.org/wiki/Byron_Shire) as documentation aids only. Actual service coverage is determined by the council lookup.
+This source is deprecated. Use recyclecoach_com with street set to your address, project_id 592 and district_id BYSC. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

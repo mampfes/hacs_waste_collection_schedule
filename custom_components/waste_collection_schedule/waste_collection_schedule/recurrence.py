@@ -29,9 +29,18 @@ work out the start date and cadence. Once you have those, use these helpers::
 
     # Good Friday (the one movable feast sources defer collections around)
     no_collection = recurrence.good_friday(2026)
+
+    # Abbreviations, scoped to one language so "mar" can't mean both
+    # March and mardi; Roman numerals only when asked for
+    recurrence.month("Mär", "de", abbreviated=True)  # 3
+    recurrence.weekday("Mo", "de", abbreviated=True)  # 0
+    recurrence.month("XII", roman=True)  # 12
+    recurrence.roman("iv")  # 4
 """
 
 import datetime
+import functools
+import re
 import unicodedata
 from collections.abc import Iterable
 
@@ -50,6 +59,7 @@ FORTNIGHTLY = datetime.timedelta(days=14)
 _LOCALES = (
     "en",
     "de",
+    "de_AT",  # Austrian German: "Jänner"
     "fr",
     "it",
     "pl",
@@ -163,14 +173,149 @@ for _forms in _EXTRA_MONTH_FORMS.values():
         _register(MONTHS, _name, _number)
 
 
-def weekday(name: str) -> int | None:
-    """Resolve a weekday name (any supported language) to 0=Mon..6=Sun, or None."""
-    return WEEKDAYS.get(str(name).strip().lower())
+@functools.cache
+def _locale_index(attr: str, code: str, abbreviated: bool) -> dict[str, int]:
+    """{name -> number} for one language: wide names, plus abbreviations if asked.
+
+    Abbreviations are registered without their trailing period ("Jan." and
+    "Jan" both become "jan"), in both CLDR contexts.
+    """
+    table = getattr(Locale.parse(code), attr)
+    index: dict[str, int] = {}
+    for width in ("wide", "abbreviated") if abbreviated else ("wide",):
+        for context in ("format", "stand-alone"):
+            for number, name in table.get(context, {}).get(width, {}).items():
+                _register(index, name.strip().rstrip("."), number)
+    if attr == "months":
+        for number, name in enumerate(_EXTRA_MONTH_FORMS.get(code, ()), start=1):
+            _register(index, name, number)
+    return index
 
 
-def month(name: str) -> int | None:
-    """Resolve a month name (any supported language) to 1=Jan..12=Dec, or None."""
-    return MONTHS.get(str(name).strip().lower())
+def _lookup(
+    attr: str,
+    global_index: dict[str, int],
+    name: str,
+    locale: str | None,
+    abbreviated: bool,
+) -> int | None:
+    key = str(name).strip().lower()
+    if locale is None:
+        if abbreviated:
+            raise ValueError(
+                f"abbreviated {attr} names are ambiguous across languages; "
+                "pass locale= as well"
+            )
+        return global_index.get(key)
+    if abbreviated:
+        key = key.rstrip(".")
+    return _locale_index(attr, locale, abbreviated).get(key)
+
+
+def _names(attr: str, locale: str, abbreviated: bool) -> tuple[str, ...]:
+    table = getattr(Locale.parse(locale), attr)["stand-alone"]
+    names = table["abbreviated" if abbreviated else "wide"]
+    return tuple(names[number].rstrip(".") for number in sorted(names))
+
+
+def weekday(
+    name: str, locale: str | None = None, *, abbreviated: bool = False
+) -> int | None:
+    """Resolve a weekday name to 0=Mon..6=Sun, or None.
+
+    Without ``locale`` any supported language's full name resolves. With a
+    language code (``"de"``) only that language's names do, and
+    ``abbreviated=True`` adds its abbreviations ("Mo", "Mo."). Abbreviations
+    always need a locale: "mar" is Tuesday in French but March elsewhere.
+    """
+    return _lookup("days", WEEKDAYS, name, locale, abbreviated)
+
+
+def month(
+    name: str,
+    locale: str | None = None,
+    *,
+    abbreviated: bool = False,
+    roman: bool = False,
+) -> int | None:
+    """Resolve a month name to 1=Jan..12=Dec, or None.
+
+    ``locale`` and ``abbreviated`` work as for :func:`weekday` ("Mär", "Okt."
+    with ``locale="de", abbreviated=True``). ``roman=True`` also accepts the
+    Roman numerals I..XII some calendars print as month headers; it is opt-in
+    because "I" or "V" in running text is rarely a month.
+    """
+    number = _lookup("months", MONTHS, name, locale, abbreviated)
+    if number is None and roman:
+        numeral = _roman_number(name)
+        number = numeral if numeral is not None and numeral <= 12 else None
+    return number
+
+
+def weekday_names(locale: str, *, abbreviated: bool = False) -> tuple[str, ...]:
+    """One language's weekday names, Monday first, as CLDR prints them stand-alone.
+
+    A trailing abbreviation period is dropped: ``weekday_names("de",
+    abbreviated=True)`` is ``("Mo", "Di", ..., "So")``.
+    """
+    return _names("days", locale, abbreviated)
+
+
+def month_names(locale: str, *, abbreviated: bool = False) -> tuple[str, ...]:
+    """One language's month names, January first (see :func:`weekday_names`).
+
+    ``month_names("de", abbreviated=True)`` is ``("Jan", "Feb", "Mär", ...)``.
+    """
+    return _names("months", locale, abbreviated)
+
+
+_ROMAN_VALUES = (
+    (1000, "M"),
+    (900, "CM"),
+    (500, "D"),
+    (400, "CD"),
+    (100, "C"),
+    (90, "XC"),
+    (50, "L"),
+    (40, "XL"),
+    (10, "X"),
+    (9, "IX"),
+    (5, "V"),
+    (4, "IV"),
+    (1, "I"),
+)
+_ROMAN_RE = re.compile(r"M{0,3}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3})")
+
+
+def roman(text: str) -> int | None:
+    """A Roman numeral ("IV", "xii") as an int, or None if it is not one.
+
+    Only well-formed numerals count ("IIII" and "IIV" are None), in either case.
+    """
+    return _roman_number(text)
+
+
+def _roman_number(text: str) -> int | None:
+    key = str(text).strip().upper()
+    if not key or not _ROMAN_RE.fullmatch(key):
+        return None
+    total = 0
+    for value, numeral in _ROMAN_VALUES:
+        while key.startswith(numeral):
+            total += value
+            key = key[len(numeral) :]
+    return total
+
+
+def to_roman(number: int) -> str:
+    """An int 1..3999 as an upper-case Roman numeral (4 -> "IV")."""
+    if not 1 <= number <= 3999:
+        raise ValueError(f"no Roman numeral for {number}")
+    parts = []
+    for value, numeral in _ROMAN_VALUES:
+        count, number = divmod(number, value)
+        parts.append(numeral * count)
+    return "".join(parts)
 
 
 def recurring(

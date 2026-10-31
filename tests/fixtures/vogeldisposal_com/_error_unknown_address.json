@@ -1,0 +1,55 @@
+{
+  "recorded_at": "2026-10-30",
+  "interactions": [
+    {
+      "key": "POST https://www.vogeldisposal.com/collectionlookup.aspx/GetCities 04ac31f764",
+      "method": "POST",
+      "url": "https://www.vogeldisposal.com/collectionlookup.aspx/GetCities",
+      "final_url": "https://www.vogeldisposal.com/collectionlookup.aspx/GetCities",
+      "body": "{\"body\":{\"strInput\":\"butler\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Fri, 30 Oct 2026 22:37:15 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "private, max-age=0",
+        "cf-cache-status": "DYNAMIC",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "server-timing": "cfCacheStatus;desc=\"DYNAMIC\", cfEdge;dur=33,cfOrigin;dur=137",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=jDFCjlwgy0yaVf2gmu3B%2BwOTCoMvzN7dxseYAffMB1mumIybeJnu8F9%2FQwIgMl3lDDAX1ge1PC4MSs%2BaBCRrxBWtguRH2YAXNmd5Ld5SogifClYCD0SU0AeQPNOt%2Fk%2F9pKQv%2FeDyIrQ%3D\"}]}",
+        "content-encoding": "zstd",
+        "server": "cloudflare",
+        "cf-ray": "a52de749bbebd62f-IAD",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJkIjpbIkJVVExFUiBDSVRZLCBCVVRMRVIgQ09VTlRZIiwiQlVUTEVSIFRXUCwgQlVUTEVSIENPVU5UWSJdfQ=="
+    },
+    {
+      "key": "POST https://www.vogeldisposal.com/collectionlookup.aspx/GetSuggestedAddresses 0328cdc621",
+      "method": "POST",
+      "url": "https://www.vogeldisposal.com/collectionlookup.aspx/GetSuggestedAddresses",
+      "final_url": "https://www.vogeldisposal.com/collectionlookup.aspx/GetSuggestedAddresses",
+      "body": "{\"body\":{\"municipality\":\"BUTLER TWP, BUTLER COUNTY\",\"strAddress\":\"99999 NOWHERE RD\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Fri, 30 Oct 2026 22:37:15 GMT",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "8",
+        "cache-control": "private, max-age=0",
+        "cf-cache-status": "DYNAMIC",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "server-timing": "cfCacheStatus;desc=\"DYNAMIC\", cfEdge;dur=22,cfOrigin;dur=10",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=IIY0Ioc4H14eHl6X%2BjJWeb52AktmBwT65jLbsnk4JNuSWuU4XrvicKlr19q8J1Ka1cUgbEfb3Zbp6q9AfC%2FXuKQ3sAehwDvfS2rLVtBCp6Tt%2BW%2B98tNSxsMjFlSDxYDrLb42vmpTxbU%3D\"}]}",
+        "server": "cloudflare",
+        "cf-ray": "a52de74b498ad62f-IAD",
+        "alt-svc": "h3=\":443\"; ma=86400"
+      },
+      "content_b64": "eyJkIjpbXX0="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'address' with the value '99999 NOWHERE RD', We could not find any suggestions. Please also check other arguments."
+  }
+}

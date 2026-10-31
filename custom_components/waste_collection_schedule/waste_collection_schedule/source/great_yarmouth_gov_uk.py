@@ -1,160 +1,104 @@
-import base64
-import json
+"""Great Yarmouth Borough Council (England) bin collection dates."""
+
 import re
-from datetime import date, datetime, timedelta
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.GossForm import (
+    GossFormDataParser,
+    GossFormRetriever,
+    GossStep,
+    encode_variables,
+)
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Great Yarmouth Borough Council"
-DESCRIPTION = "Source for waste collection services for Great Yarmouth Borough Council, Norfolk, UK."
-URL = "https://myaccount.great-yarmouth.gov.uk"
-COUNTRY = "uk"
-TEST_CASES = {
-    "64 Black Street Martham NR29 4PR": {"uprn": "100090834016"},
-    "1 Hobland Barns Bradwell NR31 9BS": {"uprn": "10023466513"},
-}
+# A GOSS form that resolves the UPRN server-side, from the address record the
+# page would otherwise put in VARIABLES (without it a default address is
+# answered). The schedule comes back as HTML in the page's FormData
+# (LOOKUP_1 / SHOWSCHEDULE): one block per bin and date, the bin named by its
+# icon ("black bin") and the date without a year ("Friday  6 November").
+FORM_URL = "https://myaccount.great-yarmouth.gov.uk/find-my-waste-collection-days"
+_FORM = "WASTECOLLECTIONCALENDARV2"
 
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering your address details.",
-}
 
-PARAM_TRANSLATIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+def _confirm_address(response, *, uprn, **_) -> dict[str, str]:
+    value = str(uprn).strip()
+    return {
+        "VARIABLES": encode_variables({"ALcurrentRecord": {"uprn": value}}),
+        "ADDRESS_ALSB": "PERFORM SEARCH",
+        "ADDRESS_ALNB": "PERFORM A NEW SEARCH",
+        "ADDRESS_UPRN": value,
+        "ADDRESS_COUNTRY": "United Kingdom",
+        "ADDRESS_ADDRESSKNOWN": "true",
+        "ADDRESS_FINDANADDRESS": "true",
+        "ADDRESS_LOOKUPVBUTTON": "Confirm Address",
     }
-}
 
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "uprn": "Unique Property Reference Number (UPRN)",
+
+def _detail(area) -> str:
+    detail = area.select_one(".collection-detail")
+    return " ".join(detail.get_text(" ").split()) if detail else ""
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Great Yarmouth Borough Council"
+    DESCRIPTION = "Source for waste collection services for Great Yarmouth Borough Council, Norfolk, UK."
+    URL = "https://myaccount.great-yarmouth.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "64 Black Street Martham NR29 4PR": {"uprn": "100090834016"},
+        "1 Hobland Barns Bradwell NR31 9BS": {"uprn": "10023466513"},
     }
-}
 
-ICON_MAP = {
-    "General Waste": Icons.GENERAL_WASTE,
-    "Garden Waste": Icons.GARDEN,
-    "Recycling": Icons.RECYCLING,
-}
+    PARAMS = (uprn(),)
 
-_BASE_URL = "https://myaccount.great-yarmouth.gov.uk"
-_FORM_NAME = "WASTECOLLECTIONCALENDARV2"
-_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-}
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the Unique Property Reference Number (UPRN) of your property. "
+            "You can find it at https://www.findmyaddress.co.uk/. Since the v3 "
+            "pipeline migration, waste types use canonical, localised names, and "
+            "the dates a bulky collection can be booked are no longer listed as "
+            "collections. Update filters, automations and customisations using "
+            "the old labels."
+        ),
+    }
 
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-class Source:
-    def __init__(self, uprn: str | int):
-        self._uprn = str(uprn)
+    retrieve = GossFormRetriever(
+        FORM_URL,
+        form=_FORM,
+        steps=(GossStep("ADDRESS_LOOKUPVBUTTON", fields=_confirm_address),),
+    )
 
-    def _get_icon(self, waste_type: str) -> str | None:
-        for key, icon in ICON_MAP.items():
-            if key.lower() in waste_type.lower():
-                return icon
-        return None
+    parse = GossFormDataParser(
+        "SHOWSCHEDULE",
+        pages=["LOOKUP_1"],
+        parser=parsers.HtmlParser("div.collection-area"),
+    )
 
-    def _parse_date(self, date_str: str) -> date | None:
-        """Parse 'Friday 22 May' style date strings, inferring the year."""
-        today = date.today()
-        year = today.year
-        try:
-            d = datetime.strptime(f"{date_str.strip()} {year}", "%A %d %B %Y").date()
-            if (d - today) < timedelta(days=-31):
-                d = d.replace(year=d.year + 1)
-            return d
-        except ValueError:
-            return None
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session(impersonate="chrome")
-        session.headers.update(_HEADERS)
-
-        # Step 1: GET the form page and extract session tokens.
-        r = session.get(f"{_BASE_URL}/find-my-waste-collection-days")
-        r.raise_for_status()
-
-        m = re.search(r'action="([^"]*processsubmission[^"]*)"', r.text)
-        if not m:
-            raise ValueError("Could not find form action URL on collection page")
-        action = m.group(1).replace("&amp;", "&")
-
-        soup = BeautifulSoup(r.text, "html.parser")
-        form = soup.find("form", {"id": f"{_FORM_NAME}_FORM"})
-        if not form:
-            raise ValueError("Could not find waste collection form on page")
-
-        form_data = {
-            inp.get("name"): inp.get("value", "")
-            for inp in form.find_all("input")
-            if inp.get("name")
-        }
-
-        # Step 2: Submit the form with the UPRN to retrieve the collection schedule.
-        # The GOSS Forms server resolves the UPRN server-side; no postcode is required.
-        form_data.update(
-            {
-                f"{_FORM_NAME}_ADDRESS_UPRN": self._uprn,
-                f"{_FORM_NAME}_ADDRESS_COUNTRY": "United Kingdom",
-                f"{_FORM_NAME}_ADDRESS_ADDRESSKNOWN": "true",
-                f"{_FORM_NAME}_ADDRESS_FINDANADDRESS": "true",
-                f"{_FORM_NAME}_FORMACTION_NEXT": f"{_FORM_NAME}_ADDRESS_LOOKUPVBUTTON",
-                f"{_FORM_NAME}_ADDRESS_LOOKUPVBUTTON": "Confirm Address",
-            }
-        )
-
-        r2 = session.post(action, data=form_data)
-        r2.raise_for_status()
-
-        # Step 3: Extract the collection schedule from the Base64-encoded FormData.
-        m_fd = re.search(rf"var {_FORM_NAME}FormData = \"([^\"]+)\"", r2.text)
-        if not m_fd:
-            raise ValueError("Could not find form data in the schedule response")
-
-        fd = json.loads(base64.b64decode(m_fd.group(1)).decode("utf-8"))
-        showschedule = fd.get("LOOKUP_1", {}).get("SHOWSCHEDULE", "")
-        if not showschedule:
-            raise ValueError(
-                f"No collection schedule found for UPRN {self._uprn}. "
-                "Ensure the UPRN is for a property within Great Yarmouth Borough."
-            )
-
-        # Step 4: Parse the schedule HTML.
-        schedule_soup = BeautifulSoup(showschedule, "html.parser")
-        entries: list[Collection] = []
-        seen: set[tuple] = set()
-
-        for div in schedule_soup.find_all("div", class_="collection-area"):
-            detail = div.find("div", class_="collection-detail")
-            if not detail:
-                continue
-            b_tag = detail.find("b")
-            if not b_tag:
-                continue
-
-            date_str = b_tag.get_text(strip=True)
-            type_text = (
-                detail.get_text(separator=" ", strip=True).replace(date_str, "").strip()
-            )
-            # Strip the trailing "will be emptied" boilerplate
-            type_clean = re.sub(r"\s*will be emptied\s*$", "", type_text).strip()
-
-            cdate = self._parse_date(date_str)
-            if not cdate:
-                continue
-
-            key = (cdate, type_clean)
-            if key in seen:
-                continue
-            seen.add(key)
-
-            entries.append(
-                Collection(
-                    date=cdate,
-                    t=type_clean,
-                    icon=self._get_icon(type_clean),
-                )
-            )
-
-        return entries
+    transform = HtmlTransformer(
+        date_getter=lambda area: " ".join(area.select_one("b").get_text().split()),
+        type_getter=lambda area: area.select_one("img")["alt"],
+        description_getter=lambda area: re.sub(
+            r"\s*will be emptied$", "", _detail(area).split(" ", 3)[-1]
+        ),
+        parse_date=date_parsers.nearest_year("%A %d %B"),
+        type_value_map={
+            "black bin": wt.GENERAL_WASTE,
+            "green bin": wt.RECYCLABLES,
+            "brown bin": wt.GARDEN_WASTE,
+            # A date a bulky collection can be booked for, not a collection.
+            "bulky day": None,
+        },
+    )

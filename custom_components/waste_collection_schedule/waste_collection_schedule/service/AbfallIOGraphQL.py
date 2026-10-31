@@ -44,23 +44,19 @@ query Query($idHouseNumber: ID!, $wasteTypes: [ID], $dateMin: Date, $dateMax: Da
 """
 
 
-def _origin_for(source_cls: Any, key: str) -> str | None:
-    """Return the website of the region selected by ``key``, if declared.
+# Providers that enforce an Origin allowlist on their key and answer 401 to a
+# GraphQL query without a matching Origin/Referer. This is needed while
+# fetching, so it must stay in Python: the doc/regions YAML registry is not
+# shipped in a HACS install (``regions.from_yaml`` yields ``[]`` there).
+_ORIGIN_BY_KEY = {
+    # KELL Kommunalentsorgung Landkreis Leipzig GmbH
+    "0d7a92192ba3ae914c028ac37d73e222": "https://kell-gmbh.de",
+}
 
-    Some providers (e.g. KELL GmbH) enforce an Origin allowlist on their key and
-    answer 401 to a GraphQL query that carries no matching Origin/Referer. The
-    provider's own website is already declared as the region's ``url``.
-    Resolved via the class (REGIONS may be a staticmethod, a plain function or a
-    list). Keeps the provider registry in the source: this module holds no
-    provider list.
-    """
-    regions: Any = getattr(source_cls, "REGIONS", [])
-    if callable(regions):
-        regions = regions()
-    return next(
-        (r.url.rstrip("/") for r in regions if r.url and r.params.get("key") == key),
-        None,
-    )
+
+def _origin_for(source_cls: Any, key: str) -> str | None:
+    """Return the Origin to send for ``key``, if the provider requires one."""
+    return _ORIGIN_BY_KEY.get(key)
 
 
 def _gql_headers(source_cls: Any, key: str, api_key: str) -> dict:

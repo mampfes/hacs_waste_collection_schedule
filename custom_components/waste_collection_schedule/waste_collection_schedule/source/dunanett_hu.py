@@ -186,7 +186,7 @@ def _annual_targets(
 
 
 def _document_url(response: Any, target: tuple[str, int], *_: Any, **__: Any) -> str:
-    """Resolve the yearless DOCX from its dated municipal article."""
+    """Resolve the yearless calendar document from its dated municipal article."""
     headings = parsers.HtmlParser("h1")(response)
     response_shape.expect(
         len(headings) == 1
@@ -200,15 +200,37 @@ def _document_url(response: Any, target: tuple[str, int], *_: Any, **__: Any) ->
         urljoin(response.url, str(a["href"]))
         for a in parsers.HtmlParser("a[href]")(response)
         if hu.fold(a.get_text(" ", strip=True)) == "naptar"
-        and urlsplit(str(a["href"])).path.endswith(".docx")
+        and urlsplit(str(a["href"])).path.lower().endswith((".docx", ".pdf"))
     }
     response_shape.expect(
         len(urls) == 1,
         source_name="dunanett_hu",
-        detail="expected one annual DOCX calendar link",
+        detail="expected one annual PDF or DOCX calendar link",
         raw=sorted(urls),
     )
     return next(iter(urls))
+
+
+_ANNUAL_PDF = hu.CalendarParser(
+    types={"szelektív": "szelektív", "zöldhulladék": "zöldhulladék"},
+    strict=True,
+    expected_municipality=lambda municipality, **_: municipality,
+    year_from_url=lambda municipality, **_: municipality in _MEDIA_TOWNS,
+    january_trees=True,
+    holiday_moves=True,
+)
+_MONTH_TABLE_PDF = hu.MonthTableCalendarParser(pdf=True)
+
+
+def _parse_pdf(
+    response: Any, source: BaseSource | None = None
+) -> list[tuple[date, str]]:
+    parser = (
+        _MONTH_TABLE_PDF
+        if source is not None and source.params["municipality"] == "Dunaföldvár"
+        else _ANNUAL_PDF
+    )
+    return parser(response, source)
 
 
 @final
@@ -246,7 +268,9 @@ class Source(BaseSource):
             "PDF, HTML or DOCX calendars for current/future years automatically, "
             "uses the latest timestamped PDF upload or the uniquely published link, "
             "and fails on ambiguous links or if the current "
-            "year is unavailable rather than reusing an expired calendar.\n\n"
+            "year is unavailable rather than reusing an expired calendar. "
+            "New calendars may only be published in January, so the source can be "
+            "unavailable at the start of the year until publication.\n\n"
             "General waste, recycling and garden waste are included, except in "
             "Dunaföldvár: its document publishes only recycling and garden dates, "
             "so no general-waste schedule is returned there. Where the calendar "
@@ -306,16 +330,7 @@ class Source(BaseSource):
         discover=_annual_targets,
         parser=parsers.ByBodyPrefix(
             {
-                "%PDF-": hu.CalendarParser(
-                    types={"szelektív": "szelektív", "zöldhulladék": "zöldhulladék"},
-                    strict=True,
-                    expected_municipality=lambda municipality, **_: municipality,
-                    year_from_url=lambda municipality, **_: (
-                        municipality in _MEDIA_TOWNS
-                    ),
-                    january_trees=True,
-                    holiday_moves=True,
-                ),
+                "%PDF-": _parse_pdf,
                 "PK": hu.MonthTableCalendarParser(docx=True),
             },
             default=hu.MonthTableCalendarParser(),

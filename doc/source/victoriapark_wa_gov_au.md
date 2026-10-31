@@ -1,6 +1,8 @@
 # Town of Victoria Park
 
-Support for schedules provided by [Town of Victoria Park Bins and Collections](https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx).
+Support for schedules provided by [Town of Victoria Park](https://www.victoriapark.wa.gov.au).
+
+Source for www.victoriapark.wa.gov.au Waste Collection Services
 
 ## Configuration via configuration.yaml
 
@@ -16,10 +18,10 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **group**  
-*(int) (required)* Collection group: `1` or `2`
+*(string) (optional)*
 
 **day**  
-*(string) (required)* Collection day: `Monday`, `Tuesday`, `Wednesday`, `Thursday`, or `Friday`
+*(string) (required)*
 
 ## Example
 
@@ -34,10 +36,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Bins and Collections](https://www.victoriapark.wa.gov.au/residents/waste-and-recycling/bins-and-collections.aspx) page to find your collection group (1 or 2) and collection day from the calendar images.
-
-Collection types:
-
-- **FOGO** (Food Organics/Garden Organics) — collected weekly
-- **Recycling** — collected fortnightly (yellow weeks)
-- **General Waste** — collected fortnightly (red weeks)
+Find your collection group (1 or 2) and weekday on the council Bins and Collections page. The current linked July-June image calendar supplies the actual red/yellow weeks and public-holiday replacement dates. Dates stop at its published end; no fixed historical anchor is used. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels.

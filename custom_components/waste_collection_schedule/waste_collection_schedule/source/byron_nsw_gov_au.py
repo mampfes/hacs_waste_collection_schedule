@@ -1,239 +1,151 @@
 import logging
 import re
-from datetime import datetime
+from typing import ClassVar, final
 
-import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import retrievers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import street_address
 from waste_collection_schedule.exceptions import SourceArgumentNotFound
+from waste_collection_schedule.service.RecycleCoach import RecycleCoachParser
+from waste_collection_schedule.transformers import JsonTransformer
 
+_ADDRESS = "https://ca-web.apigw.recyclecoach.com/zone-setup/address/single"
+_COLLECTION = "https://ca-web.apigw.recyclecoach.com/zone-setup/zone/collections"
+_SCHEDULE = "https://ca-web.apigw.recyclecoach.com/zone-setup/zone/schedules"
 _LOGGER = logging.getLogger(__name__)
-
-TITLE = "Byron Shire Council"
-DESCRIPTION = "Source for Byron Shire Council, NSW, Australia."
-URL = "https://www.byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules"
-HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
-    "en": (
-        "Enter the full service address used by Byron Shire Council, for example "
-        "'120 Jonson St, Byron Bay'."
-    )
-}
-TEST_CASES = {"120 Jonson St, Byron Bay": {"address": "120 Jonson St, Byron Bay"}}
-
-PROJECT_ID = "592"
-DISTRICT_ID = "BYSC"
-ADDRESS_URL = "https://ca-web.apigw.recyclecoach.com/zone-setup/address/single"
-SCHEDULE_URL = "https://ca-web.apigw.recyclecoach.com/zone-setup/zone/schedules"
-COLLECTION_URL = "https://ca-web.apigw.recyclecoach.com/zone-setup/zone/collections"
-
 HEADERS = {
     "accept": "application/json, text/plain, */*",
     "content-type": "application/json",
     "origin": "https://app.my-waste.mobi",
     "referer": "https://app.my-waste.mobi/",
-    "user-agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/146.0.0.0 Safari/537.36"
-    ),
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
 }
 
-ICON_MAP = {
-    "garbage": Icons.GENERAL_WASTE,
-    "landfill": Icons.GENERAL_WASTE,
-    "trash": Icons.GENERAL_WASTE,
-    "recycling": Icons.RECYCLING,
-    "recycle": Icons.RECYCLING,
-    "food": Icons.BIO_KITCHEN,
-    "organics": Icons.ORGANIC,
-    "garden": Icons.GARDEN,
-    "green": Icons.ORGANIC,
-}
 
-ZONE_ID_PATTERN = re.compile(r"(?:zone-)?z[\w-]+", re.IGNORECASE)
+def _normalise(value):
+    return " ".join(str(value).upper().replace(",", " ").split())
 
 
-class Source:
-    def __init__(self, address: str):
-        _LOGGER.warning(
-            "The byron_nsw_gov_au source is deprecated and will be removed in the "
-            "next major release. Byron Shire Council is served by the shared "
-            "recyclecoach_com source: use source 'recyclecoach_com' with "
-            "street='%s', project_id='592' and district_id='BYSC'. See "
-            "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/recyclecoach_com.md",
-            " ".join(address.split()),
+def _zone(payload, address):
+    if isinstance(payload, str):
+        match = re.search(r"(?:zone-)?z[\w-]+", payload, re.IGNORECASE)
+        return (
+            (match[0] if match[0].startswith("zone-") else "zone-" + match[0])
+            if match
+            else None
         )
-        self._address = " ".join(address.split())
-        self._session = requests.Session()
-        self._session.headers.update(HEADERS)
-
-    def fetch(self) -> list[Collection]:
-        zone_id = self._get_zone_id()
-        collection_types = self._get_collection_types(zone_id)
-        schedule_data = self._get_schedule_data(zone_id)
-        entries = self._parse_entries(schedule_data, collection_types)
-
-        if not entries:
-            raise SourceArgumentNotFound("address", self._address)
-
-        return entries
-
-    def _get_zone_id(self) -> str:
-        response = self._session.get(
-            ADDRESS_URL,
-            params={
-                "sku": PROJECT_ID,
-                "district": DISTRICT_ID,
-                "prompt": "undefined",
-                "term": self._address,
-            },
-            timeout=30,
-        )
-        response.raise_for_status()
-
-        zone_id = self._extract_zone_id(response.json())
-        if zone_id is None:
-            raise SourceArgumentNotFound("address", self._address)
-
-        return zone_id
-
-    def _get_collection_types(self, zone_id: str) -> dict[str, str]:
-        response = self._session.get(
-            COLLECTION_URL,
-            params={
-                "project_id": PROJECT_ID,
-                "district_id": DISTRICT_ID,
-                "zone_id": zone_id,
-                "lang_cd": "en_US",
-            },
-            timeout=30,
-        )
-        response.raise_for_status()
-        data = response.json()
-
-        if isinstance(data, dict):
-            types = data.get("collection", {}).get("types", {})
-            if isinstance(types, dict):
-                return {
-                    str(key): value.get("title", "")
-                    for key, value in types.items()
-                    if isinstance(value, dict) and value.get("title")
-                }
-
-        return {}
-
-    def _get_schedule_data(self, zone_id: str) -> dict:
-        response = self._session.get(
-            SCHEDULE_URL,
-            params={
-                "project_id": PROJECT_ID,
-                "district_id": DISTRICT_ID,
-                "zone_id": zone_id,
-            },
-            timeout=30,
-        )
-        response.raise_for_status()
-        return response.json()
-
-    def _parse_entries(
-        self, schedule_data: dict, collection_types: dict[str, str]
-    ) -> list[Collection]:
-        entries: list[Collection] = []
-
-        for year_data in schedule_data.get("DATA", []):
-            for month_data in year_data.get("months", []):
-                for event in month_data.get("events", []):
-                    event_date = event.get("date")
-                    if not event_date:
-                        continue
-
-                    for collection in event.get("collections", []):
-                        if collection.get("status") == "is_none":
-                            continue
-
-                        collection_id = collection.get("id")
-                        if collection_id is None:
-                            continue
-
-                        waste_type = collection_types.get(
-                            f"collection-{collection_id}"
-                        ) or collection_types.get(str(collection_id))
-                        if not waste_type:
-                            continue
-
-                        entries.append(
-                            Collection(
-                                date=datetime.strptime(event_date, "%Y-%m-%d").date(),
-                                t=waste_type,
-                                icon=self._guess_icon(waste_type),
-                            )
-                        )
-
-        return entries
-
-    def _extract_zone_id(self, payload) -> str | None:
-        if isinstance(payload, dict):
-            results = payload.get("results")
-            if isinstance(results, list):
-                zone_id = self._extract_zone_id_from_results(results)
-                if zone_id:
-                    return zone_id
-
-            for key in ("zone_id", "zoneId", "zone", "id"):
-                value = payload.get(key)
-                zone_id = self._extract_zone_id(value)
-                if zone_id:
-                    return zone_id
-
-            for value in payload.values():
-                zone_id = self._extract_zone_id(value)
-                if zone_id:
-                    return zone_id
-
-            return None
-
-        if isinstance(payload, str):
-            match = ZONE_ID_PATTERN.search(payload)
-            if not match:
-                return None
-            zone_id = match.group(0)
-            return zone_id if zone_id.startswith("zone-") else f"zone-{zone_id}"
-
-        if isinstance(payload, list):
-            for item in payload:
-                zone_id = self._extract_zone_id(item)
-                if zone_id:
-                    return zone_id
-            return None
-
+    if isinstance(payload, list):
+        return next((zone for item in payload if (zone := _zone(item, address))), None)
+    if not isinstance(payload, dict):
         return None
-
-    def _extract_zone_id_from_results(self, results: list[dict]) -> str | None:
-        target = self._normalize_address(self._address)
-        matches: list[dict] = []
-
-        for result in results:
-            if not isinstance(result, dict):
-                continue
-
-            address = self._normalize_address(result.get("address", ""))
-            full_address = self._normalize_address(result.get("full_address", ""))
-            if address == target or full_address.startswith(target):
-                matches.append(result)
-
+    results = payload.get("results")
+    if isinstance(results, list):
+        matches = [
+            item
+            for item in results
+            if isinstance(item, dict)
+            and (
+                _normalise(item.get("address", "")) == _normalise(address)
+                or _normalise(item.get("full_address", "")).startswith(
+                    _normalise(address)
+                )
+            )
+        ]
         for result in matches or results:
-            zones = result.get("zones")
-            zone_id = self._extract_zone_id(zones)
-            if zone_id:
-                return zone_id
+            if isinstance(result, dict) and (
+                zone := _zone(result.get("zones"), address)
+            ):
+                return zone
+    for key in ("zone_id", "zoneId", "zone", "id"):
+        if zone := _zone(payload.get(key), address):
+            return zone
+    return _zone(list(payload.values()), address)
 
-        return None
 
-    def _normalize_address(self, value: str) -> str:
-        return " ".join(str(value).upper().replace(",", " ").split())
+def _pick_zone(response, address, **_):
+    _LOGGER.warning(
+        "byron_nsw_gov_au is deprecated; use recyclecoach_com with street=%r, project_id='592' and district_id='BYSC'",
+        address,
+    )
+    zone = _zone(response.json(), address)
+    if zone is None:
+        raise SourceArgumentNotFound("address", address)
+    return zone
 
-    def _guess_icon(self, waste_type: str) -> str | None:
-        lower = waste_type.lower()
-        for key, icon in ICON_MAP.items():
-            if key in lower:
-                return icon
-        return None
+
+def _label(record):
+    label = record["title"]
+    for keyword, key in (
+        ("garbage", "general"),
+        ("landfill", "general"),
+        ("trash", "general"),
+        ("recycling", "recycling"),
+        ("recycle", "recycling"),
+        ("food", "food"),
+        ("organics", "organic"),
+        ("garden", "garden"),
+        ("green", "organic"),
+    ):
+        if keyword in label.lower():
+            return key
+    return label
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Byron Shire Council"
+    DESCRIPTION = "Source for Byron Shire Council, NSW, Australia."
+    URL = "https://www.byron.nsw.gov.au/Residential-Services/Waste-Recycling/Bin-Collection-Services/Bin-Collection-Schedules"
+    TEST_CASES: ClassVar[dict] = {
+        "120 Jonson St, Byron Bay": {"address": "120 Jonson St, Byron Bay"}
+    }
+    COUNTRY = "au"
+    RAISE_ON_EMPTY = True
+    PARAMS = (street_address(),)
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+        wt.FOOD_WASTE,
+        wt.ORGANIC,
+        wt.GARDEN_WASTE,
+    ]
+    HOWTO: ClassVar[dict] = {
+        "en": "This source is deprecated. Use recyclecoach_com with street set to your address, project_id 592 and district_id BYSC. Since the v3 pipeline migration, waste types use canonical, localised names; update filters, automations and customisations using the old labels."
+    }
+    retrieve = retrievers.FanOutRetriever(
+        prepare=retrievers.Lookup(
+            _ADDRESS,
+            headers=HEADERS,
+            params=lambda address, **_: {
+                "sku": "592",
+                "district": "BYSC",
+                "prompt": "undefined",
+                "term": " ".join(address.split()),
+            },
+            pick=_pick_zone,
+        ),
+        targets=lambda source, context: (_COLLECTION, _SCHEDULE),
+        fetch=retrievers.Request(
+            lambda target, context, **_: target,
+            headers=HEADERS,
+            params=lambda target, context, **_: {
+                "project_id": "592",
+                "district_id": "BYSC",
+                "zone_id": context,
+                **({"lang_cd": "en_US"} if target == _COLLECTION else {}),
+            },
+        ),
+    )
+    parse = RecycleCoachParser()
+    transform = JsonTransformer(
+        date_key="date",
+        type_key=_label,
+        type_value_map={
+            "general": wt.GENERAL_WASTE,
+            "recycling": wt.RECYCLABLES,
+            "food": wt.FOOD_WASTE,
+            "organic": wt.ORGANIC,
+            "garden": wt.GARDEN_WASTE,
+        },
+    )

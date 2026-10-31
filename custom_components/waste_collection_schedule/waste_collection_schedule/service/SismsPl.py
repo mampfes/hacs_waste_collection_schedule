@@ -277,6 +277,8 @@ TYPE_VALUE_MAP = {
     "Papier i tektura": wt.PAPER,
     "Szkło": wt.GLASS,
     "Tworzywa sztuczne i metale": wt.RECYCLABLES,
+    "Odpady zielone": wt.GARDEN_WASTE,
+    "Odpady wielkogabarytowe": wt.BULKY_WASTE,
     "Popiół": wt.OTHER,
     # The platform's own spelling, and the correct one.
     "Zbióra tekstyliów": wt.TEXTILES,

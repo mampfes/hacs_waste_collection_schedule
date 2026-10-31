@@ -32,6 +32,7 @@ sys.path.insert(
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from doc_generator import render_source_doc
+from sensor_translations import apply_sensor_translations
 
 
 def _load_source(source_id: str):
@@ -64,7 +65,8 @@ def test_finnish_translation_seed_generates_provider_steps(
         assert "Kiertokapulan" in steps[step]["data_description"]["username"]
 
 
-def test_finnish_ui_has_all_common_keys_and_matching_placeholders():
+@pytest.mark.parametrize("lang", ["fi", "sv", "nb"])
+def test_ui_template_has_all_common_keys_and_matching_placeholders(lang):
     """Translation must not remove fields or break HA formatting variables."""
     root = pathlib.Path(__file__).resolve().parent.parent
     english = json.loads(
@@ -72,9 +74,13 @@ def test_finnish_ui_has_all_common_keys_and_matching_placeholders():
             root / "custom_components/waste_collection_schedule/translations/en.json"
         ).read_text(encoding="utf-8")
     )
-    finnish = json.loads(
-        (root / "translation_templates/fi.json").read_text(encoding="utf-8")
+    translated = json.loads(
+        (root / f"translation_templates/{lang}.json").read_text(encoding="utf-8")
     )
+    # Compare the generated common UI on both sides, rather than a generated
+    # English file against a seed which has not had the sensor strings applied.
+    apply_sensor_translations(english, "en")
+    apply_sensor_translations(translated, lang)
     english["config"]["step"] = {
         key: value
         for key, value in english["config"]["step"].items()
@@ -93,7 +99,7 @@ def test_finnish_ui_has_all_common_keys_and_matching_placeholders():
             actual = {field for _, field, _, _ in formatter.parse(translated) if field}
             assert expected == actual
 
-    compare(english, finnish)
+    compare(english, translated)
 
 
 # (source_id, expects_howto)

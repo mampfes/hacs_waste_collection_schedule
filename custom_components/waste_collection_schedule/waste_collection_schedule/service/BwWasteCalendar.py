@@ -56,6 +56,9 @@ FEED_LINK_SUFFIX = "als ical"
 HOUSE_NUMBER_LINK_CONTROLLER = "tx_bwwastecalendar_pi1[controller]"
 HOUSE_NUMBER_LINK_ACTION = "tx_bwwastecalendar_pi1[action]"
 HOUSE_NUMBER_LINK_STREETNAME = "tx_bwwastecalendar_pi1[streetname]"
+#: The site first rendered these links with ``action=month`` and now uses
+#: ``action=list``; accept both.
+HOUSE_NUMBER_LINK_ACTIONS = (["month"], ["list"])
 
 
 class WasteCalendarRetriever(RetrieverFunc):
@@ -208,7 +211,7 @@ class WasteCalendarRetriever(RetrieverFunc):
         query = parse_qs(urlparse(href).query)
         return (
             query.get(HOUSE_NUMBER_LINK_CONTROLLER) == ["Calendar"]
-            and query.get(HOUSE_NUMBER_LINK_ACTION) == ["month"]
+            and query.get(HOUSE_NUMBER_LINK_ACTION) in HOUSE_NUMBER_LINK_ACTIONS
             and HOUSE_NUMBER_LINK_STREETNAME in query
         )
 

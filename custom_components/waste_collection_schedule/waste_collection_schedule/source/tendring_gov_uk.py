@@ -57,11 +57,11 @@ class Source(BaseSource):
     parse = AchieveFormsRowsParser()
     preprocess = AchieveFormsFieldMapPreprocessor(
         fields=[
-            ("nextResidualCollection", "Residual waste"),
-            ("nextGreenCollection", "Green recycling box"),
-            ("nextRedCollection", "Red recycling box"),
-            ("nextFoodCollection", "Food waste", "eligibleFoodCollection"),
-            ("nextGardenCollection", "Garden waste", "activeGardenCollection"),
+            ("RefuseNextCol", "Residual waste"),
+            ("PaperNextCol", "Green recycling box"),
+            ("DMRNextCol", "Red recycling box"),
+            ("FoodNextCol", "Food waste"),
+            ("GardenNextCol", "Garden waste", "ActiveGardenCollection"),
         ],
         # API returns "DD/MM/YYYY HH:MM:SS"; truncate before the day-first parse.
         parse_date=date_parsers.for_format("%d/%m/%Y"),

@@ -21,6 +21,8 @@ from waste_collection_schedule import Customize  # type: ignore # isort:skip # n
 
 from waste_collection_schedule.colors import validate_color  # noqa: E402
 
+from .sensor_schema import yaml_sensor_fields  # noqa: E402
+
 _LOGGER = logging.getLogger(__name__)
 
 CUSTOMIZE_CONFIG = vol.Schema(
@@ -36,8 +38,10 @@ CUSTOMIZE_CONFIG = vol.Schema(
     }
 )
 
+
 SENSOR_CONFIG = vol.Schema(
     {
+        **yaml_sensor_fields(),
         vol.Required(CONF_NAME): cv.string,
         vol.Optional(const.CONF_SOURCE_INDEX, default=0): vol.Any(
             cv.positive_int, vol.All(cv.ensure_list, [cv.positive_int])

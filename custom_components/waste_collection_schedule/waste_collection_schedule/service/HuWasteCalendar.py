@@ -17,7 +17,7 @@ labels are the Hungarian words printed in the PDF (plus :data:`GENERAL` and
 header nearest to it in the layout text. A PDF without a year, without the
 month header or without any date fails loudly instead of returning nothing.
 
-``MonthTableCalendarParser`` reads the corresponding HTML/DOCX month-and-day
+``MonthTableCalendarParser`` reads the corresponding HTML/DOCX/PDF month-and-day
 tables. ``PublishedCalendarsParser`` checks downloaded calendars against their
 publication index, including files without a year in their download URL.
 """
@@ -576,7 +576,13 @@ _MONTH_NUMBERS.update(
 
 
 def _month_table_dates(
-    rows: list[list[str]], year: int, label: str, *, trees: bool, name: str
+    rows: list[list[str]],
+    year: int,
+    label: str,
+    *,
+    trees: bool,
+    name: str,
+    complete: bool = False,
 ) -> list[tuple[date, str]]:
     """Read alternating month/day rows, preserving explicitly omitted months."""
     response_shape.expect(
@@ -623,7 +629,7 @@ def _month_table_dates(
                 dated.append((when, CHRISTMAS_TREES if trees and month == 1 else label))
     response_shape.expect(
         seen == sorted(set(seen))
-        and (label != "szelektív" or seen == list(range(1, 13))),
+        and (not (complete or label == "szelektív") or seen == list(range(1, 13))),
         source_name=name,
         detail="missing, duplicate or unordered month columns",
         raw=rows,
@@ -699,17 +705,59 @@ def _article_general_dates(text: str, year: int, name: str) -> list[date]:
     )
 
 
-class MonthTableCalendarParser(Parser["list[tuple[date, str]]"]):
-    """Hungarian annual HTML/DOCX calendars with month headings above day lists.
+def _pdf_month_blocks(
+    response: Any, source: BaseSource | None
+) -> list[str | list[list[str]]]:
+    """Read alternating month/day table rows through the shared PDF extractor."""
+    blocks: list[str | list[list[str]]] = []
+    table: list[list[str]] = []
+    expect_days = False
+    for row in parsers.PdfTableParser(char_margin=1)(response, source):
+        cells = [word.text for word in row.words]
+        text = " ".join(cells)
+        months = text.split()
+        if len(months) > 1 and all(fold(month) in _MONTH_NUMBERS for month in months):
+            response_shape.expect(
+                not expect_days,
+                source_name=response_shape.source_name(source),
+                detail="missing day row below month headings",
+                raw=text,
+            )
+            table.append(months)
+            expect_days = True
+        elif expect_days:
+            table.append(cells)
+            expect_days = False
+        else:
+            if table:
+                blocks.append(table)
+                table = []
+            blocks.append(text)
+    response_shape.expect(
+        not expect_days,
+        source_name=response_shape.source_name(source),
+        detail="missing day row below month headings",
+    )
+    if table:
+        blocks.append(table)
+    return blocks
 
-    HTML uses the annual article heading and its two labelled tables; DOCX uses
-    the printed heading and body/table order. A garden table may omit months;
-    those omissions are not recurrence rules. January tree restrictions are
-    detected from the publication, and no absent residual rule is invented.
+
+class MonthTableCalendarParser(Parser["list[tuple[date, str]]"]):
+    """Hungarian annual HTML/DOCX/PDF calendars with month headings above day lists.
+
+    HTML uses the annual article heading and its two labelled tables; DOCX/PDF
+    use the printed heading and body/table order. An HTML garden table may omit
+    months; documents must print all twelve month headings, including empty
+    months. January tree restrictions are detected from the publication, and
+    no absent residual rule is invented.
     """
 
-    def __init__(self, *, docx: bool = False) -> None:
+    def __init__(self, *, docx: bool = False, pdf: bool = False) -> None:
+        if docx and pdf:
+            raise ValueError("Choose one document format")
         self.docx = docx
+        self.pdf = pdf
 
     def __call__(
         self, response: Any, source: BaseSource | None = None
@@ -717,8 +765,12 @@ class MonthTableCalendarParser(Parser["list[tuple[date, str]]"]):
         name = response_shape.source_name(source)
         wanted = fold(source.params["municipality"]) if source else ""
         weekly: list[date] = []
-        if self.docx:
-            blocks = _docx_blocks(response.content, name)
+        if self.docx or self.pdf:
+            blocks = (
+                _docx_blocks(response.content, name)
+                if self.docx
+                else _pdf_month_blocks(response, source)
+            )
             heading = " ".join(block for block in blocks if isinstance(block, str))
             match = re.search(
                 r"hulladekgyujtes\s+(20\d{2})\s*\.\s*evben", fold(heading)
@@ -780,7 +832,10 @@ class MonthTableCalendarParser(Parser["list[tuple[date, str]]"]):
                     label, restriction = "zöldhulladék", ""
                 else:
                     restriction += " " + text
-                if not self.docx and "kommunalis hulladekszallitas rendje" in text:
+                if (
+                    not (self.docx or self.pdf)
+                    and "kommunalis hulladekszallitas rendje" in text
+                ):
                     response_shape.expect(
                         not weekly,
                         source_name=name,
@@ -802,12 +857,21 @@ class MonthTableCalendarParser(Parser["list[tuple[date, str]]"]):
                     restriction,
                 )
             )
-            dated.extend(_month_table_dates(block, year, label, trees=trees, name=name))
+            dated.extend(
+                _month_table_dates(
+                    block,
+                    year,
+                    label,
+                    trees=trees,
+                    name=name,
+                    complete=self.docx or self.pdf,
+                )
+            )
             label = ""
         response_shape.expect(
             seen == ["szelektív", "zöldhulladék"]
             and bool(dated)
-            and (self.docx or bool(weekly)),
+            and (self.docx or self.pdf or bool(weekly)),
             source_name=name,
             detail="missing annual collection table or general-waste rule",
             raw=heading[:500],

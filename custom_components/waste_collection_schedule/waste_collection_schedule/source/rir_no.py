@@ -4,10 +4,16 @@ from waste_collection_schedule import date_parsers, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
+from waste_collection_schedule.preprocessors import Deduplicate
 from waste_collection_schedule.service.RirCalendar import (
     CalendarRetriever,
 )
 from waste_collection_schedule.transformers import RowTransformer
+
+
+def _clean(label: str) -> str:
+    """Fraction labels after the first come as ", <whitespace>Matavfall"."""
+    return label.lstrip(", ").strip()
 
 
 @final
@@ -34,9 +40,11 @@ class Source(BaseSource):
             all_labels=True,
         )
     )
+    # The calendar page and the monthly endpoint overlap on the next weeks.
+    preprocess = Deduplicate(key=lambda row: (row[0], _clean(row[1])))
     transform = RowTransformer(
         parse_date=date_parsers.for_format("%d.%m.%y"),
-        clean=lambda label: label.lstrip(", ").strip(),
+        clean=_clean,
         type_value_map={
             "": None,
             "Restavfall": wt.GENERAL_WASTE,

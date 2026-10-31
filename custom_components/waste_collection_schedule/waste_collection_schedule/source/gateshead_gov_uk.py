@@ -1,161 +1,96 @@
-import base64
-import binascii
-import json
+"""Gateshead Council (England) bin collection dates."""
+
 import re
-from datetime import datetime
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import uprn
+from waste_collection_schedule.service.GossForm import (
+    GossFormDataParser,
+    GossFormRetriever,
+    GossStep,
+)
+from waste_collection_schedule.transformers import HtmlTransformer
 
-TITLE = "Gateshead Council"
-DESCRIPTION = "Source for gateshead.gov.uk services for Gateshead"
-URL = "gateshead.gov.uk"
-
-TEST_CASES = {
-    "Test_001": {"uprn": "100000077407"},
-    "Test_002": {"uprn": 100000058404},
-    "Test_003": {"uprn": 100000033887},
-}
-
-ICON_MAP = {
-    "Household": Icons.GENERAL_WASTE,
-    "Recycling": Icons.RECYCLING,
-    "Garden": Icons.GARDEN,
-}
+# A GOSS form that takes the UPRN on its first page. The answer carries the
+# schedule as HTML in the page's FormData (HOUSEHOLDCOLLECTIONS_1 /
+# DISPLAYHOUSEHOLD): a table with a <th> per month ("November") and a row per
+# collection day (day of month, weekday, round), without a year.
+FORM_URL = "https://www.gateshead.gov.uk/article/3150/Bin-collection-day-checker"
+_FORM = "BINCOLLECTIONCHECKER"
+_DAY_CHANGE = re.compile(r"\s*-?\s*DAY CHANGE\s*$", re.IGNORECASE)
 
 
-class Source:
-    def __init__(self, uprn):
-        self._uprn = uprn
+def _cells(row) -> list[str]:
+    return [" ".join(td.get_text().split()) for td in row.find_all("td")]
 
-    def fetch(self):
-        session = requests.Session(impersonate="chrome124")
 
-        r = session.get(
-            "https://www.gateshead.gov.uk/article/3150/Bin-collection-day-checker",
-            timeout=30,
-        )
+def _date(row) -> str:
+    """The day of month with the month of the heading above it ("04 November")."""
+    month = row.find_previous("th").get_text(strip=True).split(" ")[0]
+    return f"{_cells(row)[0]} {month}"
 
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, features="html.parser")
 
-        form = soup.find("form", attrs={"id": "BINCOLLECTIONCHECKER_FORM"})
-        if not form or "action" not in form.attrs:
-            raise ValueError("Could not find form or form action")
-        form_url = form["action"]
+@final
+class Source(BaseSource):
+    TITLE = "Gateshead Council"
+    DESCRIPTION = "Source for gateshead.gov.uk services for Gateshead"
+    URL = "https://www.gateshead.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
 
-        pageSessionId_input = soup.find(
-            "input", attrs={"name": "BINCOLLECTIONCHECKER_PAGESESSIONID"}
-        )
-        if not pageSessionId_input or "value" not in pageSessionId_input.attrs:
-            raise ValueError("Could not find BINCOLLECTIONCHECKER_PAGESESSIONID")
-        pageSessionId = pageSessionId_input["value"]
+    TEST_CASES: ClassVar[dict] = {
+        "Test_002": {"uprn": 100000058404},
+    }
 
-        sessionId_input = soup.find(
-            "input", attrs={"name": "BINCOLLECTIONCHECKER_SESSIONID"}
-        )
-        if not sessionId_input or "value" not in sessionId_input.attrs:
-            raise ValueError("Could not find BINCOLLECTIONCHECKER_SESSIONID")
-        sessionId = sessionId_input["value"]
+    PARAMS = (uprn(),)
 
-        nonce_input = soup.find("input", attrs={"name": "BINCOLLECTIONCHECKER_NONCE"})
-        if not nonce_input or "value" not in nonce_input.attrs:
-            raise ValueError("Could not find BINCOLLECTIONCHECKER_NONCE")
-        nonce = nonce_input["value"]
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the Unique Property Reference Number (UPRN) of your property. "
+            "You can find it at https://www.findmyaddress.co.uk/. Since the v3 "
+            "pipeline migration, waste types use canonical, localised names. "
+            "Update filters, automations and customisations using the old labels."
+        ),
+    }
 
-        form_data = {
-            "BINCOLLECTIONCHECKER_PAGESESSIONID": pageSessionId,
-            "BINCOLLECTIONCHECKER_SESSIONID": sessionId,
-            "BINCOLLECTIONCHECKER_NONCE": nonce,
-            "BINCOLLECTIONCHECKER_FORMACTION_NEXT": "BINCOLLECTIONCHECKER_ADDRESSSEARCH_NEXTBUTTON",
-            "BINCOLLECTIONCHECKER_ADDRESSSEARCH_UPRN": self._uprn,
-            "BINCOLLECTIONCHECKER_ADDRESSSEARCH_ADDRESSTEXT": " ",
-        }
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.RECYCLABLES,
+    ]
 
-        r = session.post(form_url, data=form_data)
-        r.raise_for_status()
+    retrieve = GossFormRetriever(
+        FORM_URL,
+        form=_FORM,
+        state_fields=("PAGESESSIONID", "SESSIONID", "NONCE"),
+        steps=(
+            GossStep(
+                "ADDRESSSEARCH_NEXTBUTTON",
+                fields=lambda response, uprn, **_: {
+                    "ADDRESSSEARCH_UPRN": str(uprn).strip(),
+                    "ADDRESSSEARCH_ADDRESSTEXT": " ",
+                },
+            ),
+        ),
+    )
 
-        soup = BeautifulSoup(r.text, features="html.parser")
-        pattern = re.compile(
-            r"var BINCOLLECTIONCHECKERFormData = \"(.*?)\";$", re.MULTILINE | re.DOTALL
-        )
-        script = soup.find("script", string=pattern)
+    parse = GossFormDataParser(
+        "DISPLAYHOUSEHOLD",
+        pages=["HOUSEHOLDCOLLECTIONS_1"],
+        parser=parsers.HtmlParser("table.bincollections__table tr:has(> td)"),
+    )
 
-        if not script:
-            raise ValueError("Could not find BINCOLLECTIONCHECKERFormData in response")
-
-        match = pattern.search(script.text)
-        if not match:
-            raise ValueError("Could not extract BINCOLLECTIONCHECKERFormData value")
-        response_data = match.group(1)
-
-        try:
-            decoded_data = base64.b64decode(response_data)
-            data = json.loads(decoded_data)
-        except (binascii.Error, ValueError) as e:
-            raise ValueError(f"Failed to decode base64 data: {e}") from e
-        except json.JSONDecodeError as e:
-            raise ValueError(f"Failed to parse JSON data: {e}") from e
-
-        if "HOUSEHOLDCOLLECTIONS_1" not in data:
-            raise ValueError("HOUSEHOLDCOLLECTIONS_1 not found in response data")
-        if "DISPLAYHOUSEHOLD" not in data["HOUSEHOLDCOLLECTIONS_1"]:
-            raise ValueError("DISPLAYHOUSEHOLD not found in response data")
-
-        soup = BeautifulSoup(
-            data["HOUSEHOLDCOLLECTIONS_1"]["DISPLAYHOUSEHOLD"], features="html.parser"
-        )
-
-        entries = []
-        month = None
-        for tr in soup.find_all("tr"):
-            month_th = tr.find("th", attrs={"colspan": "3"})
-            if month_th:
-                month = month_th.text.split(" ")[0]
-                continue
-            if not month:
-                continue
-
-            tds = tr.find_all("td")
-            if len(tds) != 3:
-                continue
-            day = tds[0].text.strip()
-            waste_types = tds[2].text.split(" and ")
-
-            now = datetime.now()
-            month_capitalized = month.capitalize()
-            try:
-                dt = datetime.strptime(
-                    f"{now.year}-{month_capitalized}-{day}", "%Y-%B-%d"
-                ).date()
-            except ValueError:
-                day_clean = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", day)
-                dt = datetime.strptime(
-                    f"{now.year}-{month_capitalized}-{day_clean}", "%Y-%B-%d"
-                ).date()
-
-            if dt.month in (1, 2, 3) and now.month in (11, 12):
-                dt = dt.replace(year=now.year + 1)
-            elif dt.month == 12 and now.month in (1, 2, 3):
-                dt = dt.replace(year=now.year - 1)
-            elif dt < now.date() and (now.date() - dt).days > 180:
-                dt = dt.replace(year=now.year + 1)
-
-            day_change_regex = re.compile(
-                r"(.*?)\s*-?\s*DAY CHANGE\s*$", re.IGNORECASE | re.DOTALL
-            )
-            for waste_type in waste_types:
-                day_change_match = day_change_regex.match(waste_type)
-
-                if day_change_match:
-                    waste_type = day_change_match.group(1)
-                entries.append(
-                    Collection(
-                        date=dt,
-                        t=waste_type.strip(),
-                        icon=ICON_MAP.get(waste_type.strip()),
-                    )
-                )
-
-        return entries
+    transform = HtmlTransformer(
+        date_getter=_date,
+        type_getter=lambda row: _DAY_CHANGE.sub("", _cells(row)[-1]),
+        parse_date=date_parsers.nearest_year("%d %B"),
+        type_value_map={
+            "Household Waste": wt.GENERAL_WASTE,
+            "Recycling": wt.RECYCLABLES,
+            "Garden Waste": wt.GARDEN_WASTE,
+            "Recycling and Garden Waste": [wt.RECYCLABLES, wt.GARDEN_WASTE],
+            "Household Waste and Garden Waste": [wt.GENERAL_WASTE, wt.GARDEN_WASTE],
+        },
+    )

@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-10-24",
+  "interactions": [
+    {
+      "key": "GET https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/Search d9dff0059a",
+      "method": "GET",
+      "url": "https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/Search",
+      "final_url": "https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/Search?query=Stationsgatan%204",
+      "body": "{\"params\":[[\"query\",\"Stationsgatan 4\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Server": "Microsoft-IIS/10.0",
+        "Date": "Sat, 24 Oct 2026 07:18:52 GMT"
+      },
+      "content_b64": "W3siU2VydmljZUlkIjoxMDM0MzM5MjU3LCJTdHJlZXROYW1lIjoiU3RhdGlvbnNnYXRhbiA0IiwiWmlwQ29kZSI6IjgyNzMyIiwiQ2l0eU5hbWUiOiJMSlVTREFMIn0seyJTZXJ2aWNlSWQiOjEwMzQzOTkwMTYsIlN0cmVldE5hbWUiOiJTdGF0aW9uc2dhdGFuIDQxIiwiWmlwQ29kZSI6IjgyNzUwIiwiQ2l0eU5hbWUiOiJKw4RSVlPDliJ9LHsiU2VydmljZUlkIjoxMDM0Mzk5MTIwLCJTdHJlZXROYW1lIjoiU3RhdGlvbnNnYXRhbiA0Ny00OSIsIlppcENvZGUiOiI4Mjc1MCIsIkNpdHlOYW1lIjoiSsOEUlZTw5YifV0="
+    },
+    {
+      "key": "GET https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/CollectionDays b53b30216f",
+      "method": "GET",
+      "url": "https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/CollectionDays",
+      "final_url": "https://hamtningsdagar.ljusdalenergi.se:3443/api/Address/CollectionDays?serviceId=1034339257",
+      "body": "{\"params\":[[\"serviceId\",\"1034339257\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Server": "Microsoft-IIS/10.0",
+        "Date": "Sat, 24 Oct 2026 07:18:57 GMT"
+      },
+      "content_b64": "W3siU3RhdHVzIjoiQWt0aXYiLCJDb250YWluZXJUeXBlIjoiUGxhc3QiLCJGbGV4U2VydmljZVR5cGVOYW1lIjoiMzcwIEwiLCJGcmVxdWVuY3lOYW1lIjoiMSBnZ3IvdmVja2EiLCJGbGV4UGxhY2VBZGRyZXNzIjoiU3RhdGlvbnNnYXRhbiA0IiwiRmxleFBsYWNlWmlwQ29kZSI6IjgyNzMyIiwiRmxleFBsYWNlQ2l0eU5hbWUiOiJMSlVTREFMIiwiRGF0ZXMiOlsiMjAyNi0xMC0yOCIsIjIwMjYtMTEtMDQiLCIyMDI2LTExLTExIiwiMjAyNi0xMS0xOCIsIjIwMjYtMTEtMjUiLCIyMDI2LTEyLTAyIiwiMjAyNi0xMi0wOSIsIjIwMjYtMTItMTYiLCIyMDI2LTEyLTIzIiwiMjAyNi0xMi0zMCJdfSx7IlN0YXR1cyI6IkFrdGl2IiwiQ29udGFpbmVyVHlwZSI6Ikh1c2jDpWxsc2F2ZmFsbCIsIkZsZXhTZXJ2aWNlVHlwZU5hbWUiOiIzNzAgTCIsIkZyZXF1ZW5jeU5hbWUiOiIxIGdnci92ZWNrYSIsIkZsZXhQbGFjZUFkZHJlc3MiOiJTdGF0aW9uc2dhdGFuIDQiLCJGbGV4UGxhY2VaaXBDb2RlIjoiODI3MzIiLCJGbGV4UGxhY2VDaXR5TmFtZSI6IkxKVVNEQUwiLCJEYXRlcyI6WyIyMDI2LTEwLTI3IiwiMjAyNi0xMS0wMyIsIjIwMjYtMTEtMTAiLCIyMDI2LTExLTE3IiwiMjAyNi0xMS0yNCIsIjIwMjYtMTItMDEiLCIyMDI2LTEyLTA4IiwiMjAyNi0xMi0xNSIsIjIwMjYtMTItMjIiLCIyMDI2LTEyLTI5Il19LHsiU3RhdHVzIjoiQWt0aXYiLCJDb250YWluZXJUeXBlIjoiTWV0YWxsIiwiRmxleFNlcnZpY2VUeXBlTmFtZSI6IjE0MCBMIiwiRnJlcXVlbmN5TmFtZSI6IlZhcmFubmFuIHZlY2thIiwiRmxleFBsYWNlQWRkcmVzcyI6IlN0YXRpb25zZ2F0YW4gNCIsIkZsZXhQbGFjZVppcENvZGUiOiI4MjczMiIsIkZsZXhQbGFjZUNpdHlOYW1lIjoiTEpVU0RBTCIsIkRhdGVzIjpbIjIwMjYtMTAtMjgiLCIyMDI2LTExLTExIiwiMjAyNi0xMS0yNSIsIjIwMjYtMTItMDkiLCIyMDI2LTEyLTIzIl19LHsiU3RhdHVzIjoiQWt0aXYiLCJDb250YWluZXJUeXBlIjoiSHVzaMOlbGxzYXZmYWxsIiwiRmxleFNlcnZpY2VUeXBlTmFtZSI6IjY2MCBMIiwiRnJlcXVlbmN5TmFtZSI6IjEgZ2dyL3ZlY2thIiwiRmxleFBsYWNlQWRkcmVzcyI6IlN0YXRpb25zZ2F0YW4gNCIsIkZsZXhQbGFjZVppcENvZGUiOiI4MjczMiIsIkZsZXhQbGFjZUNpdHlOYW1lIjoiTEpVU0RBTCIsIkRhdGVzIjpbIjIwMjYtMTAtMjciLCIyMDI2LTExLTAzIiwiMjAyNi0xMS0xMCIsIjIwMjYtMTEtMTciLCIyMDI2LTExLTI0IiwiMjAyNi0xMi0wMSIsIjIwMjYtMTItMDgiLCIyMDI2LTEyLTE1IiwiMjAyNi0xMi0yMiIsIjIwMjYtMTItMjkiXX0seyJTdGF0dXMiOiJBa3RpdiIsIkNvbnRhaW5lclR5cGUiOiJQYXBwZXIiLCJGbGV4U2VydmljZVR5cGVOYW1lIjoiNjYwIEwiLCJGcmVxdWVuY3lOYW1lIjoiMSBnZ3IvdmVja2EiLCJGbGV4UGxhY2VBZGRyZXNzIjoiU3RhdGlvbnNnYXRhbiA0IiwiRmxleFBsYWNlWmlwQ29kZSI6IjgyNzMyIiwiRmxleFBsYWNlQ2l0eU5hbWUiOiJMSlVTREFMIiwiRGF0ZXMiOlsiMjAyNi0xMC0yOCIsIjIwMjYtMTEtMDQiLCIyMDI2LTExLTExIiwiMjAyNi0xMS0xOCIsIjIwMjYtMTEtMjUiLCIyMDI2LTEyLTAyIiwiMjAyNi0xMi0wOSIsIjIwMjYtMTItMTYiLCIyMDI2LTEyLTIzIiwiMjAyNi0xMi0zMCJdfSx7IlN0YXR1cyI6IkFrdGl2IiwiQ29udGFpbmVyVHlwZSI6Ik1hdGF2ZmFsbCIsIkZsZXhTZXJ2aWNlVHlwZU5hbWUiOiIxNDAgTCIsIkZyZXF1ZW5jeU5hbWUiOiJWYXJhbm5hbiB2ZWNrYSIsIkZsZXhQbGFjZUFkZHJlc3MiOiJTdGF0aW9uc2dhdGFuIDQiLCJGbGV4UGxhY2VaaXBDb2RlIjoiODI3MzIiLCJGbGV4UGxhY2VDaXR5TmFtZSI6IkxKVVNEQUwiLCJEYXRlcyI6WyIyMDI2LTEwLTI3IiwiMjAyNi0xMS0wMyIsIjIwMjYtMTEtMTAiLCIyMDI2LTExLTE3IiwiMjAyNi0xMS0yNCIsIjIwMjYtMTItMDEiLCIyMDI2LTEyLTA4IiwiMjAyNi0xMi0xNSIsIjIwMjYtMTItMjIiLCIyMDI2LTEyLTI5Il19LHsiU3RhdHVzIjoiQWt0aXYiLCJDb250YWluZXJUeXBlIjoiRsOkcmdhdCBnbGFzIiwiRmxleFNlcnZpY2VUeXBlTmFtZSI6IjE0MCBMIiwiRnJlcXVlbmN5TmFtZSI6IlZhciA0OmUgdmVja2EiLCJGbGV4UGxhY2VBZGRyZXNzIjoiU3RhdGlvbnNnYXRhbiA0IiwiRmxleFBsYWNlWmlwQ29kZSI6IjgyNzMyIiwiRmxleFBsYWNlQ2l0eU5hbWUiOiJMSlVTREFMIiwiRGF0ZXMiOlsiMjAyNi0xMS0xNiIsIjIwMjYtMTItMTQiXX0seyJTdGF0dXMiOiJBa3RpdiIsIkNvbnRhaW5lclR5cGUiOiJPZsOkcmdhdCBnbGFzIiwiRmxleFNlcnZpY2VUeXBlTmFtZSI6IjE0MCBMIiwiRnJlcXVlbmN5TmFtZSI6IlZhciA0OmUgdmVja2EiLCJGbGV4UGxhY2VBZGRyZXNzIjoiU3RhdGlvbnNnYXRhbiA0IiwiRmxleFBsYWNlWmlwQ29kZSI6IjgyNzMyIiwiRmxleFBsYWNlQ2l0eU5hbWUiOiJMSlVTREFMIiwiRGF0ZXMiOlsiMjAyNi0xMS0xNiIsIjIwMjYtMTItMTQiXX1d"
+    }
+  ]
+}
