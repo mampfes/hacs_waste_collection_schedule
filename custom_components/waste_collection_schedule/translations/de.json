@@ -4502,6 +4502,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Gemeinde"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "region": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Gemeinde"
+        },
+        "data_description": {
+          "region": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -4897,26 +4926,6 @@
           "district": "Ihr Ortsteil oder Stadtteil.",
           "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "region": "Region"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "region": "Region"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Quelle konfigurieren",

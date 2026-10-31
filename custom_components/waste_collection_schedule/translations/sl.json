@@ -4497,6 +4497,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Občina"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "region": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Občina"
+        },
+        "data_description": {
+          "region": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -4892,26 +4921,6 @@
           "district": "Vaše naselje ali del občine.",
           "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "region": "Regija"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "region": "Regija"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Configure Source",

@@ -4499,6 +4499,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kommun"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "region": "Namnet på din kommun, som det visas på leverantörens webbplats."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kommun"
+        },
+        "data_description": {
+          "region": "Namnet på din kommun, som det visas på leverantörens webbplats."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -4894,26 +4923,6 @@
           "district": "Ditt distrikt eller del av kommunen.",
           "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Konfigurera källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "region": "Region"
-        },
-        "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Konfigurera om källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "region": "Region"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Konfigurera källa",

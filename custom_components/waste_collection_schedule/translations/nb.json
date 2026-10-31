@@ -4499,6 +4499,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kommune"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "region": "Navnet på kommunen din, slik det står på leverandørens nettside."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kommune"
+        },
+        "data_description": {
+          "region": "Navnet på kommunen din, slik det står på leverandørens nettside."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -4894,26 +4923,6 @@
           "district": "Bydelen eller delen av kommunen du bor i.",
           "municipality": "Navnet på kommunen din, slik det står på leverandørens nettside."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Konfigurer kilde",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "region": "Region"
-        },
-        "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Konfigurer kilde på nytt",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "region": "Region"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Konfigurer kilde",

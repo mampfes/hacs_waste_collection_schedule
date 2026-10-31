@@ -4499,6 +4499,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kommune"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "region": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kommune"
+        },
+        "data_description": {
+          "region": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -4894,26 +4923,6 @@
           "district": "Dit distrikt eller del af kommunen",
           "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Konfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "region": "Region"
-        },
-        "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Omkonfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "region": "Region"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Konfigurer Kilde",

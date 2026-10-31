@@ -4502,6 +4502,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Commune"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "region": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Commune"
+        },
+        "data_description": {
+          "region": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -4897,26 +4926,6 @@
           "district": "Votre quartier ou partie de la commune.",
           "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "region": "Région"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "region": "Région"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Configurer la Source",

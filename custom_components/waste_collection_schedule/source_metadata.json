@@ -1112,6 +1112,14 @@
     "howto": {},
     "urls": {}
   },
+  "scheibbs_umweltverbaende_at": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scheibbs_umweltverbaende_at.md",
+    "howto": {
+      "de": "Gib deine Gemeinde so ein, wie sie auf https://scheibbs.umweltverbaende.at/entsorgung-und-termine/abholtermine/ verlinkt ist, ohne 'Abfuhrtermine' und 'Stadtgemeinde', mit 'Sankt' statt 'St.', z. B. 'Gaming' oder 'Sankt Anton an der Jeßnitz'. Wähle bei bio_bin '20', wenn deine Biotonne 20-mal im Jahr entleert wird (BIO/20) statt 40-mal, aktiviere lackenhof in Lackenhof (Gaming) und additional_collections, wenn du für die Zusatztermine Restmüll und Altpapier (R2, P4) angemeldet bist. Seit der Umstellung auf die v3-Pipeline verwenden Abfallarten einheitliche, übersetzte Namen. Passe Filter, Automationen und Anpassungen an, die die alten Bezeichnungen verwenden.",
+      "en": "Enter your municipality as linked on https://scheibbs.umweltverbaende.at/entsorgung-und-termine/abholtermine/ without 'Abfuhrtermine' and 'Stadtgemeinde', with 'St.' spelt out as 'Sankt', e.g. 'Gaming' or 'Sankt Anton an der Jeßnitz'. Choose '20' as bio_bin if your bio bin is emptied 20 times a year (BIO/20) rather than 40, tick lackenhof in Lackenhof (Gaming), and tick additional_collections if you registered for the additional general waste and paper dates (R2, P4). Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
+    "urls": {}
+  },
   "ics_gda_gv_at": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gda_gv_at.md",
     "howto": {
@@ -1209,11 +1217,6 @@
       "de": "Geben Sie Ihre Gemeinde so ein, wie sie auf https://gvatulln.at/fuer-die-bevoelkerung/abholtermine/ heißt (z. B. 'Tulln', 'St. Andrä-Wördern', 'Sitzenberg'). Gemeinden mit mehreren Sprengeln brauchen zusätzlich den Sprengel: die Nummer aus dem Abfuhrplan (z. B. '2') bzw. 'Zeiselmauer' / 'Wolfpassing'. Gebäudetyp 'commercial' gilt für Gewerbe und Wohnhausanlagen.",
       "en": "Enter your municipality as it is named on https://gvatulln.at/fuer-die-bevoelkerung/abholtermine/ (e.g. 'Tulln', 'St. Andrä-Wördern', 'Sitzenberg'). Municipalities split into collection districts also need the district: the 'Sprengel' number from the plan (e.g. '2'), or 'Zeiselmauer' / 'Wolfpassing'. Choose building type 'commercial' for businesses and apartment complexes (Gewerbe und Wohnhausanlagen)."
     },
-    "urls": {}
-  },
-  "scheibbs_umweltverbaende_at": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/scheibbs_umweltverbaende_at.md",
-    "howto": {},
     "urls": {}
   },
   "gaenserndorf_city_at": {
@@ -1522,7 +1525,10 @@
   },
   "hygea_be": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/hygea_be.md",
-    "howto": {},
+    "howto": {
+      "en": "This source is deprecated and will be removed in the next major release: Hygea's relaunched website no longer serves the calendar it reads and shows the Recycle! calendar instead. Use the recycleapp_be source (Recycle!) with your postcode, street and house number as on https://www.recycleapp.be.",
+      "fr": "Cette source est obsolète et sera supprimée dans la prochaine version majeure : le nouveau site de Hygea ne fournit plus le calendrier qu'elle lit et affiche le calendrier Recycle! à la place. Utilisez la source recycleapp_be (Recycle!) avec votre code postal, votre rue et votre numéro comme sur https://www.recycleapp.be."
+    },
     "urls": {}
   },
   "ics_intradel_be": {

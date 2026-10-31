@@ -2279,6 +2279,14 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Gaming",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Gaming"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Gattendorf",
       "module": "citiesapps_com",
       "default_params": {},
@@ -2501,6 +2509,22 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Gresten",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Gresten"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
+      "title": "Gresten-Land",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Gresten-Land"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Gro\u00dfkirchheim",
       "module": "ics",
       "default_params": {},
@@ -2645,6 +2669,14 @@
       "module": "gaenserndorf_city_at",
       "default_params": {},
       "id": "gaenserndorf_city_at"
+    },
+    {
+      "title": "G\u00f6stling an der Ybbs",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "G\u00f6stling an der Ybbs"
+      },
+      "id": "scheibbs_umweltverbaende_at"
     },
     {
       "title": "G\u00fcssing",
@@ -3281,6 +3313,14 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Lunz am See",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Lunz am See"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Lurnfeld",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3671,6 +3711,14 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Oberndorf an der Melk",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Oberndorf an der Melk"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Oberndorf bei Schwanenstadt",
       "module": "oberndorf_schwanenstadt_at",
       "default_params": {},
@@ -3899,6 +3947,22 @@
       "id": "puchbeihallein_gv_at"
     },
     {
+      "title": "Puchenstuben",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Puchenstuben"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
+      "title": "Purgstall an der Erlauf",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Purgstall an der Erlauf"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "P\u00f6chlarn",
       "module": "citiesapps_com",
       "default_params": {},
@@ -3965,6 +4029,14 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Randegg",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Randegg"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Rangersdorf",
       "module": "ics",
       "default_params": {},
@@ -3999,6 +4071,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_muellapp_com"
+    },
+    {
+      "title": "Reinsberg",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Reinsberg"
+      },
+      "id": "scheibbs_umweltverbaende_at"
     },
     {
       "title": "Reith im Alpbachtal",
@@ -4085,6 +4165,22 @@
       "id": "ics_muellapp_com"
     },
     {
+      "title": "Sankt Anton an der Je\u00dfnitz",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Sankt Anton an der Je\u00dfnitz"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
+      "title": "Sankt Georgen an der Leys",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Sankt Georgen an der Leys"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Sankt Georgen an der Stiefing",
       "module": "citiesapps_com",
       "default_params": {},
@@ -4113,6 +4209,14 @@
       "module": "ics",
       "default_params": {},
       "id": "ics_gem2go_dev"
+    },
+    {
+      "title": "Scheibbs",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Scheibbs"
+      },
+      "id": "scheibbs_umweltverbaende_at"
     },
     {
       "title": "Schiefling am W\u00f6rthersee",
@@ -4501,6 +4605,14 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Steinakirchen am Forst",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Steinakirchen am Forst"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Steinbrunn",
       "module": "citiesapps_com",
       "default_params": {},
@@ -4813,6 +4925,14 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Wang",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Wang"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Wartberg ob der Aist",
       "module": "citiesapps_com",
       "default_params": {},
@@ -4891,6 +5011,22 @@
       "id": "citiesapps_com"
     },
     {
+      "title": "Wieselburg",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Wieselburg"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
+      "title": "Wieselburg-Land",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Wieselburg-Land"
+      },
+      "id": "scheibbs_umweltverbaende_at"
+    },
+    {
       "title": "Wiesen",
       "module": "citiesapps_com",
       "default_params": {},
@@ -4937,6 +5073,14 @@
       "module": "citiesapps_com",
       "default_params": {},
       "id": "citiesapps_com"
+    },
+    {
+      "title": "Wolfpassing",
+      "module": "scheibbs_umweltverbaende_at",
+      "default_params": {
+        "region": "Wolfpassing"
+      },
+      "id": "scheibbs_umweltverbaende_at"
     },
     {
       "title": "Wolfsberg",

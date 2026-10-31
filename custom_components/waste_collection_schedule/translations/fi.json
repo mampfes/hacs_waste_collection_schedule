@@ -4499,6 +4499,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "region": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kunta"
+        },
+        "data_description": {
+          "region": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -4894,26 +4923,6 @@
           "district": "Kaupunginosasi tai kunnan osa.",
           "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Määritä lähde",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "region": "Region"
-        },
-        "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Määritä lähde uudelleen",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "region": "Region"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Määritä lähde",
