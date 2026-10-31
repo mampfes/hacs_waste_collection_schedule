@@ -14,15 +14,15 @@ when the count reaches zero.
 | # | Class | Sources | What it means |
 |---|---|---:|---|
 | 1 | Special / not a provider | 4 | Not a provider. Decide per module whether it stays a utility or gets a pipeline form. |
-| 2 | Retire (deprecated shim or broken stub) | 8 | Delete, or reduce to an alias, in the major release following the deprecation lifecycle in `versioning.md`. Migrating them is wasted work. |
+| 2 | Retire (deprecated shim or broken stub) | 2 left (of 8) | Delete, or reduce to an alias, in the major release following the deprecation lifecycle in `versioning.md`. Migrating them is wasted work. |
 | 3 | Login required | 10 | `CLAUDE.md` allows login-required endpoints only when the account holder is a code owner or provides a test account. Decide per source: keep (owner or test account available), or remove. |
-| 4 | Migrate onto an existing platform component | 2 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
+| 4 | Migrate onto an existing platform component | 1 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
 | 5 | Shared backend, build one component for the cluster | 1 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 1 left (of 14) | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
-| 7 | Singleton, small (<150 lines, <=2 requests) | 24 left (of 58) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
-| 8 | Singleton, medium | 74 left (of 78) | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
-| 9 | Singleton, large (>=350 lines or >=5 requests) | 24 (+1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
-| | **Total** | **147** (281 before class 4; the clusters, thirteen PDF sources and seventy-one singletons are migrated, see the notes in class 5, 6, 7 and 8) | |
+| 7 | Singleton, small (<150 lines, <=2 requests) | 10 left (of 58) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
+| 8 | Singleton, medium | 17 left (of 78) | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
+| 9 | Singleton, large (>=350 lines or >=5 requests) | 2 left (of 24, +1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
+| | **Total** | **48** (281 when this file was written; equals `Legacy fetch() sources` in `python tools/arch_coverage.py`. See the notes in class 5 to 8 and the reconciliation below) | |
 
 ## 1. Special / not a provider
 
@@ -33,14 +33,10 @@ when the count reaches zero.
 
 ## 2. Retire (deprecated shim or broken stub)
 
-- `awb_mainz_bingen_de`: delegates to kaw_mainz_bingen_de, marked deprecated
-- `byron_nsw_gov_au`: runtime deprecation warning (recyclecoach covers it)
-- `chiltern_gov_uk`: subclass of iapp_itouchvision_com, marked deprecated
 - `east_ayrshire_gov_uk`: runtime deprecation warning (ReCollect covers it)
-- `grenchen_ch`: delegated to localcities_ch and was marked deprecated; it is a small pipeline source of its own now, because a `@final` source cannot be subclassed
 - `lrasha_de`: raises on init, points to app_abfallplus_de
-- `wieliczka_kiedyodpady_pl`: TITLE "(Deprecated)", runtime warning
-- `wuerzburg_de`: TITLE "(deprecated)", points to the ICS source
+
+The other six (`awb_mainz_bingen_de`, `byron_nsw_gov_au`, `chiltern_gov_uk`, `grenchen_ch`, `wieliczka_kiedyodpady_pl`, `wuerzburg_de`) are pipeline sources now, see the reconciliation below.
 
 ## 3. Login required
 
@@ -70,7 +66,7 @@ Worked through on `release/3.0.0`. Done (7), with what the "existing platform" t
 Not done:
 
 - `lerum_se`: fits `EdpFutureWeb` (written and discarded), but `vatjanst.lerum.se` answers this environment with `403 Access denied`, so it can be neither verified nor recorded. Retry from an allowed network.
-- `south_norfolk_and_broadland_gov_uk`: reclassify as class 9. Three retrieval paths (cookie payload, postcode lookup, and a SOAP calendar chosen by a link on the summary page) need a component of their own; `WebAspxCollections` only covers the SOAP leg.
+- `south_norfolk_and_broadland_gov_uk`: migrated since in #7992. Was: reclassify as class 9. Three retrieval paths (cookie payload, postcode lookup, and a SOAP calendar chosen by a link on the summary page) need a component of their own; `WebAspxCollections` only covers the SOAP leg.
 
 ## 5. Shared backend: one component per cluster
 
@@ -78,6 +74,10 @@ Done: **umweltverbaende.at (AT)**: `umweltverbaende_at` (15 districts as `REGION
 
 | Cluster | Legacy sources | Evidence |
 |---|---|---|
+
+Left (1):
+
+- `scheibbs_umweltverbaende_at`
 
 ## 6. PDF schedule
 
@@ -99,41 +99,58 @@ Done in the fourth block (10 of 12, UK councils): `ardsandnorthdown_gov_uk`, `pe
 
 Done in the fifth block (20 singletons from NL, IT, PL, CZ, SE, LU, DE; mostly class 8): `afvalstoffendienst_nl`, `ximmio_nl`, `irado_nl`, `omrin_nl`, `burgerportaal_nl`, `cem_ambiente_it`, `amsa_it`, `gmina_zgierz_pl`, `czystyregion_pl`, `gmina_sroda_slaska_pl`, `smiecioplan_pl`, `popuvky_cz`, `affarsverken_se`, `roslagsvatten_se`, `tsceskybrod_cz`, `samiljo_se`, `valorlux_lu`, `potsdam_de`, `heidelberg_de`, `luxembourg_lu` (new shared pieces: `service/ComD.py`, `service/GminaZgierz.py`, `service/TsCeskyBrod.py`, `service/ValorluxLu.py`, `service/PotsdamAbfallkalender.py`, `service/HeidelbergDatenplattform.py`, `service/DataPublicLu.py`, `parsers.JsonLookupJoin`, `JsVarParser(json_parse=)`, `LookupChainRetriever(json=)`, ISO-week parser ignores a month name, `from_epoch` accepts any `tzinfo`, and a dozen cassette scrubbers). Ten French and German sources (`sictom_lons_le_saunier_fr`, `grandbesancon_fr`, `data_grandlyon_com`, `memotri_agglo_pau_fr`, `clissonsevremaine_fr`, `beg_logistics_de`, `kaw_mainz_bingen_de`, `amberg_de`, `stadtwerke_singen_de`, `awb_ammerland_de`) were migrated in #7813.
 
+Done in the UK block (9, recorded through a GB connection because most of these hosts refuse non-UK exits): `dover_gov_uk` (class 7; rebuilt on the council's new Veolia portal API, `portal.waste.dover.gov.uk`, the old host no longer resolves), `swansea_gov_uk` (class 7; the pink and green weeks are reported as the streams the page lists for each week), `east_renfrewshire_gov_uk`, `gateshead_gov_uk`, `great_yarmouth_gov_uk`, `powys_gov_uk` (class 8, all on `GossFormRetriever`), `ipswich_gov_uk`, `midsussex_gov_uk`, `preston_gov_uk` (class 8) (new shared piece: additive option `GossFormDataParser(pages=)` for results kept on a page that `_PAGEORDER_` does not list). `gateshead_gov_uk` keeps one of its three test cases: its host answers intermittently with a Cloudflare challenge, even to the browser fingerprint.
+
 Blocked in the fifth block (not migrated): `silea_it` (the provider's `get_calendar` API returns nothing for every municipality and month; retry later), `api_golemio_cz` (needs a Golemio API key), `komunala_kranj_si` (the GIS host refuses the German exit; may need a Slovenian IP).
 
-Found broken upstream, not migrated (3): `hygea_be` (the JSON calendar is gone after a site relaunch and the server sends an incomplete certificate chain), `grosswangen_ch` (the page no longer carries dates, only a yearly PDF and prose rules since the collection changed hands), `araccolta_it` (serves a maintenance page for every URL; the legacy source also has a bug: its waste-type generator is exhausted after the first weekday of a card). They stay legacy until a decision (fix, rewrite or remove). The second block found three more providers gone: `odenserenovation_dk` (API removed, 404), `ecoapp_ecoservice_lt` (API host no longer resolves) and `tkeliai_lt` (the calendar feature was removed from the site). Also not migrated: `dover_gov_uk` (host `collections.dover.gov.uk` no longer resolves) and `wolverhampton_gov_uk` (the page no longer carries any bin content); `blackpool_gov_uk` and `swansea_gov_uk` were unreachable from the UK exit (TLS closed / no response) and are deferred. `merton_gov_uk` (the old portal returns 404) and `newcastle_gov_uk` (the lookup was retired) are dead; both councils are already covered by shared ICS entries ("London Borough of Merton (New)", and ReCollect area `NewcastleUponTyneUK` in `recollect.yaml`), so they are removal candidates for the next major release. `hastings_gov_uk` is deferred: its server omits the intermediate certificate (the pipeline verifies TLS strictly; the legacy source disables verification), a decision on shipping the intermediate certificate is open. `vestfor_dk` is deferred: its self-service host is unreachable from the German exit and needs a Danish IP.
+Found broken upstream, not migrated (3): `hygea_be` (the JSON calendar is gone after a site relaunch and the server sends an incomplete certificate chain), `grosswangen_ch` (the page no longer carries dates, only a yearly PDF and prose rules since the collection changed hands), `araccolta_it` (serves a maintenance page for every URL; the legacy source also has a bug: its waste-type generator is exhausted after the first weekday of a card). They stay legacy until a decision (fix, rewrite or remove). The second block found three more providers gone: `odenserenovation_dk` (API removed, 404), `ecoapp_ecoservice_lt` (API host no longer resolves) and `tkeliai_lt` (the calendar feature was removed from the site). Also not migrated: `wolverhampton_gov_uk` (the page no longer carries any bin content); `blackpool_gov_uk` was unreachable from the UK exit (TLS closed / no response) and is deferred. (`dover_gov_uk` and `swansea_gov_uk`, listed here before, are migrated in the UK block above.) `merton_gov_uk` (the old portal returns 404) and `newcastle_gov_uk` (the lookup was retired) are dead; both councils are already covered by shared ICS entries ("London Borough of Merton (New)", and ReCollect area `NewcastleUponTyneUK` in `recollect.yaml`), so they are removal candidates for the next major release. `hastings_gov_uk` is deferred: its server omits the intermediate certificate (the pipeline verifies TLS strictly; the legacy source disables verification), a decision on shipping the intermediate certificate is open. `vestfor_dk` is deferred: its self-service host is unreachable from the German exit and needs a Danish IP.
 
-- **html** (7): `apps_ci_minneapolis_mn_us`, `araccolta_it`, `dover_gov_uk`, `geelongaustralia_com_au`, `mundaring_wa_gov_au`, `swansea_gov_uk`, `wolverhampton_gov_uk`
-- **json** (10): `armadale_wa_gov_au`, `blackpool_gov_uk`, `hygea_be`, `odenserenovation_dk`, `palmcoast_fl_gov`, `panda_ie`, `poriruacity_govt_nz`, `tkeliai_lt`, `vestfor_dk`, `wastenet_org_nz`
-- **?** (2): `victoriapark_wa_gov_au`, `villagebonconseil_ca`
+- **html** (2): `apps_ci_minneapolis_mn_us`, `araccolta_it`
+- **json** (5): `hygea_be`, `odenserenovation_dk`, `panda_ie`, `tkeliai_lt`, `vestfor_dk`
 - **ics/json** (1): `ecoapp_ecoservice_lt`
-- **ics/html** (2): `grosswangen_ch`, `merton_gov_uk`
-- **ics** (2): `newcastle_gov_uk`, `strathfield_nsw_gov_au`
+- **ics/html** (1): `merton_gov_uk`
+- **ics** (1): `newcastle_gov_uk`
 
 ## 8. Standalone, medium
 
 Done in the first block (4): `fairfieldcity_nsw_gov_au` (the council's autocomplete switched to spelled-out street types, which broke every saved "Dawson ST" value; the source now maps the typed street onto the autocomplete list and suggests streets when none matches), `gleneira_vic_gov_au` (the address autocomplete is a declared `Lookup`; street sweeping stays excluded, it is a weekday rule, not a date), `vogeldisposal_com` (`YearlyRetriever` over the city, address and pickup-info calls; recycling days are both general waste and recycling), `newforest_gov_uk` (the Ebase UFS form as two `Lookup`s and a `Request` in one session, no hand-rolled `http.client`). The other medium candidates checked in this block stay legacy: `newham_gov_uk` has the same missing-intermediate problem as `hastings_gov_uk`, and most of the remaining UK, AU and NZ councils refuse or geoblock the test exit, need credentials, or compute dates from a cadence.
 
-- **json** (20): `aksd_hu`, `apricaspa_it`, `bristol_gov_uk`, `casey_vic_gov_au`, `ccc_govt_nz`, `cockburn_wa_gov_au`, `enfield_gov_uk`, `fcc_group_eu`, `grafikai_svara_lt`, `hastings_gov_uk`, `joondalup_wa_gov_au`, `komunala_kranj_si`, `lacity_gov`, `nwrrr_com_au`, `silea_it`, `sivom_com`, `sunshinecoast_qld_gov_au`, `thehills_nsw_gov_au`, `vattenmiljoresurs_se`, `waikato_district_council_govt_nz`
-- **html** (22): `adur_worthing_gov_uk`, `antrimandnewtownabbey_gov_uk`, `aucklandcouncil_govt_nz`, `belfast_city_gov_uk`, `chichester_gov_uk`, `coeur_yvelines_fr`, `dardanup_wa_gov_au`, `east_renfrewshire_gov_uk`, `environmentfirst_co_uk`, `gardenbags_co_nz`, `ipswich_gov_uk`, `islington_gov_uk`, `midsussex_gov_uk`, `newham_gov_uk`, `northumberland_gov_uk`, `stamford_ct_us`, `swale_gov_uk`, `teignbridge_gov_uk`, `terrestouloises_com`, `ville_quebec_qc_ca`, `warrnambool_vic_gov_au`, `wigan_gov_uk`
-- **json/html** (13): `gateshead_gov_uk`, `goldenplains_vic_gov_au`, `gosport_gov_uk`, `great_yarmouth_gov_uk`, `greyhound_ie`, `hastingsdc_govt_nz`, `iris_salten_no`, `lewisham_gov_uk`, `powys_gov_uk`, `rfd_no`, `royalgreenwich_gov_uk`, `south_ayrshire_gov_uk`, `stockton_gov_uk`
-- **ics/json** (8): `airdrie_ca`, `api_golemio_cz`, `ekonovus_lt`, `greatershepparton_com_au`, `maitland_nsw_gov_au`, `npdc_govt_nz`, `republicservices_com`, `sanantonio_gov`
-- **?** (2): `eth_erd_hu`, `southampton_gov_uk`
-- **ics/json/html** (2): `barrie_ca`, `rir_no`
-- **json/xml** (1): `ciudad_de_la_costa_uy`
-- **csv** (2): `data_montpellier3m_fr`, `scenicrim_qld_gov_au`
-- **ics/html** (2): `portenf_sa_gov_au`, `preston_gov_uk`
-- **xml** (1): `laznebohdanec_cz`
-- **ics** (1): `ritl_ca`
+- **json** (5): `casey_vic_gov_au`, `ccc_govt_nz`, `grafikai_svara_lt`, `hastings_gov_uk`, `komunala_kranj_si`
+- **html** (5): `aucklandcouncil_govt_nz`, `gardenbags_co_nz`, `islington_gov_uk`, `newham_gov_uk`, `warrnambool_vic_gov_au`
+- **json/html** (1): `greyhound_ie`
+- **ics/json** (5): `airdrie_ca`, `api_golemio_cz`, `greatershepparton_com_au`, `maitland_nsw_gov_au`, `npdc_govt_nz`
+- **csv** (1): `scenicrim_qld_gov_au`
 
 ## 9. Standalone, large
 
-- **json** (14): `ahk_heidekreis_de`, `avfallsapp_se`, `cbcity_nsw_gov_au`, `cistomesto_si`, `delight_system_com`, `geovest_it`, `hvcgroep_nl`, `irenambiente_it`, `montreal_ca`, `montri_fr`, `olo_sk`, `pendle_gov_uk`, `sudestavenir_fr`, `wm_com`
-- **json/html** (3): `iapp_itouchvision_com`, `sesaeste_it`, `sunderland_gov_uk`
-- **html** (2): `abfall_wiener_neustadt_at`, `mywastewatcher_de`
-- **ics/json** (2): `awb_bad_kreuznach_de`, `awido_de`
-- **ics/json/html** (2): `baltimore_county_md_us`, `croydon_gov_uk`
-- **ics/html** (1): `kom_lub_com_pl`
+- **json** (1): `avfallsapp_se`
+- **ics/json/html** (1): `baltimore_county_md_us`
+
+## Reconciliation with `arch_coverage.py` (2026-10-31)
+
+Between 2026-10-13 and 2026-10-26, ninety sources listed here as legacy were migrated by PRs that did not update this file. The table total was only ever lowered by the PRs that did edit the file (#8067, #8083), so it drifted from 61 actual legacy sources to a claimed 151. The lists now hold exactly the sources that `python tools/arch_coverage.py` reports as legacy; the prose notes in the classes above are historical and may name sources that have been migrated since. Removed from the lists, by migrating PR (`grenchen_ch` is also gone from class 2; it was already a pipeline source in #7787):
+
+- #7815: `adur_worthing_gov_uk`, `aksd_hu`, `apricaspa_it`, `belfast_city_gov_uk`, `coeur_yvelines_fr`, `data_montpellier3m_fr`, `ekonovus_lt`, `eth_erd_hu`, `fcc_group_eu`, `iris_salten_no`, `laznebohdanec_cz`, `northumberland_gov_uk`, `rfd_no`, `rir_no`, `royalgreenwich_gov_uk`, `sivom_com`, `southampton_gov_uk`, `terrestouloises_com`, `vattenmiljoresurs_se`
+- #7816: `ahk_heidekreis_de`, `armadale_wa_gov_au`, `bristol_gov_uk`, `cistomesto_si`, `environmentfirst_co_uk`, `goldenplains_vic_gov_au`, `hastingsdc_govt_nz`, `irenambiente_it`, `montri_fr`, `mundaring_wa_gov_au`, `olo_sk`, `palmcoast_fl_gov`, `sesaeste_it`, `thehills_nsw_gov_au`, `villagebonconseil_ca`, `waikato_district_council_govt_nz`, `wigan_gov_uk`
+- #7818: `abfall_wiener_neustadt_at`, `barrie_ca`, `cockburn_wa_gov_au`, `enfield_gov_uk`, `hvcgroep_nl`, `joondalup_wa_gov_au`, `kom_lub_com_pl`, `lewisham_gov_uk`, `mywastewatcher_de`, `nwrrr_com_au`, `pendle_gov_uk`, `republicservices_com`, `sanantonio_gov`, `swale_gov_uk`, `ville_quebec_qc_ca`, `wm_com`
+- #7918: `awido_de`
+- #7924: `awb_bad_kreuznach_de`
+- #7927: `montreal_ca`
+- #7953: `delight_system_com`
+- #7956: `geovest_it`
+- #7957: `chiltern_gov_uk`, `iapp_itouchvision_com`
+- #7958: `chichester_gov_uk`
+- #7959: `teignbridge_gov_uk`
+- #7965: `blackpool_gov_uk`, `geelongaustralia_com_au`
+- #7975: `gosport_gov_uk`, `stockton_gov_uk`
+- #7982: `croydon_gov_uk`, `poriruacity_govt_nz`
+- #7992: `byron_nsw_gov_au`, `silea_it`, `south_ayrshire_gov_uk`, `south_norfolk_and_broadland_gov_uk`, `sunderland_gov_uk`
+- #8000: `portenf_sa_gov_au`, `wastenet_org_nz`
+- #8012: `antrimandnewtownabbey_gov_uk`
+- #8013: `ciudad_de_la_costa_uy`, `grosswangen_ch`, `ritl_ca`
+- #8014: `dardanup_wa_gov_au`, `lacity_gov`
+- #8021: `cbcity_nsw_gov_au`, `stamford_ct_us`, `sudestavenir_fr`, `sunshinecoast_qld_gov_au`, `victoriapark_wa_gov_au`
+- #8029: `awb_mainz_bingen_de`, `strathfield_nsw_gov_au`, `wieliczka_kiedyodpady_pl`, `wolverhampton_gov_uk`, `wuerzburg_de`
 
 ## How to use this
 
@@ -141,4 +158,4 @@ Done in the first block (4): `fairfieldcity_nsw_gov_au` (the council's autocompl
 2. Work **class 4**, then **class 5** cluster by cluster: each cluster is one new component plus a few small migrations, verified by cassette replay.
 3. **Class 7** is independent and parallelisable; **class 8** and **9** follow and are where a new shared component is most likely needed.
 
-Update the counts when a class empties. Delete this file when the legacy count reaches zero.
+Update the lists and counts in the same PR that migrates or removes a source, and check the total against `python tools/arch_coverage.py`. Delete this file when the legacy count reaches zero.

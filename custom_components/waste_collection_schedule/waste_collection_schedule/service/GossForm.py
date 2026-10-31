@@ -307,16 +307,37 @@ class GossFormDataParser(Parser[Any]):
     ``field`` names the HTML fragment, e.g. ``COLLECTIONDETAILS2``. Joining
     fragments before applying the configured HTML parser keeps page and
     collection ordering, while leaving layout knowledge in that parser.
+
+    ``pages`` names the pages to read instead, in order, for a form whose
+    ``_PAGEORDER_`` lists only the pages the user filled in and not the results
+    page that carries ``field`` (Gateshead's ``HOUSEHOLDCOLLECTIONS_1``). A
+    listed page that is missing, or lacks ``field``, is an upstream shape error.
     """
 
-    def __init__(self, field: str, *, parser: Parser):
+    def __init__(
+        self, field: str, *, parser: Parser, pages: Sequence[str] | None = None
+    ):
         self.field = field
         self.parser = parser
+        self.pages = tuple(pages) if pages is not None else None
 
     def __call__(self, response: Any, source: BaseSource | None = None) -> Any:
         data = form_data(response)
-        if "_PAGEORDER_" not in data:
+        if self.pages is not None:
+            missing = [
+                page
+                for page in self.pages
+                if not isinstance(data.get(page), dict) or self.field not in data[page]
+            ]
+            if missing:
+                raise ValueError(
+                    f"GOSS FormData has no {self.field!r} on page(s) {missing}"
+                )
+            pages: Sequence[str] = self.pages
+        elif "_PAGEORDER_" not in data:
             raise ValueError("No _PAGEORDER_ in GOSS FormData response")
-        markup = "\n".join(data[page][self.field] for page in data["_PAGEORDER_"])
+        else:
+            pages = data["_PAGEORDER_"]
+        markup = "\n".join(data[page][self.field] for page in pages)
         decoded: Any = SimpleNamespace(text=markup)
         return self.parser(decoded, source)

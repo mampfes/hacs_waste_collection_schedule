@@ -9510,6 +9510,26 @@ class TestGossFormComponents:
         parser = GossFormDataParser("HTML", parser=HtmlParser("p"))
         assert [tag.get_text() for tag in parser(response)] == ["second", "first"]
 
+    def test_form_data_reads_named_pages_outside_page_order(self):
+        from waste_collection_schedule.parsers import HtmlParser
+        from waste_collection_schedule.service.GossForm import GossFormDataParser
+
+        response = self._encoded_response(
+            "FFormData",
+            {
+                "_PAGEORDER_": ["SEARCH_1"],
+                "SEARCH_1": {"OTHER": "<p>search</p>"},
+                "RESULTS_1": {"HTML": "<p>results</p>"},
+            },
+        )
+        parser = GossFormDataParser("HTML", parser=HtmlParser("p"), pages=["RESULTS_1"])
+        assert [tag.get_text() for tag in parser(response)] == ["results"]
+
+        with pytest.raises(ValueError, match="RESULTS_2"):
+            GossFormDataParser("HTML", parser=HtmlParser("p"), pages=["RESULTS_2"])(
+                response
+            )
+
     def test_form_data_missing_page_order_is_reported(self):
         from waste_collection_schedule.parsers import HtmlParser
         from waste_collection_schedule.service.GossForm import GossFormDataParser
