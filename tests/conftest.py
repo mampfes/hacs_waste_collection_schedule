@@ -7,6 +7,7 @@
 # race across the whole session. pytest loads this conftest before any test
 # module in its tree, so importing homeassistant here pins the swap ahead of
 # every other import and closes the race regardless of collection order (#7415).
-import homeassistant  # noqa: F401
+import homeassistant
+import homeassistant.core  # noqa: F401
 
 pytest_plugins = ["offline_replay"]

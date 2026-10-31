@@ -270,6 +270,7 @@ class BaseTransformer(ABC, Generic[T]):
 
         def build(waste_type: WasteType) -> Collection:
             collection = Collection(date=date, waste_type=waste_type, color=color)
+            collection.set_original_label(raw_label)
             if location is not None:
                 collection.set_location(location)
             if description is not None:

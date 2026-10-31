@@ -169,6 +169,8 @@ def _customize_keys(entry: Collection) -> list[str]:
     # id and display name preferred; de-duplicate in case either equals the
     # description (e.g. an English preserved label, or no description set).
     keys = [entry.waste_type.id, entry.type]
+    if entry.original_label:
+        keys.insert(0, entry.original_label)
     if entry.description:
         keys.append(entry.description)
     return list(dict.fromkeys(keys))
@@ -182,7 +184,8 @@ def filter_function(entry: Collection, customize: dict[str, Customize]):
 
 
 def customize_function(entry: Collection, customize: dict[str, Customize]):
-    c = _match_customize_keys(customize, _customize_keys(entry))
+    keys = _customize_keys(entry)
+    c = _match_customize_keys(customize, keys)
     if c is not None:
         if c.alias is not None:
             entry.set_type(c.alias)
@@ -190,8 +193,11 @@ def customize_function(entry: Collection, customize: dict[str, Customize]):
             entry.set_icon(c.icon)
         if c.picture is not None:
             entry.set_picture(c.picture)
-        if c.color is not None:
-            entry.set_color(c.color)
+    color = _match_customize_keys(
+        {k: v for k, v in customize.items() if v.color is not None}, keys
+    )
+    if color is not None:
+        entry.set_color(color.color)
     return entry
 
 
@@ -201,18 +207,8 @@ def apply_day_offset(entry: Collection, day_offset: int) -> Collection:
 
 
 def raw_labels_of(entries: Iterable[Collection]) -> list[str]:
-    """The provider's original labels carried on ``entries`` (#7444).
-
-    Only auto-carried raw labels (``description_is_raw_label_fallback``), never
-    a source's genuine description such as an ICS DESCRIPTION.
-    """
-    return sorted(
-        {
-            e.description.strip()
-            for e in entries
-            if e.description_is_raw_label_fallback and e.description
-        }
-    )
+    """Retained provider labels, independently of visible descriptions."""
+    return sorted({e.original_label for e in entries if e.original_label})
 
 
 class SourceShell:
@@ -238,6 +234,7 @@ class SourceShell:
         self._unique_id = unique_id
         self._refreshtime: datetime.datetime | None = None
         self._entries: list[Collection] = []
+        self._sensor_entries: list[Collection] = []
         self._day_offset = day_offset
         self._ignore_duplicates = ignore_duplicates
         self._show_original_label = show_original_label
@@ -332,6 +329,12 @@ class SourceShell:
             for e in result:
                 if e.description_is_raw_label_fallback:
                     e.set_description(None)
+
+        # Sensor filters need the distinct bins before the calendar's merge.
+        # Copy because merging descriptions below mutates the retained event.
+        from copy import copy
+
+        self._sensor_entries = [copy(e) for e in result]
 
         # Remove duplicate (date, identity) pairs, folding any distinguishing
         # description from a discarded duplicate into the entry that's kept

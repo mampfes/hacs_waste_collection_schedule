@@ -13,14 +13,10 @@ from homeassistant.config_entries import (
     ConfigEntry,
     ConfigFlow,
     ConfigFlowResult,
-    OptionsFlow,
 )
-from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import callback
 from homeassistant.helpers.selector import (
     BooleanSelector,
-    DurationSelector,
-    DurationSelectorConfig,
     IconSelector,
     NumberSelector,
     NumberSelectorConfig,
@@ -30,13 +26,10 @@ from homeassistant.helpers.selector import (
     SelectSelector,
     SelectSelectorConfig,
     SelectSelectorMode,
-    TemplateSelector,
     TextSelector,
     TextSelectorConfig,
     TextSelectorType,
-    TimeSelector,
 )
-from homeassistant.helpers.translation import async_get_translations
 from voluptuous.schema_builder import UNDEFINED
 
 from waste_collection_schedule.base_source import BaseSource
@@ -49,44 +42,19 @@ from waste_collection_schedule.exceptions import (
     SourceArgumentSuggestionsExceptionBase,
 )
 from waste_collection_schedule.source_shell import (
-    default_ignore_duplicates,
     raw_labels_of,
     source_supports_show_original_label,
 )
 
 from .const import (
-    CONF_ADD_DAYS_TO,
     CONF_ALIAS,
-    CONF_COLLECTION_TYPES,
-    CONF_COUNT,
     CONF_COUNTRY_NAME,
     CONF_CUSTOMIZE,
-    CONF_DATE_TEMPLATE,
-    CONF_DAY_OFFSET,
-    CONF_DAY_OFFSET_DEFAULT,
-    CONF_DAY_SWITCH_TIME,
-    CONF_DAY_SWITCH_TIME_DEFAULT,
     CONF_DEDICATED_CALENDAR_TITLE,
-    CONF_DETAILS_FORMAT,
-    CONF_EVENT_INDEX,
-    CONF_FETCH_INTERVAL_DAYS,
-    CONF_FETCH_INTERVAL_DAYS_DEFAULT,
-    CONF_FETCH_TIME,
-    CONF_FETCH_TIME_DEFAULT,
     CONF_ICON,
-    CONF_IGNORE_DUPLICATES,
-    CONF_IGNORE_DUPLICATES_DEFAULT,
-    CONF_LEADTIME,
     CONF_PICTURE,
-    CONF_RANDOM_FETCH_TIME_OFFSET,
-    CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
-    CONF_SENSOR_MODE,
     CONF_SENSORS,
-    CONF_SEPARATOR,
-    CONF_SEPARATOR_DEFAULT,
     CONF_SHOW,
-    CONF_SHOW_ORIGINAL_LABEL,
-    CONF_SHOW_ORIGINAL_LABEL_DEFAULT,
     CONF_SOURCE_ARGS,
     CONF_SOURCE_CALENDAR_TITLE,
     CONF_SOURCE_NAME,
@@ -98,11 +66,9 @@ from .const import (
 )
 from .default_sensors import (
     DEFAULT_SENSOR_KINDS,
-    build_default_sensors,
     default_sensors_selector,
 )
-from .init_ui import WCSCoordinator
-from .sensor import DetailsFormat
+from .waste_collection_schedule.colors import validate_color
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -389,6 +355,7 @@ def get_customize_schema(defaults: dict[str, Any] | None = None):
             CONF_ICON, default=defaults.get(CONF_ICON, UNDEFINED)
         ): IconSelector(),
         vol.Optional(CONF_PICTURE, default=defaults.get(CONF_PICTURE, UNDEFINED)): str,
+        vol.Optional("color", default=defaults.get("color", UNDEFINED)): validate_color,
         vol.Optional(
             CONF_USE_DEDICATED_CALENDAR,
             default=defaults.get(CONF_USE_DEDICATED_CALENDAR, UNDEFINED),
@@ -399,151 +366,6 @@ def get_customize_schema(defaults: dict[str, Any] | None = None):
         ): str,
     }
     return schema
-
-
-def get_sensor_schema(fetched_types, add_delete=False, defaults: dict | None = None):
-    if defaults is None:
-        defaults = {}
-    schema: dict[Any, Any] = {
-        vol.Optional(CONF_NAME, default=defaults.get(CONF_NAME, UNDEFINED)): cv.string,
-    }
-    if add_delete:
-        schema[vol.Optional("delete")] = cv.boolean
-
-    schema.update(
-        {
-            vol.Optional(
-                CONF_DETAILS_FORMAT,
-                default=defaults.get(CONF_DETAILS_FORMAT, "upcoming"),
-            ): SelectSelector(
-                SelectSelectorConfig(
-                    options=[
-                        SelectOptionDict(
-                            label=k,
-                            value=k,
-                        )
-                        for k in DetailsFormat.__members__.keys()
-                    ],
-                    translation_key="details_format",
-                )
-            ),
-            vol.Optional(
-                CONF_COUNT, default=defaults.get(CONF_COUNT, UNDEFINED)
-            ): vol.All(vol.Coerce(int), vol.Range(min=1)),
-            vol.Optional(
-                CONF_LEADTIME, default=defaults.get(CONF_LEADTIME, UNDEFINED)
-            ): int,
-            vol.Optional(
-                CONF_VALUE_TEMPLATE + "_preset",
-                default=defaults.get(CONF_VALUE_TEMPLATE + "_preset", UNDEFINED),
-            ): SelectSelector(
-                SelectSelectorConfig(
-                    options=[
-                        SelectOptionDict(label=f"{k}: {v}", value=v)
-                        for k, v in EXAMPLE_VALUE_TEMPLATES.items()
-                    ],
-                    mode=SelectSelectorMode.DROPDOWN,
-                    custom_value=False,
-                    multiple=False,
-                )
-            ),
-            vol.Optional(
-                CONF_VALUE_TEMPLATE,
-                default=defaults.get(CONF_VALUE_TEMPLATE, UNDEFINED),
-            ): TemplateSelector(),
-            vol.Optional(
-                CONF_DATE_TEMPLATE, default=defaults.get(CONF_DATE_TEMPLATE, UNDEFINED)
-            ): SelectSelector(
-                SelectSelectorConfig(
-                    options=[
-                        SelectOptionDict(label=f"{k}: {v}", value=v)
-                        for k, v in EXAMPLE_DATE_TEMPLATES.items()
-                    ],
-                    mode=SelectSelectorMode.DROPDOWN,
-                    custom_value=True,
-                    multiple=False,
-                )
-            ),
-            vol.Optional(
-                CONF_DATE_TEMPLATE + "_preset",
-                default=defaults.get(CONF_DATE_TEMPLATE + "_preset", UNDEFINED),
-            ): TemplateSelector(),
-            vol.Optional(
-                CONF_ADD_DAYS_TO, default=defaults.get(CONF_ADD_DAYS_TO, UNDEFINED)
-            ): cv.boolean,
-            vol.Optional(
-                CONF_EVENT_INDEX, default=defaults.get(CONF_EVENT_INDEX, UNDEFINED)
-            ): int,
-            vol.Optional(
-                CONF_COLLECTION_TYPES,
-                default=defaults.get(CONF_COLLECTION_TYPES, UNDEFINED),
-            ): SelectSelector(
-                SelectSelectorConfig(
-                    options=fetched_types,
-                    mode=SelectSelectorMode.DROPDOWN,
-                    custom_value=True,
-                    multiple=True,
-                )
-            ),
-        }
-    )
-    if not add_delete:
-        schema[vol.Optional("skip", default=cast(Any, False))] = cv.boolean
-        schema[vol.Optional("additional", default=cast(Any, False))] = cv.boolean
-
-    return vol.Schema(schema)
-
-
-def validate_sensor_user_input(
-    sensor_input: dict[str, Any], existing_sensors
-) -> tuple[dict[str, Any], dict[str, str]]:
-    """
-    Validate sensor user input.
-
-    Args:
-        sensor_input (dict[str, Any]): user input
-
-    Returns:
-        Tuple[dict, dict]: errors, extracted args
-    """
-    errors: dict[str, str] = {}
-    args = sensor_input.copy()
-
-    # validate value_template and date_template against cv.template
-    for key in [CONF_VALUE_TEMPLATE, CONF_DATE_TEMPLATE]:
-        preset_key = key + "_preset"
-        has_preset = preset_key in sensor_input and sensor_input[preset_key]
-        has_custom = key in sensor_input and sensor_input[key]
-
-        if has_preset and has_custom:
-            # Both a preset selection and a custom value are present.
-            # The custom value (TemplateSelector) reflects the user's direct
-            # intent, so honour it and discard the stale preset.
-            args.pop(preset_key, None)
-        elif has_preset:
-            args.pop(preset_key, None)
-            args[key] = sensor_input[preset_key]
-
-        if args.get(key):
-            try:
-                cv.template(args[key])
-            except vol.Invalid:
-                errors[key] = "invalid_template"
-
-    if sensor_input.get("skip", False) and sensor_input.get("additional", False):
-        errors["base"] = "skip_additional"
-
-    # map CONF_DETAILS_FORMAT to enum DetailsFormat
-    if CONF_DETAILS_FORMAT in args:
-        args[CONF_DETAILS_FORMAT] = DetailsFormat[args[CONF_DETAILS_FORMAT]]
-
-    if not args.get(CONF_NAME):
-        errors[CONF_NAME] = "sensor_name_empty"
-    # enforce unique Name
-    elif any(x[CONF_NAME] == args[CONF_NAME] for x in existing_sensors):
-        errors[CONF_NAME] = "name_exists"
-
-    return args, errors if args.get("skip", False) is False else {}
 
 
 EXAMPLE_VALUE_TEMPLATES = {
@@ -1098,6 +920,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             # here would otherwise become a permanently empty sensor.
             fetched_types = list({x.type.strip() for x in resp})
             self._auto_sensor_types = list(fetched_types)
+            self._sensor_type_labels = {x.waste_type.id: x.type for x in resp}
+            self._provider_labels = {x.original_label for x in resp if x.original_label}
+            self._customize_key_ids = {x.type: x.waste_type.id for x in resp}
             # The selection dropdowns (customize/sensor config) offer a fuller
             # set: the fetched types plus every canonical WASTE_TYPES name, so a
             # user can pre-make a sensor for a type not seen in this fetch.
@@ -1115,6 +940,24 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                 self._customize_targets = sorted(
                     set(self._fetched_types) | set(raw_labels_of(resp))
                 )
+            customize_labels = dict(self._sensor_type_labels)
+            from .waste_collection_schedule.waste_types import display_name
+
+            customize_labels.update(
+                {
+                    wt.id: display_name(wt)
+                    for wt in getattr(source_cls, "WASTE_TYPES", ())
+                }
+            )
+            self._customize_targets = [
+                {"value": key, "label": f"{label} ({key})"}
+                for key, label in customize_labels.items()
+            ]
+            self._customize_targets.extend(
+                {"value": label, "label": label}
+                for label in raw_labels_of(resp)
+                if label not in customize_labels
+            )
         except SourceArgumentSuggestionsExceptionBase as e:
             if not hasattr(self, "_error_suggestions"):
                 self._error_suggestions = {}
@@ -1508,7 +1351,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         schema = vol.Schema(
             {
                 vol.Optional("show_customize_config", default=cast(Any, False)): bool,
-                vol.Optional("show_sensor_config", default=cast(Any, False)): bool,
                 vol.Optional(
                     "default_sensors", default=cast(Any, list(DEFAULT_SENSOR_KINDS))
                 ): default_sensors_selector(),
@@ -1517,14 +1359,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
         if user_input is not None:
             self._show_customize_config = user_input.get("show_customize_config", False)
-            self._show_sensor_config = user_input.get("show_sensor_config", False)
             self._default_sensor_kinds = user_input.get(
                 "default_sensors", list(DEFAULT_SENSOR_KINDS)
             )
             if self._show_customize_config:
                 return await self.async_step_customize_select()
-            if self._show_sensor_config:
-                return await self.async_step_sensor()
             return await self.finish()
         return self.async_show_form(step_id="flow_type", data_schema=schema)
 
@@ -1563,8 +1402,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         if CONF_CUSTOMIZE not in self._options:
             self._options[CONF_CUSTOMIZE] = {}
         if self._customize_index >= len(types):
-            if self._show_sensor_config:
-                return await self.async_step_sensor()
             return await self.finish()
 
         errors = {}
@@ -1577,17 +1414,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
                     "dedicated_calendar_title_without_use_dedicated_calendar"
                 )
             else:
-                if CONF_ALIAS in user_input:
-                    original = types[self._customize_index]
-                    alias = user_input[CONF_ALIAS]
-                    self._fetched_types.remove(original)
-                    self._fetched_types.append(alias)
-                    # Mirror the rename onto the auto-sensor set so a default
-                    # finish() still names the sensor after the alias, but only
-                    # when the renamed type was actually fetched (#6937).
-                    if original in self._auto_sensor_types:
-                        self._auto_sensor_types.remove(original)
-                        self._auto_sensor_types.append(alias)
                 self._options[CONF_CUSTOMIZE][types[self._customize_index]] = user_input
                 self._customize_index += 1
                 return await self.async_step_customize()
@@ -1606,49 +1432,34 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             errors=errors,
         )
 
-    async def async_step_sensor(
-        self, sensor_input: dict[str, Any] | None = None
-    ) -> ConfigFlowResult:
-        if not hasattr(self, "sensors"):
-            self.sensors: list[dict[str, Any]] = []
-        errors: dict[str, str] = {}
-        if sensor_input is not None:
-            args, errors = validate_sensor_user_input(sensor_input, self.sensors)
-            if len(errors) == 0 or args.get("skip", False) is True:
-                if args.get("skip", False) is False:
-                    self.sensors.append(args)
-                if args.get("additional", False) is False:
-                    self._options.update({CONF_SENSORS: self.sensors})
-                    return await self.finish()
-
-        return self.async_show_form(
-            step_id="sensor",
-            data_schema=get_sensor_schema(self._fetched_types),
-            errors=errors,
-            description_placeholders={"sensor_number": str(len(self.sensors) + 1)},
-        )
-
     async def finish(self) -> ConfigFlowResult:
-        # Auto-create one sensor per type actually fetched at this address, not
-        # per type merely offered in the selection UI. The offer (_fetched_types)
-        # is augmented with every canonical WASTE_TYPES name so a user can
-        # pre-make a sensor for an unseen type; seeding the default sensors from
-        # that union created a permanently empty sensor for each uncollected
-        # type (#6937). The default sensors are optional and are added next to
-        # any sensors the user configured; a default is dropped when a custom
-        # sensor already uses its name. Which sets are created is the user's
-        # choice on the flow_type step; without one, both sets are.
+        from .default_sensors import KIND_LEGACY, build_default_sensors
+        from .sensor_model import migrate_filter
+
         kinds = getattr(self, "_default_sensor_kinds", list(DEFAULT_SENSOR_KINDS))
-        if kinds:
-            sensors = list(self._options.get(CONF_SENSORS) or [])
-            sensors.extend(
-                build_default_sensors(
-                    kinds,
-                    getattr(self, "_auto_sensor_types", []),
-                    existing=sensors,
-                )
-            )
-            self._options[CONF_SENSORS] = sensors
+        labels = getattr(
+            self,
+            "_sensor_type_labels",
+            {migrate_filter(t, {}): t for t in getattr(self, "_auto_sensor_types", [])},
+        )
+        category_customizations = {
+            getattr(self, "_customize_key_ids", {}).get(k, k): v
+            for k, v in self._options.get(CONF_CUSTOMIZE, {}).items()
+            if k not in getattr(self, "_provider_labels", set())
+        }
+        labels = {
+            key: category_customizations.get(key, {}).get("alias") or label
+            for key, label in labels.items()
+        }
+        self._options[CONF_SENSORS] = build_default_sensors(kinds, labels)
+        self._options["auto_add_types"] = KIND_LEGACY in kinds
+        self._options["device_controls"] = False
+        raw: set[str] = getattr(self, "_provider_labels", set())
+        mapping = getattr(self, "_customize_key_ids", {})
+        self._options[CONF_CUSTOMIZE] = {
+            mapping.get(k, k) if k not in raw else k: v
+            for k, v in self._options.get(CONF_CUSTOMIZE, {}).items()
+        }
 
         return self.async_create_entry(
             title=self._title,
@@ -1659,7 +1470,9 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
     @staticmethod
     @callback
     def async_get_options_flow(config_entry: ConfigEntry):
-        return WasteCollectionOptionsFlow(config_entry)
+        from .sensor_options import SensorOptionsFlow
+
+        return SensorOptionsFlow(config_entry)
 
     async def async_step_reconfigure(self, args_input: dict[str, Any] | None = None):
         await self._async_setup_sources()
@@ -1717,357 +1530,4 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             data_schema=schema,
             errors=errors,
             description_placeholders=description_placeholders,
-        )
-
-
-class WasteCollectionOptionsFlow(OptionsFlow):
-    """Options flow."""
-
-    def __init__(self, entry) -> None:
-        self._entry: ConfigEntry = entry
-
-    async def translate(self, text: str) -> str:
-        user_language = self.hass.config.language
-        translations = await async_get_translations(self.hass, user_language, DOMAIN)
-        return translations.get(text, text)
-
-    async def async_step_init(self, user_input: dict[str, Any] | None = None):
-        # get SourceShells
-        collection_types = []
-        calendar_title = UNDEFINED
-        # get the right coordinator
-        coordinator: WCSCoordinator = self.hass.data.get(DOMAIN, {}).get(
-            self._entry.entry_id
-        )
-
-        fetched_types: list[str] = []
-        if coordinator and isinstance(coordinator, WCSCoordinator):
-            collection_types = list(coordinator._aggregator.types)
-            fetched_types = sorted(collection_types)
-            calendar_title = coordinator._shell.calendar_title
-            # Customize selection only (never sensors): also offer the
-            # provider's original labels (#7444).
-            collection_types = sorted(
-                set(collection_types) | set(coordinator._shell.raw_labels)
-            )
-
-        customized_types = list(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
-        uncustomized_types = [x for x in collection_types if x not in customized_types]
-
-        # Pre-fill "Ignore Duplicate Entries per Day" with the source's own
-        # declared opinion (IGNORE_DUPLICATES_DEFAULT) the first time this
-        # entry's options are opened, rather than always False. Once the user
-        # submits this form, their explicit choice is stored in
-        # self._entry.options and wins from then on regardless of what the
-        # source declares.
-        source_name = self._entry.data.get(CONF_SOURCE_NAME)
-        ignore_duplicates_default = (
-            default_ignore_duplicates(source_name)
-            if source_name
-            else CONF_IGNORE_DUPLICATES_DEFAULT
-        )
-        # Only relevant for a source whose transform declares carry_raw_label
-        # (currently a handful) — for every other source it would be a
-        # checkbox with nothing to show or hide, which is confusing rather
-        # than helpful, so it's omitted from the schema entirely.
-        show_original_label_relevant = bool(
-            source_name and source_supports_show_original_label(source_name)
-        )
-
-        SCHEMA_DICT: dict = {
-            vol.Optional(
-                CONF_SOURCE_CALENDAR_TITLE,
-                default=self._entry.options.get(
-                    CONF_SOURCE_CALENDAR_TITLE, calendar_title
-                ),
-            ): cv.string,
-            vol.Optional(
-                CONF_SEPARATOR,
-                default=self._entry.options.get(CONF_SEPARATOR, CONF_SEPARATOR_DEFAULT),
-            ): cv.string,
-            vol.Optional(
-                CONF_FETCH_TIME,
-                default=self._entry.options.get(
-                    CONF_FETCH_TIME, CONF_FETCH_TIME_DEFAULT
-                ),
-            ): TimeSelector(),
-            vol.Optional(
-                CONF_FETCH_INTERVAL_DAYS,
-                default=self._entry.options.get(
-                    CONF_FETCH_INTERVAL_DAYS, CONF_FETCH_INTERVAL_DAYS_DEFAULT
-                ),
-            ): vol.All(int, vol.Range(min=1)),
-            vol.Optional(
-                CONF_RANDOM_FETCH_TIME_OFFSET,
-                default=cast(
-                    Any,
-                    {
-                        "hours": self._entry.options.get(
-                            CONF_RANDOM_FETCH_TIME_OFFSET,
-                            CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
-                        )
-                        // 60,
-                        "minutes": self._entry.options.get(
-                            CONF_RANDOM_FETCH_TIME_OFFSET,
-                            CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
-                        )
-                        % 60,
-                        "seconds": 0,
-                    },
-                ),
-            ): DurationSelector(DurationSelectorConfig(enable_day=False)),
-            vol.Optional(
-                CONF_DAY_SWITCH_TIME,
-                default=self._entry.options.get(
-                    CONF_DAY_SWITCH_TIME, CONF_DAY_SWITCH_TIME_DEFAULT
-                ),
-            ): TimeSelector(),
-            vol.Optional(
-                CONF_DAY_OFFSET,
-                default=self._entry.options.get(
-                    CONF_DAY_OFFSET, CONF_DAY_OFFSET_DEFAULT
-                ),
-            ): int,
-            vol.Optional(
-                CONF_IGNORE_DUPLICATES,
-                default=self._entry.options.get(
-                    CONF_IGNORE_DUPLICATES, ignore_duplicates_default
-                ),
-            ): BooleanSelector(),
-            vol.Optional(
-                "sensor_select",
-            ): SelectSelector(
-                SelectSelectorConfig(
-                    translation_key="sensor_select",
-                    options=[
-                        *[
-                            SelectOptionDict(label=x[CONF_NAME], value=x[CONF_NAME])
-                            for x in self._entry.options.get(CONF_SENSORS, [])
-                        ],
-                        SelectOptionDict(
-                            label="add_new_sensor", value="sensor_select_add_new"
-                        ),
-                    ],
-                    mode=SelectSelectorMode.LIST,
-                    custom_value=False,
-                    multiple=True,
-                )
-            ),
-            # Adds default sensors an older entry does not have yet. Nothing
-            # is preselected, so opening the options never changes anything.
-            vol.Optional(
-                "default_sensors", default=cast(Any, [])
-            ): default_sensors_selector(),
-            vol.Optional(
-                "customize_select",
-            ): SelectSelector(
-                SelectSelectorConfig(
-                    options=[
-                        *[
-                            SelectOptionDict(
-                                label=key
-                                + (
-                                    f": {value[CONF_ALIAS]}"
-                                    if CONF_ALIAS in value
-                                    else ""
-                                ),
-                                value=key,
-                            )
-                            for key, value in self._entry.options.get(
-                                CONF_CUSTOMIZE, {}
-                            ).items()
-                        ],
-                        *[
-                            SelectOptionDict(label=x, value=x)
-                            for x in uncustomized_types
-                        ],
-                    ],
-                    mode=SelectSelectorMode.DROPDOWN,
-                    custom_value=True,
-                    multiple=True,
-                )
-            ),
-        }
-        if show_original_label_relevant:
-            SCHEMA_DICT[
-                vol.Optional(
-                    CONF_SHOW_ORIGINAL_LABEL,
-                    default=self._entry.options.get(
-                        CONF_SHOW_ORIGINAL_LABEL, CONF_SHOW_ORIGINAL_LABEL_DEFAULT
-                    ),
-                )
-            ] = BooleanSelector()
-        SCHEMA = vol.Schema(SCHEMA_DICT)
-        errors = {}
-
-        # If form filled, update options
-        if user_input is not None:
-            # Check if the times are valid format
-            try:
-                cv.time(user_input[CONF_FETCH_TIME])
-            except vol.Invalid:
-                errors[CONF_FETCH_TIME] = "time_format"
-            try:
-                cv.time(user_input[CONF_DAY_SWITCH_TIME])
-            except vol.Invalid:
-                errors[CONF_DAY_SWITCH_TIME] = "time_format"
-            if len(errors) == 0:
-                # Not an option of its own: it only decides which sensors to add.
-                default_kinds = user_input.pop("default_sensors", [])
-                user_input[CONF_RANDOM_FETCH_TIME_OFFSET] = (
-                    user_input[CONF_RANDOM_FETCH_TIME_OFFSET]["hours"] * 60
-                    + user_input[CONF_RANDOM_FETCH_TIME_OFFSET]["minutes"]
-                )
-                self._options = user_input
-
-                self._customize_select = user_input.get("customize_select", [])
-                self._customize_select_idx = 0
-                self._options[CONF_CUSTOMIZE] = {
-                    k: v
-                    for k, v in self._entry.options.get(CONF_CUSTOMIZE, {}).items()
-                    if k not in self._customize_select
-                }
-                self._sensor_select = user_input.get("sensor_select", [])
-                self._sensor_select_idx = 0
-                self._options[CONF_SENSORS] = [
-                    s
-                    for s in self._entry.options.get(CONF_SENSORS, [])
-                    if s[CONF_NAME] not in self._sensor_select
-                ]
-                # Only what is missing is added. A sensor picked for editing is
-                # still counted as present, so its name is never duplicated.
-                self._options[CONF_SENSORS].extend(
-                    build_default_sensors(
-                        default_kinds,
-                        fetched_types,
-                        existing=self._entry.options.get(CONF_SENSORS, []),
-                    )
-                )
-                return await self.async_step_customize()
-
-        return self.async_show_form(step_id="init", data_schema=SCHEMA, errors=errors)
-
-    def get_types_of_sensors_and_customizations(self) -> list[str]:
-        fetched_types: list[str] = []
-
-        # The types a source actually produces (from the live coordinator),
-        # so a type with no sensor and no customization yet still shows up
-        # to customize (#7163) — not only what CONF_SENSORS/CONF_CUSTOMIZE
-        # happen to already mention. hass may be unset in a flow built for a
-        # narrower unit test (only exercising the options below), so this
-        # stays best-effort rather than assuming a live HA runtime.
-        hass = getattr(self, "hass", None)
-        coordinator: WCSCoordinator | None = (
-            hass.data.get(DOMAIN, {}).get(self._entry.entry_id) if hass else None
-        )
-        if coordinator and isinstance(coordinator, WCSCoordinator):
-            fetched_types.extend(coordinator._aggregator.types)
-
-        fetched_types.extend(self._entry.options.get(CONF_CUSTOMIZE, {}).keys())
-
-        for c in self._entry.options.get(CONF_SENSORS, []):
-            # Sensors store their waste types under CONF_COLLECTION_TYPES (see
-            # finish()); CONF_TYPE was never present here, so the edit-sensor
-            # type list was only ever populated from customisation keys (#6944).
-            types = c.get(CONF_COLLECTION_TYPES, [])
-            fetched_types.extend(types if isinstance(types, list) else [types])
-
-        return sorted({t for t in fetched_types if t})
-
-    async def async_step_customize(self, user_input: dict[str, Any] | None = None):
-        if self._customize_select is None or self._customize_select_idx >= len(
-            self._customize_select
-        ):
-            return await self.async_step_sensor()
-
-        defaults = self._entry.options.get(CONF_CUSTOMIZE, {}).get(
-            self._customize_select[self._customize_select_idx], {}
-        )
-        is_new = self._customize_select[
-            self._customize_select_idx
-        ] not in self._entry.options.get(CONF_CUSTOMIZE, {})
-        dict_schema: dict[vol.Optional, Any] = get_customize_schema(defaults)
-        if not is_new:
-            dict_schema[vol.Optional("delete")] = cv.boolean
-
-        schema = self.add_suggested_values_to_schema(
-            vol.Schema(dict_schema), user_input
-        )
-        if user_input is not None:
-            if not user_input.get(
-                "delete", False
-            ):  # only re-add the (modified) customization if not deleted
-                user_input.pop("delete", None)
-                self._options[CONF_CUSTOMIZE][
-                    self._customize_select[self._customize_select_idx]
-                ] = user_input
-            self._customize_select_idx += 1
-            return await self.async_step_customize()
-
-        return self.async_show_form(
-            step_id="customize",
-            data_schema=schema,
-            description_placeholders={
-                "index": str(self._customize_select_idx + 1),
-                "total": str(len(self._customize_select)),
-                "type": self._customize_select[self._customize_select_idx],
-            },
-        )
-
-    async def async_step_sensor(self, user_input: dict[str, Any] | None = None):
-        if self._sensor_select is None or self._sensor_select_idx >= len(
-            self._sensor_select
-        ):
-            _LOGGER.debug("self._options: %s", self._options)
-            return self.async_create_entry(data=self._options)
-
-        # find sensor with the same name
-        original_sensor = next(
-            (
-                x
-                for x in self._entry.options.get(CONF_SENSORS, [])
-                if x[CONF_NAME] == self._sensor_select[self._sensor_select_idx]
-            ),
-            None,
-        )
-
-        schema = self.add_suggested_values_to_schema(
-            get_sensor_schema(
-                self.get_types_of_sensors_and_customizations(),
-                add_delete=True,
-                defaults=original_sensor or {},
-            ),
-            user_input,
-        )
-        errors: dict[str, str] = {}
-        # is_new = self._sensor_select[self._sensor_select_idx] == "sensor_select_add_new"
-
-        if user_input is not None:
-            if user_input.get(
-                "delete", False
-            ):  # only re-add the (modified) sensor if not deleted
-                self._sensor_select_idx += 1
-                return await self.async_step_sensor()
-
-            user_input.pop("delete", None)
-            args, errors = validate_sensor_user_input(
-                user_input, self._options[CONF_SENSORS]
-            )
-
-            if len(errors) == 0:
-                # The form has no field for the sensor mode, so an edited
-                # overview sensor must not silently turn into a plain one.
-                if original_sensor and original_sensor.get(CONF_SENSOR_MODE):
-                    args[CONF_SENSOR_MODE] = original_sensor[CONF_SENSOR_MODE]
-                self._options[CONF_SENSORS].append(args)
-                self._sensor_select_idx += 1
-                return await self.async_step_sensor()
-
-        return self.async_show_form(
-            step_id="sensor",
-            errors=errors,
-            data_schema=schema,
-            description_placeholders={
-                "sensor_number": str(self._sensor_select_idx + 1),
-            },
         )
