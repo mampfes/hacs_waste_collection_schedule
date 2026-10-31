@@ -1,7 +1,7 @@
-"""Pipeline component for the Hungarian "hulladéknaptár" PDF calendars.
+"""Pipeline components for Hungarian annual waste calendars.
 
-Depónia Nonprofit Kft. (deponia.hu) and Siókom Nonprofit Kft. (siokom.hu) are
-sister companies that publish the same annual calendar, exported from a
+Depónia (deponia.hu), Siókom (siokom.hu) and Dunanett (dunanett.hu)
+publish the same annual calendar, exported from a
 PowerPoint template: one table with a column per month and a row per separately
 collected waste type (``szelektív``, ``zöldhulladék``, ...) listing the days of
 the month ("3.,17.,31." or "1,8,15,22, 29"), and a sentence below it that
@@ -16,6 +16,10 @@ labels are the Hungarian words printed in the PDF (plus :data:`GENERAL` and
 ``ICSTransformer`` maps onto waste types. The month of a day cell is the month
 header nearest to it in the layout text. A PDF without a year, without the
 month header or without any date fails loudly instead of returning nothing.
+
+``MonthTableCalendarParser`` reads the corresponding HTML/DOCX/PDF month-and-day
+tables. ``PublishedCalendarsParser`` checks downloaded calendars against their
+publication index, including files without a year in their download URL.
 """
 
 from __future__ import annotations
@@ -26,12 +30,15 @@ import unicodedata
 from datetime import date, timedelta
 from io import BytesIO
 from typing import TYPE_CHECKING, Any
+from urllib.parse import unquote, urlsplit
+from xml.etree import ElementTree
+from zipfile import BadZipFile, ZipFile
 
-from waste_collection_schedule import response_shape
+from waste_collection_schedule import parsers, response_shape
 from waste_collection_schedule.parsers import Parser
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable, Mapping
+    from collections.abc import Callable, Iterable, Mapping
 
     from waste_collection_schedule.base_source import BaseSource
 
@@ -40,6 +47,11 @@ _LOGGER = logging.getLogger(__name__)
 #: Labels for the two rounds that are not rows of the month table.
 GENERAL = "vegyes"
 BULKY = "lomtalanítás"
+CHRISTMAS_TREES = "fenyőfa"
+CHRISTMAS_TREE_DESCRIPTION = (
+    "Christmas trees only: remove all decorations and other waste. "
+    "Other garden waste is not collected on this date."
+)
 
 MONTHS = {
     "január": 1,
@@ -67,6 +79,9 @@ WEEKDAYS = {
 }
 
 _YEAR_RE = re.compile(r"(20\d{2})\.\s*évi\s+hulladéknaptár", re.IGNORECASE)
+_JANUARY_TREES_RE = re.compile(
+    r"a januari zoldhulladekgyujtes soran kizarolag[^.]*fenyofakat szallitjuk el",
+)
 #: Day-list notations of a month cell: "14,28" / "1,8,15,22, 29" (Siókom).
 PLAIN_CELLS = r"-|\d{1,2}(?:[.,]\s*\d{1,2}){1,6}\.?|\d{1,2}\.?"
 #: and "3.,17.,31." / "14. 28" (Depónia).
@@ -135,6 +150,8 @@ def table_row_dates(
     skip: re.Pattern[str],
     cells: re.Pattern[str] = re.compile(PLAIN_CELLS),
     max_length: int | None = None,
+    strict: bool = False,
+    source_name: str = "source",
 ) -> list[tuple[date, str]]:
     """The dated cells of one table row, labelled with the row's waste type.
 
@@ -148,7 +165,22 @@ def table_row_dates(
     match = re.search(pattern, line, re.IGNORECASE)
     if not match:
         return []
-    after = line[match.end() :]
+    label_end = match.end()
+    after = line[label_end:]
+    if strict:
+        matches = list(cells.finditer(after))
+        months = [
+            min(columns, key=lambda col: abs(col[0] - label_end - cell.start()))[1]
+            for cell in matches
+        ]
+        response_shape.expect(
+            len(matches) == 12
+            and sorted(months) == list(range(1, 13))
+            and not cells.sub("", after).strip(),
+            source_name=source_name,
+            detail="expected twelve complete month cells for each waste row",
+            raw=line,
+        )
     if not re.search(r"\d|-", after):
         return []
     label = types[match.group(1).lower()]
@@ -157,12 +189,19 @@ def table_row_dates(
         token = cell.group()
         if token in ("-", "–", "—") or not _DAY_RE.search(token):
             continue
-        position = match.end() + cell.start()
+        position = label_end + cell.start()
         month = min(columns, key=lambda col: abs(col[0] - position))[1]
         for day in (int(item) for item in _DAY_RE.findall(token)):
             try:
                 entries.append((date(year, month, day), label))
             except ValueError:
+                if strict:
+                    response_shape.expect(
+                        False,
+                        source_name=source_name,
+                        detail=f"invalid calendar date {year}-{month}-{day}",
+                        raw=line,
+                    )
                 _LOGGER.debug("Ignoring invalid date %s-%s-%s", year, month, day)
     return entries
 
@@ -290,7 +329,7 @@ def bulky_dates(text: str) -> list[date]:
 
 
 class CalendarParser(Parser["list[tuple[date, str]]"]):
-    """Decode a Depónia / Siókom hulladéknaptár PDF into ``(date, label)``.
+    """Decode a Hungarian hulladéknaptár PDF into ``(date, label)``.
 
     Args:
         types: the table row labels to read (lowercase, as printed) and the
@@ -303,6 +342,15 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
             :data:`BULKY`.
         holiday_moves: apply the announced holiday moves of the weekly
             general-waste round.
+        strict: require every configured row, twelve complete month cells per
+            row, valid dates and a weekly general-waste rule.
+        expected_municipality: exact municipality in the annual heading; a
+            literal or a callable receiving the source parameters.
+        year_from_url: require the PDF filename's year to match its heading;
+            a boolean or a callable receiving the source parameters.
+        january_trees: relabel January garden dates as :data:`CHRISTMAS_TREES`
+            only when the PDF explicitly restricts them to undecorated trees.
+            Map that label to garden waste and carry its restriction metadata.
     """
 
     def __init__(
@@ -314,13 +362,21 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
         max_row_length: int | None = None,
         bulky: bool = False,
         holiday_moves: bool = False,
-    ):
+        strict: bool = False,
+        expected_municipality: str | Callable[..., str] | None = None,
+        year_from_url: bool | Callable[..., bool] = False,
+        january_trees: bool = False,
+    ) -> None:
         self.types = {key.lower(): value for key, value in types.items()}
         self.skip = re.compile(skip, re.IGNORECASE)
         self.cells = re.compile(cells)
         self.max_row_length = max_row_length
         self.bulky = bulky
         self.holiday_moves = holiday_moves
+        self.strict = strict
+        self.expected_municipality = expected_municipality
+        self.year_from_url = year_from_url
+        self.january_trees = january_trees
 
     def __call__(
         self, response: Any, source: BaseSource | None = None
@@ -343,6 +399,38 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
             raw=combined[:500],
         )
         year = int(year_match.group(1))  # type: ignore[union-attr]
+        year_from_url = (
+            self.year_from_url(**(source.params if source else {}))
+            if callable(self.year_from_url)
+            else self.year_from_url
+        )
+        if year_from_url:
+            years = re.findall(
+                r"20\d{2}", unquote(urlsplit(response.url).path).rsplit("/", 1)[-1]
+            )
+            response_shape.expect(
+                years == [str(year)],
+                source_name=name,
+                detail="PDF filename year does not match the annual heading",
+                raw=response.url,
+            )
+        if self.expected_municipality is not None:
+            wanted = (
+                self.expected_municipality(**(source.params if source else {}))
+                if callable(self.expected_municipality)
+                else self.expected_municipality
+            )
+            heading = re.search(
+                _YEAR_RE.pattern + r"\s*[-–—]\s*([^\n]+)",
+                "\n".join(layouts),
+                re.IGNORECASE,
+            )
+            response_shape.expect(
+                heading is not None and fold(heading.group(2)) == fold(wanted),
+                source_name=name,
+                detail="annual heading does not match the expected municipality",
+                raw=combined[:500],
+            )
 
         columns = None
         table_page = 0
@@ -362,7 +450,17 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
         )
 
         dated: list[tuple[date, str]] = []
+        seen_types: set[str] = set()
+        in_table = not self.strict
         for line in layouts[table_page].splitlines():
+            if self.strict:
+                if month_columns(line):
+                    in_table = True
+                    continue
+                if _COMMUNAL_RE.search(line):
+                    break
+                if not in_table:
+                    continue
             dated.extend(
                 table_row_dates(
                     line,
@@ -372,12 +470,36 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
                     skip=self.skip,
                     cells=self.cells,
                     max_length=self.max_row_length,
+                    strict=self.strict,
+                    source_name=name,
                 )
             )
+            if self.strict and not self.skip.search(line):
+                seen_types.update(
+                    label
+                    for label in self.types
+                    if re.search(rf"\b{re.escape(label)}\b", line, re.IGNORECASE)
+                )
 
         weekly = general_waste_dates(plains[table_page], year) or general_waste_dates(
             layouts[table_page], year
         )
+        if self.strict:
+            response_shape.expect(
+                bool(weekly) and set(self.types) <= seen_types,
+                source_name=name,
+                detail="missing required waste row or general-waste rule",
+                raw=layouts[table_page],
+            )
+        if self.january_trees and _JANUARY_TREES_RE.search(fold(combined)):
+            garden = self.types.get("zöldhulladék")
+            dated = [
+                (
+                    when,
+                    CHRISTMAS_TREES if when.month == 1 and label == garden else label,
+                )
+                for when, label in dated
+            ]
         if weekly and self.holiday_moves:
             weekly = apply_postponements(weekly, postponements(combined, year))
         dated.extend((when, GENERAL) for when in weekly)
@@ -390,4 +512,369 @@ class CalendarParser(Parser["list[tuple[date, str]]"]):
             detail="no collection dates found in the PDF",
             raw=combined[:500],
         )
-        return sorted(dated)
+        return sorted(set(dated)) if self.strict else sorted(dated)
+
+
+class PublishedCalendarsParser(Parser["list[tuple[date, str]]"]):
+    """Validate downloaded calendars against the years in their publication index.
+
+    Pair with ``FanOutRetriever(include_prepared=True)`` whose prepare returns
+    the index response. ``discover(response, **params)`` is the same pure pick
+    used by its targets, returning ordered ``(url, year)`` pairs. Keeping the
+    real index alongside the downloads also handles yearless/UUID filenames.
+    """
+
+    def __init__(
+        self, *, discover: Callable[..., list[tuple[str, int]]], parser: Parser
+    ) -> None:
+        self.discover = discover
+        self.parser = parsers.EachResponse(parser)
+
+    def __call__(
+        self, response: Any, source: BaseSource | None = None
+    ) -> list[tuple[date, str]]:
+        index, *documents = response
+        targets = self.discover(index, **(source.params if source else {}))
+        name = response_shape.source_name(source)
+        response_shape.expect(
+            len(documents) == len(targets),
+            source_name=name,
+            detail="publication index and downloaded calendar count disagree",
+            raw=targets,
+        )
+        records: list[tuple[date, str]] = []
+        for document, (url, year) in zip(documents, targets, strict=True):
+            dated = self.parser([document], source)
+            response_shape.expect(
+                bool(dated) and {when.year for when, _ in dated} == {year},
+                source_name=name,
+                detail="calendar heading year disagrees with its publication index",
+                raw=(url, year),
+            )
+            records.extend(dated)
+        return records
+
+
+_ROMAN_MONTHS = (
+    "I",
+    "II",
+    "III",
+    "IV",
+    "V",
+    "VI",
+    "VII",
+    "VIII",
+    "IX",
+    "X",
+    "XI",
+    "XII",
+)
+_MONTH_NUMBERS = {fold(name): number for name, number in MONTHS.items()}
+_MONTH_NUMBERS.update(
+    {name.lower(): number for number, name in enumerate(_ROMAN_MONTHS, 1)}
+)
+
+
+def _month_table_dates(
+    rows: list[list[str]],
+    year: int,
+    label: str,
+    *,
+    trees: bool,
+    name: str,
+    complete: bool = False,
+) -> list[tuple[date, str]]:
+    """Read alternating month/day rows, preserving explicitly omitted months."""
+    response_shape.expect(
+        len(rows) in (2, 4),
+        source_name=name,
+        detail="expected paired month and day rows",
+        raw=rows,
+    )
+    dated: list[tuple[date, str]] = []
+    seen: list[int] = []
+    for headers, cells in zip(rows[::2], rows[1::2], strict=True):
+        months = [_MONTH_NUMBERS.get(fold(cell).rstrip(".")) for cell in headers]
+        response_shape.expect(
+            bool(months) and len(months) == len(cells) and all(months),
+            source_name=name,
+            detail="invalid month headings or unequal day cells",
+            raw=rows,
+        )
+        for month, cell in zip(months, cells, strict=True):
+            assert month is not None
+            seen.append(month)
+            token = cell.strip()
+            response_shape.expect(
+                re.fullmatch(r"-|\d{1,2}(?:(?:\.?\s+|\s*[/,]\s*)\d{1,2})*\.?", token)
+                is not None,
+                source_name=name,
+                detail="invalid month day list",
+                raw=cell,
+            )
+            days = [int(day) for day in re.findall(r"\d+", token)]
+            response_shape.expect(
+                days == sorted(set(days)),
+                source_name=name,
+                detail="duplicate or unordered days in month cell",
+                raw=cell,
+            )
+            for day in days:
+                try:
+                    when = date(year, month, day)
+                except ValueError:
+                    raise response_shape.ResponseShapeError(
+                        name, "invalid calendar date"
+                    ) from None
+                dated.append((when, CHRISTMAS_TREES if trees and month == 1 else label))
+    response_shape.expect(
+        seen == sorted(set(seen))
+        and (not (complete or label == "szelektív") or seen == list(range(1, 13))),
+        source_name=name,
+        detail="missing, duplicate or unordered month columns",
+        raw=rows,
+    )
+    return dated
+
+
+def _docx_blocks(content: bytes, name: str) -> list[str | list[list[str]]]:
+    """Extract body paragraphs and table cells from a real DOCX ZIP, in order."""
+    ns = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
+
+    def text(element: ElementTree.Element) -> str:
+        return (
+            " ".join(
+                "".join(node.text or "" for node in paragraph.findall(".//w:t", ns))
+                for paragraph in element.iterfind(".//w:p", ns)
+            )
+            if element.tag.endswith("}tc")
+            else "".join(node.text or "" for node in element.findall(".//w:t", ns))
+        )
+
+    try:
+        with ZipFile(BytesIO(content)) as archive:
+            # ElementTree does not resolve external entities.
+            root = ElementTree.fromstring(archive.read("word/document.xml"))  # nosec B314
+    except (BadZipFile, KeyError, ElementTree.ParseError) as error:
+        raise response_shape.ResponseShapeError(
+            name, "invalid DOCX calendar"
+        ) from error
+    body = root.find("w:body", ns)
+    response_shape.expect(
+        body is not None,
+        source_name=name,
+        detail="missing DOCX body",
+        raw=content[:100],
+    )
+    assert body is not None
+    return [
+        [
+            [text(cell) for cell in row.findall("w:tc", ns)]
+            for row in element.findall("w:tr", ns)
+        ]
+        if element.tag.endswith("}tbl")
+        else text(element)
+        for element in body
+        if element.tag.endswith(("}tbl", "}p"))
+    ]
+
+
+def _article_general_dates(text: str, year: int, name: str) -> list[date]:
+    """Require both named areas to share the explicitly stated target weekday.
+
+    The weekday *before* ``helyett`` is the superseded round, never a target.
+    An altered or area-dependent rule needs investigation rather than guessing.
+    """
+    weekday = "|".join(fold(day) for day in WEEKDAYS)
+    rule = re.fullmatch(
+        rf"melykut telepulesreszen valtozik a kommunalis hulladekszallitas rendje\s*:\s*"
+        rf"a korabbi (?:{weekday})i nap helyett (?P<changed>{weekday})i napokon "
+        rf"tortenik a hulladekszallitas\. a kozponti telepulesreszen valtozatlanul "
+        rf"(?P<central>{weekday})i napon kerul elszallitasra a kommunalis hulladek\.",
+        fold(text),
+    )
+    response_shape.expect(
+        rule is not None and rule["changed"] == rule["central"],
+        source_name=name,
+        detail="unrecognised or area-dependent annual general-waste rule",
+        raw=text,
+    )
+    assert rule is not None
+    return dates_in_range(
+        date(year, 1, 1), date(year, 12, 31), weekdays_in(rule["changed"])
+    )
+
+
+def _pdf_month_blocks(
+    response: Any, source: BaseSource | None
+) -> list[str | list[list[str]]]:
+    """Read alternating month/day table rows through the shared PDF extractor."""
+    blocks: list[str | list[list[str]]] = []
+    table: list[list[str]] = []
+    expect_days = False
+    for row in parsers.PdfTableParser(char_margin=1)(response, source):
+        cells = [word.text for word in row.words]
+        text = " ".join(cells)
+        months = text.split()
+        if len(months) > 1 and all(fold(month) in _MONTH_NUMBERS for month in months):
+            response_shape.expect(
+                not expect_days,
+                source_name=response_shape.source_name(source),
+                detail="missing day row below month headings",
+                raw=text,
+            )
+            table.append(months)
+            expect_days = True
+        elif expect_days:
+            table.append(cells)
+            expect_days = False
+        else:
+            if table:
+                blocks.append(table)
+                table = []
+            blocks.append(text)
+    response_shape.expect(
+        not expect_days,
+        source_name=response_shape.source_name(source),
+        detail="missing day row below month headings",
+    )
+    if table:
+        blocks.append(table)
+    return blocks
+
+
+class MonthTableCalendarParser(Parser["list[tuple[date, str]]"]):
+    """Hungarian annual HTML/DOCX/PDF calendars with month headings above day lists.
+
+    HTML uses the annual article heading and its two labelled tables; DOCX/PDF
+    use the printed heading and body/table order. An HTML garden table may omit
+    months; documents must print all twelve month headings, including empty
+    months. January tree restrictions are detected from the publication, and
+    no absent residual rule is invented.
+    """
+
+    def __init__(self, *, docx: bool = False, pdf: bool = False) -> None:
+        if docx and pdf:
+            raise ValueError("Choose one document format")
+        self.docx = docx
+        self.pdf = pdf
+
+    def __call__(
+        self, response: Any, source: BaseSource | None = None
+    ) -> list[tuple[date, str]]:
+        name = response_shape.source_name(source)
+        wanted = fold(source.params["municipality"]) if source else ""
+        weekly: list[date] = []
+        if self.docx or self.pdf:
+            blocks = (
+                _docx_blocks(response.content, name)
+                if self.docx
+                else _pdf_month_blocks(response, source)
+            )
+            heading = " ".join(block for block in blocks if isinstance(block, str))
+            match = re.search(
+                r"hulladekgyujtes\s+(20\d{2})\s*\.\s*evben", fold(heading)
+            )
+        else:
+            headings = parsers.HtmlParser("h1")(response)
+            contents = parsers.HtmlParser(".entry-content")(response)
+            response_shape.expect(
+                len(headings) == len(contents) == 1,
+                source_name=name,
+                detail="expected one annual article and heading",
+                raw=response.text[:500],
+            )
+            heading = headings[0].get_text(" ", strip=True)
+            match = re.fullmatch(
+                r"tajekoztato a hulladekszallitas (20\d{2})\.? evi rendjerol",
+                fold(heading),
+            )
+            blocks = [
+                [
+                    [
+                        cell.get_text(" ", strip=True)
+                        for cell in row.find_all(["td", "th"], recursive=False)
+                    ]
+                    for row in element.select("tr")
+                ]
+                if element.name == "table"
+                else element.get_text(" ", strip=True)
+                for element in contents[0].find_all(["p", "table"], recursive=False)
+            ]
+            heading += " " + contents[0].get_text(" ", strip=True)
+        response_shape.expect(
+            match is not None
+            and bool(wanted)
+            and re.search(rf"\b{re.escape(wanted)}(?:en)?\b", fold(heading))
+            is not None,
+            source_name=name,
+            detail="missing annual heading or wrong municipality",
+            raw=heading[:500],
+        )
+        assert match is not None
+        year = int(match[1])
+        dated: list[tuple[date, str]] = []
+        seen: list[str] = []
+        label = ""
+        restriction = ""
+        for block in blocks:
+            if isinstance(block, str):
+                text = fold(block)
+                if re.fullmatch(
+                    r"(?:a )?szelektiv hulladek(?:szallitas idopontjai| gyujtes)\s*:",
+                    text,
+                ):
+                    label, restriction = "szelektív", ""
+                elif re.fullmatch(
+                    r"(?:biologiailag lebomlo hulladek elszallitasanak idopontjai|zoldhulladek gyujtes)\s*:",
+                    text,
+                ):
+                    label, restriction = "zöldhulladék", ""
+                else:
+                    restriction += " " + text
+                if (
+                    not (self.docx or self.pdf)
+                    and "kommunalis hulladekszallitas rendje" in text
+                ):
+                    response_shape.expect(
+                        not weekly,
+                        source_name=name,
+                        detail="duplicate general-waste rule",
+                        raw=block,
+                    )
+                    weekly = _article_general_dates(block, year, name)
+                continue
+            response_shape.expect(
+                bool(label) and label not in seen,
+                source_name=name,
+                detail="missing or duplicate table label",
+                raw=block,
+            )
+            seen.append(label)
+            trees = bool(
+                re.search(
+                    r"januarban csak karacsonyfat szallitanak el|a januari zoldhulladek\s*gyujtes soran kizarolag[^.]*fenyofakat szallitjak el",
+                    restriction,
+                )
+            )
+            dated.extend(
+                _month_table_dates(
+                    block,
+                    year,
+                    label,
+                    trees=trees,
+                    name=name,
+                    complete=self.docx or self.pdf,
+                )
+            )
+            label = ""
+        response_shape.expect(
+            seen == ["szelektív", "zöldhulladék"]
+            and bool(dated)
+            and (self.docx or self.pdf or bool(weekly)),
+            source_name=name,
+            detail="missing annual collection table or general-waste rule",
+            raw=heading[:500],
+        )
+        dated.extend((when, GENERAL) for when in weekly)
+        return sorted(set(dated))
