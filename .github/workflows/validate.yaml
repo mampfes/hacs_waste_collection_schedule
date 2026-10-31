@@ -97,10 +97,13 @@ jobs:
         run: |
           python -c "from custom_components.waste_collection_schedule import config_flow"
           # Exclude `live` tests (they fetch real provider endpoints); the
-          # gating run stays deterministic and offline.
-          pytest -m "not live" --ignore=tests/test_offline_fixtures.py --durations=20
-      - name: Replay offline cassettes on two workers
-        run: pytest tests/test_offline_fixtures.py -n 2 --dist load --durations=20
+          # gating run stays deterministic and offline. One xdist worker per
+          # runner CPU (four on GitHub's standard Linux runners).
+          pytest -m "not live" --ignore=tests/test_offline_fixtures.py -n auto --durations=20
+      - name: Replay offline cassettes on all runner CPUs
+        # The fallback ceiling is merged across workers (tests/offline_replay.py),
+        # so it still gates the full pass.
+        run: pytest tests/test_offline_fixtures.py -n auto --dist load --durations=20
       - name: Report BaseSource pipeline coverage
         run: |
           # Informational migration metric (RFC #6561); never fails the build.
