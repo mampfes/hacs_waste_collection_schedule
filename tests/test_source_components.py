@@ -23,6 +23,26 @@ SOURCES_TO_EXCLUDE = ["__init__.py", "example.py"]
 SOURCES_EXCLUDE_TEST_CASE_CHECK = ["multiple"]
 
 
+@pytest.mark.parametrize("case", ["Unknown address", "Uncovered apartment address"])
+def test_stockholm_address_errors_blame_the_entered_address(case):
+    import cassette
+    from fixtures_support import error_fixture_path
+    from waste_collection_schedule.exceptions import SourceArgumentNotFound
+    from waste_collection_schedule.source.stockholmvattenochavfall_se import Source
+
+    args = Source.ERROR_TEST_CASES[case]
+    with (
+        cassette.replaying(error_fixture_path("stockholmvattenochavfall_se", case)),
+        pytest.raises(SourceArgumentNotFound) as error,
+    ):
+        Source(street="Drottninggatan", **args).fetch()
+    assert type(error.value) is SourceArgumentNotFound
+    assert error.value.argument == "address"
+    assert args["address"] in str(error.value)
+    if case == "Uncovered apartment address":
+        assert "villa och radhus" in str(error.value)
+
+
 @pytest.mark.parametrize("area_name", [None, ""])
 def test_threer_empty_area_offers_the_top_level(area_name):
     from waste_collection_schedule.exceptions import (

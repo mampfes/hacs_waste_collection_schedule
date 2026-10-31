@@ -5,6 +5,7 @@
   "reportMissingModuleSource": false,
   "include": [
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/nkom_lt.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/stockholmvattenochavfall_se.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/awb_mainz_bingen_de.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/wieliczka_kiedyodpady_pl.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/wuerzburg_de.py",
@@ -196,6 +197,7 @@
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/derbyshiredales_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/dienten_gv_at.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/dudley_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/dunanett_hu.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/durban_gov_za.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/durham_gov_uk.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/ead_darmstadt_de.py",
