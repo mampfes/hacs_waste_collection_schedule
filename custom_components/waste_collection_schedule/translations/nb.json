@@ -22662,6 +22662,26 @@
           "street": "Gatenavnet ditt."
         }
       },
+      "args_tamax_imielno_pl": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+        }
+      },
+      "reconfigure_tamax_imielno_pl": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_jaktorow_pl": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -22679,6 +22699,26 @@
         "data": {
           "calendar_title": "Kalendernavn",
           "region": "Region"
+        },
+        "data_description": {}
+      },
+      "args_tamax_janow_pl": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+        }
+      },
+      "reconfigure_tamax_janow_pl": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "area": "Area"
         },
         "data_description": {}
       },
@@ -22890,6 +22930,26 @@
           "street": "Gatenavnet ditt."
         }
       },
+      "args_tamax_net_pl": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+        }
+      },
+      "reconfigure_tamax_net_pl": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_gmina_radlow_pl": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -22907,6 +22967,26 @@
         "data": {
           "calendar_title": "Kalendernavn",
           "town": "Sted"
+        },
+        "data_description": {}
+      },
+      "args_tamax_szczekociny_pl": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+        }
+      },
+      "reconfigure_tamax_szczekociny_pl": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "area": "Area"
         },
         "data_description": {}
       },

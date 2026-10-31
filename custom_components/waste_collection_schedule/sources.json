@@ -32881,6 +32881,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Imielno",
+      "module": "tamax_imielno_pl",
+      "default_params": {},
+      "id": "tamax_imielno_pl"
+    },
+    {
       "title": "Gmina Inowroc\u0142aw",
       "module": "sims_pl",
       "default_params": {
@@ -32893,6 +32899,12 @@
       "module": "jaktorow_pl",
       "default_params": {},
       "id": "jaktorow_pl"
+    },
+    {
+      "title": "Gmina Jan\u00f3w",
+      "module": "tamax_janow_pl",
+      "default_params": {},
+      "id": "tamax_janow_pl"
     },
     {
       "title": "Gmina Je\u017cewo",
@@ -33215,6 +33227,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Radziemice",
+      "module": "tamax_net_pl",
+      "default_params": {},
+      "id": "tamax_net_pl"
+    },
+    {
       "title": "Gmina Rad\u0142\u00f3w",
       "module": "gmina_radlow_pl",
       "default_params": {},
@@ -33291,6 +33309,12 @@
         "owner": "Gmina Strzelin"
       },
       "id": "sims_pl"
+    },
+    {
+      "title": "Gmina Szczekociny",
+      "module": "tamax_szczekociny_pl",
+      "default_params": {},
+      "id": "tamax_szczekociny_pl"
     },
     {
       "title": "Gmina Szczytna",
@@ -34009,6 +34033,30 @@
         "app": "slupsk"
       },
       "id": "ecoharmonogram_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Imielno)",
+      "module": "tamax_imielno_pl",
+      "default_params": {},
+      "id": "tamax_imielno_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Jan\u00f3w)",
+      "module": "tamax_janow_pl",
+      "default_params": {},
+      "id": "tamax_janow_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Radziemice)",
+      "module": "tamax_net_pl",
+      "default_params": {},
+      "id": "tamax_net_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Szczekociny)",
+      "module": "tamax_szczekociny_pl",
+      "default_params": {},
+      "id": "tamax_szczekociny_pl"
     },
     {
       "title": "Trzebownisko",

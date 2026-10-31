@@ -5160,10 +5160,24 @@
     },
     "urls": {}
   },
+  "tamax_imielno_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_imielno_pl.md",
+    "howto": {
+      "en": "Find Gmina Imielno (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/ and select your village. The source reads the printed day-and-Roman-month dates, including holiday exceptions. Mixed waste/bio and recycling use different village groups and are matched independently. The four dated bulky collections also accept complete electrical equipment. Tyres have no separate canonical type. Business calendars are not supported."
+    },
+    "urls": {}
+  },
   "jaktorow_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jaktorow_pl.md",
     "howto": {
       "en": "Select your collection region (rejon). Most villages are split across regions by street: the schedule PDF linked on https://bip.jaktorow.pl/odpady-komunalne/harmonogram lists the villages and streets of each region at the top of its page (for example, all of Henryszew is in Rejon 6)."
+    },
+    "urls": {}
+  },
+  "tamax_janow_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_janow_pl.md",
+    "howto": {
+      "en": "Find Gmina Janów (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. Select your village group exactly as printed on the household PDF. Use Trudne wjazdy only if the council has assigned your property to that route. Apartment-block and business schedules are not supported. Mixed recycling includes the plastic/metal, paper and glass bags collected together. M-PSZOK collections require registration and have no dated appointments in this calendar."
     },
     "urls": {}
   },
@@ -5221,10 +5235,24 @@
     },
     "urls": {}
   },
+  "tamax_net_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_net_pl.md",
+    "howto": {
+      "en": "On https://www.tamax.net.pl/harmonogramy/ find Gmina Radziemice and select the village group printed on your household calendar. Only these three Radziemice household tables are supported; other municipalities, apartment blocks and business calendars use different layouts. In particular, the Racławice download is for businesses. Ash (Popiół paleniskowy) is classified as Other and keeps its original label. The combined bulky collection also accepts electronics and textiles. Tyres have no separate canonical type."
+    },
+    "urls": {}
+  },
   "gmina_radlow_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_radlow_pl.md",
     "howto": {
       "en": "Select your village in Gmina Radłów."
+    },
+    "urls": {}
+  },
+  "tamax_szczekociny_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_szczekociny_pl.md",
+    "howto": {
+      "en": "Find Gmina Szczekociny (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. Select your village group or street list exactly as printed on the household PDF. Street choices show the beginning of each list; read its PDF for the complete streets. Use the Trudne wjazdy / domki letniskowe route only if the council has assigned your property to that route. Apartment-block and business schedules are not supported. Mixed recycling includes the plastic/metal, paper and glass bags collected together. Textiles and bulky items go to the collection centre; no undated drop-off or appointment is added."
     },
     "urls": {}
   },

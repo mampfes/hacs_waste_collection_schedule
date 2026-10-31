@@ -4494,8 +4494,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Grodzisk Mazowiecki](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina i Miasto Dzierzgoń](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina i Miasto Nowe Skalmierzyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Imielno](/doc/source/tamax_imielno_pl.md) / tamax.net.pl
 - [Gmina Inowrocław](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Jaktorów](/doc/source/jaktorow_pl.md) / bip.jaktorow.pl/odpady-komunalne/harmonogram
+- [Gmina Janów](/doc/source/tamax_janow_pl.md) / tamax.net.pl
 - [Gmina Jeżewo](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kamionka Wielka](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kluczbork](/doc/source/sims_pl.md) / sisms.pl
@@ -4538,6 +4540,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Przykładowa](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Pyskowice](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Radoszyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Radziemice](/doc/source/tamax_net_pl.md) / tamax.net.pl
 - [Gmina Radłów](/doc/source/gmina_radlow_pl.md) / gminaradlow.pl
 - [Gmina Reda](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Rumia](/doc/source/sims_pl.md) / sisms.pl
@@ -4548,6 +4551,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Staszów](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Stawiguda](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Strzelin](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Szczekociny](/doc/source/tamax_szczekociny_pl.md) / tamax.net.pl
 - [Gmina Szczytna](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Sztum](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Szumowo](/doc/source/sims_pl.md) / sisms.pl
@@ -4644,6 +4648,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Szczecin](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Słomka](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Słupsk](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
+- [TAMAX (Gmina Imielno)](/doc/source/tamax_imielno_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Janów)](/doc/source/tamax_janow_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Radziemice)](/doc/source/tamax_net_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Szczekociny)](/doc/source/tamax_szczekociny_pl.md) / tamax.net.pl
 - [Trzebownisko](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
 - [Wieliczka](/doc/source/kiedyodpady_pl.md) / wieliczka.kiedyodpady.pl

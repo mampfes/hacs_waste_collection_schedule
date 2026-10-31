@@ -22662,6 +22662,26 @@
           "street": "Ditt gatunamn."
         }
       },
+      "args_tamax_imielno_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_imielno_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_jaktorow_pl": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -22679,6 +22699,26 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "region": "Region"
+        },
+        "data_description": {}
+      },
+      "args_tamax_janow_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_janow_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
         },
         "data_description": {}
       },
@@ -22890,6 +22930,26 @@
           "street": "Ditt gatunamn."
         }
       },
+      "args_tamax_net_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_net_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_gmina_radlow_pl": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -22907,6 +22967,26 @@
         "data": {
           "calendar_title": "Kalendernamn",
           "town": "Ort"
+        },
+        "data_description": {}
+      },
+      "args_tamax_szczekociny_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_tamax_szczekociny_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area"
         },
         "data_description": {}
       },
