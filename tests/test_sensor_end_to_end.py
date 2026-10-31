@@ -332,6 +332,63 @@ async def test_due_reload_fetch_does_not_block_setup_and_is_cancelled_on_unload(
 
 
 @pytest.mark.asyncio
+async def test_repeated_reload_serializes_surviving_provider_workers(running_entry, ha):
+    entry, source = running_entry
+    ha.data[DOMAIN][entry.entry_id]._last_fetch_date = date.today() - timedelta(days=2)
+    started = asyncio.Event()
+    overlap = asyncio.Event()
+    release = Event()
+
+    def fetch():
+        source.fetch_count += 1
+        if source.fetch_count == 2:
+            ha.loop.call_soon_threadsafe(started.set)
+            if not release.wait(10):
+                raise TimeoutError("Test did not release first provider worker")
+            return [Collection(date=date(2099, 1, 2), waste_type=PAPER)]
+        ha.loop.call_soon_threadsafe(overlap.set)
+        return [Collection(date=date(2099, 1, 3), waste_type=PAPER)]
+
+    source.fetch = fetch
+    try:
+        assert await ha.config_entries.async_reload(entry.entry_id)
+        await asyncio.wait_for(started.wait(), 5)
+        assert await ha.config_entries.async_reload(entry.entry_id)
+        # The first worker survives coroutine cancellation. Its replacement must
+        # wait for that worker rather than issuing an overlapping provider call.
+        with pytest.raises(TimeoutError):
+            await asyncio.wait_for(overlap.wait(), 0.1)
+    finally:
+        release.set()
+        await ha.async_block_till_done(wait_background_tasks=True)
+    current = ha.data[DOMAIN][entry.entry_id]
+    assert source.fetch_count == 3
+    eid = sensor_id(ha, entry, "type_paper")
+    assert ha.states.get(eid).attributes["date"] == "2099-01-03"
+    assert current._aggregator.get_upcoming()[0].date == date(2099, 1, 3)
+    assert current._last_fetch_date == date.today()
+
+
+@pytest.mark.asyncio
+async def test_fetch_service_does_not_request_disabled_entries(running_entry, ha):
+    entry, source = running_entry
+    ha.data[DOMAIN][entry.entry_id]._last_fetch_date = date.today() - timedelta(days=2)
+    await ha.config_entries.async_set_disabled_by(
+        entry.entry_id, ConfigEntryDisabler.USER
+    )
+    await ha.services.async_call(DOMAIN, "fetch_data", {}, blocking=True)
+    await ha.async_block_till_done(wait_background_tasks=True)
+    assert source.fetch_count == 1
+    await ha.config_entries.async_set_disabled_by(entry.entry_id, None)
+    await ha.async_block_till_done(wait_background_tasks=True)
+    assert source.fetch_count == 2
+    assert entry.state.value == "loaded"
+    await ha.services.async_call(DOMAIN, "fetch_data", {}, blocking=True)
+    await ha.async_block_till_done(wait_background_tasks=True)
+    assert source.fetch_count == 2
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "keys", [(PAPER.names["en"], PAPER.names["fr"]), (PAPER.names["en"], "paper")]
 )

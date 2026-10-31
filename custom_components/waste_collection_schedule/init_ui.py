@@ -128,6 +128,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
 
     if reuse_schedule:
+        coordinator._fetch_lock = previous._fetch_lock
         coordinator._last_fetch_date = previous._last_fetch_date
         coordinator.async_set_updated_data(previous.data or {})
         coordinator._async_track_timers()
