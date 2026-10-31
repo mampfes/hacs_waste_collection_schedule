@@ -953,6 +953,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Oak Bay (BC)](/doc/source/recyclecoach_com.md) / oakbay.ca
 - [Oakville (ON)](/doc/source/recyclecoach_com.md) / oakville.ca
 - [Orillia (ON)](/doc/source/recyclecoach_com.md) / orillia.ca
+- [Ottawa Valley Waste Recovery Centre (Petawawa)](/doc/source/ovwrc_com.md) / ovwrc.com
 - [Ottawa, Canada](/doc/ics/recollect.md) / ottawa.ca
 - [Oxford County, ON](/doc/ics/recollect.md) / oxfordcounty.ca/services-for-you/garbage-and-recycling/curbside-collection
 - [Peel Region, ON](/doc/ics/recollect.md) / peelregion.ca
@@ -4084,6 +4085,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Schivenoglia](/doc/source/mantovaambiente_it.md) / mantovaambiente.it/comuni/schivenoglia
 - [SEAB Biella](/doc/source/seab_biella_it.md) / seab.biella.it
 - [Seab SPA Bolzano](/doc/source/junker_app.md) / junker.app
+- [Selargius Sostenibile](/doc/source/selargiusostenibile_it.md) / selargiusostenibile.it
 - [Sennori e Sorso - Gesenu Spa](/doc/source/junker_app.md) / junker.app
 - [Seravezza (ERSU)](/doc/source/portapporta_it.md) / portapporta.webmapp.it
 - [Seregno](/doc/source/siunet_it.md) / siunet.it
@@ -4461,6 +4463,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Ecoharmonogram](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Ecoharmonogram.pl (generic)](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [EcoSzczecin](/doc/source/ecoszczecin_pl.md) / ecoszczecin.pl
+- [EKO-REGION (Gmina Szczerców)](/doc/source/eko_region_pl.md) / eko-region.pl
 - [Ekoland Polska (Kraśnik area)](/doc/source/ekolandpolska_com_pl.md) / ekolandpolska.com.pl
 - [Gawłów](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Gdańsk](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
@@ -4491,8 +4494,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Grodzisk Mazowiecki](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina i Miasto Dzierzgoń](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina i Miasto Nowe Skalmierzyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Imielno](/doc/source/tamax_imielno_pl.md) / tamax.net.pl
 - [Gmina Inowrocław](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Jaktorów](/doc/source/jaktorow_pl.md) / bip.jaktorow.pl/odpady-komunalne/harmonogram
+- [Gmina Janów](/doc/source/tamax_janow_pl.md) / tamax.net.pl
 - [Gmina Jeżewo](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kamionka Wielka](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kluczbork](/doc/source/sims_pl.md) / sisms.pl
@@ -4535,6 +4540,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Przykładowa](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Pyskowice](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Radoszyce](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Radziemice](/doc/source/tamax_net_pl.md) / tamax.net.pl
 - [Gmina Radłów](/doc/source/gmina_radlow_pl.md) / gminaradlow.pl
 - [Gmina Reda](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Rumia](/doc/source/sims_pl.md) / sisms.pl
@@ -4545,6 +4551,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Staszów](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Stawiguda](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Strzelin](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Szczekociny](/doc/source/tamax_szczekociny_pl.md) / tamax.net.pl
 - [Gmina Szczytna](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Sztum](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Szumowo](/doc/source/sims_pl.md) / sisms.pl
@@ -4641,6 +4648,10 @@ If you already have enough information for your municipality/region, you are ver
 - [Szczecin](/doc/source/smiecioplan_pl.md) / smiecioplan.pl
 - [Słomka](/doc/source/bochnia_gmina_pl.md) / bochnia-gmina.pl
 - [Słupsk](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
+- [TAMAX (Gmina Imielno)](/doc/source/tamax_imielno_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Janów)](/doc/source/tamax_janow_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Radziemice)](/doc/source/tamax_net_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Szczekociny)](/doc/source/tamax_szczekociny_pl.md) / tamax.net.pl
 - [Trzebownisko](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [Warsaw](/doc/source/warszawa19115_pl.md) / warszawa19115.pl
 - [Wieliczka](/doc/source/kiedyodpady_pl.md) / wieliczka.kiedyodpady.pl
@@ -5085,6 +5096,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Chichester District Council](/doc/source/chichester_gov_uk.md) / chichester.gov.uk
 - [Chorley Council](/doc/source/chorley_gov_uk.md) / chorley.gov.uk
 - [City of Doncaster Council](/doc/source/doncaster_gov_uk.md) / doncaster.gov.uk
+- [City of Edinburgh Council](/doc/source/edinburgh_gov_uk.md) / edinburgh.gov.uk
 - [City Of Lincoln Council](/doc/source/lincoln_gov_uk.md) / lincoln.gov.uk
 - [City of York Council](/doc/source/york_gov_uk.md) / york.gov.uk
 - [Clackmannanshire Council](/doc/source/clackmannanshire_gov_uk.md) / clacks.gov.uk
@@ -5230,6 +5242,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Newcastle Under Lyme Borough Council](/doc/source/newcastle_staffs_gov_uk.md) / newcastle-staffs.gov.uk
 - [Newcastle upon Tyne](/doc/ics/recollect.md) / new.newcastle.gov.uk/recycling-waste/check-your-bin-collection-day
 - [Newport City Council](/doc/source/iapp_itouchvision_com.md) / newport.gov.uk
+- [Newry, Mourne and Down District Council](/doc/source/newrymournedown_org.md) / newrymournedown.org
 - [North Ayrshire Council](/doc/source/north_ayrshire_gov_uk.md) / north-ayrshire.gov.uk
 - [North East Derbyshire District Council](/doc/source/ne_derbyshire_gov_uk.md) / ne-derbyshire.gov.uk
 - [North East Lincolnshire Council](/doc/source/nelincs_gov_uk.md) / nelincs.gov.uk

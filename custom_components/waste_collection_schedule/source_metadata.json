@@ -214,7 +214,7 @@
   "gleneira_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gleneira_vic_gov_au.md",
     "howto": {
-      "en": "Visit the [Glen Eira City Council](https://www.gleneira.vic.gov.au/our-city/in-your-area) \"Find your bin collection day\" page and search for your address, for example: 4 Staniland Grove ELSTERNWICK VIC 3185. The address is resolved through the council's own address lookup, so commas, lower case suburbs and abbreviated street types (e.g. \"Hwy\" for \"Highway\") are accepted as well."
+      "en": "Visit the [Glen Eira City Council](https://www.gleneira.vic.gov.au/our-city/in-your-area) \"Find your bin collection day\" page and search for your address, for example: 4 Staniland Grove ELSTERNWICK VIC 3185. The address is resolved through the council's own address lookup, so commas, lower case suburbs and abbreviated street types (e.g. \"Hwy\" for \"Highway\") are accepted as well. The council shows the next collection of each bin. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -445,7 +445,7 @@
   "fairfieldcity_nsw_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fairfieldcity_nsw_gov_au.md",
     "howto": {
-      "en": "Visit https://kerbside.fairfieldcity.nsw.gov.au/kerbside/ and start typing your street name and suburb into the 'Street name & Suburb' field. Use the autocomplete suggestion (e.g. 'Dawson Street, FAIRFIELD HEIGHTS') as the value for street_and_suburb, and enter just your street number for street_number. Abbreviated street types from older configurations (e.g. 'Dawson ST, FAIRFIELD HEIGHTS') are still accepted."
+      "en": "Visit https://kerbside.fairfieldcity.nsw.gov.au/kerbside/ and start typing your street name and suburb into the 'Street name & Suburb' field. Use the autocomplete suggestion (e.g. 'Dawson Street, FAIRFIELD HEIGHTS') as the street, including the suburb, and enter just your street number (e.g. 1, 7A, 7/10) as the house number. Abbreviated street types from older configurations (e.g. 'Dawson ST, FAIRFIELD HEIGHTS') are still accepted. The council shows the next collection of each bin. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -1717,6 +1717,13 @@
   "villagebonconseil_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/villagebonconseil_ca.md",
     "howto": {},
+    "urls": {}
+  },
+  "ovwrc_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ovwrc_com.md",
+    "howto": {
+      "en": "Open https://ovwrc.com/curbside-collection-calendars/ and consult the map in the Town of Petawawa calendar to find your regular Wednesday, Thursday or Friday route. Choose that usual day, even in a holiday week; the source uses the actual printed collection dates. It reads green carts, blue paper boxes, yellow container bins, garbage and natural Christmas trees. Separate leaf/yard-waste and large-item collections are not supported. Pembroke and Laurentian Valley use other calendars and are not supported. First-time PDF parsing can take several seconds; an unchanged document reuses the parsed grid."
+    },
     "urls": {}
   },
   "pointe_claire_qc_ca": {
@@ -4515,6 +4522,13 @@
     },
     "urls": {}
   },
+  "selargiusostenibile_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/selargiusostenibile_it.md",
+    "howto": {
+      "en": "Copy the link to the current UTENZE DOMESTICHE / CENTRO ABITATO PDF on https://selargiusostenibile.it. Find your residual-waste zone A or B in the street list at the beginning of that PDF. Independently choose Selargius paese or Su Planu e Is Corrias for paper. Update the URL when a new calendar is published. The supported layout is the March-February booklet with two months across facing pages. Oil and textiles are collected only by appointment and have no dates in this source."
+    },
+    "urls": {}
+  },
   "silea_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/silea_it.md",
     "howto": {
@@ -4571,7 +4585,9 @@
   },
   "grafikai_svara_lt": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/grafikai_svara_lt.md",
-    "howto": {},
+    "howto": {
+      "en": "Use the same values as in the address search on https://grafikai.svara.lt: 'Regionas' is the region, 'Seniūnija' the district, 'Gatvė' the street and 'Namo numeris' the house number. If a value is misspelled, the error message lists the valid alternatives."
+    },
     "urls": {}
   },
   "nemenkom_lt": {
@@ -5116,6 +5132,13 @@
     },
     "urls": {}
   },
+  "eko_region_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eko_region_pl.md",
+    "howto": {
+      "en": "Find your village on https://eko-region.pl/gmina/szczercow/ and enter its name as printed there (for example Szubienice). The source automatically follows the Nieruchomości Zamieszkałe residential link. Business/non-residential schedules and Szczerców town's separate street calendars are not supported. Ash dates marked (popiół) in the Bio column are classified separately as Other, with the original Popiół label retained. Bulky-waste notices state multi-day windows covering different villages, so no exact bulky date is inferred."
+    },
+    "urls": {}
+  },
   "ekolandpolska_com_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ekolandpolska_com_pl.md",
     "howto": {
@@ -5137,10 +5160,24 @@
     },
     "urls": {}
   },
+  "tamax_imielno_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_imielno_pl.md",
+    "howto": {
+      "en": "Find Gmina Imielno (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/ and select your village. The source reads the printed day-and-Roman-month dates, including holiday exceptions. Mixed waste/bio and recycling use different village groups and are matched independently. The four dated bulky collections also accept complete electrical equipment. Tyres have no separate canonical type. Business calendars are not supported."
+    },
+    "urls": {}
+  },
   "jaktorow_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/jaktorow_pl.md",
     "howto": {
       "en": "Select your collection region (rejon). Most villages are split across regions by street: the schedule PDF linked on https://bip.jaktorow.pl/odpady-komunalne/harmonogram lists the villages and streets of each region at the top of its page (for example, all of Henryszew is in Rejon 6)."
+    },
+    "urls": {}
+  },
+  "tamax_janow_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_janow_pl.md",
+    "howto": {
+      "en": "Find Gmina Janów (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. Select your village group exactly as printed on the household PDF. Use Trudne wjazdy only if the council has assigned your property to that route. Apartment-block and business schedules are not supported. Mixed recycling includes the plastic/metal, paper and glass bags collected together. M-PSZOK collections require registration and have no dated appointments in this calendar."
     },
     "urls": {}
   },
@@ -5198,10 +5235,24 @@
     },
     "urls": {}
   },
+  "tamax_net_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_net_pl.md",
+    "howto": {
+      "en": "On https://www.tamax.net.pl/harmonogramy/ find Gmina Radziemice and select the village group printed on your household calendar. Only these three Radziemice household tables are supported; other municipalities, apartment blocks and business calendars use different layouts. In particular, the Racławice download is for businesses. Ash (Popiół paleniskowy) is classified as Other and keeps its original label. The combined bulky collection also accepts electronics and textiles. Tyres have no separate canonical type."
+    },
+    "urls": {}
+  },
   "gmina_radlow_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gmina_radlow_pl.md",
     "howto": {
       "en": "Select your village in Gmina Radłów."
+    },
+    "urls": {}
+  },
+  "tamax_szczekociny_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_szczekociny_pl.md",
+    "howto": {
+      "en": "Find Gmina Szczekociny (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. Select your village group or street list exactly as printed on the household PDF. Street choices show the beginning of each list; read its PDF for the complete streets. Use the Trudne wjazdy / domki letniskowe route only if the council has assigned your property to that route. Apartment-block and business schedules are not supported. Mixed recycling includes the plastic/metal, paper and glass bags collected together. Textiles and bulky items go to the collection centre; no undated drop-off or appointment is added."
     },
     "urls": {}
   },
@@ -6631,6 +6682,13 @@
     },
     "urls": {}
   },
+  "edinburgh_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edinburgh_gov_uk.md",
+    "howto": {
+      "en": "Search for your street at https://www.edinburgh.gov.uk/bin-collection-days under Recycling and waste. Enter the full record name, including any house-number range and Odd/Even suffix. The source follows the current street record and reads its annual PDF, including holiday changes. Green-bin recycling, the glass box and grey-bin waste are supported; food, garden and communal-bin services are not included. The published January grid has a duplicated day number; the complete weekday grid determines that date. An expired calendar fails explicitly."
+    },
+    "urls": {}
+  },
   "lincoln_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lincoln_gov_uk.md",
     "howto": {},
@@ -7576,7 +7634,9 @@
   },
   "newforest_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newforest_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode (e.g. SO40 8XX) and the Unique Property Reference Number (UPRN) of your property. You can find your UPRN at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7601,6 +7661,13 @@
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
+  },
+  "newrymournedown_org": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newrymournedown_org.md",
+    "howto": {
+      "en": "Either enter the postcode and house number shown by the council's lookup at https://www.newrymournedown.org/weekly-bin-collection-and-calendar. Or paste your council bin-collections PDF link into url instead. The direct PDF option works independently of the address portal, which can be temporarily unavailable. Dates, including holiday changes, come from the printed calendar. Black bins are general waste, blue bins recycling, and brown bins combined food/garden waste (Organic). Unnumbered properties and ambiguous house numbers are not supported by this address lookup."
+    },
+    "urls": {}
   },
   "north_ayrshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/north_ayrshire_gov_uk.md",
@@ -8969,7 +9036,7 @@
   "vogeldisposal_com": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/vogeldisposal_com.md",
     "howto": {
-      "en": "Enter your municipality and street address. Exact spelling is not required: a rough municipality (for example 'butler twp') and a partial street address (for example '1002 tudor') are matched automatically. If the input matches more than one place, the matching options are shown so you can pick the right one."
+      "en": "Enter your municipality and street address. Exact spelling is not required: a rough municipality (for example 'butler twp') and a partial street address (for example '1002 tudor') are matched automatically. If the input matches more than one place, the matching options are shown so you can pick the right one. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
