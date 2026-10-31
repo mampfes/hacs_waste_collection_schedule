@@ -28665,11 +28665,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
-          "uprn": "En enkel måte å finne ditt Unique Property Reference Number (UPRN) på er å gå til {url_www_findmyaddress_co_uk} og skrive inn adressen din."
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_dover_gov_uk": {
@@ -28677,10 +28677,10 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "En enkel måte å finne ditt Unique Property Reference Number (UPRN) på er å gå til {url_www_findmyaddress_co_uk} og skrive inn adressen din."
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_dudley_gov_uk": {
@@ -29004,11 +29004,12 @@
         "data": {
           "calendar_title": "Kalendernavn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
-          "uprn": "En enkel måte å finne ditt Unique Property Reference Number (UPRN) på er å gå til {url_www_findmyaddress_co_uk} og skrive inn adressen din."
+          "postcode": "Postnummeret ditt.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_east_renfrewshire_gov_uk": {
@@ -29017,10 +29018,11 @@
         "data": {
           "calendar_title": "Kalendernavn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "En enkel måte å finne ditt Unique Property Reference Number (UPRN) på er å gå til {url_www_findmyaddress_co_uk} og skrive inn adressen din."
+          "postcode": "Postnummeret ditt.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_eastriding_gov_uk": {
@@ -29541,11 +29543,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
-          "uprn": "En enkel måte å finne ditt Unique Property Reference Number (UPRN) på er å gå til {url_www_findmyaddress_co_uk} og skrive inn adressen din."
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_gateshead_gov_uk": {
@@ -29553,10 +29555,10 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "En enkel måte å finne ditt Unique Property Reference Number (UPRN) på er å gå til {url_www_findmyaddress_co_uk} og skrive inn adressen din."
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "args_ics_gedling_gov_uk": {
@@ -29681,10 +29683,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_great_yarmouth_gov_uk": {
@@ -29692,9 +29695,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_guildford_gov_uk": {
         "title": "Konfigurer kilde",
@@ -30083,7 +30088,7 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "location_id": "Location Id"
+          "location_id": "Lokasjons-ID"
         },
         "data_description": {
           "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
@@ -30094,7 +30099,7 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "location_id": "Location Id"
+          "location_id": "Lokasjons-ID"
         },
         "data_description": {}
       },
@@ -31054,13 +31059,15 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "house_number": "Husnummer",
-          "number": "Number",
+          "number": "Husnummer",
           "postcode": "Postnummer",
           "street": "Gate"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "number": "Husnummeret ditt.",
+          "postcode": "Postnummeret ditt.",
+          "street": "Gatenavnet ditt."
         }
       },
       "reconfigure_midsussex_gov_uk": {
@@ -31068,12 +31075,15 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "house_number": "Husnummer",
-          "number": "Number",
+          "number": "Husnummer",
           "postcode": "Postnummer",
           "street": "Gate"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Husnummeret ditt.",
+          "postcode": "Postnummeret ditt.",
+          "street": "Gatenavnet ditt."
+        }
       },
       "args_midulstercouncil_org": {
         "title": "Konfigurer kilde",
@@ -32179,10 +32189,12 @@
         "data": {
           "calendar_title": "Kalendernavn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "postcode": "Postnummeret ditt.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_powys_gov_uk": {
@@ -32191,20 +32203,25 @@
         "data": {
           "calendar_title": "Kalendernavn",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Postnummeret ditt.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_preston_gov_uk": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "street": "Gate",
-          "uprn": "Uprn"
+          "street": "Adresse",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "street": "Hele adressen din.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_preston_gov_uk": {
@@ -32212,10 +32229,13 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "street": "Gate",
-          "uprn": "Uprn"
+          "street": "Adresse",
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Hele adressen din.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_reading_gov_uk": {
         "title": "Konfigurer kilde",
@@ -33458,12 +33478,15 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "post_code": "Post Code",
-          "street_name": "Street Name",
-          "uprn": "Uprn"
+          "post_code": "Postnummer",
+          "street_name": "Gate",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "post_code": "Postnummeret ditt.",
+          "street_name": "Gatenavnet ditt.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_swansea_gov_uk": {
@@ -33471,11 +33494,15 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "post_code": "Post Code",
-          "street_name": "Street Name",
-          "uprn": "Uprn"
+          "post_code": "Postnummer",
+          "street_name": "Gate",
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "post_code": "Postnummeret ditt.",
+          "street_name": "Gatenavnet ditt.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_swindon_gov_uk": {
         "title": "Konfigurer kilde",

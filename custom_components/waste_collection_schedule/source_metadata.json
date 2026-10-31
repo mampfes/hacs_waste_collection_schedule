@@ -6843,7 +6843,9 @@
   },
   "dover_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/dover_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the Unique Property Reference Number (UPRN) of your property. You can find it at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -6955,7 +6957,9 @@
   },
   "east_renfrewshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/east_renfrewshire_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode and the Unique Property Reference Number (UPRN) of your property. You can find your UPRN at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7116,7 +7120,9 @@
   },
   "gateshead_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gateshead_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the Unique Property Reference Number (UPRN) of your property. You can find it at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7156,9 +7162,11 @@
   "great_yarmouth_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/great_yarmouth_gov_uk.md",
     "howto": {
-      "en": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to https://www.findmyaddress.co.uk/ and entering your address details."
+      "en": "Enter the Unique Property Reference Number (UPRN) of your property. You can find it at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names, and the dates a bulky collection can be booked are no longer listed as collections. Update filters, automations and customisations using the old labels."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "guildford_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/guildford_gov_uk.md",
@@ -7283,7 +7291,7 @@
   "ipswich_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ipswich_gov_uk.md",
     "howto": {
-      "en": "Visit https://app.ipswich.gov.uk/bin-collection-better-recycling/ and search for your street. Once your schedule is displayed the URL will end with /weeks/<number> — use that number as the `location_id` argument."
+      "en": "Visit https://app.ipswich.gov.uk/bin-collection-better-recycling/ and search for your street. Once your schedule is displayed the URL ends with /weeks/<number>: use that number as the location ID (e.g. 549). Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -7576,7 +7584,7 @@
   "midsussex_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/midsussex_gov_uk.md",
     "howto": {
-      "en": "Enter your property's exact Postcode, Street Name, and House Name/Number (or business name) as they appear on the council's website's collection search tool."
+      "en": "Enter your property's postcode, street name and house name or number (or business name) as they appear in the council's collection search. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels. The old `house_number` argument is gone; use `number` instead."
     },
     "urls": {}
   },
@@ -7933,7 +7941,9 @@
   },
   "powys_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/powys_gov_uk.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your postcode (e.g. SY16 2PQ) and the Unique Property Reference Number (UPRN) of your property. You can find your UPRN at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names, and the weekly recycling and food waste round is reported as two collections. Update filters, automations and customisations using the old labels."
+    },
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
@@ -7941,9 +7951,11 @@
   "preston_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/preston_gov_uk.md",
     "howto": {
-      "en": "Enter your postcode or street name in the 'Street / Postcode' field. If your postcode returns multiple properties, find your UPRN at https://www.findmyaddress.co.uk/ and enter it in the optional 'UPRN' field to select the exact property."
+      "en": "Enter your street name or postcode as you would on https://selfservice.preston.gov.uk/service/Forms/FindMyNearest.aspx?Service=bins. If it matches more than one property, also enter your Unique Property Reference Number (UPRN), which you can find at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
     },
-    "urls": {}
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "reading_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/reading_gov_uk.md",
@@ -8335,8 +8347,12 @@
   },
   "swansea_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swansea_gov_uk.md",
-    "howto": {},
-    "urls": {}
+    "howto": {
+      "en": "Enter the full postcode of your property. Collections are scheduled per street, so that is usually enough; to pick one address, also enter part of it (e.g. the street name) or its Unique Property Reference Number (UPRN). Since the v3 pipeline migration, the pink and green collection weeks are reported as the waste types collected in them (as listed for your address), using canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
+    "urls": {
+      "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
+    }
   },
   "swindon_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/swindon_gov_uk.md",
