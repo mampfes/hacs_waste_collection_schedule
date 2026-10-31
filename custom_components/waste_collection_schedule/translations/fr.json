@@ -26,12 +26,10 @@
         "description": "Choisissez le niveau de détail souhaité pour cette intégration. Laissez vide si vous souhaitez simplement configurer un calendrier de base.",
         "data": {
           "show_customize_config": "Afficher les Configurations Personnalisées des Événements de Collecte",
-          "show_sensor_config": "Afficher les Configurations des Capteurs",
           "default_sensors": "Capteurs par défaut"
         },
         "data_description": {
           "show_customize_config": "Sélectionnez ceci si vous souhaitez personnaliser les types de collecte.",
-          "show_sensor_config": "Sélectionnez ceci si vous souhaitez configurer des capteurs.",
           "default_sensors": "Choisissez les capteurs par défaut à créer. Ils peuvent être combinés avec vos propres capteurs."
         }
       },
@@ -54,7 +52,8 @@
           "icon": "Icône",
           "picture": "Image",
           "use_dedicated_calendar": "Utiliser un calendrier dédié",
-          "dedicated_calendar_title": "Titre du calendrier dédié"
+          "dedicated_calendar_title": "Titre du calendrier dédié",
+          "color": "Couleur (#RRGGBB ; vide = valeur par défaut)"
         },
         "data_description": {
           "alias": "Le nouveau nom du type de collecte. (seulement si vous souhaitez le modifier)",
@@ -93,35 +92,6 @@
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
           "f_abfallarten": "Filtre facultatif : les types de déchets à inclure."
-        }
-      },
-      "sensor": {
-        "title": "Créer un Capteur \"{sensor_number}\"",
-        "description": "Configurez un capteur à la fois.",
-        "data": {
-          "name": "Nom du Capteur",
-          "details_format": "Format des Détails",
-          "count": "Nombre",
-          "leadtime": "Délai",
-          "value_template": "Modèle de Valeur",
-          "date_template": "Modèle de Date",
-          "add_days_to": "Ajouter des Jours à",
-          "event_index": "Index de l'Événement",
-          "types": "Types",
-          "skip": "Ne pas créer de capteur",
-          "additional": "Ajouter des capteurs supplémentaires"
-        },
-        "data_description": {
-          "details_format": "Spécifie le format utilisé pour afficher les informations dans la fenêtre d'informations supplémentaires de Home Assistant. 'Prochaines': montre une liste des prochaines collectes, 'Types de rendez-vous': montre une liste des types de déchets et leur prochaine date de collecte, 'Générique': fournit tous les attributs comme types de données Python génériques, 'Caché': masque les attributs des prochaines collectes.",
-          "count": "Limite l'affichage à un certain nombre de prochaines collectes.",
-          "leadtime": "Limite l'affichage aux collectes se produisant dans un certain délai.",
-          "value_template": "Utilise le templating de Home Assistant pour formater les informations d'état d'une entité. Vous pouvez utiliser 'value.date', 'value.daysTo', 'value.types'.",
-          "date_template": "Utilise le templating de Home Assistant pour formater les dates affichées. Par exemple : 'value.date.strftime(\"%d.%m.%Y\")'.",
-          "add_days_to": "Ajoute un attribut 'daysTo' contenant le nombre de jours jusqu'à la prochaine collecte.",
-          "event_index": "Utilisé pour attribuer un capteur à un index de date spécifique. Utile pour les collectes successives.",
-          "types": "Utilisé pour filtrer les types de déchets. Affichera uniquement les collectes correspondantes.",
-          "skip": "Si coché, le capteur ne sera pas créé.",
-          "additional": "Permet d'ajouter d'autres capteurs."
         }
       },
       "reconfigure": {
@@ -36089,6 +36059,9 @@
           "address": "Votre adresse complète."
         }
       }
+    },
+    "error": {
+      "invalid_sensor": "Vérifiez les paramètres du capteur, les modèles et la couleur #RRGGBB."
     }
   },
   "selector": {
@@ -36097,6 +36070,547 @@
         "legacy": "Un capteur par type de déchet",
         "new": "Capteurs de synthèse (prochaine collecte, jours restants, dernière mise à jour)"
       }
+    },
+    "state_format": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    },
+    "date_format": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    },
+    "language": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    },
+    "details_format": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    },
+    "kind": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    },
+    "action": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    }
+  },
+  "options": {
+    "abort": {
+      "sensor_removed": "Ce capteur a été supprimé pendant la modification. Rouvrez les options du capteur."
+    },
+    "step": {
+      "source_settings": {
+        "title": "Paramètres de la source",
+        "data": {
+          "random_fetch_time_offset": "Décalage aléatoire de récupération (minutes)"
+        }
+      },
+      "init": {
+        "title": "Calendrier de Collecte des Déchets",
+        "menu_options": {
+          "source_settings": "Paramètres de la source",
+          "sensors": "Capteurs",
+          "waste_types": "Types de déchets"
+        }
+      },
+      "sensors": {
+        "title": "Capteurs",
+        "data": {
+          "predefined": "Capteurs prédéfinis",
+          "edit_sensor": "Modifier le capteur",
+          "device_controls": "Commandes par appareil",
+          "auto_add_types": "Ajouter automatiquement les nouveaux types"
+        }
+      },
+      "edit_sensor": {
+        "title": "Modifier le capteur",
+        "data": {
+          "name": "Nom",
+          "enabled": "Activé",
+          "state_format": "Texte d'état",
+          "language": "Langue",
+          "date_format": "Format de date",
+          "details_format": "Format des détails",
+          "count": "Nombre",
+          "leadtime": "Délai (jours)",
+          "unique_types": "Chaque type une seule fois",
+          "exclude_types": "Types exclus",
+          "advanced": "Paramètres avancés",
+          "action": "Action",
+          "types": "Types de déchets",
+          "kind": "Type de capteur"
+        }
+      },
+      "sensor_advanced": {
+        "title": "Paramètres avancés",
+        "data": {
+          "event_index": "Indice de collecte",
+          "value_template": "Modèle d’état personnalisé",
+          "date_template": "Modèle de date personnalisé",
+          "color": "Couleur (#RRGGBB ; vide = valeur par défaut)"
+        }
+      },
+      "waste_types": {
+        "title": "Types de déchets",
+        "data": {
+          "types": "Types de déchets"
+        }
+      }
+    },
+    "error": {
+      "invalid_sensor": "Vérifiez les paramètres du capteur, les modèles et la couleur #RRGGBB."
+    }
+  },
+  "issues": {
+    "legacy_sensors": {
+      "title": "Capteurs issus d’anciens changements de nom",
+      "description": "Ces anciens capteurs n’ont aucune configuration enregistrée : {entities}. Vérifiez les automatisations et tableaux de bord avant de les supprimer.",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Supprimer les anciennes entrées de capteur",
+            "description": "Supprimer les anciennes entrées de registre indiquées ? Les capteurs actifs migrés sont conservés."
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "state_format": {
+        "name": "Texte d'état",
+        "state": {
+          "types_in_days": "Types et compte à rebours",
+          "in_days": "Compte à rebours",
+          "relative": "Aujourd’hui / Demain / dans N jours",
+          "date": "Date de collecte",
+          "types": "Types de collecte",
+          "days": "Nombre de jours",
+          "custom": "Modèle personnalisé",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+          "upcoming": "Dates à venir",
+          "appointment_types": "Prochaine date par type",
+          "generic": "Enregistrements structurés",
+          "hidden": "Masquer les détails",
+          "schedule": "Calendrier de collecte",
+          "days_to": "Jours avant la collecte",
+          "last_update": "Dernière mise à jour",
+          "auto": "Langue de Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Ajouter un capteur personnalisé",
+          "save": "Enregistrer",
+          "reset": "Rétablir les valeurs par défaut",
+          "duplicate": "Dupliquer comme capteur personnalisé",
+          "delete": "Supprimer le capteur personnalisé"
+        }
+      },
+      "language": {
+        "name": "Langue",
+        "state": {
+          "types_in_days": "Types et compte à rebours",
+          "in_days": "Compte à rebours",
+          "relative": "Aujourd’hui / Demain / dans N jours",
+          "date": "Date de collecte",
+          "types": "Types de collecte",
+          "days": "Nombre de jours",
+          "custom": "Modèle personnalisé",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+          "upcoming": "Dates à venir",
+          "appointment_types": "Prochaine date par type",
+          "generic": "Enregistrements structurés",
+          "hidden": "Masquer les détails",
+          "schedule": "Calendrier de collecte",
+          "days_to": "Jours avant la collecte",
+          "last_update": "Dernière mise à jour",
+          "auto": "Langue de Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Ajouter un capteur personnalisé",
+          "save": "Enregistrer",
+          "reset": "Rétablir les valeurs par défaut",
+          "duplicate": "Dupliquer comme capteur personnalisé",
+          "delete": "Supprimer le capteur personnalisé"
+        }
+      },
+      "date_format": {
+        "name": "Format de date",
+        "state": {
+          "types_in_days": "Types et compte à rebours",
+          "in_days": "Compte à rebours",
+          "relative": "Aujourd’hui / Demain / dans N jours",
+          "date": "Date de collecte",
+          "types": "Types de collecte",
+          "days": "Nombre de jours",
+          "custom": "Modèle personnalisé",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+          "upcoming": "Dates à venir",
+          "appointment_types": "Prochaine date par type",
+          "generic": "Enregistrements structurés",
+          "hidden": "Masquer les détails",
+          "schedule": "Calendrier de collecte",
+          "days_to": "Jours avant la collecte",
+          "last_update": "Dernière mise à jour",
+          "auto": "Langue de Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Ajouter un capteur personnalisé",
+          "save": "Enregistrer",
+          "reset": "Rétablir les valeurs par défaut",
+          "duplicate": "Dupliquer comme capteur personnalisé",
+          "delete": "Supprimer le capteur personnalisé"
+        }
+      },
+      "details_format": {
+        "name": "Format des détails",
+        "state": {
+          "types_in_days": "Types et compte à rebours",
+          "in_days": "Compte à rebours",
+          "relative": "Aujourd’hui / Demain / dans N jours",
+          "date": "Date de collecte",
+          "types": "Types de collecte",
+          "days": "Nombre de jours",
+          "custom": "Modèle personnalisé",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+          "upcoming": "Dates à venir",
+          "appointment_types": "Prochaine date par type",
+          "generic": "Enregistrements structurés",
+          "hidden": "Masquer les détails",
+          "schedule": "Calendrier de collecte",
+          "days_to": "Jours avant la collecte",
+          "last_update": "Dernière mise à jour",
+          "auto": "Langue de Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Ajouter un capteur personnalisé",
+          "save": "Enregistrer",
+          "reset": "Rétablir les valeurs par défaut",
+          "duplicate": "Dupliquer comme capteur personnalisé",
+          "delete": "Supprimer le capteur personnalisé"
+        }
+      }
+    },
+    "number": {
+      "count": {
+        "name": "Nombre (0 = ∞)"
+      },
+      "leadtime": {
+        "name": "Délai (jours) (-1 = ∞)"
+      },
+      "event_index": {
+        "name": "Indice de collecte"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Activé"
+      },
+      "unique_types": {
+        "name": "Chaque type une seule fois"
+      },
+      "advanced": {
+        "name": "Paramètres avancés"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Nom"
+      },
+      "value_template": {
+        "name": "Modèle d’état personnalisé"
+      },
+      "date_template": {
+        "name": "Modèle de date personnalisé"
+      },
+      "color": {
+        "name": "Couleur (#RRGGBB ; vide = valeur par défaut)"
+      }
+    },
+    "button": {
+      "create_sensor": {
+        "name": "Créer le capteur {name}"
+      },
+      "delete": {
+        "name": "Supprimer le capteur personnalisé"
+      }
+    }
+  },
+  "exceptions": {
+    "type_unavailable": {
+      "message": "Ce type de collecte ne figure plus dans le calendrier actuel."
+    },
+    "custom_template_required": {
+      "message": "Définissez d’abord un modèle d’état personnalisé dans les paramètres avancés."
     }
   }
 }

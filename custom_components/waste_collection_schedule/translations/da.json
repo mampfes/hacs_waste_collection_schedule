@@ -26,12 +26,10 @@
         "description": "Vælg hvordan du vil konfigurere denne integration. Lad den være tom hvis du bare vil konfigurere en standard kalender.",
         "data": {
           "show_customize_config": "Vis Afhentnings Tilpasnings Indstillinger",
-          "show_sensor_config": "Vis Sensor Indstillinger",
           "default_sensors": "Standard sensorer"
         },
         "data_description": {
           "show_customize_config": "Vælg dette hvis du vil tilpasse dine afhentnings typer.",
-          "show_sensor_config": "Vælg dette hvis du vil indstille sensorer.",
           "default_sensors": "Vælg hvilke standard sensorer du vil oprette. De kan kombineres med dine egne sensorer."
         }
       },
@@ -54,7 +52,8 @@
           "icon": "Ikon",
           "picture": "Billede",
           "use_dedicated_calendar": "Brug dedikeret kalender",
-          "dedicated_calendar_title": "Dedikeret kalender titel"
+          "dedicated_calendar_title": "Dedikeret kalender titel",
+          "color": "Farve (#RRGGBB; tom = standard)"
         },
         "data_description": {
           "alias": "Det nye navn for afhentnings typen. (kun hvis du vil ændre det)",
@@ -93,35 +92,6 @@
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
           "f_abfallarten": "Valgfrit filter: affaldstyperne du vil inkludere."
-        }
-      },
-      "sensor": {
-        "title": "Tilføj Sensor \"{sensor_number}\"",
-        "description": "Konfigurer en sensor ad gangen.",
-        "data": {
-          "name": "Navnet På Sensoren",
-          "details_format": "Detalje Format",
-          "count": "Antal",
-          "leadtime": "Varslingstid",
-          "value_template": "Værdi Skabelon",
-          "date_template": "Dato Skabelon",
-          "add_days_to": "Tilføj Dage Til",
-          "event_index": "Begivenhedsindeks",
-          "types": "Typer",
-          "skip": "Tilføj ikke sensor",
-          "additional": "Tilføj flere sensorer"
-        },
-        "data_description": {
-          "details_format": "Angiver formatet der bruges til at vise information i Home Assistants mere info pop-up. 'upcoming': viser en liste af kommende afhentninger, 'appointment_types': viser en liste af affaldstyper og deres næste afhentningsdato, 'generic': tilgængeliggør alle egenskaber som generiske Python data typer, 'hidden': gem egenskaberne for kommende afhentninger",
-          "count": "Begrænser Home Assistants more info popup til at vise de næste antal afhentninger",
-          "leadtime": "Begrænser Home Assistants more info popup til at kun vise de afhentninger der sker indenfor de næste varslingstid dage",
-          "value_template": "Bruger Home Assistant-skabeloner til at formatere statusoplysningerne for en enhed. Du kan bruge 'value.date', 'value.daysTo', 'value.types'",
-          "date_template": "Bruger Home Assistant-skabeloner til at formatere datoerne der fremgår i popup informationer om en entitet. f.eks. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Tilføjer en 'daysTo' egenskab til en kilde entitets tilstand der indeholder antallet af dage indtil næste afhentning",
-          "event_index": "Bruges til at knytte en sensor til et bestemt indeks for en afhentnings index. Den næste afhentningsdato har event_index 0. Det er nyttigt, hvis du vil have separate sensorer til næste afhentning, anden afhentning, tredje afhentning osv.",
-          "types": "Bruges til at filtrere affaldstyper. Sensoren viser kun afhentninger, der matcher disse affaldstyper. Du skal bruge aliaset, hvis du har brugt et alias i konfigurationen af kilden.",
-          "skip": "Hvis dette er markeret, bliver sensoren ikke oprettet, og al din ovenstående konfiguration ignoreres.",
-          "additional": "Hvis dette er markeret, bliver du bedt om at tilføje endnu en sensor, efter at du har gemt denne."
         }
       },
       "reconfigure": {
@@ -36103,40 +36073,18 @@
       "name_exists": "Sensor navnet findes allerede. Vælg venligst et andet navn.",
       "preset_selected": "Du kan ikke vælge en forudindstilling og angive en tilpasset værdi på samme tid.",
       "sensor_name_empty": "Sensor navnet må ikke være tomt. Angiv venligst et navn.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke angive en dedikeret kalender titel uden at slå den dedikerede kalender til."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke angive en dedikeret kalender titel uden at slå den dedikerede kalender til.",
+      "invalid_sensor": "Kontrollér sensorindstillinger, skabeloner og farven #RRGGBB."
     }
   },
   "options": {
     "step": {
       "init": {
-        "description": "Opdater Waste Collection Schedule detaljer.",
-        "data": {
-          "sensor_select": "Sensorer At Ændre",
-          "default_sensors": "Tilføj Standard Sensorer",
-          "customize_select": "Tilpasninger At Ændre",
-          "calendar_title": "Kalender Titel",
-          "separator": "Separator",
-          "fetch_time": "Tidspunkt For Datahentning",
-          "random_fetch_time_offset": "Tilfældig Forskydning Af Tidspunktet For Datahentning",
-          "day_switch_time": "Tidspunkt For Skift Af Dag",
-          "fetch_interval_days": "Dage Mellem Datahentning",
-          "day_offset": "Dagsforskydning",
-          "ignore_duplicates": "Ignorer Dubletter Pr. Dag",
-          "show_original_label": "Vis Den Oprindelige Udbyder Etiket"
-        },
-        "data_description": {
-          "sensor_select": "Vælg den sensor du vil ændre. (vælg 'Add new sensor' for at lave en ny sensor)",
-          "default_sensors": "Tilføjer de valgte standard sensorer der mangler. Eksisterende sensorer forbliver uændrede.",
-          "customize_select": "Vælg den tilpasning du vil ændre. (eller vælg en ny tilpasning for at tilføje en ny)",
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "separator": "Bruges til at samle afhentninger, hvis kilden returnerer flere værdier for den samme dag.",
-          "fetch_time": "Angiver tidspunktet på dagen i formatet 'HH:MM', hvor Home Assistant henter den seneste afhentningsplan fra udbyderen.",
-          "random_fetch_time_offset": "Forskydder tilfældigt tidspunktet for datahentning med op til x minutter. Kan bruges til at fordele Home Assistants datahentning over et længere tidsrum for at undgå spidsbelastning hos udbyderne.",
-          "day_switch_time": "Tidspunktet på dagen i formatet HH:MM, hvor Home Assistant afslutter den aktuelle afhentning og går videre til den næste.",
-          "fetch_interval_days": "Angiver, hvor ofte Home Assistant henter data fra denne kilde. Standardværdien er 1 dag. Med en værdi på 2 hentes data hver anden dag.",
-          "day_offset": "Forskydning i dage, der skal lægges til afhentningsdatoen (kan være negativ). Hvis der ikke angives en værdi, bruges standardværdien 0.",
-          "ignore_duplicates": "Når denne funktion er aktiveret, fjernes dubletter af afhentninger med samme affaldstype på samme dag, så der kun er én post pr. affaldstype pr. dag.",
-          "show_original_label": "Når denne funktion er aktiveret (standard), bevarer nogle kilder den oprindelige udbyder etiket (f.eks. det præcise navn på beholderen) i afhentningens etiket, selv efter at den er blevet knyttet til en standardiseret affaldstype. Deaktivér funktionen for at skjule den oprindelige etiket."
+        "title": "Waste Collection Schedule",
+        "menu_options": {
+          "source_settings": "Kildeindstillinger",
+          "sensors": "Sensorer",
+          "waste_types": "Affaldstyper"
         }
       },
       "customize": {
@@ -36149,7 +36097,8 @@
           "icon": "Ikon",
           "picture": "Billede",
           "use_dedicated_calendar": "Brug dedikeret kalender",
-          "dedicated_calendar_title": "Dedikeret kalender titel"
+          "dedicated_calendar_title": "Dedikeret kalender titel",
+          "color": "Farve (#RRGGBB; tom = standard)"
         },
         "data_description": {
           "delete": "Fjern denne tilpasning.",
@@ -36161,35 +36110,73 @@
           "dedicated_calendar_title": "Titlen til den dedikerede kalender entitet."
         }
       },
-      "sensor": {
-        "title": "Ændre/Tilføj Sensor \"{sensor_number}\"",
-        "description": "Konfigurer en sensor ad gangen.",
+      "source_settings": {
+        "description": "Opdater Waste Collection Schedule detaljer.",
         "data": {
-          "delete": "Fjern",
-          "name": "Navnet På Sensoren",
-          "details_format": "Detalje Format",
-          "count": "Antal",
-          "leadtime": "Varslingstid",
-          "value_template": "Værdi Skabelon",
-          "date_template": "Dato Skabelon",
-          "add_days_to": "Tilføj Dage Til",
-          "event_index": "Begivenhedsindeks",
-          "types": "Typer",
-          "skip": "Tilføj ikke sensor",
-          "additional": "Tilføj flere sensorer"
+          "calendar_title": "Kalender Titel",
+          "separator": "Separator",
+          "fetch_time": "Tidspunkt For Datahentning",
+          "random_fetch_time_offset": "Tilfældigt hentningsoffset (minutter)",
+          "day_switch_time": "Tidspunkt For Skift Af Dag",
+          "fetch_interval_days": "Dage Mellem Datahentning",
+          "day_offset": "Dagsforskydning",
+          "ignore_duplicates": "Ignorer Dubletter Pr. Dag",
+          "show_original_label": "Vis Den Oprindelige Udbyder Etiket"
         },
         "data_description": {
-          "delete": "Fjern denne tilpasning.",
-          "details_format": "Angiver formatet der bruges til at vise information i Home Assistants mere info pop-up. 'upcoming': viser en liste af kommende afhentninger, 'appointment_types': viser en liste af affaldstyper og deres næste afhentningsdato, 'generic': tilgængeliggør alle egenskaber som generiske Python data typer, 'hidden': gem egenskaberne for kommende afhentninger",
-          "count": "Begrænser Home Assistants more info popup til at vise de næste antal afhentninger",
-          "leadtime": "Begrænser Home Assistants more info popup til at kun vise de afhentninger der sker indenfor de næste varslingstid dage",
-          "value_template": "Bruger Home Assistant-skabeloner til at formatere statusoplysningerne for en enhed. Du kan bruge 'value.date', 'value.daysTo', 'value.types'",
-          "date_template": "Bruger Home Assistant-skabeloner til at formatere datoerne der fremgår i popup informationer om en entitet. f.eks. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Tilføjer en 'daysTo' egenskab til en kilde entitets tilstand der indeholder antallet af dage indtil næste afhentning",
-          "event_index": "Bruges til at knytte en sensor til et bestemt indeks for en afhentnings index. Den næste afhentningsdato har event_index 0. Det er nyttigt, hvis du vil have separate sensorer til næste afhentning, anden afhentning, tredje afhentning osv.",
-          "types": "Bruges til at filtrere affaldstyper. Sensoren viser kun afhentninger, der matcher disse affaldstyper. Du skal bruge aliaset, hvis du har brugt et alias i konfigurationen af kilden.",
-          "skip": "Hvis dette er markeret, bliver sensoren ikke oprettet, og al din ovenstående konfiguration ignoreres.",
-          "additional": "Hvis dette er markeret, bliver du bedt om at tilføje endnu en sensor, efter at du har gemt denne."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "separator": "Bruges til at samle afhentninger, hvis kilden returnerer flere værdier for den samme dag.",
+          "fetch_time": "Angiver tidspunktet på dagen i formatet 'HH:MM', hvor Home Assistant henter den seneste afhentningsplan fra udbyderen.",
+          "random_fetch_time_offset": "Forskydder tilfældigt tidspunktet for datahentning med op til x minutter. Kan bruges til at fordele Home Assistants datahentning over et længere tidsrum for at undgå spidsbelastning hos udbyderne.",
+          "day_switch_time": "Tidspunktet på dagen i formatet HH:MM, hvor Home Assistant afslutter den aktuelle afhentning og går videre til den næste.",
+          "fetch_interval_days": "Angiver, hvor ofte Home Assistant henter data fra denne kilde. Standardværdien er 1 dag. Med en værdi på 2 hentes data hver anden dag.",
+          "day_offset": "Forskydning i dage, der skal lægges til afhentningsdatoen (kan være negativ). Hvis der ikke angives en værdi, bruges standardværdien 0.",
+          "ignore_duplicates": "Når denne funktion er aktiveret, fjernes dubletter af afhentninger med samme affaldstype på samme dag, så der kun er én post pr. affaldstype pr. dag.",
+          "show_original_label": "Når denne funktion er aktiveret (standard), bevarer nogle kilder den oprindelige udbyder etiket (f.eks. det præcise navn på beholderen) i afhentningens etiket, selv efter at den er blevet knyttet til en standardiseret affaldstype. Deaktivér funktionen for at skjule den oprindelige etiket."
+        },
+        "title": "Kildeindstillinger"
+      },
+      "sensors": {
+        "title": "Sensorer",
+        "data": {
+          "predefined": "Foruddefinerede sensorer",
+          "edit_sensor": "Rediger sensor",
+          "device_controls": "Enhedsstyring",
+          "auto_add_types": "Tilføj automatisk nye typer"
+        }
+      },
+      "edit_sensor": {
+        "title": "Rediger sensor",
+        "data": {
+          "name": "Navn",
+          "enabled": "Aktiveret",
+          "state_format": "Statustekst",
+          "language": "Sprog",
+          "date_format": "Datoformat",
+          "details_format": "Detaljeformat",
+          "count": "Antal",
+          "leadtime": "Fremtidig periode (dage)",
+          "unique_types": "Hver type kun én gang",
+          "exclude_types": "Udelad typer",
+          "advanced": "Avancerede indstillinger",
+          "action": "Handling",
+          "types": "Affaldstyper",
+          "kind": "Sensortype"
+        }
+      },
+      "sensor_advanced": {
+        "title": "Avancerede indstillinger",
+        "data": {
+          "event_index": "Afhentningsindeks",
+          "value_template": "Brugerdefineret tilstandsskabelon",
+          "date_template": "Brugerdefineret datoskabelon",
+          "color": "Farve (#RRGGBB; tom = standard)"
+        }
+      },
+      "waste_types": {
+        "title": "Affaldstyper",
+        "data": {
+          "types": "Affaldstyper"
         }
       }
     },
@@ -36199,17 +36186,52 @@
       "name_exists": "Sensor navnet findes allerede. Vælg venligst et andet navn.",
       "preset_selected": "Du kan ikke vælge en forudindstilling og angive en tilpasset værdi på samme tid.",
       "sensor_name_empty": "Sensor navnet må ikke være tomt. Angiv venligst et navn.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke angive en dedikeret kalender titel uden at slå den dedikerede kalender til."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke angive en dedikeret kalender titel uden at slå den dedikerede kalender til.",
+      "invalid_sensor": "Kontrollér sensorindstillinger, skabeloner og farven #RRGGBB."
     },
-    "abort": {}
+    "abort": {
+      "sensor_removed": "Denne sensor blev fjernet under redigering. Åbn sensorindstillingerne igen."
+    }
   },
   "selector": {
     "details_format": {
       "options": {
-        "upcoming": "Kommende",
-        "appointment_types": "Aftaletyper",
-        "generic": "Generisk",
-        "hidden": "Skjult"
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
       }
     },
     "default_sensors": {
@@ -36230,7 +36252,440 @@
       "options": {
         "sensor_select_add_new": "Tilføj ny sensor"
       }
+    },
+    "state_format": {
+      "options": {
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
+      }
+    },
+    "date_format": {
+      "options": {
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
+      }
+    },
+    "language": {
+      "options": {
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
+      }
+    },
+    "kind": {
+      "options": {
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
+      }
+    },
+    "action": {
+      "options": {
+        "types_in_days": "Typer og nedtælling",
+        "in_days": "Nedtælling",
+        "relative": "I dag / I morgen / om N dage",
+        "date": "Afhentningsdato",
+        "types": "Affaldstyper",
+        "days": "Antal dage",
+        "custom": "Brugerdefineret skabelon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ugedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ugedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ugedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Næste dato pr. type",
+        "generic": "Strukturerede poster",
+        "hidden": "Skjul detaljer",
+        "schedule": "Afhentningsplan",
+        "days_to": "Dage til afhentning",
+        "last_update": "Seneste opdatering",
+        "auto": "Home Assistant-sprog",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Tilføj brugerdefineret sensor",
+        "save": "Gem",
+        "reset": "Gendan standarder",
+        "duplicate": "Dupliker som brugerdefineret sensor",
+        "delete": "Slet brugerdefineret sensor"
+      }
     }
   },
-  "issues": {}
+  "issues": {
+    "legacy_sensors": {
+      "title": "Sensorer fra tidligere omdøbninger",
+      "description": "Disse gamle sensorer har ingen gemt konfiguration: {entities}. Kontrollér automatiseringer og dashboards før fjernelse.",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Fjern gamle sensorposter",
+            "description": "Fjern de viste gamle registerposter? Aktive migrerede sensorer bevares."
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "state_format": {
+        "name": "Statustekst",
+        "state": {
+          "types_in_days": "Typer og nedtælling",
+          "in_days": "Nedtælling",
+          "relative": "I dag / I morgen / om N dage",
+          "date": "Afhentningsdato",
+          "types": "Affaldstyper",
+          "days": "Antal dage",
+          "custom": "Brugerdefineret skabelon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ugedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ugedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ugedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Næste dato pr. type",
+          "generic": "Strukturerede poster",
+          "hidden": "Skjul detaljer",
+          "schedule": "Afhentningsplan",
+          "days_to": "Dage til afhentning",
+          "last_update": "Seneste opdatering",
+          "auto": "Home Assistant-sprog",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Tilføj brugerdefineret sensor",
+          "save": "Gem",
+          "reset": "Gendan standarder",
+          "duplicate": "Dupliker som brugerdefineret sensor",
+          "delete": "Slet brugerdefineret sensor"
+        }
+      },
+      "language": {
+        "name": "Sprog",
+        "state": {
+          "types_in_days": "Typer og nedtælling",
+          "in_days": "Nedtælling",
+          "relative": "I dag / I morgen / om N dage",
+          "date": "Afhentningsdato",
+          "types": "Affaldstyper",
+          "days": "Antal dage",
+          "custom": "Brugerdefineret skabelon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ugedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ugedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ugedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Næste dato pr. type",
+          "generic": "Strukturerede poster",
+          "hidden": "Skjul detaljer",
+          "schedule": "Afhentningsplan",
+          "days_to": "Dage til afhentning",
+          "last_update": "Seneste opdatering",
+          "auto": "Home Assistant-sprog",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Tilføj brugerdefineret sensor",
+          "save": "Gem",
+          "reset": "Gendan standarder",
+          "duplicate": "Dupliker som brugerdefineret sensor",
+          "delete": "Slet brugerdefineret sensor"
+        }
+      },
+      "date_format": {
+        "name": "Datoformat",
+        "state": {
+          "types_in_days": "Typer og nedtælling",
+          "in_days": "Nedtælling",
+          "relative": "I dag / I morgen / om N dage",
+          "date": "Afhentningsdato",
+          "types": "Affaldstyper",
+          "days": "Antal dage",
+          "custom": "Brugerdefineret skabelon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ugedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ugedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ugedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Næste dato pr. type",
+          "generic": "Strukturerede poster",
+          "hidden": "Skjul detaljer",
+          "schedule": "Afhentningsplan",
+          "days_to": "Dage til afhentning",
+          "last_update": "Seneste opdatering",
+          "auto": "Home Assistant-sprog",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Tilføj brugerdefineret sensor",
+          "save": "Gem",
+          "reset": "Gendan standarder",
+          "duplicate": "Dupliker som brugerdefineret sensor",
+          "delete": "Slet brugerdefineret sensor"
+        }
+      },
+      "details_format": {
+        "name": "Detaljeformat",
+        "state": {
+          "types_in_days": "Typer og nedtælling",
+          "in_days": "Nedtælling",
+          "relative": "I dag / I morgen / om N dage",
+          "date": "Afhentningsdato",
+          "types": "Affaldstyper",
+          "days": "Antal dage",
+          "custom": "Brugerdefineret skabelon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ugedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ugedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ugedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Næste dato pr. type",
+          "generic": "Strukturerede poster",
+          "hidden": "Skjul detaljer",
+          "schedule": "Afhentningsplan",
+          "days_to": "Dage til afhentning",
+          "last_update": "Seneste opdatering",
+          "auto": "Home Assistant-sprog",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Tilføj brugerdefineret sensor",
+          "save": "Gem",
+          "reset": "Gendan standarder",
+          "duplicate": "Dupliker som brugerdefineret sensor",
+          "delete": "Slet brugerdefineret sensor"
+        }
+      }
+    },
+    "number": {
+      "count": {
+        "name": "Antal (0 = ∞)"
+      },
+      "leadtime": {
+        "name": "Fremtidig periode (dage) (-1 = ∞)"
+      },
+      "event_index": {
+        "name": "Afhentningsindeks"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Aktiveret"
+      },
+      "unique_types": {
+        "name": "Hver type kun én gang"
+      },
+      "advanced": {
+        "name": "Avancerede indstillinger"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Navn"
+      },
+      "value_template": {
+        "name": "Brugerdefineret tilstandsskabelon"
+      },
+      "date_template": {
+        "name": "Brugerdefineret datoskabelon"
+      },
+      "color": {
+        "name": "Farve (#RRGGBB; tom = standard)"
+      }
+    },
+    "button": {
+      "create_sensor": {
+        "name": "Opret sensoren {name}"
+      },
+      "delete": {
+        "name": "Slet brugerdefineret sensor"
+      }
+    }
+  },
+  "exceptions": {
+    "type_unavailable": {
+      "message": "Denne affaldstype findes ikke længere i den aktuelle plan."
+    },
+    "custom_template_required": {
+      "message": "Angiv først en brugerdefineret tilstandsskabelon under avancerede indstillinger."
+    }
+  }
 }

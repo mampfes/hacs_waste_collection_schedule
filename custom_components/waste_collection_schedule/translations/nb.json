@@ -26,12 +26,10 @@
         "description": "Velg hvor detaljert du vil konfigurere integrasjonen. La feltet stå tomt hvis du bare vil sette opp en enkel kalender.",
         "data": {
           "show_customize_config": "Vis tilpasning av tømmetyper",
-          "show_sensor_config": "Vis sensorkonfigurasjon",
           "default_sensors": "Standardsensorer"
         },
         "data_description": {
           "show_customize_config": "Velg dette hvis du vil tilpasse tømmetypene.",
-          "show_sensor_config": "Velg dette hvis du vil konfigurere sensorer.",
           "default_sensors": "Velg hvilke standardsensorer som skal opprettes. De kan kombineres med dine egne sensorer."
         }
       },
@@ -54,7 +52,8 @@
           "icon": "Ikon",
           "picture": "Bilde",
           "use_dedicated_calendar": "Bruk egen kalender",
-          "dedicated_calendar_title": "Navn på egen kalender"
+          "dedicated_calendar_title": "Navn på egen kalender",
+          "color": "Farge (#RRGGBB; tomt = standard)"
         },
         "data_description": {
           "alias": "Nytt navn på tømmetypen (bare hvis du vil endre det).",
@@ -93,35 +92,6 @@
         "data_description": {
           "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
           "f_abfallarten": "Valgfritt filter: avfallstypene som skal tas med."
-        }
-      },
-      "sensor": {
-        "title": "Opprett sensor \"{sensor_number}\"",
-        "description": "Konfigurer én sensor om gangen.",
-        "data": {
-          "name": "Navn på sensoren",
-          "details_format": "Detaljformat",
-          "count": "Antall",
-          "leadtime": "Tidshorisont",
-          "value_template": "Verdimal",
-          "date_template": "Datomal",
-          "add_days_to": "Legg til dager igjen",
-          "event_index": "Hendelsesindeks",
-          "types": "Typer",
-          "skip": "Ikke opprett sensoren",
-          "additional": "Legg til flere sensorer"
-        },
-        "data_description": {
-          "details_format": "Angir formatet for informasjonen i Home Assistants informasjonsvindu. 'upcoming': liste over kommende tømminger, 'appointment_types': liste over avfallstyper og neste tømmedato for hver, 'generic': alle attributter som generiske Python-datatyper, 'hidden': skjuler attributtene for kommende tømminger",
-          "count": "Begrenser Home Assistants informasjonsvindu til de neste int tømmingene",
-          "leadtime": "Begrenser Home Assistants informasjonsvindu til tømminger innen de neste leadtime dagene",
-          "value_template": "Formaterer entitetens tilstand med Home Assistants maler. Du kan bruke 'value.date', 'value.daysTo', 'value.types",
-          "date_template": "Formaterer datoene i entitetens informasjonsvindu med Home Assistants maler, f.eks. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Legger til attributtet 'daysTo' i kildeentitetens tilstand, med antall dager til neste tømming",
-          "event_index": "Knytter sensoren til en bestemt tømmedato. Neste tømming har event_index 0. Nyttig hvis du vil ha egne sensorer for neste tømming, den andre, den tredje …",
-          "types": "Filtrerer avfallstyper. Sensoren viser bare tømminger av disse avfallstypene. Har du angitt alias i kildens konfigurasjon, må du bruke aliaset.",
-          "skip": "Hvis avmerket opprettes ikke sensoren, og innstillingene over ignoreres.",
-          "additional": "Hvis avmerket kan du legge til en ny sensor når denne er lagret."
         }
       },
       "reconfigure": {
@@ -36103,40 +36073,18 @@
       "name_exists": "Sensornavnet finnes allerede. Velg et annet navn.",
       "preset_selected": "Du kan ikke velge en forhåndsinnstilling og samtidig oppgi egne verdier.",
       "sensor_name_empty": "Sensornavnet kan ikke være tomt. Oppgi et navn.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke oppgi navn på en egen kalender uten å slå på egen kalender."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke oppgi navn på en egen kalender uten å slå på egen kalender.",
+      "invalid_sensor": "Kontroller sensorinnstillinger, maler og fargen #RRGGBB."
     }
   },
   "options": {
     "step": {
       "init": {
-        "description": "Oppdater innstillingene for Waste Collection Schedule.",
-        "data": {
-          "sensor_select": "Sensorer som skal endres",
-          "default_sensors": "Legg til standardsensorer",
-          "customize_select": "Tilpasninger som skal endres",
-          "calendar_title": "Kalendernavn",
-          "separator": "Skilletegn",
-          "fetch_time": "Hentetidspunkt",
-          "random_fetch_time_offset": "Tilfeldig forskyvning av hentetidspunkt",
-          "day_switch_time": "Tidspunkt for dagsskifte",
-          "fetch_interval_days": "Dager mellom hentinger",
-          "day_offset": "Dagsforskyvning",
-          "ignore_duplicates": "Ignorer duplikater per dag",
-          "show_original_label": "Vis renovatørens opprinnelige navn"
-        },
-        "data_description": {
-          "sensor_select": "Velg sensoren du vil endre (velg 'Legg til ny sensor' for å opprette en ny).",
-          "default_sensors": "Legger til de valgte standardsensorene som mangler. Eksisterende sensorer forblir uendret.",
-          "customize_select": "Velg tilpasningen du vil endre (eller velg en ny for å opprette den).",
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
-          "separator": "Brukes til å slå sammen oppføringene når kilden gir flere verdier for samme dag.",
-          "fetch_time": "Klokkeslett i formatet 'HH:MM' da Home Assistant henter den nyeste tømmeplanen fra renovatøren.",
-          "random_fetch_time_offset": "Forskyver hentetidspunktet tilfeldig med opptil x minutter. Sprer Home Assistants hentinger over lengre tid, slik at renovatørene slipper toppbelastning.",
-          "day_switch_time": "Klokkeslett i formatet 'HH:MM' da Home Assistant forlater dagens oppføring og går videre til neste.",
-          "fetch_interval_days": "Hvor ofte Home Assistant henter tømminger fra denne kalenderkilden. Standard er 1 dag; med verdien 2 hentes de annenhver dag.",
-          "day_offset": "Antall dager som legges til tømmedatoen (kan være negativt). Oppgis ingen verdi, brukes standardverdien 0",
-          "ignore_duplicates": "Når dette er slått på, fjernes duplikater med samme avfallstype på samme dag, slik at bare én oppføring per type og dag blir igjen.",
-          "show_original_label": "Når dette er slått på (standard), beholder noen kilder renovatørens opprinnelige navn (f.eks. det nøyaktige navnet på beholderen) i tømmingens beskrivelse, også etter at den er koblet til en standard avfallstype. Slå av for å skjule det opprinnelige navnet."
+        "title": "Waste Collection Schedule",
+        "menu_options": {
+          "source_settings": "Kildeinnstillinger",
+          "sensors": "Sensorer",
+          "waste_types": "Avfallstyper"
         }
       },
       "customize": {
@@ -36149,7 +36097,8 @@
           "icon": "Ikon",
           "picture": "Bilde",
           "use_dedicated_calendar": "Bruk egen kalender",
-          "dedicated_calendar_title": "Navn på egen kalender"
+          "dedicated_calendar_title": "Navn på egen kalender",
+          "color": "Farge (#RRGGBB; tomt = standard)"
         },
         "data_description": {
           "delete": "Slett denne tilpasningen.",
@@ -36161,35 +36110,73 @@
           "dedicated_calendar_title": "Navnet på den egne kalenderentiteten."
         }
       },
-      "sensor": {
-        "title": "Endre/opprett sensor \"{sensor_number}\"",
-        "description": "Konfigurer én sensor om gangen.",
+      "source_settings": {
+        "description": "Oppdater innstillingene for Waste Collection Schedule.",
         "data": {
-          "delete": "Slett",
-          "name": "Navn på sensoren",
-          "details_format": "Detaljformat",
-          "count": "Antall",
-          "leadtime": "Tidshorisont",
-          "value_template": "Verdimal",
-          "date_template": "Datomal",
-          "add_days_to": "Legg til dager igjen",
-          "event_index": "Hendelsesindeks",
-          "types": "Typer",
-          "skip": "Ikke opprett sensoren",
-          "additional": "Legg til flere sensorer"
+          "calendar_title": "Kalendernavn",
+          "separator": "Skilletegn",
+          "fetch_time": "Hentetidspunkt",
+          "random_fetch_time_offset": "Tilfeldig henteforskyvning (minutter)",
+          "day_switch_time": "Tidspunkt for dagsskifte",
+          "fetch_interval_days": "Dager mellom hentinger",
+          "day_offset": "Dagsforskyvning",
+          "ignore_duplicates": "Ignorer duplikater per dag",
+          "show_original_label": "Vis renovatørens opprinnelige navn"
         },
         "data_description": {
-          "delete": "Slett denne sensoren.",
-          "details_format": "Angir formatet for informasjonen i Home Assistants informasjonsvindu. 'upcoming': liste over kommende tømminger, 'appointment_types': liste over avfallstyper og neste tømmedato for hver, 'generic': alle attributter som generiske Python-datatyper, 'hidden': skjuler attributtene for kommende tømminger",
-          "count": "Begrenser Home Assistants informasjonsvindu til de neste int tømmingene",
-          "leadtime": "Begrenser Home Assistants informasjonsvindu til tømminger innen de neste leadtime dagene",
-          "value_template": "Formaterer entitetens tilstand med Home Assistants maler. Du kan bruke 'value.date', 'value.daysTo', 'value.types",
-          "date_template": "Formaterer datoene i entitetens informasjonsvindu med Home Assistants maler, f.eks. 'value.date.strftime(\"%d.%m.%Y\")'",
-          "add_days_to": "Legger til attributtet 'daysTo' i kildeentitetens tilstand, med antall dager til neste tømming",
-          "event_index": "Knytter sensoren til en bestemt tømmedato. Neste tømming har event_index 0. Nyttig hvis du vil ha egne sensorer for neste tømming, den andre, den tredje …",
-          "types": "Filtrerer avfallstyper. Sensoren viser bare tømminger av disse avfallstypene. Har du angitt alias i kildens konfigurasjon, må du bruke aliaset.",
-          "skip": "Hvis avmerket opprettes ikke sensoren, og innstillingene over ignoreres.",
-          "additional": "Hvis avmerket kan du legge til en ny sensor når denne er lagret."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "separator": "Brukes til å slå sammen oppføringene når kilden gir flere verdier for samme dag.",
+          "fetch_time": "Klokkeslett i formatet 'HH:MM' da Home Assistant henter den nyeste tømmeplanen fra renovatøren.",
+          "random_fetch_time_offset": "Forskyver hentetidspunktet tilfeldig med opptil x minutter. Sprer Home Assistants hentinger over lengre tid, slik at renovatørene slipper toppbelastning.",
+          "day_switch_time": "Klokkeslett i formatet 'HH:MM' da Home Assistant forlater dagens oppføring og går videre til neste.",
+          "fetch_interval_days": "Hvor ofte Home Assistant henter tømminger fra denne kalenderkilden. Standard er 1 dag; med verdien 2 hentes de annenhver dag.",
+          "day_offset": "Antall dager som legges til tømmedatoen (kan være negativt). Oppgis ingen verdi, brukes standardverdien 0",
+          "ignore_duplicates": "Når dette er slått på, fjernes duplikater med samme avfallstype på samme dag, slik at bare én oppføring per type og dag blir igjen.",
+          "show_original_label": "Når dette er slått på (standard), beholder noen kilder renovatørens opprinnelige navn (f.eks. det nøyaktige navnet på beholderen) i tømmingens beskrivelse, også etter at den er koblet til en standard avfallstype. Slå av for å skjule det opprinnelige navnet."
+        },
+        "title": "Kildeinnstillinger"
+      },
+      "sensors": {
+        "title": "Sensorer",
+        "data": {
+          "predefined": "Forhåndsdefinerte sensorer",
+          "edit_sensor": "Rediger sensor",
+          "device_controls": "Enhetskontroller",
+          "auto_add_types": "Legg til nye typer automatisk"
+        }
+      },
+      "edit_sensor": {
+        "title": "Rediger sensor",
+        "data": {
+          "name": "Navn",
+          "enabled": "Aktivert",
+          "state_format": "Tilstandstekst",
+          "language": "Språk",
+          "date_format": "Datoformat",
+          "details_format": "Detaljformat",
+          "count": "Antall",
+          "leadtime": "Se fremover (dager)",
+          "unique_types": "Hver type bare én gang",
+          "exclude_types": "Utelat typer",
+          "advanced": "Avanserte innstillinger",
+          "action": "Handling",
+          "types": "Avfallstyper",
+          "kind": "Sensortype"
+        }
+      },
+      "sensor_advanced": {
+        "title": "Avanserte innstillinger",
+        "data": {
+          "event_index": "Henteindeks",
+          "value_template": "Egendefinert tilstandsmal",
+          "date_template": "Egendefinert datomal",
+          "color": "Farge (#RRGGBB; tomt = standard)"
+        }
+      },
+      "waste_types": {
+        "title": "Avfallstyper",
+        "data": {
+          "types": "Avfallstyper"
         }
       }
     },
@@ -36199,17 +36186,52 @@
       "name_exists": "Sensornavnet finnes allerede. Velg et annet navn.",
       "preset_selected": "Du kan ikke velge en forhåndsinnstilling og samtidig oppgi egne verdier.",
       "sensor_name_empty": "Sensornavnet kan ikke være tomt. Oppgi et navn.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke oppgi navn på en egen kalender uten å slå på egen kalender."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Du kan ikke oppgi navn på en egen kalender uten å slå på egen kalender.",
+      "invalid_sensor": "Kontroller sensorinnstillinger, maler og fargen #RRGGBB."
     },
-    "abort": {}
+    "abort": {
+      "sensor_removed": "Denne sensoren ble fjernet under redigering. Åpne sensorinnstillingene igjen."
+    }
   },
   "selector": {
     "details_format": {
       "options": {
-        "upcoming": "Kommende",
-        "appointment_types": "Tømmetyper",
-        "generic": "Generisk",
-        "hidden": "Skjult"
+        "types_in_days": "Typer og nedtelling",
+        "in_days": "Nedtelling",
+        "relative": "I dag / I morgen / om N dager",
+        "date": "Hentedato",
+        "types": "Avfallstyper",
+        "days": "Antall dager",
+        "custom": "Egendefinert mal",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ukedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ukedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ukedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Neste dato per type",
+        "generic": "Strukturerte oppføringer",
+        "hidden": "Skjul detaljer",
+        "schedule": "Henteplan",
+        "days_to": "Dager til henting",
+        "last_update": "Siste oppdatering",
+        "auto": "Home Assistant-språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Legg til egendefinert sensor",
+        "save": "Lagre",
+        "reset": "Gjenopprett standardverdier",
+        "duplicate": "Dupliser som egendefinert sensor",
+        "delete": "Slett egendefinert sensor"
       }
     },
     "default_sensors": {
@@ -36230,7 +36252,440 @@
       "options": {
         "sensor_select_add_new": "Legg til ny sensor"
       }
+    },
+    "state_format": {
+      "options": {
+        "types_in_days": "Typer og nedtelling",
+        "in_days": "Nedtelling",
+        "relative": "I dag / I morgen / om N dager",
+        "date": "Hentedato",
+        "types": "Avfallstyper",
+        "days": "Antall dager",
+        "custom": "Egendefinert mal",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ukedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ukedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ukedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Neste dato per type",
+        "generic": "Strukturerte oppføringer",
+        "hidden": "Skjul detaljer",
+        "schedule": "Henteplan",
+        "days_to": "Dager til henting",
+        "last_update": "Siste oppdatering",
+        "auto": "Home Assistant-språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Legg til egendefinert sensor",
+        "save": "Lagre",
+        "reset": "Gjenopprett standardverdier",
+        "duplicate": "Dupliser som egendefinert sensor",
+        "delete": "Slett egendefinert sensor"
+      }
+    },
+    "date_format": {
+      "options": {
+        "types_in_days": "Typer og nedtelling",
+        "in_days": "Nedtelling",
+        "relative": "I dag / I morgen / om N dager",
+        "date": "Hentedato",
+        "types": "Avfallstyper",
+        "days": "Antall dager",
+        "custom": "Egendefinert mal",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ukedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ukedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ukedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Neste dato per type",
+        "generic": "Strukturerte oppføringer",
+        "hidden": "Skjul detaljer",
+        "schedule": "Henteplan",
+        "days_to": "Dager til henting",
+        "last_update": "Siste oppdatering",
+        "auto": "Home Assistant-språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Legg til egendefinert sensor",
+        "save": "Lagre",
+        "reset": "Gjenopprett standardverdier",
+        "duplicate": "Dupliser som egendefinert sensor",
+        "delete": "Slett egendefinert sensor"
+      }
+    },
+    "language": {
+      "options": {
+        "types_in_days": "Typer og nedtelling",
+        "in_days": "Nedtelling",
+        "relative": "I dag / I morgen / om N dager",
+        "date": "Hentedato",
+        "types": "Avfallstyper",
+        "days": "Antall dager",
+        "custom": "Egendefinert mal",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ukedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ukedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ukedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Neste dato per type",
+        "generic": "Strukturerte oppføringer",
+        "hidden": "Skjul detaljer",
+        "schedule": "Henteplan",
+        "days_to": "Dager til henting",
+        "last_update": "Siste oppdatering",
+        "auto": "Home Assistant-språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Legg til egendefinert sensor",
+        "save": "Lagre",
+        "reset": "Gjenopprett standardverdier",
+        "duplicate": "Dupliser som egendefinert sensor",
+        "delete": "Slett egendefinert sensor"
+      }
+    },
+    "kind": {
+      "options": {
+        "types_in_days": "Typer og nedtelling",
+        "in_days": "Nedtelling",
+        "relative": "I dag / I morgen / om N dager",
+        "date": "Hentedato",
+        "types": "Avfallstyper",
+        "days": "Antall dager",
+        "custom": "Egendefinert mal",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ukedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ukedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ukedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Neste dato per type",
+        "generic": "Strukturerte oppføringer",
+        "hidden": "Skjul detaljer",
+        "schedule": "Henteplan",
+        "days_to": "Dager til henting",
+        "last_update": "Siste oppdatering",
+        "auto": "Home Assistant-språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Legg til egendefinert sensor",
+        "save": "Lagre",
+        "reset": "Gjenopprett standardverdier",
+        "duplicate": "Dupliser som egendefinert sensor",
+        "delete": "Slett egendefinert sensor"
+      }
+    },
+    "action": {
+      "options": {
+        "types_in_days": "Typer og nedtelling",
+        "in_days": "Nedtelling",
+        "relative": "I dag / I morgen / om N dager",
+        "date": "Hentedato",
+        "types": "Avfallstyper",
+        "days": "Antall dager",
+        "custom": "Egendefinert mal",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Ukedag, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Ukedag, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Ukedag, YYYY-MM-DD",
+        "upcoming": "Kommende datoer",
+        "appointment_types": "Neste dato per type",
+        "generic": "Strukturerte oppføringer",
+        "hidden": "Skjul detaljer",
+        "schedule": "Henteplan",
+        "days_to": "Dager til henting",
+        "last_update": "Siste oppdatering",
+        "auto": "Home Assistant-språk",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Legg til egendefinert sensor",
+        "save": "Lagre",
+        "reset": "Gjenopprett standardverdier",
+        "duplicate": "Dupliser som egendefinert sensor",
+        "delete": "Slett egendefinert sensor"
+      }
     }
   },
-  "issues": {}
+  "issues": {
+    "legacy_sensors": {
+      "title": "Sensorer fra tidligere navneendringer",
+      "description": "Disse gamle sensorene har ingen lagret konfigurasjon: {entities}. Kontroller automatiseringer og oversikter før fjerning.",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Fjern gamle sensoroppføringer",
+            "description": "Fjern de oppførte gamle registeroppføringene? Aktive migrerte sensorer beholdes."
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "state_format": {
+        "name": "Tilstandstekst",
+        "state": {
+          "types_in_days": "Typer og nedtelling",
+          "in_days": "Nedtelling",
+          "relative": "I dag / I morgen / om N dager",
+          "date": "Hentedato",
+          "types": "Avfallstyper",
+          "days": "Antall dager",
+          "custom": "Egendefinert mal",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ukedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ukedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ukedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Neste dato per type",
+          "generic": "Strukturerte oppføringer",
+          "hidden": "Skjul detaljer",
+          "schedule": "Henteplan",
+          "days_to": "Dager til henting",
+          "last_update": "Siste oppdatering",
+          "auto": "Home Assistant-språk",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Legg til egendefinert sensor",
+          "save": "Lagre",
+          "reset": "Gjenopprett standardverdier",
+          "duplicate": "Dupliser som egendefinert sensor",
+          "delete": "Slett egendefinert sensor"
+        }
+      },
+      "language": {
+        "name": "Språk",
+        "state": {
+          "types_in_days": "Typer og nedtelling",
+          "in_days": "Nedtelling",
+          "relative": "I dag / I morgen / om N dager",
+          "date": "Hentedato",
+          "types": "Avfallstyper",
+          "days": "Antall dager",
+          "custom": "Egendefinert mal",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ukedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ukedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ukedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Neste dato per type",
+          "generic": "Strukturerte oppføringer",
+          "hidden": "Skjul detaljer",
+          "schedule": "Henteplan",
+          "days_to": "Dager til henting",
+          "last_update": "Siste oppdatering",
+          "auto": "Home Assistant-språk",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Legg til egendefinert sensor",
+          "save": "Lagre",
+          "reset": "Gjenopprett standardverdier",
+          "duplicate": "Dupliser som egendefinert sensor",
+          "delete": "Slett egendefinert sensor"
+        }
+      },
+      "date_format": {
+        "name": "Datoformat",
+        "state": {
+          "types_in_days": "Typer og nedtelling",
+          "in_days": "Nedtelling",
+          "relative": "I dag / I morgen / om N dager",
+          "date": "Hentedato",
+          "types": "Avfallstyper",
+          "days": "Antall dager",
+          "custom": "Egendefinert mal",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ukedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ukedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ukedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Neste dato per type",
+          "generic": "Strukturerte oppføringer",
+          "hidden": "Skjul detaljer",
+          "schedule": "Henteplan",
+          "days_to": "Dager til henting",
+          "last_update": "Siste oppdatering",
+          "auto": "Home Assistant-språk",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Legg til egendefinert sensor",
+          "save": "Lagre",
+          "reset": "Gjenopprett standardverdier",
+          "duplicate": "Dupliser som egendefinert sensor",
+          "delete": "Slett egendefinert sensor"
+        }
+      },
+      "details_format": {
+        "name": "Detaljformat",
+        "state": {
+          "types_in_days": "Typer og nedtelling",
+          "in_days": "Nedtelling",
+          "relative": "I dag / I morgen / om N dager",
+          "date": "Hentedato",
+          "types": "Avfallstyper",
+          "days": "Antall dager",
+          "custom": "Egendefinert mal",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Ukedag, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Ukedag, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Ukedag, YYYY-MM-DD",
+          "upcoming": "Kommende datoer",
+          "appointment_types": "Neste dato per type",
+          "generic": "Strukturerte oppføringer",
+          "hidden": "Skjul detaljer",
+          "schedule": "Henteplan",
+          "days_to": "Dager til henting",
+          "last_update": "Siste oppdatering",
+          "auto": "Home Assistant-språk",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Legg til egendefinert sensor",
+          "save": "Lagre",
+          "reset": "Gjenopprett standardverdier",
+          "duplicate": "Dupliser som egendefinert sensor",
+          "delete": "Slett egendefinert sensor"
+        }
+      }
+    },
+    "number": {
+      "count": {
+        "name": "Antall (0 = ∞)"
+      },
+      "leadtime": {
+        "name": "Se fremover (dager) (-1 = ∞)"
+      },
+      "event_index": {
+        "name": "Henteindeks"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Aktivert"
+      },
+      "unique_types": {
+        "name": "Hver type bare én gang"
+      },
+      "advanced": {
+        "name": "Avanserte innstillinger"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Navn"
+      },
+      "value_template": {
+        "name": "Egendefinert tilstandsmal"
+      },
+      "date_template": {
+        "name": "Egendefinert datomal"
+      },
+      "color": {
+        "name": "Farge (#RRGGBB; tomt = standard)"
+      }
+    },
+    "button": {
+      "create_sensor": {
+        "name": "Opprett sensoren {name}"
+      },
+      "delete": {
+        "name": "Slett egendefinert sensor"
+      }
+    }
+  },
+  "exceptions": {
+    "type_unavailable": {
+      "message": "Denne avfallstypen finnes ikke lenger i gjeldende plan."
+    },
+    "custom_template_required": {
+      "message": "Angi først en egendefinert tilstandsmal i avanserte innstillinger."
+    }
+  }
 }
