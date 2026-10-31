@@ -186,7 +186,7 @@ class Source:
                 from homeassistant.components import persistent_notification
                 # Create notification using Home Assistant's helper
                 persistent_notification.create(
-                    hass=None, # Will auto-resolve or trigger via notification center
+                    hass=None,  # Will auto-resolve or trigger via notification center
                     message=f"Failed to update East Herts waste collection schedule:\n`{err}`",
                     title="Waste Collection Schedule Error",
                     notification_id="eastherts_waste_fetch_error",
