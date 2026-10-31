@@ -20,6 +20,7 @@ Releases are listed in reverse chronological order.
 - Raw provider labels participate in customization matching even on sources without `carry_raw_label`; existing glob customizations can therefore match more events. Combined rounds retain all categories of the selected bin's earliest pickup.
 - Options saves preserve concurrent native-control edits and discovered sensors. Reloads of an unchanged source keep its cached schedule available and retry a due fetch in the background; failure leaves the cache in place. Manual Reload and `fetch_data` skip fetching inside `fetch_interval_days`. Native text controls follow HA's 255-character limit; longer saved values remain intact and can be edited in integration options.
 - Generic `upcoming` retains `Collection` objects for local Jinja access. As before, Jinja's `to_json` filter cannot serialize these objects directly; the REST API serializes their rich records.
+- The `fetch_data` action skips disabled integration entries. Provider fetches taking longer than two minutes log a warning; later requests for that source continue waiting for the running fetch to finish.
 
 ### Deprecated
 

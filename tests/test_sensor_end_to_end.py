@@ -416,10 +416,12 @@ async def test_long_saved_template_is_preserved_and_native_control_recovers(
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("trigger", ["reload", "re-enable", "controls"])
+@pytest.mark.parametrize(
+    "trigger", ["reload", "re-enable", "controls", "entity-enable"]
+)
 @pytest.mark.parametrize("fetch_state", ["fresh", "due-success", "due-failure"])
 async def test_cached_reload_retries_due_fetch_without_losing_sensors(
-    running_entry, ha, trigger, fetch_state
+    running_entry, ha, trigger, fetch_state, monkeypatch
 ):
     entry, source = running_entry
     coordinator = ha.data[DOMAIN][entry.entry_id]
@@ -442,14 +444,38 @@ async def test_cached_reload_retries_due_fetch_without_losing_sensors(
             entry.entry_id, ConfigEntryDisabler.USER
         )
         await ha.config_entries.async_set_disabled_by(entry.entry_id, None)
-    else:
+    elif trigger == "controls":
         ha.config_entries.async_update_entry(
             entry, options={**entry.options, "device_controls": True}
         )
+    else:
+        registry = er.async_get(ha)
+        registry.async_update_entity(eid, disabled_by=er.RegistryEntryDisabler.USER)
+        await ha.async_block_till_done()
+        restored = asyncio.Event()
+
+        def entity_restored(event):
+            if event.data["entity_id"] == eid and event.data["new_state"] is not None:
+                restored.set()
+
+        unsubscribe = ha.bus.async_listen("state_changed", entity_restored)
+        try:
+            registry.async_update_entity(eid, disabled_by=None)
+            await ha.async_block_till_done()
+            # HA batches registry-enable reloads for 30 seconds. Wait for the
+            # actual entity to return through that scheduled reload.
+            loop_time = ha.loop.time
+            with monkeypatch.context() as clock:
+                clock.setattr(ha.loop, "time", lambda: loop_time() + 31)
+                await asyncio.wait_for(restored.wait(), timeout=5)
+                await ha.async_block_till_done(wait_background_tasks=True)
+        finally:
+            unsubscribe()
     await ha.async_block_till_done(wait_background_tasks=True)
     assert source.fetch_count == (1 if fetch_state == "fresh" else 2)
     assert entry.state.value == "loaded"
     current = ha.data[DOMAIN][entry.entry_id]
+    assert current is not coordinator
     assert sensor_id(ha, entry, "type_paper") == eid
     assert ha.states.get(eid).attributes["date"] == (
         "2099-01-02" if fetch_state == "due-success" else "2099-01-01"

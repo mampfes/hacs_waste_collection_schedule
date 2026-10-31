@@ -2,6 +2,7 @@ import asyncio
 import os
 import sys
 from datetime import date
+from threading import Event
 from typing import Any, cast
 from unittest.mock import AsyncMock, Mock, patch
 
@@ -184,3 +185,73 @@ def test_yaml_api_retries_all_sources_after_partial_failure() -> None:
     api._fetch()
     assert successful_shell.fetch_count == 2
     assert recovering_shell.fetch_count == 2
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("slow", [False, True])
+@pytest.mark.parametrize("succeeds", [False, True])
+async def test_provider_fetch_warning_is_delayed_once_and_cleared_on_completion(
+    ha, monkeypatch, caplog, slow, succeeds
+):
+    from sensor_fixtures import entry_for
+
+    from custom_components.waste_collection_schedule import wcs_coordinator
+
+    started = asyncio.Event()
+    release = Event()
+
+    class Source:
+        def fetch(self):
+            ha.loop.call_soon_threadsafe(started.set)
+            if not release.wait(timeout=10):
+                raise TimeoutError("Test did not release provider")
+            if not succeeds:
+                raise RuntimeError("Synthetic provider outage")
+            return [Collection(date=date(2099, 1, 1), t="Paper")]
+
+    shell = SourceShell(
+        Source(), {}, "Test source", "Test source", None, None, "slow", 0
+    )
+    coordinator = wcs_coordinator.WCSCoordinator(
+        ha, entry_for(ha, {}), shell, ", ", "01:00", 1, 0, "10:00"
+    )
+    loop_time = ha.loop.time
+    elapsed = 0
+    caplog.set_level("WARNING", logger=wcs_coordinator.__name__)
+
+    def warnings():
+        return [
+            r.getMessage() for r in caplog.records if r.name == wcs_coordinator.__name__
+        ]
+
+    async def advance(seconds):
+        nonlocal elapsed
+        elapsed += seconds
+        # Let the real event loop dispatch timers made due by the clock change.
+        await asyncio.sleep(0)
+        await asyncio.sleep(0)
+
+    with monkeypatch.context() as clock:
+        clock.setattr(ha.loop, "time", lambda: loop_time() + elapsed)
+        task = ha.async_create_task(coordinator._fetch_now())
+        try:
+            await asyncio.wait_for(started.wait(), timeout=5)
+            await advance(119)
+            assert warnings() == []
+            if slow:
+                await advance(2)
+                assert len(warnings()) == 1
+                assert "Test source" in warnings()[0]
+                assert "120 seconds" in warnings()[0]
+                assert not task.done()
+                await advance(120)
+                assert len(warnings()) == 1
+            release.set()
+            assert await task is succeeds
+            assert coordinator._last_fetch_date == (date.today() if succeeds else None)
+            await advance(300)
+            assert len(warnings()) == int(slow)
+        finally:
+            release.set()
+            await task
+            await coordinator.async_shutdown()
