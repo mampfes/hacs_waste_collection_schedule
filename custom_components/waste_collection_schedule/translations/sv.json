@@ -36457,12 +36457,11 @@
   "issues": {
     "legacy_sensors": {
       "title": "Sensorer från tidigare namnbyten",
-      "description": "Dessa gamla sensorer saknar sparad konfiguration: {entities}. Kontrollera automationer och instrumentpaneler före borttagning.",
       "fix_flow": {
         "step": {
           "confirm": {
             "title": "Ta bort gamla sensorposter",
-            "description": "Ta bort de angivna gamla registerposterna? Aktiva migrerade sensorer behålls."
+            "description": "Dessa gamla sensorer saknar sparad konfiguration: {entities}. Kontrollera automationer och instrumentpaneler före borttagning.\n\nTa bort de angivna gamla registerposterna? Aktiva migrerade sensorer behålls."
           }
         }
       }

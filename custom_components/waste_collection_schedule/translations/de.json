@@ -36456,12 +36456,11 @@
   "issues": {
     "legacy_sensors": {
       "title": "Sensoren aus früheren Umbenennungen",
-      "description": "Diese alten Sensoren haben keine gespeicherte Konfiguration: {entities}. Vor dem Entfernen Automationen und Dashboards prüfen.",
       "fix_flow": {
         "step": {
           "confirm": {
             "title": "Alte Sensoreinträge entfernen",
-            "description": "Aufgeführte alte Registrierungseinträge entfernen? Aktive migrierte Sensoren bleiben erhalten."
+            "description": "Diese alten Sensoren haben keine gespeicherte Konfiguration: {entities}. Vor dem Entfernen Automationen und Dashboards prüfen.\n\nAufgeführte alte Registrierungseinträge entfernen? Aktive migrierte Sensoren bleiben erhalten."
           }
         }
       }

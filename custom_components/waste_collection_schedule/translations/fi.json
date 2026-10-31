@@ -36453,12 +36453,11 @@
   "issues": {
     "legacy_sensors": {
       "title": "Aiemmista uudelleennimeämisistä jääneet anturit",
-      "description": "Näillä vanhoilla antureilla ei ole tallennettua kokoonpanoa: {entities}. Tarkista automaatiot ja kojelaudat ennen poistamista.",
       "fix_flow": {
         "step": {
           "confirm": {
             "title": "Poista vanhat anturimerkinnät",
-            "description": "Poistetaanko luetellut vanhat rekisterimerkinnät? Aktiiviset siirretyt anturit säilytetään."
+            "description": "Näillä vanhoilla antureilla ei ole tallennettua kokoonpanoa: {entities}. Tarkista automaatiot ja kojelaudat ennen poistamista.\n\nPoistetaanko luetellut vanhat rekisterimerkinnät? Aktiiviset siirretyt anturit säilytetään."
           }
         }
       }

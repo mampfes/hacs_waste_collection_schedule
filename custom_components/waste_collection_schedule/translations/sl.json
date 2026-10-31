@@ -36449,12 +36449,11 @@
   "issues": {
     "legacy_sensors": {
       "title": "Senzorji iz prejšnjih preimenovanj",
-      "description": "Ti stari senzorji nimajo shranjene konfiguracije: {entities}. Pred odstranitvijo preverite avtomatizacije in nadzorne plošče.",
       "fix_flow": {
         "step": {
           "confirm": {
             "title": "Odstrani stare vnose senzorjev",
-            "description": "Odstranim navedene stare vnose registra? Aktivni preseljeni senzorji ostanejo."
+            "description": "Ti stari senzorji nimajo shranjene konfiguracije: {entities}. Pred odstranitvijo preverite avtomatizacije in nadzorne plošče.\n\nOdstranim navedene stare vnose registra? Aktivni preseljeni senzorji ostanejo."
           }
         }
       }

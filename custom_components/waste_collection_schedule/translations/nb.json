@@ -36457,12 +36457,11 @@
   "issues": {
     "legacy_sensors": {
       "title": "Sensorer fra tidligere navneendringer",
-      "description": "Disse gamle sensorene har ingen lagret konfigurasjon: {entities}. Kontroller automatiseringer og oversikter før fjerning.",
       "fix_flow": {
         "step": {
           "confirm": {
             "title": "Fjern gamle sensoroppføringer",
-            "description": "Fjern de oppførte gamle registeroppføringene? Aktive migrerte sensorer beholdes."
+            "description": "Disse gamle sensorene har ingen lagret konfigurasjon: {entities}. Kontroller automatiseringer og oversikter før fjerning.\n\nFjern de oppførte gamle registeroppføringene? Aktive migrerte sensorer beholdes."
           }
         }
       }

@@ -36457,12 +36457,11 @@
   "issues": {
     "legacy_sensors": {
       "title": "Sensoren van eerdere naamswijzigingen",
-      "description": "Deze oude sensoren hebben geen opgeslagen configuratie: {entities}. Controleer automatiseringen en dashboards voordat u ze verwijdert.",
       "fix_flow": {
         "step": {
           "confirm": {
             "title": "Oude sensorvermeldingen verwijderen",
-            "description": "De vermelde oude registervermeldingen verwijderen? Actieve gemigreerde sensoren blijven behouden."
+            "description": "Deze oude sensoren hebben geen opgeslagen configuratie: {entities}. Controleer automatiseringen en dashboards voordat u ze verwijdert.\n\nDe vermelde oude registervermeldingen verwijderen? Actieve gemigreerde sensoren blijven behouden."
           }
         }
       }
