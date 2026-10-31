@@ -357,6 +357,11 @@ async def test_manager_edits_keep_entity_id_and_do_not_fetch(running_entry, ha):
     )
     assert registry.async_get(entity_id).original_name == "Renamed paper"
     assert ha.states.get(entity_id).attributes["color"] == "#123456"
+    for key in ("collections", "upcoming"):
+        assert all(
+            item["color"] == "#123456" and item["color_source"] == "sensor"
+            for item in ha.states.get(entity_id).attributes[key]
+        )
     assert source.fetch_count == 1
 
 

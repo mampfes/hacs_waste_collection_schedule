@@ -15,7 +15,7 @@ from homeassistant.helpers.selector import (
     SelectSelectorMode,
 )
 
-from .sensor_model import SensorConfig, catalogue_id, migrate_filter
+from .sensor_model import SensorConfig, catalogue_id
 
 # Keep the stored setup-choice names while creating catalogue records.
 KIND_LEGACY = "legacy"
@@ -79,18 +79,13 @@ def catalogue(type_labels: dict[str, str]) -> dict[str, dict[str, Any]]:
     return records
 
 
-def build_default_sensors(kinds, fetched_types, existing=()):
+def build_default_sensors(kinds, fetched_types: dict[str, str], existing=()):
     """Materialize missing catalogue records, deduplicating by origin, not name."""
     kinds = set(kinds)
-    labels = (
-        fetched_types
-        if isinstance(fetched_types, dict)
-        else {migrate_filter(t, {}): t for t in fetched_types}
-    )
     present = {s.get("origin") for s in existing}
     return [
         r
-        for origin, r in catalogue(labels).items()
+        for origin, r in catalogue(fetched_types).items()
         if origin not in present
         and (
             (origin.startswith("type:") and KIND_LEGACY in kinds)

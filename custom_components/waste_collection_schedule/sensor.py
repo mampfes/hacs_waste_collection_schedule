@@ -477,7 +477,8 @@ class ScheduleSensor(SensorEntity):
             ]
         if "collections" in attributes and self._record.get("color"):
             attributes["collections"] = [
-                {**c, "color": self._record["color"]} for c in attributes["collections"]
+                {**c, "color": self._record["color"], "color_source": "sensor"}
+                for c in attributes["collections"]
             ]
         self._attr_extra_state_attributes = attributes
         self._add_refreshtime()
