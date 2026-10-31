@@ -101,6 +101,8 @@ class SensorManager:
 
     async def async_add_discovered_types(self):
         async with self._lock:
+            if not self.entry.options.get("auto_add_types"):
+                return
             records = list(self.entry.options.get("sensors", []))
             existing = {s["origin"] for s in records}
             records.extend(

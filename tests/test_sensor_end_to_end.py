@@ -350,3 +350,51 @@ async def test_excluded_type_is_absent_from_detail_type_lists(
     assert PAPER.names["en"] in (
         attrs if details == "appointment_types" else attrs["types"]
     )
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("count", [None, 1])
+async def test_generic_pickup_index_skips_date_groups_before_flattening(
+    running_entry, ha, count
+):
+    entry, source = running_entry
+    source.fetch = lambda: [
+        Collection(date=date(2099, 1, 1), waste_type=PAPER),
+        Collection(date=date(2099, 1, 1), waste_type=GLASS),
+        Collection(date=date(2099, 1, 2), waste_type=PAPER),
+    ]
+    coordinator = ha.data[DOMAIN][entry.entry_id]
+    coordinator._last_fetch_date = None
+    await coordinator._fetch_now()
+    record = next(r for r in entry.options["sensors"] if r["origin"] == "custom")
+    await coordinator.sensor_manager.async_update(
+        record["id"],
+        {"types": [], "details_format": "generic", "event_index": 1, "count": count},
+    )
+    await ha.async_block_till_done()
+    attrs = ha.states.get(sensor_id(ha, entry, record["id"])).attributes
+    assert attrs["date"] == "2099-01-02"
+    assert [(e.date, e.waste_type.id) for e in attrs["upcoming"]] == [
+        (date(2099, 1, 2), "paper")
+    ]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "running_entry", [{"records": [], "types": [PAPER, GLASS]}], indirect=True
+)
+async def test_enabling_discovery_immediately_uses_the_cached_schedule(
+    running_entry, ha
+):
+    entry, source = running_entry
+    assert not entry.options["sensors"]
+    ha.config_entries.async_update_entry(
+        entry, options={**entry.options, "auto_add_types": True}
+    )
+    await ha.async_block_till_done()
+    assert {r["origin"] for r in entry.options["sensors"]} == {
+        "type:paper",
+        "type:glass",
+    }
+    assert all(sensor_id(ha, entry, r["id"]) for r in entry.options["sensors"])
+    assert source.fetch_count == 1

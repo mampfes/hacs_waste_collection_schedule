@@ -181,6 +181,10 @@ async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None
         and {k: v for k, v in manager.options.items() if k not in sensor_keys}
         == {k: v for k, v in entry.options.items() if k not in sensor_keys}
     ):
+        if entry.options.get("auto_add_types") and not manager.options.get(
+            "auto_add_types"
+        ):
+            await manager.async_add_discovered_types()
         await manager.async_apply()
     else:
         await hass.config_entries.async_reload(entry.entry_id)

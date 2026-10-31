@@ -470,13 +470,15 @@ class ScheduleSensor(SensorEntity):
             attributes["types"] = [self._type_label(t) for t in collection_types]
             records = self._aggregator.get_upcoming(
                 preserve_bins=True,
-                count=self._count,
                 leadtime=self._leadtime,
                 include_types=self._collection_types,
                 include_today=self._include_today,
-                start_index=self._event_index,
                 **self._filter_options(),
             )
+            selected_dates = set(sorted({e.date for e in records})[self._event_index :])
+            records = [e for e in records if e.date in selected_dates]
+            if self._count is not None:
+                records = records[: self._count]
             attributes["upcoming"] = [self._collection_for_sensor(c) for c in records]
             refreshtime = ""
             if self._aggregator.refreshtime is not None:
