@@ -20,9 +20,9 @@ when the count reaches zero.
 | 5 | Shared backend, build one component for the cluster | 0 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 1 left (of 14) | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
 | 7 | Singleton, small (<150 lines, <=2 requests) | 8 left (of 58, -1 to class 2) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
-| 8 | Singleton, medium | 12 left (of 78) | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
+| 8 | Singleton, medium | 11 left (of 78) | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
 | 9 | Singleton, large (>=350 lines or >=5 requests) | 2 left (of 24, +1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
-| | **Total** | **41** (281 when this file was written; equals `Legacy fetch() sources` in `python tools/arch_coverage.py`. See the notes in class 5 to 8 and the reconciliation below) | |
+| | **Total** | **40** (281 when this file was written; equals `Legacy fetch() sources` in `python tools/arch_coverage.py`. See the notes in class 5 to 8 and the reconciliation below) | |
 
 ## 1. Special / not a provider
 
@@ -66,7 +66,7 @@ Worked through on `release/3.0.0`. Done (7), with what the "existing platform" t
 
 Not done:
 
-- `lerum_se`: fits `EdpFutureWeb` (written and discarded), but `vatjanst.lerum.se` answers this environment with `403 Access denied`, so it can be neither verified nor recorded. Retry from an allowed network. Rechecked 2026-10-31: the host also drops the connection from a Swedish exit and in a regular browser, yet the municipality's current e-service ("Hämtningsdagar för ditt hushållsavfall", `sjalvservice.lerum.se/oversikt/external/346`) still redirects to `vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SimpleWastePickup`. That reads as an outage, not a retirement, so it is not deprecated; recheck before deciding.
+- `lerum_se`: fits `EdpFutureWeb` (written and discarded), but `vatjanst.lerum.se` answers this environment with `403 Access denied`, so it can be neither verified nor recorded. Retry from an allowed network. Rechecked 2026-10-31: the host also drops the connection from a Swedish exit and in a regular browser, yet the municipality's current e-service ("Hämtningsdagar för ditt hushållsavfall", `sjalvservice.lerum.se/oversikt/external/346`) still redirects to `vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SimpleWastePickup`. That reads as an outage, not a retirement, so it is not deprecated; recheck before deciding (next recheck 2026-11-14).
 - `south_norfolk_and_broadland_gov_uk`: migrated since in #7992. Was: reclassify as class 9. Three retrieval paths (cookie payload, postcode lookup, and a SOAP calendar chosen by a link on the summary page) need a component of their own; `WebAspxCollections` only covers the SOAP leg.
 
 ## 5. Shared backend: one component per cluster
@@ -111,11 +111,17 @@ Found broken upstream, not migrated (3): `hygea_be` (the JSON calendar is gone a
 - **ics/html** (1): `merton_gov_uk`
 - **ics** (1): `newcastle_gov_uk`
 
+Note on `apps_ci_minneapolis_mn_us`: the data is still published, but the site sits behind a Cloudflare challenge, also from a US exit. It loads in a browser once the check is passed, which a source cannot do, so it stays legacy for now.
+
 ## 8. Standalone, medium
 
 Done in the first block (4): `fairfieldcity_nsw_gov_au` (the council's autocomplete switched to spelled-out street types, which broke every saved "Dawson ST" value; the source now maps the typed street onto the autocomplete list and suggests streets when none matches), `gleneira_vic_gov_au` (the address autocomplete is a declared `Lookup`; street sweeping stays excluded, it is a weekday rule, not a date), `vogeldisposal_com` (`YearlyRetriever` over the city, address and pickup-info calls; recycling days are both general waste and recycling), `newforest_gov_uk` (the Ebase UFS form as two `Lookup`s and a `Request` in one session, no hand-rolled `http.client`). Done in batch 4 (5, from recordings through AU, NZ and SI exits, or from this environment where the host answers): `casey_vic_gov_au`, `aucklandcouncil_govt_nz`, `ccc_govt_nz` (only the rounds the API flags as current are published; the legacy source rolled stale dates forward by a fixed interval, which is a projection and is gone), `komunala_kranj_si` (its GIS host omits an intermediate that some trust stores lack; certifi and the browser-impersonating session verify it, so it needs no TLS workaround), `warrnambool_vic_gov_au` (the `wcdm-public` host no longer resolves; the council's own bin-day search on `/kerbside-bin-collection` answers the address with the next two collection days). The other medium candidates checked in the first block stay legacy: `newham_gov_uk` has the same missing-intermediate problem as `hastings_gov_uk`, and most of the remaining UK, AU and NZ councils refuse or geoblock the test exit, need credentials, or compute dates from a cadence.
 
-- **json** (2): `grafikai_svara_lt`, `hastings_gov_uk`
+Done since: `hastings_gov_uk` (#8068; the server's incomplete certificate chain is completed with the TLS AIA fallback instead of `verify=False`).
+
+Not migrated by decision: `grafikai_svara_lt` stays legacy (each update would download about 55 MB).
+
+- **json** (1): `grafikai_svara_lt`
 - **html** (3): `gardenbags_co_nz`, `islington_gov_uk`, `newham_gov_uk`
 - **json/html** (1): `greyhound_ie`
 - **ics/json** (5): `airdrie_ca`, `api_golemio_cz`, `greatershepparton_com_au`, `maitland_nsw_gov_au`, `npdc_govt_nz`
