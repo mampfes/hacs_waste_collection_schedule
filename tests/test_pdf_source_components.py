@@ -1477,6 +1477,97 @@ def _recorded_pdf_response(module, case):
     return cassette.CassetteResponse(item)
 
 
+def test_outlined_month_rows_keep_printed_holiday_dates_and_combined_bins():
+    from waste_collection_schedule.service.NewryMourneDownCalendar import CalendarParser
+
+    response = _recorded_pdf_response(
+        "newrymournedown_org", "9 Derrymore Road, Bessbrook"
+    )
+    with freeze_time("2026-10-30"):
+        rows = set(CalendarParser()(response))
+    assert len(rows) == 84
+    assert (D(2026, 4, 2), "Black bin") in rows
+    assert (D(2026, 4, 2), "Brown bin") in rows
+    assert (D(2026, 4, 9), "Blue bin") in rows
+    assert {day.month for day, _ in rows if day.year == 2026} == set(range(4, 13))
+    assert {day.month for day, _ in rows if day.year == 2027} == set(range(1, 5))
+    with freeze_time("2027-05-01"), pytest.raises(ValueError, match="expired"):
+        CalendarParser()(response)
+
+
+def _recorded_wednesday_calendar():
+    import cassette
+    from fixtures_support import FIXTURE_DIR
+
+    path = Path(FIXTURE_DIR) / "newrymournedown_org" / "_wednesday.json"
+    return cassette.CassetteResponse(json.loads(path.read_text())["interactions"][0])
+
+
+def test_outlined_calendar_keeps_the_printed_friday_exception():
+    from waste_collection_schedule.service.NewryMourneDownCalendar import CalendarParser
+
+    with freeze_time("2026-10-30"):
+        rows = set(CalendarParser()(_recorded_wednesday_calendar()))
+    assert (D(2026, 10, 30), "Black bin") in rows
+    assert (D(2026, 10, 30), "Brown bin") in rows
+    assert any(day == D(2026, 10, 28) for day, _ in rows)
+
+
+def test_outlined_calendar_rejects_a_month_grid_disagreeing_with_its_route_weekday():
+    from waste_collection_schedule.service.NewryMourneDownCalendar import CalendarParser
+
+    response = _recorded_wednesday_calendar()
+    response.url = response.url.replace("WED-Z1", "MON-Z1")
+    with freeze_time("2026-10-30"), pytest.raises(ValueError, match="route weekday"):
+        CalendarParser()(response)
+
+
+@pytest.mark.parametrize("scale,dx,dy", [(1, 0, 0), (0.6, -50, 70), (2.5, 300, -100)])
+def test_outlined_digit_recognition_is_translation_and_scale_independent(scale, dx, dy):
+    from io import BytesIO
+
+    from pdfminer.high_level import extract_pages
+    from pdfminer.layout import LTCurve
+    from waste_collection_schedule.service.NewryMourneDownCalendar import _color, _walk
+    from waste_collection_schedule.service.PdfVectorDigits import (
+        TAHOMA_BOLD,
+        VectorDigits,
+    )
+
+    response = _recorded_wednesday_calendar()
+    # The first April cell prints 1. Its outlined numeral sits in the centre
+    # of the first black/brown box, independent of the hidden text layer.
+    candidates = [
+        x
+        for page in extract_pages(BytesIO(response.content))
+        for x in _walk(page)
+        if isinstance(x, LTCurve)
+        and x.fill
+        and _color(x.non_stroking_color, (1, 1, 1))
+        and 8 < x.height < 13
+        and 130 < x.x0 < 140
+        and 438 < x.y0 < 440
+    ]
+    assert len(candidates) == 1
+    original = candidates[0]
+    shape = SimpleNamespace(
+        x0=original.x0 * scale + dx,
+        y0=original.y0 * scale + dy,
+        width=original.width * scale,
+        height=original.height * scale,
+        x1=original.x1 * scale + dx,
+        original_path=[
+            (part[0], *((x * scale + dx, y * scale + dy) for x, y in part[1:]))
+            for part in original.original_path
+        ],
+    )
+    decoder = VectorDigits(TAHOMA_BOLD)
+    assert decoder.read([shape]) == 1
+    shape.original_path.append(("l", (shape.x0, shape.y0)))
+    with pytest.raises(ValueError, match="Unknown"):
+        decoder.read([shape])
+
+
 def test_marked_pdf_preserves_ritl_combined_rounds_and_ignores_padding_days():
     from collections import Counter
 
