@@ -49,7 +49,8 @@ async def test_dedicated_calendar_resolves_aliased_legacy_type_after_empty_fetch
         {
             "Legacy paper": Customize(
                 "Legacy paper", alias="Recycling", use_dedicated_calendar=True
-            )
+            ),
+            "Legacy glass": Customize("Legacy glass", alias="Recycling"),
         },
         "Provider",
         "Offline calendar fixture",
@@ -59,16 +60,30 @@ async def test_dedicated_calendar_resolves_aliased_legacy_type_after_empty_fetch
         0,
     )
     assert shell.fetch()
-    calendar = create_calendar_entries([shell])[0]
+    calendars = {
+        entity.unique_id: entity for entity in create_calendar_entries([shell])
+    }
+    calendar = calendars[calc_unique_calendar_id(shell, "Legacy paper")]
+    general = calendars[calc_unique_calendar_id(shell)]
     assert calendar.unique_id == calc_unique_calendar_id(shell, "Legacy paper")
     assert calendar.event is None
-    source.events = [Collection(date=date(2099, 1, 1), t="Legacy paper")]
+    assert general.event is None
+    source.events = [
+        Collection(date=date(2099, 1, 1), t="Legacy paper"),
+        Collection(date=date(2099, 1, 2), t="Legacy glass"),
+    ]
     assert shell.fetch()
     events = await calendar.async_get_events(
-        ha, datetime(2099, 1, 1, tzinfo=UTC), datetime(2099, 1, 2, tzinfo=UTC)
+        ha, datetime(2099, 1, 1, tzinfo=UTC), datetime(2099, 1, 3, tzinfo=UTC)
     )
     assert [(event.summary, event.start) for event in events] == [
         ("Recycling", date(2099, 1, 1))
+    ]
+    events = await general.async_get_events(
+        ha, datetime(2099, 1, 1, tzinfo=UTC), datetime(2099, 1, 3, tzinfo=UTC)
+    )
+    assert [(event.summary, event.start) for event in events] == [
+        ("Recycling", date(2099, 1, 2))
     ]
 
 

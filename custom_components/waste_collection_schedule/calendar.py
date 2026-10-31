@@ -168,7 +168,7 @@ def create_calendar_entries(
 
         # Display aliases can be shared by separate categories or provider bins.
         # Check the pre-merge records so a shared alias cannot hide a remainder.
-        if any(
+        if (not records and dedicated_types) or any(
             not any(aggregator.matches_type(event, key) for key in dedicated_filters)
             for event in records
         ):
