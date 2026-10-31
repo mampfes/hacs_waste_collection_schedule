@@ -602,6 +602,26 @@ def test_each_response_then_preprocesses_each_document_on_its_own():
     assert parse(responses) == [(D(2026, 12, 30), "Bio"), (D(2027, 1, 6), "Bio")]
 
 
+def test_tamax_szczekociny_retains_wrapped_month_rows_and_seasonal_bio():
+    from waste_collection_schedule.source.tamax_szczekociny_pl import Source
+
+    response = _recorded_pdf_response(
+        "tamax_szczekociny_pl", "Rokitno, Ołudza, Wólka Ołudzka, Grabiec"
+    )
+    with freeze_time("2026-10-31"):
+        rows = set(Source.preprocess(Source.parse(response)))
+    assert len(rows) == 49
+    for day in (3, 17, 30):
+        assert (D(2026, 4, day), "komunalne") in rows
+    assert (D(2026, 4, 3), "segregowane") in rows
+    assert (D(2026, 4, 11), "biodegradowalne") in rows
+    assert (D(2026, 4, 20), "biodegradowalne") in rows
+    assert not any(
+        d.month in (1, 3, 11) and label == "biodegradowalne" for d, label in rows
+    )
+    assert (D(2026, 12, 7), "biodegradowalne") in rows
+
+
 class TestDayGridCodesAndWeekdays:
     CODES: ClassVar[dict] = {
         "B": "Bio",
