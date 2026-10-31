@@ -35,10 +35,17 @@ def sensor_id(ha, entry, record_id, domain="sensor", suffix=""):
 
 
 @pytest.mark.asyncio
-async def test_dedicated_calendar_resolves_aliased_legacy_type_after_empty_fetch(ha):
+@pytest.mark.parametrize("initial", ["empty", "partial-dedicated"])
+async def test_dedicated_calendar_resolves_aliased_legacy_type_after_incomplete_fetch(
+    ha, initial
+):
     class Source:
         def __init__(self):
-            self.events = []
+            self.events = (
+                []
+                if initial == "empty"
+                else [Collection(date=date(2099, 1, 1), t="Legacy paper")]
+            )
 
         def fetch(self):
             return self.events
@@ -51,6 +58,7 @@ async def test_dedicated_calendar_resolves_aliased_legacy_type_after_empty_fetch
                 "Legacy paper", alias="Recycling", use_dedicated_calendar=True
             ),
             "Legacy glass": Customize("Legacy glass", alias="Recycling"),
+            "Legacy organic": Customize("Legacy organic", use_dedicated_calendar=True),
         },
         "Provider",
         "Offline calendar fixture",
@@ -66,7 +74,7 @@ async def test_dedicated_calendar_resolves_aliased_legacy_type_after_empty_fetch
     calendar = calendars[calc_unique_calendar_id(shell, "Legacy paper")]
     general = calendars[calc_unique_calendar_id(shell)]
     assert calendar.unique_id == calc_unique_calendar_id(shell, "Legacy paper")
-    assert calendar.event is None
+    assert (calendar.event is None) == (initial == "empty")
     assert general.event is None
     source.events = [
         Collection(date=date(2099, 1, 1), t="Legacy paper"),
@@ -95,6 +103,8 @@ async def test_dedicated_calendar_resolves_aliased_legacy_type_after_empty_fetch
         (PAPER.names["en"], GLASS.names["en"]),
         ("Blue bin", "Green bin"),
         ("Legacy paper", "Legacy glass"),
+        ("Trimmed paper", "Trimmed glass"),
+        ("Description small bin", "Description large bin"),
     ],
 )
 @pytest.mark.parametrize(
@@ -107,19 +117,34 @@ async def test_dedicated_calendars_keep_membership_when_aliases_collide(
         def fetch(self):
             second_date = date(2099, 1, 1 if partition == "same-day" else 2)
             events = [
-                Collection(date=date(2099, 1, 1), t=keys[0], location="Paper curb")
-                if keys[0] == "Legacy paper"
+                Collection(
+                    date=date(2099, 1, 1),
+                    t=keys[0] + (" " if keys[0].startswith("Trimmed") else ""),
+                    location="Paper curb",
+                )
+                if keys[0].startswith(("Legacy", "Trimmed"))
                 else Collection(
                     date=date(2099, 1, 1), waste_type=PAPER, location="Paper curb"
                 ),
-                Collection(date=second_date, t=keys[1], location="Glass depot")
-                if keys[0] == "Legacy paper"
+                Collection(
+                    date=second_date,
+                    t=keys[1] + (" " if keys[0].startswith("Trimmed") else ""),
+                    location="Glass depot",
+                )
+                if keys[0].startswith(("Legacy", "Trimmed"))
                 else Collection(
-                    date=second_date, waste_type=GLASS, location="Glass depot"
+                    date=second_date,
+                    waste_type=PAPER if keys[0].startswith("Description") else GLASS,
+                    location="Glass depot",
                 ),
             ]
-            for event, label in zip(events, ("Blue bin", "Green bin"), strict=True):
-                event.set_original_label(label)
+            for event, label, key in zip(
+                events, ("Blue bin", "Green bin"), keys, strict=True
+            ):
+                if keys[0].startswith("Description"):
+                    event.set_description(key)
+                elif not keys[0].startswith("Trimmed"):
+                    event.set_original_label(label)
             if partition == "third":
                 events.append(Collection(date=date(2099, 1, 3), waste_type=ORGANIC))
             return events
