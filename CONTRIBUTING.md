@@ -38,6 +38,11 @@ The container reproduces the CI **minimum** lane, the oldest supported Home Assi
 
 If you cannot use the container, everything still works locally, but expect occasional differences from CI and lean on the PR checks.
 
+## Standalone use
+
+To install the core without Home Assistant or export a schedule to iCalendar,
+see [Using the sources without Home Assistant](doc/standalone.md).
+
 ## Adding New Service Providers
 
 ### Fork And Clone The Repository, And Checkout A New Branch

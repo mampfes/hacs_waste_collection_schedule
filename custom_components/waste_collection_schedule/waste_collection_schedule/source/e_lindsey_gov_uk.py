@@ -30,6 +30,7 @@ class Source(BaseSource):
         wt.GENERAL_WASTE,
         wt.RECYCLABLES,
         wt.PAPER,
+        wt.FOOD_WASTE,
         wt.GARDEN_WASTE,
     ]
 
@@ -45,8 +46,9 @@ class Source(BaseSource):
 
     # The form's name carries the financial year (WASTECOLLECTIONDAYS202627), so
     # it is matched rather than spelled; NLPGEL is East Lindsey's address gazetteer.
-    # The reply names the next refuse, recycling and purple-bin dates and the
-    # garden-waste calendar PDF, which is read for its dated collections.
+    # The reply names the next refuse, recycling, purple-bin and food-waste
+    # dates and the garden-waste calendar PDF, which is read for its dated
+    # collections.
     retrieve = retrievers.FanOutRetriever(
         prepare=GossFormRetriever(
             "https://www.e-lindsey.gov.uk/mywastecollections",
@@ -80,6 +82,7 @@ class Source(BaseSource):
             "Refuse": wt.GENERAL_WASTE,
             "Recycling": wt.RECYCLABLES,
             "Purple Bin": wt.PAPER,
+            "Food Waste": wt.FOOD_WASTE,
             "Garden Waste": wt.GARDEN_WASTE,
         },
     )

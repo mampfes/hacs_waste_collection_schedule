@@ -30,7 +30,7 @@ import datetime
 import itertools
 import re
 import unicodedata
-from collections.abc import Callable, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from typing import TYPE_CHECKING, NamedTuple
 
 from waste_collection_schedule import recurrence, response_shape
@@ -71,6 +71,7 @@ class Marker(NamedTuple):
     width: tuple[float, float] = (3.0, 20.0)
     height: tuple[float, float] = (3.0, 20.0)
     frame: tuple[float, float] | None = None
+    stroke_only: bool | None = None
 
 
 class _Anchor(NamedTuple):
@@ -96,7 +97,14 @@ def to_rgb(color: Sequence[float] | None) -> tuple[float, float, float] | None:
 
 
 def _same_color(vector: PdfVector, marker: Marker) -> bool:
-    rgb = to_rgb(vector.fill_color)
+    if (
+        marker.stroke_only is not None
+        and (vector.fill_color is None) != marker.stroke_only
+    ):
+        return False
+    rgb = to_rgb(
+        vector.fill_color if vector.fill_color is not None else vector.stroke_color
+    )
     expected = to_rgb(marker.color)
     return (
         rgb is not None
@@ -203,6 +211,11 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
             ``PdfWordLayoutParser``), for a PDF whose day numbers are there.
         min_markers: fewest symbols expected; fewer raise
             ``ResponseShapeError`` (a changed design or an image-only PDF).
+        continuation_pages: reuse a heading page's month columns on its following
+            page when that page has no headings (a facing-page calendar).
+        include_strokes: retain stroke-only pictograms as well as filled ones.
+        text_markers: printed annotations such as zone letters mapped to labels;
+            they bind to day numbers using the same placement and row reach.
     """
 
     def __init__(
@@ -219,6 +232,9 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
         min_markers: int = 10,
         include_form_text: bool = False,
         read_headings: bool = True,
+        continuation_pages: bool = False,
+        include_strokes: bool = False,
+        text_markers: Mapping[str, str] | None = None,
     ):
         if placement not in ("row", "cell", "below"):
             raise ValueError("placement must be 'row', 'cell' or 'below'")
@@ -233,12 +249,17 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
         self.min_markers = min_markers
         self.include_form_text = include_form_text
         self.read_headings = read_headings
+        self.continuation_pages = continuation_pages
+        self.include_strokes = include_strokes
+        self.text_markers = dict(text_markers or {})
 
     def __call__(
         self, response: Response, source: BaseSource | None = None
     ) -> list[tuple[datetime.date, str]]:
         layout = PdfWordLayoutParser(
-            min_words=28, include_form_text=self.include_form_text
+            min_words=28,
+            include_form_text=self.include_form_text,
+            include_strokes=self.include_strokes,
         )(response, source)[0]
         name = response_shape.source_name(source)
         url = str(getattr(response, "url", "") or "")
@@ -289,6 +310,23 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
             for marker in self.markers
             if marker.frame is not None
             for anchor in _framed(vectors, marker, anchors)
+        )
+        hits.extend(
+            (anchor, Marker(label, (0,)))
+            for word in words
+            if (label := self.text_markers.get(word.text)) is not None
+            for anchor in self._anchors_of(
+                PdfVector(
+                    word.page,
+                    word.x - 1,
+                    word.y - 1,
+                    word.x + 1,
+                    word.y + 1,
+                    None,
+                    None,
+                ),
+                anchors,
+            )
         )
 
         marked: list[tuple[_Anchor, int, str, str | None]] = []
@@ -529,6 +567,15 @@ class MarkerCalendarParser(Parser["list[tuple[datetime.date, str]]"]):
         bands = completed
         if not bands:
             return {}, None
+        if self.continuation_pages:
+            headed_pages = {page for page, _, _ in bands}
+            for page, _, columns in list(bands):
+                following = [a for a in anchors if a.page == page + 1]
+                if following and page + 1 not in headed_pages:
+                    # A facing page continues the same columns without repeating
+                    # their month headings. Never bridge two printed headings.
+                    bands.append((page + 1, max(a.y for a in following) + 1, columns))
+            bands.sort(key=lambda band: (band[0], -band[1]))
 
         # Every day number belongs to the nearest heading row above it.
         under: dict[int, list[_Anchor]] = {}

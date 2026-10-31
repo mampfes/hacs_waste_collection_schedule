@@ -47,6 +47,8 @@ import requests as _plain_requests
 from bs4 import BeautifulSoup, Tag
 from curl_cffi.requests import RequestsError as _CurlRequestsError
 
+from waste_collection_schedule import tls
+
 if TYPE_CHECKING:
     from curl_cffi import requests as _cffi_requests
 
@@ -1412,13 +1414,12 @@ class AthosWasteManagementRetriever(_BaseRetriever):
               sits inside a TYPO3 page whose hidden inputs are login-form
               tokens).
 
-        verify: TLS verification for every request, passed straight to the
-            session (default ``True``). ``False`` disables it; a path to a CA
-            bundle uses that bundle instead. Needed by a deployment whose
-            certificate is itself valid but whose server omits the issuing
-            intermediate, so the chain cannot be built from the default trust
-            store (awg_de). Prefer a completed bundle over ``False`` where the
-            missing intermediate is known and stable.
+        verify: TLS verification for every request (default ``True``). A
+            path to a CA bundle uses that bundle instead; :data:`tls.AIA`
+            completes the chain of a host whose server omits its issuing
+            intermediate from the leaf's AIA URL (awg_de), see
+            :mod:`waste_collection_schedule.tls`. ``False`` disables
+            verification and is not for new deployments.
         initial_validate: optional ``callable(response, source)``, run on the
             response to the initial GET before any step. Raise a
             ``SourceArgument*`` exception to reject a value the site's own
@@ -1441,7 +1442,7 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         encoding: str | None = "utf-8",
         submit_action_field: str = "SubmitAction",
         state: str = "accumulate",
-        verify: bool | str = True,
+        verify: tls.Verify = True,
         initial_validate: Callable[[Response, BaseSource], None] | None = None,
         iterate_field: str | None = None,
     ):
@@ -1508,11 +1509,12 @@ class AthosWasteManagementRetriever(_BaseRetriever):
                 source,
             )
 
-            response = source.session.post(
+            response = tls.send(
+                source.session.post,
                 url,
+                self.verify,
                 data=dict(state),
                 headers=headers,
-                verify=self.verify,
             )
 
             response.raise_for_status()
@@ -1527,20 +1529,22 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         headers = self._resolve(self.headers, source)
         url = self._resolve(self.url, source)
 
-        initial = source.session.get(
+        initial = tls.send(
+            source.session.get,
             url,
+            self.verify,
             params=self.initial_params,
             headers=headers,
-            verify=self.verify,
         )
 
         if initial.status_code == 404 and self.fallback_url is not None:
             url = self._resolve(self.fallback_url, source)
-            initial = source.session.get(
+            initial = tls.send(
+                source.session.get,
                 url,
+                self.verify,
                 params=self.initial_params,
                 headers=headers,
-                verify=self.verify,
             )
 
         initial.raise_for_status()
@@ -1867,6 +1871,13 @@ class Request(_BaseRetriever):
         raise_for_status: raise on an error status (default). Off for a
             provider whose error status is itself the answer a ``pick`` reads.
         timeout: request timeout in seconds.
+        verify: TLS verification. ``True`` (default) verifies against the
+            session's trust store; a path uses that CA bundle
+            (:func:`tls.ca_bundle`); :data:`tls.AIA` verifies normally and,
+            for a host that omits its intermediate certificate, completes the
+            chain from the leaf's AIA ``caIssuers`` URL and retries once (see
+            :mod:`waste_collection_schedule.tls`). Never ``False`` in a new
+            source.
     """
 
     def __init__(
@@ -1890,6 +1901,7 @@ class Request(_BaseRetriever):
         encoding: str | None = None,
         raise_for_status: bool = True,
         timeout: int = 30,
+        verify: tls.Verify = True,
     ):
         if method.upper() not in ("GET", "POST"):
             raise ValueError(f"unknown Request method {method!r}: expected GET or POST")
@@ -1913,6 +1925,7 @@ class Request(_BaseRetriever):
         self.encoding = encoding
         self.raise_for_status = raise_for_status
         self.timeout = timeout
+        self.verify = verify
 
     def __call__(self, source: BaseSource, *args: Any) -> Any:
         """The response, or ``None`` when ``when`` ruled the request out."""
@@ -1943,14 +1956,16 @@ class Request(_BaseRetriever):
         }
         url = _with(self.url, args, params)
         if self.method == "POST":
-            response = source.session.post(
+            response = tls.send(
+                source.session.post,
                 url,
+                self.verify,
                 data=_with(self.data, args, params),
                 json=_with(self.json, args, params),
                 **kwargs,
             )
         else:
-            response = source.session.get(url, **kwargs)
+            response = tls.send(source.session.get, url, self.verify, **kwargs)
         if self.raise_for_status:
             response.raise_for_status()
         return response
@@ -2027,7 +2042,7 @@ class Lookup:
         **request: the remaining :class:`Request` arguments (``method``,
             ``params``, ``data``, ``json``, ``headers``, ``cookies``,
             ``allow_redirects``, ``retry_if``, ``retries``, ``retry_delay``,
-            ``encoding``, ``raise_for_status``, ``timeout``).
+            ``encoding``, ``raise_for_status``, ``timeout``, ``verify``).
     """
 
     def __init__(
@@ -2358,3 +2373,24 @@ class _DefaultHttpPostRetriever(RetrieverFunc):
 # Zero-config default instances (used by BaseSource and simple sources).
 http_get = _DefaultHttpGetRetriever()
 http_post = _DefaultHttpPostRetriever()
+
+
+class WithParams(RetrieverFunc):
+    """Bind provider configuration without adding an unused config-form field.
+
+    A shallow source view keeps the shared HTTP session and component context;
+    the caller's params are never changed. Bound values take precedence.
+    """
+
+    def __init__(self, retrieve: RetrieverFunc, **params: Any):
+        self.retrieve = retrieve
+        self.params = params
+
+    def __call__(self, source: BaseSource) -> Any:
+        from copy import copy
+
+        session = source.session
+        view = copy(source)
+        view.params = {**source.params, **self.params}
+        view._session = session
+        return self.retrieve(view)

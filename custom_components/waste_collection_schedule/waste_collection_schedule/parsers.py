@@ -2278,6 +2278,17 @@ class PdfVector(NamedTuple):
     fill_color: tuple[float, ...] | None
 
 
+class PdfPolygon(PdfVector):
+    """A vector with vertices, preserving PdfVector's existing tuple interface."""
+
+    points: tuple[tuple[float, float], ...]
+
+    def __new__(cls, *args, points: tuple[tuple[float, float], ...] = ()):
+        polygon = super().__new__(cls, *args)
+        polygon.points = points
+        return polygon
+
+
 class PdfDocumentLayout(NamedTuple):
     """A PDF's text plus positioned fragments and vector paths."""
 
@@ -2422,6 +2433,7 @@ def _pdf_word_layout(
     *,
     include_form_text: bool = False,
     include_strokes: bool = False,
+    include_points: bool = False,
 ) -> PdfWordLayout:
     """Retain individual word centres even when lines span several grid cells."""
     from io import BytesIO
@@ -2471,16 +2483,19 @@ def _pdf_word_layout(
             for child in item:
                 visit(child, page)
         elif isinstance(item, LTCurve) and item.fill:
+            vector = PdfVector(
+                page,
+                item.x0,
+                item.y0,
+                item.x1,
+                item.y1,
+                _pdf_color(item.stroking_color, grayscale_to_rgb=True),
+                _pdf_color(item.non_stroking_color, grayscale_to_rgb=True),
+            )
             vectors.append(
-                PdfVector(
-                    page,
-                    item.x0,
-                    item.y0,
-                    item.x1,
-                    item.y1,
-                    _pdf_color(item.stroking_color, grayscale_to_rgb=True),
-                    _pdf_color(item.non_stroking_color, grayscale_to_rgb=True),
-                )
+                PdfPolygon(*vector, points=tuple(item.pts))
+                if include_points
+                else vector
             )
         elif isinstance(item, LTCurve) and item.stroke and include_strokes:
             # A stroke-only path paints a band around its geometry: report the
@@ -2524,6 +2539,8 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
     kept too, as the area they paint (widened by half the line width), with
     ``fill_color`` None and the paint in ``stroke_color``.
     The one-item list composes with ``parsers.EachResponse``.
+    ``include_points`` retains filled polygon vertices for matching labels on
+    a coloured service-area map; bounding boxes alone overlap across areas.
     """
 
     def __init__(
@@ -2533,11 +2550,13 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
         min_vectors: int = 0,
         include_form_text: bool = False,
         include_strokes: bool = False,
+        include_points: bool = False,
     ):
         self.min_words = min_words
         self.min_vectors = min_vectors
         self.include_form_text = include_form_text
         self.include_strokes = include_strokes
+        self.include_points = include_points
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -2546,6 +2565,7 @@ class PdfWordLayoutParser(Parser[list[PdfWordLayout]]):
             response,
             include_form_text=self.include_form_text,
             include_strokes=self.include_strokes,
+            include_points=self.include_points,
         )
         response_shape.expect(
             len(layout.words) >= self.min_words
@@ -2606,11 +2626,40 @@ class PdfTableParser(Parser["list[PdfRow]"]):
         y_tolerance: runs whose baselines differ by at most this many points
             are treated as the same row (default 3.0).
         min_words: minimum total text runs expected across the document.
+        char_margin: pdfminer's ``LAParams.char_margin`` (default 2.0). Lower
+            it when neighbouring grid cells sit so close that pdfminer joins
+            them into one run ("Sonntag 1 So" across two month columns).
+        decode: optional ``callable(text) -> text`` applied to every run
+            before it is clustered, for a PDF whose embedded font has no
+            ``ToUnicode`` map, so pdfminer prints ``(cid:N)`` placeholders the
+            source can map back to letters.
+        figure_text: also read text placed inside form XObjects (pdfminer
+            figures), which some PDF converters wrap the whole page in and
+            which is skipped otherwise. Runs that fall outside the page box
+            (a converter's form drawn larger than the page) are not visible
+            and are dropped in this mode.
+        x_range: optional ``(x_min, x_max)``; runs whose horizontal centre
+            lies outside it are dropped, e.g. a legend printed beside the
+            calendar grid that would otherwise read as part of the last
+            month column.
     """
 
-    def __init__(self, *, y_tolerance: float = 3.0, min_words: "int | None" = None):
+    def __init__(
+        self,
+        *,
+        y_tolerance: float = 3.0,
+        min_words: "int | None" = None,
+        char_margin: "float | None" = None,
+        decode: "Callable[[str], str] | None" = None,
+        figure_text: bool = False,
+        x_range: "tuple[float, float] | None" = None,
+    ):
         self.y_tolerance = y_tolerance
         self.min_words = min_words
+        self.char_margin = char_margin
+        self.decode = decode
+        self.figure_text = figure_text
+        self.x_range = x_range
 
     def __call__(
         self, response: Response, source: "BaseSource | None" = None
@@ -2618,24 +2667,62 @@ class PdfTableParser(Parser["list[PdfRow]"]):
         from io import BytesIO
 
         from pdfminer.high_level import extract_pages
-        from pdfminer.layout import LAParams, LTTextContainer, LTTextLineHorizontal
+        from pdfminer.layout import (
+            LAParams,
+            LTFigure,
+            LTTextContainer,
+            LTTextLineHorizontal,
+        )
+
+        laparams: dict[str, Any] = {"boxes_flow": None}
+        if self.char_margin is not None:
+            laparams["char_margin"] = self.char_margin
+        if self.figure_text:
+            laparams["all_texts"] = True
 
         # (page, y1, x0, x1, text) for every text run on every page.
         runs: list[tuple[int, float, float, float, str]] = []
-        # We sort text runs by coordinates below. Skip pdfminer's expensive
-        # reading-order grouping, which does not affect line text or geometry.
-        for page_no, layout in enumerate(
-            extract_pages(BytesIO(response.content), laparams=LAParams(boxes_flow=None))
-        ):
-            for element in layout:
+
+        def collect(
+            page_no: int,
+            elements: Iterable[Any],
+            page_box: "tuple[float, float, float, float] | None",
+        ) -> None:
+            for element in elements:
+                if self.figure_text and isinstance(element, LTFigure):
+                    collect(page_no, element, page_box)
+                    continue
                 if not isinstance(element, LTTextContainer):
                     continue
                 for line in element:
                     if not isinstance(line, LTTextLineHorizontal):
                         continue
-                    text = line.get_text().strip()
+                    if (
+                        self.figure_text
+                        and page_box is not None
+                        and not (
+                            page_box[0] <= (line.x0 + line.x1) / 2 <= page_box[2]
+                            and page_box[1] <= (line.y0 + line.y1) / 2 <= page_box[3]
+                        )
+                    ):
+                        continue
+                    if self.x_range is not None and not (
+                        self.x_range[0] <= (line.x0 + line.x1) / 2 <= self.x_range[1]
+                    ):
+                        continue
+                    text = line.get_text()
+                    if self.decode is not None:
+                        text = self.decode(text)
+                    text = text.strip()
                     if text:
                         runs.append((page_no, line.y1, line.x0, line.x1, text))
+
+        # We sort text runs by coordinates below. Skip pdfminer's expensive
+        # reading-order grouping, which does not affect line text or geometry.
+        for page_no, layout in enumerate(
+            extract_pages(BytesIO(response.content), laparams=LAParams(**laparams))
+        ):
+            collect(page_no, layout, getattr(layout, "bbox", None))
 
         if self.min_words is not None:
             response_shape.expect(

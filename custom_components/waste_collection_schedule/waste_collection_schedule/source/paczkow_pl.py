@@ -40,6 +40,8 @@ _HEADER = re.compile(
 _MONTH_YEAR = re.compile(r"([A-ZĄĆĘŁŃÓŚŹŻ]+)\s+(20\d\d)", re.I)
 # One month's days: "06" or "01, 15, 29".
 _DAY_GROUP = re.compile(r"\d{1,2}(?:\s*,\s*\d{1,2})*")
+# A wrapped piece of a row's day lists: days and commas only.
+_CONTINUATION = re.compile(r"^\s*\d{1,2}(?:\s*,\s*\d{1,2})*\s*,?\s*$")
 _NON_RESIDENTIAL = re.compile(r"Nieruchomości\s+nie\s*zamieszkałe", re.I)
 _FOOTER = re.compile(r"nie mają prawa wchodzenia na teren posesji\)?", re.I)
 
@@ -72,6 +74,24 @@ def _quarter_pdfs(response: Any, **_: Any) -> list[str]:
     return wanted
 
 
+def _waste_rows(text: str) -> list[str]:
+    """The table's lines, a row's wrapped day lists joined back onto it.
+
+    A month cell too narrow for its days wraps them ("02, 06, 09, 13, 16, 20,
+    23, 27," over "30"), and some pypdf versions (before 6.20) extract each
+    wrapped piece as a line of its own. Such a piece holds only days and
+    commas; joined with a space, a piece continuing a cell follows its comma
+    and a new cell is space-separated, as on one line.
+    """
+    lines: list[str] = []
+    for line in text.splitlines():
+        if lines and _CONTINUATION.match(line):
+            lines[-1] = f"{lines[-1].rstrip()} {line.strip()}"
+        else:
+            lines.append(line)
+    return lines
+
+
 def _tables(text: str, _source: Any = None) -> list[dict[str, Any]]:
     """Split one PDF's text into its area tables (residential only)."""
     # The town PDF ends with the non-residential properties' table (offices,
@@ -98,7 +118,7 @@ def _tables(text: str, _source: Any = None) -> list[dict[str, Any]]:
         footer = _FOOTER.search(text, header.end())
         end = footer.end() if footer else len(text)
         rows: list[tuple[datetime.date, str]] = []
-        for line in text[header.end() : end].splitlines():
+        for line in _waste_rows(text[header.end() : end]):
             label = next((key for key in _TYPES if key.lower() in line.lower()), None)
             if label is None:
                 continue

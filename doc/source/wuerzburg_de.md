@@ -1,10 +1,8 @@
 # Abfallkalender Würzburg (deprecated)
 
-Please use the [ICS source](https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wuerzburg_de.md) instead.
+Support for schedules provided by [Abfallkalender Würzburg (deprecated)](https://www.wuerzburg.de).
 
----
-
-Support for schedules provided by [Abfallkalender Würzburg](https://www.wuerzburg.de/themen/umwelt-verkehr/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html), serving the City of Würzburg.
+Deprecated: Use the ICS source instead. Source for waste collection in the city of Würzburg, Germany.
 
 ## Configuration via configuration.yaml
 
@@ -13,40 +11,28 @@ waste_collection_schedule:
   sources:
     - name: wuerzburg_de
       args:
-        district: ADDRESS
+        district: DISTRICT
         street: STREET
 ```
 
 ### Configuration Variables
 
-**district** and **street** can be used independently, only **one** is required. If set, priority will be given to **street**.
-
 **district**  
-*(string) (required)* - if *street* is empty
+*(string) (optional)*
 
 **street**  
-*(string) (required)* - if *district* is empty
+*(string) (optional)*
 
 ## Example
 
-Both examples will yield the same result.
-
 ```yaml
 waste_collection_schedule:
   sources:
     - name: wuerzburg_de
       args:
-        district: "Altstadt"
+        district: Altstadt
 ```
 
-```yaml
-waste_collection_schedule:
-  sources:
-    - name: wuerzburg_de
-      args:
-        street: "Juliuspromenade"
-```
+## How to get the source arguments
 
-## How to get the source argument
-
-The source argument is either district or street as displayed in the web form at [Abfallkalender Würzburg](https://www.wuerzburg.de/themen/umwelt-verkehr/vorsorge-entsorgung/abfallkalender/32208.Abfallkalender.html). Exact match is required.
+This source remains deprecated; the generic ICS configuration is recommended. Enter district or street exactly as listed on the city calendar. Street takes precedence if both are set. The published event API supplies actual dates and collection pictures. Types now use canonical, localised names; update filters and customisations using old labels.

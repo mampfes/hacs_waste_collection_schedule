@@ -3268,3 +3268,22 @@ class HolidayShift(Preprocessor[Any, "tuple[datetime.date, str]"]):
             shifted = self._adjust(collection_date, key, source)
             if shifted is not None:
                 yield shifted, key
+
+
+class LogOnce(Preprocessor[Any, Any]):
+    """Log a migration/deprecation notice once per component, preserving rows."""
+
+    def __init__(self, message: str, *, logger: str = __name__):
+        import logging
+
+        self.logger = logging.getLogger(logger)
+        self.message = message
+        self.logged = False
+
+    def __call__(
+        self, records: Any, source: "BaseSource | None" = None
+    ) -> Iterable[Any]:
+        if not self.logged:
+            self.logger.warning(self.message)
+            self.logged = True
+        return records

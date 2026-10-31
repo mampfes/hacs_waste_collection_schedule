@@ -101,6 +101,30 @@ def _sunshinecoast_qld_gov_au(
             interaction["content_b64"] = base64.b64encode(raw[:64]).decode("ascii")
 
 
+def _strathfield_nsw_gov_au(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep the dated calendar page and its vector colours, dropping the guide."""
+    from io import BytesIO
+
+    from pypdf import PdfReader, PdfWriter
+    from pypdf.constants import ImageType
+
+    for interaction in interactions:
+        if not interaction["url"].lower().endswith(".pdf"):
+            continue
+        raw = base64.b64decode(interaction["content_b64"])
+        reader = PdfReader(BytesIO(raw))
+        writer = PdfWriter()
+        writer.add_page(reader.pages[0])
+        writer.remove_images(ImageType.XOBJECT_IMAGES | ImageType.INLINE_IMAGES)
+        writer.pages[0].compress_content_streams()
+        writer.compress_identical_objects()
+        output = BytesIO()
+        writer.write(output)
+        interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
+
+
 def _sica_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None:
     """Keep the configured commune's collections from the recording day on."""
     wanted = str(args["municipality"]).lower()
@@ -654,6 +678,7 @@ SCRUBBERS: dict[str, Scrubber] = {
     "ritl_ca": _ritl_ca,
     "wastenet_org_nz": _wastenet_org_nz,
     "montreal_ca": _montreal_ca,
+    "strathfield_nsw_gov_au": _strathfield_nsw_gov_au,
     "sunshinecoast_qld_gov_au": _sunshinecoast_qld_gov_au,
     "cbcity_nsw_gov_au": _cbcity_nsw_gov_au,
     "dardanup_wa_gov_au": _dardanup_wa_gov_au,

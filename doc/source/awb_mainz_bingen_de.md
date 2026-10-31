@@ -1,44 +1,39 @@
 # Abfallwirtschaftsbetrieb LK Mainz-Bingen (Deprecated)
 
-This source is deprecated and kept for existing configurations. Please use [KAW Mainz und Mainz-Bingen AöR](./kaw_mainz_bingen_de.md) for new setups.
+Support for schedules provided by [Abfallwirtschaftsbetrieb LK Mainz-Bingen (Deprecated)](https://lk.kaw-mainz-bingen.de/de/Abfallentsorgung/Abfallkalender).
 
-Existing `awb_mainz_bingen_de` configurations use the current [KAW Abfallkalender](https://lk.kaw-mainz-bingen.de/de/Abfallentsorgung/Abfallkalender) internally.
+Deprecated source for Abfallwirtschaftsbetrieb LK Mainz-Bingen. Please use KAW Mainz und Mainz-Bingen AöR instead.
 
 ## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
-    sources:
-        - name: awb_mainz_bingen_de
-          args:
-            bezirk: Abfuhrbezirk
-            ort: Ort
-
+  sources:
+    - name: awb_mainz_bingen_de
+      args:
+        bezirk: BEZIRK
+        ort: ORT
 ```
 
 ### Configuration Variables
 
 **bezirk**  
-*(String) (required)*
+*(string) (required)*
 
 **ort**  
-*(String) (required)*
-
-**strasse**  
-*(String) (optional, legacy parameter; ignored by the current website)*
+*(string) (required)*
 
 ## Example
 
 ```yaml
 waste_collection_schedule:
-    sources:
-        - name: awb_mainz_bingen_de
-          args:
-            bezirk: Stadt Ingelheim
-            ort: Ingelheim Süd
-
+  sources:
+    - name: awb_mainz_bingen_de
+      args:
+        bezirk: Stadt Ingelheim
+        ort: "Ingelheim S\xFCd"
 ```
 
-## How to get the source argument
+## How to get the source arguments
 
-Find the parameters using [the KAW Abfallkalender](https://lk.kaw-mainz-bingen.de/de/Abfallentsorgung/Abfallkalender). Select your `Abfuhrbezirk` and `Ort` and copy the names exactly.
+This legacy source name remains deprecated; prefer kaw_mainz_bingen_de. Existing bezirk, ort and saved strasse arguments remain accepted. The current KAW API only needs district and municipality. Collection dates and canonical waste types are unchanged.

@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-10-31",
+  "interactions": [
+    {
+      "key": "POST https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService 32d3b2420c",
+      "method": "POST",
+      "url": "https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService",
+      "final_url": "https://el2.hastings.gov.uk/MyArea/CollectionDays.asmx/LookupCollectionDaysByService",
+      "body": "{\"body\":{\"Uprn\":\"100060038877\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "private, max-age=0",
+        "content-type": "application/json; charset=utf-8",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnet-version": "4.0.30319",
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET,POST",
+        "access-control-allow-headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With",
+        "date": "Sat, 31 Oct 2026 07:45:53 GMT",
+        "content-length": "759"
+      },
+      "content_b64": "eyJkIjpbeyJfX3R5cGUiOiJUUFdTLldhc3RlLkNvbGxlY3Rpb25EYXlCeVNlcnZpY2UiLCJJZCI6MiwiRGF0ZXMiOlsiXC9EYXRlKDE3OTM3NTA0MDAwMDApXC8iLCJcL0RhdGUoMTc5NDM1NTIwMDAwMClcLyIsIlwvRGF0ZSgxNzk0OTYwMDAwMDAwKVwvIiwiXC9EYXRlKDE3OTU1NjQ4MDAwMDApXC8iXSwiU2VydmljZSI6IkZvb2Qgd2FzdGUgY29sbGVjdGlvbiBzZXJ2aWNlIiwiU2NoZWR1bGUiOiIiLCJJbWFnZSI6ImZvb2QtYmluLWdyZXkucG5nIn0seyJfX3R5cGUiOiJUUFdTLldhc3RlLkNvbGxlY3Rpb25EYXlCeVNlcnZpY2UiLCJJZCI6MCwiRGF0ZXMiOlsiXC9EYXRlKDE3OTM2NjQwMDAwMDApXC8iLCJcL0RhdGUoMTc5NDI2ODgwMDAwMClcLyIsIlwvRGF0ZSgxNzk0ODczNjAwMDAwKVwvIiwiXC9EYXRlKDE3OTU0Nzg0MDAwMDApXC8iXSwiU2VydmljZSI6IlJlY3ljbGluZyBjb2xsZWN0aW9uIHNlcnZpY2UiLCJTY2hlZHVsZSI6IlJlY1R1ZSIsIkltYWdlIjoiZHItc2Fjay5wbmcifSx7Il9fdHlwZSI6IlRQV1MuV2FzdGUuQ29sbGVjdGlvbkRheUJ5U2VydmljZSIsIklkIjoxLCJEYXRlcyI6WyJcL0RhdGUoMTc5MzY2NDAwMDAwMClcLyIsIlwvRGF0ZSgxNzk0MjY4ODAwMDAwKVwvIiwiXC9EYXRlKDE3OTQ4NzM2MDAwMDApXC8iLCJcL0RhdGUoMTc5NTQ3ODQwMDAwMClcLyJdLCJTZXJ2aWNlIjoiUnViYmlzaCBjb2xsZWN0aW9uIHNlcnZpY2UiLCJTY2hlZHVsZSI6IlJlZlR1ZSIsIkltYWdlIjoiZHctc2Fjay5wbmcifV19"
+    }
+  ]
+}

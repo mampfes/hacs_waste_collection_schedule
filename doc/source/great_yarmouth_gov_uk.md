@@ -1,9 +1,8 @@
 # Great Yarmouth Borough Council
 
-Support for schedules provided by [Great Yarmouth Borough Council](https://myaccount.great-yarmouth.gov.uk), serving the Borough of Great Yarmouth, Norfolk, UK.
+Support for schedules provided by [Great Yarmouth Borough Council](https://myaccount.great-yarmouth.gov.uk).
 
-## Local Government Reorganisation note
-During the ongoing local government reorganisation (LGR) in Norfolk, please continue to use the source for your current area as long as it's still working. New sources for the new East Norfolk council are not expected to be live until at least April 2028, when the council itself officially comes into being.
+Source for waste collection services for Great Yarmouth Borough Council, Norfolk, UK.
 
 ## Configuration via configuration.yaml
 
@@ -12,15 +11,13 @@ waste_collection_schedule:
   sources:
     - name: great_yarmouth_gov_uk
       args:
-        uprn: UNIQUE_PROPERTY_REFERENCE_NUMBER
+        uprn: UPRN
 ```
 
 ### Configuration Variables
 
-**uprn**
+**uprn**  
 *(string) (required)*
-
-Your Unique Property Reference Number (UPRN). An easy way to find this is by visiting [findmyaddress.co.uk](https://www.findmyaddress.co.uk/) and entering your address details.
 
 ## Example
 
@@ -29,5 +26,9 @@ waste_collection_schedule:
   sources:
     - name: great_yarmouth_gov_uk
       args:
-        uprn: "100090834016"
+        uprn: '100090834016'
 ```
+
+## How to get the source arguments
+
+Enter the Unique Property Reference Number (UPRN) of your property. You can find it at https://www.findmyaddress.co.uk/. Since the v3 pipeline migration, waste types use canonical, localised names, and the dates a bulky collection can be booked are no longer listed as collections. Update filters, automations and customisations using the old labels.

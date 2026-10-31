@@ -1,240 +1,214 @@
-import base64
+"""Swansea Council (Wales) bin collection dates."""
+
 import json
 import re
-from datetime import date
+from typing import ClassVar, final
 
-from bs4 import BeautifulSoup
-from curl_cffi import requests
-from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule import date_parsers, parsers, preprocessors, retrievers
+from waste_collection_schedule import field_terms as ft
+from waste_collection_schedule import waste_types as wt
+from waste_collection_schedule.base_source import BaseSource
+from waste_collection_schedule.config_params import postcode, street, text_field
 from waste_collection_schedule.exceptions import (
     SourceArgumentNotFound,
     SourceArgumentNotFoundWithSuggestions,
 )
+from waste_collection_schedule.service.GossForm import GossFormDataParser
+from waste_collection_schedule.transformers import RowTransformer
 
-TITLE = "Swansea Council"
-DESCRIPTION = "Source script for swansea.gov.uk"
-URL = "https://swansea.gov.uk"
-COUNTRY = "uk"
-TEST_CASES = {
-    "Cwmdonkin Drive": {"street_name": "cwmdonkin", "post_code": "SA20RA"},
-    "Cwmdonkin Drive (UPRN)": {"post_code": "SA2 0RA", "uprn": "100100351698"},
-    "Postcode only": {"post_code": "sa2 0ra"},
-}
-
-PARAM_DESCRIPTIONS = {
-    "en": {
-        "post_code": "Full postcode of the property",
-        "street_name": "Any part of the address (e.g. street name), used to pick an address in the postcode",
-        "uprn": "Unique Property Reference Number (UPRN) of the property",
-    }
-}
-PARAM_TRANSLATIONS = {
-    "en": {
-        "post_code": "Postcode",
-        "street_name": "Street name",
-        "uprn": "UPRN",
-    }
-}
-
-FORM_URL = "https://www.swansea.gov.uk/recyclingsearch"
+# The postcode search (JSON-RPC answered as JSONP) gives the postcode's
+# addresses; the address is then posted to a GOSS form, whose answer carries
+# the bin information as HTML in the page's FormData (POSTCODEINPUT_1 /
+# DISPLAYBININFO). That has a block per collection week ("pink week", "green
+# week") listing what is collected in it, and month calendars whose day cells
+# are marked calendar-pink, calendar-green or calendar-both.
 POSTCODE_URL = "https://www.swansea.gov.uk/apiserver/postcode"
-FORM_NAME = "RECYCLINGSEARCHMYACCOUNT"
-
-ICON_MAP = {
-    "Pink": Icons.GENERAL_WASTE,
-    "Green": Icons.RECYCLING,
+FORM_URL = "https://www.swansea.gov.uk/recyclingsearch"
+_FORM = "RECYCLINGSEARCHMYACCOUNT"
+_WEEKS = {
+    "calendar-pink": ("pink",),
+    "calendar-green": ("green",),
+    "calendar-both": ("pink", "green"),
 }
-
-CLASS_MAP = {
-    "calendar-pink": ["Pink"],
-    "calendar-green": ["Green"],
-    "calendar-both": ["Pink", "Green"],
-}
-
-MONTHS = {
-    m: i + 1
-    for i, m in enumerate(
-        [
-            "january",
-            "february",
-            "march",
-            "april",
-            "may",
-            "june",
-            "july",
-            "august",
-            "september",
-            "october",
-            "november",
-            "december",
-        ]
-    )
-}
+_MONTHS = (
+    "january february march april may june july august september october "
+    "november december"
+).split()
 
 
-def _normalise(s: str) -> str:
-    return re.sub(r"[^A-Z0-9]", "", s.upper())
+def _normalise(text: str) -> str:
+    return re.sub(r"[^A-Z0-9]", "", str(text).upper())
 
 
-def _parse_caption(caption: str) -> tuple[int, int] | None:
-    """Parse 'October 2026' or 'i18n{sc.commercialwaste.month10} 2026'."""
-    year_match = re.search(r"(\d{4})\s*$", caption)
-    if not year_match:
-        return None
-    year = int(year_match.group(1))
-    month_match = re.search(r"month(\d{1,2})\}", caption)
-    if month_match:
-        return year, int(month_match.group(1))
-    word = caption[: year_match.start()].strip().lower()
-    if word in MONTHS:
-        return year, MONTHS[word]
-    return None
-
-
-def _address_desc(address: dict) -> str:
+def _address_text(address: dict) -> str:
     parts = [address.get(f"line{i}", "") for i in range(1, 6)]
     parts += [address.get("town", ""), address.get("postcode", "")]
-    return ", ".join(p for p in parts if p)
+    return ", ".join(part for part in parts if part)
 
 
-class Source:
-    def __init__(
-        self,
-        post_code: str,
-        street_name: str | None = None,
-        uprn: str | int | None = None,
-    ):
-        self._post_code = post_code
-        self._street_name = street_name
-        self._uprn = str(uprn) if uprn else None
+def _search_params(*_, post_code, **__) -> dict[str, str]:
+    rpc = {
+        "id": 1,
+        "method": "postcodeSearch",
+        "params": {"provider": "", "postcode": post_code},
+    }
+    return {"callback": "cb", "jsonrpc": json.dumps(rpc)}
 
-    def _get_address(self, session) -> dict:
-        jsonrpc = {
-            "id": 1,
-            "method": "postcodeSearch",
-            "params": {"provider": "", "postcode": self._post_code},
-        }
-        r = session.get(
-            POSTCODE_URL,
-            params={"callback": "cb", "jsonrpc": json.dumps(jsonrpc)},
-            timeout=30,
+
+def _address(response, *, post_code, street_name=None, uprn=None, **_) -> dict:
+    """The address the configuration names among the postcode's addresses."""
+    text = response.text
+    payload = json.loads(text[text.index("(") + 1 : text.rindex(")")])
+    addresses = [a for a in payload.get("result") or [] if "udprn" in a]
+    if not addresses:
+        raise SourceArgumentNotFound("post_code", post_code)
+    if uprn:
+        wanted = str(uprn).strip().lstrip("0")
+        for address in addresses:
+            if address["udprn"].lstrip("0") == wanted:
+                return address
+        raise SourceArgumentNotFoundWithSuggestions(
+            "uprn", uprn, [a["udprn"] for a in addresses]
         )
-        r.raise_for_status()
-        # Response is JSONP: cb({...})
-        payload = json.loads(r.text[r.text.index("(") + 1 : r.text.rindex(")")])
-        addresses = [a for a in payload.get("result") or [] if "udprn" in a]
-        if not addresses:
-            raise SourceArgumentNotFound("post_code", self._post_code)
-
-        if self._uprn:
-            for address in addresses:
-                if address["udprn"].lstrip("0") == self._uprn.lstrip("0"):
-                    return address
-            raise SourceArgumentNotFoundWithSuggestions(
-                "uprn", self._uprn, [a["udprn"] for a in addresses]
-            )
-
-        if self._street_name:
-            needle = _normalise(self._street_name)
-            for address in addresses:
-                if needle in _normalise(_address_desc(address)):
-                    return address
-            raise SourceArgumentNotFoundWithSuggestions(
-                "street_name",
-                self._street_name,
-                sorted({_address_desc(a) for a in addresses}),
-            )
-
-        # Collections are scheduled per street, so any address in the postcode will do
-        return addresses[0]
-
-    def fetch(self) -> list[Collection]:
-        session = requests.Session(impersonate="chrome")
-
-        address = self._get_address(session)
-
-        r = session.get(FORM_URL, timeout=30)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, "html.parser")
-        form = soup.find("form", id=f"{FORM_NAME}_FORM")
-        if not form:
-            raise Exception("Could not find recycling search form")
-
-        def _val(name: str) -> str:
-            el = form.find("input", attrs={"name": f"{FORM_NAME}_{name}"})
-            return el.get("value", "") if el else ""
-
-        data = {
-            f"{FORM_NAME}_PAGESESSIONID": _val("PAGESESSIONID"),
-            f"{FORM_NAME}_SESSIONID": _val("SESSIONID"),
-            f"{FORM_NAME}_NONCE": _val("NONCE"),
-            f"{FORM_NAME}_VARIABLES": "e30=",
-            f"{FORM_NAME}_PAGENAME": "POSTCODEINPUT",
-            f"{FORM_NAME}_PAGEINSTANCE": "0",
-            f"{FORM_NAME}_ADDRESSLOOKUPPOSTCODE": address.get("postcode", ""),
-            f"{FORM_NAME}_ADDRESSLINE1": address.get("line1", ""),
-            f"{FORM_NAME}_ADDRESSLINE2": address.get("line2", ""),
-            f"{FORM_NAME}_ADDRESSLINE3": address.get("line3", ""),
-            f"{FORM_NAME}_TOWN": address.get("town", ""),
-            f"{FORM_NAME}_POSTCODE": address.get("postcode", ""),
-            f"{FORM_NAME}_UPRN": address["udprn"],
-            f"{FORM_NAME}_FORMACTION_NEXT": f"{FORM_NAME}_NEXTBUTTON",
-        }
-        r = session.post(
-            form["action"],
-            data=data,
-            headers={"Origin": "https://www.swansea.gov.uk", "Referer": FORM_URL},
-            timeout=30,
+    if street_name:
+        needle = _normalise(street_name)
+        for address in addresses:
+            if needle in _normalise(_address_text(address)):
+                return address
+        raise SourceArgumentNotFoundWithSuggestions(
+            "street_name", street_name, sorted({_address_text(a) for a in addresses})
         )
-        r.raise_for_status()
+    # Collections are scheduled per street, so any address in the postcode does.
+    return addresses[0]
 
-        return self._parse_calendar(self._get_bin_info_html(r.text))
 
-    @staticmethod
-    def _get_bin_info_html(page: str) -> str:
-        # The results are held in the base64-encoded form data of the page
-        match = re.search(rf'{FORM_NAME}FormData\s*=\s*"([^"]+)"', page)
-        if match:
-            form_data = json.loads(base64.b64decode(match.group(1)).decode("utf-8"))
-            for page_data in form_data.values():
-                if isinstance(page_data, dict) and page_data.get("DISPLAYBININFO"):
-                    return page_data["DISPLAYBININFO"]
-        # Fall back to the rendered results block
-        soup = BeautifulSoup(page, "html.parser")
-        div = soup.find("div", id=f"{FORM_NAME}_DISPLAYBININFO")
-        if div:
-            return str(div)
-        raise Exception("No collection data found in response")
+def _form(response, *_, **__) -> dict[str, str]:
+    """The form's action and session tokens."""
+    action = re.search(r'action="([^"]*processsubmission[^"]*)"', response.text)
+    fields = retrievers.form_inputs(response.text, hidden_only=True)
+    if action is None:
+        raise ValueError("Swansea recycling search form not found")
+    return {"action": action.group(1).replace("&amp;", "&"), **fields}
 
-    @staticmethod
-    def _parse_calendar(html: str) -> list[Collection]:
-        soup = BeautifulSoup(html, "html.parser")
-        entries = []
-        for table in soup.select("table.bin-calendar"):
-            caption = table.find("caption")
-            year_month = (
-                _parse_caption(caption.get_text(strip=True)) if caption else None
-            )
-            if not year_month:
-                continue
-            year, month = year_month
-            for td in table.find_all("td"):
-                types = next(
-                    (CLASS_MAP[c] for c in td.get("class") or [] if c in CLASS_MAP),
-                    None,
-                )
-                day = td.get_text(strip=True)
-                if not types or not day.isdigit():
-                    continue
-                for t in types:
-                    entries.append(
-                        Collection(
-                            date=date(year, month, int(day)),
-                            t=t,
-                            icon=ICON_MAP.get(t),
-                        )
-                    )
 
-        if not entries:
-            raise Exception("No collection dates found in calendar")
-        return entries
+def _submit(address, form, **_) -> dict[str, str]:
+    return {
+        f"{_FORM}_PAGESESSIONID": form.get(f"{_FORM}_PAGESESSIONID", ""),
+        f"{_FORM}_SESSIONID": form.get(f"{_FORM}_SESSIONID", ""),
+        f"{_FORM}_NONCE": form.get(f"{_FORM}_NONCE", ""),
+        f"{_FORM}_VARIABLES": "e30=",
+        f"{_FORM}_PAGENAME": "POSTCODEINPUT",
+        f"{_FORM}_PAGEINSTANCE": "0",
+        f"{_FORM}_ADDRESSLOOKUPPOSTCODE": address.get("postcode", ""),
+        f"{_FORM}_ADDRESSLINE1": address.get("line1", ""),
+        f"{_FORM}_ADDRESSLINE2": address.get("line2", ""),
+        f"{_FORM}_ADDRESSLINE3": address.get("line3", ""),
+        f"{_FORM}_TOWN": address.get("town", ""),
+        f"{_FORM}_POSTCODE": address.get("postcode", ""),
+        f"{_FORM}_UPRN": address["udprn"],
+        f"{_FORM}_FORMACTION_NEXT": f"{_FORM}_NEXTBUTTON",
+    }
+
+
+def _month(caption: str) -> str:
+    """ "11 2026" from "November 2026" or "i18n{sc.commercialwaste.month11} 2026"."""
+    year = re.search(r"(\d{4})\s*$", caption)
+    number = re.search(r"month(\d{1,2})\}", caption)
+    if number is None:
+        word = caption[: year.start()].strip().lower() if year else ""
+        month = _MONTHS.index(word) + 1 if word in _MONTHS else 0
+    else:
+        month = int(number.group(1))
+    return f"{month} {year.group(1) if year else ''}"
+
+
+def _items(day, source) -> list[tuple[str, str]]:
+    """``(date, item)`` rows: what the marked week collects, on that day."""
+    root = list(day.parents)[-1]
+    weeks = next((_WEEKS[c] for c in day.get("class") or [] if c in _WEEKS), ())
+    caption = day.find_parent("table").find("caption").get_text(strip=True)
+    date = f"{day.get_text(strip=True)} {_month(caption)}"
+    rows = []
+    for week in weeks:
+        for item in root.select(
+            f"article.myaccount-block__collection--{week} li.myaccount-block__list-item"
+        ):
+            text = " ".join(item.get_text().split())
+            key = re.search(r"\.(\w+)\}$", text)
+            rows.append((date, key.group(1) if key else text))
+    return rows
+
+
+@final
+class Source(BaseSource):
+    TITLE = "Swansea Council"
+    DESCRIPTION = "Source script for swansea.gov.uk"
+    URL = "https://swansea.gov.uk"
+    COUNTRY = "uk"
+    RAISE_ON_EMPTY = True
+
+    TEST_CASES: ClassVar[dict] = {
+        "Cwmdonkin Drive": {"street_name": "cwmdonkin", "post_code": "SA20RA"},
+        "Cwmdonkin Drive (UPRN)": {"post_code": "SA2 0RA", "uprn": "100100351698"},
+        "Postcode only": {"post_code": "sa2 0ra"},
+    }
+
+    PARAMS = (
+        postcode("post_code"),
+        street("street_name", optional=True),
+        text_field("uprn", term=ft.UPRN, optional=True),
+    )
+
+    HOWTO: ClassVar[dict] = {
+        "en": (
+            "Enter the full postcode of your property. Collections are "
+            "scheduled per street, so that is usually enough; to pick one "
+            "address, also enter part of it (e.g. the street name) or its "
+            "Unique Property Reference Number (UPRN). Since the v3 pipeline "
+            "migration, the pink and green collection weeks are reported as "
+            "the waste types collected in them (as listed for your address), "
+            "using canonical, localised names. Update filters, automations "
+            "and customisations using the old labels."
+        ),
+    }
+
+    WASTE_TYPES: ClassVar[list] = [
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.GENERAL_WASTE,
+        wt.PAPER,
+        wt.PLASTIC,
+        wt.RECYCLABLES,
+    ]
+
+    retrieve = retrievers.Request(
+        lambda address, form, **_: form["action"],
+        method="POST",
+        before=(
+            retrievers.Lookup(POSTCODE_URL, params=_search_params, pick=_address),
+            retrievers.Lookup(FORM_URL, pick=_form),
+        ),
+        data=_submit,
+    )
+
+    parse = GossFormDataParser(
+        "DISPLAYBININFO",
+        pages=["POSTCODEINPUT_1"],
+        parser=parsers.HtmlParser(
+            "table.bin-calendar td.calendar-pink, table.bin-calendar "
+            "td.calendar-green, table.bin-calendar td.calendar-both"
+        ),
+    )
+    preprocess = preprocessors.ExplodeList(_items)
+
+    transform = RowTransformer(
+        parse_date=date_parsers.for_format("%d %m %Y"),
+        type_value_map={
+            "paperandcardboard": wt.PAPER,
+            "glassandcans": wt.RECYCLABLES,
+            "plastic": wt.PLASTIC,
+            "foodwaste": wt.FOOD_WASTE,
+            "gardenwaste": wt.GARDEN_WASTE,
+            "nonrecyclables": wt.GENERAL_WASTE,
+        },
+    )

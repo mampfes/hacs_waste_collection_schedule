@@ -2708,6 +2708,8 @@ class TestRecurrence:
         assert recurrence.weekday("火曜日") == 1 and recurrence.weekday("火") == 1
         assert recurrence.weekday("日") == 6
         assert recurrence.month("12月") == 12
+        # Austrian German January.
+        assert recurrence.month("Jänner") == 1 and recurrence.month("jaenner") == 1
         # Unknown input is still a clean miss.
         assert recurrence.month("not-a-month") is None
 
@@ -3983,7 +3985,6 @@ class TestAthosWasteManagementRetriever:
             "https://example.com/Servlet",
             params={"SubmitAction": "wasteDisposalServices"},
             headers=None,
-            verify=True,
         )
         assert source.session.post.call_count == 2
         first_call, second_call = source.session.post.call_args_list
@@ -6509,6 +6510,69 @@ class TestPdfTableParser:
         pages = self._pages([("only", 10, 20, 100.0)])
         with pytest.raises(ResponseShapeError):
             self._run(pages, min_words=5)
+
+    def test_decode_and_x_range(self):
+        pages = self._pages(
+            [
+                ("(cid:53)(cid:48)", 10, 30, 100.0),
+                ("Legende", 700, 760, 100.0),
+            ]
+        )
+        rows = self._run(
+            pages,
+            decode=lambda text: text.replace("(cid:53)(cid:48)", "RM"),
+            x_range=(0.0, 650.0),
+        )
+        assert [[w.text for w in row.words] for row in rows] == [["RM"]]
+
+    def test_char_margin_reaches_pdfminer(self):
+        from waste_collection_schedule.parsers import PdfTableParser
+
+        with (
+            patch("pdfminer.high_level.extract_pages", return_value=[]) as extract,
+            patch("pdfminer.layout.LTTextContainer", self._FakeContainer),
+            patch("pdfminer.layout.LTTextLineHorizontal", self._FakeLine),
+        ):
+            PdfTableParser(char_margin=1.0)(SimpleNamespace(content=b"%PDF-"))
+            PdfTableParser()(SimpleNamespace(content=b"%PDF-"))
+        assert extract.call_args_list[0].kwargs["laparams"].char_margin == 1.0
+        assert extract.call_args_list[1].kwargs["laparams"].char_margin == 2.0
+
+    def test_figure_text_reads_form_xobjects_inside_the_page(self):
+        from waste_collection_schedule.parsers import PdfTableParser
+
+        class FakeFigure(list):
+            pass
+
+        class FakePage(list):
+            bbox = (0.0, 0.0, 800.0, 600.0)
+
+        def line(text, y):
+            fake = self._FakeLine(text, 10, 30, y)
+            fake.y0 = y - 8
+            return fake
+
+        figure = FakeFigure(
+            [
+                self._FakeContainer([line("inside", 100.0)]),
+                # Drawn below the page box: not visible, dropped.
+                self._FakeContainer([line("outside", -50.0)]),
+            ]
+        )
+        page = FakePage([figure])
+
+        def run(**kwargs):
+            with (
+                patch("pdfminer.high_level.extract_pages", return_value=[page]),
+                patch("pdfminer.layout.LTTextContainer", self._FakeContainer),
+                patch("pdfminer.layout.LTTextLineHorizontal", self._FakeLine),
+                patch("pdfminer.layout.LTFigure", FakeFigure),
+            ):
+                return PdfTableParser(**kwargs)(SimpleNamespace(content=b"%PDF-"))
+
+        assert run() == []
+        rows = run(figure_text=True)
+        assert [[w.text for w in row.words] for row in rows] == [["inside"]]
 
 
 class TestPdfMonthColumns:
@@ -9510,6 +9574,26 @@ class TestGossFormComponents:
         parser = GossFormDataParser("HTML", parser=HtmlParser("p"))
         assert [tag.get_text() for tag in parser(response)] == ["second", "first"]
 
+    def test_form_data_reads_named_pages_outside_page_order(self):
+        from waste_collection_schedule.parsers import HtmlParser
+        from waste_collection_schedule.service.GossForm import GossFormDataParser
+
+        response = self._encoded_response(
+            "FFormData",
+            {
+                "_PAGEORDER_": ["SEARCH_1"],
+                "SEARCH_1": {"OTHER": "<p>search</p>"},
+                "RESULTS_1": {"HTML": "<p>results</p>"},
+            },
+        )
+        parser = GossFormDataParser("HTML", parser=HtmlParser("p"), pages=["RESULTS_1"])
+        assert [tag.get_text() for tag in parser(response)] == ["results"]
+
+        with pytest.raises(ValueError, match="RESULTS_2"):
+            GossFormDataParser("HTML", parser=HtmlParser("p"), pages=["RESULTS_2"])(
+                response
+            )
+
     def test_form_data_missing_page_order_is_reported(self):
         from waste_collection_schedule.parsers import HtmlParser
         from waste_collection_schedule.service.GossForm import GossFormDataParser
@@ -10051,3 +10135,115 @@ def test_gpsea_bounded_season_does_not_expand_into_the_next_year():
     assert rows
     assert min(d for d, _ in rows) == datetime.date(2026, 3, 2)
     assert max(d for d, _ in rows) == datetime.date(2026, 11, 30)
+
+
+def test_with_params_binds_provider_without_mutating_source_or_session():
+    from waste_collection_schedule.base_source import BaseSource
+    from waste_collection_schedule.retrievers import WithParams
+
+    source = BaseSource()
+    source.params = {"city": "Wieliczka", "municipality": "saved-other-value"}
+    source._session = SimpleNamespace(marker="original session")
+    observed = []
+
+    def retrieve(view):
+        observed.append(view)
+        return dict(view.params), view.session
+
+    params, session = WithParams(retrieve, municipality="wieliczka")(source)
+    assert params == {"city": "Wieliczka", "municipality": "wieliczka"}
+    assert source.params == {"city": "Wieliczka", "municipality": "saved-other-value"}
+    assert observed[0] is not source
+    assert session is source.session
+
+
+def test_log_once_preserves_rows_and_warns_once(caplog):
+    from waste_collection_schedule.preprocessors import LogOnce
+
+    notice = LogOnce("Use the supported replacement", logger="migration-test")
+    rows = [(datetime.date(2026, 10, 26), "paper")]
+    assert notice(rows) is rows
+    assert notice(rows) is rows
+    assert (
+        sum(r.message == "Use the supported replacement" for r in caplog.records) == 1
+    )
+
+
+@pytest.mark.parametrize("picture", ["https://example.org/bin.png", None])
+def test_json_picture_metadata_survives_combined_type_expansion(picture):
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.transformers import JsonTransformer
+
+    transform = JsonTransformer(
+        date_key="date",
+        type_key="type",
+        picture_key=lambda row: row["thumb"].get("url"),
+        type_value_map={"combined": [wt.PAPER, wt.GLASS]},
+    )
+    entries = transform(
+        {"date": "2026-10-26", "type": "combined", "thumb": {"url": picture}}
+    )
+    assert len(entries) == 2
+    assert all(e.picture == picture for e in entries)
+
+
+def test_wolverhampton_dated_calendar_keeps_all_services_and_year_boundary():
+    from waste_collection_schedule.service.DrupalServiceCalendar import (
+        ServiceCalendarParser,
+    )
+
+    html = '<table class="calendar"><thead><tr><th>January 2027</th></tr></thead><tr><td><table class="services-row"><tr><td class="td-date">Sat, 2 Jan</td><td class="service service-row waste"></td><td class="service service-row recycling"></td><td class="service service-row garden"></td><td class="service service-row food"></td></tr></table></td></tr></table>'
+    response = MagicMock()
+    response.json.return_value = [
+        {
+            "command": "insert",
+            "selector": "#bin-collection-calendar-widget--content",
+            "data": html,
+        }
+    ]
+    rows = ServiceCalendarParser()(response)
+    assert rows == [
+        (datetime.date(2027, 1, 2), kind)
+        for kind in ("food", "garden", "recycling", "waste")
+    ]
+    response.json.return_value[0]["data"] = html.replace("Sat, 2 Jan", "Fri, 2 Jan")
+    with pytest.raises(ValueError, match="disagrees"):
+        ServiceCalendarParser()(response)
+
+
+def test_wolverhampton_rejects_missing_calendar_and_unknown_service():
+    from waste_collection_schedule.service.DrupalServiceCalendar import (
+        ServiceCalendarParser,
+    )
+
+    response = MagicMock()
+    response.json.return_value = []
+    with pytest.raises(ValueError, match="unique dated"):
+        ServiceCalendarParser()(response)
+    response.json.return_value = [
+        {
+            "command": "insert",
+            "selector": "#bin-collection-calendar-widget--content",
+            "data": '<table class="calendar"><thead><tr><th>October 2026</th></tr></thead><tr><td><table class="services-row"><tr><td class="td-date">Wed, 28 Oct</td><td class="service service-row changed-bin"></td></tr></table></td></tr></table>',
+        }
+    ]
+    with pytest.raises(ValueError, match="Unknown collection"):
+        ServiceCalendarParser()(response)
+
+
+def test_awb_mainz_saved_legacy_street_is_accepted_without_unused_form_field():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.awb_mainz_bingen_de import Source
+
+    case = "Stadt Bingen, Bingen-Stadt"
+    args = Source.TEST_CASES[case]
+    path = fixture_path("awb_mainz_bingen_de", case)
+    with cassette.replaying(path):
+        expected = Source(**args).fetch()
+    with cassette.replaying(path):
+        actual = Source(**args, strasse="Hafenstraße").fetch()
+    assert [(e.date, e.waste_type, e.location, e.description) for e in actual] == [
+        (e.date, e.waste_type, e.location, e.description) for e in expected
+    ]
+    assert "strasse" not in {name for param in Source.PARAMS for name in param.fields}

@@ -59,6 +59,7 @@ FORTNIGHTLY = datetime.timedelta(days=14)
 _LOCALES = (
     "en",
     "de",
+    "de_AT",  # Austrian German: "Jänner"
     "fr",
     "it",
     "pl",

@@ -13,4 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      - name: Prepare common sensor translations
+        # Generated JSON is committed by the post-merge documentation workflow.
+        # Validate generator changes here before that workflow has run.
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          from sensor_translations import apply_sensor_translations
+
+          for path in Path("custom_components/waste_collection_schedule/translations").glob("*.json"):
+              translations = json.loads(path.read_text(encoding="utf-8"))
+              apply_sensor_translations(translations, path.stem)
+              path.write_text(
+                  json.dumps(translations, ensure_ascii=False, indent=2) + "\n",
+                  encoding="utf-8",
+              )
+          PY
       - uses: home-assistant/actions/hassfest@master

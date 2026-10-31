@@ -10,6 +10,7 @@ import base64
 import datetime
 import json
 import os
+import re
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -45,6 +46,192 @@ from waste_collection_schedule.service.PdfTextCalendar import (
 )
 
 D = datetime.date
+
+
+def test_marked_pdf_distinguishes_stroke_and_fill_palettes():
+    response = SimpleNamespace(content=_marked_calendar_pdf())
+    rows = _marked_parser(stroke_colors={"outlined": ((1, 0, 0),)})(response)
+    assert {(r["date"], r["type"]) for r in rows} == {
+        (D(2026, 1, 26), "general"),
+        (D(2026, 1, 26), "outlined"),
+    }
+
+
+def test_marked_pdf_duplicate_day_repair_requires_an_explicit_limit_and_a_missing_number():
+    response = SimpleNamespace(
+        content=_marked_calendar_pdf(marked_day=(1, 16), duplicate_days={(1, 16): 17})
+    )
+    with pytest.raises(ValueError, match="differs from grid"):
+        _marked_parser()(response)
+    rows = _marked_parser(max_duplicate_day_repairs=1)(response)
+    assert {r["date"] for r in rows} == {D(2026, 1, 16)}
+    two_errors = SimpleNamespace(
+        content=_marked_calendar_pdf(duplicate_days={(1, 16): 17, (2, 10): 11})
+    )
+    with pytest.raises(ValueError, match="differs from grid"):
+        _marked_parser(max_duplicate_day_repairs=1)(two_errors)
+    with pytest.raises(ValueError, match="Incomplete printed grid"):
+        _marked_parser(max_duplicate_day_repairs=1)(
+            SimpleNamespace(content=_marked_calendar_pdf(bad_day=(1, 16)))
+        )
+
+
+def test_edinburgh_printed_markers_keep_christmas_shift_and_the_january_grid_date():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.source.edinburgh_gov_uk import Source
+
+    case = "Princess Mary Road"
+    with cassette.replaying(fixture_path("edinburgh_gov_uk", case)):
+        rows = Source(**Source.TEST_CASES[case]).fetch()
+    pairs = {(r.date, r.waste_type.id) for r in rows}
+    assert len(rows) == 78
+    assert (D(2026, 1, 16), wt.RECYCLABLES.id) in pairs
+    assert (D(2026, 1, 16), wt.GLASS.id) in pairs
+    assert not any(day == D(2026, 1, 17) for day, _ in pairs)
+    assert (D(2026, 12, 26), wt.GENERAL_WASTE.id) in pairs
+    assert (D(2026, 12, 25), wt.GENERAL_WASTE.id) not in pairs
+
+
+def test_edinburgh_rejects_an_expired_calendar():
+    from waste_collection_schedule.source.edinburgh_gov_uk import _current_year
+
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="this year"):
+        list(_current_year([{"date": D(2026, 12, 26)}], None))
+
+
+def _grand_lieu_calendar():
+    """A complete synthetic published table, with a retained holiday pickup."""
+    import calendar
+
+    from waste_collection_schedule.parsers import (
+        PdfTextFragment,
+        PdfVector,
+        PdfWordLayout,
+    )
+    from waste_collection_schedule.service.FrenchColourCalendar import _MONTHS
+
+    line = PdfTextFragment
+    colours = ((0.98, 0.84, 0.79), (0.86, 0.89, 0.93))
+    lines = [line(0, "2026", 5, 600), line(0, "Jours fériés : samedi suivant", 5, 580)]
+    vectors, words = [], []
+    for index, (name, day, parity) in enumerate(
+        [
+            ("GENESTON", "Lundi", 0),
+            ("LE BIGNON", "Lundi", 1),
+            ("MONTBERT", "Vendredi", 1),
+            ("SAINT LUMINE", "Vendredi", 0),
+        ]
+    ):
+        y = 400 - index * 30
+        lines.append(line(0, name, 20, y))
+        weekday = line(0, day, 70, y)
+        words.append(weekday)
+        vectors.append(PdfVector(0, 60, y - 5, 80, y + 5, None, colours[parity]))
+    for month, name in enumerate(_MONTHS, 1):
+        x = 130 + month * 60
+        words.append(line(0, name.upper(), x, 550))
+        for day in range(1, calendar.monthrange(2026, month)[1] + 1):
+            d = D(2026, month, day)
+            y = 530 - day * 10
+            p = line(0, f"{'LMMJVSD'[d.weekday()]} {day}", x, y)
+            lines.append(p)
+            vectors.append(
+                PdfVector(
+                    0,
+                    x - 25,
+                    y - 4,
+                    x + 25,
+                    y + 4,
+                    None,
+                    colours[d.isocalendar().week % 2],
+                )
+            )
+            if d in {D(2026, 4, 6), D(2026, 5, 8), D(2026, 12, 25)}:
+                lines.append(line(0, "Férié", x + 10, y))
+    return PdfWordLayout(lines, words, vectors)
+
+
+@pytest.mark.parametrize(
+    "commune,expected,absent",
+    [
+        ("Geneston", D(2026, 5, 25), D(2026, 5, 30)),
+        ("Le Bignon", D(2026, 4, 11), D(2026, 4, 6)),
+        ("Montbert", D(2026, 5, 9), D(2026, 5, 8)),
+        ("Saint Lumine de Coutais", D(2026, 12, 26), D(2026, 12, 25)),
+    ],
+)
+def test_french_calendar_holiday_replacements_and_retained_collections(
+    commune, expected, absent
+):
+    from waste_collection_schedule.service.FrenchColourCalendar import grand_lieu_rows
+
+    rows = grand_lieu_rows(
+        [_grand_lieu_calendar()], SimpleNamespace(params={"municipality": commune})
+    )
+    assert (expected, "general") in rows
+    assert (expected, "recycling") in rows
+    assert (absent, "general") not in rows
+
+
+def test_french_calendar_rejects_missing_printed_dates():
+    from waste_collection_schedule.service.FrenchColourCalendar import grand_lieu_rows
+
+    document = _grand_lieu_calendar()
+    document.lines.remove(next(p for p in document.lines if p.text == "J 1"))
+    with pytest.raises(ResponseShapeError, match="incomplete day grid"):
+        grand_lieu_rows(
+            [document], SimpleNamespace(params={"municipality": "Geneston"})
+        )
+
+
+def test_french_calendar_area_matching_uses_polygon_not_overlapping_bounds():
+    from waste_collection_schedule.parsers import PdfPolygon, PdfTextFragment
+    from waste_collection_schedule.service.FrenchColourCalendar import (
+        _contains,
+        _normalise,
+    )
+
+    area = PdfPolygon(
+        0, 0, 0, 10, 10, None, (1, 0, 0), points=((0, 0), (10, 0), (0, 10), (0, 0))
+    )
+    assert _contains(area, PdfTextFragment(0, "A", 2, 2))
+    assert not _contains(area, PdfTextFragment(0, "B", 8, 8))
+    assert _normalise("Beillé") == "beille"
+
+
+def test_french_calendar_year_does_not_treat_an_address_number_as_a_year():
+    from waste_collection_schedule.parsers import PdfTextFragment
+    from waste_collection_schedule.service.FrenchColourCalendar import _year
+
+    document = _grand_lieu_calendar()
+    document.lines.append(PdfTextFragment(0, "2033 Route de Connerré", 50, 20))
+    document.words.append(PdfTextFragment(0, "2033", 50, 20))
+    assert _year(document) == 2026
+
+
+def test_pdf_word_layout_can_retain_service_area_polygon_vertices():
+    from io import BytesIO
+
+    from pypdf import PdfWriter
+    from pypdf.generic import DecodedStreamObject, NameObject
+
+    writer = PdfWriter()
+    page = writer.add_blank_page(width=30, height=30)
+    stream = DecodedStreamObject()
+    stream.set_data(b"1 0 0 rg 0 0 m 10 0 l 0 10 l h f")
+    page[NameObject("/Contents")] = writer._add_object(stream)
+    out = BytesIO()
+    writer.write(out)
+    response = SimpleNamespace(content=out.getvalue())
+    ordinary = parsers.PdfWordLayoutParser(min_words=0)(response)[0]
+    polygons = parsers.PdfWordLayoutParser(min_words=0, include_points=True)(response)[
+        0
+    ]
+    assert len(ordinary.vectors[0]) == 7
+    assert not hasattr(ordinary.vectors[0], "points")
+    assert polygons.vectors[0].points[:3] == ((0, 0), (10, 0), (0, 10))
 
 
 def _page(html: str, url: str = "https://example.org/waste/") -> SimpleNamespace:
@@ -249,6 +436,41 @@ def _row(page, y, *words):
     return PdfRow(page, y, tuple(PdfWord(text, x0, x1) for text, x0, x1 in words))
 
 
+def test_tamax_janow_reads_independent_recycling_and_bio_dates():
+    from waste_collection_schedule.source.tamax_janow_pl import Source
+
+    response = _recorded_pdf_response("tamax_janow_pl", "Janów")
+    with freeze_time("2026-10-31"):
+        rows = set(Source.preprocess(Source.parse(response)))
+    assert len(rows) == 36
+    assert (D(2026, 5, 28), "komunalne") in rows
+    assert (D(2026, 5, 28), "segregowane") in rows
+    assert (D(2026, 5, 22), "biodegradowalne") in rows
+    assert (D(2026, 12, 21), "komunalne") in rows
+    assert (D(2026, 12, 23), "biodegradowalne") in rows
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="current year"):
+        Source.preprocess(Source.parse(response))
+
+
+def test_tamax_route_discovery_keeps_identical_filenames_in_their_municipality():
+    from waste_collection_schedule.service.Tamax import CalendarLink
+
+    response = _page(
+        '<div class="elementor-tab-title" aria-controls="janow">Gmina Janów (mieszkańcy)</div>'
+        '<div id="janow"><p>2026 <a href="/a/2026-TRUDNE-WJAZDY.pdf">PDF</a></p></div>'
+        '<div class="elementor-tab-title" aria-controls="lelow">Gmina Lelów (mieszkańcy)</div>'
+        '<div id="lelow"><p>2026 <a href="/b/2026-TRUDNE-WJAZDY.pdf">PDF</a></p></div>'
+    )
+    selector = CalendarLink("Janów", {"Difficult access": "-TRUDNE-WJAZDY.pdf"})
+    with freeze_time("2026-10-31"):
+        assert (
+            selector(response, area="Difficult access")
+            == "https://example.org/a/2026-TRUDNE-WJAZDY.pdf"
+        )
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="current-year"):
+        selector(response, area="Difficult access")
+
+
 class TestPdfMonthRows:
     LABELS: ClassVar[dict] = {"zmieszane": 1, "metale": 1, "szkło": 1, "bio": 1}
 
@@ -380,6 +602,26 @@ def test_each_response_then_preprocesses_each_document_on_its_own():
     assert parse(responses) == [(D(2026, 12, 30), "Bio"), (D(2027, 1, 6), "Bio")]
 
 
+def test_tamax_szczekociny_retains_wrapped_month_rows_and_seasonal_bio():
+    from waste_collection_schedule.source.tamax_szczekociny_pl import Source
+
+    response = _recorded_pdf_response(
+        "tamax_szczekociny_pl", "Rokitno, Ołudza, Wólka Ołudzka, Grabiec"
+    )
+    with freeze_time("2026-10-31"):
+        rows = set(Source.preprocess(Source.parse(response)))
+    assert len(rows) == 49
+    for day in (3, 17, 30):
+        assert (D(2026, 4, day), "komunalne") in rows
+    assert (D(2026, 4, 3), "segregowane") in rows
+    assert (D(2026, 4, 11), "biodegradowalne") in rows
+    assert (D(2026, 4, 20), "biodegradowalne") in rows
+    assert not any(
+        d.month in (1, 3, 11) and label == "biodegradowalne" for d, label in rows
+    )
+    assert (D(2026, 12, 7), "biodegradowalne") in rows
+
+
 class TestDayGridCodesAndWeekdays:
     CODES: ClassVar[dict] = {
         "B": "Bio",
@@ -454,6 +696,25 @@ class TestYearlyLinksNamesAndLookback:
         assert pick(_page(self.HTML), municipality="Arona zona C") == [
             "https://example.org/download/arona-zona-c-2026-uff-3"
         ]
+
+
+def test_tamax_imielno_matches_every_village_across_both_tables_and_preserves_holidays():
+    from waste_collection_schedule.source.tamax_imielno_pl import _AREAS, Source
+
+    response = _recorded_pdf_response("tamax_imielno_pl", "Imielno")
+    parsed = Source.parse(response)
+    with freeze_time("2026-10-31"):
+        outputs = {v: set(Source.preprocess(parsed, Source(area=v))) for v in _AREAS}
+    assert all(len(rows) == 28 for rows in outputs.values())
+    assert (D(2026, 1, 5), "Zmieszane i bio") in outputs["Borszowice"]
+    assert (D(2026, 6, 6), "Zmieszane i bio") in outputs["Borszowice"]
+    assert (D(2026, 12, 29), "Zmieszane i bio") in outputs["Imielno"]
+    assert (D(2026, 5, 9), "Segregowane") in outputs["Imielno"]
+    assert (D(2026, 5, 8), "Segregowane") in outputs["Borszowice"]
+    assert (D(2026, 12, 10), "Zmieszane i bio") in outputs["Opatkowice Murowane"]
+    assert (D(2026, 11, 30), "Wielkogabarytowe") in outputs["Karczunek"]
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="current year"):
+        Source.preprocess(parsed, Source(area="Imielno"))
 
 
 class TestPdfMonthBlocks:
@@ -548,6 +809,105 @@ _EAST_LINDSEY_FIXTURE = (
 )
 
 
+def test_icon_calendar_matches_resized_legend_items_and_rejects_unknown_or_ambiguous_images():
+    from PIL import Image
+    from waste_collection_schedule.service.PdfIconCalendar import (
+        _thumbnail,
+        match_image,
+    )
+
+    red = _thumbnail(Image.new("RGB", (60, 80), "red"))
+    blue = _thumbnail(Image.new("RGB", (60, 80), "blue"))
+    smaller_blue = _thumbnail(Image.new("RGB", (15, 20), "blue"))
+    assert match_image(smaller_blue, {"paper": blue, "garbage": red}) == "paper"
+    with pytest.raises(ValueError, match="Unrecognised"):
+        match_image(
+            _thumbnail(Image.new("RGB", (60, 80), "green")),
+            {"paper": blue, "garbage": red},
+        )
+    with pytest.raises(ValueError, match="ambiguous"):
+        match_image(blue, {"paper": blue, "garbage": blue})
+
+
+def test_icon_calendar_cache_is_bounded_to_one_response_and_returns_copies(monkeypatch):
+    from waste_collection_schedule.service.PdfIconCalendar import IconMonthGridParser
+
+    parser = IconMonthGridParser(page=0, legend={})
+    calls = []
+
+    def parse(content):
+        calls.append(content)
+        return ((D(2026, 7, 4), "Paper"),)
+
+    monkeypatch.setattr(parser, "_parse", parse)
+    first = parser(SimpleNamespace(content=b"one"))
+    first.clear()
+    assert parser(SimpleNamespace(content=b"one")) == [(D(2026, 7, 4), "Paper")]
+    parser(SimpleNamespace(content=b"two"))
+    parser(SimpleNamespace(content=b"one"))
+    assert calls == [b"one", b"two", b"one"]
+
+
+def test_icon_calendar_selects_the_printed_holiday_replacement_and_requires_complete_weeks():
+    from waste_collection_schedule.service.PdfIconCalendar import CollectionWeekday
+
+    source = SimpleNamespace(params={"day": "Friday"})
+    rows = [
+        (D(2026, 4, 1), "Paper"),
+        (D(2026, 4, 2), "Paper"),
+        (D(2026, 4, 4), "Paper"),
+    ]
+    select = CollectionWeekday()
+    with freeze_time("2026-04-01"):
+        result = list(select(rows, source))
+        assert [r["date"] for r in result] == [D(2026, 4, 4)]
+        with pytest.raises(ValueError, match="Incomplete printed collection week"):
+            list(select(rows[:1] + rows[2:], source))
+        with pytest.raises(ValueError, match="week is missing"):
+            list(
+                select(
+                    rows
+                    + [
+                        (day + datetime.timedelta(days=14), label)
+                        for day, label in rows
+                    ],
+                    source,
+                )
+            )
+
+
+def test_petawawa_published_icons_preserve_new_year_and_good_friday_shifts():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.source.ovwrc_com import Source
+
+    with freeze_time("2026-10-30"):
+        case = "Petawawa Friday route"
+        with cassette.replaying(fixture_path("ovwrc_com", case)):
+            rows = Source(**Source.TEST_CASES[case]).fetch()
+    pairs = {(r.date, r.waste_type.id) for r in rows}
+    assert (D(2026, 1, 3), wt.GENERAL_WASTE.id) in pairs
+    assert any(day == D(2026, 7, 4) for day, _ in pairs)
+    assert (D(2027, 3, 27), wt.GENERAL_WASTE.id) in pairs
+    assert not any(day in (D(2026, 1, 2), D(2027, 3, 26)) for day, _ in pairs)
+    trees = [r for r in rows if r.waste_type.id == wt.GARDEN_WASTE.id]
+    assert len(trees) == 2
+    assert all(r.description == "Natural Christmas trees only" for r in trees)
+
+
+def test_petawawa_does_not_select_a_future_calendar_before_it_starts():
+    import re
+
+    from waste_collection_schedule.source.ovwrc_com import _current_calendar
+
+    matches = [re.search(r"(20\d{2})", year) for year in ("2025", "2026", "2027")]
+    with freeze_time("2026-12-20"):
+        assert _current_calendar(matches)[1] == "2026"
+    with freeze_time("2027-01-02"):
+        assert _current_calendar(matches)[1] == "2027"
+
+
 def _east_lindsey_pdf():
     recording = json.loads(_EAST_LINDSEY_FIXTURE.read_text(encoding="utf-8"))
     return SimpleNamespace(
@@ -593,12 +953,90 @@ def test_east_lindsey_replays_the_complete_lookup_and_calendar_download():
     assert max(entry.date for entry in garden) == D(2027, 3, 16)
 
 
+def test_east_lindsey_reads_food_waste_from_wastenextfood(tmp_path):
+    """``wastenextfood`` is the next food-waste collection (port of #8024).
+
+    The recorded cassette predates that field, so this copies it and adds a
+    ``wastenextfood`` value in the same shape as the other ``wastenext*`` dates.
+    """
+    recording = json.loads(_EAST_LINDSEY_FIXTURE.read_text(encoding="utf-8"))
+    html = base64.b64decode(recording["interactions"][1]["content_b64"]).decode()
+    match = re.search(r'([A-Z0-9_]+FormData\s*=\s*")([^"]+)(")', html)
+    assert match is not None
+    payload = json.loads(base64.b64decode(match.group(2)))
+    payload["RESULTS_1"]["FIELD12"]["result"][0]["wastenextfood"] = (
+        "Wednesday 28th October 2026"
+    )
+    encoded = base64.b64encode(json.dumps(payload).encode()).decode()
+    html = html[: match.start(2)] + encoded + html[match.end(2) :]
+    recording["interactions"][1]["content_b64"] = base64.b64encode(
+        html.encode()
+    ).decode()
+    path = tmp_path / "with_food.json"
+    path.write_text(json.dumps(recording), encoding="utf-8")
+
+    import cassette
+    from waste_collection_schedule.source.e_lindsey_gov_uk import Source
+
+    with cassette.replaying(str(path)):
+        entries = Source(uprn="100030786099").fetch()
+    non_garden = sorted(
+        (entry for entry in entries if entry.type != "Garden Waste"),
+        key=lambda entry: entry.date,
+    )
+    assert [(entry.date, entry.type, entry.icon) for entry in non_garden] == [
+        (D(2026, 10, 14), "General Waste", "mdi:trash-can"),
+        (D(2026, 10, 21), "Paper & Cardboard", "mdi:package-variant"),
+        (D(2026, 10, 28), "Food Waste", "mdi:food-apple"),
+        (D(2026, 11, 4), "Recycling", "mdi:recycle"),
+    ]
+
+
 def test_east_lindsey_without_a_garden_subscription_does_not_fetch_a_pdf():
     for pdf_id in (None, "", "null"):
         payload = {"RESULTS_1": {"FIELD12": {"result": [{"greenpdfid": pdf_id}]}}}
         encoded = base64.b64encode(json.dumps(payload).encode()).decode()
         response = SimpleNamespace(text=f'var XFormData = "{encoded}";')
         assert garden_calendar_urls(None, response) == []
+
+
+def test_tamax_lelow_reads_iso_month_colours_ash_and_the_dated_bulky_notice():
+    from waste_collection_schedule.source.tamax_lelow_pl import Source
+
+    response = _recorded_pdf_response(
+        "tamax_lelow_pl", "Lelów (bez ul. Spacerowej), Lgota Błotna, Lgota Gawronna"
+    )
+    with freeze_time("2026-10-31"):
+        rows = {(r["date"], r["type"]) for r in Source.parse(response)}
+    assert len(rows) == 51
+    assert (D(2026, 1, 12), "Popiół") in rows
+    assert (D(2026, 1, 20), "Zmieszane") in rows
+    assert (D(2026, 1, 20), "Segregowane") in rows
+    assert (D(2026, 1, 20), "Bio") not in rows
+    assert (D(2026, 4, 7), "Bio") in rows
+    assert (D(2026, 7, 30), "Wielkogabarytowe") in rows
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="this year"):
+        Source.parse(response)
+
+
+def test_iso_pdf_month_headings_must_agree_with_the_printed_year(monkeypatch):
+    from waste_collection_schedule.service import MarkedPdfCalendar
+    from waste_collection_schedule.source.tamax_lelow_pl import Source
+
+    response = _recorded_pdf_response(
+        "tamax_lelow_pl", "Lelów (bez ul. Spacerowej), Lgota Błotna, Lgota Gawronna"
+    )
+    normal = MarkedPdfCalendar._normal
+    monkeypatch.setattr(
+        MarkedPdfCalendar,
+        "_normal",
+        lambda value: "2027-02" if value.strip() == "2026-02" else normal(value),
+    )
+    with (
+        freeze_time("2026-10-31"),
+        pytest.raises(ValueError, match="headings disagree"),
+    ):
+        Source.parse(response)
 
 
 def test_fan_out_can_return_the_prepared_response_first():
@@ -722,6 +1160,24 @@ def test_pisz_missing_flat_number_must_not_return_a_partial_calendar():
     with cassette.replaying(fixture_path("pisz_pl", case)):
         with pytest.raises(SourceArgumentRequired, match="house_number"):
             Source(**args).fetch()
+
+
+def test_tamax_wlodowice_includes_bio_and_ash_on_red_dates_and_single_digit_bulky_day():
+    from waste_collection_schedule.source.tamax_wlodowice_pl import Source
+
+    response = _recorded_pdf_response("tamax_wlodowice_pl", "Zdów, Hucisko")
+    with freeze_time("2026-10-31"):
+        rows = Source.parse(response)
+    bulky = [r["date"] for r in rows if r["type"] == "Wielkogabarytowe"]
+    assert bulky == [D(2026, 10, 2)]
+    by_date = {}
+    for row in rows:
+        by_date.setdefault(row["date"], set()).add(row["type"])
+    assert sum(r["type"] == "Popiół" for r in rows) == 12
+    for types in by_date.values():
+        if "Segregowane" in types:
+            assert {"Zmieszane", "Segregowane", "Bio", "Popiół"} <= types
+    assert len(rows) == 65
 
 
 class TestPdfRoundMonthGrid:
@@ -1008,6 +1464,81 @@ def test_marker_calendar_read_headings_off_numbers_columns_in_order(monkeypatch)
     assert rows == [(datetime.date(2026, month, 1), "Dot") for month in (1, 2, 3)]
 
 
+def test_marker_calendar_continuations_and_text_annotations(monkeypatch):
+    from waste_collection_schedule.parsers import PdfTextFragment, PdfWordLayout
+    from waste_collection_schedule.service import PdfMarkerCalendar
+
+    words = [
+        PdfTextFragment(0, name, x, 400) for name, x in (("Marzo", 60), ("Aprile", 250))
+    ]
+    words.extend(
+        [
+            PdfTextFragment(0, "6", 60, 350),
+            PdfTextFragment(0, "A", 180, 350),
+            PdfTextFragment(0, "3", 250, 350),
+            PdfTextFragment(0, "B", 370, 350),
+            PdfTextFragment(1, "20", 60, 390),
+            PdfTextFragment(1, "A", 180, 390),
+            PdfTextFragment(1, "17", 250, 390),
+            PdfTextFragment(1, "B", 370, 390),
+        ]
+    )
+    layout = PdfWordLayout(lines=[], words=words, vectors=[])
+
+    class Layout:
+        def __init__(self, **_):
+            pass
+
+        def __call__(self, *_):
+            return [layout]
+
+    monkeypatch.setattr(PdfMarkerCalendar, "PdfWordLayoutParser", Layout)
+    response = SimpleNamespace(url="https://example.org/calendar_2026.pdf")
+    parser = PdfMarkerCalendar.MarkerCalendarParser(
+        [],
+        continuation_pages=True,
+        text_markers={"A": "Zone A", "B": "Zone B"},
+        row_reach=160,
+        min_markers=4,
+    )
+    assert parser(response) == [
+        (D(2026, 3, 6), "Zone A"),
+        (D(2026, 3, 20), "Zone A"),
+        (D(2026, 4, 3), "Zone B"),
+        (D(2026, 4, 17), "Zone B"),
+    ]
+
+
+def test_marker_calendar_accepts_a_stroked_icon_without_using_an_unpainted_fill():
+    from waste_collection_schedule.parsers import PdfVector
+    from waste_collection_schedule.service.PdfMarkerCalendar import Marker, _same_color
+
+    marker = Marker("Paper", (0.145, 0.541, 0.753))
+    assert _same_color(PdfVector(0, 0, 0, 12, 16, marker.color, None), marker)
+    assert not _same_color(PdfVector(0, 0, 0, 12, 16, marker.color, (0, 0, 0)), marker)
+
+
+def test_selargius_independent_zones_and_continuation_pages():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.source.selargiusostenibile_it import Source
+
+    outputs = []
+    for case, args in Source.TEST_CASES.items():
+        with cassette.replaying(fixture_path("selargiusostenibile_it", case)):
+            outputs.append({(r.date, r.waste_type.id) for r in Source(**args).fetch()})
+    paese_a, paese_b, suplanu_a = outputs
+    assert (D(2026, 3, 6), wt.GENERAL_WASTE.id) in paese_a
+    assert (D(2026, 3, 6), wt.GENERAL_WASTE.id) not in paese_b
+    assert (D(2026, 3, 13), wt.GENERAL_WASTE.id) in paese_b
+    assert (D(2026, 3, 5), wt.PAPER.id) in paese_a
+    assert (D(2026, 3, 5), wt.PAPER.id) not in suplanu_a
+    assert (D(2026, 3, 6), wt.PAPER.id) in suplanu_a
+    assert (D(2027, 2, 26), wt.PAPER.id) in suplanu_a
+    assert (D(2027, 2, 27), wt.ORGANIC.id) in paese_a
+
+
 class TestOutlinedDayRows:
     """Text labels dated by the outlined day rows and month headings."""
 
@@ -1183,11 +1714,15 @@ def _marked_calendar_pdf(
     year=2026,
     columns=7,
     omitted=None,
+    duplicate_days=None,
     bad_day=None,
     year_label=True,
     hidden_blue=False,
     marked_day=(1, 26),
     cancelled=None,
+    row_band=False,
+    heading_year=False,
+    stray_number=False,
 ):
     """A complete printed calendar; January 26 has fill and stroke markers."""
     import calendar
@@ -1218,7 +1753,9 @@ def _marked_calendar_pdf(
 
         if year_label:
             text(f"YEAR {year}", 20, 760)
-        text(name, 20, 700)
+        text(f"{name} {year}" if heading_year else name, 20, 700)
+        if stray_number and month == 1:
+            commands.append("BT /F1 8 Tf 1 1 1 rg 20 610 Td (22) Tj ET")
         for column, label in enumerate(_MARKED_WEEKDAYS[:columns]):
             text(label, 20 + 20 * column, 680)
         for week, days in enumerate(calendar.monthcalendar(year, month)):
@@ -1233,10 +1770,13 @@ def _marked_calendar_pdf(
                 if marked and hidden_blue:
                     commands.append(f"q 0 0 1 rg {x + 1} {y - 1} 8 8 re f Q")
                 if marked:
-                    commands.append(f"q 0 0 0 rg {x - 2} {y - 4} 16 14 re f Q")
-                    commands.append(f"q 1 0 0 RG 2 w {x - 2} {y - 4} 16 14 re S Q")
+                    width = 136 if row_band else 16
+                    commands.append(f"q 0 0 0 rg {x - 2} {y - 4} {width} 14 re f Q")
+                    commands.append(f"q 1 0 0 RG 2 w {x - 2} {y - 4} {width} 14 re S Q")
                 if (month, day) != omitted:
                     value = 32 if (month, day) == bad_day else day
+                    if duplicate_days:
+                        value = duplicate_days.get((month, day), value)
                     text(value, x, y, "1 1 1" if marked else "0 0 0")
         stream = DecodedStreamObject()
         stream.set_data("\n".join(commands).encode("ascii"))
@@ -1314,6 +1854,97 @@ def _recorded_pdf_response(module, case):
     data = json.loads(Path(fixture_path(module, case)).read_text())
     item = next(item for item in data["interactions"] if ".pdf" in item["url"])
     return cassette.CassetteResponse(item)
+
+
+def test_outlined_month_rows_keep_printed_holiday_dates_and_combined_bins():
+    from waste_collection_schedule.service.NewryMourneDownCalendar import CalendarParser
+
+    response = _recorded_pdf_response(
+        "newrymournedown_org", "9 Derrymore Road, Bessbrook"
+    )
+    with freeze_time("2026-10-30"):
+        rows = set(CalendarParser()(response))
+    assert len(rows) == 84
+    assert (D(2026, 4, 2), "Black bin") in rows
+    assert (D(2026, 4, 2), "Brown bin") in rows
+    assert (D(2026, 4, 9), "Blue bin") in rows
+    assert {day.month for day, _ in rows if day.year == 2026} == set(range(4, 13))
+    assert {day.month for day, _ in rows if day.year == 2027} == set(range(1, 5))
+    with freeze_time("2027-05-01"), pytest.raises(ValueError, match="expired"):
+        CalendarParser()(response)
+
+
+def _recorded_wednesday_calendar():
+    import cassette
+    from fixtures_support import FIXTURE_DIR
+
+    path = Path(FIXTURE_DIR) / "newrymournedown_org" / "_wednesday.json"
+    return cassette.CassetteResponse(json.loads(path.read_text())["interactions"][0])
+
+
+def test_outlined_calendar_keeps_the_printed_friday_exception():
+    from waste_collection_schedule.service.NewryMourneDownCalendar import CalendarParser
+
+    with freeze_time("2026-10-30"):
+        rows = set(CalendarParser()(_recorded_wednesday_calendar()))
+    assert (D(2026, 10, 30), "Black bin") in rows
+    assert (D(2026, 10, 30), "Brown bin") in rows
+    assert any(day == D(2026, 10, 28) for day, _ in rows)
+
+
+def test_outlined_calendar_rejects_a_month_grid_disagreeing_with_its_route_weekday():
+    from waste_collection_schedule.service.NewryMourneDownCalendar import CalendarParser
+
+    response = _recorded_wednesday_calendar()
+    response.url = response.url.replace("WED-Z1", "MON-Z1")
+    with freeze_time("2026-10-30"), pytest.raises(ValueError, match="route weekday"):
+        CalendarParser()(response)
+
+
+@pytest.mark.parametrize("scale,dx,dy", [(1, 0, 0), (0.6, -50, 70), (2.5, 300, -100)])
+def test_outlined_digit_recognition_is_translation_and_scale_independent(scale, dx, dy):
+    from io import BytesIO
+
+    from pdfminer.high_level import extract_pages
+    from pdfminer.layout import LTCurve
+    from waste_collection_schedule.service.NewryMourneDownCalendar import _color, _walk
+    from waste_collection_schedule.service.PdfVectorDigits import (
+        TAHOMA_BOLD,
+        VectorDigits,
+    )
+
+    response = _recorded_wednesday_calendar()
+    # The first April cell prints 1. Its outlined numeral sits in the centre
+    # of the first black/brown box, independent of the hidden text layer.
+    candidates = [
+        x
+        for page in extract_pages(BytesIO(response.content))
+        for x in _walk(page)
+        if isinstance(x, LTCurve)
+        and x.fill
+        and _color(x.non_stroking_color, (1, 1, 1))
+        and 8 < x.height < 13
+        and 130 < x.x0 < 140
+        and 438 < x.y0 < 440
+    ]
+    assert len(candidates) == 1
+    original = candidates[0]
+    shape = SimpleNamespace(
+        x0=original.x0 * scale + dx,
+        y0=original.y0 * scale + dy,
+        width=original.width * scale,
+        height=original.height * scale,
+        x1=original.x1 * scale + dx,
+        original_path=[
+            (part[0], *((x * scale + dx, y * scale + dy) for x, y in part[1:]))
+            for part in original.original_path
+        ],
+    )
+    decoder = VectorDigits(TAHOMA_BOLD)
+    assert decoder.read([shape]) == 1
+    shape.original_path.append(("l", (shape.x0, shape.y0)))
+    with pytest.raises(ValueError, match="Unknown"):
+        decoder.read([shape])
 
 
 def test_marked_pdf_preserves_ritl_combined_rounds_and_ignores_padding_days():
@@ -1496,3 +2127,220 @@ def test_victoria_park_raster_grid_tracks_image_scale(group, scale):
         SimpleNamespace(content=payload.getvalue(), url=response.url), source
     )
     assert actual == expected
+
+
+@pytest.mark.parametrize("year,day", [(2026, 12), (2027, 11)])
+def test_marked_pdf_week_bands_span_printed_day_cells(year, day):
+    response = SimpleNamespace(
+        content=_marked_calendar_pdf(year=year, marked_day=(1, day), row_band=True)
+    )
+    rows = _marked_parser(row_bands=True)(response)
+    expected = {D(year, 1, day) + datetime.timedelta(days=i) for i in range(7)}
+    assert {r["date"] for r in rows if r["type"] == "general"} == expected
+    assert {r["date"] for r in rows if r["type"] == "organic"} == expected
+
+
+@pytest.mark.parametrize("year", [2026, 2027])
+def test_marked_pdf_year_suffixed_headings_are_opt_in(year):
+    response = SimpleNamespace(
+        content=_marked_calendar_pdf(year=year, heading_year=True)
+    )
+    with pytest.raises(ValueError, match="complete annual"):
+        _marked_parser()(response)
+    rows = _marked_parser(heading_year=True)(response)
+    assert {r["date"] for r in rows} == {D(year, 1, 26)}
+
+
+def test_marked_pdf_font_filter_excludes_editing_text_but_requires_real_day_numbers():
+    response = SimpleNamespace(content=_marked_calendar_pdf(stray_number=True))
+    with pytest.raises(ValueError, match="differs from grid"):
+        _marked_parser()(response)
+    assert len(_marked_parser(day_font_size=(8.9, 9.1))(response)) == 2
+    with pytest.raises(ValueError, match="Incomplete printed grid"):
+        _marked_parser(day_font_size=(8.9, 9.1))(
+            SimpleNamespace(
+                content=_marked_calendar_pdf(omitted=(1, 1), stray_number=True)
+            )
+        )
+
+
+def test_strathfield_published_calendar_is_complete_and_stops_at_year_end():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule.source.strathfield_nsw_gov_au import Source
+
+    case = "Monday collection"
+    source = Source(**Source.TEST_CASES[case])
+    with cassette.replaying(fixture_path("strathfield_nsw_gov_au", case)):
+        response = source.retrieve(source)
+        days = source.parse(response, source)
+    with cassette.replaying(fixture_path("strathfield_nsw_gov_au", case)):
+        entries = source.fetch()
+    assert len(days) == 365
+    assert len({r["date"] for r in days}) == 365
+    assert (D(2026, 1, 5), "green") in {(r["date"], r["type"]) for r in days}
+    assert all(D(2026, 10, 26) <= e.date <= D(2026, 12, 31) for e in entries)
+
+
+def test_paczkow_joins_day_lists_wrapped_onto_their_own_lines():
+    """pypdf before 6.20 extracts a wrapped month cell as separate lines."""
+    import datetime
+
+    from waste_collection_schedule.source.paczkow_pl import _tables
+
+    header = (
+        "Ulice: Kopernika\n"
+        "RODZAJ ODEBRANEGO ODPADU PAŹDZIERNIK 2026 LISTOPAD 2026 GRUDZIEŃ 2026 \n"
+    )
+    footer = "\nnie mają prawa wchodzenia na teren posesji)"
+    joined = "Odpady BIO 09, 23, 30 06, 20 04, 18\n"
+    wrapped = "Odpady BIO 09, 23, \n30 \n06, 20 \n04, \n18 \n"
+
+    expected = [
+        (datetime.date(2026, month, day), "Odpady BIO")
+        for month, days in ((10, (9, 23, 30)), (11, (6, 20)), (12, (4, 18)))
+        for day in days
+    ]
+    for body in (joined, wrapped):
+        (table,) = _tables(header + body + footer)
+        assert table["areas"] == ["Kopernika"]
+        assert table["rows"] == expected
+
+    # A row genuinely missing a month still fails loudly.
+    with pytest.raises(ValueError):
+        _tables(header + "Odpady BIO 09, 23, 30 06, 20\n" + footer)
+
+
+def test_eko_region_outlined_table_keeps_ash_and_seasonal_collection_changes():
+    from collections import Counter
+
+    from waste_collection_schedule.service.EkoRegionCalendar import CalendarParser
+
+    response = _recorded_pdf_response("eko_region_pl", "Bednarze")
+    with freeze_time("2026-10-30"):
+        rows = set(CalendarParser()(response))
+    assert len(rows) == 61
+    assert Counter(label for _, label in rows) == {
+        "Metale i tworzywa sztuczne": 12,
+        "Papier": 4,
+        "Szkło": 4,
+        "Bio": 15,
+        "Popiół": 6,
+        "Zmieszane odpady komunalne": 20,
+    }
+    assert (D(2026, 1, 10), "Popiół") in rows
+    assert (D(2026, 1, 10), "Bio") not in rows
+    assert (D(2026, 4, 3), "Popiół") in rows
+    assert (D(2026, 4, 17), "Bio") in rows
+    assert (D(2026, 11, 2), "Zmieszane odpady komunalne") in rows
+    assert (D(2026, 11, 9), "Zmieszane odpady komunalne") not in rows
+
+
+def test_eko_region_unknown_outlined_glyphs_fail_instead_of_dropping_days(monkeypatch):
+    from waste_collection_schedule.service import EkoRegionCalendar
+
+    response = _recorded_pdf_response("eko_region_pl", "Bednarze")
+    monkeypatch.delitem(EkoRegionCalendar._GLYPHS, "2")
+    with freeze_time("2026-10-30"), pytest.raises(ValueError, match="Unknown outlined"):
+        EkoRegionCalendar.CalendarParser()(response)
+
+
+def test_eko_region_rejects_last_years_calendar():
+    from waste_collection_schedule.service.EkoRegionCalendar import CalendarParser
+
+    response = _recorded_pdf_response("eko_region_pl", "Bednarze")
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="current-year"):
+        CalendarParser()(response)
+
+
+def test_nkom_source_selects_the_configured_locality_and_maps_columns():
+    from waste_collection_schedule.preprocessors import PdfMonthGridRow
+    from waste_collection_schedule.source.nkom_lt import Source
+
+    rows = [
+        PdfMonthGridRow(
+            2026,
+            0,
+            400,
+            3,
+            "Nemėžis, Kuprioniškės",
+            [(0, D(2026, 10, 7))],
+        ),
+        PdfMonthGridRow(
+            2026,
+            0,
+            350,
+            6,
+            "Nemėžis, Kuprioniškės",
+            [
+                (0, D(2026, 10, 9)),
+                (3, D(2026, 10, 1)),
+            ],
+        ),
+        PdfMonthGridRow(
+            2026,
+            0,
+            325,
+            6,
+            "Nemėžis, another route",
+            [
+                (0, D(2026, 10, 9)),
+                (3, D(2026, 10, 1)),
+            ],
+        ),
+        PdfMonthGridRow(
+            2026,
+            0,
+            300,
+            6,
+            "Other village",
+            [(0, D(2026, 10, 10))],
+        ),
+    ]
+
+    events = Source.preprocess(rows, Source(location="Nemėžis"))
+
+    assert events == [
+        {"date": D(2026, 10, 7), "type": "mixed"},
+        {"date": D(2026, 10, 9), "type": "packaging"},
+        {"date": D(2026, 10, 1), "type": "glass"},
+    ]
+
+
+def test_nkom_source_reports_a_location_not_present_in_the_schedule():
+    from waste_collection_schedule.exceptions import SourceArgumentNotFound
+    from waste_collection_schedule.preprocessors import PdfMonthGridRow
+    from waste_collection_schedule.source.nkom_lt import Source
+
+    with pytest.raises(SourceArgumentNotFound, match="Missing"):
+        Source.preprocess(
+            [PdfMonthGridRow(2026, 0, 400, 3, "Nemėžis", [(0, D(2026, 10, 7))])],
+            Source(location="Missing"),
+        )
+
+
+def test_nkom_schedule_lookup_selects_the_latest_pdf_for_each_waste_group():
+    from waste_collection_schedule.source.nkom_lt import _schedule_links
+
+    page = SimpleNamespace(
+        text="""
+        <a href="/grafikai/Grafikas-misriu-2025-(10-12).pdf">old mixed</a>
+        <a href="/grafikai/Grafikas-misriu-2026-(10-12).pdf">new mixed</a>
+        <a href="/grafikai/Grafikas-pakuociu-2026-(10-12).pdf">packaging</a>
+        """,
+        url="https://www.nkom.lt/kita.html",
+    )
+
+    assert _schedule_links(page) == [
+        "https://www.nkom.lt/grafikai/Grafikas-misriu-2026-(10-12).pdf",
+        "https://www.nkom.lt/grafikai/Grafikas-pakuociu-2026-(10-12).pdf",
+    ]
+
+
+def test_nkom_schedule_lookup_reports_missing_pdf_links_as_shape_error():
+    from waste_collection_schedule.source.nkom_lt import _schedule_links
+
+    page = SimpleNamespace(text="<html></html>", url="https://www.nkom.lt/kita.html")
+
+    with pytest.raises(ResponseShapeError, match="schedule PDF"):
+        _schedule_links(page)

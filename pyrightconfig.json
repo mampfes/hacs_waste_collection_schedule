@@ -4,6 +4,13 @@
   "reportMissingImports": false,
   "reportMissingModuleSource": false,
   "include": [
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/nkom_lt.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/awb_mainz_bingen_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/wieliczka_kiedyodpady_pl.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/wuerzburg_de.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/strathfield_nsw_gov_au.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/source/wolverhampton_gov_uk.py",
+    "custom_components/waste_collection_schedule/waste_collection_schedule/service/DrupalServiceCalendar.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/victoriapark_wa_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/sunshinecoast_qld_gov_au.py",
     "custom_components/waste_collection_schedule/waste_collection_schedule/source/cbcity_nsw_gov_au.py",

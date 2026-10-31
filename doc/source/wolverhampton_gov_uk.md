@@ -1,8 +1,10 @@
-<img src="/images/icon.png" alt="Waste Collection Schedule logo" title="Waste Collection Schedule" align="right" height="60" />
-
 # Wolverhampton City Council
 
-**Configuration via configuration.yaml**
+Support for schedules provided by [Wolverhampton City Council](https://www.wolverhampton.gov.uk).
+
+Source for Wolverhampton City Council waste collection.
+
+## Configuration via configuration.yaml
 
 ```yaml
 waste_collection_schedule:
@@ -13,22 +15,25 @@ waste_collection_schedule:
         uprn: UPRN
 ```
 
-**Configuration Variables**
+### Configuration Variables
 
-**postcode** _(string) (required)_ : Your postcode
-**uprn** _(string) (required)_ : The unique property reference number for your address
+**postcode**  
+*(string) (required)*
 
-**How to find your UPRN**
-1. Visit the [Wolverhampton Find My Nearest](https://www.wolverhampton.gov.uk/waste-and-recycling/bin-collection-dates) page
-2. Enter your postcode and select your address
-3. The UPRN will be visible in the URL after selecting your address (e.g., https://www.wolverhampton.gov.uk/find-my-nearest/WV11RD/10094887108 where 10094887108 is the UPRN)
+**uprn**  
+*(string) (required)*
 
-**Example**
+## Example
 
 ```yaml
 waste_collection_schedule:
   sources:
     - name: wolverhampton_gov_uk
       args:
-        postcode: "WV1 1RD"
-        uprn: "10094887108"
+        postcode: WV1 1RD
+        uprn: '10094887108'
+```
+
+## How to get the source arguments
+
+Enter the postcode and UPRN from the council's In Your Area property page. The source follows its View the calendar link and reads the dated calendar supplied by the council, including seasonal gaps. Only services listed for that property are returned. Types now use canonical, localised names; update filters and customisations using old labels.

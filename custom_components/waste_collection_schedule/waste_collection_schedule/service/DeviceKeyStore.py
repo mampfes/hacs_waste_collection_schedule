@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
-import logging
+from __future__ import annotations
 
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers import storage
+import logging
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -16,6 +19,8 @@ class DeviceKeyStore:
 
     def __init__(self, hass: HomeAssistant):
         """Initialize the device key store."""
+        from homeassistant.helpers import storage
+
         self._hass = hass
         self._store = storage.Store(hass, STORAGE_VERSION, STORAGE_KEY)
         self._data: dict[str, str] = {}

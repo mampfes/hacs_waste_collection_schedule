@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "waste-collection-schedule"
+dynamic = ["version"]
+description = "Waste collection schedule sources, usable independently of Home Assistant"
+readme = "doc/standalone.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = [
+    "Babel>=2.12.0",
+    "beautifulsoup4>=4.12.2",
+    "certifi",
+    "curl_cffi>=0.7.0",
+    "holidays>=0.40",
+    "icalendar>=4.0.9",
+    "icalevents>=0.2.1",
+    "jinja2>=3.1.2",
+    "lxml>=4.9.4",
+    "pdfminer.six>=20221105",
+    "Pillow>=10.0.0",
+    "pycryptodome>=3.20.0",
+    "pypdf>=6.20.0",
+    "PyYAML>=6.0.1",
+    "python-dateutil>=2.8.2",
+    "pytz>=2021.3",
+    "requests>=2.31.0",
+    "typing_extensions>=4.12.2",
+    "urllib3>=1.26.18",
+]
+
+[project.urls]
+Repository = "https://github.com/mampfes/hacs_waste_collection_schedule"
+Issues = "https://github.com/mampfes/hacs_waste_collection_schedule/issues"
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["custom_components/waste_collection_schedule"]
+include = [
+    "waste_collection_schedule",
+    "waste_collection_schedule.source",
+    "waste_collection_schedule.service",
+]

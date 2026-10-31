@@ -15,52 +15,25 @@ The browser's conversation is two requests:
 :class:`AuraApexRetriever` is that conversation and :class:`AuraServiceUnitsParser`
 reads the answer into ``(timestamp, task name)`` rows.
 
-The host sends its leaf certificate without the issuing intermediate, so no
-default trust store can build a chain to it. :func:`ca_bundle` completes
-certifi's roots with the missing intermediate instead of disabling
-verification.
+Chesterfield's host sends its leaf certificate without the issuing
+intermediate, so no default trust store can build a chain to it. The
+retriever takes a ``verify`` value for its requests; ``tls.AIA`` completes the
+chain from the leaf's AIA URL (see :mod:`waste_collection_schedule.tls`).
 """
 
 from __future__ import annotations
 
-import hashlib
 import json
-import os
-import tempfile
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Any
 
-import certifi
-
-from waste_collection_schedule import response_shape
+from waste_collection_schedule import response_shape, tls
 from waste_collection_schedule.parsers import Parser
 from waste_collection_schedule.retrievers import RetrieverFunc
 
 if TYPE_CHECKING:
     from waste_collection_schedule.base_source import BaseSource
     from waste_collection_schedule.retrievers import Response
-
-_bundles: dict[str, str] = {}
-
-
-def ca_bundle(extra_pem: str) -> str:
-    """Path of a CA bundle: certifi's roots plus ``extra_pem`` (a PEM text).
-
-    Written once per process to a temp file and reused.
-    """
-    key = hashlib.sha1(extra_pem.encode("ascii")).hexdigest()
-    path = _bundles.get(key)
-    if path is not None and os.path.exists(path):
-        return path
-    with open(certifi.where(), encoding="ascii") as f:
-        roots = f.read()
-    fd, path = tempfile.mkstemp(prefix="wcs_ca_", suffix=".pem")
-    with os.fdopen(fd, "w", encoding="ascii") as f:
-        f.write(roots)
-        f.write("\n")
-        f.write(extra_pem)
-    _bundles[key] = path
-    return path
 
 
 class AuraApexRetriever(RetrieverFunc):
@@ -74,8 +47,9 @@ class AuraApexRetriever(RetrieverFunc):
         method: the Apex method.
         params: ``callable(**source.params) -> dict``, the method's arguments.
         base_path: path prefix of the site (default ``/anonymous``).
-        ca_certs: PEM text of an intermediate certificate the host does not
-            send, trusted on top of certifi's roots.
+        verify: TLS verification for both requests: ``True`` (default), a CA
+            bundle path (:func:`tls.ca_bundle`), or :data:`tls.AIA` for a host
+            that omits its intermediate certificate.
         timeout: request timeout in seconds.
     """
 
@@ -89,7 +63,7 @@ class AuraApexRetriever(RetrieverFunc):
         method: str,
         params: Callable[..., dict[str, Any]],
         base_path: str = "/anonymous",
-        ca_certs: str | None = None,
+        verify: tls.Verify = True,
         timeout: int = 30,
     ):
         self.host = host
@@ -99,16 +73,16 @@ class AuraApexRetriever(RetrieverFunc):
         self.method = method
         self.params = params
         self.base_path = base_path
-        self.ca_certs = ca_certs
+        self.verify = verify
         self.timeout = timeout
 
     def __call__(self, source: BaseSource) -> Response:
-        verify: Any = ca_bundle(self.ca_certs) if self.ca_certs else True
         base = f"https://{self.host}{self.base_path}"
-        boot = source.session.get(
+        boot = tls.send(
+            source.session.get,
             f"{base}/c/{self.app}.app",
+            self.verify,
             params={"aura.format": "JSON", "aura.formatAdapter": "LIGHTNING_OUT"},
-            verify=verify,
             timeout=self.timeout,
         )
         boot.raise_for_status()
@@ -144,8 +118,10 @@ class AuraApexRetriever(RetrieverFunc):
             "globals": {},
             "uad": True,
         }
-        response = source.session.post(
+        response = tls.send(
+            source.session.post,
             f"{base}/aura",
+            self.verify,
             params={"r": 2, "aura.ApexAction.execute": 1},
             data={
                 "message": json.dumps({"actions": [action]}),
@@ -153,7 +129,6 @@ class AuraApexRetriever(RetrieverFunc):
                 "aura.pageURI": self.page_uri,
                 "aura.token": "null",
             },
-            verify=verify,
             timeout=self.timeout,
         )
         response.raise_for_status()

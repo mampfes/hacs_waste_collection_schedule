@@ -1,6 +1,8 @@
 # Warrnambool City Council
 
-Support for schedules provided by [Warrnambool City Council](https://www.warrnambool.vic.gov.au/kerbside-bin-collection).
+Support for schedules provided by [Warrnambool City Council](https://www.warrnambool.vic.gov.au).
+
+Source for Warrnambool City Council waste collection.
 
 ## Configuration via configuration.yaml
 
@@ -29,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Visit the [Warrnambool City Council kerbside bin collection](https://www.warrnambool.vic.gov.au/kerbside-bin-collection) page and search for your address in the bin collection lookup. The address should be in the format used by the lookup, e.g. "3 Kiama Ave WARRNAMBOOL VIC 3280".
+Search for your address on https://www.warrnambool.vic.gov.au/kerbside-bin-collection and enter it exactly as the address field suggests it, e.g. 3 Kiama Ave WARRNAMBOOL VIC 3280. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.

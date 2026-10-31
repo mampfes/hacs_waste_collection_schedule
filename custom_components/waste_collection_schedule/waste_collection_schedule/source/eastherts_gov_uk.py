@@ -56,7 +56,7 @@ class Source(BaseSource):
         service_page="Bins___When_are_my_Bin_Collection_days",
         steps=[
             LookupStep(
-                "683d9ff0e299d",
+                "6accfd6441228",
                 section="Collection Days",
                 form_values=lambda ctx, source: {
                     "inputUPRN": {"value": source.params["uprn"]}

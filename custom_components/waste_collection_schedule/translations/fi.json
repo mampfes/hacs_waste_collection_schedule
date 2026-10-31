@@ -26,12 +26,10 @@
         "description": "Valitse, kuinka yksityiskohtaisesti haluat määrittää integraation. Jätä tyhjäksi, jos haluat vain peruskalenterin.",
         "data": {
           "show_customize_config": "Näytä jätelajien mukautusasetukset",
-          "show_sensor_config": "Näytä anturiasetukset",
           "default_sensors": "Oletusanturit"
         },
         "data_description": {
           "show_customize_config": "Valitse tämä, jos haluat mukauttaa jätelajeja.",
-          "show_sensor_config": "Valitse tämä, jos haluat määrittää antureita.",
           "default_sensors": "Valitse luotavat oletusanturit. Niitä voi käyttää yhdessä omien antureiden kanssa."
         }
       },
@@ -54,7 +52,8 @@
           "icon": "Kuvake",
           "picture": "Kuva",
           "use_dedicated_calendar": "Käytä omaa kalenteria",
-          "dedicated_calendar_title": "Oman kalenterin nimi"
+          "dedicated_calendar_title": "Oman kalenterin nimi",
+          "color": "Väri (#RRGGBB; tyhjä = oletus)"
         },
         "data_description": {
           "alias": "Jätelajin uusi nimi (vain jos haluat muuttaa sitä).",
@@ -93,35 +92,6 @@
         "data_description": {
           "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
           "f_abfallarten": "Valinnainen suodatin: sisällytettävät jätelajit."
-        }
-      },
-      "sensor": {
-        "title": "Luo anturi \"{sensor_number}\"",
-        "description": "Määritä yksi anturi kerrallaan.",
-        "data": {
-          "name": "Anturin nimi",
-          "details_format": "Tietojen esitysmuoto",
-          "count": "Lukumäärä",
-          "leadtime": "Ennakkoaika",
-          "value_template": "Arvomalli",
-          "date_template": "Päivämäärämalli",
-          "add_days_to": "Lisää daysTo-attribuutti",
-          "event_index": "Keräyskerran indeksi",
-          "types": "Jätelajit",
-          "skip": "Älä luo anturia",
-          "additional": "Lisää muita antureita"
-        },
-        "data_description": {
-          "details_format": "Määrittää Home Assistantin lisätietoikkunan esitysmuodon. 'upcoming': tulevat keräykset, 'appointment_types': jätelajit ja niiden seuraavat keräyspäivät, 'generic': kaikki attribuutit Pythonin perustietotyyppeinä, 'hidden': piilottaa tulevien keräysten attribuutit.",
-          "count": "Rajoittaa Home Assistantin lisätietoikkunan näyttämään määritetyn määrän seuraavia keräyksiä.",
-          "leadtime": "Rajoittaa Home Assistantin lisätietoikkunan näyttämään vain ennakkoajan sisällä tapahtuvat keräykset.",
-          "value_template": "Muotoilee entiteetin tilatiedot Home Assistantin mallien avulla. Voit käyttää arvoja 'value.date', 'value.daysTo' ja 'value.types'.",
-          "date_template": "Muotoilee lisätietoikkunan päivämäärät Home Assistantin mallien avulla, esimerkiksi 'value.date.strftime(\"%d.%m.%Y\")'.",
-          "add_days_to": "Lisää lähde-entiteetille daysTo-attribuutin, joka kertoo päivien määrän seuraavaan keräykseen.",
-          "event_index": "Valitsee anturin näyttämän keräyskerran indeksin. Seuraavan keräyksen event_index on 0. Voit luoda omat anturit seuraavalle, toiselle ja kolmannelle keräykselle.",
-          "types": "Suodattaa jätelajit. Anturi näyttää vain näitä jätelajeja vastaavat keräykset. Käytä vaihtoehtoista nimeä, jos määritit sellaisen lähteen asetuksissa.",
-          "skip": "Jos valittu, anturia ei luoda ja yllä olevat asetukset ohitetaan.",
-          "additional": "Jos valittu, voit lisätä toisen anturin tämän tallentamisen jälkeen."
         }
       },
       "reconfigure": {
@@ -885,10 +855,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street_address": "Street Address"
+          "street_address": "Osoite"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street_address": "Koko osoitteesi."
         }
       },
       "reconfigure_casey_vic_gov_au": {
@@ -896,9 +867,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street_address": "Street Address"
+          "street_address": "Osoite"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Koko osoitteesi."
+        }
       },
       "args_cockburn_wa_gov_au": {
         "title": "Määritä lähde",
@@ -950,10 +923,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street_address": "Street Address"
+          "street_address": "Osoite"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street_address": "Koko osoitteesi."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -961,9 +935,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street_address": "Street Address"
+          "street_address": "Osoite"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Koko osoitteesi."
+        }
       },
       "args_gosnells_wa_gov_au": {
         "title": "Määritä lähde",
@@ -1801,11 +1777,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Katu",
+          "street_number": "Talon numero"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street_and_suburb": "Kadun nimi.",
+          "street_number": "Talon numero."
         }
       },
       "reconfigure_fairfieldcity_nsw_gov_au": {
@@ -1813,10 +1791,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Street Number"
+          "street_and_suburb": "Katu",
+          "street_number": "Talon numero"
         },
-        "data_description": {}
+        "data_description": {
+          "street_and_suburb": "Kadun nimi.",
+          "street_number": "Talon numero."
+        }
       },
       "args_frankston_vic_gov_au": {
         "title": "Määritä lähde",
@@ -3675,10 +3656,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street_address": "Street Address"
+          "street_address": "Osoite"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street_address": "Koko osoitteesi."
         }
       },
       "reconfigure_warrnambool_vic_gov_au": {
@@ -3686,9 +3668,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street_address": "Street Address"
+          "street_address": "Osoite"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Koko osoitteesi."
+        }
       },
       "args_waverley_nsw_gov_au": {
         "title": "Määritä lähde",
@@ -4491,6 +4475,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "region": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Kunta"
+        },
+        "data_description": {
+          "region": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -4886,26 +4899,6 @@
           "district": "Kaupunginosasi tai kunnan osa.",
           "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Määritä lähde",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "region": "Region"
-        },
-        "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Määritä lähde uudelleen",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "region": "Region"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Määritä lähde",
@@ -7054,6 +7047,26 @@
         },
         "data_description": {}
       },
+      "args_ovwrc_com": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_ovwrc_com": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "day": "Day"
+        },
+        "data_description": {}
+      },
       "args_pointe_claire_qc_ca": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -8849,6 +8862,26 @@
           "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
       },
+      "args_grandlieu_fr": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_grandlieu_fr": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Kunta"
+        },
+        "data_description": {}
+      },
       "args_mamirolle_info": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -9185,6 +9218,29 @@
         },
         "data_description": {
           "district": "Kaupunginosasi tai kunnan osa."
+        }
+      },
+      "args_syvalorm_fr": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Kunta"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
+      },
+      "reconfigure_syvalorm_fr": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "municipality": "Kunta"
+        },
+        "data_description": {
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
       },
       "args_toulouse_metropole_fr": {
@@ -9925,11 +9981,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "district": "Alue",
+          "district": "Kaupunginosa",
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "district": "Kaupunginosasi tai kunnan osa.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_wuerzburg_de": {
@@ -9937,10 +9995,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "district": "Alue",
+          "district": "Kaupunginosa",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Kaupunginosasi tai kunnan osa.",
+          "street": "Kadun nimi."
+        }
       },
       "args_ics_wuerzburg_de": {
         "title": "Määritä lähde",
@@ -11040,11 +11101,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "bezirk": "Bezirk",
-          "ort": "Ort"
+          "bezirk": "Kaupunginosa",
+          "ort": "Kunta"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "bezirk": "Kaupunginosasi tai kunnan osa.",
+          "ort": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
       },
       "reconfigure_awb_mainz_bingen_de": {
@@ -11052,10 +11115,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "bezirk": "Bezirk",
-          "ort": "Ort"
+          "bezirk": "Kaupunginosa",
+          "ort": "Kunta"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Kaupunginosasi tai kunnan osa.",
+          "ort": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
       },
       "args_ics_abfallwirtschaft_uhk_de": {
         "title": "Määritä lähde",
@@ -19073,6 +19139,28 @@
         },
         "data_description": {}
       },
+      "args_raywhelan_ie": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "calendar": "Calendar",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_raywhelan_ie": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "calendar": "Calendar",
+          "day": "Day"
+        },
+        "data_description": {}
+      },
       "args_junker_app": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -19898,6 +19986,30 @@
         },
         "data_description": {}
       },
+      "args_selargiusostenibile_it": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Vyöhyke"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_selargiusostenibile_it": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Vyöhyke"
+        },
+        "data_description": {}
+      },
       "args_silea_it": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -20093,6 +20205,8 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
+          "city": "Kaupunki",
+          "containers": "Containers",
           "district": "Alue",
           "house_number": "Talon numero",
           "region": "Region",
@@ -20108,6 +20222,8 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
+          "city": "Kaupunki",
+          "containers": "Containers",
           "district": "Alue",
           "house_number": "Talon numero",
           "region": "Region",
@@ -21083,7 +21199,7 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "area_number": "Area Number"
+          "area_number": "Sijainnin tunnus"
         },
         "data_description": {
           "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
@@ -21094,7 +21210,7 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "area_number": "Area Number"
+          "area_number": "Sijainnin tunnus"
         },
         "data_description": {}
       },
@@ -21151,7 +21267,8 @@
           "address": "Osoite"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
         }
       },
       "reconfigure_ccc_govt_nz": {
@@ -21161,7 +21278,9 @@
           "calendar_title": "Kalenterin nimi",
           "address": "Osoite"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
       },
       "args_dunedin_govt_nz": {
         "title": "Määritä lähde",
@@ -22433,6 +22552,26 @@
           "street": "Kadun nimi."
         }
       },
+      "args_eko_region_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "village": "Village"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_eko_region_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "village": "Village"
+        },
+        "data_description": {}
+      },
       "args_ekolandpolska_com_pl": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -22516,6 +22655,26 @@
           "street": "Kadun nimi."
         }
       },
+      "args_tamax_imielno_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_imielno_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_jaktorow_pl": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -22533,6 +22692,46 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "region": "Region"
+        },
+        "data_description": {}
+      },
+      "args_tamax_janow_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_janow_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
+      "args_tamax_koniusza_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_koniusza_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
         },
         "data_description": {}
       },
@@ -22567,6 +22766,46 @@
           "street": "Kadun nimi."
         }
       },
+      "args_tamax_ksiaz_wielki_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_ksiaz_wielki_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
+      "args_tamax_lelow_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_lelow_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_maslow_pl": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -22589,6 +22828,26 @@
         "data_description": {
           "district": "Kaupunginosasi tai kunnan osa."
         }
+      },
+      "args_tamax_bochnia_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_bochnia_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
       },
       "args_gmina_miekinia_pl": {
         "title": "Määritä lähde",
@@ -22744,6 +23003,26 @@
           "street": "Kadun nimi."
         }
       },
+      "args_tamax_net_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_net_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_gmina_radlow_pl": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -22764,6 +23043,46 @@
         },
         "data_description": {}
       },
+      "args_tamax_szczekociny_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_szczekociny_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
+      "args_tamax_sedziszow_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_sedziszow_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_gmina_trzebnica_pl": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -22781,6 +23100,26 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "region_id": "Region Id"
+        },
+        "data_description": {}
+      },
+      "args_tamax_wlodowice_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_wlodowice_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
         },
         "data_description": {}
       },
@@ -23128,6 +23467,26 @@
           "street": "Kadun nimi."
         }
       },
+      "args_tamax_wieliczka_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+        }
+      },
+      "reconfigure_tamax_wieliczka_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "area": "Area"
+        },
+        "data_description": {}
+      },
       "args_zywiec_pl": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -23426,11 +23785,15 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "number": "Number",
+          "lookahead_days": "Lookahead Days",
+          "number": "Talon numero",
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "number": "Talon numero.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_wieliczka_kiedyodpady_pl": {
@@ -23439,10 +23802,15 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "city": "Kaupunki",
-          "number": "Number",
+          "lookahead_days": "Lookahead Days",
+          "number": "Talon numero",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "number": "Talon numero.",
+          "street": "Kadun nimi."
+        }
       },
       "args_ekosystem_wroc_pl": {
         "title": "Määritä lähde",
@@ -23729,7 +24097,8 @@
           "address": "Osoite"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
         }
       },
       "reconfigure_komunala_kranj_si": {
@@ -23739,7 +24108,9 @@
           "calendar_title": "Kalenterin nimi",
           "address": "Osoite"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
       },
       "args_komunala_slb_si": {
         "title": "Määritä lähde",
@@ -24315,6 +24686,29 @@
           "street_address": "Koko osoitteesi."
         }
       },
+      "args_kretsloppsydost_se": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "street_address": "Osoite"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street_address": "Koko osoitteesi."
+        }
+      },
+      "reconfigure_kretsloppsydost_se": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "street_address": "Osoite"
+        },
+        "data_description": {
+          "street_address": "Koko osoitteesi."
+        }
+      },
       "args_renhallningen_kristianstad_se": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -24426,6 +24820,29 @@
           "street_address": "Street Address"
         },
         "data_description": {}
+      },
+      "args_ljusdalenergi_se": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
+        }
+      },
+      "reconfigure_ljusdalenergi_se": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite"
+        },
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
       },
       "args_lumire_se": {
         "title": "Määritä lähde",
@@ -27860,6 +28277,29 @@
           "postcode": "Postinumerosi."
         }
       },
+      "args_edinburgh_gov_uk": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "street": "Katu"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street": "Kadun nimi."
+        }
+      },
+      "reconfigure_edinburgh_gov_uk": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "street": "Katu"
+        },
+        "data_description": {
+          "street": "Kadun nimi."
+        }
+      },
       "args_lincoln_gov_uk": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -28341,10 +28781,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_dover_gov_uk": {
@@ -28352,9 +28793,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_dudley_gov_uk": {
         "title": "Määritä lähde",
@@ -28674,10 +29117,12 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_east_renfrewshire_gov_uk": {
@@ -28686,9 +29131,12 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_eastriding_gov_uk": {
         "title": "Määritä lähde",
@@ -29208,10 +29656,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_gateshead_gov_uk": {
@@ -29219,9 +29668,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_ics_gedling_gov_uk": {
         "title": "Määritä lähde",
@@ -29345,10 +29796,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_great_yarmouth_gov_uk": {
@@ -29356,9 +29808,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_guildford_gov_uk": {
         "title": "Määritä lähde",
@@ -29505,10 +29959,13 @@
           "calendar_title": "Kalenterin nimi",
           "house_number": "Talon numero",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "house_number": "Talon numero.",
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hastings_gov_uk": {
@@ -29518,9 +29975,13 @@
           "calendar_title": "Kalenterin nimi",
           "house_number": "Talon numero",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Talon numero.",
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_waste_havant_gov_uk": {
         "title": "Määritä lähde",
@@ -29747,7 +30208,7 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "location_id": "Location Id"
+          "location_id": "Sijainnin tunnus"
         },
         "data_description": {
           "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
@@ -29758,7 +30219,7 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "location_id": "Location Id"
+          "location_id": "Sijainnin tunnus"
         },
         "data_description": {}
       },
@@ -30715,13 +31176,15 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "house_number": "Talon numero",
-          "number": "Number",
+          "number": "Talon numero",
           "postcode": "Postinumero",
           "street": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "number": "Talon numero.",
+          "postcode": "Postinumerosi.",
+          "street": "Kadun nimi."
         }
       },
       "reconfigure_midsussex_gov_uk": {
@@ -30729,12 +31192,15 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "house_number": "Talon numero",
-          "number": "Number",
+          "number": "Talon numero",
           "postcode": "Postinumero",
           "street": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Talon numero.",
+          "postcode": "Postinumerosi.",
+          "street": "Kadun nimi."
+        }
       },
       "args_midulstercouncil_org": {
         "title": "Määritä lähde",
@@ -30912,10 +31378,12 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_newforest_gov_uk": {
@@ -30924,9 +31392,12 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_newark_sherwooddc_gov_uk": {
         "title": "Määritä lähde",
@@ -30992,6 +31463,35 @@
         },
         "data_description": {
           "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "args_newrymournedown_org": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "house_number": "Talon numero",
+          "postcode": "Postinumero",
+          "url": "Url"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "house_number": "Talon numero.",
+          "postcode": "Postinumerosi."
+        }
+      },
+      "reconfigure_newrymournedown_org": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "house_number": "Talon numero",
+          "postcode": "Postinumero",
+          "url": "Url"
+        },
+        "data_description": {
+          "house_number": "Talon numero.",
+          "postcode": "Postinumerosi."
         }
       },
       "args_north_ayrshire_gov_uk": {
@@ -31803,10 +32303,12 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_powys_gov_uk": {
@@ -31815,20 +32317,25 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_preston_gov_uk": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street": "Katu",
-          "uprn": "Uprn"
+          "street": "Osoite",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "street": "Koko osoitteesi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_preston_gov_uk": {
@@ -31836,10 +32343,13 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "street": "Katu",
-          "uprn": "Uprn"
+          "street": "Osoite",
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Koko osoitteesi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_reading_gov_uk": {
         "title": "Määritä lähde",
@@ -33082,12 +33592,15 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "post_code": "Post Code",
-          "street_name": "Street Name",
-          "uprn": "Uprn"
+          "post_code": "Postinumero",
+          "street_name": "Katu",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "post_code": "Postinumerosi.",
+          "street_name": "Kadun nimi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_swansea_gov_uk": {
@@ -33095,11 +33608,15 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "post_code": "Post Code",
-          "street_name": "Street Name",
-          "uprn": "Uprn"
+          "post_code": "Postinumero",
+          "street_name": "Katu",
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "post_code": "Postinumerosi.",
+          "street_name": "Kadun nimi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_swindon_gov_uk": {
         "title": "Määritä lähde",
@@ -34251,10 +34768,11 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "Sijainnin tunnus"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "postcode": "Postinumerosi."
         }
       },
       "reconfigure_wolverhampton_gov_uk": {
@@ -34263,9 +34781,11 @@
         "data": {
           "calendar_title": "Kalenterin nimi",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "Sijainnin tunnus"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Postinumerosi."
+        }
       },
       "args_wrexham_gov_uk": {
         "title": "Määritä lähde",
@@ -35465,6 +35985,29 @@
           "street_address": "Koko osoitteesi."
         }
       },
+      "args_huntington_ny_us": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
+        }
+      },
+      "reconfigure_huntington_ny_us": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite"
+        },
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
+      },
       "args_ics_trashdaynow_com": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -35536,7 +36079,9 @@
           "municipality": "Kunta"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
         }
       },
       "reconfigure_vogeldisposal_com": {
@@ -35547,7 +36092,10 @@
           "address": "Osoite",
           "municipality": "Kunta"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Koko osoitteesi.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti."
+        }
       },
       "args_wm_com": {
         "title": "Määritä lähde",
@@ -35621,40 +36169,18 @@
       "name_exists": "Anturin nimi on jo käytössä. Valitse toinen nimi.",
       "preset_selected": "Et voi valita esiasetusta ja antaa omia arvoja samanaikaisesti.",
       "sensor_name_empty": "Anturin nimi ei voi olla tyhjä. Anna nimi.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Et voi antaa oman kalenterin nimeä ottamatta omaa kalenteria käyttöön."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Et voi antaa oman kalenterin nimeä ottamatta omaa kalenteria käyttöön.",
+      "invalid_sensor": "Tarkista anturin asetukset, mallit ja #RRGGBB-väri."
     }
   },
   "options": {
     "step": {
       "init": {
-        "description": "Päivitä Waste Collection Schedule -asetukset.",
-        "data": {
-          "sensor_select": "Muokattavat anturit",
-          "default_sensors": "Lisää oletusanturit",
-          "customize_select": "Muokattavat mukautukset",
-          "calendar_title": "Kalenterin nimi",
-          "separator": "Erotin",
-          "fetch_time": "Hakuaika",
-          "random_fetch_time_offset": "Hakuajan satunnainen siirto",
-          "day_switch_time": "Päivän vaihtumisaika",
-          "fetch_interval_days": "Päiviä hakujen välillä",
-          "day_offset": "Päivämäärän siirto",
-          "ignore_duplicates": "Ohita saman päivän päällekkäiset keräykset",
-          "show_original_label": "Näytä palveluntarjoajan alkuperäinen nimi"
-        },
-        "data_description": {
-          "sensor_select": "Valitse muokattava anturi tai valitse 'Lisää uusi anturi' luodaksesi uuden.",
-          "default_sensors": "Lisää valitut oletusanturit, jotka vielä puuttuvat. Nykyisiä antureita ei muuteta.",
-          "customize_select": "Valitse muokattava mukautus tai valitse uusi mukautus luodaksesi uuden.",
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
-          "separator": "Yhdistää merkinnät, jos lähde palauttaa useita arvoja samalle päivälle.",
-          "fetch_time": "Kellonaika muodossa HH:MM, jolloin Home Assistant hakee palveluntarjoajalta uusimman keräysaikataulun.",
-          "random_fetch_time_offset": "Siirtää hakuaikaa satunnaisesti enintään x minuuttia. Tämä jakaa Home Assistantin haut pidemmälle ajalle ja vähentää palveluntarjoajan kuormitushuippuja.",
-          "day_switch_time": "Kellonaika muodossa HH:MM, jolloin Home Assistant siirtyy nykyisestä merkinnästä seuraavaan.",
-          "fetch_interval_days": "Määrittää, kuinka usein Home Assistant hakee keräykset tästä kalenterilähteestä. Oletusarvo on 1 päivä. Arvolla 2 keräykset haetaan joka toinen päivä.",
-          "day_offset": "Keräyspäivään lisättävä päivien määrä (voi olla negatiivinen). Jos kenttä on tyhjä, käytetään oletusarvoa 0.",
-          "ignore_duplicates": "Kun käytössä, saman jätelajin päällekkäiset keräykset samalta päivältä poistetaan. Kustakin jätelajista säilytetään vain yksi merkintä päivää kohden.",
-          "show_original_label": "Kun käytössä (oletus), jotkin lähteet säilyttävät palveluntarjoajan alkuperäisen nimen keräyksen kuvauksessa myös jätelajin vakioinnin jälkeen. Poista käytöstä piilottaaksesi alkuperäisen nimen."
+        "title": "Waste Collection Schedule",
+        "menu_options": {
+          "source_settings": "Lähteen asetukset",
+          "sensors": "Anturit",
+          "waste_types": "Jätelajit"
         }
       },
       "customize": {
@@ -35667,7 +36193,8 @@
           "icon": "Kuvake",
           "picture": "Kuva",
           "use_dedicated_calendar": "Käytä omaa kalenteria",
-          "dedicated_calendar_title": "Oman kalenterin nimi"
+          "dedicated_calendar_title": "Oman kalenterin nimi",
+          "color": "Väri (#RRGGBB; tyhjä = oletus)"
         },
         "data_description": {
           "delete": "Poista tämä mukautus.",
@@ -35679,35 +36206,73 @@
           "dedicated_calendar_title": "Oman kalenterientiteetin nimi."
         }
       },
-      "sensor": {
-        "title": "Muokkaa tai luo anturi \"{sensor_number}\"",
-        "description": "Määritä yksi anturi kerrallaan.",
+      "source_settings": {
+        "description": "Päivitä Waste Collection Schedule -asetukset.",
         "data": {
-          "delete": "Poista",
-          "name": "Anturin nimi",
-          "details_format": "Tietojen esitysmuoto",
-          "count": "Lukumäärä",
-          "leadtime": "Ennakkoaika",
-          "value_template": "Arvomalli",
-          "date_template": "Päivämäärämalli",
-          "add_days_to": "Lisää daysTo-attribuutti",
-          "event_index": "Keräyskerran indeksi",
-          "types": "Jätelajit",
-          "skip": "Älä luo anturia",
-          "additional": "Lisää muita antureita"
+          "calendar_title": "Kalenterin nimi",
+          "separator": "Erotin",
+          "fetch_time": "Hakuaika",
+          "random_fetch_time_offset": "Satunnainen hakusiirtymä (minuuttia)",
+          "day_switch_time": "Päivän vaihtumisaika",
+          "fetch_interval_days": "Päiviä hakujen välillä",
+          "day_offset": "Päivämäärän siirto",
+          "ignore_duplicates": "Ohita saman päivän päällekkäiset keräykset",
+          "show_original_label": "Näytä palveluntarjoajan alkuperäinen nimi"
         },
         "data_description": {
-          "delete": "Poista tämä mukautus.",
-          "details_format": "Määrittää Home Assistantin lisätietoikkunan esitysmuodon. 'upcoming': tulevat keräykset, 'appointment_types': jätelajit ja niiden seuraavat keräyspäivät, 'generic': kaikki attribuutit Pythonin perustietotyyppeinä, 'hidden': piilottaa tulevien keräysten attribuutit.",
-          "count": "Rajoittaa Home Assistantin lisätietoikkunan näyttämään määritetyn määrän seuraavia keräyksiä.",
-          "leadtime": "Rajoittaa Home Assistantin lisätietoikkunan näyttämään vain ennakkoajan sisällä tapahtuvat keräykset.",
-          "value_template": "Muotoilee entiteetin tilatiedot Home Assistantin mallien avulla. Voit käyttää arvoja 'value.date', 'value.daysTo' ja 'value.types'.",
-          "date_template": "Muotoilee lisätietoikkunan päivämäärät Home Assistantin mallien avulla, esimerkiksi 'value.date.strftime(\"%d.%m.%Y\")'.",
-          "add_days_to": "Lisää lähde-entiteetille daysTo-attribuutin, joka kertoo päivien määrän seuraavaan keräykseen.",
-          "event_index": "Valitsee anturin näyttämän keräyskerran indeksin. Seuraavan keräyksen event_index on 0. Voit luoda omat anturit seuraavalle, toiselle ja kolmannelle keräykselle.",
-          "types": "Suodattaa jätelajit. Anturi näyttää vain näitä jätelajeja vastaavat keräykset. Käytä vaihtoehtoista nimeä, jos määritit sellaisen lähteen asetuksissa.",
-          "skip": "Jos valittu, anturia ei luoda ja yllä olevat asetukset ohitetaan.",
-          "additional": "Jos valittu, voit lisätä toisen anturin tämän tallentamisen jälkeen."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "separator": "Yhdistää merkinnät, jos lähde palauttaa useita arvoja samalle päivälle.",
+          "fetch_time": "Kellonaika muodossa HH:MM, jolloin Home Assistant hakee palveluntarjoajalta uusimman keräysaikataulun.",
+          "random_fetch_time_offset": "Siirtää hakuaikaa satunnaisesti enintään x minuuttia. Tämä jakaa Home Assistantin haut pidemmälle ajalle ja vähentää palveluntarjoajan kuormitushuippuja.",
+          "day_switch_time": "Kellonaika muodossa HH:MM, jolloin Home Assistant siirtyy nykyisestä merkinnästä seuraavaan.",
+          "fetch_interval_days": "Määrittää, kuinka usein Home Assistant hakee keräykset tästä kalenterilähteestä. Oletusarvo on 1 päivä. Arvolla 2 keräykset haetaan joka toinen päivä.",
+          "day_offset": "Keräyspäivään lisättävä päivien määrä (voi olla negatiivinen). Jos kenttä on tyhjä, käytetään oletusarvoa 0.",
+          "ignore_duplicates": "Kun käytössä, saman jätelajin päällekkäiset keräykset samalta päivältä poistetaan. Kustakin jätelajista säilytetään vain yksi merkintä päivää kohden.",
+          "show_original_label": "Kun käytössä (oletus), jotkin lähteet säilyttävät palveluntarjoajan alkuperäisen nimen keräyksen kuvauksessa myös jätelajin vakioinnin jälkeen. Poista käytöstä piilottaaksesi alkuperäisen nimen."
+        },
+        "title": "Lähteen asetukset"
+      },
+      "sensors": {
+        "title": "Anturit",
+        "data": {
+          "predefined": "Esimääritetyt anturit",
+          "edit_sensor": "Muokkaa anturia",
+          "device_controls": "Laitteen ohjaimet",
+          "auto_add_types": "Lisää uudet jätelajit automaattisesti"
+        }
+      },
+      "edit_sensor": {
+        "title": "Muokkaa anturia",
+        "data": {
+          "name": "Nimi",
+          "enabled": "Käytössä",
+          "state_format": "Tilan teksti",
+          "language": "Kieli",
+          "date_format": "Päivämäärän muoto",
+          "details_format": "Tietojen muoto",
+          "count": "Määrä",
+          "leadtime": "Ennakkoaika (päivää)",
+          "unique_types": "Jokainen jätelaji vain kerran",
+          "exclude_types": "Poissuljetut jätelajit",
+          "advanced": "Lisäasetukset",
+          "action": "Toiminto",
+          "types": "Jätelajit",
+          "kind": "Anturin tyyppi"
+        }
+      },
+      "sensor_advanced": {
+        "title": "Lisäasetukset",
+        "data": {
+          "event_index": "Keräysindeksi",
+          "value_template": "Mukautettu tilamalli",
+          "date_template": "Mukautettu päivämäärämalli",
+          "color": "Väri (#RRGGBB; tyhjä = oletus)"
+        }
+      },
+      "waste_types": {
+        "title": "Jätelajit",
+        "data": {
+          "types": "Jätelajit"
         }
       }
     },
@@ -35717,17 +36282,52 @@
       "name_exists": "Anturin nimi on jo käytössä. Valitse toinen nimi.",
       "preset_selected": "Et voi valita esiasetusta ja antaa omia arvoja samanaikaisesti.",
       "sensor_name_empty": "Anturin nimi ei voi olla tyhjä. Anna nimi.",
-      "dedicated_calendar_title_without_use_dedicated_calendar": "Et voi antaa oman kalenterin nimeä ottamatta omaa kalenteria käyttöön."
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Et voi antaa oman kalenterin nimeä ottamatta omaa kalenteria käyttöön.",
+      "invalid_sensor": "Tarkista anturin asetukset, mallit ja #RRGGBB-väri."
     },
-    "abort": {}
+    "abort": {
+      "sensor_removed": "Anturi poistettiin muokkauksen aikana. Avaa anturin asetukset uudelleen."
+    }
   },
   "selector": {
     "details_format": {
       "options": {
-        "upcoming": "Tulevat keräykset",
-        "appointment_types": "Keräystyypit",
-        "generic": "Yleinen",
-        "hidden": "Piilotettu"
+        "types_in_days": "Tyypit ja lähtölaskenta",
+        "in_days": "Lähtölaskenta",
+        "relative": "Tänään / Huomenna / N päivän kuluttua",
+        "date": "Keräyspäivä",
+        "types": "Jätelajit",
+        "days": "Päivien määrä",
+        "custom": "Mukautettu malli",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Viikonpäivä, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Viikonpäivä, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Viikonpäivä, YYYY-MM-DD",
+        "upcoming": "Tulevat päivät",
+        "appointment_types": "Seuraava päivä jätelajeittain",
+        "generic": "Rakenteiset tiedot",
+        "hidden": "Piilota tiedot",
+        "schedule": "Keräysaikataulu",
+        "days_to": "Päiviä keräykseen",
+        "last_update": "Viimeisin päivitys",
+        "auto": "Home Assistantin kieli",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lisää mukautettu anturi",
+        "save": "Tallenna",
+        "reset": "Palauta oletukset",
+        "duplicate": "Kopioi mukautetuksi anturiksi",
+        "delete": "Poista mukautettu anturi"
       }
     },
     "default_sensors": {
@@ -35748,7 +36348,439 @@
       "options": {
         "sensor_select_add_new": "Lisää uusi anturi"
       }
+    },
+    "state_format": {
+      "options": {
+        "types_in_days": "Tyypit ja lähtölaskenta",
+        "in_days": "Lähtölaskenta",
+        "relative": "Tänään / Huomenna / N päivän kuluttua",
+        "date": "Keräyspäivä",
+        "types": "Jätelajit",
+        "days": "Päivien määrä",
+        "custom": "Mukautettu malli",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Viikonpäivä, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Viikonpäivä, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Viikonpäivä, YYYY-MM-DD",
+        "upcoming": "Tulevat päivät",
+        "appointment_types": "Seuraava päivä jätelajeittain",
+        "generic": "Rakenteiset tiedot",
+        "hidden": "Piilota tiedot",
+        "schedule": "Keräysaikataulu",
+        "days_to": "Päiviä keräykseen",
+        "last_update": "Viimeisin päivitys",
+        "auto": "Home Assistantin kieli",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lisää mukautettu anturi",
+        "save": "Tallenna",
+        "reset": "Palauta oletukset",
+        "duplicate": "Kopioi mukautetuksi anturiksi",
+        "delete": "Poista mukautettu anturi"
+      }
+    },
+    "date_format": {
+      "options": {
+        "types_in_days": "Tyypit ja lähtölaskenta",
+        "in_days": "Lähtölaskenta",
+        "relative": "Tänään / Huomenna / N päivän kuluttua",
+        "date": "Keräyspäivä",
+        "types": "Jätelajit",
+        "days": "Päivien määrä",
+        "custom": "Mukautettu malli",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Viikonpäivä, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Viikonpäivä, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Viikonpäivä, YYYY-MM-DD",
+        "upcoming": "Tulevat päivät",
+        "appointment_types": "Seuraava päivä jätelajeittain",
+        "generic": "Rakenteiset tiedot",
+        "hidden": "Piilota tiedot",
+        "schedule": "Keräysaikataulu",
+        "days_to": "Päiviä keräykseen",
+        "last_update": "Viimeisin päivitys",
+        "auto": "Home Assistantin kieli",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lisää mukautettu anturi",
+        "save": "Tallenna",
+        "reset": "Palauta oletukset",
+        "duplicate": "Kopioi mukautetuksi anturiksi",
+        "delete": "Poista mukautettu anturi"
+      }
+    },
+    "language": {
+      "options": {
+        "types_in_days": "Tyypit ja lähtölaskenta",
+        "in_days": "Lähtölaskenta",
+        "relative": "Tänään / Huomenna / N päivän kuluttua",
+        "date": "Keräyspäivä",
+        "types": "Jätelajit",
+        "days": "Päivien määrä",
+        "custom": "Mukautettu malli",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Viikonpäivä, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Viikonpäivä, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Viikonpäivä, YYYY-MM-DD",
+        "upcoming": "Tulevat päivät",
+        "appointment_types": "Seuraava päivä jätelajeittain",
+        "generic": "Rakenteiset tiedot",
+        "hidden": "Piilota tiedot",
+        "schedule": "Keräysaikataulu",
+        "days_to": "Päiviä keräykseen",
+        "last_update": "Viimeisin päivitys",
+        "auto": "Home Assistantin kieli",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lisää mukautettu anturi",
+        "save": "Tallenna",
+        "reset": "Palauta oletukset",
+        "duplicate": "Kopioi mukautetuksi anturiksi",
+        "delete": "Poista mukautettu anturi"
+      }
+    },
+    "kind": {
+      "options": {
+        "types_in_days": "Tyypit ja lähtölaskenta",
+        "in_days": "Lähtölaskenta",
+        "relative": "Tänään / Huomenna / N päivän kuluttua",
+        "date": "Keräyspäivä",
+        "types": "Jätelajit",
+        "days": "Päivien määrä",
+        "custom": "Mukautettu malli",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Viikonpäivä, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Viikonpäivä, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Viikonpäivä, YYYY-MM-DD",
+        "upcoming": "Tulevat päivät",
+        "appointment_types": "Seuraava päivä jätelajeittain",
+        "generic": "Rakenteiset tiedot",
+        "hidden": "Piilota tiedot",
+        "schedule": "Keräysaikataulu",
+        "days_to": "Päiviä keräykseen",
+        "last_update": "Viimeisin päivitys",
+        "auto": "Home Assistantin kieli",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lisää mukautettu anturi",
+        "save": "Tallenna",
+        "reset": "Palauta oletukset",
+        "duplicate": "Kopioi mukautetuksi anturiksi",
+        "delete": "Poista mukautettu anturi"
+      }
+    },
+    "action": {
+      "options": {
+        "types_in_days": "Tyypit ja lähtölaskenta",
+        "in_days": "Lähtölaskenta",
+        "relative": "Tänään / Huomenna / N päivän kuluttua",
+        "date": "Keräyspäivä",
+        "types": "Jätelajit",
+        "days": "Päivien määrä",
+        "custom": "Mukautettu malli",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Viikonpäivä, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Viikonpäivä, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Viikonpäivä, YYYY-MM-DD",
+        "upcoming": "Tulevat päivät",
+        "appointment_types": "Seuraava päivä jätelajeittain",
+        "generic": "Rakenteiset tiedot",
+        "hidden": "Piilota tiedot",
+        "schedule": "Keräysaikataulu",
+        "days_to": "Päiviä keräykseen",
+        "last_update": "Viimeisin päivitys",
+        "auto": "Home Assistantin kieli",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Lisää mukautettu anturi",
+        "save": "Tallenna",
+        "reset": "Palauta oletukset",
+        "duplicate": "Kopioi mukautetuksi anturiksi",
+        "delete": "Poista mukautettu anturi"
+      }
     }
   },
-  "issues": {}
+  "issues": {
+    "legacy_sensors": {
+      "title": "Aiemmista uudelleennimeämisistä jääneet anturit",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Poista vanhat anturimerkinnät",
+            "description": "Näillä vanhoilla antureilla ei ole tallennettua kokoonpanoa: {entities}. Tarkista automaatiot ja kojelaudat ennen poistamista.\n\nPoistetaanko luetellut vanhat rekisterimerkinnät? Aktiiviset siirretyt anturit säilytetään."
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "state_format": {
+        "name": "Tilan teksti",
+        "state": {
+          "types_in_days": "Tyypit ja lähtölaskenta",
+          "in_days": "Lähtölaskenta",
+          "relative": "Tänään / Huomenna / N päivän kuluttua",
+          "date": "Keräyspäivä",
+          "types": "Jätelajit",
+          "days": "Päivien määrä",
+          "custom": "Mukautettu malli",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Viikonpäivä, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Viikonpäivä, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Viikonpäivä, YYYY-MM-DD",
+          "upcoming": "Tulevat päivät",
+          "appointment_types": "Seuraava päivä jätelajeittain",
+          "generic": "Rakenteiset tiedot",
+          "hidden": "Piilota tiedot",
+          "schedule": "Keräysaikataulu",
+          "days_to": "Päiviä keräykseen",
+          "last_update": "Viimeisin päivitys",
+          "auto": "Home Assistantin kieli",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Lisää mukautettu anturi",
+          "save": "Tallenna",
+          "reset": "Palauta oletukset",
+          "duplicate": "Kopioi mukautetuksi anturiksi",
+          "delete": "Poista mukautettu anturi"
+        }
+      },
+      "language": {
+        "name": "Kieli",
+        "state": {
+          "types_in_days": "Tyypit ja lähtölaskenta",
+          "in_days": "Lähtölaskenta",
+          "relative": "Tänään / Huomenna / N päivän kuluttua",
+          "date": "Keräyspäivä",
+          "types": "Jätelajit",
+          "days": "Päivien määrä",
+          "custom": "Mukautettu malli",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Viikonpäivä, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Viikonpäivä, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Viikonpäivä, YYYY-MM-DD",
+          "upcoming": "Tulevat päivät",
+          "appointment_types": "Seuraava päivä jätelajeittain",
+          "generic": "Rakenteiset tiedot",
+          "hidden": "Piilota tiedot",
+          "schedule": "Keräysaikataulu",
+          "days_to": "Päiviä keräykseen",
+          "last_update": "Viimeisin päivitys",
+          "auto": "Home Assistantin kieli",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Lisää mukautettu anturi",
+          "save": "Tallenna",
+          "reset": "Palauta oletukset",
+          "duplicate": "Kopioi mukautetuksi anturiksi",
+          "delete": "Poista mukautettu anturi"
+        }
+      },
+      "date_format": {
+        "name": "Päivämäärän muoto",
+        "state": {
+          "types_in_days": "Tyypit ja lähtölaskenta",
+          "in_days": "Lähtölaskenta",
+          "relative": "Tänään / Huomenna / N päivän kuluttua",
+          "date": "Keräyspäivä",
+          "types": "Jätelajit",
+          "days": "Päivien määrä",
+          "custom": "Mukautettu malli",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Viikonpäivä, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Viikonpäivä, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Viikonpäivä, YYYY-MM-DD",
+          "upcoming": "Tulevat päivät",
+          "appointment_types": "Seuraava päivä jätelajeittain",
+          "generic": "Rakenteiset tiedot",
+          "hidden": "Piilota tiedot",
+          "schedule": "Keräysaikataulu",
+          "days_to": "Päiviä keräykseen",
+          "last_update": "Viimeisin päivitys",
+          "auto": "Home Assistantin kieli",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Lisää mukautettu anturi",
+          "save": "Tallenna",
+          "reset": "Palauta oletukset",
+          "duplicate": "Kopioi mukautetuksi anturiksi",
+          "delete": "Poista mukautettu anturi"
+        }
+      },
+      "details_format": {
+        "name": "Tietojen muoto",
+        "state": {
+          "types_in_days": "Tyypit ja lähtölaskenta",
+          "in_days": "Lähtölaskenta",
+          "relative": "Tänään / Huomenna / N päivän kuluttua",
+          "date": "Keräyspäivä",
+          "types": "Jätelajit",
+          "days": "Päivien määrä",
+          "custom": "Mukautettu malli",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Viikonpäivä, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Viikonpäivä, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Viikonpäivä, YYYY-MM-DD",
+          "upcoming": "Tulevat päivät",
+          "appointment_types": "Seuraava päivä jätelajeittain",
+          "generic": "Rakenteiset tiedot",
+          "hidden": "Piilota tiedot",
+          "schedule": "Keräysaikataulu",
+          "days_to": "Päiviä keräykseen",
+          "last_update": "Viimeisin päivitys",
+          "auto": "Home Assistantin kieli",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Lisää mukautettu anturi",
+          "save": "Tallenna",
+          "reset": "Palauta oletukset",
+          "duplicate": "Kopioi mukautetuksi anturiksi",
+          "delete": "Poista mukautettu anturi"
+        }
+      }
+    },
+    "number": {
+      "count": {
+        "name": "Määrä (0 = ∞)"
+      },
+      "leadtime": {
+        "name": "Ennakkoaika (päivää) (-1 = ∞)"
+      },
+      "event_index": {
+        "name": "Keräysindeksi"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Käytössä"
+      },
+      "unique_types": {
+        "name": "Jokainen jätelaji vain kerran"
+      },
+      "advanced": {
+        "name": "Lisäasetukset"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Nimi"
+      },
+      "value_template": {
+        "name": "Mukautettu tilamalli"
+      },
+      "date_template": {
+        "name": "Mukautettu päivämäärämalli"
+      },
+      "color": {
+        "name": "Väri (#RRGGBB; tyhjä = oletus)"
+      }
+    },
+    "button": {
+      "create_sensor": {
+        "name": "Luo anturi {name}"
+      },
+      "delete": {
+        "name": "Poista mukautettu anturi"
+      }
+    }
+  },
+  "exceptions": {
+    "type_unavailable": {
+      "message": "Tämä jätelaji ei enää sisälly nykyiseen aikatauluun."
+    },
+    "custom_template_required": {
+      "message": "Määritä ensin mukautettu tilamalli lisäasetuksissa."
+    }
+  }
 }

@@ -26,12 +26,10 @@
         "description": "Choisissez le niveau de détail souhaité pour cette intégration. Laissez vide si vous souhaitez simplement configurer un calendrier de base.",
         "data": {
           "show_customize_config": "Afficher les Configurations Personnalisées des Événements de Collecte",
-          "show_sensor_config": "Afficher les Configurations des Capteurs",
           "default_sensors": "Capteurs par défaut"
         },
         "data_description": {
           "show_customize_config": "Sélectionnez ceci si vous souhaitez personnaliser les types de collecte.",
-          "show_sensor_config": "Sélectionnez ceci si vous souhaitez configurer des capteurs.",
           "default_sensors": "Choisissez les capteurs par défaut à créer. Ils peuvent être combinés avec vos propres capteurs."
         }
       },
@@ -54,7 +52,8 @@
           "icon": "Icône",
           "picture": "Image",
           "use_dedicated_calendar": "Utiliser un calendrier dédié",
-          "dedicated_calendar_title": "Titre du calendrier dédié"
+          "dedicated_calendar_title": "Titre du calendrier dédié",
+          "color": "Couleur (#RRGGBB ; vide = valeur par défaut)"
         },
         "data_description": {
           "alias": "Le nouveau nom du type de collecte. (seulement si vous souhaitez le modifier)",
@@ -93,35 +92,6 @@
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
           "f_abfallarten": "Filtre facultatif : les types de déchets à inclure."
-        }
-      },
-      "sensor": {
-        "title": "Créer un Capteur \"{sensor_number}\"",
-        "description": "Configurez un capteur à la fois.",
-        "data": {
-          "name": "Nom du Capteur",
-          "details_format": "Format des Détails",
-          "count": "Nombre",
-          "leadtime": "Délai",
-          "value_template": "Modèle de Valeur",
-          "date_template": "Modèle de Date",
-          "add_days_to": "Ajouter des Jours à",
-          "event_index": "Index de l'Événement",
-          "types": "Types",
-          "skip": "Ne pas créer de capteur",
-          "additional": "Ajouter des capteurs supplémentaires"
-        },
-        "data_description": {
-          "details_format": "Spécifie le format utilisé pour afficher les informations dans la fenêtre d'informations supplémentaires de Home Assistant. 'Prochaines': montre une liste des prochaines collectes, 'Types de rendez-vous': montre une liste des types de déchets et leur prochaine date de collecte, 'Générique': fournit tous les attributs comme types de données Python génériques, 'Caché': masque les attributs des prochaines collectes.",
-          "count": "Limite l'affichage à un certain nombre de prochaines collectes.",
-          "leadtime": "Limite l'affichage aux collectes se produisant dans un certain délai.",
-          "value_template": "Utilise le templating de Home Assistant pour formater les informations d'état d'une entité. Vous pouvez utiliser 'value.date', 'value.daysTo', 'value.types'.",
-          "date_template": "Utilise le templating de Home Assistant pour formater les dates affichées. Par exemple : 'value.date.strftime(\"%d.%m.%Y\")'.",
-          "add_days_to": "Ajoute un attribut 'daysTo' contenant le nombre de jours jusqu'à la prochaine collecte.",
-          "event_index": "Utilisé pour attribuer un capteur à un index de date spécifique. Utile pour les collectes successives.",
-          "types": "Utilisé pour filtrer les types de déchets. Affichera uniquement les collectes correspondantes.",
-          "skip": "Si coché, le capteur ne sera pas créé.",
-          "additional": "Permet d'ajouter d'autres capteurs."
         }
       },
       "reconfigure": {
@@ -885,11 +855,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_address": "Adresse complète"
+          "street_address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "street_address": "Adresse complète incluant le quartier, la région et le code postal, sans virgules de séparation."
+          "street_address": "Votre adresse complète."
         }
       },
       "reconfigure_casey_vic_gov_au": {
@@ -897,10 +867,10 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_address": "Adresse complète"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "street_address": "Adresse complète incluant le quartier, la région et le code postal, sans virgules de séparation."
+          "street_address": "Votre adresse complète."
         }
       },
       "args_cockburn_wa_gov_au": {
@@ -953,11 +923,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_address": "Adresse complète"
+          "street_address": "Adresse"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "street_address": "Adresse complète, de préférence avec le quartier, l'État et le code postal. Les virgules et les types de voie abrégés sont acceptés."
+          "street_address": "Votre adresse complète."
         }
       },
       "reconfigure_gleneira_vic_gov_au": {
@@ -965,10 +935,10 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_address": "Adresse complète"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "street_address": "Adresse complète, de préférence avec le quartier, l'État et le code postal. Les virgules et les types de voie abrégés sont acceptés."
+          "street_address": "Votre adresse complète."
         }
       },
       "args_gosnells_wa_gov_au": {
@@ -1807,11 +1777,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Numéro de rue"
+          "street_and_suburb": "Rue",
+          "street_number": "Numéro"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_and_suburb": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
         }
       },
       "reconfigure_fairfieldcity_nsw_gov_au": {
@@ -1819,10 +1791,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_and_suburb": "Street And Suburb",
-          "street_number": "Numéro de rue"
+          "street_and_suburb": "Rue",
+          "street_number": "Numéro"
         },
-        "data_description": {}
+        "data_description": {
+          "street_and_suburb": "Le nom de votre rue.",
+          "street_number": "Votre numéro de rue."
+        }
       },
       "args_frankston_vic_gov_au": {
         "title": "Configurer la Source",
@@ -3681,10 +3656,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_address": "Adresse de rue"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_address": "Votre adresse complète."
         }
       },
       "reconfigure_warrnambool_vic_gov_au": {
@@ -3692,9 +3668,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street_address": "Adresse de rue"
+          "street_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Votre adresse complète."
+        }
       },
       "args_waverley_nsw_gov_au": {
         "title": "Configurer la Source",
@@ -4497,6 +4475,35 @@
         },
         "data_description": {}
       },
+      "args_scheibbs_umweltverbaende_at": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Commune"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "region": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
+      },
+      "reconfigure_scheibbs_umweltverbaende_at": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "additional_collections": "Additional Collections",
+          "bio_bin": "Bio Bin",
+          "lackenhof": "Lackenhof",
+          "region": "Commune"
+        },
+        "data_description": {
+          "region": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
+      },
       "args_ics_gda_gv_at": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -4892,26 +4899,6 @@
           "district": "Votre quartier ou partie de la commune.",
           "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
-      },
-      "args_scheibbs_umweltverbaende_at": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "region": "Région"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
-        }
-      },
-      "reconfigure_scheibbs_umweltverbaende_at": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "region": "Région"
-        },
-        "data_description": {}
       },
       "args_gaenserndorf_city_at": {
         "title": "Configurer la Source",
@@ -7060,6 +7047,26 @@
         },
         "data_description": {}
       },
+      "args_ovwrc_com": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_ovwrc_com": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "day": "Day"
+        },
+        "data_description": {}
+      },
       "args_pointe_claire_qc_ca": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -8850,6 +8857,26 @@
           "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
+      "args_grandlieu_fr": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "municipality": "Municipalité"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_grandlieu_fr": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "municipality": "Municipalité"
+        },
+        "data_description": {}
+      },
       "args_mamirolle_info": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -9186,6 +9213,29 @@
         },
         "data_description": {
           "district": "Votre quartier ou partie de la commune."
+        }
+      },
+      "args_syvalorm_fr": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "municipality": "Commune"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
+      },
+      "reconfigure_syvalorm_fr": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "municipality": "Commune"
+        },
+        "data_description": {
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "args_toulouse_metropole_fr": {
@@ -9926,11 +9976,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "district": "District",
+          "district": "Quartier",
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "district": "Votre quartier ou partie de la commune.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_wuerzburg_de": {
@@ -9938,10 +9990,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "district": "District",
+          "district": "Quartier",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "district": "Votre quartier ou partie de la commune.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_ics_wuerzburg_de": {
         "title": "Configurer la Source",
@@ -11041,11 +11096,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "bezirk": "District",
-          "ort": "Ville"
+          "bezirk": "Quartier",
+          "ort": "Commune"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "bezirk": "Votre quartier ou partie de la commune.",
+          "ort": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "reconfigure_awb_mainz_bingen_de": {
@@ -11053,10 +11110,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "bezirk": "District",
-          "ort": "Ville"
+          "bezirk": "Quartier",
+          "ort": "Commune"
         },
-        "data_description": {}
+        "data_description": {
+          "bezirk": "Votre quartier ou partie de la commune.",
+          "ort": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
       },
       "args_ics_abfallwirtschaft_uhk_de": {
         "title": "Configurer la Source",
@@ -19074,6 +19134,28 @@
         },
         "data_description": {}
       },
+      "args_raywhelan_ie": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "calendar": "Calendrier",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_raywhelan_ie": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "calendar": "Calendrier",
+          "day": "Day"
+        },
+        "data_description": {}
+      },
       "args_junker_app": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -19899,6 +19981,30 @@
         },
         "data_description": {}
       },
+      "args_selargiusostenibile_it": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_selargiusostenibile_it": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "paper_area": "Paper Area",
+          "url": "URL",
+          "zone": "Zone"
+        },
+        "data_description": {}
+      },
       "args_silea_it": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -20094,6 +20200,8 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "city": "Ville",
+          "containers": "Containers",
           "district": "District",
           "house_number": "Numéro civique",
           "region": "Région",
@@ -20109,6 +20217,8 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
+          "city": "Ville",
+          "containers": "Containers",
           "district": "District",
           "house_number": "Numéro civique",
           "region": "Région",
@@ -21084,7 +21194,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "area_number": "Area Number"
+          "area_number": "ID d'emplacement"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
@@ -21095,7 +21205,7 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "area_number": "Area Number"
+          "area_number": "ID d'emplacement"
         },
         "data_description": {}
       },
@@ -21152,7 +21262,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_ccc_govt_nz": {
@@ -21162,7 +21273,9 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
       },
       "args_dunedin_govt_nz": {
         "title": "Configurer la Source",
@@ -22434,6 +22547,26 @@
           "street": "Le nom de votre rue."
         }
       },
+      "args_eko_region_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "village": "Village"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_eko_region_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "village": "Village"
+        },
+        "data_description": {}
+      },
       "args_ekolandpolska_com_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -22517,6 +22650,26 @@
           "street": "Le nom de votre rue."
         }
       },
+      "args_tamax_imielno_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_tamax_imielno_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {}
+      },
       "args_jaktorow_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -22534,6 +22687,46 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "region": "Région"
+        },
+        "data_description": {}
+      },
+      "args_tamax_janow_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_tamax_janow_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_tamax_koniusza_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_tamax_koniusza_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
         },
         "data_description": {}
       },
@@ -22568,6 +22761,46 @@
           "street": "Le nom de votre rue."
         }
       },
+      "args_tamax_ksiaz_wielki_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_tamax_ksiaz_wielki_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_tamax_lelow_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_tamax_lelow_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {}
+      },
       "args_maslow_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -22590,6 +22823,26 @@
         "data_description": {
           "district": "Votre quartier ou partie de la commune."
         }
+      },
+      "args_tamax_bochnia_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_tamax_bochnia_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {}
       },
       "args_gmina_miekinia_pl": {
         "title": "Configurer la Source",
@@ -22745,6 +22998,26 @@
           "street": "Le nom de votre rue."
         }
       },
+      "args_tamax_net_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_tamax_net_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {}
+      },
       "args_gmina_radlow_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -22765,6 +23038,46 @@
         },
         "data_description": {}
       },
+      "args_tamax_szczekociny_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_tamax_szczekociny_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {}
+      },
+      "args_tamax_sedziszow_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_tamax_sedziszow_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {}
+      },
       "args_gmina_trzebnica_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -22782,6 +23095,26 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "region_id": "Region Id"
+        },
+        "data_description": {}
+      },
+      "args_tamax_wlodowice_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_tamax_wlodowice_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
         },
         "data_description": {}
       },
@@ -23129,6 +23462,26 @@
           "street": "Le nom de votre rue."
         }
       },
+      "args_tamax_wieliczka_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+        }
+      },
+      "reconfigure_tamax_wieliczka_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "area": "Zone"
+        },
+        "data_description": {}
+      },
       "args_zywiec_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -23427,11 +23780,15 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
+          "lookahead_days": "Lookahead Days",
           "number": "Numéro",
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village.",
+          "number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_wieliczka_kiedyodpady_pl": {
@@ -23440,10 +23797,15 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "city": "Ville",
+          "lookahead_days": "Lookahead Days",
           "number": "Numéro",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "city": "Votre ville ou village.",
+          "number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_ekosystem_wroc_pl": {
         "title": "Configurer la Source",
@@ -23730,7 +24092,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
         }
       },
       "reconfigure_komunala_kranj_si": {
@@ -23740,7 +24103,9 @@
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
       },
       "args_komunala_slb_si": {
         "title": "Configurer la Source",
@@ -24316,6 +24681,29 @@
           "street_address": "Votre adresse complète."
         }
       },
+      "args_kretsloppsydost_se": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street_address": "Votre adresse complète."
+        }
+      },
+      "reconfigure_kretsloppsydost_se": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street_address": "Adresse"
+        },
+        "data_description": {
+          "street_address": "Votre adresse complète."
+        }
+      },
       "args_renhallningen_kristianstad_se": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -24427,6 +24815,29 @@
           "street_address": "Adresse de rue"
         },
         "data_description": {}
+      },
+      "args_ljusdalenergi_se": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
+        }
+      },
+      "reconfigure_ljusdalenergi_se": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
       },
       "args_lumire_se": {
         "title": "Configurer la Source",
@@ -27861,6 +28272,29 @@
           "postcode": "Votre code postal."
         }
       },
+      "args_edinburgh_gov_uk": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street": "Le nom de votre rue."
+        }
+      },
+      "reconfigure_edinburgh_gov_uk": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "street": "Rue"
+        },
+        "data_description": {
+          "street": "Le nom de votre rue."
+        }
+      },
       "args_lincoln_gov_uk": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -28346,7 +28780,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_dover_gov_uk": {
@@ -28357,7 +28791,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_dudley_gov_uk": {
@@ -28685,7 +29119,8 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_east_renfrewshire_gov_uk": {
@@ -28697,7 +29132,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_eastriding_gov_uk": {
@@ -29222,7 +29658,7 @@
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_gateshead_gov_uk": {
@@ -29233,7 +29669,7 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "args_ics_gedling_gov_uk": {
@@ -29361,7 +29797,8 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_great_yarmouth_gov_uk": {
@@ -29371,7 +29808,9 @@
           "calendar_title": "Titre du Calendrier",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_guildford_gov_uk": {
         "title": "Configurer la Source",
@@ -29516,12 +29955,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "postcode": "Code postal",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Votre numéro de rue.",
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hastings_gov_uk": {
@@ -29529,11 +29971,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
+          "house_number": "Numéro",
           "postcode": "Code postal",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Votre numéro de rue.",
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_waste_havant_gov_uk": {
         "title": "Configurer la Source",
@@ -30731,13 +31177,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
           "number": "Numéro",
           "postcode": "Code postal",
           "street": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "number": "Votre numéro de rue.",
+          "postcode": "Votre code postal.",
+          "street": "Le nom de votre rue."
         }
       },
       "reconfigure_midsussex_gov_uk": {
@@ -30745,12 +31193,15 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "house_number": "Numéro civique",
           "number": "Numéro",
           "postcode": "Code postal",
           "street": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "number": "Votre numéro de rue.",
+          "postcode": "Votre code postal.",
+          "street": "Le nom de votre rue."
+        }
       },
       "args_midulstercouncil_org": {
         "title": "Configurer la Source",
@@ -30931,7 +31382,9 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_newforest_gov_uk": {
@@ -30942,7 +31395,10 @@
           "postcode": "Code postal",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_newark_sherwooddc_gov_uk": {
         "title": "Configurer la Source",
@@ -31011,6 +31467,35 @@
         },
         "data_description": {
           "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "args_newrymournedown_org": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro",
+          "postcode": "Code postal",
+          "url": "Url"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "house_number": "Votre numéro de rue.",
+          "postcode": "Votre code postal."
+        }
+      },
+      "reconfigure_newrymournedown_org": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "house_number": "Numéro",
+          "postcode": "Code postal",
+          "url": "Url"
+        },
+        "data_description": {
+          "house_number": "Votre numéro de rue.",
+          "postcode": "Votre code postal."
         }
       },
       "args_north_ayrshire_gov_uk": {
@@ -31825,7 +32310,9 @@
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_powys_gov_uk": {
@@ -31836,18 +32323,23 @@
           "postcode": "Code postal",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "postcode": "Votre code postal.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_preston_gov_uk": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street": "Rue",
+          "street": "Adresse",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "street": "Votre adresse complète.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_preston_gov_uk": {
@@ -31855,10 +32347,13 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "street": "Rue",
+          "street": "Adresse",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "street": "Votre adresse complète.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_reading_gov_uk": {
         "title": "Configurer la Source",
@@ -33102,11 +33597,14 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "post_code": "Code postal",
-          "street_name": "Nom de rue",
+          "street_name": "Rue",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "post_code": "Votre code postal.",
+          "street_name": "Le nom de votre rue.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_swansea_gov_uk": {
@@ -33115,10 +33613,14 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "post_code": "Code postal",
-          "street_name": "Nom de rue",
+          "street_name": "Rue",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "post_code": "Votre code postal.",
+          "street_name": "Le nom de votre rue.",
+          "uprn": "Votre Unique Property Reference Number (UPRN). Trouvez-le sur {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_swindon_gov_uk": {
         "title": "Configurer la Source",
@@ -34270,11 +34772,11 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "postcode": "Code postal",
-          "uprn": "UPRN"
+          "uprn": "ID d'emplacement"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "postcode": "Votre code postal."
         }
       },
       "reconfigure_wolverhampton_gov_uk": {
@@ -34283,10 +34785,10 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "postcode": "Code postal",
-          "uprn": "UPRN"
+          "uprn": "ID d'emplacement"
         },
         "data_description": {
-          "uprn": "Une manière simple de retrouver votre numéro unique de propriété (UPRN) est de vous rendre sur {url_www_findmyaddress_co_uk} et de saisir les détails de votre adresse."
+          "postcode": "Votre code postal."
         }
       },
       "args_wrexham_gov_uk": {
@@ -35487,6 +35989,29 @@
           "street_address": "Votre adresse complète."
         }
       },
+      "args_huntington_ny_us": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète."
+        }
+      },
+      "reconfigure_huntington_ny_us": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "address": "Adresse"
+        },
+        "data_description": {
+          "address": "Votre adresse complète."
+        }
+      },
       "args_ics_trashdaynow_com": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -35555,10 +36080,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "municipality": "Municipalité"
+          "municipality": "Commune"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "address": "Votre adresse complète.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
         }
       },
       "reconfigure_vogeldisposal_com": {
@@ -35567,9 +36094,12 @@
         "data": {
           "calendar_title": "Titre du Calendrier",
           "address": "Adresse",
-          "municipality": "Municipalité"
+          "municipality": "Commune"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Votre adresse complète.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur."
+        }
       },
       "args_wm_com": {
         "title": "Configurer la Source",
@@ -35629,6 +36159,9 @@
           "address": "Votre adresse complète."
         }
       }
+    },
+    "error": {
+      "invalid_sensor": "Vérifiez les paramètres du capteur, les modèles et la couleur #RRGGBB."
     }
   },
   "selector": {
@@ -35637,6 +36170,546 @@
         "legacy": "Un capteur par type de déchet",
         "new": "Capteurs de synthèse (prochaine collecte, jours restants, dernière mise à jour)"
       }
+    },
+    "state_format": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    },
+    "date_format": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    },
+    "language": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    },
+    "details_format": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    },
+    "kind": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    },
+    "action": {
+      "options": {
+        "types_in_days": "Types et compte à rebours",
+        "in_days": "Compte à rebours",
+        "relative": "Aujourd’hui / Demain / dans N jours",
+        "date": "Date de collecte",
+        "types": "Types de collecte",
+        "days": "Nombre de jours",
+        "custom": "Modèle personnalisé",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+        "upcoming": "Dates à venir",
+        "appointment_types": "Prochaine date par type",
+        "generic": "Enregistrements structurés",
+        "hidden": "Masquer les détails",
+        "schedule": "Calendrier de collecte",
+        "days_to": "Jours avant la collecte",
+        "last_update": "Dernière mise à jour",
+        "auto": "Langue de Home Assistant",
+        "en": "English",
+        "de": "Deutsch",
+        "fr": "Français",
+        "it": "Italiano",
+        "nl": "Nederlands",
+        "sl": "Slovenščina",
+        "da": "Dansk",
+        "fi": "Suomi",
+        "sv": "Svenska",
+        "nb": "Norsk bokmål",
+        "add_custom": "Ajouter un capteur personnalisé",
+        "save": "Enregistrer",
+        "reset": "Rétablir les valeurs par défaut",
+        "duplicate": "Dupliquer comme capteur personnalisé",
+        "delete": "Supprimer le capteur personnalisé"
+      }
+    }
+  },
+  "options": {
+    "abort": {
+      "sensor_removed": "Ce capteur a été supprimé pendant la modification. Rouvrez les options du capteur."
+    },
+    "step": {
+      "source_settings": {
+        "title": "Paramètres de la source",
+        "data": {
+          "random_fetch_time_offset": "Décalage aléatoire de récupération (minutes)"
+        }
+      },
+      "init": {
+        "title": "Calendrier de Collecte des Déchets",
+        "menu_options": {
+          "source_settings": "Paramètres de la source",
+          "sensors": "Capteurs",
+          "waste_types": "Types de déchets"
+        }
+      },
+      "sensors": {
+        "title": "Capteurs",
+        "data": {
+          "predefined": "Capteurs prédéfinis",
+          "edit_sensor": "Modifier le capteur",
+          "device_controls": "Commandes par appareil",
+          "auto_add_types": "Ajouter automatiquement les nouveaux types"
+        }
+      },
+      "edit_sensor": {
+        "title": "Modifier le capteur",
+        "data": {
+          "name": "Nom",
+          "enabled": "Activé",
+          "state_format": "Texte d'état",
+          "language": "Langue",
+          "date_format": "Format de date",
+          "details_format": "Format des détails",
+          "count": "Nombre",
+          "leadtime": "Délai (jours)",
+          "unique_types": "Chaque type une seule fois",
+          "exclude_types": "Types exclus",
+          "advanced": "Paramètres avancés",
+          "action": "Action",
+          "types": "Types de déchets",
+          "kind": "Type de capteur"
+        }
+      },
+      "sensor_advanced": {
+        "title": "Paramètres avancés",
+        "data": {
+          "event_index": "Indice de collecte",
+          "value_template": "Modèle d’état personnalisé",
+          "date_template": "Modèle de date personnalisé",
+          "color": "Couleur (#RRGGBB ; vide = valeur par défaut)"
+        }
+      },
+      "waste_types": {
+        "title": "Types de déchets",
+        "data": {
+          "types": "Types de déchets"
+        }
+      }
+    },
+    "error": {
+      "invalid_sensor": "Vérifiez les paramètres du capteur, les modèles et la couleur #RRGGBB."
+    }
+  },
+  "issues": {
+    "legacy_sensors": {
+      "title": "Capteurs issus d’anciens changements de nom",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Supprimer les anciennes entrées de capteur",
+            "description": "Ces anciens capteurs n’ont aucune configuration enregistrée : {entities}. Vérifiez les automatisations et tableaux de bord avant de les supprimer.\n\nSupprimer les anciennes entrées de registre indiquées ? Les capteurs actifs migrés sont conservés."
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "state_format": {
+        "name": "Texte d'état",
+        "state": {
+          "types_in_days": "Types et compte à rebours",
+          "in_days": "Compte à rebours",
+          "relative": "Aujourd’hui / Demain / dans N jours",
+          "date": "Date de collecte",
+          "types": "Types de collecte",
+          "days": "Nombre de jours",
+          "custom": "Modèle personnalisé",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+          "upcoming": "Dates à venir",
+          "appointment_types": "Prochaine date par type",
+          "generic": "Enregistrements structurés",
+          "hidden": "Masquer les détails",
+          "schedule": "Calendrier de collecte",
+          "days_to": "Jours avant la collecte",
+          "last_update": "Dernière mise à jour",
+          "auto": "Langue de Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Ajouter un capteur personnalisé",
+          "save": "Enregistrer",
+          "reset": "Rétablir les valeurs par défaut",
+          "duplicate": "Dupliquer comme capteur personnalisé",
+          "delete": "Supprimer le capteur personnalisé"
+        }
+      },
+      "language": {
+        "name": "Langue",
+        "state": {
+          "types_in_days": "Types et compte à rebours",
+          "in_days": "Compte à rebours",
+          "relative": "Aujourd’hui / Demain / dans N jours",
+          "date": "Date de collecte",
+          "types": "Types de collecte",
+          "days": "Nombre de jours",
+          "custom": "Modèle personnalisé",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+          "upcoming": "Dates à venir",
+          "appointment_types": "Prochaine date par type",
+          "generic": "Enregistrements structurés",
+          "hidden": "Masquer les détails",
+          "schedule": "Calendrier de collecte",
+          "days_to": "Jours avant la collecte",
+          "last_update": "Dernière mise à jour",
+          "auto": "Langue de Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Ajouter un capteur personnalisé",
+          "save": "Enregistrer",
+          "reset": "Rétablir les valeurs par défaut",
+          "duplicate": "Dupliquer comme capteur personnalisé",
+          "delete": "Supprimer le capteur personnalisé"
+        }
+      },
+      "date_format": {
+        "name": "Format de date",
+        "state": {
+          "types_in_days": "Types et compte à rebours",
+          "in_days": "Compte à rebours",
+          "relative": "Aujourd’hui / Demain / dans N jours",
+          "date": "Date de collecte",
+          "types": "Types de collecte",
+          "days": "Nombre de jours",
+          "custom": "Modèle personnalisé",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+          "upcoming": "Dates à venir",
+          "appointment_types": "Prochaine date par type",
+          "generic": "Enregistrements structurés",
+          "hidden": "Masquer les détails",
+          "schedule": "Calendrier de collecte",
+          "days_to": "Jours avant la collecte",
+          "last_update": "Dernière mise à jour",
+          "auto": "Langue de Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Ajouter un capteur personnalisé",
+          "save": "Enregistrer",
+          "reset": "Rétablir les valeurs par défaut",
+          "duplicate": "Dupliquer comme capteur personnalisé",
+          "delete": "Supprimer le capteur personnalisé"
+        }
+      },
+      "details_format": {
+        "name": "Format des détails",
+        "state": {
+          "types_in_days": "Types et compte à rebours",
+          "in_days": "Compte à rebours",
+          "relative": "Aujourd’hui / Demain / dans N jours",
+          "date": "Date de collecte",
+          "types": "Types de collecte",
+          "days": "Nombre de jours",
+          "custom": "Modèle personnalisé",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Jour de la semaine, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Jour de la semaine, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Jour de la semaine, YYYY-MM-DD",
+          "upcoming": "Dates à venir",
+          "appointment_types": "Prochaine date par type",
+          "generic": "Enregistrements structurés",
+          "hidden": "Masquer les détails",
+          "schedule": "Calendrier de collecte",
+          "days_to": "Jours avant la collecte",
+          "last_update": "Dernière mise à jour",
+          "auto": "Langue de Home Assistant",
+          "en": "English",
+          "de": "Deutsch",
+          "fr": "Français",
+          "it": "Italiano",
+          "nl": "Nederlands",
+          "sl": "Slovenščina",
+          "da": "Dansk",
+          "fi": "Suomi",
+          "sv": "Svenska",
+          "nb": "Norsk bokmål",
+          "add_custom": "Ajouter un capteur personnalisé",
+          "save": "Enregistrer",
+          "reset": "Rétablir les valeurs par défaut",
+          "duplicate": "Dupliquer comme capteur personnalisé",
+          "delete": "Supprimer le capteur personnalisé"
+        }
+      }
+    },
+    "number": {
+      "count": {
+        "name": "Nombre (0 = ∞)"
+      },
+      "leadtime": {
+        "name": "Délai (jours) (-1 = ∞)"
+      },
+      "event_index": {
+        "name": "Indice de collecte"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Activé"
+      },
+      "unique_types": {
+        "name": "Chaque type une seule fois"
+      },
+      "advanced": {
+        "name": "Paramètres avancés"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Nom"
+      },
+      "value_template": {
+        "name": "Modèle d’état personnalisé"
+      },
+      "date_template": {
+        "name": "Modèle de date personnalisé"
+      },
+      "color": {
+        "name": "Couleur (#RRGGBB ; vide = valeur par défaut)"
+      }
+    },
+    "button": {
+      "create_sensor": {
+        "name": "Créer le capteur {name}"
+      },
+      "delete": {
+        "name": "Supprimer le capteur personnalisé"
+      }
+    }
+  },
+  "exceptions": {
+    "type_unavailable": {
+      "message": "Ce type de collecte ne figure plus dans le calendrier actuel."
+    },
+    "custom_template_required": {
+      "message": "Définissez d’abord un modèle d’état personnalisé dans les paramètres avancés."
     }
   }
 }
