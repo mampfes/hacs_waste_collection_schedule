@@ -1088,6 +1088,81 @@ def test_marker_calendar_read_headings_off_numbers_columns_in_order(monkeypatch)
     assert rows == [(datetime.date(2026, month, 1), "Dot") for month in (1, 2, 3)]
 
 
+def test_marker_calendar_continuations_and_text_annotations(monkeypatch):
+    from waste_collection_schedule.parsers import PdfTextFragment, PdfWordLayout
+    from waste_collection_schedule.service import PdfMarkerCalendar
+
+    words = [
+        PdfTextFragment(0, name, x, 400) for name, x in (("Marzo", 60), ("Aprile", 250))
+    ]
+    words.extend(
+        [
+            PdfTextFragment(0, "6", 60, 350),
+            PdfTextFragment(0, "A", 180, 350),
+            PdfTextFragment(0, "3", 250, 350),
+            PdfTextFragment(0, "B", 370, 350),
+            PdfTextFragment(1, "20", 60, 390),
+            PdfTextFragment(1, "A", 180, 390),
+            PdfTextFragment(1, "17", 250, 390),
+            PdfTextFragment(1, "B", 370, 390),
+        ]
+    )
+    layout = PdfWordLayout(lines=[], words=words, vectors=[])
+
+    class Layout:
+        def __init__(self, **_):
+            pass
+
+        def __call__(self, *_):
+            return [layout]
+
+    monkeypatch.setattr(PdfMarkerCalendar, "PdfWordLayoutParser", Layout)
+    response = SimpleNamespace(url="https://example.org/calendar_2026.pdf")
+    parser = PdfMarkerCalendar.MarkerCalendarParser(
+        [],
+        continuation_pages=True,
+        text_markers={"A": "Zone A", "B": "Zone B"},
+        row_reach=160,
+        min_markers=4,
+    )
+    assert parser(response) == [
+        (D(2026, 3, 6), "Zone A"),
+        (D(2026, 3, 20), "Zone A"),
+        (D(2026, 4, 3), "Zone B"),
+        (D(2026, 4, 17), "Zone B"),
+    ]
+
+
+def test_marker_calendar_accepts_a_stroked_icon_without_using_an_unpainted_fill():
+    from waste_collection_schedule.parsers import PdfVector
+    from waste_collection_schedule.service.PdfMarkerCalendar import Marker, _same_color
+
+    marker = Marker("Paper", (0.145, 0.541, 0.753))
+    assert _same_color(PdfVector(0, 0, 0, 12, 16, marker.color, None), marker)
+    assert not _same_color(PdfVector(0, 0, 0, 12, 16, marker.color, (0, 0, 0)), marker)
+
+
+def test_selargius_independent_zones_and_continuation_pages():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.source.selargiusostenibile_it import Source
+
+    outputs = []
+    for case, args in Source.TEST_CASES.items():
+        with cassette.replaying(fixture_path("selargiusostenibile_it", case)):
+            outputs.append({(r.date, r.waste_type.id) for r in Source(**args).fetch()})
+    paese_a, paese_b, suplanu_a = outputs
+    assert (D(2026, 3, 6), wt.GENERAL_WASTE.id) in paese_a
+    assert (D(2026, 3, 6), wt.GENERAL_WASTE.id) not in paese_b
+    assert (D(2026, 3, 13), wt.GENERAL_WASTE.id) in paese_b
+    assert (D(2026, 3, 5), wt.PAPER.id) in paese_a
+    assert (D(2026, 3, 5), wt.PAPER.id) not in suplanu_a
+    assert (D(2026, 3, 6), wt.PAPER.id) in suplanu_a
+    assert (D(2027, 2, 26), wt.PAPER.id) in suplanu_a
+    assert (D(2027, 2, 27), wt.ORGANIC.id) in paese_a
+
+
 class TestOutlinedDayRows:
     """Text labels dated by the outlined day rows and month headings."""
 
