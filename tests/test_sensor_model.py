@@ -163,7 +163,11 @@ def test_migrated_date_presets_render_exact_legacy_text(template):
         ("fr", "Aujourd'hui", "Demain"),
         ("it", "Oggi", "Domani"),
         ("nl", "Vandaag", "Morgen"),
-        ("pl", "Dzisiaj", "Jutro"),
+        ("sl", "Danes", "Jutri"),
+        ("da", "I dag", "I morgen"),
+        ("fi", "Tänään", "Huomenna"),
+        ("sv", "I dag", "I morgon"),
+        ("nb", "I dag", "I morgen"),
     ],
 )
 def test_relative_rendering_is_localized(language, today, tomorrow):

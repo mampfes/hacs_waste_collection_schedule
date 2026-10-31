@@ -50,11 +50,11 @@ class SensorControl(Entity):
     _attr_entity_category = EntityCategory.CONFIG
     _attr_should_poll = False
 
-    def __init__(self, manager, sensor_id, key, label):
+    def __init__(self, manager, sensor_id, key):
         self.manager = manager
         self.sensor_id = sensor_id
         self.key = key
-        self._attr_name = label
+        self._attr_translation_key = key
         self._attr_unique_id = f"{manager.entry.entry_id}_control_{sensor_id}_{key}"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, f"{manager.entry.entry_id}_sensor_{sensor_id}")},

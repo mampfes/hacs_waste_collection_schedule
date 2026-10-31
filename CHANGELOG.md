@@ -9,11 +9,12 @@ Releases are listed in reverse chronological order.
 ### Changed
 
 - UI sensors use stable internal IDs, retain entity IDs and history through edits, and can be disabled without deleting their configuration. Configure separates source settings, sensors, and waste-type customization.
-- Built-in state/date formats support English, German, French, Italian, Dutch, and Polish without writing templates. YAML supports the same formatting and filtering options, optional `unique_id`, and `kind: days_to` / `last_update`.
+- Built-in state/date formats support English, German, French, Italian, Dutch, Slovenian, Danish, Finnish, Swedish, and Norwegian Bokmål without writing templates. YAML supports the same formatting and filtering options, optional `unique_id`, and `kind: days_to` / `last_update`.
 - Optional native device pages edit the same sensor records. Sensor-only changes do not fetch the provider again. **Next collection** remains the combined overview sensor.
 - Type filters accept canonical IDs and retained provider labels before duplicate merging. `unique_types` keeps the next collection of each retained provider bin, or each category when labels are not retained. `exclude_types` is available in UI and YAML.
 - Structured collection records retain provider labels and resolved colors even when labels are hidden. Waste-type colors can be edited in the UI. Generic detail lists honor the pickup index.
 - Existing UI configurations migrate to entry version 4, preserving identities and custom templates. Older integration versions cannot load migrated entries; restore a backup before downgrading. Repairs lists legacy sensors left behind by earlier renames for explicit cleanup.
+- Migration retains dedicated calendar identities and normalizes legacy unlimited limits. Invalid stored templates make only the affected sensor unavailable. Rich collection lists remain available to cards while recorder history retains the small date and day attributes.
 
 ### Deprecated
 

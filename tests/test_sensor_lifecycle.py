@@ -469,7 +469,9 @@ async def test_options_remain_editable_without_a_running_provider(ha):
     flow = SensorOptionsFlow(entry)
     flow.hass = ha
     source = await flow.async_step_source_settings()
-    assert source["data_schema"]({})["calendar_title"] == entry.title
+    assert "calendar_title" not in source["data_schema"]({})
+    title = next(k for k in source["data_schema"].schema if str(k) == "calendar_title")
+    assert title.description["suggested_value"] == entry.title
     await flow.async_step_waste_types()
     await flow.async_step_sensors(
         {"predefined": ["type:paper"], "edit_sensor": record["id"]}
@@ -522,7 +524,11 @@ async def test_yaml_formats_kinds_and_unique_ids_work_in_both_configuration_path
                 },
                 {"name": "Numeric paper", "kind": "days_to"},
                 {"name": "Fetched paper", "kind": "last_update"},
-                {"name": "Legacy text"},
+                {
+                    "name": "Legacy text",
+                    "value_template": '{{ value.types|join(", ") }}:{{ value.daysTo }}',
+                    "date_template": '{{ value.date.strftime("%d/%m/%Y") }}',
+                },
             ],
         },
         "sensor": [
@@ -531,6 +537,7 @@ async def test_yaml_formats_kinds_and_unique_ids_work_in_both_configuration_path
                 "name": "Classic paper",
                 "unique_id": "classic_old_name",
                 "state_format": "types",
+                "value_template": '{{ value.types|join(", ")|lower }}',
                 "unique_types": True,
             }
         ],
@@ -549,6 +556,7 @@ async def test_yaml_formats_kinds_and_unique_ids_work_in_both_configuration_path
     assert (
         ha.states.get("sensor.fetched_paper").attributes["device_class"] == "timestamp"
     )
-    assert ha.states.get("sensor.legacy_text").state == f"Paper in {days} days"
+    assert ha.states.get("sensor.legacy_text").state == f"Paper:{days}"
+    assert ha.states.get("sensor.legacy_text").attributes["01/01/2099"] == "Paper"
     classic_id = registry.async_get_entity_id("sensor", DOMAIN, "classic_old_name")
-    assert ha.states.get(classic_id).state == "Paper"
+    assert ha.states.get(classic_id).state == "paper"

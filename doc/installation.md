@@ -207,7 +207,7 @@ waste_collection_schedule:
 | unique_id | string | optional | YAML only. Defaults to `name`; set it to the old name when renaming an existing YAML sensor to keep its identity |
 | kind | string | optional | `schedule` (default), `days_to`, or `last_update` |
 | state_format | string | optional | `types_in_days` (default), `in_days`, `relative`, `date`, `types`, `days`, or `custom`. A `value_template` takes precedence |
-| language | string | optional | `auto`, `en`, `de`, `fr`, `it`, `nl`, or `pl`. YAML defaults to English for compatibility |
+| language | string | optional | `auto`, `en`, `de`, `fr`, `it`, `nl`, `sl`, `da`, `fi`, `sv`, or `nb`. YAML defaults to English for compatibility |
 | date_format | string | optional | `dmy`, `weekday_dmy`, `mdy`, `weekday_mdy`, `iso` (default), or `weekday_iso`. A `date_template` takes precedence for detail dates |
 | unique_types | boolean | optional | Default `false`. Keep the earliest eligible collection per provider bin when the source uses `carry_raw_label`, otherwise per type ID, before applying `event_index` and `count` |
 | exclude_types | list of strings | optional | Remove matching types or provider labels after applying the include filter. New, unlisted types remain included |
@@ -235,6 +235,8 @@ Every sensor that has an upcoming collection exposes these language-neutral attr
 `collections` contains structured records for the next collection day. Both `upcoming` and `generic` details also expose an `upcoming` list of records with `date`, `type_id`, display `type`, `original_label`, effective `color`, icon, and available picture, location, or description. Transformers retain provider labels for matching and metadata even when descriptions are hidden. A source must opt into `carry_raw_label` for separate provider-bin identity; other sources keep type-based uniqueness.
 
 Color precedence is sensor override → raw-label customization → type-ID customization → provider color → canonical default. A raw-label customization without a color still inherits the type's color. Native sensor icons do not automatically take their color from this attribute; compatible cards can use it.
+
+The rich `collections` and `upcoming` lists remain available to cards and templates but are excluded from recorder history to avoid HA’s attribute-size limit. State history and the smaller date/type attributes are retained.
 
 `appointment_types` remains a per-type attribute view. `unique_types` instead changes the date-ordered collection list; several bins on one date still share that date group.
 

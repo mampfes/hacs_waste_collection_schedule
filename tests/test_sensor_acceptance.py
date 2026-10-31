@@ -207,11 +207,15 @@ async def test_unmaterialized_seasonal_create_button_becomes_unavailable(
     await ha.async_block_till_done()
     assert ha.states.get(button_id).state == "unavailable"
     assert not any(r["origin"] == "type:glass" for r in entry.options["sensors"])
-    with pytest.raises(HomeAssistantError, match="no longer"):
+    with pytest.raises(HomeAssistantError) as raised:
         await coordinator.sensor_manager.async_add_from_catalogue("type:glass")
+    assert raised.value.translation_key == "type_unavailable"
 
 
-def test_noncarried_provider_labels_remain_filterable_with_type_based_uniqueness():
+@pytest.mark.parametrize("same_day", [False, True])
+def test_noncarried_provider_labels_remain_filterable_with_type_based_uniqueness(
+    same_day,
+):
     from waste_collection_schedule.source.ecoharmonogram_pl import Source as EcoSource
 
     labels = ["ODPADY ZMIESZANE", "ODPADY ZMIESZANE (2 x miesiąc)"]
@@ -219,7 +223,9 @@ def test_noncarried_provider_labels_remain_filterable_with_type_based_uniqueness
     class Source:
         def fetch(self):
             return [
-                EcoSource.transform({"date": f"2099-01-0{index}", "type": label})
+                EcoSource.transform(
+                    {"date": f"2099-01-0{1 if same_day else index}", "type": label}
+                )
                 for index, label in enumerate(labels, 1)
             ]
 
@@ -236,9 +242,11 @@ def test_noncarried_provider_labels_remain_filterable_with_type_based_uniqueness
     shell.fetch()
     aggregator = CollectionAggregator([shell])
     selected = aggregator.get_upcoming(include_types=[labels[1]])
-    assert [event.date for event in selected] == [date(2099, 1, 2)]
+    assert [event.date for event in selected] == [date(2099, 1, 1 if same_day else 2)]
     assert selected[0].original_label == labels[1]
     assert selected[0].description is None
+    shell._ignore_duplicates = True
+    assert len(aggregator.get_upcoming(preserve_bins=True)) == (1 if same_day else 2)
     assert [event.date for event in aggregator.get_upcoming(unique_types=True)] == [
         date(2099, 1, 1)
     ]

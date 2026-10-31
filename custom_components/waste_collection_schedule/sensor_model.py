@@ -20,7 +20,7 @@ STATE_FORMATS = (
     "custom",
 )
 DATE_FORMATS = ("dmy", "weekday_dmy", "mdy", "weekday_mdy", "iso", "weekday_iso")
-LANGUAGES = ("auto", "en", "de", "fr", "it", "nl", "pl")
+LANGUAGES = ("auto", "en", "de", "fr", "it", "nl", "sl", "da", "fi", "sv", "nb")
 KINDS = ("schedule", "days_to", "last_update")
 DETAILS_FORMATS = ("upcoming", "appointment_types", "generic", "hidden")
 

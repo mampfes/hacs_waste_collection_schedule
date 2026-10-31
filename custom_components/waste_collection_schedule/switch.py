@@ -23,12 +23,8 @@ async def async_setup_entry(hass, entry, async_add_entities):
         entry,
         async_add_entities,
         lambda manager, record: [
-            SensorSwitch(manager, record["id"], key, label)
-            for key, label in (
-                ("enabled", "Sensor enabled"),
-                ("unique_types", "Each type only once"),
-                ("advanced", "Advanced controls"),
-            )
+            SensorSwitch(manager, record["id"], key)
+            for key in ("enabled", "unique_types", "advanced")
             if key in CONTROL_KEYS[record["kind"]]
         ],
     )

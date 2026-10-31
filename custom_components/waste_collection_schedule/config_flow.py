@@ -43,7 +43,6 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.source_shell import (
     raw_labels_of,
-    source_supports_show_original_label,
 )
 
 from .const import (
@@ -348,21 +347,27 @@ def _get_waste_types_for_customize(source_cls) -> list[str]:
 def get_customize_schema(defaults: dict[str, Any] | None = None):
     if defaults is None:
         defaults = {}
+
+    def suggested(key):
+        return (
+            {"suggested_value": defaults[key]}
+            if defaults.get(key) is not None
+            else None
+        )
+
     schema = {
-        vol.Optional(CONF_ALIAS, default=defaults.get(CONF_ALIAS, UNDEFINED)): str,
+        vol.Optional(CONF_ALIAS, description=suggested(CONF_ALIAS)): str,
         vol.Optional(CONF_SHOW, default=defaults.get(CONF_SHOW, True)): cv.boolean,
-        vol.Optional(
-            CONF_ICON, default=defaults.get(CONF_ICON, UNDEFINED)
-        ): IconSelector(),
-        vol.Optional(CONF_PICTURE, default=defaults.get(CONF_PICTURE, UNDEFINED)): str,
-        vol.Optional("color", default=defaults.get("color", UNDEFINED)): str,
+        vol.Optional(CONF_ICON, description=suggested(CONF_ICON)): IconSelector(),
+        vol.Optional(CONF_PICTURE, description=suggested(CONF_PICTURE)): str,
+        vol.Optional("color", description=suggested("color")): str,
         vol.Optional(
             CONF_USE_DEDICATED_CALENDAR,
             default=defaults.get(CONF_USE_DEDICATED_CALENDAR, UNDEFINED),
         ): cv.boolean,
         vol.Optional(
             CONF_DEDICATED_CALENDAR_TITLE,
-            default=defaults.get(CONF_DEDICATED_CALENDAR_TITLE, UNDEFINED),
+            description=suggested(CONF_DEDICATED_CALENDAR_TITLE),
         ): str,
     }
     return schema
@@ -931,13 +936,6 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             if waste_type_names:
                 self._fetched_types = list(
                     set(self._fetched_types) | set(waste_type_names)
-                )
-            # Customize targets: also offer the provider's original labels,
-            # when the source carries them (#7444). Never used for sensors.
-            self._customize_targets = list(self._fetched_types)
-            if source_supports_show_original_label(source):
-                self._customize_targets = sorted(
-                    set(self._fetched_types) | set(raw_labels_of(resp))
                 )
             customize_labels = dict(self._sensor_type_labels)
             from .waste_collection_schedule.waste_types import display_name

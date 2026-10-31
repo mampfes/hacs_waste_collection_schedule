@@ -11,8 +11,8 @@ class SensorNumber(SensorControl, NumberEntity):
     _attr_native_step = 1
     _attr_mode = NumberMode.BOX
 
-    def __init__(self, manager, sensor_id, key, label):
-        super().__init__(manager, sensor_id, key, label)
+    def __init__(self, manager, sensor_id, key):
+        super().__init__(manager, sensor_id, key)
         self._attr_native_min_value = -1 if key == "leadtime" else 0
 
     @property
@@ -41,12 +41,8 @@ async def async_setup_entry(hass, entry, async_add_entities):
         entry,
         async_add_entities,
         lambda manager, record: [
-            SensorNumber(manager, record["id"], key, label)
-            for key, label in (
-                ("count", "Count (0 = unlimited)"),
-                ("leadtime", "Lead time (-1 = unlimited, 0 = today)"),
-                ("event_index", "Pickup index"),
-            )
+            SensorNumber(manager, record["id"], key)
+            for key in ("count", "leadtime", "event_index")
             if key in CONTROL_KEYS[record["kind"]]
         ],
     )

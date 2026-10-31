@@ -12,6 +12,7 @@ from homeassistant.helpers.selector import (
     TimeSelector,
 )
 
+from . import const
 from .config_flow import get_customize_schema
 from .const import DOMAIN
 from .default_sensors import catalogue
@@ -85,8 +86,21 @@ class SensorOptionsFlow(OptionsFlow):
         return self.manager.catalogue if self.manager else catalogue(self.type_labels)
 
     async def async_step_init(self, user_input=None):
+        from homeassistant.helpers.translation import async_get_translations
+
+        from .sensor_format import async_prepare_formats
+
+        await async_prepare_formats(self.hass)
+        self._translations = await async_get_translations(
+            self.hass, self.hass.config.language, "selector", {DOMAIN}
+        )
         return self.async_show_menu(
             step_id="init", menu_options=["source_settings", "sensors", "waste_types"]
+        )
+
+    def _label(self, selector, key, fallback):
+        return getattr(self, "_translations", {}).get(
+            f"component.{DOMAIN}.selector.{selector}.options.{key}", fallback
         )
 
     async def async_step_source_settings(self, user_input=None):
@@ -95,9 +109,10 @@ class SensorOptionsFlow(OptionsFlow):
             try:
                 cv.time(user_input["fetch_time"])
                 cv.time(user_input["day_switch_time"])
-                return self.async_create_entry(
-                    data={**self._entry.options, **user_input}
-                )
+                options = {**self._entry.options, **user_input}
+                if not user_input.get("calendar_title"):
+                    options.pop("calendar_title", None)
+                return self.async_create_entry(data=options)
             except vol.Invalid:
                 errors["base"] = "time_format"
         options = self._entry.options
@@ -105,23 +120,46 @@ class SensorOptionsFlow(OptionsFlow):
         schema = {
             vol.Optional(
                 "calendar_title",
-                default=options.get("calendar_title", self._entry.title),
+                description={
+                    "suggested_value": options.get("calendar_title")
+                    or (
+                        self.manager.coordinator.shell.title
+                        if self.manager
+                        else self._entry.title
+                    )
+                },
             ): str,
-            vol.Required("separator", default=options.get("separator", ", ")): str,
             vol.Required(
-                "fetch_time", default=options.get("fetch_time", "01:00")
+                "separator",
+                default=options.get("separator", const.CONF_SEPARATOR_DEFAULT),
+            ): str,
+            vol.Required(
+                "fetch_time",
+                default=options.get("fetch_time", const.CONF_FETCH_TIME_DEFAULT),
             ): TimeSelector(),
             vol.Required(
-                "day_switch_time", default=options.get("day_switch_time", "10:00")
+                "day_switch_time",
+                default=options.get(
+                    "day_switch_time", const.CONF_DAY_SWITCH_TIME_DEFAULT
+                ),
             ): TimeSelector(),
             vol.Required(
-                "fetch_interval_days", default=options.get("fetch_interval_days", 1)
+                "fetch_interval_days",
+                default=options.get(
+                    "fetch_interval_days", const.CONF_FETCH_INTERVAL_DAYS_DEFAULT
+                ),
             ): vol.All(int, vol.Range(min=1)),
             vol.Required(
                 "random_fetch_time_offset",
-                default=options.get("random_fetch_time_offset", 60),
+                default=options.get(
+                    "random_fetch_time_offset",
+                    const.CONF_RANDOM_FETCH_TIME_OFFSET_DEFAULT,
+                ),
             ): vol.All(int, vol.Range(min=0)),
-            vol.Required("day_offset", default=options.get("day_offset", 0)): int,
+            vol.Required(
+                "day_offset",
+                default=options.get("day_offset", const.CONF_DAY_OFFSET_DEFAULT),
+            ): int,
             vol.Required(
                 "ignore_duplicates",
                 default=options.get(
@@ -133,7 +171,9 @@ class SensorOptionsFlow(OptionsFlow):
             schema[
                 vol.Required(
                     "show_original_label",
-                    default=options.get("show_original_label", True),
+                    default=options.get(
+                        "show_original_label", const.CONF_SHOW_ORIGINAL_LABEL_DEFAULT
+                    ),
                 )
             ] = bool
         return self.async_show_form(
@@ -184,7 +224,14 @@ class SensorOptionsFlow(OptionsFlow):
             ),
             vol.Optional("edit_sensor"): choices(
                 [{"value": r["id"], "label": r["name"]} for r in self._records]
-                + [{"value": "add_custom", "label": "Add custom sensor"}]
+                + [
+                    {
+                        "value": "add_custom",
+                        "label": self._label(
+                            "action", "add_custom", "Add custom sensor"
+                        ),
+                    }
+                ]
             ),
             vol.Optional(
                 "device_controls",
@@ -229,7 +276,7 @@ class SensorOptionsFlow(OptionsFlow):
             options = [
                 {
                     "value": style,
-                    "label": "Custom template"
+                    "label": self._label("state_format", "custom", "Custom template")
                     if style == "custom"
                     else str(
                         render_state(
@@ -390,12 +437,16 @@ class SensorOptionsFlow(OptionsFlow):
                         int, vol.Range(min=0)
                     ),
                     vol.Optional(
-                        "value_template", default=record["value_template"] or ""
+                        "value_template",
+                        description={"suggested_value": record["value_template"] or ""},
                     ): str,
                     vol.Optional(
-                        "date_template", default=record["date_template"] or ""
+                        "date_template",
+                        description={"suggested_value": record["date_template"] or ""},
                     ): str,
-                    vol.Optional("color", default=record["color"] or ""): str,
+                    vol.Optional(
+                        "color", description={"suggested_value": record["color"] or ""}
+                    ): str,
                 }
             ),
             errors=errors,

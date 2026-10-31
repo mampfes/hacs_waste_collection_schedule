@@ -2,6 +2,8 @@
 
 from copy import deepcopy
 
+from sensor_translation_labels import COMMON_LABELS
+
 FIELD_LABELS = {
     "en": (
         "Name",
@@ -115,6 +117,54 @@ FIELD_LABELS = {
         "Affaldstyper",
         "Sensortype",
     ),
+    "fi": (
+        "Nimi",
+        "Käytössä",
+        "Tilan teksti",
+        "Kieli",
+        "Päivämäärän muoto",
+        "Tietojen muoto",
+        "Määrä",
+        "Ennakkoaika (päivää)",
+        "Jokainen jätelaji vain kerran",
+        "Poissuljetut jätelajit",
+        "Lisäasetukset",
+        "Toiminto",
+        "Jätelajit",
+        "Anturin tyyppi",
+    ),
+    "sv": (
+        "Namn",
+        "Aktiverad",
+        "Tillståndstext",
+        "Språk",
+        "Datumformat",
+        "Detaljformat",
+        "Antal",
+        "Framförhållning (dagar)",
+        "Varje typ endast en gång",
+        "Uteslut typer",
+        "Avancerade inställningar",
+        "Åtgärd",
+        "Avfallstyper",
+        "Sensortyp",
+    ),
+    "nb": (
+        "Navn",
+        "Aktivert",
+        "Tilstandstekst",
+        "Språk",
+        "Datoformat",
+        "Detaljformat",
+        "Antall",
+        "Se fremover (dager)",
+        "Hver type bare én gang",
+        "Utelat typer",
+        "Avanserte innstillinger",
+        "Handling",
+        "Avfallstyper",
+        "Sensortype",
+    ),
 }
 FIELD_KEYS = (
     "name",
@@ -196,6 +246,33 @@ MENUS = {
         "Enhedsstyring",
         "Tilføj automatisk nye typer",
     ),
+    "fi": (
+        "Lähteen asetukset",
+        "Anturit",
+        "Jätelajit",
+        "Muokkaa anturia",
+        "Esimääritetyt anturit",
+        "Laitteen ohjaimet",
+        "Lisää uudet jätelajit automaattisesti",
+    ),
+    "sv": (
+        "Källinställningar",
+        "Sensorer",
+        "Avfallstyper",
+        "Redigera sensor",
+        "Fördefinierade sensorer",
+        "Enhetskontroller",
+        "Lägg automatiskt till nya typer",
+    ),
+    "nb": (
+        "Kildeinnstillinger",
+        "Sensorer",
+        "Avfallstyper",
+        "Rediger sensor",
+        "Forhåndsdefinerte sensorer",
+        "Enhetskontroller",
+        "Legg til nye typer automatisk",
+    ),
 }
 CHOICE_LABELS = {
     "types_in_days": "Types and countdown",
@@ -224,7 +301,12 @@ CHOICE_LABELS = {
     "fr": "Français",
     "it": "Italiano",
     "nl": "Nederlands",
-    "pl": "Polski",
+    "sl": "Slovenščina",
+    "da": "Dansk",
+    "fi": "Suomi",
+    "sv": "Svenska",
+    "nb": "Norsk bokmål",
+    "add_custom": "Add custom sensor",
     "save": "Save",
     "reset": "Reset to defaults",
     "duplicate": "Duplicate as custom sensor",
@@ -234,6 +316,14 @@ CHOICE_LABELS = {
 
 def apply_sensor_translations(translations, language):
     """Update common UI strings without editing generated provider translations."""
+    ui = COMMON_LABELS.get(language, COMMON_LABELS["en"])
+    choice_labels = {key: ui.get(key, value) for key, value in CHOICE_LABELS.items()}
+    for key, pattern in (
+        ("weekday_dmy", "DD.MM.YYYY"),
+        ("weekday_mdy", "MM/DD/YYYY"),
+        ("weekday_iso", "YYYY-MM-DD"),
+    ):
+        choice_labels[key] = ui["weekday"] + ", " + pattern
     labels = dict(
         zip(FIELD_KEYS, FIELD_LABELS.get(language, FIELD_LABELS["en"]), strict=True)
     )
@@ -247,9 +337,7 @@ def apply_sensor_translations(translations, language):
     for group in ("data", "data_description"):
         for key in ("sensor_select", "customize_select", "default_sensors"):
             source_form.get(group, {}).pop(key, None)
-    source_form.setdefault("data", {})["random_fetch_time_offset"] = (
-        "Random fetch offset (minutes)"
-    )
+    source_form.setdefault("data", {})["random_fetch_time_offset"] = ui["random_offset"]
     options["source_settings"] = source_form
     options["init"] = {
         "title": translations.get("title", "Waste Collection Schedule"),
@@ -270,10 +358,8 @@ def apply_sensor_translations(translations, language):
     }
     options["edit_sensor"] = {"title": edit, "data": labels}
     advanced_labels = {
-        "event_index": "Pickup index",
-        "value_template": "Custom state template",
-        "date_template": "Custom date template",
-        "color": "Color (#RRGGBB; empty = default)",
+        key: ui[key]
+        for key in ("event_index", "value_template", "date_template", "color")
     }
     options["sensor_advanced"] = {"title": labels["advanced"], "data": advanced_labels}
     options["waste_types"] = {"title": waste, "data": {"types": labels["types"]}}
@@ -281,7 +367,7 @@ def apply_sensor_translations(translations, language):
     for context in ("config", "options"):
         translations.setdefault(context, {}).setdefault("error", {})[
             "invalid_sensor"
-        ] = "Check the sensor settings, templates and #RRGGBB color."
+        ] = ui["invalid_sensor"]
         customize = translations[context].setdefault("step", {}).get("customize")
         if customize:
             customize.setdefault("data", {})["color"] = advanced_labels["color"]
@@ -290,13 +376,13 @@ def apply_sensor_translations(translations, language):
         setup.get(group, {}).pop("show_sensor_config", None)
     translations["config"]["step"].pop("sensor", None)
     translations.setdefault("issues", {})["legacy_sensors"] = {
-        "title": "Sensors left behind by earlier renames",
-        "description": "These legacy sensors have no saved configuration: {entities}. Check automations and dashboards before removing them.",
+        "title": ui["repair_title"],
+        "description": ui["repair_description"],
         "fix_flow": {
             "step": {
                 "confirm": {
-                    "title": "Remove legacy sensor entries",
-                    "description": "Remove the listed legacy registry entries? Active migrated sensors are retained.",
+                    "title": ui["confirm_title"],
+                    "description": ui["confirm_description"],
                 }
             }
         },
@@ -310,7 +396,25 @@ def apply_sensor_translations(translations, language):
         "kind",
         "action",
     ):
-        selectors[key] = {"options": CHOICE_LABELS}
-    entities = translations.setdefault("entity", {}).setdefault("select", {})
-    for key in ("state_format", "language", "date_format", "details_format"):
-        entities[key] = {"name": labels[key], "state": CHOICE_LABELS}
+        selectors[key] = {"options": choice_labels}
+    entities = translations.setdefault("entity", {})
+    control_labels = {**labels, **advanced_labels}
+    control_labels["count"] += " (0 = ∞)"
+    control_labels["leadtime"] += " (-1 = ∞)"
+    platforms = {
+        "select": ("state_format", "language", "date_format", "details_format"),
+        "number": ("count", "leadtime", "event_index"),
+        "switch": ("enabled", "unique_types", "advanced"),
+        "text": ("name", "value_template", "date_template", "color"),
+    }
+    for platform, keys in platforms.items():
+        for key in keys:
+            definition = {"name": control_labels[key]}
+            if platform == "select":
+                definition["state"] = choice_labels
+            entities.setdefault(platform, {})[key] = definition
+    entities.setdefault("button", {})["create_sensor"] = {"name": ui["create_sensor"]}
+    entities["button"]["delete"] = {"name": ui["delete"]}
+    errors = translations.setdefault("exceptions", {})
+    for key in ("type_unavailable", "custom_template_required"):
+        errors[key] = {"message": ui[key]}

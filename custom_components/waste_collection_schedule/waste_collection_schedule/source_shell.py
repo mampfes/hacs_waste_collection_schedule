@@ -398,7 +398,9 @@ class SourceShell:
         if c is not None and c.alias:
             return c.alias
 
-        return type
+        from waste_collection_schedule.waste_types import ALL_TYPES, display_name
+
+        return next((display_name(t) for t in ALL_TYPES if t.id == type), type)
 
     @staticmethod
     def create(

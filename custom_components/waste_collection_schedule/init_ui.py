@@ -182,14 +182,9 @@ async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None
     else:
         await hass.config_entries.async_reload(entry.entry_id)
 
-    return
-
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload a config entry."""
-    platforms = PLATFORMS + (
-        CONTROL_PLATFORMS if entry.options.get("device_controls") else []
-    )
     coordinator = hass.data.get(const.DOMAIN, {}).get(entry.entry_id)
     # Unload the platforms that were loaded, even when this edit turns the controls off.
     platforms = PLATFORMS + (

@@ -31,13 +31,8 @@ async def async_setup_entry(hass, entry, async_add_entities):
         entry,
         async_add_entities,
         lambda manager, record: [
-            SensorText(manager, record["id"], key, label)
-            for key, label in (
-                ("name", "Name"),
-                ("value_template", "Custom state template"),
-                ("date_template", "Custom date template"),
-                ("color", "Custom color (empty = default)"),
-            )
+            SensorText(manager, record["id"], key)
+            for key in ("name", "value_template", "date_template", "color")
             if key in CONTROL_KEYS[record["kind"]]
         ],
     )

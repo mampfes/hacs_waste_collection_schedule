@@ -132,6 +132,8 @@ async def running_entry(ha, tmp_path, request):
     records = list(catalogue({"paper": "Paper"}).values())
     records.append(SensorConfig(name="Custom paper", types=["paper"]).as_dict())
     records = initial.get("records", records)
+    if initial.get("version", 4) >= 4:
+        records = [SensorConfig.from_dict(r).as_dict() for r in records]
     entry = entry_for(
         ha,
         {

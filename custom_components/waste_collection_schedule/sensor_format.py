@@ -1,5 +1,8 @@
 """Semantic state/date rendering without generating Jinja templates."""
 
+from datetime import date
+from functools import cache
+
 from babel.dates import format_date
 
 from .sensor_model import LANGUAGES
@@ -22,7 +25,17 @@ _TEXT = {
         "{types} over {n} dagen",
         "op {date}",
     ),
-    "pl": ("Dzisiaj", "Jutro", "za {n} dni", "{types} za {n} dni", "{date}"),
+    "sl": ("Danes", "Jutri", "čez {n} dni", "{types} čez {n} dni", "{date}"),
+    "da": ("I dag", "I morgen", "om {n} dage", "{types} om {n} dage", "den {date}"),
+    "fi": (
+        "Tänään",
+        "Huomenna",
+        "{n} päivän kuluttua",
+        "{types} {n} päivän kuluttua",
+        "{date}",
+    ),
+    "sv": ("I dag", "I morgon", "om {n} dagar", "{types} om {n} dagar", "den {date}"),
+    "nb": ("I dag", "I morgen", "om {n} dager", "{types} om {n} dager", "den {date}"),
 }
 _DATES = {
     "dmy": "dd.MM.yyyy",
@@ -41,7 +54,21 @@ def language_for(language: str, ha_language: str) -> str:
 
 
 def render_date(value, style: str, language: str) -> str:
+    if style == "iso":
+        return value.isoformat()
     return format_date(value, _DATES[style], locale=language)
+
+
+@cache
+def _prepare_locales():
+    for language in LANGUAGES:
+        if language != "auto":
+            format_date(date(2000, 1, 1), _DATES["weekday_iso"], locale=language)
+
+
+async def async_prepare_formats(hass):
+    """Load Babel's locale data off HA's event loop before rendering callbacks."""
+    await hass.async_add_executor_job(_prepare_locales)
 
 
 def render_state(

@@ -15,6 +15,7 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE, UnitOfTime
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.exceptions import TemplateError
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.template import Template
@@ -79,6 +80,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 # Config flow setup
 async def async_setup_entry(hass, config: ConfigEntry, async_add_entities):
+    from .sensor_format import async_prepare_formats
+
+    await async_prepare_formats(hass)
     coordinator = hass.data[DOMAIN][config.entry_id]
     from .sensor_manager import SensorManager
 
@@ -108,6 +112,9 @@ def create_sensor(hass, coordinator, record):
 
 # YAML setup (via discovery from waste_collection_schedule: sensors: or legacy sensor platform)
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
+    from .sensor_format import async_prepare_formats
+
+    await async_prepare_formats(hass)
     if discovery_info is not None:
         # New method: sensor loaded via discovery from waste_collection_schedule: sensors:
         api = discovery_info["api"]
@@ -201,6 +208,8 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 class ScheduleSensor(SensorEntity):
     """Base for sensors."""
 
+    _unrecorded_attributes = frozenset({"collections", "upcoming"})
+
     def __init__(
         self,
         hass: HomeAssistant,
@@ -256,9 +265,25 @@ class ScheduleSensor(SensorEntity):
         self._leadtime = record.get("leadtime")
         self._collection_types = record.get("types") or None
         self._event_index = record.get("event_index", 0)
+        self._template_error = False
+        self._attr_available = True
         for key in ("value_template", "date_template"):
             value = record.get(key)
-            template = cv.template(value) if value else None
+            try:
+                template = (
+                    value
+                    if isinstance(value, Template)
+                    else cv.template(value)
+                    if value
+                    else None
+                )
+                if template is not None:
+                    template.ensure_valid()
+            except (vol.Invalid, TemplateError) as err:
+                _LOGGER.error("Invalid %s for sensor %s: %s", key, record["name"], err)
+                template = None
+                self._template_error = True
+                self._attr_available = False
             if template is not None:
                 template.hass = self.hass
             setattr(self, "_" + key, template)
@@ -388,6 +413,13 @@ class ScheduleSensor(SensorEntity):
         if self._aggregator is None:
             return
 
+        if getattr(self, "_template_error", False):
+            self._value = None
+            self._attr_extra_state_attributes = {}
+            if self.hass is not None and self.enabled:
+                self.async_write_ha_state()
+            return
+
         upcoming1 = self._aggregator.get_upcoming_group_by_day(
             count=1,
             include_types=self._collection_types,
@@ -433,10 +465,10 @@ class ScheduleSensor(SensorEntity):
                 date = (
                     "" if len(collections) == 0 else self._render_date(collections[0])
                 )
-                attributes[t] = date
+                attributes[self._type_label(t)] = date
         elif self._details_format == DetailsFormat.generic:
             # insert generic attributes into details
-            attributes["types"] = collection_types
+            attributes["types"] = [self._type_label(t) for t in collection_types]
             records = self._aggregator.get_upcoming(
                 preserve_bins=True,
                 count=self._count,
@@ -492,6 +524,17 @@ class ScheduleSensor(SensorEntity):
             record["color"] = self._record["color"]
             record["color_source"] = "sensor"
         return record
+
+    def _type_label(self, type_id):
+        """Keep legacy attribute names in display vocabulary, with ID filters."""
+        for event in self._aggregator._entries:
+            if event.waste_type.id == type_id:
+                return event.type
+        from waste_collection_schedule.waste_types import ALL_TYPES, display_name
+
+        if self._coordinator:
+            return self._coordinator.shell.get_collection_type_name(type_id)
+        return next((display_name(t) for t in ALL_TYPES if t.id == type_id), type_id)
 
 
 class DaysToSensor(ScheduleSensor):

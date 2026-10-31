@@ -19,11 +19,13 @@ class DeleteSensorButton(SensorControl, ButtonEntity):
 class CreateSensorButton(ButtonEntity):
     _attr_entity_category = EntityCategory.CONFIG
     _attr_should_poll = False
+    _attr_has_entity_name = True
+    _attr_translation_key = "create_sensor"
 
     def __init__(self, manager, origin, record):
         self.manager = manager
         self.origin = origin
-        self._attr_name = "Create " + record["name"] + " sensor"
+        self._attr_translation_placeholders = {"name": record["name"]}
         self._attr_unique_id = (
             manager.entry.entry_id + "_create_" + catalogue_id(origin)
         )
@@ -57,7 +59,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
         entry,
         async_add_entities,
         lambda manager, record: (
-            [DeleteSensorButton(manager, record["id"], "delete", "Delete sensor")]
+            [DeleteSensorButton(manager, record["id"], "delete")]
             if record["origin"] == "custom"
             else []
         ),

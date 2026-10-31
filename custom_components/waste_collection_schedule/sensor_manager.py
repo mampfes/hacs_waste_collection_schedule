@@ -129,10 +129,17 @@ class SensorManager:
                 controls_prefix
             ):
                 control_id = entity.unique_id.removeprefix(controls_prefix)
-                record = next(
-                    (s for s in records if control_id.startswith(s["id"] + "_")), None
+                match = next(
+                    (
+                        (s, key)
+                        for s in records
+                        for key in CONTROL_KEYS[s["kind"]]
+                        | ({"delete"} if s["origin"] == "custom" else set())
+                        if control_id == s["id"] + "_" + key
+                    ),
+                    None,
                 )
-                key = control_id.removeprefix(record["id"] + "_") if record else ""
+                record, key = match if match else (None, "")
                 if record is None or (
                     key not in CONTROL_KEYS[record["kind"]]
                     and not (key == "delete" and record["origin"] == "custom")
@@ -236,7 +243,7 @@ class SensorManager:
                 offered = self.catalogue.get(origin)
                 if offered is None:
                     raise HomeAssistantError(
-                        "This collection type is no longer in the current schedule."
+                        translation_domain=DOMAIN, translation_key="type_unavailable"
                     )
                 records.append(offered)
             self.hass.config_entries.async_update_entry(

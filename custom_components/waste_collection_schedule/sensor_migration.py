@@ -80,9 +80,9 @@ def migrate_records(
             kind=kind,
             types=types,
             details_format=details,
-            count=old.get("count"),
-            leadtime=old.get("leadtime"),
-            event_index=old.get("event_index") or 0,
+            count=old.get("count") if (old.get("count") or 0) > 0 else None,
+            leadtime=old.get("leadtime") if (old.get("leadtime") or 0) >= 0 else None,
+            event_index=max(0, old.get("event_index") or 0),
             exclude_types=[
                 migrate_filter(t, customize, type_ids)
                 for t in old.get("exclude_types") or []
@@ -159,6 +159,21 @@ async def async_migrate_sensors(hass, entry, *, source_name=None) -> dict:
     type_ids = {wt.id for wt in getattr(source_cls, "WASTE_TYPES", ())}
     options = migrate_records(dict(entry.options), type_ids)
     registry = er.async_get(hass)
+    for old_key, customization in entry.options.get("customize", {}).items():
+        new_key = migrate_filter(old_key, {}, type_ids)
+        if new_key == old_key or not customization.get("use_dedicated_calendar"):
+            continue
+        old_uid = f"{entry.entry_id}_{old_key}_calendar"
+        new_uid = f"{entry.entry_id}_{new_key}_calendar"
+        entity_id = registry.async_get_entity_id("calendar", DOMAIN, old_uid)
+        target = registry.async_get_entity_id("calendar", DOMAIN, new_uid)
+        if entity_id and not target:
+            registry.async_update_entity(entity_id, new_unique_id=new_uid)
+        elif entity_id and target != entity_id:
+            _LOGGER.warning(
+                "Calendar migration retained %s: target identity already exists",
+                entity_id,
+            )
     for old, record in zip(
         entry.options.get("sensors", []), options["sensors"], strict=True
     ):

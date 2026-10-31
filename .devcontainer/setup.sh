@@ -16,7 +16,7 @@ python3 -m pip install -r requirements.txt
 # cannot even be collected without it. CI installs it explicitly rather than via
 # requirements.txt, so install it here too.
 echo "==> Installing development tooling (pre-commit, pytest, freezegun)"
-python3 -m pip install pre-commit pytest freezegun
+python3 -m pip install pre-commit pytest pytest-asyncio freezegun
 
 # The CI "minimum" lane pins the oldest supported Home Assistant. Install the
 # same pins here so this container reproduces that lane, and so the tests that
