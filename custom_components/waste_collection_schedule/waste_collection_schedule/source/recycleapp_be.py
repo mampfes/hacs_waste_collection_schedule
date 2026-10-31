@@ -111,6 +111,12 @@ class Source(BaseSource):
             "street": "Abeelstraat",
             "house_number": 1,
         },
+        # Mons town hall, in the Hygea area (replaces the deprecated hygea_be).
+        "7000 Mons, Grand-Place 22 (Hygea)": {
+            "postcode": 7000,
+            "street": "Grand-Place",
+            "house_number": 22,
+        },
     }
 
     PARAMS = (

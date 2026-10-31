@@ -13,6 +13,8 @@ happens in the same release as the deprecation.
 | `newcastle_gov_uk` | source | 2.30.0 | shared ReCollect ICS source (area `NewcastleUponTyneUK`) | next major | [#6753](https://github.com/mampfes/hacs_waste_collection_schedule/pull/6753) |
 | `byron_nsw_gov_au` | source | 3.0.0 | shared `recyclecoach_com` source (`project_id: 592`, `district_id: BYSC`) | next major | n/a |
 | `east_ayrshire_gov_uk` | source | 3.0.0 | shared `recollect_net` source (area `EastAyrshireUK`, `service_id: waste`, `locale: en-GB`) | next major | n/a |
+| `grafikai_svara_lt`: `waste_object_ids` | argument | 3.0.0 | `containers` (open-data container IDs); the old API IDs no longer exist, so the argument is ignored | next major | [#8066](https://github.com/mampfes/hacs_waste_collection_schedule/pull/8066) |
+| `hygea_be` | source | 3.0.0 | shared `recycleapp_be` source (`postcode`, `street`, `house_number`); Hygea's relaunched site embeds the Recycle! calendar | next major | n/a |
 
 When you deprecate something, add a row here, log a one-time runtime warning in
 the source, add a `Deprecated` entry to `CHANGELOG.md`, and point the source's

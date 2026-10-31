@@ -1,11 +1,8 @@
 # Ipswich Borough Council
 
-Support for waste collection schedules provided by [Ipswich Borough Council](https://www.ipswich.gov.uk), serving Ipswich, Suffolk, UK.
+Support for schedules provided by [Ipswich Borough Council](https://www.ipswich.gov.uk).
 
-## Local Government Reorganisation note
-This source **only** serves the areas covered by the **existing** Ipswich Borough Council, and not the upcoming Ipswich & South Suffolk Council.
-
-During the ongoing local government reorganisation (LGR) in Suffolk, please continue to use the source for your current area as long as it's still working. New sources for the new Ipswich & South Suffolk Council are not expected to be live until at least April 2028, when the council itself officially comes into being.
+Source for waste collection schedules provided by Ipswich Borough Council, UK.
 
 ## Configuration via configuration.yaml
 
@@ -19,22 +16,8 @@ waste_collection_schedule:
 
 ### Configuration Variables
 
-**location_id**
-*(integer) (required)*
-
-A numeric ID that identifies your street/address in the council's collection portal.
-
-## How to find your `location_id`
-
-1. Go to <https://app.ipswich.gov.uk/bin-collection-better-recycling/>
-2. Search for and select your street.
-3. Your collection schedule will be displayed and the browser URL will change to something like:
-
-   ```
-   https://app.ipswich.gov.uk/bin-collection-better-recycling/weeks/549
-   ```
-
-4. The number at the end of the URL (`549` in the example above) is your `location_id`.
+**location_id**  
+*(string) (required)*
 
 ## Example
 
@@ -46,15 +29,6 @@ waste_collection_schedule:
         location_id: 549
 ```
 
-## Bin types returned
+## How to get the source arguments
 
-The source maps the council's bin descriptions to the following waste types:
-
-| Council description | Returned type   | Icon                   |
-|---------------------|-----------------|------------------------|
-| General Waste       | General Waste   | `mdi:trash-can`        |
-| Recycling           | Recycling       | `mdi:recycle`          |
-| Garden Waste        | Garden Waste    | `mdi:leaf`             |
-| Food Waste          | Food Waste      | `mdi:food-apple`       |
-
-Unknown bin types are returned with their original name and a generic `mdi:trash-can` icon.
+Visit https://app.ipswich.gov.uk/bin-collection-better-recycling/ and search for your street. Once your schedule is displayed the URL ends with /weeks/<number>: use that number as the location ID (e.g. 549). Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels.
