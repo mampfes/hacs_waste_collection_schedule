@@ -698,6 +698,25 @@ class TestYearlyLinksNamesAndLookback:
         ]
 
 
+def test_tamax_imielno_matches_every_village_across_both_tables_and_preserves_holidays():
+    from waste_collection_schedule.source.tamax_imielno_pl import _AREAS, Source
+
+    response = _recorded_pdf_response("tamax_imielno_pl", "Imielno")
+    parsed = Source.parse(response)
+    with freeze_time("2026-10-31"):
+        outputs = {v: set(Source.preprocess(parsed, Source(area=v))) for v in _AREAS}
+    assert all(len(rows) == 28 for rows in outputs.values())
+    assert (D(2026, 1, 5), "Zmieszane i bio") in outputs["Borszowice"]
+    assert (D(2026, 6, 6), "Zmieszane i bio") in outputs["Borszowice"]
+    assert (D(2026, 12, 29), "Zmieszane i bio") in outputs["Imielno"]
+    assert (D(2026, 5, 9), "Segregowane") in outputs["Imielno"]
+    assert (D(2026, 5, 8), "Segregowane") in outputs["Borszowice"]
+    assert (D(2026, 12, 10), "Zmieszane i bio") in outputs["Opatkowice Murowane"]
+    assert (D(2026, 11, 30), "Wielkogabarytowe") in outputs["Karczunek"]
+    with freeze_time("2027-01-01"), pytest.raises(ValueError, match="current year"):
+        Source.preprocess(parsed, Source(area="Imielno"))
+
+
 class TestPdfMonthBlocks:
     LABELS: ClassVar[dict] = {"SECCO": 1, "UMIDO": 1, "VERDE": 1}
 
