@@ -5188,6 +5188,13 @@
     },
     "urls": {}
   },
+  "tamax_lelow_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tamax_lelow_pl.md",
+    "howto": {
+      "en": "Find Gmina Lelów (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. Select the exact household village group; Lelów's Spacerowa street has a separate route. Use Trudne wjazdy only if the council assigned your property to that route. Yellow cells collect mixed waste and bio; red cells collect mixed waste and recycling; brown cells collect ash, classified as Other with the original Popiół label. The dated bulky notice includes furniture and complete electrical equipment. Tyres and construction items have no separate canonical type. Apartment-block and business calendars are not supported."
+    },
+    "urls": {}
+  },
   "maslow_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/maslow_pl.md",
     "howto": {

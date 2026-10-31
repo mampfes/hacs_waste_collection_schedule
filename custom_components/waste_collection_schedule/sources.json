@@ -32985,6 +32985,12 @@
       "id": "sims_pl"
     },
     {
+      "title": "Gmina Lel\u00f3w",
+      "module": "tamax_lelow_pl",
+      "default_params": {},
+      "id": "tamax_lelow_pl"
+    },
+    {
       "title": "Gmina Lubrza",
       "module": "sims_pl",
       "default_params": {
@@ -34045,6 +34051,12 @@
       "module": "tamax_janow_pl",
       "default_params": {},
       "id": "tamax_janow_pl"
+    },
+    {
+      "title": "TAMAX (Gmina Lel\u00f3w)",
+      "module": "tamax_lelow_pl",
+      "default_params": {},
+      "id": "tamax_lelow_pl"
     },
     {
       "title": "TAMAX (Gmina Radziemice)",

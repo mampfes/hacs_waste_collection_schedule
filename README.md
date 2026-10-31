@@ -4508,6 +4508,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Kruszwica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Krzanowice](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Legnickie Pole](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Lelów](/doc/source/tamax_lelow_pl.md) / tamax.net.pl
 - [Gmina Lubrza](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Masłów](/doc/source/maslow_pl.md) / maslow.pl
 - [Gmina Miedziana Góra](/doc/source/sims_pl.md) / sisms.pl
@@ -4650,6 +4651,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Słupsk](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
 - [TAMAX (Gmina Imielno)](/doc/source/tamax_imielno_pl.md) / tamax.net.pl
 - [TAMAX (Gmina Janów)](/doc/source/tamax_janow_pl.md) / tamax.net.pl
+- [TAMAX (Gmina Lelów)](/doc/source/tamax_lelow_pl.md) / tamax.net.pl
 - [TAMAX (Gmina Radziemice)](/doc/source/tamax_net_pl.md) / tamax.net.pl
 - [TAMAX (Gmina Szczekociny)](/doc/source/tamax_szczekociny_pl.md) / tamax.net.pl
 - [Trzebownisko](/doc/source/ecoharmonogram_pl.md) / ecoharmonogram.pl
