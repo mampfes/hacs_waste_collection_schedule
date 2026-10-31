@@ -1088,6 +1088,105 @@ def test_marker_calendar_read_headings_off_numbers_columns_in_order(monkeypatch)
     assert rows == [(datetime.date(2026, month, 1), "Dot") for month in (1, 2, 3)]
 
 
+def test_icon_calendar_matches_resized_legend_items_and_rejects_unknown_or_ambiguous_images():
+    from PIL import Image
+    from waste_collection_schedule.service.PdfIconCalendar import (
+        _thumbnail,
+        match_image,
+    )
+
+    red = _thumbnail(Image.new("RGB", (60, 80), "red"))
+    blue = _thumbnail(Image.new("RGB", (60, 80), "blue"))
+    smaller_blue = _thumbnail(Image.new("RGB", (15, 20), "blue"))
+    assert match_image(smaller_blue, {"paper": blue, "garbage": red}) == "paper"
+    with pytest.raises(ValueError, match="Unrecognised"):
+        match_image(
+            _thumbnail(Image.new("RGB", (60, 80), "green")),
+            {"paper": blue, "garbage": red},
+        )
+    with pytest.raises(ValueError, match="ambiguous"):
+        match_image(blue, {"paper": blue, "garbage": blue})
+
+
+def test_icon_calendar_cache_is_bounded_to_one_response_and_returns_copies(monkeypatch):
+    from waste_collection_schedule.service.PdfIconCalendar import IconMonthGridParser
+
+    parser = IconMonthGridParser(page=0, legend={})
+    calls = []
+
+    def parse(content):
+        calls.append(content)
+        return ((D(2026, 7, 4), "Paper"),)
+
+    monkeypatch.setattr(parser, "_parse", parse)
+    first = parser(SimpleNamespace(content=b"one"))
+    first.clear()
+    assert parser(SimpleNamespace(content=b"one")) == [(D(2026, 7, 4), "Paper")]
+    parser(SimpleNamespace(content=b"two"))
+    parser(SimpleNamespace(content=b"one"))
+    assert calls == [b"one", b"two", b"one"]
+
+
+def test_icon_calendar_selects_the_printed_holiday_replacement_and_requires_complete_weeks():
+    from waste_collection_schedule.service.PdfIconCalendar import CollectionWeekday
+
+    source = SimpleNamespace(params={"day": "Friday"})
+    rows = [
+        (D(2026, 4, 1), "Paper"),
+        (D(2026, 4, 2), "Paper"),
+        (D(2026, 4, 4), "Paper"),
+    ]
+    select = CollectionWeekday()
+    with freeze_time("2026-04-01"):
+        result = list(select(rows, source))
+        assert [r["date"] for r in result] == [D(2026, 4, 4)]
+        with pytest.raises(ValueError, match="Incomplete printed collection week"):
+            list(select(rows[:1] + rows[2:], source))
+        with pytest.raises(ValueError, match="week is missing"):
+            list(
+                select(
+                    rows
+                    + [
+                        (day + datetime.timedelta(days=14), label)
+                        for day, label in rows
+                    ],
+                    source,
+                )
+            )
+
+
+def test_petawawa_published_icons_preserve_new_year_and_good_friday_shifts():
+    import cassette
+    from fixtures_support import fixture_path
+    from waste_collection_schedule import waste_types as wt
+    from waste_collection_schedule.source.ovwrc_com import Source
+
+    with freeze_time("2026-10-30"):
+        case = "Petawawa Friday route"
+        with cassette.replaying(fixture_path("ovwrc_com", case)):
+            rows = Source(**Source.TEST_CASES[case]).fetch()
+    pairs = {(r.date, r.waste_type.id) for r in rows}
+    assert (D(2026, 1, 3), wt.GENERAL_WASTE.id) in pairs
+    assert any(day == D(2026, 7, 4) for day, _ in pairs)
+    assert (D(2027, 3, 27), wt.GENERAL_WASTE.id) in pairs
+    assert not any(day in (D(2026, 1, 2), D(2027, 3, 26)) for day, _ in pairs)
+    trees = [r for r in rows if r.waste_type.id == wt.GARDEN_WASTE.id]
+    assert len(trees) == 2
+    assert all(r.description == "Natural Christmas trees only" for r in trees)
+
+
+def test_petawawa_does_not_select_a_future_calendar_before_it_starts():
+    import re
+
+    from waste_collection_schedule.source.ovwrc_com import _current_calendar
+
+    matches = [re.search(r"(20\d{2})", year) for year in ("2025", "2026", "2027")]
+    with freeze_time("2026-12-20"):
+        assert _current_calendar(matches)[1] == "2026"
+    with freeze_time("2027-01-02"):
+        assert _current_calendar(matches)[1] == "2027"
+
+
 class TestOutlinedDayRows:
     """Text labels dated by the outlined day rows and month headings."""
 
@@ -1396,105 +1495,6 @@ def _recorded_pdf_response(module, case):
     data = json.loads(Path(fixture_path(module, case)).read_text())
     item = next(item for item in data["interactions"] if ".pdf" in item["url"])
     return cassette.CassetteResponse(item)
-
-
-def test_icon_calendar_matches_resized_legend_items_and_rejects_unknown_or_ambiguous_images():
-    from PIL import Image
-    from waste_collection_schedule.service.PdfIconCalendar import (
-        _thumbnail,
-        match_image,
-    )
-
-    red = _thumbnail(Image.new("RGB", (60, 80), "red"))
-    blue = _thumbnail(Image.new("RGB", (60, 80), "blue"))
-    smaller_blue = _thumbnail(Image.new("RGB", (15, 20), "blue"))
-    assert match_image(smaller_blue, {"paper": blue, "garbage": red}) == "paper"
-    with pytest.raises(ValueError, match="Unrecognised"):
-        match_image(
-            _thumbnail(Image.new("RGB", (60, 80), "green")),
-            {"paper": blue, "garbage": red},
-        )
-    with pytest.raises(ValueError, match="ambiguous"):
-        match_image(blue, {"paper": blue, "garbage": blue})
-
-
-def test_icon_calendar_cache_is_bounded_to_one_response_and_returns_copies(monkeypatch):
-    from waste_collection_schedule.service.PdfIconCalendar import IconMonthGridParser
-
-    parser = IconMonthGridParser(page=0, legend={})
-    calls = []
-
-    def parse(content):
-        calls.append(content)
-        return ((D(2026, 7, 4), "Paper"),)
-
-    monkeypatch.setattr(parser, "_parse", parse)
-    first = parser(SimpleNamespace(content=b"one"))
-    first.clear()
-    assert parser(SimpleNamespace(content=b"one")) == [(D(2026, 7, 4), "Paper")]
-    parser(SimpleNamespace(content=b"two"))
-    parser(SimpleNamespace(content=b"one"))
-    assert calls == [b"one", b"two", b"one"]
-
-
-def test_icon_calendar_selects_the_printed_holiday_replacement_and_requires_complete_weeks():
-    from waste_collection_schedule.service.PdfIconCalendar import CollectionWeekday
-
-    source = SimpleNamespace(params={"day": "Friday"})
-    rows = [
-        (D(2026, 4, 1), "Paper"),
-        (D(2026, 4, 2), "Paper"),
-        (D(2026, 4, 4), "Paper"),
-    ]
-    select = CollectionWeekday()
-    with freeze_time("2026-04-01"):
-        result = list(select(rows, source))
-        assert [r["date"] for r in result] == [D(2026, 4, 4)]
-        with pytest.raises(ValueError, match="Incomplete printed collection week"):
-            list(select(rows[:1] + rows[2:], source))
-        with pytest.raises(ValueError, match="week is missing"):
-            list(
-                select(
-                    rows
-                    + [
-                        (day + datetime.timedelta(days=14), label)
-                        for day, label in rows
-                    ],
-                    source,
-                )
-            )
-
-
-def test_petawawa_published_icons_preserve_new_year_and_good_friday_shifts():
-    import cassette
-    from fixtures_support import fixture_path
-    from waste_collection_schedule import waste_types as wt
-    from waste_collection_schedule.source.ovwrc_com import Source
-
-    with freeze_time("2026-10-30"):
-        case = "Petawawa Friday route"
-        with cassette.replaying(fixture_path("ovwrc_com", case)):
-            rows = Source(**Source.TEST_CASES[case]).fetch()
-    pairs = {(r.date, r.waste_type.id) for r in rows}
-    assert (D(2026, 1, 3), wt.GENERAL_WASTE.id) in pairs
-    assert any(day == D(2026, 7, 4) for day, _ in pairs)
-    assert (D(2027, 3, 27), wt.GENERAL_WASTE.id) in pairs
-    assert not any(day in (D(2026, 1, 2), D(2027, 3, 26)) for day, _ in pairs)
-    trees = [r for r in rows if r.waste_type.id == wt.GARDEN_WASTE.id]
-    assert len(trees) == 2
-    assert all(r.description == "Natural Christmas trees only" for r in trees)
-
-
-def test_petawawa_does_not_select_a_future_calendar_before_it_starts():
-    import re
-
-    from waste_collection_schedule.source.ovwrc_com import _current_calendar
-
-    matches = [re.search(r"(20\d{2})", year) for year in ("2025", "2026", "2027")]
-    with freeze_time("2026-12-20"):
-        assert _current_calendar(matches)[1] == "2026"
-    with freeze_time("2027-01-02"):
-        assert _current_calendar(matches)[1] == "2027"
 
 
 def test_marked_pdf_preserves_ritl_combined_rounds_and_ignores_padding_days():
