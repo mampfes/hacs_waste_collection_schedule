@@ -885,10 +885,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "street_address": "Hele adressen din."
         }
       },
       "reconfigure_casey_vic_gov_au": {
@@ -896,9 +897,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Hele adressen din."
+        }
       },
       "args_cockburn_wa_gov_au": {
         "title": "Konfigurer kilde",
@@ -3683,10 +3686,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "street_address": "Hele adressen din."
         }
       },
       "reconfigure_warrnambool_vic_gov_au": {
@@ -3694,9 +3698,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "street_address": "Street Address"
+          "street_address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Hele adressen din."
+        }
       },
       "args_waverley_nsw_gov_au": {
         "title": "Konfigurer kilde",
@@ -21218,7 +21224,7 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "area_number": "Area Number"
+          "area_number": "Lokasjons-ID"
         },
         "data_description": {
           "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
@@ -21229,7 +21235,7 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "area_number": "Area Number"
+          "area_number": "Lokasjons-ID"
         },
         "data_description": {}
       },
@@ -21286,7 +21292,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "address": "Hele adressen din."
         }
       },
       "reconfigure_ccc_govt_nz": {
@@ -21296,7 +21303,9 @@
           "calendar_title": "Kalendernavn",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Hele adressen din."
+        }
       },
       "args_dunedin_govt_nz": {
         "title": "Konfigurer kilde",
@@ -24013,7 +24022,8 @@
           "address": "Adresse"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "address": "Hele adressen din."
         }
       },
       "reconfigure_komunala_kranj_si": {
@@ -24023,7 +24033,9 @@
           "calendar_title": "Kalendernavn",
           "address": "Adresse"
         },
-        "data_description": {}
+        "data_description": {
+          "address": "Hele adressen din."
+        }
       },
       "args_komunala_slb_si": {
         "title": "Konfigurer kilde",

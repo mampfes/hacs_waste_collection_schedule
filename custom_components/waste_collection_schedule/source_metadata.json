@@ -195,7 +195,7 @@
   "casey_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/casey_vic_gov_au.md",
     "howto": {
-      "en": "Visit the [City of Casey](https://www.casey.vic.gov.au/find-your-bin-collection-day) \"Find your bin collection day\" page and search for your address. There are typically no commas and the suburb / state name are in capitals. For example: 55 Victor Crescent NARRE WARREN VIC 3805. The arguments should exactly match the full street address after selecting the autocomplete result."
+      "en": "Visit the City of Casey \"Find your bin collection day\" page (https://www.casey.vic.gov.au/find-your-bin-collection-day) and search for your address. Enter the full street address exactly as the autocomplete shows it, without commas and with the suburb and state in capitals, e.g. 55 Victor Crescent NARRE WARREN VIC 3805. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
@@ -926,7 +926,9 @@
   },
   "warrnambool_vic_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/warrnambool_vic_gov_au.md",
-    "howto": {},
+    "howto": {
+      "en": "Search for your address on https://www.warrnambool.vic.gov.au/kerbside-bin-collection and enter it exactly as the address field suggests it, e.g. 3 Kiama Ave WARRNAMBOOL VIC 3280. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "waverley_nsw_gov_au": {
@@ -4574,7 +4576,9 @@
   },
   "ecoapp_ecoservice_lt": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ecoapp_ecoservice_lt.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter the inventory number printed on the side of each container, separated by commas, e.g. 13-L-115261, 13-P-505460. You can check them in the schedule search on https://ecoservice.lt/grafikai/. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "ekonovus_lt": {
@@ -4812,7 +4816,9 @@
   },
   "aucklandcouncil_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/aucklandcouncil_govt_nz.md",
-    "howto": {},
+    "howto": {
+      "en": "Search for your address on the council's collection-day page (https://www.aucklandcouncil.govt.nz/en/rubbish-recycling/rubbish-recycling-collections/rubbish-recycling-collection-days.html). The area number is the number in the address of the result page, e.g. 12342453293 in .../rubbish-recycling-collection-days/12342453293.html. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "cdc_govt_nz": {
@@ -4831,7 +4837,9 @@
   },
   "ccc_govt_nz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ccc_govt_nz.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address as the council's bin-day lookup on https://ccc.govt.nz finds it, e.g. 53 Hereford Street. Only the dates the council currently plans are shown; a round the council has no current date for is left out. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
+    },
     "urls": {}
   },
   "dunedin_govt_nz": {
@@ -5512,7 +5520,7 @@
   "komunala_kranj_si": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/komunala_kranj_si.md",
     "howto": {
-      "en": "Enter the street name and house number exactly as shown in the Komunala Kranj address search."
+      "en": "Enter the address exactly as the Komunala Kranj address search shows it, e.g. 'Koroška cesta 1, Kranj, 4000 Kranj'. Since the v3 pipeline migration, waste types use canonical, localised names. Update filters, automations and customisations using the old labels."
     },
     "urls": {}
   },
