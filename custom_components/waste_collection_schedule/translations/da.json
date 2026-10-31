@@ -29873,12 +29873,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "postcode": "Postnummer",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "house_number": "Dit husnummer",
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hastings_gov_uk": {
@@ -29886,11 +29889,15 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "house_number": "House Number",
+          "house_number": "Husnummer",
           "postcode": "Postnummer",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Dit husnummer",
+          "postcode": "Dit postnummer",
+          "uprn": "Din Unique Property Reference Number. Find den på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_waste_havant_gov_uk": {
         "title": "Konfigurer Kilde",

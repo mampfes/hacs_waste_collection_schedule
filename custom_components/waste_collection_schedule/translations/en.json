@@ -29962,15 +29962,15 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number (Deprecated, leave empty)",
-          "postcode": "Postcode (Deprecated, leave empty)",
-          "uprn": "Unique Property Reference Number (UPRN)"
+          "house_number": "House Number",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "house_number": "Deprecated, leave mpty, will be ignored",
-          "postcode": "Deprecated, leave mpty, will be ignored",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details"
+          "house_number": "Your house number.",
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hastings_gov_uk": {
@@ -29978,14 +29978,14 @@
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "house_number": "House Number (Deprecated, leave empty)",
-          "postcode": "Postcode (Deprecated, leave empty)",
-          "uprn": "Unique Property Reference Number (UPRN)"
+          "house_number": "House Number",
+          "postcode": "Postcode",
+          "uprn": "UPRN"
         },
         "data_description": {
-          "house_number": "Deprecated, leave mpty, will be ignored",
-          "postcode": "Deprecated, leave mpty, will be ignored",
-          "uprn": "An easy way to discover your Unique Property Reference Number (UPRN) is by going to {url_www_findmyaddress_co_uk} and entering in your address details"
+          "house_number": "Your house number.",
+          "postcode": "Your postcode.",
+          "uprn": "Your Unique Property Reference Number. Find it at {url_www_findmyaddress_co_uk}"
         }
       },
       "args_waste_havant_gov_uk": {

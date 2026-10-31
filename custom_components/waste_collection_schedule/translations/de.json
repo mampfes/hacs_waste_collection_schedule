@@ -29877,11 +29877,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "house_number": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hastings_gov_uk": {
@@ -29890,10 +29893,14 @@
         "data": {
           "calendar_title": "Kalender Titel",
           "house_number": "Hausnummer",
-          "postcode": "PLZ",
+          "postcode": "Postleitzahl",
           "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Ihre Hausnummer.",
+          "postcode": "Ihre Postleitzahl.",
+          "uprn": "Ihre Unique Property Reference Number (UPRN). Finden Sie sie unter {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_waste_havant_gov_uk": {
         "title": "Quelle konfigurieren",

@@ -29877,10 +29877,13 @@
           "calendar_title": "Kalenterin nimi",
           "house_number": "Talon numero",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "house_number": "Talon numero.",
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hastings_gov_uk": {
@@ -29890,9 +29893,13 @@
           "calendar_title": "Kalenterin nimi",
           "house_number": "Talon numero",
           "postcode": "Postinumero",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Talon numero.",
+          "postcode": "Postinumerosi.",
+          "uprn": "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_waste_havant_gov_uk": {
         "title": "Määritä lähde",

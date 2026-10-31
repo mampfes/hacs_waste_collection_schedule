@@ -29875,10 +29875,13 @@
           "calendar_title": "Kalendernavn",
           "house_number": "Husnummer",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "house_number": "Husnummeret ditt.",
+          "postcode": "Postnummeret ditt.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
         }
       },
       "reconfigure_hastings_gov_uk": {
@@ -29888,9 +29891,13 @@
           "calendar_title": "Kalendernavn",
           "house_number": "Husnummer",
           "postcode": "Postnummer",
-          "uprn": "Uprn"
+          "uprn": "UPRN"
         },
-        "data_description": {}
+        "data_description": {
+          "house_number": "Husnummeret ditt.",
+          "postcode": "Postnummeret ditt.",
+          "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
+        }
       },
       "args_waste_havant_gov_uk": {
         "title": "Konfigurer kilde",
