@@ -1719,6 +1719,13 @@
     "howto": {},
     "urls": {}
   },
+  "ovwrc_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ovwrc_com.md",
+    "howto": {
+      "en": "Open https://ovwrc.com/curbside-collection-calendars/ and consult the map in the Town of Petawawa calendar to find your regular Wednesday, Thursday or Friday route. Choose that usual day, even in a holiday week; the source uses the actual printed collection dates. It reads green carts, blue paper boxes, yellow container bins, garbage and natural Christmas trees. Separate leaf/yard-waste and large-item collections are not supported. Pembroke and Laurentian Valley use other calendars and are not supported. First-time PDF parsing can take several seconds; an unchanged document reuses the parsed grid."
+    },
+    "urls": {}
+  },
   "pointe_claire_qc_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pointe_claire_qc_ca.md",
     "howto": {
@@ -5125,6 +5132,13 @@
     },
     "urls": {}
   },
+  "eko_region_pl": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/eko_region_pl.md",
+    "howto": {
+      "en": "Find your village on https://eko-region.pl/gmina/szczercow/ and enter its name as printed there (for example Szubienice). The source automatically follows the Nieruchomości Zamieszkałe residential link. Business/non-residential schedules and Szczerców town's separate street calendars are not supported. Ash dates marked (popiół) in the Bio column are classified separately as Other, with the original Popiół label retained. Bulky-waste notices state multi-day windows covering different villages, so no exact bulky date is inferred."
+    },
+    "urls": {}
+  },
   "ekolandpolska_com_pl": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/ekolandpolska_com_pl.md",
     "howto": {
@@ -6640,6 +6654,13 @@
     },
     "urls": {}
   },
+  "edinburgh_gov_uk": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/edinburgh_gov_uk.md",
+    "howto": {
+      "en": "Search for your street at https://www.edinburgh.gov.uk/bin-collection-days under Recycling and waste. Enter the full record name, including any house-number range and Odd/Even suffix. The source follows the current street record and reads its annual PDF, including holiday changes. Green-bin recycling, the glass box and grey-bin waste are supported; food, garden and communal-bin services are not included. The published January grid has a duplicated day number; the complete weekday grid determines that date. An expired calendar fails explicitly."
+    },
+    "urls": {}
+  },
   "lincoln_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lincoln_gov_uk.md",
     "howto": {},
@@ -7612,6 +7633,13 @@
     "urls": {
       "url_www_findmyaddress_co_uk": "https://www.findmyaddress.co.uk/"
     }
+  },
+  "newrymournedown_org": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/newrymournedown_org.md",
+    "howto": {
+      "en": "Either enter the postcode and house number shown by the council's lookup at https://www.newrymournedown.org/weekly-bin-collection-and-calendar. Or paste your council bin-collections PDF link into url instead. The direct PDF option works independently of the address portal, which can be temporarily unavailable. Dates, including holiday changes, come from the printed calendar. Black bins are general waste, blue bins recycling, and brown bins combined food/garden waste (Organic). Unnumbered properties and ambiguous house numbers are not supported by this address lookup."
+    },
+    "urls": {}
   },
   "north_ayrshire_gov_uk": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/north_ayrshire_gov_uk.md",

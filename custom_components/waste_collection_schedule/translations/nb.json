@@ -7062,6 +7062,26 @@
         },
         "data_description": {}
       },
+      "args_ovwrc_com": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "day": "Day"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+        }
+      },
+      "reconfigure_ovwrc_com": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "day": "Day"
+        },
+        "data_description": {}
+      },
       "args_pointe_claire_qc_ca": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -22539,6 +22559,26 @@
           "street": "Gatenavnet ditt."
         }
       },
+      "args_eko_region_pl": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "village": "Village"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+        }
+      },
+      "reconfigure_eko_region_pl": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "village": "Village"
+        },
+        "data_description": {}
+      },
       "args_ekolandpolska_com_pl": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -28021,6 +28061,29 @@
           "postcode": "Postnummeret ditt."
         }
       },
+      "args_edinburgh_gov_uk": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "street": "Gate"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "street": "Gatenavnet ditt."
+        }
+      },
+      "reconfigure_edinburgh_gov_uk": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "street": "Gate"
+        },
+        "data_description": {
+          "street": "Gatenavnet ditt."
+        }
+      },
       "args_lincoln_gov_uk": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -31176,6 +31239,35 @@
         },
         "data_description": {
           "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
+        }
+      },
+      "args_newrymournedown_org": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "house_number": "Husnummer",
+          "postcode": "Postnummer",
+          "url": "Url"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "house_number": "Husnummeret ditt.",
+          "postcode": "Postnummeret ditt."
+        }
+      },
+      "reconfigure_newrymournedown_org": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "house_number": "Husnummer",
+          "postcode": "Postnummer",
+          "url": "Url"
+        },
+        "data_description": {
+          "house_number": "Husnummeret ditt.",
+          "postcode": "Postnummeret ditt."
         }
       },
       "args_north_ayrshire_gov_uk": {
