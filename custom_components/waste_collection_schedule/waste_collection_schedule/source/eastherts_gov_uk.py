@@ -41,7 +41,22 @@ ICON_MAP = {
 REGEX = {
     "SID": r"sid=(.+)",
     "PROCESS_URI": r"(AF-Process-[a-f0-9-]+)",
-    "LOOKUP_ID": r'([a-f0-9]{13})',  # Achieveservice IDs are typically 13-char hex strings
+}
+
+HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
+    "en": "You can find your UPRN by visiting https://www.findmyaddress.co.uk/ and entering in your address details.",
+}
+
+PARAM_DESCRIPTIONS = {
+    "en": {
+        "uprn": "Every UK residential property is allocated a Unique Property Reference Number (UPRN). You can find yours by going to https://www.findmyaddress.co.uk/ and entering in your address details.",
+    },
+}
+
+PARAM_TRANSLATIONS = {
+    "en": {
+        "uprn": "Unique Property Reference Number",
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -86,51 +101,53 @@ class Source:
     def fetch(self):
         s = requests.Session()
 
-        try:
-            if self._uprn is None:
-                self._uprn = self.get_uprn_from_postcode(
-                    s, self._address_postcode.replace(" ", "")
-                )
-
-            # 1. Load the main council bin service page
-            r = s.get(
-                "https://eastherts-self.achieveservice.com/service/Bins___When_are_my_Bin_Collection_days",
-                headers=HEADERS,
+        if self._uprn is None:
+            self._uprn = self.get_uprn_from_postcode(
+                s, self._address_postcode.replace(" ", "")
             )
-            r.raise_for_status()
-            soup = BeautifulSoup(r.content, "html.parser")
 
-            # 2. Extract session ID (sid) and Process URI dynamically
-            sid = None
-            process_uri = None
-            
-            for link in soup.find_all(["link", "script", "iframe"], href=True) + soup.find_all(["script", "iframe"], src=True):
-                val = link.get("href") or link.get("src")
-                if "apibroker" in val and not sid:
-                    sid_match = re.findall(REGEX["SID"], val)
-                    if sid_match:
-                        sid = sid_match[0]
-                if "AF-Process-" in val and not process_uri:
-                    process_match = re.findall(REGEX["PROCESS_URI"], val)
-                    if process_match:
-                        process_uri = process_match[0]
+        # 1. Load the main bin collection service page
+        r = s.get(
+            "https://eastherts-self.achieveservice.com/service/Bins___When_are_my_Bin_Collection_days",
+            headers=HEADERS,
+        )
+        r.raise_for_status()
+        soup = BeautifulSoup(r.content, "html.parser")
 
-            if not sid or not process_uri:
-                text_match_sid = re.search(r"sid=([a-f0-9]{32})", r.text)
-                if text_match_sid and not sid:
-                    sid = text_match_sid.group(1)
-                text_match_process = re.search(r"(AF-Process-[a-f0-9-]+)", r.text)
-                if text_match_process and not process_uri:
-                    process_uri = text_match_process.group(1)
+        # 2. Dynamically extract session ID (sid) and Process URI
+        sid = None
+        process_uri = None
 
-            if not sid:
-                raise ValueError("Could not extract session sid from East Herts page")
+        for link in soup.find_all(
+            ["link", "script", "iframe"], href=True
+        ) + soup.find_all(["script", "iframe"], src=True):
+            val = link.get("href") or link.get("src")
+            if "apibroker" in val and not sid:
+                sid_match = re.findall(REGEX["SID"], val)
+                if sid_match:
+                    sid = sid_match[0]
+            if "AF-Process-" in val and not process_uri:
+                process_match = re.findall(REGEX["PROCESS_URI"], val)
+                if process_match:
+                    process_uri = process_match[0]
 
-            timestamp = time.time_ns() // 1_000_000
+        if not sid or not process_uri:
+            text_match_sid = re.search(r"sid=([a-f0-9]{32})", r.text)
+            if text_match_sid and not sid:
+                sid = text_match_sid.group(1)
+            text_match_process = re.search(r"(AF-Process-[a-f0-9-]+)", r.text)
+            if text_match_process and not process_uri:
+                process_uri = text_match_process.group(1)
 
-            # 3. Dynamically fetch form definition to discover active lookup IDs
-            lookup_id = "6accfd6441228"  # Fallback
-            if process_uri:
+        if not sid:
+            raise ValueError("Could not extract sid token from East Herts page")
+
+        timestamp = time.time_ns() // 1_000_000
+
+        # 3. Resolve dynamic lookup package ID
+        lookup_id = "6accfd6441228"  # Known active fallback
+        if process_uri:
+            try:
                 def_req = s.get(
                     f"https://eastherts-self.achieveservice.com/apibroker/runLookup?id={process_uri}&getOnlyTokens=true&sid={sid}",
                     headers=HEADERS,
@@ -139,59 +156,65 @@ class Source:
                     found_ids = re.findall(r'"([a-f0-9]{13})"', def_req.text)
                     if found_ids:
                         lookup_id = found_ids[-1]
+            except Exception as err:
+                _LOGGER.debug(
+                    f"Dynamic lookup extraction issue, using fallback: {err}"
+                )
 
-            # 4. Query schedule using UPRN payload
-            payload = {
-                "formValues": {"Collection Days": {"inputUPRN": {"value": self._uprn}}}
-            }
-            scheduleRequest = s.post(
-                f"https://eastherts-self.achieveservice.com/apibroker/runLookup?id={lookup_id}&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
-                headers=HEADERS,
-                json=payload,
-            )
-            scheduleRequest.raise_for_status()
-            rowdata = json.loads(scheduleRequest.content)["integration"]["transformed"][
-                "rows_data"
-            ]["0"]
+        # 4. Fetch waste collection schedule
+        payload = {
+            "formValues": {"Collection Days": {"inputUPRN": {"value": self._uprn}}}
+        }
+        scheduleRequest = s.post(
+            f"https://eastherts-self.achieveservice.com/apibroker/runLookup?id={lookup_id}&repeat_against=&noRetry=true&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self&_={timestamp}&sid={sid}",
+            headers=HEADERS,
+            json=payload,
+        )
+        scheduleRequest.raise_for_status()
+        rowdata = json.loads(scheduleRequest.content)["integration"]["transformed"][
+            "rows_data"
+        ]["0"]
 
-            temp_dict: dict = {}
-            for item in rowdata:
-                if "NextDate" in item:
-                    if rowdata[item] != "":
-                        temp_dict.update(
-                            {item.replace("NextDate", ""): self.resolve_year(rowdata[item])}
+        # 5. Extract NextDate entries
+        bin_names = {
+            "Refuse": "Refuse",
+            "Recycling": "Recycling",
+            "GW": "Garden Waste",
+            "Paper": "Paper",
+            "Food": "Food",
+        }
+
+        entries = []
+        seen_combos = set()
+
+        for key, val in rowdata.items():
+            if not val or val == "":
+                continue
+
+            if "NextDate" in key:
+                clean_type = key.replace("NextDateRaw", "").replace("NextDate", "")
+                title = bin_names.get(clean_type, clean_type)
+
+                try:
+                    if "Raw" in key:
+                        collection_date = parse(val).date()
+                    else:
+                        collection_date = self.resolve_year(val).date()
+
+                    combo_key = (title, collection_date)
+                    if combo_key not in seen_combos:
+                        seen_combos.add(combo_key)
+                        entries.append(
+                            Collection(
+                                date=collection_date,
+                                t=title,
+                                icon=ICON_MAP.get(title),
+                            )
                         )
-
-            entries = []
-            for item in temp_dict:
-                if item == "GW":
-                    title = "Garden Waste"
-                else:
-                    title = item
-                entries.append(
-                    Collection(
-                        date=temp_dict[item].date(),
-                        t=title,
-                        icon=ICON_MAP.get(title),
+                except Exception as parse_err:
+                    _LOGGER.debug(
+                        f"Failed to parse date for {key} ('{val}'): {parse_err}"
                     )
-                )
 
-            return entries
-
-        except Exception as err:
-            _LOGGER.error(f"East Herts bin fetch failed: {err}")
-            
-            # Fire a persistent notification in Home Assistant UI
-            try:
-                from homeassistant.components import persistent_notification
-                # Create notification using Home Assistant's helper
-                persistent_notification.create(
-                    hass=None,  # Will auto-resolve or trigger via notification center
-                    message=f"Failed to update East Herts waste collection schedule:\n`{err}`",
-                    title="Waste Collection Schedule Error",
-                    notification_id="eastherts_waste_fetch_error",
-                )
-            except Exception:
-                pass  # Fall back to logging if persistent_notification helper isn't available in sync thread
-            
-            raise err  # Re-raise so the core integration knows update failed
+        return entries
+        
