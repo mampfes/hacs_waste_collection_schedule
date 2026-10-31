@@ -17,8 +17,6 @@ re-read on every fetch, so extrapolated dates are corrected daily by the
 official data.
 """
 
-from __future__ import annotations
-
 import csv
 import datetime
 import difflib
@@ -139,6 +137,10 @@ _cache: dict[str, object] = {"time": 0.0, "gz": b""}
 # The open data lists only the next collection date per container. Further
 # dates are extrapolated from the published frequency up to this many days.
 _EXTRAPOLATION_HORIZON_DAYS = 60
+# A row whose date passed more than this many days ago is a series the provider
+# no longer maintains, so nothing is extrapolated from it. The grace period
+# covers the gap between a collection and the next nightly refresh of the file.
+_STALE_ROW_GRACE_DAYS = 2
 
 _MONTHS = {
     "sausį": 1,
@@ -213,7 +215,7 @@ class _Frequency:
         self.weekdays: set[int] = set()
 
     @classmethod
-    def parse(cls, text: str) -> _Frequency | None:
+    def parse(cls, text: str) -> "_Frequency | None":
         """Return a parsed frequency or None when the text is not understood."""
         freq = cls()
         for raw in text.split(","):
@@ -333,7 +335,7 @@ def _download_csv_gz() -> bytes:
     )
     r.raise_for_status()
     if "text/html" in r.headers.get("content-type", ""):
-        raise Exception(
+        raise RuntimeError(
             "Kauno švara open-data download returned an HTML page instead of the "
             "CSV file; the sharing link may have changed."
         )
@@ -344,7 +346,7 @@ def _download_csv_gz() -> bytes:
                 gz.write(chunk)
     data = buf.getvalue()
     if len(data) < 1000:
-        raise Exception("Kauno švara open-data CSV download was unexpectedly small.")
+        raise RuntimeError("Kauno švara open-data CSV download was unexpectedly small.")
     return data
 
 
@@ -379,7 +381,7 @@ class Source:
         district: str | None = None,
         city: str | None = None,
         containers: list[str] | str | None = None,
-        waste_object_ids: list[str | int] | str | int | None = None,
+        waste_object_ids: list[str | int] | None = None,
     ):
         self._region = str(region).strip()
         self._street = str(street).strip()
@@ -435,7 +437,9 @@ class Source:
 
         if self._district:
             district = _norm(self._district)
-            filtered = [r for r in house_rows if _norm(r[1]) == district]
+            # Most Kaunas and Alytus rows have an empty district, so an empty
+            # cell matches any district rather than excluding the address.
+            filtered = [r for r in house_rows if _norm(r[1]) in (district, "")]
             if not filtered:
                 raise SourceArgumentNotFoundWithSuggestions(
                     "district", self._district, sorted({r[1] for r in house_rows})
@@ -450,16 +454,17 @@ class Source:
                 )
             house_rows = filtered
 
-        places = {(r[1], r[2]) for r in house_rows}
-        if len(places) > 1 and not self._district and not self._city:
-            districts = sorted({d for d, _ in places if d})
+        if not self._district and not self._city:
+            # An empty district cell is not a second place: the same address is
+            # often listed both with and without its district.
+            districts = sorted({r[1] for r in house_rows if r[1]})
             if len(districts) > 1:
                 raise SourceArgAmbiguousWithSuggestions(
                     "district", self._district, districts
                 )
-            raise SourceArgAmbiguousWithSuggestions(
-                "city", self._city, sorted({c for _, c in places})
-            )
+            cities = sorted({r[2] for r in house_rows})
+            if len(cities) > 1:
+                raise SourceArgAmbiguousWithSuggestions("city", self._city, cities)
 
         if self._containers:
             filtered = [r for r in house_rows if _norm(r[5]) in self._containers]
@@ -477,34 +482,32 @@ class Source:
         today = datetime.date.today()
         end = today + datetime.timedelta(days=_EXTRAPOLATION_HORIZON_DAYS)
 
-        # container id -> (service, frequency text, dates listed in the CSV)
-        per_container: dict[str, tuple[str, str, set[datetime.date]]] = {}
-        for row in rows:
-            try:
-                date = datetime.date.fromisoformat(row[6][:10])
-            except ValueError:
-                continue
-            service, frequency, container = row[8].strip(), row[7].strip(), row[5]
-            entry = per_container.setdefault(container, (service, frequency, set()))
-            entry[2].add(date)
+        stale_before = today - datetime.timedelta(days=_STALE_ROW_GRACE_DAYS)
 
+        # Every row is a series of its own: a container can have several rows
+        # with different rules ("first Tuesday" plus "third Friday") or the same
+        # rule on different dates (two rounds of "kas 14 dienų" a week apart).
         seen: set[tuple[datetime.date, str]] = set()
         entries: list[Collection] = []
-        for service, frequency, dates in per_container.values():
-            all_dates = set(dates)
-            freq = _Frequency.parse(frequency) if dates else None
-            if dates and freq is None:
-                _LOGGER.debug(
-                    "grafikai_svara_lt: frequency %r not understood, "
-                    "using the listed dates only",
-                    frequency,
-                )
-            elif freq is not None:
-                # Some rows carry stale dates years in the past; only
-                # extrapolate into the future.
-                all_dates.update(d for d in freq.dates(max(dates), end) if d >= today)
+        for row in rows:
+            try:
+                listed = datetime.date.fromisoformat(row[6][:10])
+            except ValueError:
+                continue
+            frequency, service = row[7].strip(), row[8].strip()
+            dates = {listed}
+            if listed >= stale_before:
+                freq = _Frequency.parse(frequency)
+                if freq is None:
+                    _LOGGER.debug(
+                        "grafikai_svara_lt: frequency %r not understood, "
+                        "using the listed date only",
+                        frequency,
+                    )
+                else:
+                    dates.update(d for d in freq.dates(listed, end) if d >= today)
             icon = _icon_for(service)
-            for date in sorted(all_dates):
+            for date in sorted(dates):
                 key = (date, service)
                 if key in seen:
                     continue
