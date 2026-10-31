@@ -3983,7 +3983,6 @@ class TestAthosWasteManagementRetriever:
             "https://example.com/Servlet",
             params={"SubmitAction": "wasteDisposalServices"},
             headers=None,
-            verify=True,
         )
         assert source.session.post.call_count == 2
         first_call, second_call = source.session.post.call_args_list

@@ -1414,13 +1414,12 @@ class AthosWasteManagementRetriever(_BaseRetriever):
               sits inside a TYPO3 page whose hidden inputs are login-form
               tokens).
 
-        verify: TLS verification for every request, passed straight to the
-            session (default ``True``). ``False`` disables it; a path to a CA
-            bundle uses that bundle instead. Needed by a deployment whose
-            certificate is itself valid but whose server omits the issuing
-            intermediate, so the chain cannot be built from the default trust
-            store (awg_de). Prefer a completed bundle over ``False`` where the
-            missing intermediate is known and stable.
+        verify: TLS verification for every request (default ``True``). A
+            path to a CA bundle uses that bundle instead; :data:`tls.AIA`
+            completes the chain of a host whose server omits its issuing
+            intermediate from the leaf's AIA URL (awg_de), see
+            :mod:`waste_collection_schedule.tls`. ``False`` disables
+            verification and is not for new deployments.
         initial_validate: optional ``callable(response, source)``, run on the
             response to the initial GET before any step. Raise a
             ``SourceArgument*`` exception to reject a value the site's own
@@ -1443,7 +1442,7 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         encoding: str | None = "utf-8",
         submit_action_field: str = "SubmitAction",
         state: str = "accumulate",
-        verify: bool | str = True,
+        verify: tls.Verify = True,
         initial_validate: Callable[[Response, BaseSource], None] | None = None,
         iterate_field: str | None = None,
     ):
@@ -1510,11 +1509,12 @@ class AthosWasteManagementRetriever(_BaseRetriever):
                 source,
             )
 
-            response = source.session.post(
+            response = tls.send(
+                source.session.post,
                 url,
+                self.verify,
                 data=dict(state),
                 headers=headers,
-                verify=self.verify,
             )
 
             response.raise_for_status()
@@ -1529,20 +1529,22 @@ class AthosWasteManagementRetriever(_BaseRetriever):
         headers = self._resolve(self.headers, source)
         url = self._resolve(self.url, source)
 
-        initial = source.session.get(
+        initial = tls.send(
+            source.session.get,
             url,
+            self.verify,
             params=self.initial_params,
             headers=headers,
-            verify=self.verify,
         )
 
         if initial.status_code == 404 and self.fallback_url is not None:
             url = self._resolve(self.fallback_url, source)
-            initial = source.session.get(
+            initial = tls.send(
+                source.session.get,
                 url,
+                self.verify,
                 params=self.initial_params,
                 headers=headers,
-                verify=self.verify,
             )
 
         initial.raise_for_status()
