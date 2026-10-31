@@ -4,6 +4,7 @@ import asyncio
 from copy import deepcopy
 
 from homeassistant.core import callback
+from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.dispatcher import (
     async_dispatcher_connect,
@@ -53,14 +54,25 @@ class SensorManager:
 
     @property
     def type_labels(self):
-        from .waste_collection_schedule.waste_types import display_name
+        from waste_collection_schedule.waste_types import ALL_TYPES, display_name
 
         customizations = self.entry.options.get("customize", {})
-        return {
+        labels = {
             e.waste_type.id: customizations.get(e.waste_type.id, {}).get("alias")
             or display_name(e.waste_type)
             for e in self.coordinator.shell._entries
         }
+        known = {wt.id: display_name(wt) for wt in ALL_TYPES}
+        for record in self.entry.options.get("sensors", []):
+            if record["origin"].startswith("type:"):
+                type_id = record["origin"].removeprefix("type:")
+                label = known.get(
+                    type_id, type_id.removeprefix("preserved:").removeprefix("legacy_")
+                )
+                labels.setdefault(
+                    type_id, customizations.get(type_id, {}).get("alias") or label
+                )
+        return labels
 
     @property
     def catalogue(self):
@@ -168,7 +180,7 @@ class SensorManager:
                 additions.append(entity)
             else:
                 entity.apply_config(record)
-                if entity.hass is not None:
+                if entity.hass is not None and entity.enabled:
                     entity._update_sensor()
             entity_id = registry.async_get_entity_id("sensor", DOMAIN, entity.unique_id)
             if entity_id:
@@ -221,7 +233,12 @@ class SensorManager:
             if record:
                 record["enabled"] = True
             else:
-                records.append(self.catalogue[origin])
+                offered = self.catalogue.get(origin)
+                if offered is None:
+                    raise HomeAssistantError(
+                        "This collection type is no longer in the current schedule."
+                    )
+                records.append(offered)
             self.hass.config_entries.async_update_entry(
                 self.entry, options={**self.entry.options, "sensors": records}
             )

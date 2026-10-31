@@ -447,7 +447,9 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
         from .sensor_migration import async_migrate_sensors
 
         options = (
-            await async_migrate_sensors(hass, config_entry)
+            await async_migrate_sensors(
+                hass, config_entry, source_name=new_data.get("name")
+            )
             if config_entry.version < 4
             else dict(config_entry.options)
         )

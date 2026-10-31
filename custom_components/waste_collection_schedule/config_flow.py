@@ -355,7 +355,7 @@ def get_customize_schema(defaults: dict[str, Any] | None = None):
             CONF_ICON, default=defaults.get(CONF_ICON, UNDEFINED)
         ): IconSelector(),
         vol.Optional(CONF_PICTURE, default=defaults.get(CONF_PICTURE, UNDEFINED)): str,
-        vol.Optional("color", default=defaults.get("color", UNDEFINED)): validate_color,
+        vol.Optional("color", default=defaults.get("color", UNDEFINED)): str,
         vol.Optional(
             CONF_USE_DEDICATED_CALENDAR,
             default=defaults.get(CONF_USE_DEDICATED_CALENDAR, UNDEFINED),
@@ -1406,13 +1406,21 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
         errors = {}
 
         if user_input is not None:
+            user_input = dict(user_input)
+            try:
+                if user_input.get("color"):
+                    user_input["color"] = validate_color(user_input["color"])
+                else:
+                    user_input.pop("color", None)
+            except ValueError:
+                errors["base"] = "invalid_sensor"
             if user_input.get(CONF_DEDICATED_CALENDAR_TITLE, "") and not user_input.get(
                 CONF_USE_DEDICATED_CALENDAR, False
             ):
                 errors[CONF_DEDICATED_CALENDAR_TITLE] = (
                     "dedicated_calendar_title_without_use_dedicated_calendar"
                 )
-            else:
+            if not errors:
                 self._options[CONF_CUSTOMIZE][types[self._customize_index]] = user_input
                 self._customize_index += 1
                 return await self.async_step_customize()

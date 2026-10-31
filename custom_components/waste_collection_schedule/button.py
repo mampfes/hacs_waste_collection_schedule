@@ -32,6 +32,24 @@ class CreateSensorButton(ButtonEntity):
     async def async_press(self):
         await self.manager.async_add_from_catalogue(self.origin)
 
+    @property
+    def available(self):
+        return self.origin in self.manager.catalogue
+
+    async def async_added_to_hass(self):
+        await super().async_added_to_hass()
+        self.async_on_remove(
+            async_dispatcher_connect(
+                self.hass,
+                SENSOR_CONFIG_SIGNAL + self.manager.entry.entry_id,
+                self._changed,
+            )
+        )
+
+    @callback
+    def _changed(self):
+        self.async_write_ha_state()
+
 
 async def async_setup_entry(hass, entry, async_add_entities):
     await setup_controls(

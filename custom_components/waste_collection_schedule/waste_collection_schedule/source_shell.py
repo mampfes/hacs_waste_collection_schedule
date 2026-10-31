@@ -170,7 +170,7 @@ def _customize_keys(entry: Collection) -> list[str]:
     # description (e.g. an English preserved label, or no description set).
     keys = [entry.waste_type.id, entry.type]
     if entry.original_label:
-        keys.insert(0, entry.original_label)
+        keys.append(entry.original_label)
     if entry.description:
         keys.append(entry.description)
     return list(dict.fromkeys(keys))
@@ -194,7 +194,8 @@ def customize_function(entry: Collection, customize: dict[str, Customize]):
         if c.picture is not None:
             entry.set_picture(c.picture)
     color = _match_customize_keys(
-        {k: v for k, v in customize.items() if v.color is not None}, keys
+        {k: v for k, v in customize.items() if v.color is not None},
+        [entry.original_label, *keys] if entry.original_label else keys,
     )
     if color is not None:
         entry.set_color(color.color)

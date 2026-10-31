@@ -146,7 +146,7 @@ class CollectionAggregator:
                 identity = (
                     (entry.waste_type.id, entry.original_label or entry._identity_key)
                     if preserve_bins
-                    else entry.original_label
+                    else entry._bin_identity
                     if unique_types
                     else entry._identity_key
                 )
@@ -209,7 +209,7 @@ class CollectionAggregator:
             seen = set()
             unique = []
             for entry in entries:
-                key = entry.original_label or entry.waste_type.id
+                key = entry._bin_identity
                 if key not in seen:
                     seen.add(key)
                     unique.append(entry)

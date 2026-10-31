@@ -29,7 +29,7 @@ from .waste_collection_schedule.source_shell import (
 )
 
 
-def choices(values, *, multiple=False):
+def choices(values, *, multiple=False, custom_value=False):
     sets = {
         "state_format": STATE_FORMATS,
         "date_format": DATE_FORMATS,
@@ -43,9 +43,11 @@ def choices(values, *, multiple=False):
     return SelectSelector(
         SelectSelectorConfig(
             options=list(values),
-            mode=SelectSelectorMode.LIST if multiple else SelectSelectorMode.DROPDOWN,
+            mode=SelectSelectorMode.LIST
+            if multiple and not custom_value
+            else SelectSelectorMode.DROPDOWN,
             multiple=multiple,
-            custom_value=False,
+            custom_value=custom_value,
             translation_key=translation_key,
         )
     )
@@ -64,11 +66,12 @@ class SensorOptionsFlow(OptionsFlow):
     def type_labels(self):
         if self.manager:
             return self.manager.type_labels
-        from .waste_collection_schedule.waste_types import ALL_TYPES, display_name
+        from waste_collection_schedule.waste_types import ALL_TYPES, display_name
 
         known = {wt.id: display_name(wt) for wt in ALL_TYPES}
+        customizations = self._entry.options.get("customize", {})
         return {
-            key: known.get(key, key)
+            key: customizations.get(key, {}).get("alias") or known.get(key, key)
             for record in self._entry.options.get("sensors", [])
             for key in record["types"]
         }
@@ -423,30 +426,43 @@ class SensorOptionsFlow(OptionsFlow):
                     vol.Optional("types"): choices(
                         [{"value": k, "label": v} for k, v in labels.items()],
                         multiple=True,
+                        custom_value=True,
                     )
                 }
             ),
         )
 
     async def async_step_customize(self, user_input=None):
+        from .waste_collection_schedule.colors import validate_color
+
         if self._customize_select_idx >= len(self._customize_select):
             return self.async_create_entry(data=self._options)
         key = self._customize_select[self._customize_select_idx]
         current = self._options.get("customize", {}).get(key, {})
+        errors = {}
         if user_input is not None:
             values = {k: v for k, v in user_input.items() if k != "delete"}
-            customizations = self._options.setdefault("customize", {})
-            if user_input.get("delete"):
-                customizations.pop(key, None)
+            try:
+                if values.get("color") and not user_input.get("delete"):
+                    values["color"] = validate_color(values["color"])
+                else:
+                    values.pop("color", None)
+            except ValueError:
+                errors["base"] = "invalid_sensor"
             else:
-                customizations[key] = values
-            self._customize_select_idx += 1
-            return await self.async_step_customize()
-        schema = get_customize_schema(current)
+                customizations = self._options.setdefault("customize", {})
+                if user_input.get("delete"):
+                    customizations.pop(key, None)
+                else:
+                    customizations[key] = values
+                self._customize_select_idx += 1
+                return await self.async_step_customize()
+        schema = get_customize_schema({**current, **(user_input or {})})
         schema[vol.Optional("delete", default=False)] = bool
         return self.async_show_form(
             step_id="customize",
             data_schema=vol.Schema(schema),
+            errors=errors,
             description_placeholders={
                 "type": key,
                 "index": str(self._customize_select_idx + 1),

@@ -10,4 +10,4 @@
 import homeassistant
 import homeassistant.core  # noqa: F401
 
-pytest_plugins = ["offline_replay"]
+pytest_plugins = ["offline_replay", "sensor_fixtures"]

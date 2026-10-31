@@ -31,6 +31,14 @@ def migrate_records(
     records = []
     origins = set()
     customize = options.get("customize", {})
+    # Older UI flows saved canonical display names as customization keys.
+    # Normalize those alongside their sensor filters; explicit ids win collisions.
+    customize = {
+        migrate_filter(key, {}, type_ids): customize[key]
+        for key in sorted(customize, key=lambda key: key in type_ids)
+    }
+    if "customize" in options:
+        result["customize"] = customize
     for old in options.get("sensors", []):
         if "id" in old and "origin" in old:
             records.append(SensorConfig.from_dict(old).as_dict())
@@ -133,14 +141,18 @@ def migrate_records(
                 record.date_format = style
             else:
                 record.date_template = date
+        elif record.state_format == "date" and record.date_format != "iso":
+            # Old detail keys defaulted to ISO independently of the state template.
+            # Preserve that implicit format through the existing template override.
+            record.date_template = EXAMPLE_DATE_TEMPLATES["2020-03-20"]
         records.append(record.as_dict())
     result["sensors"] = records
     return result
 
 
-async def async_migrate_sensors(hass, entry) -> dict:
+async def async_migrate_sensors(hass, entry, *, source_name=None) -> dict:
     source_cls, _ = await hass.async_add_executor_job(
-        _load_source_class, entry.data.get("name", "")
+        _load_source_class, source_name or entry.data.get("name", "")
     )
     # Raw-string sources such as ICS/static do not declare canonical categories.
     # A matching vocabulary name alone cannot prove their provider label is an id.

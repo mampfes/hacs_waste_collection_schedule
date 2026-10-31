@@ -79,6 +79,7 @@ class Collection:
         self._location: str | None = None
         self._description: str | None = None
         self._original_label: str | None = None
+        self._bin_label: str | None = None
         # True only when _description was filled in by a transformer's
         # carry_raw_label fallback (transformers.BaseTransformer._collections),
         # never when the source set its own description (e.g. via
@@ -141,11 +142,19 @@ class Collection:
 
     @property
     def original_label(self) -> str | None:
-        """Provider bin identity, retained independently of its visible description."""
+        """Provider label for filtering and metadata, independent of description."""
         return self._original_label
 
-    def set_original_label(self, label: str | None) -> None:
+    def set_original_label(
+        self, label: str | None, *, for_identity: bool = True
+    ) -> None:
+        """Retain the label; use it for bin identity only when the source opts in."""
         self._original_label = _clean_optional_str(label)
+        self._bin_label = self._original_label if for_identity else None
+
+    @property
+    def _bin_identity(self) -> str:
+        return self._bin_label or self.waste_type.id
 
     def _merge_description(self, other: "Collection") -> None:
         if other.description and other.description != self.description:

@@ -159,7 +159,7 @@ waste_collection_schedule:
 | alias | string | optional | A more readable, or user-friendly, name for the type of waste being collected. Default is `None` |
 | show | boolean | optional | Show (`True`) or hide (`False`) collections of this specific waste type. Default is `True` |
 | icon | string | optional | Icon to use for this specific waste type. Any [Material Design Icon](https://pictogrammers.com/library/mdi/) name in the form `mdi:icon-name` is accepted (e.g. `mdi:bottle-soda`). When omitted, the source's default icon is used — defaults follow the canonical [`Icons`](../custom_components/waste_collection_schedule/waste_collection_schedule/icons.py) catalogue so the same logical category looks consistent across sources. Set this to override the default for any single waste type. |
-| color | string | optional | YAML only: a quoted `#RRGGBB` display color. Overrides the source color and global default. |
+| color | string | optional | A quoted `#RRGGBB` display color, available in YAML and under Configure → Waste types. Overrides the source color and global default. |
 | picture | string | optional | string representation of the path to a picture used to represent this specific waste type. Default is `None` |
 | use_dedicated_calendar | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
 | dedicated_calendar_title | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |
@@ -209,7 +209,7 @@ waste_collection_schedule:
 | state_format | string | optional | `types_in_days` (default), `in_days`, `relative`, `date`, `types`, `days`, or `custom`. A `value_template` takes precedence |
 | language | string | optional | `auto`, `en`, `de`, `fr`, `it`, `nl`, or `pl`. YAML defaults to English for compatibility |
 | date_format | string | optional | `dmy`, `weekday_dmy`, `mdy`, `weekday_mdy`, `iso` (default), or `weekday_iso`. A `date_template` takes precedence for detail dates |
-| unique_types | boolean | optional | Default `false`. Keep the earliest eligible collection per retained provider label, or per type ID when no label is retained, before applying `event_index` and `count` |
+| unique_types | boolean | optional | Default `false`. Keep the earliest eligible collection per provider bin when the source uses `carry_raw_label`, otherwise per type ID, before applying `event_index` and `count` |
 | exclude_types | list of strings | optional | Remove matching types or provider labels after applying the include filter. New, unlisted types remain included |
 | color | string | optional | Sensor-local `#RRGGBB` override for the color attribute and structured collection records |
 | details_format | string | optional | Specifies the format used to display info in Home Assistant's _more info_ pop-up. Valid values are: `upcoming`, `appointment_types`, `generic` and `hidden`. If no value is supplied, the default of "upcoming" is used. See [options for details_format](#options-for-details_format-parameter) for more details |
@@ -232,7 +232,7 @@ Every sensor that has an upcoming collection exposes these language-neutral attr
 | `next_types` | List of the waste types collected on that day |
 | `color` | Display color of the next collection (`#RRGGBB`), if known |
 
-`collections` contains structured records for the next collection day. Both `upcoming` and `generic` details also expose an `upcoming` list of records with `date`, `type_id`, display `type`, `original_label`, effective `color`, icon, and available picture, location, or description. Hiding original labels affects visible descriptions, not matching or structured identity. A source must opt into carrying raw labels to expose separate provider bins.
+`collections` contains structured records for the next collection day. Both `upcoming` and `generic` details also expose an `upcoming` list of records with `date`, `type_id`, display `type`, `original_label`, effective `color`, icon, and available picture, location, or description. Transformers retain provider labels for matching and metadata even when descriptions are hidden. A source must opt into `carry_raw_label` for separate provider-bin identity; other sources keep type-based uniqueness.
 
 Color precedence is sensor override → raw-label customization → type-ID customization → provider color → canonical default. A raw-label customization without a color still inherits the type's color. Native sensor icons do not automatically take their color from this attribute; compatible cards can use it.
 
