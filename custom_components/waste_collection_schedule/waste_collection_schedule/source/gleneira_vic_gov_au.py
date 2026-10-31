@@ -56,19 +56,37 @@ _STREET_WORDS = set(_STREET_TYPES.values())
 _STATES = {"VIC", "VICTORIA"}
 
 
+def _first_type(words: list[str]) -> int:
+    """Where a street type can start: never in the first word of the name."""
+    return 2 if words and words[0][0].isdigit() else 1
+
+
 def _words(value: str) -> list[str]:
-    """Upper-case words, commas dropped, street types spelled out."""
+    """Upper-case words, commas dropped, street types spelled out.
+
+    Only from ``_first_type`` on: the "St" of "12 St James Parade" and the
+    "Court" of "10 Court Street" open a street name, they do not close one.
+    """
     words = value.upper().replace(",", " ").split()
-    return [_STREET_TYPES.get(word, word) for word in words]
+    start = _first_type(words)
+    return [
+        _STREET_TYPES.get(word, word) if index >= start else word
+        for index, word in enumerate(words)
+    ]
 
 
 def _significant(value: str) -> list[str]:
-    """The words of an address without its state and postcode."""
-    return [
-        word
-        for word in _words(value)
-        if word not in _STATES and not (word.isdigit() and len(word) == 4)
-    ]
+    """The words of an address without its trailing state and postcode.
+
+    Trailing only: "1161 Glen Huntly Road" keeps its number and "12 Victoria
+    Street" its name.
+    """
+    words = _words(value)
+    while len(words) > 2 and (
+        words[-1] in _STATES or (words[-1].isdigit() and len(words[-1]) == 4)
+    ):
+        words.pop()
+    return words
 
 
 def _query(street_address: str, **_) -> dict:
@@ -79,8 +97,8 @@ def _query(street_address: str, **_) -> dict:
     is checked on the candidates instead.
     """
     words = _significant(street_address)
-    for index, word in enumerate(words):
-        if index and word in _STREET_WORDS:
+    for index in range(_first_type(words), len(words)):
+        if words[index] in _STREET_WORDS:
             return {"text": " ".join(words[: index + 1])}
     return {"text": " ".join(words)}
 
@@ -88,9 +106,11 @@ def _query(street_address: str, **_) -> dict:
 def _address(response, *keys, street_address, **_) -> str:
     """The register's own wording of the configured address."""
     # The endpoint answers 404 for "nothing matched".
-    candidates = response.json() if response.status_code != 404 else []
-    if response.status_code not in (200, 404):
+    if response.status_code == 404:
+        candidates = []
+    else:
         response.raise_for_status()
+        candidates = response.json()
     values = [str(c["value"]) for c in candidates or [] if c.get("value")]
     if not values:
         raise SourceArgumentNotFound(

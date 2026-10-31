@@ -171,4 +171,5 @@ class Source(BaseSource):
             "Green bin": wt.ORGANIC,
         },
         carry_raw_label=True,
+        skip_unparseable_dates=True,
     )

@@ -143,6 +143,7 @@ class Source(BaseSource):
         type_getter=lambda row: _cells(row)[1].split()[0],
         description_getter=lambda row: _cells(row)[1],
         parse_date=date_parsers.for_format("%A %B %d, %Y"),
+        skip_unparseable_dates=True,
         type_value_map={
             "Food": wt.FOOD_WASTE,
             "Garden": wt.GARDEN_WASTE,

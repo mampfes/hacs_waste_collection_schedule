@@ -113,7 +113,7 @@ class Source(BaseSource):
                 f"{LOOKUP_URL}/GetCities",
                 method="POST",
                 json=lambda municipality, **_: {
-                    "strInput": (str(municipality).split() or [""])[0]
+                    "strInput": (str(municipality).split(",")[0].split() or [""])[0]
                 },
                 pick=_municipality,
             ),
