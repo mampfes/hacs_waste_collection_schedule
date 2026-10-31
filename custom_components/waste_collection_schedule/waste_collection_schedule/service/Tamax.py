@@ -12,11 +12,27 @@ URL = "https://www.tamax.net.pl"
 
 
 class CalendarLink:
-    """Select one explicitly supported household route, without a dated URL."""
+    """Select one explicitly supported household route, without a dated URL.
 
-    def __init__(self, municipality: str, areas: Mapping[str, str]):
+    Each area maps to a text identifying its PDF link, matched
+    case-insensitively in the link's ``href``, or with ``match_label=True`` in
+    the link's printed label (for a PDF renamed every half-year). The link must
+    name the current year unless ``require_year=False`` (a sheet running into
+    the next year under its first year's label).
+    """
+
+    def __init__(
+        self,
+        municipality: str,
+        areas: Mapping[str, str],
+        *,
+        match_label: bool = False,
+        require_year: bool = True,
+    ):
         self.municipality = municipality
         self.areas = dict(areas)
+        self.match_label = match_label
+        self.require_year = require_year
 
     def __call__(self, response, *_, area):
         if area not in self.areas:
@@ -36,10 +52,15 @@ class CalendarLink:
             )
         for link in panels[0].select("a[href]"):
             href = link["href"]
-            if self.areas[area].casefold() not in href.casefold():
-                continue
             label = link.parent.get_text(" ", strip=True)
-            if ".pdf" in href.lower() and year in href + label:
+            if (
+                self.areas[area].casefold()
+                not in (label if self.match_label else href).casefold()
+            ):
+                continue
+            if ".pdf" in href.lower() and (
+                not self.require_year or year in href + label
+            ):
                 matches.add(urljoin(response.url, href))
         if len(matches) != 1:
             raise ValueError("No unambiguous current-year TAMAX household calendar")
