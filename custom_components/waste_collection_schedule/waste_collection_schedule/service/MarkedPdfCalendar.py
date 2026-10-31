@@ -198,6 +198,9 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
     their inferred position carries no collection marker.
 
     Set row_bands=True for filled week rows spanning several day cells.
+    heading_year accepts a year suffix on each month heading. day_font_size
+    restricts the numeral height in PDF points, for files carrying invisible
+    editing text in a different font size; all expected days are still required.
     """
 
     def __init__(
@@ -214,6 +217,8 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         pages: Sequence[int] | None = None,
         cancelled_colors: Sequence[tuple[float, ...]] = (),
         row_bands: bool = False,
+        heading_year: bool = False,
+        day_font_size: tuple[float, float] | None = None,
     ):
         self.months = {_normal(name): i + 1 for i, name in enumerate(months)}
         self.weekdays = tuple(_normal(name) for name in weekdays)
@@ -228,6 +233,8 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
         self.pages = frozenset(pages) if pages is not None else None
         self.cancelled_colors = {"cancelled": tuple(cancelled_colors)}
         self.row_bands = row_bands
+        self.heading_year = heading_year
+        self.day_font_size = day_font_size
 
     def _keys(
         self, color: Any, palette: Mapping[str, Sequence[tuple[float, ...]]]
@@ -260,7 +267,10 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
             words = [word for line in lines for word in _words(line)]
             headings = []
             for line in lines:
-                month = self.months.get(_normal(line.get_text()))
+                heading_text = _normal(line.get_text())
+                if self.heading_year:
+                    heading_text = re.sub(r"\s+20\d{2}$", "", heading_text)
+                month = self.months.get(heading_text)
                 if month is not None:
                     headings.append(
                         _Word(str(month), line.x0, line.y0, line.x1, line.y1, None)
@@ -363,6 +373,12 @@ class MarkedPdfCalendarParser(Parser[list[dict[str, Any]]]):
                             or (w.text.isdigit() and 1 <= int(w.text) <= 31)
                         )
                         and min(abs(w.x - x) for x in centers) < cell_width * 0.45
+                        and (
+                            self.day_font_size is None
+                            or self.day_font_size[0]
+                            <= w.y1 - w.y0
+                            <= self.day_font_size[1]
+                        )
                     ]
                     day_rows = _rows(numbers)
                     first_weekday = datetime.date(year, month, 1).weekday()

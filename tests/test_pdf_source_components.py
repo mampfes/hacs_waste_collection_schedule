@@ -1269,6 +1269,8 @@ def _marked_calendar_pdf(
     marked_day=(1, 26),
     cancelled=None,
     row_band=False,
+    heading_year=False,
+    stray_number=False,
 ):
     """A complete printed calendar; January 26 has fill and stroke markers."""
     import calendar
@@ -1299,7 +1301,9 @@ def _marked_calendar_pdf(
 
         if year_label:
             text(f"YEAR {year}", 20, 760)
-        text(name, 20, 700)
+        text(f"{name} {year}" if heading_year else name, 20, 700)
+        if stray_number and month == 1:
+            commands.append("BT /F1 8 Tf 1 1 1 rg 20 610 Td (22) Tj ET")
         for column, label in enumerate(_MARKED_WEEKDAYS[:columns]):
             text(label, 20 + 20 * column, 680)
         for week, days in enumerate(calendar.monthcalendar(year, month)):
@@ -1589,6 +1593,30 @@ def test_marked_pdf_week_bands_span_printed_day_cells(year, day):
     expected = {D(year, 1, day) + datetime.timedelta(days=i) for i in range(7)}
     assert {r["date"] for r in rows if r["type"] == "general"} == expected
     assert {r["date"] for r in rows if r["type"] == "organic"} == expected
+
+
+@pytest.mark.parametrize("year", [2026, 2027])
+def test_marked_pdf_year_suffixed_headings_are_opt_in(year):
+    response = SimpleNamespace(
+        content=_marked_calendar_pdf(year=year, heading_year=True)
+    )
+    with pytest.raises(ValueError, match="complete annual"):
+        _marked_parser()(response)
+    rows = _marked_parser(heading_year=True)(response)
+    assert {r["date"] for r in rows} == {D(year, 1, 26)}
+
+
+def test_marked_pdf_font_filter_excludes_editing_text_but_requires_real_day_numbers():
+    response = SimpleNamespace(content=_marked_calendar_pdf(stray_number=True))
+    with pytest.raises(ValueError, match="differs from grid"):
+        _marked_parser()(response)
+    assert len(_marked_parser(day_font_size=(8.9, 9.1))(response)) == 2
+    with pytest.raises(ValueError, match="Incomplete printed grid"):
+        _marked_parser(day_font_size=(8.9, 9.1))(
+            SimpleNamespace(
+                content=_marked_calendar_pdf(omitted=(1, 1), stray_number=True)
+            )
+        )
 
 
 def test_strathfield_published_calendar_is_complete_and_stops_at_year_end():
