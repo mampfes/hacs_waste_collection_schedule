@@ -73,11 +73,14 @@ class Collection:
         self._waste_type = waste_type
         self._source_color = normalize_color(color)
         self._color_override: str | None = None
+        self._color_override_source = "customize"
         self._type_override: str | None = None
         self._icon_override: str | None = None
         self._picture: str | None = None
         self._location: str | None = None
         self._description: str | None = None
+        self._original_label: str | None = None
+        self._bin_label: str | None = None
         # True only when _description was filled in by a transformer's
         # carry_raw_label fallback (transformers.BaseTransformer._collections),
         # never when the source set its own description (e.g. via
@@ -115,16 +118,17 @@ class Collection:
     @property
     def color_source(self) -> str:
         if self._color_override is not None:
-            return "customize"
+            return self._color_override_source
         return "source" if self._source_color is not None else "default"
 
     def set_source_color(self, color: str | None):
         """Attach a provider's display color without changing the global type."""
         self._source_color = normalize_color(color)
 
-    def set_color(self, color: str | None):
+    def set_color(self, color: str | None, *, source: str = "customize"):
         """Set or clear a user customization, preserving the source default."""
         self._color_override = normalize_color(color)
+        self._color_override_source = source
 
     @property
     def picture(self):
@@ -137,6 +141,30 @@ class Collection:
     @property
     def description(self):
         return self._description
+
+    @property
+    def original_label(self) -> str | None:
+        """Provider label for filtering and metadata, independent of description."""
+        return self._original_label
+
+    def set_original_label(
+        self, label: str | None, *, for_identity: bool = True
+    ) -> None:
+        """Retain the label; use it for bin identity only when the source opts in."""
+        self._original_label = _clean_optional_str(label)
+        self._bin_label = self._original_label if for_identity else None
+
+    @property
+    def _bin_identity(self) -> str:
+        return self._bin_label or self.waste_type.id
+
+    def _merge_description(self, other: "Collection") -> None:
+        if other.description and other.description != self.description:
+            self.set_description(
+                ", ".join(
+                    dict.fromkeys(filter(None, [self.description, other.description]))
+                )
+            )
 
     @property
     def description_is_raw_label_fallback(self) -> bool:
@@ -153,6 +181,8 @@ class Collection:
         ``description_is_raw_label_fallback`` before clearing it.
         """
         self._description = _clean_optional_str(description)
+        if self._original_label is None:
+            self.set_original_label(description)
         self._description_is_raw_label_fallback = True
 
     def set_type(self, t: str):
@@ -179,6 +209,7 @@ class Collection:
             "date": self._date.isoformat(),
             "type": self.type,
             "type_id": self.waste_type.id,
+            "original_label": self.original_label,
             "color": self.color,
             "color_source": self.color_source,
             "icon": self.icon,

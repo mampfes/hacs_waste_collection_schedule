@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [Unreleased]
+
+### Changed
+
+- UI sensors use stable internal IDs, retain entity IDs and history through edits, and can be disabled without deleting their configuration. Configure separates source settings, sensors, and waste-type customization.
+- Built-in state/date formats support English, German, French, Italian, Dutch, Slovenian, Danish, Finnish, Swedish, and Norwegian Bokmål without writing templates. YAML supports the same formatting and filtering options, optional `unique_id`, and `kind: days_to` / `last_update`.
+- Optional native device pages edit the same sensor records. Sensor-only changes do not fetch the provider again. **Next collection** remains the combined overview sensor.
+- Type filters accept canonical IDs and retained provider labels before duplicate merging. `unique_types` keeps the next collection of each retained provider bin, or each category when labels are not retained. `exclude_types` is available in UI and YAML.
+- Structured collection records retain provider labels and resolved colors even when labels are hidden. Waste-type colors can be edited in the UI. Generic detail lists honor the pickup index.
+- Existing UI configurations migrate to entry version 4, preserving identities and custom templates. Older integration versions cannot load migrated entries; restore a backup before downgrading. Repairs lists legacy sensors left behind by earlier renames for explicit cleanup.
+- Migration retains dedicated calendar identities and preserves conflicting customization keys instead of discarding their settings. Negative legacy lead time and pickup indexes normalize to zero with a per-sensor warning; negative indexes previously selected from the end, so review those sensors after upgrading.
+- Invalid stored templates make only the affected sensor unavailable. Generic `upcoming` retains its date-object and `daysTo` interface for local templates. Rich `upcoming` and `collections` lists stay available live but are excluded from new recorder history rows, including generic details; date and day attributes remain recorded.
+- Raw provider labels participate in customization matching even on sources without `carry_raw_label`; existing glob customizations can therefore match more events. Combined rounds retain all categories of the selected bin's earliest pickup.
+- Options saves preserve concurrent native-control edits and discovered sensors. Reloads of an unchanged source keep its cached schedule available and retry a due fetch in the background; failure leaves the cache in place. Manual Reload and `fetch_data` skip fetching inside `fetch_interval_days`. Native text controls follow HA's 255-character limit; longer saved values remain intact and can be edited in integration options.
+- Generic `upcoming` retains `Collection` objects for local Jinja access. As before, Jinja's `to_json` filter cannot serialize these objects directly; the REST API serializes their rich records.
+
+### Deprecated
+
+- `add_days_to` is accepted and ignored in YAML; `daysTo` is always exposed. Removal is scheduled for the next major release.
+
 ## [3.0.0-beta.8] - 2026-10-26
 
 This is a pre-release (beta) that migrates 202 more legacy sources to the BaseSource pipeline since beta.7, so that 1005 of 1087 source modules now run on it, and adds 62 new sources and a number of new regions, many of them PDF-based and built on new shared PDF building blocks. If you tried an earlier beta, please update; if you haven't yet, opt in via HACS' "show beta versions" toggle. Report problems as regular GitHub issues. Stable installs are unaffected until 3.0.0 ships. Fixes marked "port of" shipped earlier in the stable v2.36.0.

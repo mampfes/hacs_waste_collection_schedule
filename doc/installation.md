@@ -57,21 +57,32 @@ As of version 2.0.0 of the Waste Collection Schedule component, you can configur
 1. You will be asked to select your service provider
 1. You will be asked to enter the required arguments for the service provider (you can find a detailed description of the arguments in the documentation of the source you selected (linked in the [README](/README.md#supported-service-providers))) and the name of the calendar.
 1. You will be asked to select the waste types you to customize (you will be able to change the name, icon, and picture of the waste type and decide if you want to show or hide it). Detailed information can be found in the [Attributes for customize](#attributes-for-customize) section.
-1. You will be asked to configure sensors. If you do not want to configure any sensors scroll down and select `Do not create sensor`. Otherwise configure the sensors as described in the [Configuring Sensor(s)](#configuring-sensors) section, if you want to configure multiple sensors, you must select `Add additional sensors` while configuring the previous sensor.
-1. After completing the configuration you can click `CUSTOMIZE` to change some advanced settings described in the [Configuring Source(s)](#configuring-sources) section. You can also change the sensor or customizees here. Or click on the 3 dots and select reconfigure to change attributes of the source.
+1. Choose the default sensor sets to create. Add custom sensors afterwards under **Configure → Sensors**.
+1. Open **Configure** to edit **Source settings**, **Sensors**, or **Waste types**. Use the entry's three-dot menu → **Reconfigure** to change provider arguments or address.
 
-### Default sensors
+### Default sensors and editing
 
-When you add a source in the GUI you can choose which default sensors are created. Both sets are preselected, you can untick either or both, and they can be combined with your own sensors:
+Setup offers one sensor per discovered waste type and the overview sensors **Next collection**, **Days until collection**, and **Last update**. Both sets are preselected. New per-type sensors use relative text such as “Tomorrow” in Home Assistant's language. Overview sensors expose collection types, a numeric countdown, and the last successful fetch time respectively.
 
-| Set | Sensors |
-|--|--|
-| One sensor per waste type | One sensor per waste type of your address, showing the next collection date of that type (e.g. `on Mon, 21.09.2026`) |
-| Overview sensors | **Next collection**: the waste types of the next collection day, with the [attributes](#attributes-of-a-sensor) `daysTo`, `date`, `next_types` and `color`<br>**Days until collection**: the number of days until the next collection (unit `d`), for automations<br>**Last update**: when the schedule was last fetched (diagnostic, hidden by default) |
+Open **Configure → Sensors** to enable or disable predefined sensors, edit a saved sensor, or add a custom sensor. Disabling retains settings, registry identity, entity ID, and history. Renaming or changing display settings also retains identity. Custom sensors can be deleted; predefined sensors can be reset or duplicated as custom sensors.
 
-The overview sensors have English names on purpose, so the entity ids are the same for everyone and the examples in this documentation work when copied. You can rename them in Home Assistant; the entity id stays the same. They only contain raw values (numbers, dates, waste types), so a card or template can show them in your own language, see the [FAQ](/doc/faq.md).
+State text, language, date format, details, count, lead time, include/exclude filters, and **Each type only once** are ordinary settings. **Advanced settings** opens a separate form for pickup index, custom templates, and a sensor color override. Existing templates remain custom until you explicitly replace them. Clearing a template or color restores built-in behavior.
 
-To add the default sensors to an entry you set up earlier, click `CUSTOMIZE` on the entry and select them under `Add default sensors`. Only sensors that are missing are added, existing sensors are never changed.
+**Device controls** is optional and off by default. It adds a device for each sensor and native select, number, switch, text, and button controls. These edit the same saved records as the options editor. The source device offers creation buttons for predefined sensors. Sensor-only edits update in place. Reloading an unchanged source reuses its in-memory schedule and retries a due fetch in the background. A failed attempt leaves cached sensors available. This also applies after re-enabling an entry or an entity.
+
+On the device page, a count of `0` means unlimited. Lead time uses `-1` for unlimited and `0` for today only; positive values limit the number of days shown.
+
+Home Assistant limits native text controls to 255 characters. Longer saved templates or names remain intact; their native text control is unavailable until the value is shortened through **Configure → Sensors**. The options editor and YAML support longer templates.
+
+For new entries that choose per-type sensors, newly discovered types are added automatically. Migrated entries keep this off; the setting is available under **Configure → Sensors**. A seasonal type disappearing does not delete its sensor.
+
+### Sensor migration
+
+Existing UI sensors migrate automatically to config-entry version 4. Names, entity IDs, custom templates, and registry-disabled states are retained. Recognized built-in templates keep their existing English output; new sensors use the selected language. Old sensors left behind by earlier renames are listed in **Repairs** for explicit removal after checking dashboard and automation references.
+
+Older integration versions cannot load a version-4 entry. Restore a backup before downgrading. YAML configuration does not require migration.
+
+Negative legacy lead time and pickup indexes normalize to zero and produce a warning naming the affected sensor. Negative indexes previously selected from the end of the schedule; review those sensors after migration. Conflicting customization keys retain their separate settings and calendar identities.
 
 ### GUI limitations
 
@@ -152,7 +163,7 @@ waste_collection_schedule:
 | alias | string | optional | A more readable, or user-friendly, name for the type of waste being collected. Default is `None` |
 | show | boolean | optional | Show (`True`) or hide (`False`) collections of this specific waste type. Default is `True` |
 | icon | string | optional | Icon to use for this specific waste type. Any [Material Design Icon](https://pictogrammers.com/library/mdi/) name in the form `mdi:icon-name` is accepted (e.g. `mdi:bottle-soda`). When omitted, the source's default icon is used — defaults follow the canonical [`Icons`](../custom_components/waste_collection_schedule/waste_collection_schedule/icons.py) catalogue so the same logical category looks consistent across sources. Set this to override the default for any single waste type. |
-| color | string | optional | YAML only: a quoted `#RRGGBB` display color. Overrides the source color and global default. |
+| color | string | optional | A quoted `#RRGGBB` display color, available in YAML and under Configure → Waste types. Overrides the source color and global default. |
 | picture | string | optional | string representation of the path to a picture used to represent this specific waste type. Default is `None` |
 | use_dedicated_calendar | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
 | dedicated_calendar_title | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |
@@ -187,7 +198,6 @@ waste_collection_schedule:
       leadtime: LEADTIME
       value_template: VALUE_TEMPLATE
       date_template: DATE_TEMPLATE
-      add_days_to: ADD_DAYS_TO
       event_index: EVENT_INDEX
       types:
         - Waste Type 1
@@ -197,7 +207,15 @@ waste_collection_schedule:
 | Parameter | Type | Requirement | Description |
 |--|--|--|--|
 | source_index *(YAML ONLY)* | int | optional | Used to assign a sensor to a specific source. Only needed if multiple sources are defined. The first source defined is source_index 0, the second source_index 1, etc. If no value is supplied, the default of 0 is used.<br><br>If you want to have a sensor which combines the data from multiple sources, just add a list of sources here. [Example](#combine-data-from-multiple-sources). This parameter is not available when using GUI configuration, as you're adding sensors directly to sources |
-| name | string | required | The name Home Assistant used for this sensor |
+| name | string | required | The sensor's display name |
+| unique_id | string | optional | YAML only. Defaults to `name`; set it to the old name when renaming an existing YAML sensor to keep its identity |
+| kind | string | optional | `schedule` (default), `days_to`, or `last_update` |
+| state_format | string | optional | `types_in_days` (default), `in_days`, `relative`, `date`, `types`, `days`, or `custom`. A `value_template` takes precedence |
+| language | string | optional | `auto`, `en`, `de`, `fr`, `it`, `nl`, `sl`, `da`, `fi`, `sv`, or `nb`. YAML defaults to English for compatibility |
+| date_format | string | optional | `dmy`, `weekday_dmy`, `mdy`, `weekday_mdy`, `iso` (default), or `weekday_iso`. A `date_template` takes precedence for detail dates |
+| unique_types | boolean | optional | Default `false`. Keep the earliest eligible collection per provider bin when the source uses `carry_raw_label`, otherwise per type ID, before applying `event_index` and `count` |
+| exclude_types | list of strings | optional | Remove matching types or provider labels after applying the include filter. New, unlisted types remain included |
+| color | string | optional | Sensor-local `#RRGGBB` override for the color attribute and structured collection records |
 | details_format | string | optional | Specifies the format used to display info in Home Assistant's _more info_ pop-up. Valid values are: `upcoming`, `appointment_types`, `generic` and `hidden`. If no value is supplied, the default of "upcoming" is used. See [options for details_format](#options-for-details_format-parameter) for more details |
 | count | int | optional | Limits Home Assistant's _more info_ popup to displaying the next _int_ collections |
 | leadtime | int | optional | Limits Home Assistant's _more info_ popup to only displaying collections happening within the next _leadtime_ days|
@@ -205,7 +223,7 @@ waste_collection_schedule:
 | date_template | string | optional | Uses Home Assistant templating to format the dates appearing within the _more info_ popup information of an entity. See [template variables](#template-variables-for-value_template-and-date_template-parameters) for further details |
 | add_days_to | boolean | optional | Deprecated, has no effect: the `daysTo` attribute is now always set. Still accepted so existing configurations stay valid |
 | event_index | int | optional | Used to assign a sensor to a specific pickup date index. The next pickup date has event_index 0. Useful if you want to have dedicated sensors for next collection, second collection, third collection, ... |
-| types | list of strings | optional | Used to filter waste types. The sensor will only display collections matching these waste types. You need to use the alias if you used `alias` in the customize section of the sources configuration. |
+| types | list of strings | optional | Used to filter waste types. The sensor will only display collections matching these waste types. Use canonical IDs such as `paper` to survive display-language or alias changes. Display names and retained original provider labels also match. Distinct bins sharing one category can be selected by their exact provider labels, even with `show_original_label: false`. Filtering happens before same-day duplicate merging. |
 
 ### Attributes of a sensor
 
@@ -217,6 +235,32 @@ Every sensor that has an upcoming collection exposes these language-neutral attr
 | `date` | Date of the next collection, ISO format (`YYYY-MM-DD`) |
 | `next_types` | List of the waste types collected on that day |
 | `color` | Display color of the next collection (`#RRGGBB`), if known |
+
+`collections` contains structured records for the next collection day. Both `upcoming` and `generic` details also expose an `upcoming` list of records with `date`, `type_id`, display `type`, `original_label`, effective `color`, icon, and available picture, location, or description. Transformers retain provider labels for matching and metadata even when descriptions are hidden. A source must opt into `carry_raw_label` for separate provider-bin identity; other sources keep type-based uniqueness.
+
+Color precedence is sensor override → raw-label customization → type-ID customization → provider color → canonical default. A raw-label customization without a color still inherits the type's color. Native sensor icons do not automatically take their color from this attribute; compatible cards can use it.
+
+The rich `collections` and `upcoming` lists remain available to cards and templates but are excluded from recorder history to avoid HA’s attribute-size limit. State history and the smaller date/type attributes are retained.
+
+`appointment_types` remains a per-type attribute view. `unique_types` instead changes the date-ordered collection list; several bins on one date still share that date group.
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: static
+      args:
+        type: Paper
+        frequency: WEEKLY
+        weekdays: MO
+  sensors:
+    - name: Next of each bin
+      state_format: relative
+      language: auto
+      unique_types: true
+      count: 4
+      details_format: generic
+      exclude_types: [hazardous]
+```
 
 ## Options for _details_format_ parameter
 
@@ -271,6 +315,10 @@ If you want to trigger a manual update of the sources, you can call the service:
 `waste_collection_schedule.fetch_data`
 
 Normally the configuration option 'fetch_time' is used to do this periodically.
+
+Manual Reload and `fetch_data` honor `fetch_interval_days`: they skip the provider request if the last successful fetch is still inside that interval. When a fetch is due, reloading an unchanged UI source starts the request in the background while its cached schedule remains available. A failed request does not advance the last successful fetch date, so a later Reload or `fetch_data` can retry.
+
+Generic `upcoming` attributes contain `Collection` objects for local templates such as `.daysTo` and `.date.strftime(...)`. Jinja's `to_json` filter cannot serialize those objects directly; use the REST API for JSON records or select the required scalar fields in your template.
 
 You can also configure `fetch_interval_days` in the Home Assistant UI:
 `Settings` → `Devices & Services` → `Waste Collection Schedule` → `Configure`.

@@ -3,6 +3,7 @@
 import asyncio
 import importlib
 import logging
+from collections.abc import Mapping
 from typing import Any
 
 import homeassistant.helpers.config_validation as cv
@@ -27,6 +28,7 @@ from .waste_collection_schedule import SourceShell, Customize  # type: ignore # 
 _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = ["calendar", "sensor"]
+CONTROL_PLATFORMS = ["button", "select", "number", "switch", "text"]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -48,6 +50,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     device_store = initialize_device_key_store(hass)
     await device_store.async_load()
 
+    from .sensor_migration import report_legacy_orphans
+
+    # HA restores persisted repairs as nonfixable until their owner reports them.
+    report_legacy_orphans(hass, entry)
+
     customize_dicts: dict[str, dict[str, Any]] = options.get(const.CONF_CUSTOMIZE, {})
 
     customize: dict[str, Customize] = {}
@@ -58,25 +65,38 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             show=c.get(const.CONF_SHOW, True),
             icon=c.get(const.CONF_ICON),
             picture=c.get(const.CONF_PICTURE),
+            color=c.get(const.CONF_COLOR),
             use_dedicated_calendar=c.get(const.CONF_USE_DEDICATED_CALENDAR, False),
             dedicated_calendar_title=c.get(const.CONF_DEDICATED_CALENDAR_TITLE, False),
         )
 
-    shell = await hass.async_add_executor_job(
-        SourceShell.create,
-        entry.data[const.CONF_SOURCE_NAME],
-        customize,
-        entry.data[const.CONF_SOURCE_ARGS],
-        options.get(const.CONF_SOURCE_CALENDAR_TITLE),
-        options.get(const.CONF_DAY_OFFSET, const.CONF_DAY_OFFSET_DEFAULT),
-        # None (option never explicitly set on this entry) lets
-        # SourceShell.create resolve the source's own declared default
-        # instead of always falling back to CONF_IGNORE_DUPLICATES_DEFAULT.
-        options.get(const.CONF_IGNORE_DUPLICATES),
-        options.get(
-            const.CONF_SHOW_ORIGINAL_LABEL, const.CONF_SHOW_ORIGINAL_LABEL_DEFAULT
-        ),
+    previous = hass.data.get(const.DOMAIN, {}).get(entry.entry_id)
+    previous_manager = getattr(previous, "sensor_manager", None)
+    display_keys = {"sensors", "auto_add_types", "device_controls"}
+    reuse_schedule = (
+        previous_manager is not None
+        and previous_manager.data == dict(entry.data)
+        and {k: v for k, v in previous_manager.options.items() if k not in display_keys}
+        == {k: v for k, v in options.items() if k not in display_keys}
     )
+    if reuse_schedule:
+        shell = previous.shell
+    else:
+        shell = await hass.async_add_executor_job(
+            SourceShell.create,
+            entry.data[const.CONF_SOURCE_NAME],
+            customize,
+            entry.data[const.CONF_SOURCE_ARGS],
+            options.get(const.CONF_SOURCE_CALENDAR_TITLE),
+            options.get(const.CONF_DAY_OFFSET, const.CONF_DAY_OFFSET_DEFAULT),
+            # None (option never explicitly set on this entry) lets
+            # SourceShell.create resolve the source's own declared default
+            # instead of always falling back to CONF_IGNORE_DUPLICATES_DEFAULT.
+            options.get(const.CONF_IGNORE_DUPLICATES),
+            options.get(
+                const.CONF_SHOW_ORIGINAL_LABEL, const.CONF_SHOW_ORIGINAL_LABEL_DEFAULT
+            ),
+        )
 
     if shell is None:
         raise ConfigEntryError(
@@ -107,7 +127,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         ),
     )
 
-    await coordinator.async_config_entry_first_refresh()
+    if reuse_schedule:
+        coordinator._fetch_lock = previous._fetch_lock
+        coordinator._last_fetch_date = previous._last_fetch_date
+        coordinator.async_set_updated_data(previous.data or {})
+        coordinator._async_track_timers()
+    else:
+        await coordinator.async_config_entry_first_refresh()
 
     hass.data.setdefault(const.DOMAIN, {})[entry.entry_id] = coordinator
 
@@ -123,6 +149,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    if entry.options.get("device_controls"):
+        await hass.config_entries.async_forward_entry_setups(entry, CONTROL_PLATFORMS)
+    else:
+        from .sensor_manager import cleanup_sensor_devices
+
+        registry = er.async_get(hass)
+        for entity in er.async_entries_for_config_entry(registry, entry.entry_id):
+            if entity.platform == const.DOMAIN and entity.unique_id.startswith(
+                (entry.entry_id + "_control_", entry.entry_id + "_create_")
+            ):
+                registry.async_remove(entity.entity_id)
+        cleanup_sensor_devices(hass, entry, set())
 
     entry.async_on_unload(entry.add_update_listener(async_update_listener))
 
@@ -131,19 +169,56 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         const.DOMAIN, "fetch_data", get_fetch_all_service(hass), schema=vol.Schema({})
     )
 
+    if reuse_schedule:
+        # Keep cached entities available while retrying any due fetch. The entry
+        # owns cancellation on unload; _fetch_now honors the fetch interval.
+        entry.async_create_background_task(
+            hass, coordinator._fetch_now(), "Waste collection refresh after reload"
+        )
+
     return True
 
 
-async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    # Reload this instance
-    await hass.config_entries.async_reload(entry.entry_id)
-
-    return True
+async def async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    coordinator = hass.data.get(const.DOMAIN, {}).get(entry.entry_id)
+    manager = getattr(coordinator, "sensor_manager", None)
+    sensor_keys = {"sensors", "auto_add_types"}
+    if (
+        manager is not None
+        and manager.data == dict(entry.data)
+        and {k: v for k, v in manager.options.items() if k not in sensor_keys}
+        == {k: v for k, v in entry.options.items() if k not in sensor_keys}
+    ):
+        if entry.options.get("auto_add_types") and not manager.options.get(
+            "auto_add_types"
+        ):
+            await manager.async_add_discovered_types()
+        await manager.async_apply()
+    else:
+        await hass.config_entries.async_reload(entry.entry_id)
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload a config entry."""
-    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    coordinator = hass.data.get(const.DOMAIN, {}).get(entry.entry_id)
+    # Unload the platforms that were loaded, even when this edit turns the controls off.
+    platforms = PLATFORMS + (
+        CONTROL_PLATFORMS
+        if coordinator and coordinator.sensor_manager.options.get("device_controls")
+        else []
+    )
+    unloaded = await hass.config_entries.async_unload_platforms(entry, platforms)
+    if unloaded and coordinator:
+        await coordinator.async_shutdown()
+    return unloaded
+
+
+async def async_remove_entry(hass: HomeAssistant, entry: ConfigEntry):
+    """Release the reload schedule and repair belonging to the removed entry."""
+    from homeassistant.helpers import issue_registry as ir
+
+    hass.data.get(const.DOMAIN, {}).pop(entry.entry_id, None)
+    ir.async_delete_issue(hass, const.DOMAIN, "legacy_sensors_" + entry.entry_id)
 
 
 async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
@@ -387,8 +462,18 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
         if config_entry.version < 3:
             await _migrate_registry_unique_ids(hass, config_entry, old_registry_base)
 
+        from .sensor_migration import async_migrate_sensors
+
+        options = (
+            await async_migrate_sensors(
+                hass, config_entry, source_name=new_data.get("name")
+            )
+            if config_entry.version < 4
+            else dict(config_entry.options)
+        )
         hass.config_entries.async_update_entry(
             config_entry,
+            options=options,
             data=new_data,
             version=const.CONFIG_VERSION,
             minor_version=const.CONFIG_MINOR_VERSION,
@@ -399,7 +484,7 @@ async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) ->
     return True
 
 
-def _get_source_unique_id(data: dict[str, Any]) -> str | None:
+def _get_source_unique_id(data: Mapping[str, Any]) -> str | None:
     """Rebuild the pre-v3 source-derived id entities/devices were registered under.
 
     Up to config version 2 every entity's unique_id and the device identifier
