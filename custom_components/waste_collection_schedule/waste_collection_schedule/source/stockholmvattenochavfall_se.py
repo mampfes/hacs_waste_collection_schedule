@@ -195,6 +195,8 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%Y-%m-%d"),
         type_value_map={
             "Kärl 1 - restavfall och matavfall": [wt.GENERAL_WASTE, wt.FOOD_WASTE],
+            "Restavfall, villa": wt.GENERAL_WASTE,
+            "Matavfall, villa": wt.FOOD_WASTE,
             "Kärl 2 - papper och plast": [wt.PAPER, wt.PLASTIC],
             "Kärl 3 - glas och metall": [wt.GLASS, wt.METAL],
             "Trädgårdsavfall, villa": wt.GARDEN_WASTE,
