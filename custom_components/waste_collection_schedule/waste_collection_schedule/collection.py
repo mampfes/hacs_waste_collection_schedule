@@ -222,6 +222,55 @@ class Collection:
             d["description"] = self._description
         return d
 
+    # State that as_dict() (the display view) drops but customize and the
+    # aggregator read, so a stored collection is restored exactly.
+    _STORED_STATE = (
+        "source_color",
+        "color_override",
+        "color_override_source",
+        "type_override",
+        "customize_key",
+        "icon_override",
+        "picture",
+        "location",
+        "description",
+        "original_label",
+        "bin_label",
+        "description_is_raw_label_fallback",
+    )
+
+    def as_storage_dict(self) -> dict:
+        """Return the full state for from_storage_dict().
+
+        Changing the keys needs a version bump of every Store that persists it.
+        """
+        wt = self._waste_type
+        return {
+            "date": self._date.isoformat(),
+            "waste_type": {
+                "id": wt.id,
+                "icon": wt.icon,
+                "color": wt.color,
+                "names": wt.names,
+            },
+            **{k: getattr(self, f"_{k}") for k in self._STORED_STATE},
+        }
+
+    @staticmethod
+    def from_storage_dict(d: dict) -> "Collection":
+        """Rebuild a collection from as_storage_dict()."""
+        from .waste_types import ALL_TYPES
+
+        # canonical types from the catalogue: newer names, icons and colours
+        # apply, and identity checks such as `waste_type is PAPER` hold
+        waste_type = next(
+            (t for t in ALL_TYPES if t.id == d["waste_type"]["id"]), None
+        ) or WasteType(**d["waste_type"])
+        c = Collection(datetime.date.fromisoformat(d["date"]), waste_type)
+        for k in Collection._STORED_STATE:
+            setattr(c, f"_{k}", d[k])
+        return c
+
     def __getitem__(self, key):
         return self.as_dict()[key]
 
