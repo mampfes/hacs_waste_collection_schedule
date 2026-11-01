@@ -158,7 +158,7 @@ class Source:
                         lookup_id = found_ids[-1]
             except Exception as err:
                 _LOGGER.debug(
-                    f"Dynamic lookup extraction issue, using fallback: {err}"
+                    "Dynamic lookup extraction issue, using fallback: %s", err
                 )
 
         # 4. Fetch waste collection schedule
