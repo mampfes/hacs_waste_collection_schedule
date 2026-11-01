@@ -213,7 +213,7 @@ class Source:
                         )
                 except Exception as parse_err:
                     _LOGGER.debug(
-                        f"Failed to parse date for {key} ('{val}'): {parse_err}"
+                        "Failed to parse date for {key} ('{val}'): {parse_err}"
                     )
 
         return entries
