@@ -1,0 +1,21 @@
+title: Uelzen (Landkreis)
+url: https://www.muellkalender-uelzen.de/
+howto:
+  en: | 
+    - Go to <https://www.muellkalender-uelzen.de/> and select your location.  
+    - Choose your waste bins
+    - Choose `iCal-Feed zum Abonnieren` at the bottom
+    - Copy the link to the ics
+    - Use this link as the `url` parameter.
+  de: |
+    - Gehe auf <https://www.muellkalender-uelzen.de/> and wähle deine Ortschaft aus
+    - Wähle deine Mülltonnenarten
+    - Kopiere den Link unten auf der Seite
+    - Setze den kopierten Link als `url` Parameter ein
+test_cases:
+  Beverbeck (Restmüll, Gelbe Tonne, Altpapier (Formata)):
+    url: https://www.muellkalender-uelzen.de/muellkalender.ics?id=H341&&option=1000110011 
+  Hohnstorf mit Lietzberg (Restmüll und Komposttonne): 
+    url: https://www.muellkalender-uelzen.de/muellkalender.ics?id=09MJ&&option=1011000011 
+  Steddorf mit Neu Steddorf (Restmüll und Gelbe Tonne):
+    url: https://www.muellkalender-uelzen.de/muellkalender.ics?id=91Q2&&option=1000100011 
