@@ -112,6 +112,9 @@ class Source(BaseSource):
         "Doktor Abrahams väg 4, Bromma, 168 58": {
             "address": "Doktor Abrahams väg 4, Bromma, 168 58"
         },
+        "Stenborgsvägen 4, Hägersten, 129 38": {
+            "address": "Stenborgsvägen 4, Hägersten, 129 38"
+        },
         "Björkvägen 3, Enskede": {"address": "Björkvägen 3, Enskede"},
         "Gamla Tyresövägen 305, Enskededalen": {
             "address": "Gamla Tyresövägen 305, Enskededalen"
