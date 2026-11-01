@@ -112,6 +112,9 @@ class Source(BaseSource):
         "Doktor Abrahams väg 4, Bromma, 168 58": {
             "address": "Doktor Abrahams väg 4, Bromma, 168 58"
         },
+        "Stenborgsvägen 2, Hägersten, 129 38": {
+            "address": "Stenborgsvägen 2, Hägersten, 129 38"
+        },
         "Björkvägen 3, Enskede": {"address": "Björkvägen 3, Enskede"},
         "Gamla Tyresövägen 305, Enskededalen": {
             "address": "Gamla Tyresövägen 305, Enskededalen"
@@ -192,6 +195,8 @@ class Source(BaseSource):
         parse_date=date_parsers.for_format("%Y-%m-%d"),
         type_value_map={
             "Kärl 1 - restavfall och matavfall": [wt.GENERAL_WASTE, wt.FOOD_WASTE],
+            "Restavfall, villa": wt.GENERAL_WASTE,
+            "Matavfall, villa": wt.FOOD_WASTE,
             "Kärl 2 - papper och plast": [wt.PAPER, wt.PLASTIC],
             "Kärl 3 - glas och metall": [wt.GLASS, wt.METAL],
             "Trädgårdsavfall, villa": wt.GARDEN_WASTE,
