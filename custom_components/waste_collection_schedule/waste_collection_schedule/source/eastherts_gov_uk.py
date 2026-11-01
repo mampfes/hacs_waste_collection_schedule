@@ -122,11 +122,11 @@ class Source:
             ["link", "script", "iframe"], href=True
         ) + soup.find_all(["script", "iframe"], src=True):
             val = link.get("href") or link.get("src")
-            if "apibroker" in val and not sid:
+            if val and "apibroker" in val and not sid:
                 sid_match = re.findall(REGEX["SID"], val)
                 if sid_match:
                     sid = sid_match[0]
-            if "AF-Process-" in val and not process_uri:
+            if val and "AF-Process-" in val and not process_uri:
                 process_match = re.findall(REGEX["PROCESS_URI"], val)
                 if process_match:
                     process_uri = process_match[0]
@@ -213,7 +213,10 @@ class Source:
                         )
                 except Exception as parse_err:
                     _LOGGER.debug(
-                        "Failed to parse date for {key} ('{val}'): {parse_err}"
+                        "Failed to parse date for %s ('%s'): %s",
+                        key,
+                        val,
+                        parse_err,
                     )
 
         return entries
