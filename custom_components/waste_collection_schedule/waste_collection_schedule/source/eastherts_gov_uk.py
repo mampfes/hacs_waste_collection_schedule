@@ -39,8 +39,8 @@ ICON_MAP = {
     "Food": Icons.BIO_KITCHEN,
 }
 REGEX = {
-    "SID": r"sid=(.+)",
-    "PROCESS_URI": r"(AF-Process-[a-f0-9-]+)",
+    "SID": r"sid=([A-Fa-f0-9]+)",
+    "PROCESS_URI": r"(AF-Process-[A-Fa-f0-9-]+)",
 }
 
 HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
@@ -93,9 +93,10 @@ class Source:
     def resolve_year(self, dt):
         today = datetime.now()
         this_year = today.year
-        temp_dt = parse(f"{dt} {this_year}")
+        dt_clean = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", dt, flags=re.IGNORECASE)
+        temp_dt = parse(f"{dt_clean} {this_year}")
         if temp_dt.month == 1 and today.month == 12:
-            temp_dt = parse(f"{dt} {this_year + 1}")
+            temp_dt = parse(f"{dt_clean} {this_year + 1}")
         return temp_dt
 
     def fetch(self):
@@ -106,7 +107,6 @@ class Source:
                 s, self._address_postcode.replace(" ", "")
             )
 
-        # 1. Load the main bin collection service page
         r = s.get(
             "https://eastherts-self.achieveservice.com/service/Bins___When_are_my_Bin_Collection_days",
             headers=HEADERS,
@@ -114,74 +114,88 @@ class Source:
         r.raise_for_status()
         soup = BeautifulSoup(r.content, "html.parser")
 
-        # 2. Dynamically extract session ID (sid) and Process URI
         sid = None
         process_uri = None
 
-        for link in soup.find_all(
-            ["link", "script", "iframe"], href=True
-        ) + soup.find_all(["script", "iframe"], src=True):
-            val = link.get("href") or link.get("src")
-            if val and "apibroker" in val and not sid:
+        for link in soup.find_all(["link", "script", "iframe"], href=True):
+            val = link.get("href")
+            if val and "apibroker" in val and sid is None:
                 sid_match = re.findall(REGEX["SID"], val)
                 if sid_match:
                     sid = sid_match[0]
-            if val and "AF-Process-" in val and not process_uri:
+            if val and "AF-Process-" in val and process_uri is None:
                 process_match = re.findall(REGEX["PROCESS_URI"], val)
                 if process_match:
                     process_uri = process_match[0]
 
-        if not sid or not process_uri:
-            text_match_sid = re.search(r"sid=([a-f0-9]{32})", r.text)
-            if text_match_sid and not sid:
+        for tag in soup.find_all(["script", "iframe"], src=True):
+            val = tag.get("src")
+            if val and "apibroker" in val and sid is None:
+                sid_match = re.findall(REGEX["SID"], val)
+                if sid_match:
+                    sid = sid_match[0]
+            if val and "AF-Process-" in val and process_uri is None:
+                process_match = re.findall(REGEX["PROCESS_URI"], val)
+                if process_match:
+                    process_uri = process_match[0]
+
+        if sid is None or process_uri is None:
+            text_match_sid = re.search(r"sid=([A-Fa-f0-9]{32})", r.text)
+            if sid is None and text_match_sid:
                 sid = text_match_sid.group(1)
-            text_match_process = re.search(r"(AF-Process-[a-f0-9-]+)", r.text)
-            if text_match_process and not process_uri:
+            text_match_process = re.search(r"(AF-Process-[A-Fa-f0-9-]+)", r.text)
+            if process_uri is None and text_match_process:
                 process_uri = text_match_process.group(1)
 
-        if not sid:
+        if sid is None:
             raise ValueError("Could not extract sid token from East Herts page")
 
         timestamp = time.time_ns() // 1_000_000
 
-        # 3. Resolve dynamic lookup package ID
-        lookup_id = "6accfd6441228"  # Known active fallback
-        if process_uri:
+        lookup_id = "6accfd6441228"
+        if process_uri is not None:
             try:
                 def_req = s.get(
-                    f"https://eastherts-self.achieveservice.com/apibroker/runLookup?id={process_uri}&getOnlyTokens=true&sid={sid}",
+                    "https://eastherts-self.achieveservice.com/apibroker/runLookup"
+                    f"?id={process_uri}&getOnlyTokens=true&sid={sid}",
                     headers=HEADERS,
                 )
                 if def_req.status_code == 200:
-                    found_ids = re.findall(r'"([a-f0-9]{13})"', def_req.text)
+                    found_ids = re.findall(r'"([A-Fa-f0-9]{13})"', def_req.text)
                     if found_ids:
                         lookup_id = found_ids[-1]
             except Exception as err:
                 _LOGGER.debug(
-                    "Dynamic lookup extraction issue, using fallback: %s", err
+                    "Dynamic lookup extraction issue, using fallback: %s",
+                    err,
                 )
 
-        # 4. Fetch waste collection schedule
         payload = {
             "formValues": {"Collection Days": {"inputUPRN": {"value": self._uprn}}}
         }
-        scheduleRequest = s.post(
+        schedule_request = s.post(
             (
                 "https://eastherts-self.achieveservice.com/apibroker/runLookup"
                 f"?id={lookup_id}&repeat_against=&noRetry=true"
-                "&getOnlyTokens=undefined&log_id=&app_name="
-                "AF-Renderer::Self"
+                "&getOnlyTokens=undefined&log_id=&app_name=AF-Renderer::Self"
                 f"&_={timestamp}&sid={sid}"
             ),
             headers=HEADERS,
             json=payload,
         )
-        scheduleRequest.raise_for_status()
-        rowdata = json.loads(scheduleRequest.content)["integration"]["transformed"][
-            "rows_data"
-        ]["0"]
+        schedule_request.raise_for_status()
 
-        # 5. Extract NextDate entries
+        try:
+            response = schedule_request.json()
+            rowdata = (
+                response.get("integration", {})
+                .get("transformed", {})
+                .get("rows_data", {})
+                .get("0", {})
+            )
+        except ValueError:
+            rowdata = {}
+
         bin_names = {
             "Refuse": "Refuse",
             "Recycling": "Recycling",
@@ -196,34 +210,34 @@ class Source:
         for key, val in rowdata.items():
             if not val or val == "":
                 continue
+            if "NextDate" not in key:
+                continue
 
-            if "NextDate" in key:
-                clean_type = key.replace("NextDateRaw", "").replace("NextDate", "")
-                title = bin_names.get(clean_type, clean_type)
+            clean_type = key.replace("NextDateRaw", "").replace("NextDate", "")
+            title = bin_names.get(clean_type, clean_type)
 
-                try:
-                    if "Raw" in key:
-                        collection_date = parse(val).date()
-                    else:
-                        collection_date = self.resolve_year(val).date()
+            try:
+                if "Raw" in key:
+                    collection_date = parse(str(val)).date()
+                else:
+                    collection_date = self.resolve_year(str(val)).date()
 
-                    combo_key = (title, collection_date)
-                    if combo_key not in seen_combos:
-                        seen_combos.add(combo_key)
-                        entries.append(
-                            Collection(
-                                date=collection_date,
-                                t=title,
-                                icon=ICON_MAP.get(title),
-                            )
+                combo_key = (title, collection_date)
+                if combo_key not in seen_combos:
+                    seen_combos.add(combo_key)
+                    entries.append(
+                        Collection(
+                            date=collection_date,
+                            t=title,
+                            icon=ICON_MAP.get(title),
                         )
-                except Exception as parse_err:
-                    _LOGGER.debug(
-                        "Failed to parse date for %s ('%s'): %s",
-                        key,
-                        val,
-                        parse_err,
                     )
+            except (TypeError, ValueError) as parse_err:
+                _LOGGER.debug(
+                    "Failed to parse date for %s ('%s'): %s",
+                    key,
+                    val,
+                    parse_err,
+                )
 
         return entries
-        
