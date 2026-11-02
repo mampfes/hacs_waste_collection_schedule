@@ -68,6 +68,8 @@ class Source:
 
     def get_data(self, year):
         session = requests.session()
+        # The form preselects the next year from autumn on, so request it explicitly
+        zeitraum = f"Jahresübersicht {year}"
 
         # 1) GET: "Abfallkalender"
         r = session.get(
@@ -83,6 +85,7 @@ class Source:
         # 2) CITYCHANGED
         args["Ort"] = self._street[0].upper()
         args["SubmitAction"] = "CITYCHANGED"
+        args["Zeitraum"] = zeitraum
         r = session.post(API_URL, data=args)
         r.raise_for_status()
 
@@ -93,6 +96,7 @@ class Source:
         # 3) STREETCHANGED
         args["Strasse"] = self._street
         args["SubmitAction"] = "STREETCHANGED"
+        args["Zeitraum"] = zeitraum
         r = session.post(API_URL, data=args)
         r.raise_for_status()
 
@@ -103,6 +107,7 @@ class Source:
         # 4) forward
         args["Hausnummer"] = str(self._hnr)
         args["SubmitAction"] = "forward"
+        args["Zeitraum"] = zeitraum
         args["ContainerGewaehlt_1"] = "on"
         args["ContainerGewaehlt_2"] = "on"
         args["ContainerGewaehlt_3"] = "on"
