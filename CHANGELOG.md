@@ -6,6 +6,12 @@ Releases are listed in reverse chronological order.
 
 ## [Unreleased]
 
+### Removed
+
+- removed newcastle_gov_uk: Newcastle City Council retired the `community.newcastle.gov.uk` bin lookup, which now answers "The details are not currently available" for every address. Deprecated since 2.30.0; use the shared ReCollect ICS source (area `NewcastleUponTyneUK`, see `doc/ics/recollect.md`)
+- removed merton_gov_uk ("London Borough of Merton (Old)"): the `myneighbourhood.merton.gov.uk` waste services page answers HTTP 404. Use the ICS source with the "London Borough of Merton (New)" calendar link from fixmystreet.merton.gov.uk. It was not deprecated first because it could no longer return data
+- removed lrasha_de: since August 2025 (#4449) the source has only raised an error pointing to app_abfallplus_de (Kreis Schwäbisch-Hall). It was not deprecated first because it could no longer return data
+
 ### Changed
 
 - Dedicated calendars retain their category or provider-bin membership when types share a display alias, including description keys and trimmed legacy labels. The general calendar keeps non-dedicated collections and remains available when only part of the dedicated schedule is present; saved keys and calendar identities remain unchanged.
