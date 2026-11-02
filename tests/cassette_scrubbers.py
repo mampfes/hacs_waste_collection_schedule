@@ -747,7 +747,45 @@ def _tkeliai_lt(interactions: list[dict], args: dict[str, Any], today: str) -> N
         interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
 
 
+def _tamax(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep only the download sections of a TAMAX municipality page.
+
+    The page is ~300 KB of site chrome around the accordion ``CalendarLink``
+    reads: each ``.elementor-tab-title`` and the panel it controls. The PDF
+    calendars are kept as recorded.
+    """
+    from bs4 import BeautifulSoup
+
+    for interaction in interactions:
+        if ".pdf" in interaction["url"].lower():
+            continue
+        html = base64.b64decode(interaction["content_b64"]).decode("utf-8")
+        soup = BeautifulSoup(html, "html.parser")
+        kept = []
+        for title in soup.select(".elementor-tab-title"):
+            panel = soup.find(id=title.get("aria-controls"))
+            if panel is not None:
+                kept += [str(title), str(panel)]
+        if not kept:
+            raise ValueError("TAMAX page has no download sections to keep")
+        raw = "<html><body>" + "\n".join(kept) + "</body></html>"
+        interaction["content_b64"] = base64.b64encode(raw.encode("utf-8")).decode(
+            "ascii"
+        )
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "tamax_net_pl": _tamax,
+    "tamax_imielno_pl": _tamax,
+    "tamax_janow_pl": _tamax,
+    "tamax_lelow_pl": _tamax,
+    "tamax_szczekociny_pl": _tamax,
+    "tamax_wlodowice_pl": _tamax,
+    "tamax_bochnia_pl": _tamax,
+    "tamax_koniusza_pl": _tamax,
+    "tamax_ksiaz_wielki_pl": _tamax,
+    "tamax_sedziszow_pl": _tamax,
+    "tamax_wieliczka_pl": _tamax,
     "portapporta_it": _portapporta_it,
     "ritl_ca": _ritl_ca,
     "wastenet_org_nz": _wastenet_org_nz,

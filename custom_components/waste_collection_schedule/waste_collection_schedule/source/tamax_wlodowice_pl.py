@@ -12,6 +12,7 @@ from waste_collection_schedule.service.TamaxMarkedCalendar import (
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
+_PAGE = f"{URL}/harmonogramy/slaskie/gmina-wlodowice/"
 _AREAS = {
     "Włodowice (bez ul. Kopaniny, Różana i Leszczynowa), Morsko": "Wlodowice-Morsko",
     "Rudniki (bez ul. Górniczej), Włodowice (ul. Kopaniny i Różana)": "Rudniki-bez-ulicy-Gorniczej",
@@ -42,7 +43,7 @@ class Source(BaseSource):
     PARAMS = (config_params.dropdown("area", list(_AREAS), "Household calendar area"),)
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Find Gmina Włodowice (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. "
+            "Find Gmina Włodowice (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/slaskie/gmina-wlodowice/. "
             "Select your exact village group, including the street exceptions in Włodowice and Rudniki. "
             "Use Trudne wjazdy only if the council assigned your property to that route. "
             "Yellow cells collect mixed waste and bio. Red cells collect mixed waste and all listed "
@@ -53,11 +54,7 @@ class Source(BaseSource):
         )
     }
     retrieve = retrievers.LookupChainRetriever(
-        steps=(
-            retrievers.Lookup(
-                f"{URL}/harmonogramy/", pick=CalendarLink("Włodowice", _AREAS)
-            ),
-        ),
+        steps=(retrievers.Lookup(_PAGE, pick=CalendarLink("Włodowice", _AREAS)),),
         url=lambda pdf_url, **_: pdf_url,
     )
     parse = HouseholdCalendarParser(separate_ash=False)

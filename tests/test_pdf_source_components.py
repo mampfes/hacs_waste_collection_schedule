@@ -484,6 +484,53 @@ def test_tamax_route_discovery_keeps_identical_filenames_in_their_municipality()
         selector(response, area="Difficult access")
 
 
+def test_tamax_route_discovery_refuses_the_stale_overview_page():
+    from waste_collection_schedule.service.Tamax import CalendarLink
+
+    html = (
+        '<div class="elementor-tab-title" aria-controls="j">Gmina Janów (mieszkańcy)</div>'
+        '<div id="j"><p>2026 <a href="/a/2026-Janow.pdf">PDF</a></p></div>'
+    )
+    selector = CalendarLink("Janów", {"Janów": "-Janow.pdf"})
+    with freeze_time("2026-10-31"):
+        with pytest.raises(ValueError, match="overview"):
+            selector(
+                _page(html, url="https://www.tamax.net.pl/harmonogramy/"),
+                area="Janów",
+            )
+        assert (
+            selector(
+                _page(
+                    html,
+                    url="https://www.tamax.net.pl/harmonogramy/slaskie/gmina-janow/",
+                ),
+                area="Janów",
+            )
+            == "https://www.tamax.net.pl/a/2026-Janow.pdf"
+        )
+
+
+def test_tamax_sources_look_up_their_municipality_page():
+    import importlib
+    import pkgutil
+
+    import waste_collection_schedule.source as sources
+
+    names = [
+        m.name
+        for m in pkgutil.iter_modules(sources.__path__)
+        if m.name.startswith("tamax_")
+    ]
+    assert len(names) >= 11
+    for name in names:
+        module = importlib.import_module(f"waste_collection_schedule.source.{name}")
+        # The /harmonogramy/ overview lags behind the municipality pages.
+        assert re.fullmatch(
+            r"https://www\.tamax\.net\.pl/harmonogramy/[a-z]+/[a-z-]+/", module._PAGE
+        ), (name, module._PAGE)
+        assert '/harmonogramy/"' not in Path(module.__file__).read_text(), name
+
+
 class TestPdfMonthRows:
     LABELS: ClassVar[dict] = {"zmieszane": 1, "metale": 1, "szkło": 1, "bio": 1}
 

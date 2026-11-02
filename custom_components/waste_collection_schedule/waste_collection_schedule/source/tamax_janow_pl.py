@@ -11,6 +11,7 @@ from waste_collection_schedule.service.DatedPdfColumns import DatedColumns
 from waste_collection_schedule.service.Tamax import URL, CalendarLink
 from waste_collection_schedule.transformers import ICSTransformer
 
+_PAGE = f"{URL}/harmonogramy/slaskie/gmina-janow/"
 _AREAS = {
     "Janów": "-Janow.pdf",
     "Apolonka, Bystrzanowice, Bystrzanowice Dwór, Góry Gorzkowskie, Hucisko, Lgoczanka, Sokole Pole, Teodorów": "Apolonka-Bystrzanowice",
@@ -39,7 +40,7 @@ class Source(BaseSource):
     PARAMS = (config_params.dropdown("area", list(_AREAS), "Household calendar area"),)
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Find Gmina Janów (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. "
+            "Find Gmina Janów (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/slaskie/gmina-janow/. "
             "Select your village group exactly as printed on the household PDF. "
             "Use Trudne wjazdy only if the council has assigned your property to that route. "
             "Apartment-block and business schedules are not supported. Mixed recycling "
@@ -48,11 +49,7 @@ class Source(BaseSource):
         )
     }
     retrieve = retrievers.LookupChainRetriever(
-        steps=(
-            retrievers.Lookup(
-                f"{URL}/harmonogramy/", pick=CalendarLink("Janów", _AREAS)
-            ),
-        ),
+        steps=(retrievers.Lookup(_PAGE, pick=CalendarLink("Janów", _AREAS)),),
         url=lambda pdf_url, **_: pdf_url,
     )
     parse = PdfTableParser(min_words=40)
