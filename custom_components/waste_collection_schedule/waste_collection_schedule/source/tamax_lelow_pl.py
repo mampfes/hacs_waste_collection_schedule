@@ -12,6 +12,7 @@ from waste_collection_schedule.service.TamaxMarkedCalendar import (
 )
 from waste_collection_schedule.transformers import JsonTransformer
 
+_PAGE = f"{URL}/harmonogramy/slaskie/gmina-lelow/"
 _AREAS = {
     "Lelów (bez ul. Spacerowej), Lgota Błotna, Lgota Gawronna": "Lelow-bez-ulkicy-Spacerowej",
     "Lelów (ul. Spacerowa), Nakło, Paulinów, Turzyn, Ślęzany": "Naklo-Paulinow-Turzyn",
@@ -41,7 +42,7 @@ class Source(BaseSource):
     PARAMS = (config_params.dropdown("area", list(_AREAS), "Household calendar area"),)
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Find Gmina Lelów (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. "
+            "Find Gmina Lelów (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/slaskie/gmina-lelow/. "
             "Select the exact household village group; Lelów's Spacerowa street has a separate route. "
             "Use Trudne wjazdy only if the council assigned your property to that route. "
             "Yellow cells collect mixed waste and bio; red cells collect mixed waste and recycling; "
@@ -51,11 +52,7 @@ class Source(BaseSource):
         )
     }
     retrieve = retrievers.LookupChainRetriever(
-        steps=(
-            retrievers.Lookup(
-                f"{URL}/harmonogramy/", pick=CalendarLink("Lelów", _AREAS)
-            ),
-        ),
+        steps=(retrievers.Lookup(_PAGE, pick=CalendarLink("Lelów", _AREAS)),),
         url=lambda pdf_url, **_: pdf_url,
     )
     parse = HouseholdCalendarParser(separate_ash=True)

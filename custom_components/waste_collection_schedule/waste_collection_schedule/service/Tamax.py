@@ -1,8 +1,16 @@
-"""Discover current TAMAX calendars from their published download index."""
+"""Discover current TAMAX calendars from their municipality download pages.
+
+TAMAX publishes each municipality's calendars on its own page under
+``/harmonogramy/<voivodeship>/<municipality>/``. The ``/harmonogramy/``
+overview repeats the same sections but is not kept in step: after the
+half-yearly re-upload in July 2026 it still linked Koniusza's and Książ
+Wielki's January calendars. Sources therefore look their link up on the
+municipality page, and ``CalendarLink`` refuses the overview.
+"""
 
 import datetime
 from collections.abc import Mapping
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit
 
 from bs4 import BeautifulSoup
 
@@ -37,6 +45,11 @@ class CalendarLink:
     def __call__(self, response, *_, area):
         if area not in self.areas:
             raise SourceArgumentNotFoundWithSuggestions("area", area, list(self.areas))
+        if urlsplit(str(response.url)).path.rstrip("/") == "/harmonogramy":
+            raise ValueError(
+                "The TAMAX /harmonogramy/ overview is not kept up to date; "
+                "look the calendar up on the municipality's own page"
+            )
         matches = set()
         year = str(datetime.date.today().year)
         soup = BeautifulSoup(response.text, "html.parser")

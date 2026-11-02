@@ -11,6 +11,7 @@ from waste_collection_schedule.service.DatedPdfColumns import DatedColumns
 from waste_collection_schedule.service.Tamax import URL, CalendarLink
 from waste_collection_schedule.transformers import ICSTransformer
 
+_PAGE = f"{URL}/harmonogramy/slaskie/gmina-szczekociny/"
 _AREAS = {
     "Szczekociny: 8 Pułku Ułanów, Boczna, Centralna, Dębowa…": "Szczekociny-ulice-8-Pulku-Ulanow",
     "Szczekociny: Akacjowa, Brzozowa, Głowackiego, Grochowskiego, Jana Pawła II…": "Szczekociny-ulice-Akacjowa",
@@ -40,7 +41,7 @@ class Source(BaseSource):
     PARAMS = (config_params.dropdown("area", list(_AREAS), "Household calendar area"),)
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Find Gmina Szczekociny (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. "
+            "Find Gmina Szczekociny (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/slaskie/gmina-szczekociny/. "
             "Select your village group or street list exactly as printed on the household PDF. Street choices show the beginning of each list; read its PDF for the complete streets. "
             "Use the Trudne wjazdy / domki letniskowe route only if the council has assigned your property to that route. "
             "Apartment-block and business schedules are not supported. Mixed recycling "
@@ -49,11 +50,7 @@ class Source(BaseSource):
         )
     }
     retrieve = retrievers.LookupChainRetriever(
-        steps=(
-            retrievers.Lookup(
-                f"{URL}/harmonogramy/", pick=CalendarLink("Szczekociny", _AREAS)
-            ),
-        ),
+        steps=(retrievers.Lookup(_PAGE, pick=CalendarLink("Szczekociny", _AREAS)),),
         url=lambda pdf_url, **_: pdf_url,
     )
     parse = PdfTableParser(min_words=40)

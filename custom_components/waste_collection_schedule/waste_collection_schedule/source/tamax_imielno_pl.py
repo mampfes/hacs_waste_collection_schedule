@@ -11,6 +11,7 @@ from waste_collection_schedule.service.ImielnoCalendar import VillageDateRows
 from waste_collection_schedule.service.Tamax import URL, CalendarLink
 from waste_collection_schedule.transformers import ICSTransformer
 
+_PAGE = f"{URL}/harmonogramy/swietokrzyskie/gmina-imielno/"
 _AREAS = dict.fromkeys(
     [
         "Borszowice",
@@ -61,7 +62,7 @@ class Source(BaseSource):
     PARAMS = (config_params.dropdown("area", list(_AREAS), "Village"),)
     HOWTO: ClassVar[dict] = {
         "en": (
-            "Find Gmina Imielno (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/ and select your village. "
+            "Find Gmina Imielno (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/swietokrzyskie/gmina-imielno/ and select your village. "
             "The source reads the printed day-and-Roman-month dates, including holiday exceptions. "
             "Mixed waste/bio and recycling use different village groups and are matched independently. "
             "The four dated bulky collections also accept complete electrical equipment. "
@@ -69,11 +70,7 @@ class Source(BaseSource):
         )
     }
     retrieve = retrievers.LookupChainRetriever(
-        steps=(
-            retrievers.Lookup(
-                f"{URL}/harmonogramy/", pick=CalendarLink("Imielno", _AREAS)
-            ),
-        ),
+        steps=(retrievers.Lookup(_PAGE, pick=CalendarLink("Imielno", _AREAS)),),
         url=lambda pdf_url, **_: pdf_url,
     )
     parse = PdfTableParser(min_words=30)
