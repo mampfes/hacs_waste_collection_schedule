@@ -31,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Find Gmina Imielno (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/ and select your village. The source reads the printed day-and-Roman-month dates, including holiday exceptions. Mixed waste/bio and recycling use different village groups and are matched independently. The four dated bulky collections also accept complete electrical equipment. Tyres have no separate canonical type. Business calendars are not supported.
+Find Gmina Imielno (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/swietokrzyskie/gmina-imielno/ and select your village. The source reads the printed day-and-Roman-month dates, including holiday exceptions. Mixed waste/bio and recycling use different village groups and are matched independently. The four dated bulky collections also accept complete electrical equipment. Tyres have no separate canonical type. Business calendars are not supported.

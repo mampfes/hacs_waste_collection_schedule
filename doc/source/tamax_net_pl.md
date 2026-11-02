@@ -31,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-On https://www.tamax.net.pl/harmonogramy/ find Gmina Radziemice and select the village group printed on your household calendar. Only these three Radziemice household tables are supported; other municipalities, apartment blocks and business calendars use different layouts. In particular, the Racławice download is for businesses. Ash (Popiół paleniskowy) is classified as Other and keeps its original label. The combined bulky collection also accepts electronics and textiles. Tyres have no separate canonical type.
+On https://www.tamax.net.pl/harmonogramy/malopolskie/gmina-radziemice/ find Gmina Radziemice (mieszkańcy) and select the village group printed on your household calendar. Only these three Radziemice household tables are supported; other municipalities, apartment blocks and business calendars use different layouts. In particular, the Racławice download is for businesses. Ash (Popiół paleniskowy) is classified as Other and keeps its original label. The combined bulky collection also accepts electronics and textiles. Tyres have no separate canonical type.

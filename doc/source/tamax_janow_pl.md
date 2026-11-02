@@ -31,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Find Gmina Janów (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/. Select your village group exactly as printed on the household PDF. Use Trudne wjazdy only if the council has assigned your property to that route. Apartment-block and business schedules are not supported. Mixed recycling includes the plastic/metal, paper and glass bags collected together. M-PSZOK collections require registration and have no dated appointments in this calendar.
+Find Gmina Janów (mieszkańcy) at https://www.tamax.net.pl/harmonogramy/slaskie/gmina-janow/. Select your village group exactly as printed on the household PDF. Use Trudne wjazdy only if the council has assigned your property to that route. Apartment-block and business schedules are not supported. Mixed recycling includes the plastic/metal, paper and glass bags collected together. M-PSZOK collections require registration and have no dated appointments in this calendar.
