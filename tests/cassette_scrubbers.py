@@ -673,6 +673,29 @@ def _ritl_ca(interactions: list[dict], args: dict[str, Any], today: str) -> None
         interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
 
 
+def _airdrie_ca(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep the configured community's events of the city-wide feed (~300 KB)."""
+
+    def key(name: str) -> str:
+        return " ".join(name.replace("'", "").upper().split())
+
+    wanted = key(str(args["community"]))
+    for interaction in interactions:
+        if interaction["url"].split("?")[0].endswith("/WasteRecycling/getEvents"):
+            _set_json(
+                interaction,
+                [
+                    event
+                    for event in _json(interaction)
+                    if wanted
+                    in {
+                        key(name)
+                        for name in event["extendedProps"]["communities"].split(",")
+                    }
+                ],
+            )
+
+
 SCRUBBERS: dict[str, Scrubber] = {
     "portapporta_it": _portapporta_it,
     "ritl_ca": _ritl_ca,
@@ -699,6 +722,7 @@ SCRUBBERS: dict[str, Scrubber] = {
     "nwrrr_com_au": _nwrrr_com_au,
     "luxembourg_lu": _luxembourg_lu,
     "chesterfield_gov_uk": _chesterfield_gov_uk,
+    "airdrie_ca": _airdrie_ca,
 }
 
 
