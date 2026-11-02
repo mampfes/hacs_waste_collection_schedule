@@ -1571,7 +1571,7 @@
   "airdrie_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/airdrie_ca.md",
     "howto": {
-      "en": "Select your community from the dropdown list."
+      "en": "Select your community as named on the City of Airdrie [collection schedules page](https://www.airdrie.ca/index.cfm?serviceID=1880). The [Waste and recycling community map](https://www.airdrie.ca/getLink.cfm?ID=13995) shows which community an address belongs to."
     },
     "urls": {}
   },
