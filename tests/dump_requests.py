@@ -30,8 +30,9 @@ import sys
 
 import dateutil.parser  # noqa: F401
 
-sys.path.insert(
-    0,
+# Appended, not inserted first: the component folder holds HA platform modules
+# such as select.py that would otherwise shadow the standard library.
+sys.path.append(
     os.path.join(
         os.path.dirname(__file__),
         "../custom_components/waste_collection_schedule",
