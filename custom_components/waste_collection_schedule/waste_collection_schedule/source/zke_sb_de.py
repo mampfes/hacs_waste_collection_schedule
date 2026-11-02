@@ -12,6 +12,12 @@ address-wizard's own model and becomes
 re-scrapes, so that value is hardcoded on the download step instead of
 picked up dynamically (confirmed live: 75 collections, matching the legacy
 source's "Harthweg 7" TEST_CASE exactly).
+
+The year is a ``Zeitraum`` radio (``Jahresübersicht <year>``), not a hidden
+input, so it is never carried forward on its own and the server's
+preselection wins -- next year from autumn on. ``iterate_field`` runs the
+wizard once per offered year instead, covering the rest of the current year
+and the next one (#8098).
 """
 
 from typing import ClassVar, final
@@ -60,6 +66,7 @@ class Source(BaseSource):
     retrieve = AthosWasteManagementRetriever(
         url=_SERVLET,
         initial_params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+        iterate_field="Zeitraum",
         steps=[
             {
                 "submit_action": "CITYCHANGED",
@@ -84,7 +91,7 @@ class Source(BaseSource):
             },
         ],
     )
-    parse = parsers.IcsParser()
+    parse = parsers.EachResponse(parsers.IcsParser())
     transform = ICSTransformer(
         clean=lambda label: label.split(":")[0].strip(),
         type_value_map={
