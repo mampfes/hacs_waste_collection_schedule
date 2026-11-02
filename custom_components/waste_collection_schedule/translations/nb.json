@@ -20329,10 +20329,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "location": "Location"
+          "location": "Gate"
         },
         "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "location": "Gatenavnet ditt."
         }
       },
       "reconfigure_tkeliai_lt": {
@@ -20340,9 +20341,11 @@
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernavn",
-          "location": "Location"
+          "location": "Gate"
         },
-        "data_description": {}
+        "data_description": {
+          "location": "Gatenavnet ditt."
+        }
       },
       "args_sratc_lt": {
         "title": "Konfigurer kilde",

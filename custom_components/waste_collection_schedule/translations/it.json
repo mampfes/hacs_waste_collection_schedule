@@ -20329,10 +20329,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "location": "Posizione"
+          "location": "Via"
         },
         "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi."
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "location": "Il nome della vostra via."
         }
       },
       "reconfigure_tkeliai_lt": {
@@ -20340,9 +20341,11 @@
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
         "data": {
           "calendar_title": "Nome Calendario",
-          "location": "Posizione"
+          "location": "Via"
         },
-        "data_description": {}
+        "data_description": {
+          "location": "Il nome della vostra via."
+        }
       },
       "args_sratc_lt": {
         "title": "Configurazione Sorgente",

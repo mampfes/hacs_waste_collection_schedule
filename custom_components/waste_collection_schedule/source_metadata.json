@@ -4626,7 +4626,9 @@
   },
   "tkeliai_lt": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/tkeliai_lt.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street or village as the schedules on https://tkeliai.lt/atlieku-tvarkymas list it, e.g. 'Žalioji', 'Butkų Juzės (nuo 1 iki 31)' or 'Paragai'. A street listed in several parts needs its house-number range; a village name that occurs in two elderships needs the eldership, e.g. 'Gintalai, Varnių seniūnija'. The old forms ('Žalioji g.', 'Butkų Juzės(1-31) g.', 'Paragai k.') keep working."
+    },
     "urls": {}
   },
   "sratc_lt": {

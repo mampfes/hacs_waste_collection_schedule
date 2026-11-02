@@ -20329,10 +20329,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location": "Position"
+          "location": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "location": "Ihr Straßenname."
         }
       },
       "reconfigure_tkeliai_lt": {
@@ -20340,9 +20341,11 @@
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location": "Position"
+          "location": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "location": "Ihr Straßenname."
+        }
       },
       "args_sratc_lt": {
         "title": "Quelle konfigurieren",

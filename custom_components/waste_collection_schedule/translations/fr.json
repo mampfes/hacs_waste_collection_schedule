@@ -20329,10 +20329,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "location": "Emplacement"
+          "location": "Rue"
         },
         "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé."
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "location": "Le nom de votre rue."
         }
       },
       "reconfigure_tkeliai_lt": {
@@ -20340,9 +20341,11 @@
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
         "data": {
           "calendar_title": "Titre du Calendrier",
-          "location": "Emplacement"
+          "location": "Rue"
         },
-        "data_description": {}
+        "data_description": {
+          "location": "Le nom de votre rue."
+        }
       },
       "args_sratc_lt": {
         "title": "Configurer la Source",

@@ -20334,10 +20334,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "location": "Location"
+          "location": "Katu"
         },
         "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä."
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "location": "Kadun nimi."
         }
       },
       "reconfigure_tkeliai_lt": {
@@ -20345,9 +20346,11 @@
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
         "data": {
           "calendar_title": "Kalenterin nimi",
-          "location": "Location"
+          "location": "Katu"
         },
-        "data_description": {}
+        "data_description": {
+          "location": "Kadun nimi."
+        }
       },
       "args_sratc_lt": {
         "title": "Määritä lähde",

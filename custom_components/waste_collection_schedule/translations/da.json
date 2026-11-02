@@ -20329,10 +20329,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location": "Location"
+          "location": "Gade"
         },
         "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer."
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "location": "Dit gadenavn"
         }
       },
       "reconfigure_tkeliai_lt": {
@@ -20340,9 +20341,11 @@
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
         "data": {
           "calendar_title": "Kalender Titel",
-          "location": "Location"
+          "location": "Gade"
         },
-        "data_description": {}
+        "data_description": {
+          "location": "Dit gadenavn"
+        }
       },
       "args_sratc_lt": {
         "title": "Konfigurer Kilde",
