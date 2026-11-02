@@ -18551,12 +18551,6 @@
       "id": "awido_de"
     },
     {
-      "title": "Landkreis Schw\u00e4bisch Hall (Broken)",
-      "module": "lrasha_de",
-      "default_params": {},
-      "id": "lrasha_de"
-    },
-    {
       "title": "Landkreis Sigmaringen",
       "module": "abfall_io_graphql",
       "default_params": {
@@ -37975,12 +37969,6 @@
       "id": "ics_merton_gov_uk"
     },
     {
-      "title": "London Borough of Merton (Old)",
-      "module": "merton_gov_uk",
-      "default_params": {},
-      "id": "merton_gov_uk"
-    },
-    {
       "title": "London Borough of Newham",
       "module": "newham_gov_uk",
       "default_params": {},
@@ -38163,12 +38151,6 @@
       "module": "newark_sherwooddc_gov_uk",
       "default_params": {},
       "id": "newark_sherwooddc_gov_uk"
-    },
-    {
-      "title": "Newcastle City Council",
-      "module": "newcastle_gov_uk",
-      "default_params": {},
-      "id": "newcastle_gov_uk"
     },
     {
       "title": "Newcastle Under Lyme Borough Council",

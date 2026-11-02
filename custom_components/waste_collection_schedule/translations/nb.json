@@ -15561,26 +15561,6 @@
           "street": "Gatenavnet ditt."
         }
       },
-      "args_lrasha_de": {
-        "title": "Konfigurer kilde",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "location": "Location"
-        },
-        "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
-        }
-      },
-      "reconfigure_lrasha_de": {
-        "title": "Konfigurer kilde på nytt",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "location": "Location"
-        },
-        "data_description": {}
-      },
       "args_ics_landkreis_stade_de": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -30940,26 +30920,6 @@
         },
         "data_description": {}
       },
-      "args_merton_gov_uk": {
-        "title": "Konfigurer kilde",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "property": "Property"
-        },
-        "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
-        }
-      },
-      "reconfigure_merton_gov_uk": {
-        "title": "Konfigurer kilde på nytt",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "property": "Property"
-        },
-        "data_description": {}
-      },
       "args_newham_gov_uk": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -31538,29 +31498,6 @@
         },
         "data_description": {
           "uprn": "Ditt Unique Property Reference Number. Finn det på {url_www_findmyaddress_co_uk}"
-        }
-      },
-      "args_newcastle_gov_uk": {
-        "title": "Konfigurer kilde",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "uprn": "Uprn"
-        },
-        "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
-          "uprn": "En enkel måte å finne ditt Unique Property Reference Number (UPRN) på er å gå til {url_www_findmyaddress_co_uk} og skrive inn adressen din."
-        }
-      },
-      "reconfigure_newcastle_gov_uk": {
-        "title": "Konfigurer kilde på nytt",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "uprn": "Uprn"
-        },
-        "data_description": {
-          "uprn": "En enkel måte å finne ditt Unique Property Reference Number (UPRN) på er å gå til {url_www_findmyaddress_co_uk} og skrive inn adressen din."
         }
       },
       "args_newcastle_staffs_gov_uk": {
