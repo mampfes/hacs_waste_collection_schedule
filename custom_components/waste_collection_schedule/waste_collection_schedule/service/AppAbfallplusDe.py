@@ -972,7 +972,7 @@ class AppAbfallplusDe:
         soup = BeautifulSoup(r.text, features="html.parser")
         self._f_id_abfallart = []
         for to_skip in ABFALLARTEN_H2_SKIP:
-            to_skip_element = soup.find("h2", text=to_skip)
+            to_skip_element = soup.find("h2", string=to_skip)
             div_to_skip = (
                 to_skip_element.find_parent("div") if to_skip_element else None
             )
@@ -1103,7 +1103,7 @@ class AppAbfallplusDe:
         subtitle when needed.
         """
         soup = BeautifulSoup(text, "xml")
-        soup_categories = soup.find("key", text="categories")
+        soup_categories = soup.find("key", string="categories")
         if not soup_categories:
             raise Exception("No categories found.")
         soup_array = soup_categories.find_next_sibling("array")
@@ -1113,15 +1113,15 @@ class AppAbfallplusDe:
         # First pass: collect id, name, subtitle for all categories
         raw_categories: list[tuple[str, str, str]] = []
         for category in soup_array.find_all("dict"):
-            cat_id = category.find("key", text="id").find_next_sibling("string").text
+            cat_id = category.find("key", string="id").find_next_sibling("string").text
             name = (
-                category.find("key", text="name")
+                category.find("key", string="name")
                 .find_next_sibling("string")
                 .text.replace("![CDATA[", "")
                 .replace("]]", "")
                 .strip()
             )
-            subtitle_tag = category.find("key", text="subtitle")
+            subtitle_tag = category.find("key", string="subtitle")
             subtitle = (
                 subtitle_tag.find_next_sibling("string")
                 .text.replace("![CDATA[", "")
@@ -1145,16 +1145,16 @@ class AppAbfallplusDe:
 
         collections: list[dict] = []
         for collection in (
-            soup.find("key", text="dates").find_next_sibling("array").find_all("dict")
+            soup.find("key", string="dates").find_next_sibling("array").find_all("dict")
         ):
             category = (
-                collection.find("key", text="category_id")
+                collection.find("key", string="category_id")
                 .find_next_sibling("string")
                 .text
             )
             category_name = categories[category]
             pickup_date_str = (
-                collection.find("key", text="pickup_date")
+                collection.find("key", string="pickup_date")
                 .find_next_sibling("string")
                 .text
             )
