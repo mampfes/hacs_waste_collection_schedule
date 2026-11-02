@@ -49,17 +49,28 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-          cache: pip
-          cache-dependency-path: requirements.txt
+      - name: Set up uv
+        # uv resolves and installs Home Assistant's dependency tree several
+        # times faster than pip; its cache is keyed on requirements.txt.
+        uses: astral-sh/setup-uv@v10.3.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: requirements.txt
       - name: Install ruff
-        run: pip install ruff
+        run: uv pip install --system ruff
       - name: Lint with ruff
         run: |
           # stop the build if there are Python syntax errors or undefined names
           ruff check . --select E9,F63,F7,F82 --output-format=full --statistics
       - name: Install pre-commit dependencies
         if: github.event_name == 'pull_request'
-        run: pip install pre-commit -r requirements.txt "homeassistant==2024.4.0" "josepy<2"
+        run: uv pip install --system pre-commit -r requirements.txt "homeassistant==2024.4.0" "josepy<2"
+      - name: Cache pre-commit hook environments
+        if: github.event_name == 'pull_request'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ runner.os }}-py3.12-${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Run pre-commit (PR changes only)
         if: github.event_name == 'pull_request'
         run: |
@@ -87,23 +98,30 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python_version }}
-          cache: pip
-          cache-dependency-path: requirements.txt
+      - name: Set up uv
+        # uv resolves and installs Home Assistant's dependency tree several
+        # times faster than pip. The cache suffix keeps the two lanes apart.
+        uses: astral-sh/setup-uv@v10.3.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: requirements.txt
+          cache-suffix: ${{ matrix.lane }}
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install pytest pytest-asyncio pytest-xdist freezegun -r requirements.txt "${{ matrix.homeassistant_spec }}" "${{ matrix.josepy_spec }}"
+          uv pip install --system pytest pytest-asyncio pytest-xdist freezegun -r requirements.txt "${{ matrix.homeassistant_spec }}" "${{ matrix.josepy_spec }}"
       - name: Test components with pytest
         run: |
           python -c "from custom_components.waste_collection_schedule import config_flow"
           # Exclude `live` tests (they fetch real provider endpoints); the
           # gating run stays deterministic and offline. One xdist worker per
-          # runner CPU (four on GitHub's standard Linux runners).
-          pytest -m "not live" --ignore=tests/test_offline_fixtures.py -n auto --durations=20
+          # logical CPU (four on GitHub's standard Linux runners). `-n auto`
+          # would count physical cores only, because Home Assistant pulls in
+          # psutil, and start just two.
+          pytest -m "not live" --ignore=tests/test_offline_fixtures.py -n logical --durations=20
       - name: Replay offline cassettes on all runner CPUs
         # The fallback ceiling is merged across workers (tests/offline_replay.py),
         # so it still gates the full pass.
-        run: pytest tests/test_offline_fixtures.py -n auto --dist load --durations=20
+        run: pytest tests/test_offline_fixtures.py -n logical --dist load --durations=20
       - name: Report BaseSource pipeline coverage
         run: |
           # Informational migration metric (RFC #6561); never fails the build.

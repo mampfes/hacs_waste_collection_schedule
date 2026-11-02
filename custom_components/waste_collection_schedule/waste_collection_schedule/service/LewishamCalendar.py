@@ -116,7 +116,7 @@ class _CalendarClient:
 
     def parse(self, r):
         soup = BeautifulSoup(r.text, "html.parser")
-        heading = soup.find("h2", text="When your bins are collected:")
+        heading = soup.find("h2", string="When your bins are collected:")
         if not heading:
             raise ValueError("Could not find collection heading")
         entries: list[dict] = []

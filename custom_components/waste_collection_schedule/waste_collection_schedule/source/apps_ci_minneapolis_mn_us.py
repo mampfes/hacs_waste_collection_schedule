@@ -69,7 +69,7 @@ class Source:
 
         # 1. Find the next garbage collection date
         garbage_collection_text = (
-            soup.find("strong", text="Next Garbage Collection:")
+            soup.find("strong", string="Next Garbage Collection:")
             .find_next("a")
             .text.strip()
         )
@@ -85,7 +85,7 @@ class Source:
 
         # 2. Find the next recycling collection date
         recycling_collection_text = (
-            soup.find("strong", text="Next Recycling Collection:")
+            soup.find("strong", string="Next Recycling Collection:")
             .find_next("a")
             .text.strip()
         )
