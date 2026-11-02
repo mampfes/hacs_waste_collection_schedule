@@ -20,9 +20,9 @@ when the count reaches zero.
 | 5 | Shared backend, build one component for the cluster | 0 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 1 left (of 14) | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
 | 7 | Singleton, small (<150 lines, <=2 requests) | 6 left (of 58, -1 to class 2) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
-| 8 | Singleton, medium | 11 left (of 78) | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
+| 8 | Singleton, medium | 10 left (of 78) | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
 | 9 | Singleton, large (>=350 lines or >=5 requests) | 2 left (of 24, +1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
-| | **Total** | **37** (281 when this file was written; equals `Legacy fetch() sources` in `python tools/arch_coverage.py`. See the notes in class 5 to 8 and the reconciliation below) | |
+| | **Total** | **36** (281 when this file was written; equals `Legacy fetch() sources` in `python tools/arch_coverage.py`. See the notes in class 5 to 8 and the reconciliation below) | |
 
 ## 1. Special / not a provider
 
@@ -118,12 +118,14 @@ Done in the first block (4): `fairfieldcity_nsw_gov_au` (the council's autocompl
 
 Done since: `hastings_gov_uk` (#8068; the server's incomplete certificate chain is completed with the TLS AIA fallback instead of `verify=False`).
 
+Done in the research block: `airdrie_ca`. The old `functions/calendar.cfc` calendar (ID 10) answers `[]` for every date range; the collection schedules page now loads one city-wide JSON feed (`functions/WasteRecycling/getEvents`, dated garbage, recycling and organics collections, each listing the communities it serves), which the source filters by the configured community. The community list gains Vantage Rise; the feed spells King's Heights without the apostrophe, so community names are matched case- and apostrophe-insensitively.
+
 Not migrated by decision: `grafikai_svara_lt` stays legacy (each update would download about 55 MB).
 
 - **json** (1): `grafikai_svara_lt`
 - **html** (3): `gardenbags_co_nz`, `islington_gov_uk`, `newham_gov_uk`
 - **json/html** (1): `greyhound_ie`
-- **ics/json** (5): `airdrie_ca`, `api_golemio_cz`, `greatershepparton_com_au`, `maitland_nsw_gov_au`, `npdc_govt_nz`
+- **ics/json** (4): `api_golemio_cz`, `greatershepparton_com_au`, `maitland_nsw_gov_au`, `npdc_govt_nz`
 - **csv** (1): `scenicrim_qld_gov_au`
 
 ## 9. Standalone, large
@@ -132,6 +134,8 @@ Not migrated by decision: `grafikai_svara_lt` stays legacy (each update would do
 - **ics/json/html** (1): `baltimore_county_md_us`
 
 Decided (2026-10-31): the sources whose dates are computed from a cadence rather than published by the provider stay legacy, since a pipeline source must not project dates: `baltimore_county_md_us` (weekly trash), `orange_nsw_gov_au`, `maitland_nsw_gov_au`, `npdc_govt_nz`, `scenicrim_qld_gov_au`, `greatershepparton_com_au`, `islington_gov_uk`, `api_golemio_cz` and `araccolta_it`. They are not migration work; remove them at a major release or when the provider publishes dates.
+
+Researched (2026-11-02), not migrated: `avfallsapp_se`. All 17 configured hosts answer. The 15 WordPress deployments (`<provider>.avfallsapp.se/wp-json/nova/v1/`) answer the address search (`next-pickup/search`) without registration, but every schedule call (`next-pickup/list`, `next-pickup/fetch`) answers `device_not_registered` until a device has been registered (`POST /register`) and the address bound to it (`POST /next-pickup/set-status`). These are writes against the provider that the legacy source performs once in the config flow and then reuses through the stored `api_key`. Vänersborg and Teknik i Väst run a Laravel API that also wants a bearer token from the app (HTTP 401 without it). The three test cases rely on the original contributor's secrets, so none of them can be recorded as they are. Next step, if wanted: register one test device per provider (an explicit decision, since it creates state at the provider), then migrate onto a shared `service/Avfallsapp.py` with the registration as a config-time step.
 
 ## Reconciliation with `arch_coverage.py` (2026-10-31)
 
