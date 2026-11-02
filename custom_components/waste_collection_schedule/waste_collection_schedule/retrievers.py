@@ -1165,7 +1165,7 @@ def yearly_links(
             its first group that matched is the four-digit year (so a provider
             that moved the year within its file names can be matched with two
             alternative groups). Links are resolved against the index page's
-            URL and de-duplicated. Or ``callable(**source.params) -> str`` for
+            URL (or its ``<base href>``) and de-duplicated. Or ``callable(**source.params) -> str`` for
             a pattern naming the configured calendar.
         argument: for an index listing one calendar per area, the
             ``source.params`` field naming the area as the page's link text
@@ -1191,9 +1191,13 @@ def yearly_links(
             raise ValueError(
                 f"yearly_links pattern {compiled.pattern!r} has no group for the year"
             )
-        base = getattr(response, "url", "") or ""
+        page_url = getattr(response, "url", "") or ""
+        soup = BeautifulSoup(response.text, "html.parser")
+        # Relative links resolve against the page's <base href> when it has one.
+        base_tag = soup.find("base", href=True)
+        base = urljoin(page_url, str(base_tag["href"])) if base_tag else page_url
         by_text: dict[str, dict[str, int]] = {}
-        for tag in BeautifulSoup(response.text, "html.parser").find_all("a", href=True):
+        for tag in soup.find_all("a", href=True):
             href = str(tag["href"])
             match = compiled.search(href)
             year = (
