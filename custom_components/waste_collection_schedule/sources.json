@@ -22610,6 +22610,12 @@
       "id": "jumomind_de"
     },
     {
+      "title": "Uelzen (Landkreis)",
+      "module": "ics",
+      "default_params": {},
+      "id": "ics_muellkalender_uelzen_de"
+    },
+    {
       "title": "ULM (EBU)",
       "module": "ics",
       "default_params": {},

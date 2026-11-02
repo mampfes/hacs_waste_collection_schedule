@@ -1,0 +1,42 @@
+# Uelzen (Landkreis)
+
+Uelzen (Landkreis) is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.
+
+
+## How to get the configuration arguments
+
+- Go to <https://www.muellkalender-uelzen.de/> and select your location.  
+- Choose your waste bins
+- Choose `iCal-Feed zum Abonnieren` at the bottom
+- Copy the link to the ics
+- Use this link as the `url` parameter.
+
+## Examples
+
+### Beverbeck (Restmüll, Gelbe Tonne, Altpapier (Formata))
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.muellkalender-uelzen.de/muellkalender.ics?id=H341&&option=1000110011
+```
+### Hohnstorf mit Lietzberg (Restmüll und Komposttonne)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.muellkalender-uelzen.de/muellkalender.ics?id=09MJ&&option=1011000011
+```
+### Steddorf mit Neu Steddorf (Restmüll und Gelbe Tonne)
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: ics
+      args:
+        url: https://www.muellkalender-uelzen.de/muellkalender.ics?id=91Q2&&option=1000100011
+```

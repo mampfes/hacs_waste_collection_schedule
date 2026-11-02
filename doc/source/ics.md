@@ -424,6 +424,7 @@ This source has been successfully tested with the following service providers:
 - [SWK Herford](/doc/ics/swk_herford_de.md) / swk.herford.de
 - [Südbrandenburgischer Abfallzweckverband](/doc/ics/sbazv_de.md) / sbazv.de/entsorgungstermine/restmuell-papier-gelbesaecke-laubsaecke-weihnachtsbaeume
 - [Technischer Betriebsdienst Reutlingen](/doc/ics/tbr_reutlingen_de.md) / tbr-reutlingen.de
+- [Uelzen (Landkreis)](/doc/ics/muellkalender_uelzen_de.md) / muellkalender-uelzen.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
 - [Vlotho](/doc/ics/vlotho_de.md) / vlotho.de
 - [VUE Waltrop](/doc/ics/vue_waltrop_de.md) / vue-waltrop.de

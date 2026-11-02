@@ -3040,6 +3040,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Tübingen](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [UBZ Umwelt- und Servicebetrieb Zweibrücken](/doc/source/ubzzw_de.md) / ubzzw.com
 - [Uckermark](/doc/source/jumomind_de.md) / udg-uckermark.de
+- [Uelzen (Landkreis)](/doc/ics/muellkalender_uelzen_de.md) / muellkalender-uelzen.de
 - [ULM (EBU)](/doc/ics/ebu_ulm_de.md) / ebu-ulm.de
 - [Ulm (MyMuell App)](/doc/source/jumomind_de.md) / mymuell.de
 - [Ulmen](/doc/source/buergerportal_de.md) / cochem-zell-online.de

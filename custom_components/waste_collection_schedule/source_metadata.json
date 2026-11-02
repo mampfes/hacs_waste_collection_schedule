@@ -4067,6 +4067,14 @@
     "howto": {},
     "urls": {}
   },
+  "ics_muellkalender_uelzen_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/muellkalender_uelzen_de.md",
+    "howto": {
+      "de": "- Gehe auf <https://www.muellkalender-uelzen.de/> and wähle deine Ortschaft aus\n- Wähle deine Mülltonnenarten\n- Kopiere den Link unten auf der Seite\n- Setze den kopierten Link als `url` Parameter ein\n",
+      "en": "- Go to <https://www.muellkalender-uelzen.de/> and select your location.  \n- Choose your waste bins\n- Choose `iCal-Feed zum Abonnieren` at the bottom\n- Copy the link to the ics\n- Use this link as the `url` parameter.\n"
+    },
+    "urls": {}
+  },
   "ics_ebu_ulm_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/ebu_ulm_de.md",
     "howto": {

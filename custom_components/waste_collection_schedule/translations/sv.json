@@ -18099,6 +18099,50 @@
           "street": "Ditt gatunamn."
         }
       },
+      "args_ics_muellkalender_uelzen_de": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "URL",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_ics_muellkalender_uelzen_de": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "file": "File",
+          "headers": "Headers",
+          "impersonate": "Impersonate",
+          "method": "Method",
+          "offset": "Offset",
+          "params": "Params",
+          "regex": "Regex",
+          "split_at": "Split At",
+          "title_template": "Title Template",
+          "url": "URL",
+          "verify_ssl": "Verify Ssl",
+          "version": "Version",
+          "year_field": "Year Field"
+        },
+        "data_description": {}
+      },
       "args_ics_ebu_ulm_de": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
