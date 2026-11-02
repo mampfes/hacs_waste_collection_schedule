@@ -16,7 +16,7 @@ sys.path.append(
 # path, and no other test module has appended it yet when this one is collected.
 sys.path.append(str(Path(__file__).parents[1]))
 
-from waste_collection_schedule import Collection
+from waste_collection_schedule import Collection, CollectionBase
 from waste_collection_schedule.collection import CollectionGroup
 from waste_collection_schedule.source.ecoharmonogram_pl import Source
 from waste_collection_schedule.source_shell import Customize, customize_function
@@ -245,3 +245,24 @@ def test_a_sensor_mode_picks_the_sensor_class():
     assert SENSOR_CLASSES[SENSOR_MODE_LAST_UPDATE] is LastUpdateSensor
     # No mode (every sensor stored before the modes existed) stays a plain sensor.
     assert SENSOR_CLASSES.get(None, ScheduleSensor) is ScheduleSensor
+
+
+def test_storage_dict_round_trip_keeps_type_identity_and_colors():
+    paper = Collection(date=D, waste_type=PAPER, color="#123456")
+    paper.set_color("#abcdef")
+    paper.set_type("Blue bin")
+    paper.set_location("Main St")
+    paper.set_description_from_raw_label("Altpapier")
+    legacy = Collection(date=D, t="Glass", icon="mdi:bottle-wine", color="#00ff00")
+
+    for entry in (paper, legacy):
+        stored = json.loads(json.dumps(entry.as_storage_dict()))
+        restored = CollectionBase.from_storage_dict(stored)
+        assert restored == entry
+        assert restored.as_storage_dict() == entry.as_storage_dict()
+        assert restored.as_dict() == entry.as_dict()
+
+    restored = CollectionBase.from_storage_dict(paper.as_storage_dict())
+    assert restored.waste_type is PAPER
+    assert (restored.color, restored.color_source) == ("#ABCDEF", "customize")
+    assert restored.description_is_raw_label_fallback

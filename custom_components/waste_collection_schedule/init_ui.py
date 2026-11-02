@@ -11,7 +11,7 @@ import requests
 import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.exceptions import ConfigEntryError
+from homeassistant.exceptions import ConfigEntryError, ConfigEntryNotReady
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers import entity_registry as er
 
@@ -20,7 +20,7 @@ from .waste_collection_schedule.service.DeviceKeyStore import (
     initialize_device_key_store,
 )
 from .waste_collection_schedule.source_shell import calc_unique_source_id
-from .wcs_coordinator import WCSCoordinator
+from .wcs_coordinator import FETCH_STATES, WCSCoordinator, cache_store
 
 from . import const  # type: ignore # isort:skip
 from .waste_collection_schedule import SourceShell, Customize  # type: ignore # isort:skip
@@ -29,6 +29,9 @@ _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = ["calendar", "sensor"]
 CONTROL_PLATFORMS = ["button", "select", "number", "switch", "text"]
+# HA warns about setups slower than this; a slower fetch continues in the
+# background and fills the cache for the next setup retry
+FIRST_FETCH_TIMEOUT = 10
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -127,13 +130,24 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         ),
     )
 
+    restored = not reuse_schedule and await coordinator.async_restore_cache()
     if reuse_schedule:
-        coordinator._fetch_lock = previous._fetch_lock
         coordinator._last_fetch_date = previous._last_fetch_date
         coordinator.async_set_updated_data(previous.data or {})
         coordinator._async_track_timers()
+    elif restored:
+        # show the cached schedule now and fetch in the background (#8063)
+        coordinator.async_set_updated_data({})
+        coordinator._async_track_timers()
     else:
-        await coordinator.async_config_entry_first_refresh()
+        try:
+            async with asyncio.timeout(FIRST_FETCH_TIMEOUT):
+                await coordinator.async_config_entry_first_refresh()
+        except TimeoutError as err:
+            coordinator._setup_timed_out = True
+            raise ConfigEntryNotReady(
+                f"{shell.title} did not respond within {FIRST_FETCH_TIMEOUT} seconds"
+            ) from err
 
     hass.data.setdefault(const.DOMAIN, {})[entry.entry_id] = coordinator
 
@@ -169,11 +183,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         const.DOMAIN, "fetch_data", get_fetch_all_service(hass), schema=vol.Schema({})
     )
 
-    if reuse_schedule:
+    if reuse_schedule or restored:
         # Keep cached entities available while retrying any due fetch. The entry
         # owns cancellation on unload; _fetch_now honors the fetch interval.
         entry.async_create_background_task(
-            hass, coordinator._fetch_now(), "Waste collection refresh after reload"
+            hass,
+            coordinator.async_fetch_with_retry(),
+            "Waste collection refresh in the background",
         )
 
     return True
@@ -214,11 +230,14 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
 
 
 async def async_remove_entry(hass: HomeAssistant, entry: ConfigEntry):
-    """Release the reload schedule and repair belonging to the removed entry."""
+    """Release the schedule, cache and repair belonging to the removed entry."""
     from homeassistant.helpers import issue_registry as ir
 
     hass.data.get(const.DOMAIN, {}).pop(entry.entry_id, None)
+    state = hass.data.get(FETCH_STATES, {}).pop(entry.entry_id, None)
     ir.async_delete_issue(hass, const.DOMAIN, "legacy_sensors_" + entry.entry_id)
+    async with state.cache_lock if state else asyncio.Lock():
+        await cache_store(hass, entry.entry_id).async_remove()
 
 
 async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
