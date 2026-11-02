@@ -403,6 +403,16 @@ class TestYearlyLinks:
         with pytest.raises(ValueError, match="page layout may have changed"):
             retrievers.yearly_links(r"nothing_(20\d\d)\.pdf$")(_page(self.HTML))
 
+    @freeze_time("2026-10-11")
+    def test_relative_links_resolve_against_the_base_href(self):
+        html = (
+            '<base href="https://example.org/" /><a href="uploads/cal_2026.pdf">x</a>'
+        )
+        pick = retrievers.yearly_links(r"cal_(20\d\d)[^/]*\.pdf$")
+        assert pick(_page(html, url="https://example.org/waste/page/")) == [
+            "https://example.org/uploads/cal_2026.pdf"
+        ]
+
     def test_a_pattern_without_a_year_group_is_rejected(self):
         with pytest.raises(ValueError, match="no group for the year"):
             retrievers.yearly_links(r"cal_20\d\d\.pdf$")(_page(self.HTML))

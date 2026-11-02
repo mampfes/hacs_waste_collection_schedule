@@ -696,6 +696,57 @@ def _airdrie_ca(interactions: list[dict], args: dict[str, Any], today: str) -> N
             )
 
 
+def _tkeliai_lt(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep the index page's PDF links and the PDF pages naming the location.
+
+    The index page is site chrome around a handful of links; the town and
+    village notices are about 600 KB each, two notices per page. A page is
+    kept when it names the configured street or village, together with the
+    page after it (a long village list runs onto the next page); a PDF with
+    no such page keeps its first, so it still parses.
+    """
+    from io import BytesIO
+
+    from pypdf import PdfReader, PdfWriter
+    from pypdf.constants import ImageType
+    from waste_collection_schedule.source.tkeliai_lt import (
+        _compact,
+        _split_location,
+    )
+
+    wanted = _compact(_split_location(str(args["location"]).split(",")[0])[0])
+    for interaction in interactions:
+        content = base64.b64decode(interaction["content_b64"])
+        if not content.startswith(b"%PDF"):
+            html = content.decode("utf-8", "replace")
+            kept = re.findall(r"<base\b[^>]*>", html) + re.findall(
+                r"<a\b[^>]*\.pdf\"[^>]*>.*?</a>", html, re.S
+            )
+            raw = "<html><head>" + "\n".join(kept) + "</head></html>"
+            interaction["content_b64"] = base64.b64encode(raw.encode("utf-8")).decode(
+                "ascii"
+            )
+            continue
+        reader = PdfReader(BytesIO(content))
+        hits = [
+            index
+            for index, page in enumerate(reader.pages)
+            if wanted in _compact(page.extract_text() or "")
+        ]
+        keep = sorted({i for hit in hits for i in (hit, hit + 1)} or {0})
+        writer = PdfWriter()
+        for index in keep:
+            if index < len(reader.pages):
+                writer.add_page(reader.pages[index])
+        writer.remove_images(ImageType.XOBJECT_IMAGES | ImageType.INLINE_IMAGES)
+        for page in writer.pages:
+            page.compress_content_streams()
+        writer.compress_identical_objects()
+        output = BytesIO()
+        writer.write(output)
+        interaction["content_b64"] = base64.b64encode(output.getvalue()).decode("ascii")
+
+
 SCRUBBERS: dict[str, Scrubber] = {
     "portapporta_it": _portapporta_it,
     "ritl_ca": _ritl_ca,
@@ -723,6 +774,7 @@ SCRUBBERS: dict[str, Scrubber] = {
     "luxembourg_lu": _luxembourg_lu,
     "chesterfield_gov_uk": _chesterfield_gov_uk,
     "airdrie_ca": _airdrie_ca,
+    "tkeliai_lt": _tkeliai_lt,
 }
 
 
