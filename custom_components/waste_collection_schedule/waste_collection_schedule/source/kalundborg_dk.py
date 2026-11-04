@@ -53,14 +53,32 @@ class Source:
 
         response = requests.get(self._api_url, headers=headers)
         response.raise_for_status()
-        containers = response.json()
+        data = response.json()
+
+        # The API used to return a flat list of containers; it now returns a dict
+        # with chains (chainDetailsOwn/Zero/Use), each holding containerDetails.
+        if isinstance(data, dict):
+            containers = [
+                detail
+                for chains in data.values()
+                if isinstance(chains, list)
+                for chain in chains
+                if isinstance(chain, dict)
+                for detail in chain.get("containerDetails", [])
+            ]
+        else:
+            containers = data
 
         entries = []
 
         for container in containers:
-            name = container.get("containerType", {}).get(
-                "description", "Ukendt beholder"
-            )
+            container_type = container.get("containerType")
+            if isinstance(container_type, dict):
+                name = container_type.get("description", "Ukendt beholder")
+            elif isinstance(container_type, str):
+                name = container_type
+            else:
+                name = "Ukendt beholder"
             collect_dates = container.get("collectDates", [])
 
             # Renodjurs-style matching logic - most specific first
