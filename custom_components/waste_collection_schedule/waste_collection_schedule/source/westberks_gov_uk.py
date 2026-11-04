@@ -53,6 +53,25 @@ def find_uprn(addresses: list[dict], housenumberorname: str) -> str | None:
     return None
 
 
+def _check_response(r: requests.Response) -> None:
+    """Raise a clear error when the council's site blocks the request.
+
+    Since November 2026 westberks.gov.uk answers automated requests with a
+    Cloudflare challenge page (HTTP 403) instead of JSON, see #8122.
+    """
+    content_type = r.headers.get("content-type", "")
+    if r.headers.get("cf-mitigated") == "challenge" or (
+        "text/html" in content_type and "just a moment" in r.text[:2000].lower()
+    ):
+        raise ValueError(
+            "West Berkshire Council's website blocks automated requests with a "
+            "Cloudflare challenge, so collection dates cannot be fetched. This is "
+            "a change on the council's side, see "
+            "https://github.com/mampfes/hacs_waste_collection_schedule/issues/8122"
+        )
+    r.raise_for_status()
+
+
 def fix_date(d: date):
     if datetime.now().month == 12 and d.month in (1, 2):
         d = d.replace(year=d.year + 1)
@@ -81,6 +100,7 @@ class Source:
             }
             args = {"callback": "HomeAssistant", "jsonrpc": json.dumps(jsonrpc), "_": 0}
             r = requests.get(SEARCH_URLS["uprn_search"], params=args)
+            _check_response(r)
 
             # I don't really know python so there *must* be a better way to do these four lines!
             response_str = r.content.decode("utf-8")
@@ -121,10 +141,13 @@ class Source:
                 "params": {"uprn": self._uprn},
             }
             r = session.post(SEARCH_URLS["collection_search"], json=rubbish_args)
+            _check_response(r)
             rubbish_data = json.loads(r.content)
             r = session.post(SEARCH_URLS["collection_search"], json=recycling_args)
+            _check_response(r)
             recycling_data = json.loads(r.content)
             r = session.post(SEARCH_URLS["collection_search"], json=food_args)
+            _check_response(r)
             food_data = json.loads(r.content)
 
             for waste_type, data, text_key, sub_key in [
