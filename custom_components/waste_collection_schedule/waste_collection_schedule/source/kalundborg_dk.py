@@ -57,6 +57,7 @@ class Source:
 
         # The API used to return a flat list of containers; it now returns a dict
         # with chains (chainDetailsOwn/Zero/Use), each holding containerDetails.
+        # Dates come as collectDates or, in the newer shape, collectCalendar.
         if isinstance(data, dict):
             containers = [
                 detail
@@ -79,7 +80,11 @@ class Source:
                 name = container_type
             else:
                 name = "Ukendt beholder"
-            collect_dates = container.get("collectDates", [])
+            collect_dates = container.get("collectDates") or [
+                item["collectDate"]
+                for item in container.get("collectCalendar") or []
+                if isinstance(item, dict) and item.get("collectDate")
+            ]
 
             # Renodjurs-style matching logic - most specific first
             lower_name = name.lower()
