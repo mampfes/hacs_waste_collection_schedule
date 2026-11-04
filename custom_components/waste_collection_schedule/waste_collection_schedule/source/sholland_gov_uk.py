@@ -17,11 +17,15 @@ ICON_MAP = {
     "refuse": Icons.GENERAL_WASTE,
     "garden": Icons.GARDEN,
     "recycling": Icons.RECYCLING,
+    "paper": Icons.PAPER,
+    "food": Icons.BIO_KITCHEN,
 }
 
 TYPE_LABELS = {
     "refuse": "Refuse",
     "recycling": "Recycling",
+    "paper": "Paper and Card",
+    "food": "Food Waste",
     "garden": "Garden",
 }
 
@@ -39,6 +43,15 @@ class Source:
     def __init__(self, uprn: str | int, postcode: str):
         self._uprn = str(uprn)
         self._postcode = postcode
+
+    @staticmethod
+    def _parse_iso_date(date_str: str | None) -> datetime.date | None:
+        if not date_str:
+            return None
+        try:
+            return datetime.date.fromisoformat(date_str)
+        except ValueError:
+            return None
 
     def _parse_display_date(self, date_str: str) -> datetime.date | None:
         if not date_str:
@@ -82,23 +95,18 @@ class Source:
             raise Exception(f"API call unsuccessful: {result!r}")
 
         entries: list[Collection] = []
-        date_map = {
-            "refuse": result.get("nextRefuseDateDisplay"),
-            "recycling": result.get("nextRecyclingDateDisplay"),
-            "garden": result.get("nextGardenDateDisplay"),
-        }
-
-        # Uncomment below line for debugging fetched data
-        # print("API result:", date_map)
-
-        for bin_type, display in date_map.items():
-            date = self._parse_display_date(display or "")
+        for bin_type, label in TYPE_LABELS.items():
+            key = f"next{bin_type.capitalize()}Date"
+            # Prefer the ISO date; fall back to parsing the display string
+            date = self._parse_iso_date(result.get(key))
+            if date is None:
+                date = self._parse_display_date(result.get(f"{key}Display") or "")
             if date is None:
                 continue
             entries.append(
                 Collection(
                     date=date,
-                    t=TYPE_LABELS[bin_type],
+                    t=label,
                     icon=ICON_MAP.get(bin_type),
                 )
             )
