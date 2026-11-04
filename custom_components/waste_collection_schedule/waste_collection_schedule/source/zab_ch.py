@@ -22,6 +22,13 @@ TEST_CASES = {
         "municipality": "Eschlikon",
         "district": "Kehrichtsammlung Eschlikon",
     },
+    # One district per tour that has several (#8106).
+    "Wil Nord": {
+        "municipality": "Wil",
+        "district": "Kehrichtsammlung Wil Nord; Papier und Karton Wil Nord-West; "
+        "Metall Wil Nord; Bioabfuhr Wil Nord; Häckseldienst Wil Nord und Süd; "
+        "Kunststoffsammlung Nord West",
+    },
 }
 
 MUNICIPALITIES = {
