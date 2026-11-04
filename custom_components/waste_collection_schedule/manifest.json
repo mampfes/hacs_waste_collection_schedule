@@ -1,7 +1,7 @@
 {
   "domain": "waste_collection_schedule",
   "name": "Waste Collection Schedule",
-  "after_dependencies": ["frontend", "lovelace"],
+  "after_dependencies": ["frontend", "http", "lovelace"],
   "codeowners": ["@mampfes"],
   "config_flow": true,
   "dependencies": [],

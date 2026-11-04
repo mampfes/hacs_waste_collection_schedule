@@ -14,9 +14,11 @@ work with other Home Assistant calendars when selected explicitly.
 
 ## Add a card
 
-Use Home Assistant 2026.6 or newer for the visual editor's repeatable waste-type
-style fields. The integration's existing schedules remain usable on older HA
-versions. The cards need the `frontend`, `http` and `lovelace` components.
+Automatic card registration requires **Home Assistant 2025.5 or newer**. Use
+**Home Assistant 2026.6 or newer** for the visual editor's repeatable waste-type
+style fields; on 2025.5–2026.5 configure the cards in YAML. Older supported HA
+versions skip card registration and retain their existing schedules. The integration
+minimum remains 2024.4.0. The cards need the `frontend`, `http` and `lovelace` components.
 
 After updating the integration, restart Home Assistant and reload your browser.
 Open a dashboard, choose **Edit dashboard → Add card**, and search for **Waste
@@ -31,7 +33,9 @@ If managing resources yourself, use a module resource at
 `/waste_collection_schedule/waste-collection-cards.js`. Do not load a second copy
 from `/local/`. Headless installs do not need to load the frontend. Removing the
 last entry of the integration (with no YAML configuration left) also removes the
-managed resource.
+managed resource (or the extra JavaScript URL in YAML mode). The storage-mode
+resource is integration-managed: deleting it manually does not opt out, and it
+will be re-created the next time Home Assistant starts.
 
 ## Customisation
 
@@ -119,6 +123,8 @@ errors and light/dark accessibility. These tests use fixture calendar responses;
 real provider and live HA rendering checks are separate deployment steps.
 
 No community card code or remote images are bundled.
+The build generates `THIRD-PARTY-NOTICES.txt` beside the JavaScript bundle with
+the complete licenses for its Lit dependencies. Ship both files together.
 
 These cards target the `release/3.0.0` integration and use its calendar API and
 collection attributes. They preserve the release branch’s entry migration,

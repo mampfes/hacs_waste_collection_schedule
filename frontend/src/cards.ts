@@ -1,5 +1,7 @@
 import { LitElement, html, nothing, type PropertyValues } from "lit";
 import { styleMap } from "lit/directives/style-map.js";
+import { keyed } from "lit/directives/keyed.js";
+import { repeat } from "lit/directives/repeat.js";
 import { styles } from "./styles";
 import {
   addDays,
@@ -37,13 +39,14 @@ function load(
   start: string,
   end: string,
   force: boolean,
+  revision: string,
 ) {
   let cache = requests.get(hass.callApi);
   if (!cache) {
     cache = new Map();
     requests.set(hass.callApi, cache);
   }
-  const key = JSON.stringify([entity, start, end]);
+  const key = JSON.stringify([entity, start, end, revision]);
   const existing = cache.get(key);
   if (!force && existing && Date.now() - existing.at < 30000)
     return existing.promise;
@@ -189,6 +192,18 @@ export class WasteCard extends LitElement {
       if (this.hass) this.checkStates(this.hass.states);
     }
   }
+  protected override update(changed: PropertyValues) {
+    const focused = this.shadowRoot?.activeElement;
+    super.update(changed);
+    // Moving a keyed node can blur it. Restore only the same surviving pickup.
+    if (
+      focused instanceof HTMLButtonElement &&
+      focused.classList.contains("pickup") &&
+      focused.isConnected &&
+      this.shadowRoot?.activeElement !== focused
+    )
+      focused.focus({ preventScroll: true });
+  }
   private signature(states = this.hass?.states) {
     if (!this.hass) return "";
     return JSON.stringify([
@@ -234,7 +249,14 @@ export class WasteCard extends LitElement {
         )
           throw new Error(entity);
         return normalizeEvents(
-          await load(hass, entity, start, end, force),
+          await load(
+            hass,
+            entity,
+            start,
+            end,
+            force,
+            JSON.stringify([states[entity].state, states[entity].last_updated]),
+          ),
           entity,
           zone,
           today,
@@ -286,24 +308,31 @@ export class WasteCard extends LitElement {
         ? style.color
         : undefined;
     const name = style.name || p.type;
+    const showIcons = this.config.show_icons !== false;
     return html`<button
       class=${color ? "pickup styled" : "pickup"}
       style=${styleMap({ "--bin-color": color })}
       @click=${() => this.moreInfo(p.entity)}
     >
-      ${this.config.show_icons !== false
+      ${picture || showIcons
         ? html`<span class="visual" aria-hidden="true"
             >${picture
-              ? html`<img
-                    src=${picture}
-                    alt=""
-                    loading="lazy"
-                    @error=${(e: Event) => {
-                      const img = e.target as HTMLImageElement;
-                      img.hidden = true;
-                      img.nextElementSibling?.removeAttribute("hidden");
-                    }}
-                  /><ha-icon hidden .icon=${icon}></ha-icon>`
+              ? keyed(
+                  JSON.stringify([picture, showIcons]),
+                  html`<img
+                      src=${picture}
+                      alt=""
+                      loading="lazy"
+                      @error=${(e: Event) => {
+                        const img = e.target as HTMLImageElement;
+                        img.hidden = true;
+                        if (showIcons)
+                          img.nextElementSibling?.removeAttribute("hidden");
+                      }}
+                    />${showIcons
+                      ? html`<ha-icon hidden .icon=${icon}></ha-icon>`
+                      : nothing}`,
+                )
               : html`<ha-icon .icon=${icon}></ha-icon>`}</span
           >`
         : nothing}
@@ -405,29 +434,33 @@ export class WasteCard extends LitElement {
                         ? "list hero"
                         : "list"}
                   >
-                    ${items.map((p) => {
-                      // Schedule groups by day; Next groups by calendar when there are several.
-                      const group =
-                        this.mode === "schedule"
-                          ? p.date
-                          : this.mode === "next" && multiple
-                            ? p.entity
-                            : "";
-                      const heading = group && previous !== group;
-                      previous = group;
-                      return html`${heading
-                        ? html`<h3 class="day">
-                            ${this.mode === "schedule"
-                              ? displayDate(p.date, language)
-                              : entityName(this.hass, p.entity)}
-                          </h3>`
-                        : nothing}${this.pickup(
-                        p,
-                        language,
-                        today,
-                        multiple && this.mode !== "next",
-                      )}`;
-                    })}
+                    ${repeat(
+                      items,
+                      (p) => JSON.stringify([p.entity, p.type, p.date]),
+                      (p) => {
+                        // Schedule groups by day; Next groups by calendar when there are several.
+                        const group =
+                          this.mode === "schedule"
+                            ? p.date
+                            : this.mode === "next" && multiple
+                              ? p.entity
+                              : "";
+                        const heading = group && previous !== group;
+                        previous = group;
+                        return html`${heading
+                          ? html`<h3 class="day">
+                              ${this.mode === "schedule"
+                                ? displayDate(p.date, language)
+                                : entityName(this.hass, p.entity)}
+                            </h3>`
+                          : nothing}${this.pickup(
+                          p,
+                          language,
+                          today,
+                          multiple && this.mode !== "next",
+                        )}`;
+                      },
+                    )}
                   </div>
                 `}
         </div></ha-card

@@ -502,3 +502,156 @@ test("error banners pass contrast with Home Assistant's default error colour", a
   });
   expect(violations).toEqual([]);
 });
+
+test("calendar revisions invalidate cached responses while cards share requests", async ({
+  page,
+}) => {
+  const card = await mount(page, "schedule");
+  const counts = await card.evaluate(async (el) => {
+    const c = el as HTMLElement & {
+      hass: Hass;
+      refresh(states: Hass["states"], force?: boolean): Promise<void>;
+    };
+    let calls = 0;
+    let label = "Old pickup";
+    c.hass.callApi = async <T>() => {
+      calls++;
+      return [{ summary: label, start: { date: "2026-10-27" } }] as T;
+    };
+    await c.refresh(c.hass.states);
+    const initial = calls;
+    const second = document.createElement(
+      "waste-collection-schedule-card",
+    ) as HTMLElement & {
+      hass: Hass;
+      setConfig(c: CardConfig): void;
+      refresh(states: Hass["states"]): Promise<void>;
+    };
+    second.hass = c.hass;
+    second.setConfig({
+      type: "custom:waste-collection-schedule-card",
+      entities: ["calendar.waste"],
+    });
+    document.getElementById("cards")!.append(second);
+    await second.refresh(second.hass.states);
+    const shared = calls;
+    label = "Updated pickup";
+    c.hass.states = {
+      "calendar.waste": {
+        ...c.hass.states["calendar.waste"]!,
+        last_updated: "b",
+      },
+    };
+    await Promise.all([
+      c.refresh(c.hass.states),
+      second.refresh(c.hass.states),
+    ]);
+    return [initial, shared, calls];
+  });
+  expect(counts).toEqual([1, 1, 2]);
+  for (const c of await page.locator("waste-collection-schedule-card").all()) {
+    await expect(c).toContainText("Updated pickup");
+    await expect(c).not.toContainText("Old pickup");
+  }
+});
+
+test("a failed picture recovers when its source URL changes", async ({
+  page,
+}) => {
+  await page.route("**/local/broken.png", (route) =>
+    route.fulfill({ status: 404, body: "missing" }),
+  );
+  await page.route("**/local/valid.svg", (route) =>
+    route.fulfill({
+      contentType: "image/svg+xml",
+      body: '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="green"/></svg>',
+    }),
+  );
+  const card = await mount(page);
+  const setPicture = async (picture: string) =>
+    card.evaluate((el, picture) => {
+      const c = el as HTMLElement & { hass: Hass };
+      const state = c.hass.states["calendar.waste"]!;
+      c.hass = {
+        ...c.hass,
+        states: {
+          "calendar.waste": {
+            ...state,
+            attributes: {
+              ...state.attributes,
+              waste_types: { "General waste": { picture } },
+            },
+          },
+        },
+      };
+    }, picture);
+  await setPicture("/local/broken.png");
+  await expect(card.locator("img")).toHaveCount(1);
+  await expect(card.locator("img")).toHaveAttribute("hidden", "");
+  await expect(
+    card.locator(".pickup").first().locator("ha-icon"),
+  ).not.toHaveAttribute("hidden", "");
+  await setPicture("/local/valid.svg");
+  await expect(card.locator("img")).toBeVisible();
+  await expect
+    .poll(() =>
+      card
+        .locator("img")
+        .evaluate((img) => (img as HTMLImageElement).naturalWidth),
+    )
+    .toBe(40);
+  await expect(card.locator(".pickup").first().locator("ha-icon")).toBeHidden();
+});
+
+test("pictures remain enabled when icons are off, including after image failure", async ({
+  page,
+}) => {
+  await page.route("**/local/picture.svg", (route) =>
+    route.fulfill({
+      contentType: "image/svg+xml",
+      body: '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"/>',
+    }),
+  );
+  const card = await mount(page, "next", {
+    show_icons: false,
+    show_pictures: true,
+    types: [{ type: "General waste", picture: "/local/picture.svg" }],
+  });
+  await expect(card.locator("img")).toBeVisible();
+  await expect(card.locator(".visual ha-icon")).toHaveCount(0);
+  await card.locator("img").dispatchEvent("error", { bubbles: false });
+  await expect(card.locator("img")).toBeHidden();
+  await expect(card.locator(".visual ha-icon")).toHaveCount(0);
+});
+
+test("focus stays on the surviving pickup when refresh inserts and reorders events", async ({
+  page,
+}) => {
+  const card = await mount(page, "schedule");
+  const focused = card.getByRole("button", { name: /Garden organics/ });
+  await focused.focus();
+  await card.evaluate(async (el) => {
+    const c = el as HTMLElement & {
+      hass: Hass;
+      refresh(states: Hass["states"], force: boolean): Promise<void>;
+    };
+    c.hass.callApi = async <T>() =>
+      [
+        { summary: "A new collection", start: { date: "2026-10-26" } },
+        { summary: "General waste", start: { date: "2026-10-31" } },
+        { summary: "Garden organics", start: { date: "2026-10-30" } },
+      ] as T;
+    await c.refresh(c.hass.states, true);
+  });
+  await expect(focused).toBeFocused();
+  await page.evaluate(() =>
+    document.addEventListener("hass-more-info", (e) => {
+      document.body.dataset.entity = (e as CustomEvent).detail.entityId;
+    }),
+  );
+  await page.keyboard.press("Enter");
+  await expect(page.locator("body")).toHaveAttribute(
+    "data-entity",
+    "calendar.waste",
+  );
+});

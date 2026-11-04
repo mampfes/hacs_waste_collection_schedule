@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import asyncio
 from types import SimpleNamespace
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 
 from custom_components.waste_collection_schedule import frontend
 
-pytestmark = pytest.mark.skipif(
+requires_registration = pytest.mark.skipif(
     frontend.StaticPathConfig is None, reason="Older HA has no async static paths"
 )
 
@@ -51,6 +51,7 @@ def setup_frontend():
         yield hass, resources, add_js
 
 
+@requires_registration
 def test_registration_is_idempotent(setup_frontend):
     hass, resources, add_js = setup_frontend
 
@@ -72,6 +73,7 @@ def test_registration_is_idempotent(setup_frontend):
     add_js.assert_not_called()
 
 
+@requires_registration
 def test_rebuild_updates_owned_resource_only(setup_frontend):
     hass, resources, _ = setup_frontend
     resources.items = [
@@ -88,6 +90,7 @@ def test_rebuild_updates_owned_resource_only(setup_frontend):
     assert resources.async_update_item.await_args.args[0] == "owned"
 
 
+@requires_registration
 def test_yaml_mode_falls_back_to_extra_module(setup_frontend):
     hass, resources, add_js = setup_frontend
     hass.data[frontend.LOVELACE_DATA].resources = None
@@ -95,6 +98,10 @@ def test_yaml_mode_falls_back_to_extra_module(setup_frontend):
     add_js.assert_called_once()
     assert add_js.call_args.args[1].startswith("/waste_collection_schedule/")
     resources.async_create_item.assert_not_called()
+    with patch.object(frontend, "remove_extra_js_url") as remove_js:
+        asyncio.run(frontend.async_unregister_frontend(hass))
+    remove_js.assert_called_once_with(hass, add_js.call_args.args[1])
+    assert frontend._EXTRA_URLS not in hass.data
 
 
 def test_missing_frontend_does_not_break_headless_setup(setup_frontend):
@@ -105,6 +112,7 @@ def test_missing_frontend_does_not_break_headless_setup(setup_frontend):
     assert not hass.data.get(frontend._REGISTERED)
 
 
+@requires_registration
 def test_resource_failure_can_retry_without_duplicate_static_paths(setup_frontend):
     hass, resources, _ = setup_frontend
     resources.async_get_info.side_effect = [RuntimeError("storage unavailable"), None]
@@ -142,6 +150,35 @@ def test_unregister_removes_only_the_owned_resource(setup_frontend):
     asyncio.run(frontend.async_unregister_frontend(hass))
     resources.async_delete_item.assert_awaited_once_with("owned")
     assert not hass.data.get(frontend._REGISTERED)
+
+
+def test_unregister_accepts_legacy_lovelace_dictionary(caplog):
+    hass = SimpleNamespace(
+        data={frontend.LOVELACE_DATA: {}, frontend._REGISTERED: True}
+    )
+    asyncio.run(frontend.async_unregister_frontend(hass))
+    assert frontend._REGISTERED not in hass.data
+    assert not caplog.records
+
+
+def test_unregister_removes_tracked_yaml_url_on_all_supported_versions():
+    url = "/waste_collection_schedule/waste-collection-cards.js?v=test"
+    manager = SimpleNamespace(remove=Mock())
+    hass = SimpleNamespace(
+        data={frontend.DATA_EXTRA_MODULE_URL: manager, frontend._EXTRA_URLS: {url}}
+    )
+    asyncio.run(frontend.async_unregister_frontend(hass))
+    manager.remove.assert_called_once_with(url)
+    assert frontend._EXTRA_URLS not in hass.data
+
+
+def test_registration_skips_unsupported_home_assistant(setup_frontend):
+    hass, resources, add_js = setup_frontend
+    with patch.object(frontend, "StaticPathConfig", None):
+        asyncio.run(frontend.async_register_frontend(hass))
+    hass.http.async_register_static_paths.assert_not_awaited()
+    resources.async_create_item.assert_not_awaited()
+    add_js.assert_not_called()
 
 
 def _remove_entry(hass, entries, removed):

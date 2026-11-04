@@ -1,5 +1,3 @@
-# Copyright (c) 2026 Ruaan Deysel
-
 """Serve the Lovelace dashboard card bundles from the integration."""
 
 from __future__ import annotations
@@ -9,7 +7,7 @@ import logging
 from pathlib import Path
 from typing import TYPE_CHECKING, Final
 
-from homeassistant.components.frontend import add_extra_js_url
+from homeassistant.components.frontend import DATA_EXTRA_MODULE_URL, add_extra_js_url
 from homeassistant.components.lovelace.resources import ResourceStorageCollection
 from homeassistant.loader import async_get_integration
 
@@ -27,6 +25,17 @@ from .const import DOMAIN
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
 
+try:
+    from homeassistant.components.frontend import remove_extra_js_url
+except ImportError:
+
+    def remove_extra_js_url(hass: HomeAssistant, url: str) -> None:
+        """Use the legacy URL manager when HA lacks the public removal helper."""
+        manager = hass.data.get(DATA_EXTRA_MODULE_URL)
+        if manager is not None:
+            manager.remove(url)
+
+
 _LOGGER = logging.getLogger(__name__)
 
 FRONTEND_URL_BASE: Final = f"/{DOMAIN}"
@@ -34,6 +43,7 @@ FRONTEND_PATH: Final = Path(__file__).parent / "frontend"
 CARD_FILES: Final = ("waste-collection-cards.js",)
 _REGISTERED: str = f"{DOMAIN}_frontend_registered"
 _STATIC_REGISTERED: str = f"{DOMAIN}_frontend_static_registered"
+_EXTRA_URLS: str = f"{DOMAIN}_frontend_extra_urls"
 YAML_CONFIGURED: str = f"{DOMAIN}_yaml_configured"
 
 
@@ -76,7 +86,7 @@ async def async_register_frontend(hass: HomeAssistant) -> None:
             urls[url] = f"{url}?v={integration.version}-{digest}"
 
         lovelace = hass.data.get(LOVELACE_DATA)
-        resources = lovelace.resources if lovelace is not None else None
+        resources = getattr(lovelace, "resources", None)
         if isinstance(resources, ResourceStorageCollection):
             await resources.async_get_info()  # Load before inspecting items.
             existing_by_url = {
@@ -95,6 +105,7 @@ async def async_register_frontend(hass: HomeAssistant) -> None:
         else:
             for url in urls.values():
                 add_extra_js_url(hass, url)
+                hass.data.setdefault(_EXTRA_URLS, set()).add(url)
     except Exception:
         _LOGGER.exception("Unable to register optional dashboard card frontend")
     else:
@@ -107,9 +118,9 @@ async def async_unregister_frontend(hass: HomeAssistant) -> None:
     Otherwise every dashboard load requests a bundle that no longer exists.
     The static path stays until restart; it is harmless and cannot be removed.
     """
-    lovelace = hass.data.get(LOVELACE_DATA)
-    resources = lovelace.resources if lovelace is not None else None
     try:
+        lovelace = hass.data.get(LOVELACE_DATA)
+        resources = getattr(lovelace, "resources", None)
         if isinstance(resources, ResourceStorageCollection):
             await resources.async_get_info()
             owned = {f"{FRONTEND_URL_BASE}/{filename}" for filename in CARD_FILES}
@@ -118,4 +129,6 @@ async def async_unregister_frontend(hass: HomeAssistant) -> None:
                     await resources.async_delete_item(item["id"])
     except Exception:
         _LOGGER.exception("Unable to remove the dashboard card resource")
+    for url in hass.data.pop(_EXTRA_URLS, set()):
+        remove_extra_js_url(hass, url)
     hass.data.pop(_REGISTERED, None)

@@ -8,7 +8,7 @@ on:
       - custom_components/waste_collection_schedule/frontend/**
       - .github/workflows/frontend.yaml
   push:
-    branches: ['release/3.0.0']
+    branches: [release/3.0.0, master]
     paths:
       - frontend/**
       - custom_components/waste_collection_schedule/frontend/**

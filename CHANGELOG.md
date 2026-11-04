@@ -12,6 +12,14 @@ Releases are listed in reverse chronological order.
 - removed merton_gov_uk ("London Borough of Merton (Old)"): the `myneighbourhood.merton.gov.uk` waste services page answers HTTP 404. Use the ICS source with the "London Borough of Merton (New)" calendar link from fixmystreet.merton.gov.uk. It was not deprecated first because it could no longer return data
 - removed lrasha_de: since August 2025 (#4449) the source has only raised an error pointing to app_abfallplus_de (Kreis Schwäbisch-Hall). It was not deprecated first because it could no longer return data
 
+### Deprecated
+
+- `add_days_to` is accepted and ignored in YAML; `daysTo` is always exposed. Removal is scheduled for the next major release.
+
+### Added
+
+- Bundled Next collection, Schedule and Bins dashboard cards with configurable waste-type styles, localized dates and visual editors. Automatic card registration requires Home Assistant 2025.5 or newer; the visual editor requires 2026.6 or newer. Older supported Home Assistant versions retain their existing schedules and skip card registration; the integration minimum remains 2024.4.0.
+
 ### Changed
 
 - Dedicated calendars retain their category or provider-bin membership when types share a display alias, including description keys and trimmed legacy labels. The general calendar keeps non-dedicated collections and remains available when only part of the dedicated schedule is present; saved keys and calendar identities remain unchanged.
@@ -27,10 +35,6 @@ Releases are listed in reverse chronological order.
 - Options saves preserve concurrent native-control edits and discovered sensors. Reloads of an unchanged source keep its cached schedule available and retry a due fetch in the background; failure leaves the cache in place. Manual Reload and `fetch_data` skip fetching inside `fetch_interval_days`. Native text controls follow HA's 255-character limit; longer saved values remain intact and can be edited in integration options.
 - Generic `upcoming` retains `Collection` objects for local Jinja access. As before, Jinja's `to_json` filter cannot serialize these objects directly; the REST API serializes their rich records.
 - The `fetch_data` action skips disabled integration entries. Provider fetches taking longer than two minutes log a warning; later requests for that source continue waiting for the running fetch to finish.
-
-### Deprecated
-
-- `add_days_to` is accepted and ignored in YAML; `daysTo` is always exposed. Removal is scheduled for the next major release.
 
 ## [3.0.0-beta.8] - 2026-10-26
 
