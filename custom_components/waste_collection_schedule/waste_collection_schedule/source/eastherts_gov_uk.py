@@ -23,6 +23,35 @@ def _next_date(text: str) -> datetime.date:
     return _WEEKDAY_DAY_MONTH(re.sub(r"(\d+)(?:st|nd|rd|th)\b", r"\1", text))
 
 
+def _parse_date(text: str) -> datetime.date:
+    """Parse either row format.
+
+    ``<Bin>NextDate`` is "Wednesday 11th November" (no year); ``<Bin>LastDateRaw``
+    is an ISO timestamp, e.g. "2026-11-04T06:00:00+00:00", of which only the date
+    part is meaningful (as in the portal's own display logic).
+    """
+    if re.match(r"\d{4}-\d{2}-\d{2}T", text):
+        return datetime.date.fromisoformat(text[:10])
+    return _next_date(text)
+
+
+def _use_key(key: str, row: dict) -> bool:
+    """Use a ``LastDateRaw`` only when it is today's collection.
+
+    Once the portal has recorded today's collection it advances ``NextDate`` to
+    the following one, so today's collection is only in ``LastDateRaw``. Earlier
+    last dates are past collections and are ignored. If the same bin's
+    ``NextDate`` is still today, that already provides the entry.
+    """
+    if not key.endswith("LastDateRaw"):
+        return True
+    today = datetime.date.today()
+    if datetime.date.fromisoformat(str(row[key])[:10]) != today:
+        return False
+    next_text = row.get(key.removesuffix("LastDateRaw") + "NextDate")
+    return not (next_text and _next_date(str(next_text)) == today)
+
+
 @final
 class Source(BaseSource):
     TITLE = "East Herts Council"
@@ -66,9 +95,12 @@ class Source(BaseSource):
         ],
     )
     parse = AchieveFormsRowsParser()
-    # One row with a "<Bin>NextDate" per bin: "Tuesday 6th October".
+    # One row with a "<Bin>NextDate" per bin ("Tuesday 6th October") and a
+    # "<Bin>LastDateRaw" (ISO timestamp), the latter used only for today.
     preprocess = AchieveFormsDynamicRowsPreprocessor(
-        r"^(.+)NextDate$", parse_date=_next_date
+        r"^(.+?)(?:NextDate|LastDateRaw)$",
+        key_filter=_use_key,
+        parse_date=_parse_date,
     )
     transform = RowTransformer(
         type_value_map={
