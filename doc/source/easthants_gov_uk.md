@@ -51,9 +51,9 @@ waste_collection_schedule:
     - name: easthants_gov_uk
       args:
         garden_calendar_number: 1
-        calendar_number: 16
+        calendar_number: 8
 ```
 
 ## How to get the source arguments
 
-Open https://www.easthants.gov.uk/bin-collections/find-your-bin-calendar. Use the map near the bottom of the page to find your address and its Unique Property Ref, then enter that as the UPRN; the council then supplies your bin and garden calendars itself. Alternatively, enter the calendar number shown on that page (for example 16 for 'Calendar 16') and, if you have a garden waste subscription, the numeric part of your garden calendar (for example 1 for 'G1').
+Open https://www.easthants.gov.uk/bin-collections/find-your-bin-calendar. Use the map near the bottom of the page to find your address and its Unique Property Ref, then enter that as the UPRN; the council then supplies your bin and garden calendars itself. Alternatively, enter the calendar number shown on that page (for example 8 for 'Calendar 8') and, if you have a garden waste subscription, the numeric part of your garden calendar (for example 1 for 'G1').
