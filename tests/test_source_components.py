@@ -1983,4 +1983,5 @@ def test_aregion_maps_a_known_tour_name_followed_by_a_place() -> None:
     assert _known_label("Altes Metall Wil") == "Altes Metall Wil"
     # Exact and unknown labels are untouched.
     assert _known_label("Grüntour") == "Grüntour"
-    assert _known_label("Kompostplatz Schönenberg") == "Kompostplatz Schönenberg"
+    assert _known_label("Kompostplatz Schönenberg") == "Kompostplatz"
+    assert _known_label("Sammelstelle Schönenberg") == "Sammelstelle Schönenberg"

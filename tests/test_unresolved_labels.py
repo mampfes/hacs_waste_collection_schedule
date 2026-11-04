@@ -69,9 +69,6 @@ _FIXTURES = discover_fixtures()
 # --------------------------------------------------------------------------- #
 
 LABELS_AWAITING_VOCABULARY = {
-    "a_region_ch::Medikamente, Chemikalien, Gifte",
-    "a_region_ch::Styropor",
-    "a_region_ch::Texilien, Schuhe",
     "aberdeenshire_gov_uk::Blue lid bin recycling and food waste",
     "aberdeenshire_gov_uk::Orange lid bin recycling and food waste",
     "abfall_io::Biogut",
@@ -232,7 +229,6 @@ LABELS_AWAITING_VOCABULARY = {
     "offenbach_de::DSD",
     "reso_gmbh_de::Sonderabfall Abgabestelle - Sonderabfall-Kleinmengensammlung: Fränkisch-Crumbach, Industriestr. 9 (Bauhof), 09: 00 Uhr-15: 00 Uhr",
     "southkesteven_gov_uk::23lt Food Caddy",
-    "zab_ch::Kompostplatz Schönenberg",
     "zva_sek_de::Altreifen (Achtung: nur Selbstanlieferung)",
 }
 

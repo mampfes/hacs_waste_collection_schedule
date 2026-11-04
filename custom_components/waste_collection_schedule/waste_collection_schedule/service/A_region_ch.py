@@ -14,11 +14,13 @@ from waste_collection_schedule.retrievers import RetrieverFunc
 from waste_collection_schedule.waste_types import (
     GARDEN_WASTE,
     GENERAL_WASTE,
+    HAZARDOUS,
     ORGANIC,
     OTHER,
     PAPER,
     PLASTIC,
     RECYCLABLES,
+    TEXTILES,
 )
 
 # --------------------------------------------------------------------------- #
@@ -91,6 +93,17 @@ TYPE_VALUE_MAP = {
     "Grüntour": GARDEN_WASTE,
     "Eisen-und Metallware": RECYCLABLES,
     "Grobmetall": RECYCLABLES,
+    # A-Region (Andwil) and ZAB (Wängi) collection points.
+    "Medikamente, Chemikalien, Gifte": HAZARDOUS,
+    # "Texilien" is the feed's own spelling.
+    "Texilien, Schuhe": TEXTILES,
+    "Textilien, Schuhe": TEXTILES,
+    "Textilien": TEXTILES,
+    # EPS is taken back separately for recycling; no source in the repo
+    # classifies it, so it joins the other separately recycled materials.
+    "Styropor": RECYCLABLES,
+    # Green-waste drop-off ("Kompostplatz Schönenberg").
+    "Kompostplatz": GARDEN_WASTE,
 }
 
 
