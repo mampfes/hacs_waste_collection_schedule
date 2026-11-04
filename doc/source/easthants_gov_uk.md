@@ -23,7 +23,7 @@ waste_collection_schedule:
     sources:
     - name: easthants_gov_uk
       args:
-        calendar_number: 16
+        calendar_number: 8
         garden_calendar_number: 1
 ```
 
