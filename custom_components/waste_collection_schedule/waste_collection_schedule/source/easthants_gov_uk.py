@@ -59,13 +59,15 @@ _CALENDAR_LINK_RE = re.compile(r"^Calendar\s+(\d+)\b", re.IGNORECASE)
 _GARDEN_CALENDAR_LINK_RE = re.compile(r"^G(\d+)\b", re.IGNORECASE)
 
 # Fill colours used for collection rows in the council PDFs. The main bin
-# calendars use RGB, while the garden calendars use CMYK.
+# calendars use RGB, while the garden calendars used CMYK until the
+# Nov 2026 - Oct 2027 issue, which switched them to RGB and shifted the rubbish
+# green slightly; both generations are kept.
 _COLOURS: dict[str, tuple[tuple[float, ...], ...]] = {
-    "rubbish": ((0.248, 0.646, 0.209),),
+    "rubbish": ((0.248, 0.646, 0.209), (0.224, 0.663, 0.208)),
     "recycling": ((0.391, 0.389, 0.387), (0.438, 0.437, 0.434)),
     "glass": ((0.0, 0.46, 0.748),),
-    "garden": ((0.6, 0.71, 1.0, 0.3),),
-    "suspended": ((0.31, 0.98, 0.0, 0.0),),
+    "garden": ((0.6, 0.71, 1.0, 0.3), (0.42, 0.294, 0.153)),
+    "suspended": ((0.31, 0.98, 0.0, 0.0), (0.694, 0.157, 0.514)),
 }
 _COLOUR_TOLERANCE = 0.02
 
@@ -350,15 +352,15 @@ class Source(BaseSource):
 
     TEST_CASES: ClassVar[dict] = {
         "UPRN lookup": {"uprn": 1710041123},
-        "Calendar 16 with garden waste G1": {
-            "calendar_number": 16,
+        "Calendar 8 with garden waste G1": {
+            "calendar_number": 8,
             "garden_calendar_number": 1,
         },
         "Calendar 1 without garden waste": {
             "calendar_number": 1,
         },
-        "Calendar 20 with garden waste G10": {
-            "calendar_number": 20,
+        "Calendar 10 with garden waste G10": {
+            "calendar_number": 10,
             "garden_calendar_number": 10,
         },
     }
@@ -374,8 +376,8 @@ class Source(BaseSource):
             "Use the map near the bottom of the page to find your address and its "
             "Unique Property Ref, then enter that as the UPRN; the council then "
             "supplies your bin and garden calendars itself. Alternatively, enter "
-            "the calendar number shown on that page (for example 16 for "
-            "'Calendar 16') and, if you have a garden waste subscription, the "
+            "the calendar number shown on that page (for example 8 for "
+            "'Calendar 8') and, if you have a garden waste subscription, the "
             "numeric part of your garden calendar (for example 1 for 'G1')."
         )
     }
