@@ -48,11 +48,15 @@ _GARDEN_CALENDAR_LINK_RE = re.compile(r"^G(\d+)\b", re.IGNORECASE)
 # Fill colours used for collection rows in the council PDFs. The main bin
 # calendars use RGB, while the garden calendars use CMYK.
 _RUBBISH_COLOUR = (0.248, 0.646, 0.209)
+_RUBBISH_COLOUR_2026 = (0.224, 0.663, 0.208)
 _RECYCLING_COLOUR = (0.391, 0.389, 0.387)
 _HARD_TO_REACH_RECYCLING_COLOUR = (0.438, 0.437, 0.434)
 _GLASS_COLOUR = (0.0, 0.46, 0.748)
 _GARDEN_COLOUR = (0.6, 0.71, 1.0, 0.3)
 _SUSPENDED_COLOUR = (0.31, 0.98, 0.0, 0.0)
+# The Nov 2026 - Oct 2027 garden calendars switched from CMYK to RGB.
+_GARDEN_COLOUR_2026 = (0.42, 0.294, 0.153)
+_SUSPENDED_COLOUR_2026 = (0.694, 0.157, 0.514)
 _COLOUR_TOLERANCE = 0.02
 
 _TYPE_MAP = {
@@ -103,15 +107,15 @@ HOW_TO_GET_ARGUMENTS_DESCRIPTION = {
 
 TEST_CASES = {
     "UPRN lookup": {"uprn": 1710041123},
-    "Calendar 16 with garden waste G1": {
-        "calendar_number": 16,
+    "Calendar 8 with garden waste G1": {
+        "calendar_number": 8,
         "garden_calendar_number": 1,
     },
     "Calendar 1 without garden waste": {
         "calendar_number": 1,
     },
-    "Calendar 20 with garden waste G10": {
-        "calendar_number": 20,
+    "Calendar 10 with garden waste G10": {
+        "calendar_number": 10,
         "garden_calendar_number": 10,
     },
 }
@@ -219,7 +223,9 @@ def _collection_rectangles(page, reader: PdfReader) -> list[tuple]:
             else:
                 fill_colour = (grey, grey, grey)
         elif operator == b"re" and len(operands) == 4:
-            if _colour_matches(fill_colour, _RUBBISH_COLOUR):
+            if _colour_matches(fill_colour, _RUBBISH_COLOUR) or _colour_matches(
+                fill_colour, _RUBBISH_COLOUR_2026
+            ):
                 type_key = "rubbish"
             elif _colour_matches(fill_colour, _RECYCLING_COLOUR) or _colour_matches(
                 fill_colour, _HARD_TO_REACH_RECYCLING_COLOUR
@@ -227,9 +233,13 @@ def _collection_rectangles(page, reader: PdfReader) -> list[tuple]:
                 type_key = "recycling"
             elif _colour_matches(fill_colour, _GLASS_COLOUR):
                 type_key = "glass"
-            elif _colour_matches(fill_colour, _GARDEN_COLOUR):
+            elif _colour_matches(fill_colour, _GARDEN_COLOUR) or _colour_matches(
+                fill_colour, _GARDEN_COLOUR_2026
+            ):
                 type_key = "garden"
-            elif _colour_matches(fill_colour, _SUSPENDED_COLOUR):
+            elif _colour_matches(fill_colour, _SUSPENDED_COLOUR) or _colour_matches(
+                fill_colour, _SUSPENDED_COLOUR_2026
+            ):
                 type_key = "suspended"
             else:
                 continue
