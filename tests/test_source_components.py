@@ -1955,3 +1955,32 @@ def test_aregion_reports_the_districts_of_all_tours() -> None:
         _aregion_fetch("Kehrichtsammlung Nord; Papier West")
     assert missing.value.suggestions == everything
     assert "Papier West" in str(missing.value)
+
+
+def test_aregion_warns_about_a_tour_none_of_whose_districts_was_requested(
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    with caplog.at_level("WARNING"):
+        _aregion_fetch("Kehrichtsammlung Nord")
+    skipped = [r.getMessage() for r in caplog.records if "skipped" in r.getMessage()]
+    assert len(skipped) == 1
+    assert "Papier" in skipped[0]
+    assert "Papier Nord, Ost; Papier Süd" in skipped[0]
+
+
+def test_aregion_maps_a_known_tour_name_followed_by_a_place() -> None:
+    from waste_collection_schedule.service.A_region_ch import _known_label
+
+    assert _known_label("Schredderdienst Liebefeld") == "Schredderdienst"
+    assert (
+        _known_label("Schredderdienst Köniz (nur Ortsteil Köniz)") == "Schredderdienst"
+    )
+    assert _known_label("Metall Sirnach/Wiezikon/Busswil") == "Metall"
+    # The longest known name wins: "Papier und Karton", not a shorter one.
+    assert _known_label("Papier und Karton Wil Nord") == "Papier und Karton"
+    # Word boundary only: no substring or mid-word matches.
+    assert _known_label("Metallware Wil") == "Metallware Wil"
+    assert _known_label("Altes Metall Wil") == "Altes Metall Wil"
+    # Exact and unknown labels are untouched.
+    assert _known_label("Grüntour") == "Grüntour"
+    assert _known_label("Kompostplatz Schönenberg") == "Kompostplatz Schönenberg"

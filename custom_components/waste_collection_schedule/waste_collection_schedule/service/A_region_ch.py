@@ -1,3 +1,4 @@
+import logging
 import re
 from typing import TYPE_CHECKING, Any, NamedTuple
 
@@ -53,6 +54,8 @@ SERVICES = {
 # The raw ICS SUMMARY labels the shared multilingual vocabulary
 # (waste_types.resolve) does not already recognise verbatim (Swiss German
 # spellings, or a canonical bucket the catalogue has no dedicated type for).
+_LOGGER = logging.getLogger(__name__)
+
 # Anything not listed here and not resolved falls back to
 # waste_types.preserved(), so an unrecognised label is still shown (never
 # silently dropped to OTHER). Consistent with the mapping already used for the
@@ -172,11 +175,19 @@ class ARegionRetriever(RetrieverFunc):
                 needs_district = True
                 continue
             # A tour none of whose districts was requested is left out: the
-            # household chose districts for the tours it uses.
-            for name in requested:
-                if name in districts:
-                    matched.add(name)
-                    calendar_pages.append((tour, districts[name]))
+            # household chose districts for the tours it uses. Say so, since a
+            # typo'd district would otherwise drop a tour unnoticed.
+            hits = [name for name in requested if name in districts]
+            if not hits:
+                _LOGGER.warning(
+                    "Tour %r skipped: none of its districts was requested "
+                    "(available: %s)",
+                    tour,
+                    "; ".join(districts),
+                )
+            for name in hits:
+                matched.add(name)
+                calendar_pages.append((tour, districts[name]))
 
         if needs_district:
             raise SourceArgumentRequiredWithSuggestions(
@@ -380,6 +391,29 @@ def _tour_label(label: str, tour: str) -> str:
     return label
 
 
+def _known_label(label: str) -> str:
+    """Map "<known tour name> <place>" to the known name, if not known itself.
+
+    Single-district tours title their events after the tour and its place
+    ("Metall Wil Nord", "Schredderdienst Liebefeld"). The longest
+    TYPE_VALUE_MAP name followed by a word boundary wins; plain substrings
+    never match.
+    """
+    folded = label.casefold()
+    if folded in _KNOWN:
+        return label
+    best = ""
+    for key in _KNOWN:
+        if len(key) > len(best) and re.match(
+            re.escape(key) + r"(?=[\s(,:/-]|$)", folded
+        ):
+            best = key
+    return _KNOWN[best] if best else label
+
+
+_KNOWN = {key.casefold(): key for key in TYPE_VALUE_MAP}
+
+
 class ARegionIcsParser(Parser["list[tuple[Any, str]]"]):
     """Decode every raw ICS calendar returned by ARegionRetriever.
 
@@ -403,11 +437,11 @@ class ARegionIcsParser(Parser["list[tuple[Any, str]]"]):
         for calendar in raw:
             if isinstance(calendar, TourCalendar):
                 rows += [
-                    (date, _tour_label(label, calendar.tour))
+                    (date, _known_label(_tour_label(label, calendar.tour)))
                     for date, label in ics.convert(calendar.ics)
                 ]
             else:
-                rows += ics.convert(calendar)
+                rows += [(d, _known_label(lbl)) for d, lbl in ics.convert(calendar)]
 
         if self.min_events is not None:
             response_shape.expect(
