@@ -28,6 +28,9 @@ Releases are listed in reverse chronological order.
 - Generic `upcoming` retains `Collection` objects for local Jinja access. As before, Jinja's `to_json` filter cannot serialize these objects directly; the REST API serializes their rich records.
 - The `fetch_data` action skips disabled integration entries. Provider fetches taking longer than two minutes log a warning; later requests for that source continue waiting for the running fetch to finish.
 
+- **Breaking:** A-Region, Köniz, ZAB Bazenheid, and Winterthur collections are labeled by their tour (General Waste, Paper & Cardboard, Organic Waste, Plastic, Garden Waste, Recycling, Other) instead of raw district titles such as "Kehrichtsammlung Eschlikon". Customizations keyed to the old district titles must be updated (#8106).
+- A-Region-based sources (a_region_ch, koeniz_ch, zab_ch, winterthur_ch): `district` accepts several names separated by `;` or as a YAML list, one per tour, so households spread across several district tours (e.g. Wil) can be configured. A single name behaves as before (#8106).
+
 ### Deprecated
 
 - `add_days_to` is accepted and ignored in YAML; `daysTo` is always exposed. Removal is scheduled for the next major release.

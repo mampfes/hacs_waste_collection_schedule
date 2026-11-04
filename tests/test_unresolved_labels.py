@@ -69,15 +69,7 @@ _FIXTURES = discover_fixtures()
 # --------------------------------------------------------------------------- #
 
 LABELS_AWAITING_VOCABULARY = {
-    "a_region_ch::Altpapier und Karton ganzes Gemeindegebiet",
-    "a_region_ch::Eisen-und Metallware",
-    "a_region_ch::Grünabfälle",
-    "a_region_ch::Hauskehricht / Sperrgut",
-    "a_region_ch::Hauskehricht, Sperrgut",
-    "a_region_ch::Hauskehricht: Unteres Stadtgebiet",
     "a_region_ch::Medikamente, Chemikalien, Gifte",
-    "a_region_ch::Papier, Karton",
-    "a_region_ch::Papier, Karton: Unteres Stadtgebiet",
     "a_region_ch::Styropor",
     "a_region_ch::Texilien, Schuhe",
     "aberdeenshire_gov_uk::Blue lid bin recycling and food waste",
@@ -226,8 +218,6 @@ LABELS_AWAITING_VOCABULARY = {
     "junker_app::Napkins",
     "kaev_niederlausitz::Gelber Wertstoffbehälter",
     "kaev_niederlausitz::Strauchwerkbündel",
-    "koeniz_ch::Kehricht und Sperrgut",
-    "koeniz_ch::Papier und Karton",
     "koeniz_ch::Schredderdienst Köniz (nur Ortsteil Köniz)",
     "koeniz_ch::Schredderdienst Liebefeld",
     "koeniz_ch::Schredderdienst Spiegel",
@@ -246,18 +236,7 @@ LABELS_AWAITING_VOCABULARY = {
     "offenbach_de::DSD",
     "reso_gmbh_de::Sonderabfall Abgabestelle - Sonderabfall-Kleinmengensammlung: Fränkisch-Crumbach, Industriestr. 9 (Bauhof), 09: 00 Uhr-15: 00 Uhr",
     "southkesteven_gov_uk::23lt Food Caddy",
-    "winterthur_ch::Grobmetall",
-    "winterthur_ch::Grüntour",
-    "zab_ch::Bring- und Holtag",
-    "zab_ch::Grünabfuhr Sirnach, Busswil, Littenheid, Wiezikon, Horben-Egg",
-    "zab_ch::Kehrichtsammlung",
-    "zab_ch::Kehrichtsammlung Eschlikon",
-    "zab_ch::Kehrichtsammlung ganzes Gemeindegebiet Sirnach",
     "zab_ch::Kompostplatz Schönenberg",
-    "zab_ch::Metall Sirnach/Wiezikon/Busswil",
-    "zab_ch::Papier und Karton",
-    "zab_ch::Papier und Karton Eschlikon ganzes Gemeindegebiet",
-    "zab_ch::Papier und Karton Sirnach",
     "zva_sek_de::Altreifen (Achtung: nur Selbstanlieferung)",
 }
 

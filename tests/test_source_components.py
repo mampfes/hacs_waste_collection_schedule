@@ -1835,3 +1835,123 @@ def test_doncaster_gov_uk_picks_address_and_parses_collections() -> None:
         ("2026-10-08", "Recycling"),
         ("2026-10-22", "Green Garden Waste Collection Service"),
     ]
+
+
+def test_aregion_district_accepts_one_name_semicolons_or_a_list() -> None:
+    from waste_collection_schedule.service.A_region_ch import _requested_districts
+
+    assert _requested_districts(None) is None
+    assert _requested_districts("Unteres Stadtgebiet") == ["Unteres Stadtgebiet"]
+    # District names contain commas, so only semicolons separate them.
+    assert _requested_districts(
+        "Papier und Karton Bronschhofen, Maugwil; Metall Wil Nord ;"
+    ) == ["Papier und Karton Bronschhofen, Maugwil", "Metall Wil Nord"]
+    assert _requested_districts(["Bioabfuhr Wil Nord", " Metall Wil Nord "]) == [
+        "Bioabfuhr Wil Nord",
+        "Metall Wil Nord",
+    ]
+    assert _requested_districts(" ; ") is None
+
+
+def test_aregion_labels_events_by_their_tour() -> None:
+    from waste_collection_schedule.service.A_region_ch import _tour_label
+
+    assert _tour_label("Kehrichtsammlung Wil Nord", "Kehrichtsammlung ") == (
+        "Kehrichtsammlung"
+    )
+    assert (
+        _tour_label("Hauskehricht: Unteres Stadtgebiet", "Hauskehricht, Sperrgut")
+        == "Hauskehricht, Sperrgut"
+    )
+    # A SUMMARY unrelated to its tour stays as printed.
+    assert _tour_label("Grünabfuhr", "Häckseldienst") == "Grünabfuhr"
+    assert _tour_label("Altmetall", "Altmetall") == "Altmetall"
+
+
+def _aregion_site(pages: dict[str, str]):
+    class Response:
+        def __init__(self, text):
+            self.text = text
+
+        def raise_for_status(self):
+            pass
+
+    class Session:
+        def __init__(self):
+            self.requested: list[str] = []
+
+        def get(self, url, **_):
+            self.requested.append(url)
+            return Response(pages[url.replace("https://zab.citymobile.ch", "")])
+
+    return Session()
+
+
+def _aregion_tile(href: str, title: str) -> str:
+    return (
+        f'<a href="{href}"><div class="badgeIcon"></div>'
+        f'<div class="title">{title}</div></a>'
+    )
+
+
+_AREGION_ICS = "BEGIN:VCALENDAR\nEND:VCALENDAR\n"
+
+
+def _aregion_pages() -> dict[str, str]:
+    return {
+        "/region": _aregion_tile("/t1?apparentid=1", "Kehrichtsammlung")
+        + _aregion_tile("/t2?apparentid=1", "Papier und Karton"),
+        "/t1?apparentid=1": _aregion_tile("/d1?apparentid=2", "Kehrichtsammlung Nord")
+        + _aregion_tile("/d2?apparentid=2", "Kehrichtsammlung Süd"),
+        "/t2?apparentid=1": _aregion_tile("/d3?apparentid=2", "Papier Nord, Ost")
+        + _aregion_tile("/d4?apparentid=2", "Papier Süd"),
+        **{
+            f"/d{n}?apparentid=2": f'<a href="webcal://zab.citymobile.ch/ical.php?{n}">x</a>'
+            for n in range(1, 5)
+        },
+        **{f"/ical.php?{n}": f"{_AREGION_ICS}{n}" for n in range(1, 5)},
+    }
+
+
+def _aregion_fetch(district):
+    from waste_collection_schedule.service.A_region_ch import ARegionRetriever
+
+    session = _aregion_site(_aregion_pages())
+    session.requested = []
+    source = MagicMock(session=session, params={"m": "W", "district": district})
+    retriever = ARegionRetriever(
+        service="zab", municipalities={"W": "/region"}, municipality="m"
+    )
+    return retriever(source), session.requested
+
+
+def test_aregion_reads_one_requested_district_per_tour() -> None:
+    calendars, _ = _aregion_fetch("Kehrichtsammlung Süd; Papier Nord, Ost")
+    assert [(c.tour, c.ics[-1]) for c in calendars] == [
+        ("Kehrichtsammlung", "2"),
+        ("Papier und Karton", "3"),
+    ]
+    # A tour none of whose districts was asked for is left out.
+    calendars, _ = _aregion_fetch(["Papier Süd"])
+    assert [(c.tour, c.ics[-1]) for c in calendars] == [("Papier und Karton", "4")]
+
+
+def test_aregion_reports_the_districts_of_all_tours() -> None:
+    from waste_collection_schedule.exceptions import (
+        SourceArgumentNotFoundWithSuggestions,
+        SourceArgumentRequiredWithSuggestions,
+    )
+
+    everything = [
+        "Kehrichtsammlung Nord",
+        "Kehrichtsammlung Süd",
+        "Papier Nord, Ost",
+        "Papier Süd",
+    ]
+    with pytest.raises(SourceArgumentRequiredWithSuggestions) as required:
+        _aregion_fetch(None)
+    assert required.value.suggestions == everything
+    with pytest.raises(SourceArgumentNotFoundWithSuggestions) as missing:
+        _aregion_fetch("Kehrichtsammlung Nord; Papier West")
+    assert missing.value.suggestions == everything
+    assert "Papier West" in str(missing.value)
