@@ -164,30 +164,42 @@ class Source:
 
         root = ET.fromstring(xml_data)
 
+        today = datetime.now().date()
+
         temp_dict: dict = {}
+        # Collections dated today. Once the portal rolls "NextDate" forward on
+        # the morning of a collection, today's collection is only available
+        # via "LastDate(Raw)" - the council's own page does the same.
+        today_dict: dict = {}
         for row in root.iter("Row"):
             for result in row.findall("result"):
                 column = result.get("column", "")
-                if not column.endswith("NextDate"):
-                    continue
                 value = (result.text or "").strip()
                 if not value or result.get("isNull", "").lower() == "true":
                     continue
-                key = column.replace("NextDate", "")
-                temp_dict[key] = self.resolve_year(value)
+                if column.endswith("NextDate"):
+                    key = column.replace("NextDate", "")
+                    temp_dict[key] = self.resolve_year(value).date()
+                elif column.endswith("LastDateRaw"):
+                    # ISO timestamp, e.g. "2026-10-28T06:00:00+00:00"; only the
+                    # date part is meaningful (matches the portal's own logic).
+                    last_date = datetime.strptime(value[:10], "%Y-%m-%d").date()
+                    if last_date == today:
+                        today_dict[column.replace("LastDateRaw", "")] = last_date
 
         entries = []
-        for item in temp_dict:
-            if item == "GW":
-                title = "Garden Waste"
-            else:
-                title = item
-            entries.append(
-                Collection(
-                    date=temp_dict[item].date(),
-                    t=title,
-                    icon=ICON_MAP.get(title),
+        seen = set()
+        for source in (temp_dict, today_dict):
+            for item, date in source.items():
+                title = "Garden Waste" if item == "GW" else item
+                if (title, date) in seen:
+                    continue
+                seen.add((title, date))
+                entries.append(
+                    Collection(
+                        date=date,
+                        t=title,
+                        icon=ICON_MAP.get(title),
+                    )
                 )
-            )
-
-        return entries
+        return entries       
