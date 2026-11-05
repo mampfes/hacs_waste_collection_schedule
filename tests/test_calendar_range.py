@@ -9,12 +9,15 @@ midnight (#5852).
 """
 
 import asyncio
+import os
+import sys
 from datetime import date, datetime
 from unittest.mock import Mock
 
 import homeassistant.util.dt as dt_util
 import pytest
 
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))  # isort:skip
 from custom_components.waste_collection_schedule.calendar import (  # isort:skip
     WasteCollectionCalendar,
 )
