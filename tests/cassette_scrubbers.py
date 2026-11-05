@@ -774,7 +774,32 @@ def _tamax(interactions: list[dict], args: dict[str, Any], today: str) -> None:
         )
 
 
+def _citymobile(interactions: list[dict], args: dict[str, Any], today: str) -> None:
+    """Keep only the links of a citymobile.ch / a-region.ch page.
+
+    ``ARegionRetriever`` reads nothing but ``<a href>`` elements (tour tiles
+    with their title, icon and ``apparentid`` links, district tiles, the
+    ``webcal`` link); each page is ~60-100 KB of widget chrome around them.
+    The ICS calendars are kept as recorded.
+    """
+    from bs4 import BeautifulSoup
+
+    for interaction in interactions:
+        if "ical.php" in interaction["url"]:
+            continue
+        html = base64.b64decode(interaction["content_b64"]).decode("utf-8", "replace")
+        links = BeautifulSoup(html, "html.parser").find_all("a", href=True)
+        raw = "<html><body>" + "\n".join(str(link) for link in links) + "</body></html>"
+        interaction["content_b64"] = base64.b64encode(raw.encode("utf-8")).decode(
+            "ascii"
+        )
+
+
 SCRUBBERS: dict[str, Scrubber] = {
+    "a_region_ch": _citymobile,
+    "koeniz_ch": _citymobile,
+    "winterthur_ch": _citymobile,
+    "zab_ch": _citymobile,
     "tamax_net_pl": _tamax,
     "tamax_imielno_pl": _tamax,
     "tamax_janow_pl": _tamax,

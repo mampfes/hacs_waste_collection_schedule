@@ -11,6 +11,8 @@ from waste_collection_schedule.transformers import RowTransformer
 _TYPE_MAP = {
     "Refuse": wt.GENERAL_WASTE,
     "Recycling": wt.RECYCLABLES,
+    "Paper and Card": wt.PAPER,
+    "Food Waste": wt.FOOD_WASTE,
     "Garden": wt.GARDEN_WASTE,
 }
 
@@ -30,6 +32,8 @@ class Source(BaseSource):
     WASTE_TYPES: ClassVar[list] = [
         wt.GENERAL_WASTE,
         wt.RECYCLABLES,
+        wt.PAPER,
+        wt.FOOD_WASTE,
         wt.GARDEN_WASTE,
     ]
 
@@ -55,11 +59,14 @@ class Source(BaseSource):
         headers={"Referer": "https://www.sholland.gov.uk/mycollections"},
     )
     parse = parsers.JsonParser("result")
-    # One field per round, each holding that round's next date.
+    # One field per round, each holding that round's next date. The paper/card
+    # and food rounds are absent (or empty) where they have not rolled out yet.
     preprocess = preprocessors.DateFields(
         fields={
             "nextRefuseDate": "Refuse",
             "nextRecyclingDate": "Recycling",
+            "nextPaperDate": "Paper and Card",
+            "nextFoodDate": "Food Waste",
             "nextGardenDate": "Garden",
         },
         parse_date=_iso_date,

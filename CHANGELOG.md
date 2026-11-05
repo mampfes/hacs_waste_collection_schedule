@@ -36,6 +36,9 @@ Releases are listed in reverse chronological order.
 - Generic `upcoming` retains `Collection` objects for local Jinja access. As before, Jinja's `to_json` filter cannot serialize these objects directly; the REST API serializes their rich records.
 - The `fetch_data` action skips disabled integration entries. Provider fetches taking longer than two minutes log a warning; later requests for that source continue waiting for the running fetch to finish.
 
+- **Breaking:** A-Region, Köniz, ZAB Bazenheid, and Winterthur collections are labeled by their tour (General Waste, Paper & Cardboard, Organic Waste, Plastic, Garden Waste, Recycling, Hazardous Waste, Textiles, Other) instead of raw district titles such as "Kehrichtsammlung Eschlikon"; titles naming a known tour plus a place ("Schredderdienst Liebefeld", "Metall Wil Nord") map to that tour. Customizations keyed to the old district titles must be updated (#8106).
+- A-Region-based sources (a_region_ch, koeniz_ch, zab_ch, winterthur_ch): `district` accepts several names separated by `;` or as a YAML list, one per tour, so households spread across several district tours (e.g. Wil) can be configured. A single name behaves as before; a multi-district tour matching none of the requested names is skipped with a warning listing its districts (#8106).
+
 ## [3.0.0-beta.8] - 2026-10-26
 
 This is a pre-release (beta) that migrates 202 more legacy sources to the BaseSource pipeline since beta.7, so that 1005 of 1087 source modules now run on it, and adds 62 new sources and a number of new regions, many of them PDF-based and built on new shared PDF building blocks. If you tried an earlier beta, please update; if you haven't yet, opt in via HACS' "show beta versions" toggle. Report problems as regular GitHub issues. Stable installs are unaffected until 3.0.0 ships. Fixes marked "port of" shipped earlier in the stable v2.36.0.
