@@ -22,3 +22,5 @@ CLAUDE.local.md
 build/
 dist/
 *.egg-info/
+
+.env

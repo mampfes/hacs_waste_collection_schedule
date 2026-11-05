@@ -45,6 +45,9 @@ def _calendar_filter_types(keys: set[str] | None, records: list[Collection]):
 class WasteCollectionCalendar(CalendarEntity):
     """Calendar entity class."""
 
+    # Per-type styling for the dashboard cards; it follows the config, not history.
+    _unrecorded_attributes = frozenset({"waste_types"})
+
     def __init__(
         self,
         aggregator: CollectionAggregator,
@@ -95,6 +98,22 @@ class WasteCollectionCalendar(CalendarEntity):
         if len(collections) == 0:
             return None
         return self._convert(collections[0])
+
+    @property
+    def extra_state_attributes(self):
+        """Return customised icons/pictures per waste type for the dashboard cards."""
+        waste_types: dict[str, dict[str, str]] = {}
+        for collection in self._get_upcoming():
+            if collection.type in waste_types:
+                continue
+            style = {
+                key: value
+                for key in ("icon", "picture")
+                if (value := getattr(collection, key))
+            }
+            if style:
+                waste_types[collection.type] = style
+        return {"waste_types": waste_types} if waste_types else None
 
     async def async_get_events(
         self, hass: HomeAssistant, start_date: datetime, end_date: datetime
