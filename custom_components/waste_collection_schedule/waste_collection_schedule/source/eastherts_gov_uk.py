@@ -202,6 +202,4 @@ class Source:
                         icon=ICON_MAP.get(title),
                     )
                 )
-
-        return entries
-        
+        return entries       
