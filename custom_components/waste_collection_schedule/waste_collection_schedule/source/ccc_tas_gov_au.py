@@ -23,6 +23,7 @@ PARAM_TRANSLATIONS = {"en": {"address": "123 Clarence St ROSNY TAS 7018"}}
 TEST_CASES = {
     "80 Clarence St": {"address": "80 Clarence St"},
     "50 East Derwent Highway": {"address": "50 East Derwent Highway"},
+    "2 Estate Drive": {"address": "2 Estate Drive"},
 }
 
 DATE_REGEX = r"\d{1,2}/\d{1,2}/\d{4}"
@@ -65,7 +66,7 @@ def _process_results(results) -> list[Collection]:
         if result["name"] == "Recycling Pickup":
             collections["Recycling"] = _get_dates(result["value"])
 
-        if result["name"] == "Green Waste Pickup":
+        if result["name"] == "Green Waste Pickup" and result["value"] != "":
             collections["Greenwaste"] = _get_dates(result["value"])
 
     for bin_type, dates in collections.items():
