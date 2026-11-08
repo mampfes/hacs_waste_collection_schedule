@@ -33,8 +33,10 @@ class KmlWeekdayZoneParser(Parser[list[dict[str, Any]]]):
     """Read named weekday groups from the first polygon covering the address.
 
     Responses are the point lookup (Nominatim ``search`` or ArcGIS
-    ``findAddressCandidates``) and the KML document, in that order. ``groups`` maps type keys to regexes capturing the published days;
-    ``weekdays`` maps the provider's normalised weekday names to Python indices.
+    ``findAddressCandidates``, whose best candidate must score at least 80)
+    and the KML document, in that order. ``groups`` maps type keys to regexes
+    capturing the published days; ``weekdays`` maps the provider's normalised
+    weekday names to Python indices.
     No collection weekday is supplied by the parser itself.
     """
 
