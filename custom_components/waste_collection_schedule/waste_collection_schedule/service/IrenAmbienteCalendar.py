@@ -101,7 +101,7 @@ class _CalendarClient:
 
     def get_streets(self, city_id: str, search: str) -> list[StreetResultEntry]:
         params: dict[str, str | int] = {
-            "api": "vie",
+            "api": "vie",  # codespell:ignore vie
             "istat": city_id,
             "search": search.lower(),
         }

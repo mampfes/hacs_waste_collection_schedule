@@ -12,7 +12,7 @@ _API = "https://data.angers.fr/api/explore/v2.1/catalog/datasets"
 
 # Source: https://data.angers.fr/explore/dataset/secteurs-de-collecte-tri-et-plus/information/
 _CITIES = [
-    "LES PONTS DE CE",
+    "LES PONTS DE CE",  # codespell:ignore ponts
     "SAINT BARTHELEMY D ANJOU",
     "SAINT CLEMENT DE LA PLACE",
     "SAINTE GEMMES SUR LOIRE",

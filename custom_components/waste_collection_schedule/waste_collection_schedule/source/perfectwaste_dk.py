@@ -214,10 +214,10 @@ class Source(BaseSource):
             "Waste app) and then reload this source."
         ),
         "da": (
-            "Vælg din kommune og indtast adressen, som Perfect Waste-appen "
+            "Vælg din kommune og indtast adressen, som Perfect Waste-appen "  # codespell:ignore som
             'skriver den, f.eks. "Søndermarken 10, 8752 Østbirk". Hvis adressen '
             "ikke er entydig, viser fejlbeskeden de mulige adresser. Vigtigt: "
-            "Perfect Waste returnerer kun tømmedage for adresser, som systemet "
+            "Perfect Waste returnerer kun tømmedage for adresser, som systemet "  # codespell:ignore som
             "allerede kender. Får du en fejl om, at der ikke er gemt tømmedage "
             "for din adresse, så tilføj adressen én gang i Perfect Waste-appen "
             "(eller din kommunes egen Perfect Waste-app) og genindlæs derefter "

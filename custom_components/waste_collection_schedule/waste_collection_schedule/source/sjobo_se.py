@@ -20,7 +20,7 @@ _BIN_TEXT = {
         "Pappersförpackningar, plastförpackningar (hårda & mjuka), ofärgade och "
         "färgade glasförpackningar samt batterier och ljuskällor i batteriboxen"
     ),
-    "MoR": "Matavfall och Restavfall",
+    "MoR": "Matavfall och Restavfall",  # codespell:ignore mor
     "FG": "Färgade glasförpackningar",
     "OFG": "Ofärgade glasförpackningar",
     "RST": "Restavfall",
@@ -33,11 +33,11 @@ _BIN_TEXT = {
     "TRG": "Trädgårdsavfall",
 }
 
-# FF1, FF2 and MoR each combine several waste types in one bin.
+# FF1, FF2 and MoR each combine several waste types in one bin.  # codespell:ignore mor
 _TYPE_MAP = {
     _BIN_TEXT["FF1"]: wt.OTHER,
     _BIN_TEXT["FF2"]: wt.OTHER,
-    _BIN_TEXT["MoR"]: wt.OTHER,
+    _BIN_TEXT["MoR"]: wt.OTHER,  # codespell:ignore mor
     _BIN_TEXT["FG"]: wt.GLASS,
     _BIN_TEXT["OFG"]: wt.GLASS,
     _BIN_TEXT["RST"]: wt.GENERAL_WASTE,

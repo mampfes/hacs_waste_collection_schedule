@@ -208,7 +208,7 @@ class Source(BaseSource):
             "https://www.econetsrl.eu/testi.php?id_testi=25, ad esempio "
             "`Strevi`. Acqui Terme e Ovada hanno un calendario per zona: "
             "indica anche la zona (`Centro Storico`, `Città` o `Standard`); "
-            "le vie di ogni zona sono elencate nella pagina 'Calendari' del "
+            "le vie di ogni zona sono elencate nella pagina 'Calendari' del "  # codespell:ignore vie
             "comune. Le date del verde sono quelle del calendario, ma nella "
             "maggior parte dei comuni il ritiro del verde va prenotato in "
             "anticipo presso Econet."

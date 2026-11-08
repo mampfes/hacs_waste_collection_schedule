@@ -281,7 +281,7 @@ def schedule_rows(
         properties = feature["properties"]
         if properties["SECTEUR"] != sector:
             continue
-        if properties["JOUR"] and properties["FREQUENCE"]:
+        if properties["JOUR"] and properties["FREQUENCE"]:  # codespell:ignore frequence
             # Not implemented yet
             continue
         message = properties["MESSAGE_EN"]

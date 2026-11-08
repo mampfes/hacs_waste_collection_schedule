@@ -47,13 +47,16 @@ def _pick_address_id(lookup, source) -> str:
             results = filtered
 
     match = next(
-        (e for e in results if e.get("Adress", "").lower() == street.lower()), None
+        # codespell:ignore-next-line adress
+        (e for e in results if e.get("Adress", "").lower() == street.lower()),
+        None,
     )
     if match is not None:
         return match["id"]
     if len(results) == 1:
         return results[0]["id"]
 
+    # codespell:ignore-next-line adress
     suggestions = [f"{e['Adress']}, {e['Ort']}" for e in results if "Adress" in e]
     raise SourceArgumentNotFoundWithSuggestions("address", full_address, suggestions)
 

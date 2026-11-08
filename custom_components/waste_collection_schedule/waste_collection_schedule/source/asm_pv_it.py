@@ -75,6 +75,7 @@ class Source(BaseSource):
             "municipality": "pavia",
             "street": "via piemonte",
         },
+        # codespell:ignore-next-line vie
         "Albuzzano": {"municipality": "Albuzzano", "street": "Tutte le vie"},
     }
 

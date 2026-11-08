@@ -177,7 +177,7 @@ class Source(BaseSource):
             "paste its URL into the pdf_url field."
         ),
         "it": (
-            "Apri https://www.gruppoveritas.it, vai alla pagina del tuo Comune, "
+            "Apri https://www.gruppoveritas.it, vai alla pagina del tuo Comune, "  # codespell:ignore vai
             "trova il link al calendario PDF e incolla l'URL nel campo pdf_url."
         ),
     }

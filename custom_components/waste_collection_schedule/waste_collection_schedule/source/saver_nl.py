@@ -121,7 +121,7 @@ class Source(BaseSource):
         ),
         "nl": (
             "Gebruik dezelfde postcode en huisnummer als je zou invoeren op "
-            "https://saver.nl/afvalkalender. Als je adres een letter of "
+            "https://saver.nl/afvalkalender. Als je adres een letter of "  # codespell:ignore adres
             "toevoeging heeft (bijv. '5a'), geef dan de letter/toevoeging in "
             "het 'toevoeging'-argument."
         ),

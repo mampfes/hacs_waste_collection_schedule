@@ -273,7 +273,7 @@ COMMON_LABELS = {
         "auto": "Home Assistant-sprog",
         "save": "Gem",
         "reset": "Gendan standarder",
-        "duplicate": "Dupliker som brugerdefineret sensor",
+        "duplicate": "Dupliker som brugerdefineret sensor",  # codespell:ignore som
         "delete": "Slet brugerdefineret sensor",
         "add_custom": "Tilføj brugerdefineret sensor",
         "event_index": "Afhentningsindeks",
@@ -357,7 +357,7 @@ COMMON_LABELS = {
         "auto": "Home Assistants språk",
         "save": "Spara",
         "reset": "Återställ standardvärden",
-        "duplicate": "Duplicera som egen sensor",
+        "duplicate": "Duplicera som egen sensor",  # codespell:ignore som
         "delete": "Ta bort egen sensor",
         "add_custom": "Lägg till egen sensor",
         "event_index": "Hämtningsindex",
@@ -399,7 +399,7 @@ COMMON_LABELS = {
         "auto": "Home Assistant-språk",
         "save": "Lagre",
         "reset": "Gjenopprett standardverdier",
-        "duplicate": "Dupliser som egendefinert sensor",
+        "duplicate": "Dupliser som egendefinert sensor",  # codespell:ignore som
         "delete": "Slett egendefinert sensor",
         "add_custom": "Legg til egendefinert sensor",
         "event_index": "Henteindeks",

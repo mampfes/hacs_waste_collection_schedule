@@ -22,12 +22,12 @@ from waste_collection_schedule.retrievers import RetrieverFunc
 _OVERVIEW_URL = "https://www.stadtwerke-singen.de/abfall/abfallkalender/"
 _GERMAN_MONTHS = {
     "januar": 1,
-    "februar": 2,
+    "februar": 2,  # codespell:ignore februar
     "märz": 3,
     "april": 4,
     "mai": 5,
     "juni": 6,
-    "juli": 7,
+    "juli": 7,  # codespell:ignore juli
     "august": 8,
     "september": 9,
     "oktober": 10,

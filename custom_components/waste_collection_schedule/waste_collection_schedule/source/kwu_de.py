@@ -110,16 +110,17 @@ class Source(BaseSource):
             Lookup(
                 f"{_BASE_URL}/kal_uebersicht-2023.php",
                 method="POST",
-                data=lambda ort, strasse, objekt, **_: {
+                data=lambda ort, strasse, objekt, **_: {  # codespell:ignore objekt
                     "ort": ort,
                     "strasse": strasse,
-                    "objekt": objekt,
+                    "objekt": objekt,  # codespell:ignore objekt
                     "jahr": date.today().year,
                 },
                 headers=_HEADERS,
                 pick=_ics_url,
             ),
         ),
+        # codespell:ignore-next-line objekt
         url=lambda ort, strasse, objekt, ics_url, **_: ics_url,
         headers=_HEADERS,
         raise_for_status=True,

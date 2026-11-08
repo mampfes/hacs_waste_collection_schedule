@@ -94,7 +94,7 @@ class Source(BaseSource):
             "Strasse und Hausnummer wie auf "
             "https://bernentsorgung.glue.ch/erb/web/index angeben, z. B. "
             "Strasse 'Bundesplatz' und Hausnummer '1'. Hausnummern mit "
-            "Zusatz werden als '3a' angegeben. Alternativ kann der "
+            "Zusatz werden als '3a' angegeben. Alternativ kann der "  # codespell:ignore alternativ
             "Schlüssel aus dem iKalender-Link (…/ical?key=…) direkt im Feld "
             "'key' eingetragen werden."
         ),

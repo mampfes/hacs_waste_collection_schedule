@@ -28,12 +28,12 @@ CALENDAR_PAGE_URL = "https://www.rir.no/hentekalender"
 # "YYYY-MM" value it used to get, it answers some months with no dates at all.
 MONTH_TITLES = (
     "Januar",
-    "Februar",
+    "Februar",  # codespell:ignore februar
     "Mars",
     "April",
     "Mai",
     "Juni",
-    "Juli",
+    "Juli",  # codespell:ignore juli
     "August",
     "September",
     "Oktober",

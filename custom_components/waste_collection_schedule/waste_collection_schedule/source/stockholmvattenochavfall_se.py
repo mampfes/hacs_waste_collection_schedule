@@ -84,8 +84,8 @@ class Source(BaseSource):
             "schedule is refreshed once a day (the default fetch interval)."
         ),
         "sv": (
-            "I gränssnittet skriver du gatunamnet och väljer sedan din adress i listan. "
-            "Ange adressen till en villa eller ett radhus som på "
+            "I gränssnittet skriver du gatunamnet och väljer sedan din adress i listan. "  # codespell:ignore adress
+            "Ange adressen till en villa eller ett radhus som på "  # codespell:ignore som
             "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, "
             "t.ex. `Hjortronvägen 3, Bromma`. Postnumret är valfritt. "
             "Webbplatsen visar bara nästa tömning av varje kärl, så schemat "

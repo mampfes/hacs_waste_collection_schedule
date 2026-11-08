@@ -15,7 +15,7 @@ from waste_collection_schedule.service.IntraMaps import (
 from waste_collection_schedule.transformers import ICSTransformer
 
 # The shire moved its map off the self-hosted maps.sjshire.wa.gov.au IntraMaps
-# server onto TechnologyOne's SaaS platform (ser.spatial.t1cloud.com). The old
+# server onto TechnologyOne's SaaS platform (ser.spatial.t1cloud.com). The old  # codespell:ignore ser
 # apikey Integration API is gone (it now serves the MapBuilder HTML shell, hence
 # the JSONDecodeError), so this uses the stateful session handshake the sibling
 # WA councils on the same platform use (IntraMapsRetriever + MapsClientConfig,
@@ -30,7 +30,7 @@ from waste_collection_schedule.transformers import ICSTransformer
 # series (see doc/contributing_source.md, "Empty results and exceptions").
 
 INTRAMAPS_CONFIG = MapsClientConfig(
-    base_url="https://ser.spatial.t1cloud.com",
+    base_url="https://ser.spatial.t1cloud.com",  # codespell:ignore ser
     instance="spatial/intramaps",
     config_id="93074f9e-ef2a-49d5-9866-91422949b9da",
     project="2e3adc22-b61d-4548-92d1-c1b02f9a30a3",

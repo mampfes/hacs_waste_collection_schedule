@@ -57,7 +57,7 @@ class Source(BaseSource):
             "Indiquez votre commune (ou secteur) telle qu'elle figure sous "
             "« Calendriers de collecte » sur "
             "https://www.golfedumorbihan-vannesagglomeration.bzh/mon-quotidien/dechets/collecte/, "
-            "par exemple `Ploeren` ou `Vannes secteur 3`."
+            "par exemple `Ploeren` ou `Vannes secteur 3`."  # codespell:ignore exemple
         ),
     }
 

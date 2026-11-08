@@ -59,7 +59,7 @@ class Source(BaseSource):
             "Indiquez votre commune (ou secteur) telle qu'elle figure dans la "
             "liste des calendriers de collecte sur "
             "https://www.grandbourg.fr/26-collecte-des-ordures-menageres.htm, "
-            "par exemple `Courtes` ou `Attignat Est Crangeat`."
+            "par exemple `Courtes` ou `Attignat Est Crangeat`."  # codespell:ignore exemple
         ),
     }
 

@@ -40,7 +40,7 @@ _COLLECTION_LABELS = {
     "HAS": "Restavfallskärl",
     "HASD": "Mat- & Restavfall delat kärl",
     "HAO": "Restavfallskärl",
-    "HAX": "Restavfallskärl",
+    "HAX": "Restavfallskärl",  # codespell:ignore hax
     "FG": "Färgat glas",
     "OFG": "Ofärgat glas",
     "HPL": "Hårdplast",
@@ -71,7 +71,7 @@ _CODE_TYPES = {
     "KK": wt.GENERAL_WASTE,
     "HAS": wt.GENERAL_WASTE,
     "HAO": wt.GENERAL_WASTE,
-    "HAX": wt.GENERAL_WASTE,
+    "HAX": wt.GENERAL_WASTE,  # codespell:ignore hax
     "MAT": wt.ORGANIC,
     "ORG": wt.ORGANIC,
     "WELL": wt.PAPER,

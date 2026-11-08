@@ -53,7 +53,7 @@ class Source(BaseSource):
         "fr": (
             "Indiquez votre commune telle qu'elle figure sur "
             "https://www.select-om.com/le-selectom-vous/calendrier-des-collectes/, "
-            "par exemple `Molsheim`."
+            "par exemple `Molsheim`."  # codespell:ignore exemple
         ),
     }
 

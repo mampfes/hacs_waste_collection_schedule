@@ -19,8 +19,8 @@ ALTPAPIER = "Altpapier/Karton"
 SONDERABFALL = "Sonderabfälle/Giftsammlung"
 
 MONTHS_DE = [
-    "Januar", "Februar", "März", "April", "Mai", "Juni",
-    "Juli", "August", "September", "Oktober", "November", "Dezember",
+    "Januar", "Februar", "März", "April", "Mai", "Juni",  # codespell:ignore februar
+    "Juli", "August", "September", "Oktober", "November", "Dezember",  # codespell:ignore juli
 ]  # fmt: skip
 
 _WEEKDAY_RE = "Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag"

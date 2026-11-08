@@ -25,15 +25,15 @@ _TYPE_MAP = {
     "metallemballasje": wt.METAL,
 }
 
-# Norwegian month names as used in the calendar headings, e.g. "Juli 2026".
+# Norwegian month names as used in the calendar headings, e.g. "Juli 2026".  # codespell:ignore juli
 _MONTHS = {
     "januar": 1,
-    "februar": 2,
+    "februar": 2,  # codespell:ignore februar
     "mars": 3,
     "april": 4,
     "mai": 5,
     "juni": 6,
-    "juli": 7,
+    "juli": 7,  # codespell:ignore juli
     "august": 8,
     "september": 9,
     "oktober": 10,

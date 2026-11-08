@@ -66,8 +66,8 @@ class Source(BaseSource):
         "fr": (
             "Indiquez votre commune telle qu'elle figure sur "
             "https://www.grandbelfort.fr/prevention-et-valorisation-des-dechets/calendriers-de-collecte.html, "
-            "par exemple `Cravanche`. À Belfort, indiquez `Belfort - ` suivi de "
-            "votre secteur, par exemple `Belfort - La Pépinière`."
+            "par exemple `Cravanche`. À Belfort, indiquez `Belfort - ` suivi de "  # codespell:ignore exemple
+            "votre secteur, par exemple `Belfort - La Pépinière`."  # codespell:ignore exemple
         ),
     }
 

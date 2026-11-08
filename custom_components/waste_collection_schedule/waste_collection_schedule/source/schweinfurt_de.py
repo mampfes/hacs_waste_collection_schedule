@@ -13,9 +13,10 @@ API_URL = "https://www.schweinfurt.de/umweltverkehr/abfall--entsorgung/mllkalend
 
 # Titles (or title fragments) that are announcements rather than an actual
 # collection/drop-off event, e.g. "Wertstoffhof geschlossen" (recycling
-# center closed) or "Aktion Kompostverkauf" (compost sale campaign). These
+# center closed) or "Aktion Kompostverkauf" (compost sale campaign). These  # codespell:ignore aktion
 # are never useful as a "collection" entry, so they are always filtered
 # out, regardless of the `showmobile` setting.
+# codespell:ignore-next-line aktion
 NON_COLLECTION_KEYWORDS = ["geschlossen", "Aktion Kompostverkauf"]
 
 

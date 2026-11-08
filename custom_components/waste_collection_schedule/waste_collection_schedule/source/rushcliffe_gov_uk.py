@@ -27,8 +27,8 @@ STATIC_FIELDS = {
 
 @final
 class Source(BaseSource):
-    TITLE = "Rushcliffe Brough Council"
-    DESCRIPTION = "Source for Rushcliffe Brough Council."
+    TITLE = "Rushcliffe Borough Council"
+    DESCRIPTION = "Source for Rushcliffe Borough Council."
     URL = "https://www.rushcliffe.gov.uk/"
     COUNTRY = "uk"
     RAISE_ON_EMPTY = True

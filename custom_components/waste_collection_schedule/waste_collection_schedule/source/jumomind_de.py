@@ -136,7 +136,7 @@ class Source(BaseSource):
         "de": (
             "Wählen Sie die 'service_id' Ihrer Region aus der Liste der Kommunen, "
             "geben Sie dann Ihren Ort ('city') an und, falls erforderlich, die "
-            "Straße ('street') und Hausnummer ('house_number'). Alternativ können "
+            "Straße ('street') und Hausnummer ('house_number'). Alternativ können "  # codespell:ignore alternativ
             "Sie eine bekannte 'city_id' und 'area_id' direkt angeben."
         ),
     }

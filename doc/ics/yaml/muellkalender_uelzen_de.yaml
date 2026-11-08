@@ -9,7 +9,7 @@ howto:
     - Copy the link to the ics
     - Use this link as the `url` parameter.
   de: |
-    - Gehe auf <https://www.muellkalender-uelzen.de/> and wähle deine Ortschaft aus
+    - Gehe auf <https://www.muellkalender-uelzen.de/> und wähle deine Ortschaft aus
     - Wähle deine Mülltonnenarten
     - Kopiere den Link unten auf der Seite
     - Setze den kopierten Link als `url` Parameter ein

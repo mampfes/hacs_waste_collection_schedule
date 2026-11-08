@@ -76,7 +76,7 @@ class Source(BaseSource):
         ),
         "fr": (
             "Indiquez votre commune telle qu'elle figure sur "
-            "https://www.valesdunes.fr/calendriers-de-collecte/, par exemple "
+            "https://www.valesdunes.fr/calendriers-de-collecte/, par exemple "  # codespell:ignore exemple
             "`Bellengreville`."
         ),
     }

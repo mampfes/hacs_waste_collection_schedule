@@ -25,7 +25,7 @@ waste_collection_schedule:
 **region**
 *(string) (required)*
 
-Municipality as used by Kauno švara, e.g. `Kauno m. sav.`, `Kauno r. sav.`, `Prienų r. sav.`, `Alytaus m. sav.`, `Alytaus r. sav.`, `Druskininkų sav.`, `Birštono sav.`, `Kaišiadorių r. sav.`, `Vilniaus m. sav.`.
+Municipality as used by Kauno švara, e.g. `Kauno m. sav.`, `Kauno r. sav.`, `Prienų r. sav.`, `Alytaus m. sav.`, `Alytaus r. sav.`, `Druskininkų sav.`, `Birštono sav.`, `Kaišiadorių r. sav.`, `Vilniaus m. sav.`. <!-- codespell:ignore sav -->
 
 **street**
 *(string) (required)*
@@ -64,7 +64,7 @@ waste_collection_schedule:
   sources:
     - name: grafikai_svara_lt
       args:
-        region: Kauno m. sav.
+        region: Kauno m. sav.  # codespell:ignore sav
         street: Demokratų g.
         house_number: 7
 ```
@@ -76,7 +76,7 @@ waste_collection_schedule:
   sources:
     - name: grafikai_svara_lt
       args:
-        region: Prienų r. sav.
+        region: Prienų r. sav.  # codespell:ignore sav
         district: Išlaužo sen.
         street: Alytaus g.
         house_number: 2

@@ -139,7 +139,7 @@ class Source(BaseSource):
         "fr": (
             "Saisissez votre commune telle qu'elle figure sur "
             "https://www.cc-montesquieu.fr/vivre/dechets/collectes-des-dechets "
-            "(par exemple « La Brède » ou « Saint-Médard-d'Eyrans »)."
+            "(par exemple « La Brède » ou « Saint-Médard-d'Eyrans »)."  # codespell:ignore exemple
         ),
     }
 
