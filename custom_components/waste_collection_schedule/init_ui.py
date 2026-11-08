@@ -15,6 +15,11 @@ from homeassistant.exceptions import ConfigEntryError, ConfigEntryNotReady
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers import entity_registry as er
 
+from .frontend import (
+    YAML_CONFIGURED,
+    async_register_frontend,
+    async_unregister_frontend,
+)
 from .service import get_fetch_all_service
 from .waste_collection_schedule.service.DeviceKeyStore import (
     initialize_device_key_store,
@@ -48,6 +53,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data,
         options,
     )
+
+    # Re-adds the card resource if the last entry was removed earlier this session.
+    await async_register_frontend(hass)
 
     # Initialize and load device key store
     device_store = initialize_device_key_store(hass)
@@ -238,6 +246,15 @@ async def async_remove_entry(hass: HomeAssistant, entry: ConfigEntry):
     ir.async_delete_issue(hass, const.DOMAIN, "legacy_sensors_" + entry.entry_id)
     async with state.cache_lock if state else asyncio.Lock():
         await cache_store(hass, entry.entry_id).async_remove()
+
+    # Keep release-branch cache/repair cleanup above, then remove owned cards.
+    remaining = [
+        e
+        for e in hass.config_entries.async_entries(const.DOMAIN)
+        if e.entry_id != entry.entry_id
+    ]
+    if not remaining and not hass.data.get(YAML_CONFIGURED):
+        await async_unregister_frontend(hass)
 
 
 async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
