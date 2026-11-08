@@ -1,6 +1,10 @@
 {
   "name": "Waste Collection Schedule",
-  "domains": ["sensor"],
+  "domains": [
+    "sensor"
+  ],
   "iot_class": "cloud_polling",
-  "homeassistant": "2024.4.0"
+  "homeassistant": "2024.4.0",
+  "zip_release": true,
+  "filename": "waste_collection_schedule.zip"
 }
