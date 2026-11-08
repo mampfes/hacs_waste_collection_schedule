@@ -1,5 +1,4 @@
 import datetime
-import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
@@ -15,12 +14,35 @@ from waste_collection_schedule.service.AchieveForms import (
 from waste_collection_schedule.transformers import RowTransformer
 
 _HOSTNAME = "eastherts-self.achieveservice.com"
-_WEEKDAY_DAY_MONTH = date_parsers.next_weekday("%A %d %B")
+# "<Bin>NextDate" is "Wednesday 11th November" (no year): its next occurrence.
+_NEXT_DATE = date_parsers.without_ordinals(date_parsers.next_weekday("%A %d %B"))
+# "<Bin>LastDateRaw" is an ISO timestamp ("2026-11-04T06:00:00+00:00"); only its
+# date part is meaningful, as in the portal's own display logic.
+_LAST_DATE = date_parsers.auto
+_ANY_DATE = date_parsers.first_of(_NEXT_DATE, _LAST_DATE)
 
 
-def _next_date(text: str) -> datetime.date:
-    """ "Tuesday 6th October" -> its next occurrence (no year is given)."""
-    return _WEEKDAY_DAY_MONTH(re.sub(r"(\d+)(?:st|nd|rd|th)\b", r"\1", text))
+def _use_key(key: str, row: dict) -> bool:
+    """Use a ``LastDateRaw`` only when it is today's collection.
+
+    Once the portal has recorded today's collection it advances ``NextDate`` to
+    the following one, so today's collection is only in ``LastDateRaw``. Earlier
+    last dates are past collections and are ignored. If the same bin's
+    ``NextDate`` is still today, that already provides the entry.
+    """
+    if not key.endswith("LastDateRaw"):
+        return True
+    today = datetime.date.today()
+    try:
+        if _LAST_DATE(str(row[key])) != today:
+            return False
+    except (ValueError, OverflowError):
+        return False
+    next_text = row.get(key.removesuffix("LastDateRaw") + "NextDate")
+    try:
+        return not (next_text and _NEXT_DATE(str(next_text)) == today)
+    except ValueError:
+        return True
 
 
 @final
@@ -66,9 +88,12 @@ class Source(BaseSource):
         ],
     )
     parse = AchieveFormsRowsParser()
-    # One row with a "<Bin>NextDate" per bin: "Tuesday 6th October".
+    # One row with a "<Bin>NextDate" per bin ("Tuesday 6th October") and a
+    # "<Bin>LastDateRaw" (ISO timestamp), the latter used only for today.
     preprocess = AchieveFormsDynamicRowsPreprocessor(
-        r"^(.+)NextDate$", parse_date=_next_date
+        r"^(.+?)(?:NextDate|LastDateRaw)$",
+        key_filter=_use_key,
+        parse_date=_ANY_DATE,
     )
     transform = RowTransformer(
         type_value_map={
