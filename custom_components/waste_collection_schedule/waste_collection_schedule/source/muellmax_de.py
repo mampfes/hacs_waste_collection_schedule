@@ -153,7 +153,18 @@ class Source:
         mm_frm_str_sel=None,
         mm_frm_hnr_sel=None,
     ):
-        self._service = service
+        # The service id is part of the URL and must match Müllmax's spelling
+        # exactly; a stray space or different case (e.g. "Evs " or "EVS") makes
+        # the form silently reset and look like an address problem (#8130).
+        service = str(service).strip()
+        self._service = next(
+            (
+                s["service_id"]
+                for s in SERVICE_MAP
+                if s["service_id"].lower() == service.lower()
+            ),
+            service,
+        )
         self._mm_frm_ort_sel = mm_frm_ort_sel
         self._mm_frm_str_sel = mm_frm_str_sel
         self._mm_frm_hnr_sel = mm_frm_hnr_sel
