@@ -1,5 +1,4 @@
 import datetime
-import re
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
@@ -15,24 +14,12 @@ from waste_collection_schedule.service.AchieveForms import (
 from waste_collection_schedule.transformers import RowTransformer
 
 _HOSTNAME = "eastherts-self.achieveservice.com"
-_WEEKDAY_DAY_MONTH = date_parsers.next_weekday("%A %d %B")
-
-
-def _next_date(text: str) -> datetime.date:
-    """ "Tuesday 6th October" -> its next occurrence (no year is given)."""
-    return _WEEKDAY_DAY_MONTH(re.sub(r"(\d+)(?:st|nd|rd|th)\b", r"\1", text))
-
-
-def _parse_date(text: str) -> datetime.date:
-    """Parse either row format.
-
-    ``<Bin>NextDate`` is "Wednesday 11th November" (no year); ``<Bin>LastDateRaw``
-    is an ISO timestamp, e.g. "2026-11-04T06:00:00+00:00", of which only the date
-    part is meaningful (as in the portal's own display logic).
-    """
-    if re.match(r"\d{4}-\d{2}-\d{2}T", text):
-        return datetime.date.fromisoformat(text[:10])
-    return _next_date(text)
+# "<Bin>NextDate" is "Wednesday 11th November" (no year): its next occurrence.
+_NEXT_DATE = date_parsers.without_ordinals(date_parsers.next_weekday("%A %d %B"))
+# "<Bin>LastDateRaw" is an ISO timestamp ("2026-11-04T06:00:00+00:00"); only its
+# date part is meaningful, as in the portal's own display logic.
+_LAST_DATE = date_parsers.auto
+_ANY_DATE = date_parsers.first_of(_NEXT_DATE, _LAST_DATE)
 
 
 def _use_key(key: str, row: dict) -> bool:
@@ -46,10 +33,16 @@ def _use_key(key: str, row: dict) -> bool:
     if not key.endswith("LastDateRaw"):
         return True
     today = datetime.date.today()
-    if datetime.date.fromisoformat(str(row[key])[:10]) != today:
+    try:
+        if _LAST_DATE(str(row[key])) != today:
+            return False
+    except (ValueError, OverflowError):
         return False
     next_text = row.get(key.removesuffix("LastDateRaw") + "NextDate")
-    return not (next_text and _next_date(str(next_text)) == today)
+    try:
+        return not (next_text and _NEXT_DATE(str(next_text)) == today)
+    except ValueError:
+        return True
 
 
 @final
@@ -100,7 +93,7 @@ class Source(BaseSource):
     preprocess = AchieveFormsDynamicRowsPreprocessor(
         r"^(.+?)(?:NextDate|LastDateRaw)$",
         key_filter=_use_key,
-        parse_date=_parse_date,
+        parse_date=_ANY_DATE,
     )
     transform = RowTransformer(
         type_value_map={
