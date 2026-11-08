@@ -4,30 +4,95 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
-## [Unreleased]
+## [3.0.0-beta.9] - 2026-11-09
+
+This is a pre-release (beta) that migrates 40 more legacy sources to the BaseSource pipeline since beta.8, adds 35 new sources and regions, removes three dead sources, deprecates `hygea_be`, and brings the bundled dashboard cards and a reworked sensor configuration with stable identities. If you tried an earlier beta, please update; if you haven't yet, opt in via HACS' "show beta versions" toggle. Report problems as regular GitHub issues. Stable installs are unaffected until 3.0.0 ships. Fixes marked "port of" shipped earlier in a stable v2.x release.
+
+**Breaking changes: please read before updating.**
+
+- **Removed sources:** `newcastle_gov_uk`, `merton_gov_uk` and `lrasha_de` are gone (see "Removed" below for the replacements).
+- **Waste-type labels have changed for every source migrated in this beta** (see "Other" below), as in the earlier betas: labels are now the canonical, localised waste-type names. Pointe-Claire (`Feuilles` is now Garden Waste) and A-Region, Köniz, ZAB Bazenheid and Winterthur (labelled by tour instead of district title) change as well. Check any automation, template, customisation or card that compares an exact label string.
+- **Existing UI configurations migrate to entry version 4.** Older integration versions cannot load migrated entries; restore a backup before downgrading. Negative legacy lead times and pickup indexes normalize to zero (with a warning); review those sensors after upgrading.
+- `hygea_be` is deprecated in favour of `recycleapp_be` and will be removed in the next major release.
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@Tom-Neverwinter, @BobrLab, @chaudis, @jonandel, @jorinkl, @n42net, @nevembalint, @ruaan-deysel, @spaklius, @vBrolin, @wagnst, @willtho89 and @wit3. 🎉
+Thanks as well to our returning contributors (@bbr111, @Olen, @PrzemyslawKlys, @yeaaaaaahh) for the fixes, sources and migrations below.
 
 ### Removed
 
-- removed newcastle_gov_uk: Newcastle City Council retired the `community.newcastle.gov.uk` bin lookup, which now answers "The details are not currently available" for every address. Deprecated since 2.30.0; use the shared ReCollect ICS source (area `NewcastleUponTyneUK`, see `doc/ics/recollect.md`)
-- removed merton_gov_uk ("London Borough of Merton (Old)"): the `myneighbourhood.merton.gov.uk` waste services page answers HTTP 404. Use the ICS source with the "London Borough of Merton (New)" calendar link from fixmystreet.merton.gov.uk. It was not deprecated first because it could no longer return data
-- removed lrasha_de: since August 2025 (#4449) the source has only raised an error pointing to app_abfallplus_de (Kreis Schwäbisch-Hall). It was not deprecated first because it could no longer return data
+- removed newcastle_gov_uk: Newcastle City Council retired the `community.newcastle.gov.uk` bin lookup, which now answers "The details are not currently available" for every address. Deprecated since 2.30.0; use the shared ReCollect ICS source (area `NewcastleUponTyneUK`, see `doc/ics/recollect.md`) (#8102)
+- removed merton_gov_uk ("London Borough of Merton (Old)"): the `myneighbourhood.merton.gov.uk` waste services page answers HTTP 404. Use the ICS source with the "London Borough of Merton (New)" calendar link from fixmystreet.merton.gov.uk. It was not deprecated first because it could no longer return data (#8102)
+- removed lrasha_de: since August 2025 (#4449) the source has only raised an error pointing to app_abfallplus_de (Kreis Schwäbisch-Hall). It was not deprecated first because it could no longer return data (#8102)
 
 ### Deprecated
 
+- deprecated hygea_be in favour of recycleapp_be (Recycle!, `postcode`, `street`, `house_number`): Hygea's relaunched site no longer serves the calendar the source reads. Removal is scheduled for the next major release (#8085)
 - `add_days_to` is accepted and ignored in YAML; `daysTo` is always exposed. Removal is scheduled for the next major release.
 
-### Added
+### Added Sources
 
-- Bundled Next collection, Schedule and Bins dashboard cards with configurable waste-type styles, localized dates and visual editors. Automatic card registration requires Home Assistant 2025.5 or newer; the visual editor requires 2026.6 or newer. Older supported Home Assistant versions retain their existing schedules and skip card registration; the integration minimum remains 2024.4.0.
+- added Dunanett Nonprofit Kft. (dunanett_hu), Hungary (thanks @nevembalint) (#7827)
+- added Ljusdal Energi (ljusdalenergi_se), Sweden (thanks @vBrolin) (#7846)
+- added Nemėžio komunalininkas (nkom_lt), Lithuania (thanks @BobrLab) (#7989)
+- added Stockholm Vatten och Avfall (stockholmvattenochavfall_se), Sweden (thanks @chaudis) (#8061, #8095)
+- added Muellkalender Landkreis Uelzen (muellkalender_uelzen_de), Germany, as an ICS source (thanks @jorinkl) (#8096)
+- added Homewood Disposal Service (NuWay) (mydisposal_com), US (thanks @Tom-Neverwinter) (#8129)
+- added Makarski komunalac (makarski_komunalac_hr), Croatia (thanks @wagnst) (#8141)
+- added Econet (econetsrl_eu), Italy, covering Acqui Terme and Ovada (#7998)
+- added PortAPPorta (portapporta_it), CBBO (cbbo_it), Castelnovetto and neighbouring comuni (castelnovetto_pv_it), Lozzolo and Roasio (lozzolo_roasio_it) and Selargius Sostenibile (selargiusostenibile_it), Italy (#8015, #8016, #8017, #8018, #8073)
+- added SYVALORM (syvalorm_fr) and Grand Lieu (grandlieu_fr), France (#8033)
+- added Town of Huntington, NY (huntington_ny_us), US (#8044)
+- added Kretslopp Sydost (kretsloppsydost_se) and Krokom (krokom_se), Sweden (#8048, #8144)
+- added Landkreis Neuwied (abfall-nr.de) to abfall_io_graphql, Germany (#8055)
+- added Ray Whelan (raywhelan_ie), Ireland (#8072)
+- added Newry, Mourne and Down District Council (newrymournedown_org) and City of Edinburgh Council (edinburgh_gov_uk), UK (#8074, #8077)
+- added Ottawa Valley Waste Recovery Centre (ovwrc_com), Petawawa, Canada, with a new shared `PdfIconCalendar` (#8075)
+- added EKO-REGION (eko_region_pl) for Gmina Szczerców, Poland (#8076)
+- added TAMAX household calendars (tamax_net_pl and related modules), Poland: Gmina Radziemice, Janów, Szczekociny, Imielno, Lelów, Włodowice, Sędziszów, Koniusza, Książ Wielki, Bochnia and Wieliczka (#8071, #8078, #8079, #8080, #8081, #8082, #8093)
+- added Norwegian Bokmål (nb) language support: UI templates, canonical waste-type names and common field labels (thanks @Olen) (#8006)
+- added bundled Next collection, Schedule and Bins dashboard cards with configurable waste-type styles, localized dates and visual editors (thanks @ruaan-deysel). Automatic card registration requires Home Assistant 2025.5 or newer; the visual editor requires 2026.6 or newer. Older supported Home Assistant versions retain their existing schedules and skip card registration; the integration minimum remains 2024.4.0 (#8008)
+- added a persistent schedule cache: the last fetched schedule is kept across restarts and reloads, so sensors and calendars stay available when the provider is down, and a hung provider no longer holds Home Assistant in "Completing startup" (thanks @willtho89) (#8035)
 
-### Fixed
+### Fixed Sources
 
-- Pointe-Claire: classify the official ICS feed by UID with accent-insensitive title fallback, reject empty feeds, and update sector guidance (port of #8133; official URLs already adopted in #7713). **Breaking label correction:** leaf pickups previously exposed as unresolved `Feuilles` now use canonical Garden Waste; filters/templates comparing the displayed `Feuilles` label may need updating. Existing canonical categories and `sector: A|B` configurations remain unchanged.
+- fixed pointe_claire_qc_ca: classify the official ICS feed by UID with accent-insensitive title fallback, reject empty feeds, and update sector guidance (port of #8133; official URLs already adopted in #7713). **Breaking label correction:** leaf pickups previously exposed as unresolved `Feuilles` now use canonical Garden Waste; filters/templates comparing the displayed `Feuilles` label may need updating. Existing canonical categories and `sector: A|B` configurations remain unchanged (#8143)
+- fixed a_region_ch, koeniz_ch, zab_ch and winterthur_ch: **Breaking:** collections are labeled by their tour (General Waste, Paper & Cardboard, Organic Waste, Plastic, Garden Waste, Recycling, Hazardous Waste, Textiles, Other) instead of raw district titles such as "Kehrichtsammlung Eschlikon"; titles naming a known tour plus a place ("Schredderdienst Liebefeld", "Metall Wil Nord") map to that tour. Customizations keyed to the old district titles must be updated. `district` also accepts several names separated by `;` or as a YAML list, one per tour, so households spread across several district tours (e.g. Wil) can be configured; a multi-district tour matching none of the requested names is skipped with a warning listing its districts (#8121)
+- fixed eastherts_gov_uk: update the AchieveService lookup package ID, preserve collection-day entries (thanks @jonandel) and support the November 2026 calendar colours (port of #8117) (#8042, #8111, #8120)
+- fixed grafikai_svara_lt: read the Kauno švara open-data CSV instead of the Turnstile-protected site (thanks @spaklius) (#8066)
+- fixed irenambiente_it: map the combined plastic-and-cans round to Recyclables (thanks @wit3) (#8032)
+- fixed cmcitymedia_de: disable the remaining six providers (thanks @n42net) (#8011)
+- fixed yarracity_vic_gov_au: align collection colours with the council bin lids (thanks @yeaaaaaahh) (#8034)
+- fixed tendring_gov_uk: adapt to renamed API response fields (#8056)
+- fixed sims_pl: map the green and bulky waste bin names (#8054)
+- fixed abfall_io_graphql: the KELL config flow no longer fails because the Origin header was derived from build-time-only REGIONS (#8043)
+- fixed app_abfallplus_de: accept house numbers saved as raw IDs before #6662 (port of #8062) (#8065)
+- fixed awg_wuppertal_de: accept `action=list` house-number links (#8025)
+- fixed e_lindsey_gov_uk: read food-waste collections (port of #8024) (#8026)
+- fixed sholland_gov_uk: add the paper/card and food rounds (port of #8115) (#8118)
+- fixed zke_sb_de: fetch every offered year (port of #8098) (#8099)
+- fixed muellmax_de: ignore surrounding spaces and case in the service id (port) (#8149)
+- fixed ccc_tas_gov_au: skip services without a collection (#8142)
+- fixed paczkow_pl: handle wrapped day lists with pypdf older than 6.20; pypdf>=6.20.0 is now required (#8022)
+- fixed tamax sources: look calendars up on the municipality pages instead of the stale overview (#8105)
+- fixed tr_qld_gov_au: label the suburb field "Suburb" (#7999)
+- fixed awg_de, chesterfield_gov_uk, fccenvironment_co_uk and mole_valley_gov_uk: use the new TLS fallback that fetches a missing intermediate certificate instead of `verify=False` or pinned intermediates (#8069)
+- fixed the calendar entity treating the end of a requested time range as inclusive; it is now exclusive (port of #8124) (#8147)
 
-### Changed
+### Other
 
-- Dedicated calendars retain their category or provider-bin membership when types share a display alias, including description keys and trimmed legacy labels. The general calendar keeps non-dedicated collections and remains available when only part of the dedicated schedule is present; saved keys and calendar identities remain unchanged.
-- UI sensors use stable internal IDs, retain entity IDs and history through edits, and can be disabled without deleting their configuration. Configure separates source settings, sensors, and waste-type customization.
+- migrated 40 more legacy sources to the BaseSource pipeline, each with recorded cassettes and canonical waste-type labels (breaking for type-based filters, see above):
+  - Australia and New Zealand: Port Adelaide Enfield, WasteNet, Dardanup, Victoria Park, Sunshine Coast, CBCity, Strathfield, Fairfield City, Glen Eira, Auckland Council, Casey, Christchurch, Warrnambool (#8000, #8014, #8021, #8029, #8067, #8086)
+  - United States and Canada: Los Angeles, Stamford, Vogel Disposal, RITL, Airdrie (#8014, #8021, #8067, #8013, #8101)
+  - UK: Antrim and Newtownabbey, Wolverhampton, New Forest, Hastings, plus nine more (Dover on the new Veolia portal API, East Renfrewshire, Gateshead, Great Yarmouth, Ipswich, Mid Sussex, Powys, Preston, Swansea) (#8012, #8029, #8067, #8068, #8083)
+  - Europe and Latin America: Ciudad de la Costa, Grosswangen, GPSEA (Sud Est Avenir), Mainz-Bingen, Wieliczka, Würzburg, Komunala Kranj, Ecoservice (Lithuania), Tkeliai (#8013, #8021, #8029, #8086, #8103)
+- rebuilt scheibbs_umweltverbaende_at on its yearly PDFs (#8085)
+- new shared building blocks: a TLS AIA fallback for hosts that omit their intermediate certificate (#8068), and `KmlZones`, `MarkedPdfCalendar`, `PdfIconCalendar`, `ColourWeekCalendar` and other calendar components used by the migrations above
+- the v3 core can be packaged for standalone use, with documented ICS export (#8030)
+- the integration ships its existing icon as a local brand asset (#8028)
+- internal: faster PR validation, review tooling bound to the reviewed SHA, inline codespell ignores, fixture tools no longer shadow the standard library, refreshed legacy classification notes (#8087, #8088, #8092, #8094, #8100, #8104, #8145)
+- Dedicated calendars retain their category or provider-bin membership when types share a display alias, including description keys and trimmed legacy labels. The general calendar keeps non-dedicated collections and remains available when only part of the dedicated schedule is present; saved keys and calendar identities remain unchanged (thanks @PrzemyslawKlys) (#8089).
+- UI sensors use stable internal IDs, retain entity IDs and history through edits, and can be disabled without deleting their configuration. Configure separates source settings, sensors, and waste-type customization (thanks @PrzemyslawKlys) (#8084).
 - Built-in state/date formats support English, German, French, Italian, Dutch, Slovenian, Danish, Finnish, Swedish, and Norwegian Bokmål without writing templates. YAML supports the same formatting and filtering options, optional `unique_id`, and `kind: days_to` / `last_update`.
 - Optional native device pages edit the same sensor records. Sensor-only changes do not fetch the provider again. **Next collection** remains the combined overview sensor.
 - Type filters accept canonical IDs and retained provider labels before duplicate merging. `unique_types` keeps the next collection of each retained provider bin, or each category when labels are not retained. `exclude_types` is available in UI and YAML.
@@ -39,9 +104,6 @@ Releases are listed in reverse chronological order.
 - Options saves preserve concurrent native-control edits and discovered sensors. Reloads of an unchanged source keep its cached schedule available and retry a due fetch in the background; failure leaves the cache in place. Manual Reload and `fetch_data` skip fetching inside `fetch_interval_days`. Native text controls follow HA's 255-character limit; longer saved values remain intact and can be edited in integration options.
 - Generic `upcoming` retains `Collection` objects for local Jinja access. As before, Jinja's `to_json` filter cannot serialize these objects directly; the REST API serializes their rich records.
 - The `fetch_data` action skips disabled integration entries. Provider fetches taking longer than two minutes log a warning; later requests for that source continue waiting for the running fetch to finish.
-
-- **Breaking:** A-Region, Köniz, ZAB Bazenheid, and Winterthur collections are labeled by their tour (General Waste, Paper & Cardboard, Organic Waste, Plastic, Garden Waste, Recycling, Hazardous Waste, Textiles, Other) instead of raw district titles such as "Kehrichtsammlung Eschlikon"; titles naming a known tour plus a place ("Schredderdienst Liebefeld", "Metall Wil Nord") map to that tour. Customizations keyed to the old district titles must be updated (#8106).
-- A-Region-based sources (a_region_ch, koeniz_ch, zab_ch, winterthur_ch): `district` accepts several names separated by `;` or as a YAML list, one per tour, so households spread across several district tours (e.g. Wil) can be configured. A single name behaves as before; a multi-district tour matching none of the requested names is skipped with a warning listing its districts (#8106).
 
 ## [3.0.0-beta.8] - 2026-10-26
 
