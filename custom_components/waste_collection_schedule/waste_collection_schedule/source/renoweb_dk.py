@@ -179,8 +179,8 @@ class Source(BaseSource):
             + "."
         ),
         "da": (
-            "Brug navnet paa din kommune som `municipality` (f.eks. `Esbjerg`, "
-            "`Aalborg`, `Rødovre`) og din adresse som `address`, f.eks. "
+            "Brug navnet paa din kommune som `municipality` (f.eks. `Esbjerg`, "  # codespell:ignore som
+            "`Aalborg`, `Rødovre`) og din adresse som `address`, f.eks. "  # codespell:ignore som
             "`Torvegade 3, 6700 Esbjerg` eller blot `Torvegade 3`."
         ),
     }

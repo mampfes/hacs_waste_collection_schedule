@@ -102,7 +102,7 @@ def attachment_pick(name: str, *, argument: str = "url") -> Callable[..., Attach
 def download_body(attachment: Attachment) -> str:
     """The body the portal's script POSTs to ask for an attachment's path."""
     parts = urlsplit(attachment.page_url)
-    fields = f"protocollo={parts.scheme}&ser={parts.netloc}&{attachment.query}&PAGINA="
+    fields = f"protocollo={parts.scheme}&ser={parts.netloc}&{attachment.query}&PAGINA="  # codespell:ignore ser
     return f'--{_BOUNDARY}\r\n&name="{fields}"\r\n\n\r\n--{_BOUNDARY}--\r\n'
 
 

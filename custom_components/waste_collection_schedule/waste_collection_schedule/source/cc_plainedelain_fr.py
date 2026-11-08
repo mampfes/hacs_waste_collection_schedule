@@ -78,7 +78,7 @@ class Source(BaseSource):
         "fr": (
             "Saisissez votre commune telle qu'elle figure sur "
             "https://cc-plainedelain.fr/les-services/gerer-vos-dechets/"
-            "les-calendriers-de-collecte/ (par exemple « Ambronay », "
+            "les-calendriers-de-collecte/ (par exemple « Ambronay », "  # codespell:ignore exemple
             "« Meximieux OUEST » ou « Meximieux SUD et EST »). La casse, les "
             "accents et les traits d'union sont ignorés."
         ),

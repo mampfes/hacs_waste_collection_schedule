@@ -48,7 +48,7 @@ class Source(BaseSource):
 
     HOWTO: ClassVar[dict] = {
         "en": "Enter your full address, e.g. `1580 Chem. du Fer-à-Cheval, Sainte-Julie, QC J3E 0A2`.",
-        "fr": "Saisissez votre adresse complète, par exemple `1580 Chem. du Fer-à-Cheval, Sainte-Julie, QC J3E 0A2`.",
+        "fr": "Saisissez votre adresse complète, par exemple `1580 Chem. du Fer-à-Cheval, Sainte-Julie, QC J3E 0A2`.",  # codespell:ignore exemple
     }
 
     retrieve = calendar_retriever("publidata.ca")

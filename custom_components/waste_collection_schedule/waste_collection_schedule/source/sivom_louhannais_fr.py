@@ -133,7 +133,7 @@ class Source(BaseSource):
         "fr": (
             "Choisissez le jour de collecte de votre commune tel qu'indiqué sur "
             "https://sivom-louhannais.fr/collecte-des-omr/les-calendriers-de-collecte.html "
-            "(par exemple Beaurepaire-en-Bresse : `Vendredi`)."
+            "(par exemple Beaurepaire-en-Bresse : `Vendredi`)."  # codespell:ignore exemple
         ),
     }
 

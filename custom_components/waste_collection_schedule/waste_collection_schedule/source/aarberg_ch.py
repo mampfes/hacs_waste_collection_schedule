@@ -103,7 +103,7 @@ class Source(BaseSource):
             "Mülital, Spins, Zälgli."
         ),
         "fr": (
-            "La zone à Aarberg, par exemple Aarberg, Grafenmoos, Leimern, "
+            "La zone à Aarberg, par exemple Aarberg, Grafenmoos, Leimern, "  # codespell:ignore exemple
             "Mülital, Spins, Zälgli."
         ),
         "it": (

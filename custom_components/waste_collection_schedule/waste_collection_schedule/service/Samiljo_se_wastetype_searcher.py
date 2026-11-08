@@ -24,6 +24,7 @@ urllib3
 parser = argparse.ArgumentParser(
     description="Searches for new bin types not yet included in NAME_MAP. Searches all addresses in the database if not otherwise specified."
 )
+# codespell:ignore-next-line adress
 parser.add_argument("--street", type=str, help="Specify a street adress or part of it.")
 parser.add_argument("--city", type=str, help="Specify a city.")
 parser.add_argument(

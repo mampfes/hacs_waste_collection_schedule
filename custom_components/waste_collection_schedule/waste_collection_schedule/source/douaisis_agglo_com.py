@@ -73,8 +73,8 @@ class Source(BaseSource):
         "fr": (
             "Indiquez votre commune telle qu'elle figure sur "
             "https://www.douaisis-agglo.com/services/dechets/calendriers-de-collecte-de-votre-commune, "
-            "par exemple `Flines-lez-Râches`. À Douai, indiquez le secteur, par "
-            "exemple `Douai - Dorignies`."
+            "par exemple `Flines-lez-Râches`. À Douai, indiquez le secteur, par "  # codespell:ignore exemple
+            "exemple `Douai - Dorignies`."  # codespell:ignore exemple
         ),
     }
 

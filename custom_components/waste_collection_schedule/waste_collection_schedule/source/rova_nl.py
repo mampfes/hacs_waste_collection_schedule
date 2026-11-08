@@ -42,7 +42,7 @@ class Source(BaseSource):
         ),
         "nl": (
             "Gebruik dezelfde postcode en huisnummer als je zou invoeren op "
-            "https://www.rova.nl/afvalkalender. Als je adres een letter of "
+            "https://www.rova.nl/afvalkalender. Als je adres een letter of "  # codespell:ignore adres
             "toevoeging heeft, geef deze dan in het 'addition'-veld."
         ),
     }

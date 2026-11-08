@@ -38,12 +38,12 @@ WEBSITE_FRACTION_MAP = {
 }
 MONTHS = {
     "januar": 1,
-    "februar": 2,
+    "februar": 2,  # codespell:ignore februar
     "mars": 3,
     "april": 4,
     "mai": 5,
     "juni": 6,
-    "juli": 7,
+    "juli": 7,  # codespell:ignore juli
     "august": 8,
     "september": 9,
     "oktober": 10,

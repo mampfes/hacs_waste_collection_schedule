@@ -103,7 +103,7 @@ class Source(BaseSource):
             "Inserisci il comune e la via esattamente come sono indicati da CEM "
             "Ambiente, ad esempio come mostrato su "
             "https://www.cemambiente.it/cemfacile/. Se l'ortografia esatta non "
-            "viene trovata, il messaggio di errore elencherà le vie più simili per "
+            "viene trovata, il messaggio di errore elencherà le vie più simili per "  # codespell:ignore vie
             "il tuo comune."
         ),
     }

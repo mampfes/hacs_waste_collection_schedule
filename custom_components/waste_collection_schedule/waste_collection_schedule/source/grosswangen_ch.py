@@ -74,12 +74,12 @@ class Source(BaseSource):
             pages=(0,),
             months=(
                 "Januar",
-                "Februar",
+                "Februar",  # codespell:ignore februar
                 "März",
                 "April",
                 "Mai",
                 "Juni",
-                "Juli",
+                "Juli",  # codespell:ignore juli
                 "August",
                 "September",
                 "Oktober",

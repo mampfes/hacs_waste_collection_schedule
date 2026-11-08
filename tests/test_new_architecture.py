@@ -6591,9 +6591,10 @@ class TestPdfMonthColumns:
 
         rows = [
             self._row(800, ("Kalender 2026", 10)),
+            # codespell:ignore-next-line februar
             self._row(780, ("Januar", 20), ("Februar", 120)),
             self._row(770, ("5 Mo", 10), ("Kehricht", 40), ("2 Mo", 110)),
-            self._row(400, ("Juli", 20), ("August", 120)),
+            self._row(400, ("Juli", 20), ("August", 120)),  # codespell:ignore juli
             self._row(390, ("6 Mo", 10), ("Kehricht", 40), ("4 Di", 110)),
             self._row(380, ("7 Di", 10), ("4 Di", 110), ("Grüngut", 140)),
         ]

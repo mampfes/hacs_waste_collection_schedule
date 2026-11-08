@@ -19,9 +19,9 @@ MONTHS_DE = {
     "april": 4,
     "august": 8,
     "dezember": 12,
-    "februar": 2,
+    "februar": 2,  # codespell:ignore februar
     "januar": 1,
-    "juli": 7,
+    "juli": 7,  # codespell:ignore juli
     "juni": 6,
     "mai": 5,
     "märz": 3,

@@ -134,9 +134,9 @@ MUNICIPALITY = _term(
         "Il nome del vostro comune, come indicato sul sito del fornitore.",
         "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
         "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
-        "Navnet på din kommune, som vist på din leverandørs hjemmeside.",  # codespell:ignore vist
+        "Navnet på din kommune, som vist på din leverandørs hjemmeside.",  # codespell:ignore vist,som
         "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
-        "Namnet på din kommun, som det visas på leverantörens webbplats.",
+        "Namnet på din kommun, som det visas på leverantörens webbplats.",  # codespell:ignore som
         "Navnet på kommunen din, slik det står på leverandørens nettside.",
     ),
 )
@@ -274,22 +274,22 @@ ADDRESS = _term(
     "Adresse",
     "Adresse",
     "Indirizzo",
-    "Adres",
+    "Adres",  # codespell:ignore adres
     "Naslov",
     "Adresse",
     "Osoite",
-    "Adress",
+    "Adress",  # codespell:ignore adress
     "Adresse",
     desc=(
         "Your full address.",
         "Ihre vollständige Adresse.",
         "Votre adresse complète.",
         "Il vostro indirizzo completo.",
-        "Uw volledige adres.",
+        "Uw volledige adres.",  # codespell:ignore adres
         "Vaš celoten naslov.",
         "Din fulde adresse",
         "Koko osoitteesi.",
-        "Din fullständiga adress.",
+        "Din fullständiga adress.",  # codespell:ignore adress
         "Hele adressen din.",
     ),
     # A pasted address routinely carries leading or trailing whitespace, which
@@ -305,7 +305,7 @@ REGION = _term(
     "Regio",
     "Regija",
     "Region",
-    "Alue",
+    "Alue",  # codespell:ignore alue
     "Region",
     "Region",
 )
@@ -473,7 +473,7 @@ CUSTOMER_NUMBER = _term(
     "Customer Number",
     "Kundennummer",
     "Numéro de client",
-    "Numero cliente",
+    "Numero cliente",  # codespell:ignore cliente
     "Klantnummer",
     "Šifra stranke",
     "Kundenummer",
@@ -517,8 +517,8 @@ WASTE_TYPES = _term(
         "Opcijski filter: tipi odpadkov, ki naj bodo vključeni.",
         "Valgfrit filter: affaldstyperne du vil inkludere.",
         "Valinnainen suodatin: sisällytettävät jätelajit.",
-        "Valfritt filter: de avfallstyper som ska tas med.",
-        "Valgfritt filter: avfallstypene som skal tas med.",
+        "Valfritt filter: de avfallstyper som ska tas med.",  # codespell:ignore som
+        "Valgfritt filter: avfallstypene som skal tas med.",  # codespell:ignore som
     ),
     # Rendered as a plain text field (no generic multi-select), so the
     # config-flow UI stores what the visitor typed as one comma separated

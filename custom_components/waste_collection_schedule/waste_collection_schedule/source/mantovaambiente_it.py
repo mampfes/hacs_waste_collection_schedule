@@ -208,7 +208,7 @@ class Source(BaseSource):
             "Inserisci il comune come è indicato su https://www.mantovaambiente.it "
             "(es. Gonzaga). Se il comune è suddiviso in più zone di raccolta, "
             "inserisci anche la zona (es. Zona 1): nella pagina del comune, il "
-            'link "Non conosci la zona?" elenca le vie e le frazioni di ogni zona. '
+            'link "Non conosci la zona?" elenca le vie e le frazioni di ogni zona. '  # codespell:ignore vie
             "Lascia la zona vuota per un comune con una sola zona; se ne ha più "
             "di una, il modulo le elenca."
         ),

@@ -11,7 +11,7 @@ howto:
     - You might need to set `verify_ssl: False` as there seems to be an issue with the website's SSL certificate.
     - Using regex `(.+):.*` will remove the location from the title.
   de: |
-    - Besuche <https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php> und wähle deinen Addresse.
+    - Besuche <https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php> und wähle deine Adresse.
     - Wähle `Jahreskalender` und deine gewünschten Abfallarten.
     - Rechtsklick -> `Linkadresse kopieren` auf den `Export in Kalenderanwendung` Button.
     - Verwende diese URL als `url` Parameter.

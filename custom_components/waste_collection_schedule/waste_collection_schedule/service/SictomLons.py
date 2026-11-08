@@ -57,16 +57,20 @@ FRENCH_DAYS = {
 }
 
 
+# codespell:ignore-next-line frequence
 def _is_parity_match(d: datetime.date, frequence: str) -> bool:
     """Return True if the ISO week number of date matches the required parity."""
     iso_week = d.isocalendar()[1]
-    if frequence == "Paire":
+    if frequence == "Paire":  # codespell:ignore frequence
         return iso_week % 2 == 0
     return iso_week % 2 == 1
 
 
 def _generate_dates(
-    days: list[str], frequence: str, today: datetime.date, lookahead_days: int = 365
+    days: list[str],
+    frequence: str,  # codespell:ignore frequence
+    today: datetime.date,
+    lookahead_days: int = 365,
 ) -> list[datetime.date]:
     """Generate all collection dates matching given French day names and week parity."""
     end_date = today + datetime.timedelta(days=lookahead_days)
@@ -78,7 +82,7 @@ def _generate_dates(
         days_ahead = (weekday - today.weekday()) % 7
         current = today + datetime.timedelta(days=days_ahead)
         while current <= end_date:
-            if _is_parity_match(current, frequence):
+            if _is_parity_match(current, frequence):  # codespell:ignore frequence
                 results.append(current)
             current += datetime.timedelta(days=7)
     return results

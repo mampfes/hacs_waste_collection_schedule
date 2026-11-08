@@ -124,11 +124,12 @@ def _is_weekly_rule(
             or (entry["woche"] == 3 and even_week)
         ) and entry["tag1"] == weekday
     if rhythm == 3 and matches(4):
+        # codespell:ignore-next-line beginn
         return (week - entry["beginn"]) % 4 == 0 and entry["tag1"] == weekday
     if rhythm == 4 and matches(1):
         return (
             entry["tag1"] == weekday or (entry["tag2"] > 0 and entry["tag2"] == weekday)
-        ) and week >= entry["beginn"]
+        ) and week >= entry["beginn"]  # codespell:ignore beginn
     return False
 
 

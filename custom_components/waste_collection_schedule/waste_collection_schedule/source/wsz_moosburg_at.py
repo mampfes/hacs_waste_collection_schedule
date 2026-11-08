@@ -118,7 +118,7 @@ class Source(BaseSource):
         ),
         "de": (
             "Wählen Sie Ihre Gemeinde, dann Ihre Adresse und, falls die Adresse "
-            "mehrere Straßen hat, die Straße. Alternativ können Sie die "
+            "mehrere Straßen hat, die Straße. Alternativ können Sie die "  # codespell:ignore alternativ
             "Adressen-ID direkt angeben: das ist die Zahl in der Anfrage "
             "https://wsz-moosburg.at/api/trash/<ID>, die der Kalender auf "
             "wsz-moosburg.at für Ihre Adresse stellt."

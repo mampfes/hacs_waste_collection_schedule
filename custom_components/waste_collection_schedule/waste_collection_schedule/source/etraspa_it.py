@@ -226,7 +226,7 @@ class Source(BaseSource):
         "it": (
             "Scegli il comune e la zona di raccolta indicata sul calendario ETRA: "
             "A o B a San Martino di Lupari, C o D a Bassano del Grappa, da 1 a 4 "
-            "a Vigonza (vedi l'elenco delle vie 'Il territorio' in fondo al "
+            "a Vigonza (vedi l'elenco delle vie 'Il territorio' in fondo al "  # codespell:ignore vie
             "calendario: le zone 1 e 2 sono la zona A, le zone 3 e 4 la zona B, "
             "e il numero indica anche il giro del vetro)."
         ),

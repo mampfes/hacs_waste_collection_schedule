@@ -47,18 +47,18 @@ URL = "https://grafikai.svara.lt"
 COUNTRY = "lt"
 TEST_CASES = {
     "Demokratų g. 7, Kaunas": {
-        "region": "Kauno m. sav.",
+        "region": "Kauno m. sav.",  # codespell:ignore sav
         "street": "Demokratų g.",
         "house_number": "7",
     },
-    "Alytaus g. 2, Išlaužo k., Išlaužo sen. Prienų r. sav.": {
-        "region": "Prienų r. sav.",
+    "Alytaus g. 2, Išlaužo k., Išlaužo sen. Prienų r. sav.": {  # codespell:ignore sav
+        "region": "Prienų r. sav.",  # codespell:ignore sav
         "street": "Alytaus g.",
         "house_number": 2,
         "district": "Išlaužo sen.",
     },
     "Alytaus g. 2, Verbyliškių k. (selected by city)": {
-        "region": "Prienų r. sav.",
+        "region": "Prienų r. sav.",  # codespell:ignore sav
         "street": "Alytaus g.",
         "house_number": "2",
         "city": "Verbyliškių k.",
@@ -88,7 +88,7 @@ PARAM_TRANSLATIONS = {
 
 PARAM_DESCRIPTIONS = {
     "en": {
-        "region": "Municipality as used by Kauno švara, e.g. 'Kauno m. sav.', 'Kauno r. sav.', 'Prienų r. sav.', 'Alytaus m. sav.'.",
+        "region": "Municipality as used by Kauno švara, e.g. 'Kauno m. sav.', 'Kauno r. sav.', 'Prienų r. sav.', 'Alytaus m. sav.'.",  # codespell:ignore sav
         "street": "Street name including the abbreviation, e.g. 'Demokratų g.'.",
         "house_number": "House number as registered, e.g. '7', '2A', '132B'.",
         "district": "Optional. Only needed if the same street and house number exists in several districts of the region, e.g. 'Išlaužo sen.'.",

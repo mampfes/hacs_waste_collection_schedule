@@ -64,7 +64,7 @@ class Source(BaseSource):
         "fr": (
             "Indiquez votre municipalité telle qu'elle figure sur "
             "https://www.mrcvr.ca/services/matieres-residuelles/calendriers-des-collectes/, "
-            "par exemple `Otterburn Park`."
+            "par exemple `Otterburn Park`."  # codespell:ignore exemple
         ),
     }
 

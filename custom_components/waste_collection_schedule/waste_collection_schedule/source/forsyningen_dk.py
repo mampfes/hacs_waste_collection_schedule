@@ -89,7 +89,7 @@ class Source(BaseSource):
             "e.g. 'Hjørringvej 10' or 'Knivholtvej 15, 1 (9900)'."
         ),
         "da": (
-            "Indtast adressen, som adressesøgningen på "
+            "Indtast adressen, som adressesøgningen på "  # codespell:ignore som
             "https://renovation.forsyningen.dk/minside/Tomningsinfo foreslår den, "
             "f.eks. 'Hjørringvej 10' eller 'Knivholtvej 15, 1 (9900)'."
         ),

@@ -18,7 +18,7 @@ _API_URL = (
     "https://www.oslo.kommune.no/actions/snap-lib-waste-complaint/search-by-address"
 )
 
-# Hyppighet.Faktor to the interval between two collections, in days.
+# Hyppighet.Faktor to the interval between two collections, in days.  # codespell:ignore faktor
 _FREQUENCY_DAYS = {
     10000: 7,  # 1 gang pr. uke (weekly)
     20000: 4,  # 2 ganger pr. uke (twice weekly, approximate)
@@ -52,13 +52,14 @@ def _describe(point, source):
         return
     today = datetime.date.today()
     for service in point["Tjenester"]:
-        label = service["Fraksjon"]["Tekst"]
+        label = service["Fraksjon"]["Tekst"]  # codespell:ignore tekst
         next_date = _parse_date(service["TommeDato"])
         if next_date >= today:
             # TommeDato is today or later: it is the next collection itself.
             yield Schedule(label, next_date)
             continue
         # TommeDato is the last collection: project the cadence forward.
+        # codespell:ignore-next-line faktor
         factor = (service.get("Hyppighet") or {}).get("Faktor", 0)
         interval = datetime.timedelta(
             days=_FREQUENCY_DAYS.get(factor, _DEFAULT_INTERVAL_DAYS)

@@ -246,12 +246,12 @@ def scrape_for_region(
     tables = extract_tables(soup)
     if not tables:
         raise ValueError(
-            "Nie znaleziono tabel harmonogramu na stronie (zmienił się układ strony?)."
+            "Nie znaleziono tabel harmonogramu na stronie (zmienił się układ strony?)."  # codespell:ignore tabel
         )
     sections = parse_tables_dict(tables)
     if not sections:
         raise ValueError(
-            "Nie udało się sparsować tabel harmonogramu (brak danych po parsowaniu)."
+            "Nie udało się sparsować tabel harmonogramu (brak danych po parsowaniu)."  # codespell:ignore tabel
         )
     entries: list[dict] = []
     found_region_anywhere = False

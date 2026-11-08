@@ -659,7 +659,7 @@ def write_ics_md_file(filename: Path, data: IcsSourceData) -> None:
         md += "  sources:\n"
         md += "    - name: ics\n"
         md += "      args:\n"
-        md += multiline_indent(yaml.dump(tc).rstrip("\n"), 8) + "\n"
+        md += multiline_indent(yaml.dump(tc, allow_unicode=True).rstrip("\n"), 8) + "\n"
         md += "```\n"
         # md += "\n"
     with open(filename, "w", encoding="utf-8", newline="\n") as f:

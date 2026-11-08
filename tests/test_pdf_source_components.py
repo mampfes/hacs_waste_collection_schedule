@@ -2429,6 +2429,7 @@ def test_halley_portal_attachment_conversation():
     )
     attachment = HalleyPortal.attachment_pick(r"\.pdf")(page)
     assert HalleyPortal.download_body(attachment) == (
+        # codespell:ignore-next-line ser
         '--AZazAZ\r\n&name="protocollo=https&ser=www.comune.example.it&'
         "en=eg696&MESSA=PUBBLICA&DSK=0000&NOME=Calendario rifiuti 2027.pdf"
         '&FORM=pdf&PAGINA="\r\n\n\r\n--AZazAZ--\r\n'

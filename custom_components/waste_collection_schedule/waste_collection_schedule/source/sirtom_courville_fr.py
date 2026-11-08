@@ -68,8 +68,8 @@ class Source(BaseSource):
             "Ouvrez https://www.sirtom-courville.fr/mes-dechets/jours-de-collecte/ "
             "et indiquez le nom de votre calendrier tel qu'il figure après "
             "« Téléchargez le calendrier des collectes : », sans l'année, par "
-            "exemple `Fontaine-la-Guyon`. Les hameaux ayant leur propre calendrier "
-            "l'ajoutent, par exemple `Digny – Les Hauts Cornets, La Gatine`."
+            "exemple `Fontaine-la-Guyon`. Les hameaux ayant leur propre calendrier "  # codespell:ignore exemple
+            "l'ajoutent, par exemple `Digny – Les Hauts Cornets, La Gatine`."  # codespell:ignore exemple
         ),
     }
 

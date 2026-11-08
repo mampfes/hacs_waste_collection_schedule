@@ -15,8 +15,8 @@ howto:
   de: |
     - `mein-abfallkalender.online` nutzt eine Subdomain pro unterstützter Gemeinde/Stadt. Öffne die Subdomain deiner Region, z.B. <https://eppstein.mein-abfallkalender.online>. Wenn du die Subdomain deiner Region nicht kennst, kannst du die Referenzseite besuchen: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.
     - Wähle deine Region (falls nötig).
-    - Klicke auf `Meine Termine anzeigen` [nicht für allen Regionen verfügbar nötig/verfügbar].
-    - Klicke auf `Termine (iCal / WebCal)` [nicht für allen Regionen verfügbar nötig/verfügbar].
+    - Klicke auf `Meine Termine anzeigen` [nicht in allen Regionen verfügbar].
+    - Klicke auf `Termine (iCal / WebCal)` [nicht in allen Regionen verfügbar].
     - Vergiss nicht, deine E-Mail zu registrieren, sonst erhältst du keinen gültigen Webcal-Link!
     - Klicke auf `Termine via iCal/WebCal nutzen`.
     - Kopiere den Webcal-Link unter `Online=Kalender "Google Kalender" (manuell)`.

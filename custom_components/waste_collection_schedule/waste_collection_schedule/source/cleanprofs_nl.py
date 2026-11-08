@@ -48,7 +48,7 @@ class Source(BaseSource):
         ),
         "nl": (
             "Vul de postcode, het huisnummer en eventueel de toevoeging in "
-            "van een adres dat bij CleanProfs geregistreerd is."
+            "van een adres dat bij CleanProfs geregistreerd is."  # codespell:ignore adres
         ),
     }
 

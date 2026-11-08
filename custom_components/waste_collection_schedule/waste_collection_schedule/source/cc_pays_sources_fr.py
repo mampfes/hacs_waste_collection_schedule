@@ -53,7 +53,7 @@ class Source(BaseSource):
         "fr": (
             "Indiquez votre commune telle qu'elle figure dans la liste sur "
             "https://www.cc-pays-sources.fr/environnement/gestion-des-dechets/votre-calendrier-de-tri/, "
-            "par exemple `Ressons-sur-Matz`."
+            "par exemple `Ressons-sur-Matz`."  # codespell:ignore exemple
         ),
     }
 

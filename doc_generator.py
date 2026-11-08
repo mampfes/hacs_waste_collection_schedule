@@ -65,7 +65,9 @@ def _representative_test_case(test_cases: dict[str, dict]) -> dict[str, Any] | N
 
 def _yaml_args_block(kwargs: dict[str, Any], indent: int = 8) -> str:
     """Render a kwargs dict as an indented YAML mapping for an ``args:`` block."""
-    dumped = yaml.dump(kwargs, default_flow_style=False, sort_keys=False).rstrip("\n")
+    dumped = yaml.dump(
+        kwargs, default_flow_style=False, sort_keys=False, allow_unicode=True
+    ).rstrip("\n")
     pad = " " * indent
     return "\n".join(f"{pad}{line}" for line in dumped.split("\n"))
 

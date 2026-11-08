@@ -10,7 +10,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "district": "Område",
         "house_number": "Husnummer",
         "municipality": "Kommune",
-        "password": "Passord",
+        "password": "Passord",  # codespell:ignore passord
         "postcode": "Postnummer",
         "street": "Gate",
         "town": "Sted",
@@ -20,7 +20,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "zone": "Sone",
     },
     "sv": {
-        "address": "Adress",
+        "address": "Adress",  # codespell:ignore adress
         "bill_number": "Fakturanummer",
         "calendar_title": "Kalendernamn",
         "city": "Ort",
@@ -41,7 +41,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "bill_number": "Laskun numero",
         "calendar_title": "Kalenterin nimi",
         "city": "Kaupunki",
-        "district": "Alue",
+        "district": "Alue",  # codespell:ignore alue
         "house_number": "Talon numero",
         "municipality": "Kunta",
         "password": "Salasana",
@@ -97,7 +97,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "address_name_numer": "Hausname oder -nummer",
         "address_postcode": "Postleitzahl",
         "address_street": "Straße",
-        "adress": "Adresse",
+        "adress": "Adresse",  # codespell:ignore adress
         "api_key": "API-Schlüssel",
         "area": "Gebiet",
         "bezirk": "Bezirk",
@@ -191,14 +191,14 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "city": "Città",
         "city_id": "ID Città",
         "city_part": "Parte della Città",
-        "client": "Cliente",
+        "client": "Cliente",  # codespell:ignore cliente
         "commune": "Comune",
         "community": "Comunità",
         "company": "Compagnia",
         "council": "Consiglio",
         "count": "Conteggio",
         "county_id": "ID Paese",
-        "customer": "Cliente",
+        "customer": "Cliente",  # codespell:ignore cliente
         "dates": "Date",
         "district": "Distretto",
         "district_id": "ID Distretto",
@@ -306,7 +306,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "address_postcode": "Code postal",
         "address_street": "Rue",
         "addressNo": "Numéro d'adresse",
-        "adress": "Adresse",
+        "adress": "Adresse",  # codespell:ignore adress
         "api_key": "Clé API",
         "area": "Zone",
         "bezirk": "District",
@@ -420,7 +420,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "address_name_number": "Ime ali številka naslova",
         "address_postcode": "Poštna številka",
         "address_street": "Ulica",
-        "adress": "Naslov",
+        "adress": "Naslov",  # codespell:ignore adress
         "api_key": "API ključ",
         "area": "Območje",
         "bezirk": "Okrožje",
@@ -594,12 +594,12 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "abf_strasse": "Straat",
         "abf_suche": "Zoeken",
         "addition": "Toevoeging",
-        "address": "Adres",
+        "address": "Adres",  # codespell:ignore adres
         "addressNo": "Adresnummer",
         "address_name_number": "Straatnaam of -nummer",
         "address_postcode": "Postcode",
         "address_street": "Straat",
-        "adress": "Adres",
+        "adress": "Adres",  # codespell:ignore adress,adres
         "api_key": "API-sleutel",
         "area": "Gebied",
         "bezirk": "Wijk",

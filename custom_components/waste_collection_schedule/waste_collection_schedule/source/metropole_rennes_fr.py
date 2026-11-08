@@ -363,10 +363,10 @@ class Source(BaseSource):
         "fr": (
             "Ouvrez https://dechets.metropole.rennes.fr/ou-et-comment-jeter-vos-dechets/ "
             "et consultez les listes des calendriers de collecte. Utilisez le nom de "
-            "l'entrée qui couvre votre adresse comme `commune`, par exemple "
+            "l'entrée qui couvre votre adresse comme `commune`, par exemple "  # codespell:ignore exemple
             "`Cesson-Sévigné`. Si plusieurs communes partagent un calendrier (par "
-            "exemple `Bruz - Chavagne`), le nom de votre commune suffit. Dans "
-            "Rennes, utilisez le quartier, par exemple `Q7 - La Pommeraie` ou "
+            "exemple `Bruz - Chavagne`), le nom de votre commune suffit. Dans "  # codespell:ignore exemple
+            "Rennes, utilisez le quartier, par exemple `Q7 - La Pommeraie` ou "  # codespell:ignore exemple
             "simplement `Q7`."
         ),
     }

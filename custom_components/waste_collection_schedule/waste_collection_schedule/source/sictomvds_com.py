@@ -143,7 +143,7 @@ class Source(BaseSource):
         ),
         "fr": (
             "Saisissez votre commune telle qu'elle apparaît sur la carte de "
-            "https://www.sictomvds.com (par exemple « Velleminfroy »)."
+            "https://www.sictomvds.com (par exemple « Velleminfroy »)."  # codespell:ignore exemple
         ),
     }
 

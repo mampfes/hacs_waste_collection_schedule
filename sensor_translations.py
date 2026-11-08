@@ -33,7 +33,7 @@ FIELD_LABELS = {
         "Jede Art nur einmal",
         "Arten ausschließen",
         "Erweiterte Einstellungen",
-        "Aktion",
+        "Aktion",  # codespell:ignore aktion
         "Abfallarten",
         "Sensorart",
     ),
