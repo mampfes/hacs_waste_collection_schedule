@@ -1136,6 +1136,10 @@ COUNTRYCODES = [
         "name": "Canada",
     },
     {
+        "code": "hr",
+        "name": "Croatia",
+    },
+    {
         "code": "cz",
         "name": "Czech Republic",
     },
