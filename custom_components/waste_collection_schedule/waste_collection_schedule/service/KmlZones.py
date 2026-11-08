@@ -32,9 +32,11 @@ def normalise(value: str) -> str:
 class KmlWeekdayZoneParser(Parser[list[dict[str, Any]]]):
     """Read named weekday groups from the first polygon covering the address.
 
-    Responses are the Nominatim point lookup and the KML document, in that
-    order. ``groups`` maps type keys to regexes capturing the published days;
-    ``weekdays`` maps the provider's normalised weekday names to Python indices.
+    Responses are the point lookup (Nominatim ``search`` or ArcGIS
+    ``findAddressCandidates``, whose best candidate must score at least 80)
+    and the KML document, in that order. ``groups`` maps type keys to regexes
+    capturing the published days; ``weekdays`` maps the provider's normalised
+    weekday names to Python indices.
     No collection weekday is supplied by the parser itself.
     """
 
@@ -52,6 +54,12 @@ class KmlWeekdayZoneParser(Parser[list[dict[str, Any]]]):
         if len(responses) != 2:
             raise ValueError("KML zone lookup needs a point and a map response")
         points = responses[0].json()
+        if isinstance(points, dict):  # ArcGIS findAddressCandidates
+            points = [
+                {"lon": c["location"]["x"], "lat": c["location"]["y"]}
+                for c in points.get("candidates", [])
+                if c.get("score", 0) >= 80
+            ][:1]
         address = str(source.params.get("address", "")) if source else ""
         if not points:
             raise SourceArgumentNotFound("address", address)
