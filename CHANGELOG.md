@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [3.0.0-beta.10] - 2026-11-09
+
+Packaging-only follow-up to beta.9. Provider logic and integration configuration are unchanged; users skipping beta.9 should also read its migration/breaking-change notes.
+
+### Fixed
+
+- HACS and Home Assistant Marketplace use a dedicated slim `waste_collection_schedule.zip` release asset instead of downloading the entire repository archive (including large test cassettes). The ZIP retains all runtime packages, translations, bundled dashboard assets and license notices. (#8151)
+
+### Other
+
+- Release packaging builds the exact tagged commit, checks archive layout/size and uploads without replacing existing different content.
+- ZIP-mode installer support is release-only; developer branch installs do not have a missing-asset fallback. GitHub's automatic source archives and older release tags are unchanged.
+- This removes the oversized-archive fallback path; it does not establish the cause of the separately reported HTTP 501. Beta.9 remains unchanged.
+
 ## [3.0.0-beta.9] - 2026-11-09
 
 This is a pre-release (beta) that migrates 40 more legacy sources to the BaseSource pipeline since beta.8, adds 35 new sources and regions, removes three dead sources, deprecates `hygea_be`, and brings the bundled dashboard cards and a reworked sensor configuration with stable identities. If you tried an earlier beta, please update; if you haven't yet, opt in via HACS' "show beta versions" toggle. Report problems as regular GitHub issues. Stable installs are unaffected until 3.0.0 ships. Fixes marked "port of" shipped earlier in a stable v2.x release.
