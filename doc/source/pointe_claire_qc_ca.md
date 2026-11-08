@@ -2,7 +2,7 @@
 
 Waste collection schedules for the [City of Pointe-Claire](https://www.pointe-claire.ca), Québec, Canada.
 
-Dates come from the iCal feed published by the city through its [Espace citoyen](https://espace.pointe-claire.ca) portal.
+Dates come from the iCal feed published by the city through its [Espace citoyen](https://espace.pointe-claire.ca) portal. <!-- codespell:ignore espace -->
 
 ## Configuration via configuration.yaml
 

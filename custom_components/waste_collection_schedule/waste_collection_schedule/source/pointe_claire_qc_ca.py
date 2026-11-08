@@ -48,9 +48,9 @@ PARAM_TRANSLATIONS = {
     },
 }
 
-# Public iCal feed published by the city through its "Espace citoyen" portal.
+# Public iCal feed published by the city through its "Espace citoyen" portal.  # codespell:ignore espace
 # The `collects` parameter selects the collection zone.
-API_URL = "https://espace.pointe-claire.ca/avis/collectes/v2/calendrier.ics"
+API_URL = "https://espace.pointe-claire.ca/avis/collectes/v2/calendrier.ics"  # codespell:ignore espace
 
 SECTOR_ZONE_MAP: dict[str, int] = {
     "A": 2,
