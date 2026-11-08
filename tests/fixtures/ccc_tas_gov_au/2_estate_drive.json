@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-11-08",
+  "interactions": [
+    {
+      "key": "POST https://www.ccc.tas.gov.au/wp-json/waste-collection/address-search f5054fc35f",
+      "method": "POST",
+      "url": "https://www.ccc.tas.gov.au/wp-json/waste-collection/address-search",
+      "final_url": "https://www.ccc.tas.gov.au/wp-json/waste-collection/address-search",
+      "body": "{\"body\":{\"address\":\"2 Estate Drive\"}}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Sun, 08 Nov 2026 20:31:56 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "server": "nginx",
+        "x-robots-tag": "noindex",
+        "link": "<https://www.ccc.tas.gov.au/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff, nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "x-frame-options": "SAMEORIGIN",
+        "content-security-policy": "frame-ancestors 'self'",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "content_b64": "eyJyZXN1bHRzIjpbIjIgRXN0YXRlIERyaXZlIEFDVE9OIFBBUksgIFRBUyAgNzE3MCJdLCJzdWNjZXNzIjp0cnVlfQ=="
+    },
+    {
+      "key": "POST https://www.ccc.tas.gov.au/wp-json/waste-collection/collection-search bcc4e128a1",
+      "method": "POST",
+      "url": "https://www.ccc.tas.gov.au/wp-json/waste-collection/collection-search",
+      "final_url": "https://www.ccc.tas.gov.au/wp-json/waste-collection/collection-search",
+      "body": "{\"body\":{\"address\":\"2 Estate Drive ACTON PARK  TAS  7170\"}}",
+      "status": 200,
+      "encoding": "UTF-8",
+      "headers": {
+        "date": "Sun, 08 Nov 2026 20:31:57 GMT",
+        "content-type": "application/json; charset=UTF-8",
+        "server": "nginx",
+        "x-robots-tag": "noindex",
+        "link": "<https://www.ccc.tas.gov.au/wp-json/>; rel=\"https://api.w.org/\"",
+        "x-content-type-options": "nosniff, nosniff",
+        "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+        "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+        "x-frame-options": "SAMEORIGIN",
+        "content-security-policy": "frame-ancestors 'self'",
+        "referrer-policy": "strict-origin-when-cross-origin"
+      },
+      "content_b64": "eyJyZXN1bHRzIjpbeyJuYW1lIjoiQWRkcmVzcyIsImNhcHRpb24iOiJBZGRyZXNzIiwidmFsdWUiOiIyIEVzdGF0ZSBEcml2ZSBBQ1RPTiBQQVJLICBUQVMgIDcxNzAifSx7Im5hbWUiOiJDZW50cm9pZF9YIiwiY2FwdGlvbiI6IkNlbnRyb2lkIFgiLCJ2YWx1ZSI6IjE0Ny40OTQwMTE3In0seyJuYW1lIjoiQ2VudHJvaWRfWSIsImNhcHRpb24iOiJDZW50cm9pZCBZIiwidmFsdWUiOiItNDIuODYwMTM5NiJ9LHsibmFtZSI6Ildhc3RlIENvbGxlY3Rpb24gQXJlYSIsImNhcHRpb24iOiJXYXN0ZSBDb2xsZWN0aW9uIEFyZWEiLCJ2YWx1ZSI6IkFjdG9uIFBhcmsgLSBSb2NoZXMgQmVhY2ggLSBMYXVkZXJkYWxlIn0seyJuYW1lIjoiV2FzdGUgQ29sbGVjdGlvbiBEYXkiLCJjYXB0aW9uIjoiV2FzdGUgQ29sbGVjdGlvbiBEYXkiLCJ2YWx1ZSI6IkZyaWRheSJ9LHsibmFtZSI6IkdhcmJhZ2UgUGlja3VwIiwiY2FwdGlvbiI6IkdhcmJhZ2UgUGlja3VwIiwidmFsdWUiOiJXZWVrbHkgMTNcLzExXC8yMDI2LCAyMFwvMTFcLzIwMjYifSx7Im5hbWUiOiJSZWN5Y2xpbmcgUGlja3VwIiwiY2FwdGlvbiI6IlJlY3ljbGluZyBQaWNrdXAiLCJ2YWx1ZSI6IkZvcnRuaWdodGx5IDIwXC8xMVwvMjAyNiwgMDRcLzEyXC8yMDI2In0seyJuYW1lIjoiR3JlZW4gV2FzdGUgUGlja3VwIiwiY2FwdGlvbiI6IkdyZWVuIFdhc3RlIFBpY2t1cCIsInZhbHVlIjoiIn0seyJuYW1lIjoiSGFyZHdhc3RlIiwiY2FwdGlvbiI6IkhhcmR3YXN0ZSIsInZhbHVlIjoiMTBcLzAyXC8yMDIzIn1dLCJzdWNjZXNzIjp0cnVlfQ=="
+    }
+  ]
+}
