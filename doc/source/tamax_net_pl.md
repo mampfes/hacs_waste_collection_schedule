@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tamax_net_pl
       args:
-        area: "B\u0142ogocice, K\u0105ty, Kowary, Radziemice, Wola Gruszowska"
+        area: Błogocice, Kąty, Kowary, Radziemice, Wola Gruszowska
 ```
 
 ## How to get the source arguments

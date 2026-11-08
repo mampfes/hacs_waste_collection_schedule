@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: fosenrenovasjon_no
       args:
-        address: "Lys\xF8ysundveien 117"
+        address: Lysøysundveien 117
 ```

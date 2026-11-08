@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tamax_wieliczka_pl
       args:
-        area: "Rejon I: Bednarka, Czarnochowska, Dani\u0142owicza, Deskura\u2026"
+        area: 'Rejon I: Bednarka, Czarnochowska, Daniłowicza, Deskura…'
 ```
 
 ## How to get the source arguments

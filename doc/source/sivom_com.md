@@ -31,7 +31,7 @@ waste_collection_schedule:
     - name: sivom_com
       args:
         commune: VILLECRESNES
-        street: "ACACIAS All\xE9e des"
+        street: ACACIAS Allée des
 ```
 
 ## How to get the source arguments

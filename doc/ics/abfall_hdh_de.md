@@ -52,7 +52,7 @@ waste_collection_schedule:
           papier: '1'
           papiertonne: '1'
           rest: '1'
-          strasse: "Hauptstra\xDFe"
+          strasse: Hauptstraße
           tag: '0'
           uhrzeit: ''
         split_at: \+

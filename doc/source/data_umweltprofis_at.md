@@ -39,7 +39,7 @@ waste_collection_schedule:
     - name: data_umweltprofis_at
       args:
         district: Rohrbach
-        city: "Aigen-Schl\xE4gl"
+        city: Aigen-Schlägl
         street: Almesbergerweg
         house_number: '1'
 ```

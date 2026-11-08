@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: puchbeihallein_gv_at
       args:
-        strasse: "Ahornstra\xDFe"
+        strasse: Ahornstraße
         hausnummer: '3'
 ```
 

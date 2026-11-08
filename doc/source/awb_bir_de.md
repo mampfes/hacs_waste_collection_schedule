@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: awb_bir_de
       args:
-        street: "Auf dem Scho\xDF"
+        street: Auf dem Schoß
         city: Reichenbach
 ```
 

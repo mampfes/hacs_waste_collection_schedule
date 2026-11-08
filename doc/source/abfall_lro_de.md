@@ -46,7 +46,7 @@ waste_collection_schedule:
   sources:
     - name: abfall_lro_de
       args:
-        municipality: "Alt K\xE4twin"
+        municipality: Alt Kätwin
         black_rhythm: 2w
         green_rhythm: 4w
 ```

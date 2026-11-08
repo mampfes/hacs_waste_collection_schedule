@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: sratc_lt
       args:
-        street: "Plateli\u0173 g."
+        street: Platelių g.
 ```
 
 ## How to get the source arguments

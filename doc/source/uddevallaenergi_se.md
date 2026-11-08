@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: uddevallaenergi_se
       args:
-        address: "Fj\xE4llv\xE4gen 11, Ljungskile"
+        address: Fjällvägen 11, Ljungskile
 ```
 
 ## How to get the source arguments

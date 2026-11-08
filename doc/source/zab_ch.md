@@ -30,5 +30,5 @@ waste_collection_schedule:
   sources:
     - name: zab_ch
       args:
-        municipality: "W\xE4ngi"
+        municipality: Wängi
 ```

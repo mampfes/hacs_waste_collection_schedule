@@ -26,6 +26,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: "https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/downloadfile.jsp?format=ics&zeit=-:00:00&lang=de&jahr={%Y}&ort=M\xF6\
-          rfelden-Walldorf&strasse=8371&fraktion=0&fraktion=1&fraktion=2&fraktion=3&fraktion=4&fraktion=5&fraktion=6&fraktion=7&fraktion=8&fraktion=9&fraktion=10&fraktion=11&fraktion=12&md=-"
+        url: https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/downloadfile.jsp?format=ics&zeit=-:00:00&lang=de&jahr={%Y}&ort=Mörfelden-Walldorf&strasse=8371&fraktion=0&fraktion=1&fraktion=2&fraktion=3&fraktion=4&fraktion=5&fraktion=6&fraktion=7&fraktion=8&fraktion=9&fraktion=10&fraktion=11&fraktion=12&md=-
 ```

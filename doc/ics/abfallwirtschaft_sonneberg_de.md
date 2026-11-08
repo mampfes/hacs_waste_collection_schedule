@@ -53,8 +53,8 @@ waste_collection_schedule:
       args:
         method: POST
         params:
-          ort: "F\xF6ritztal"
-          stadtteil: "Schw\xE4rzdorf"
+          ort: Föritztal
+          stadtteil: Schwärzdorf
         url: https://www.abfallwirtschaft-sonneberg.de/PHPtoICS{%Y}.php
 ```
 ### Neuhaus am Rennweg, Neuhaus am Rennweg
@@ -80,7 +80,7 @@ waste_collection_schedule:
         method: POST
         params:
           ort: Sonneberg
-          stadtteil: "H\xF6nbach"
+          stadtteil: Hönbach
         url: https://www.abfallwirtschaft-sonneberg.de/PHPtoICS{%Y}.php
 ```
 ### Sonneberg, Innenstadtbereich, Coburger Allee

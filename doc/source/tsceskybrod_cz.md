@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tsceskybrod_cz
       args:
-        street: "n\xE1m. Arno\u0161ta z Pardubic"
+        street: nám. Arnošta z Pardubic
 ```
 
 ## How to get the source arguments

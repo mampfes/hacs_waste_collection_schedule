@@ -45,7 +45,7 @@ waste_collection_schedule:
   sources:
     - name: stadt_bad_orb_de
       args:
-        strasse: "Kurparkstra\xDFe"
+        strasse: Kurparkstraße
 ```
 
 ### Using pois

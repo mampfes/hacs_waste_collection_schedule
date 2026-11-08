@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: magdeburg_de
       args:
-        street: "Halberst\xE4dter Chaussee 66"
+        street: Halberstädter Chaussee 66
 ```
 
 ## How to get the source arguments

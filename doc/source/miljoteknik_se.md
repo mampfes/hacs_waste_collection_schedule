@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: miljoteknik_se
       args:
-        street_address: "Hjortsbergav\xE4gen 16, Johannishus"
+        street_address: Hjortsbergavägen 16, Johannishus
 ```
 
 ## How to get the source arguments

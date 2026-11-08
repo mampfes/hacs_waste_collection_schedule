@@ -64,8 +64,8 @@ waste_collection_schedule:
     - name: wsz_moosburg_at
       args:
         municipal: Moosburg
-        address: "Oberg\xF6riach"
-        street: "Oberg\xF6riach"
+        address: Obergöriach
+        street: Obergöriach
 ```
 
 ## How to get the source arguments

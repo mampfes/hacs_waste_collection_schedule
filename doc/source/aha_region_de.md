@@ -43,6 +43,6 @@ waste_collection_schedule:
     - name: aha_region_de
       args:
         gemeinde: Neustadt a. Rbge.
-        strasse: "Am Rotdorn / N\xF6pke"
+        strasse: Am Rotdorn / Nöpke
         hnr: 1
 ```

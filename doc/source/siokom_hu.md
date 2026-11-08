@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: siokom_hu
       args:
-        area: "Balatonvil\xE1gos"
+        area: Balatonvilágos
 ```
 
 ## How to get the source arguments

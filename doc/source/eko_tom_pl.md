@@ -35,6 +35,6 @@ waste_collection_schedule:
     - name: eko_tom_pl
       args:
         city: Czerwonak
-        street: "\u0179r\xF3dlana"
+        street: Źródlana
         nr: '39'
 ```

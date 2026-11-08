@@ -5330,7 +5330,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Royal Borough Of Greenwich](/doc/source/royalgreenwich_gov_uk.md) / royalgreenwich.gov.uk
 - [Rugby Borough Council](/doc/source/rugby_gov_uk.md) / rugby.gov.uk
 - [Runnymede Borough Council](/doc/source/runnymede_gov_uk.md) / runnymede.gov.uk
-- [Rushcliffe Brough Council](/doc/source/rushcliffe_gov_uk.md) / rushcliffe.gov.uk
+- [Rushcliffe Borough Council](/doc/source/rushcliffe_gov_uk.md) / rushcliffe.gov.uk
 - [Rushmoor Borough Council](/doc/source/rushmoor_gov_uk.md) / rushmoor.gov.uk
 - [Salford City Council](/doc/source/salford_gov_uk.md) / salford.gov.uk
 - [Sandwell Council](/doc/source/sandwell_gov_uk.md) / my.sandwell.gov.uk

@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: abfallkalender_prezero_network
       args:
-        street: "Aalstra\xDFe"
+        street: Aalstraße
         house_number: '1'
 ```
 

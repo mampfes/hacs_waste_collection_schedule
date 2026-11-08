@@ -31,7 +31,7 @@ waste_collection_schedule:
     - name: nemenkom_lt
       args:
         village: Bajorai
-        street: "Melis\u0173 g."
+        street: Melisų g.
 ```
 
 ## How to get the source arguments

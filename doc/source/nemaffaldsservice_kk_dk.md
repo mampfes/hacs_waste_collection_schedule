@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: nemaffaldsservice_kk_dk
       args:
-        address: "N\xF8rrebrogade 10"
+        address: Nørrebrogade 10
 ```
 
 ## How to get the source arguments

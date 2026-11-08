@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: nsr_se
       args:
-        address: "Signestorpsv\xE4gen 1"
+        address: Signestorpsvägen 1
 ```
 
 ## How to get the source arguments

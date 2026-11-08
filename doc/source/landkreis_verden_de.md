@@ -39,6 +39,6 @@ waste_collection_schedule:
     - name: landkreis_verden_de
       args:
         city: Achim
-        street: "Am Schie\xDFstand"
+        street: Am Schießstand
         house_number: 10
 ```

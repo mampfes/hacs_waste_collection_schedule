@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: partille_se
       args:
-        street_address: "Tiondev\xE4gen 6, Partille"
+        street_address: Tiondevägen 6, Partille
 ```
 
 ## How to get the source arguments

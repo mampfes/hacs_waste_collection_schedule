@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: ekolandpolska_com_pl
       args:
-        municipality: "Miasto Kra\u015Bnik"
+        municipality: Miasto Kraśnik
         street: Lubelska
 ```
 

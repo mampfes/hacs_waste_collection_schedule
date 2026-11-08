@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: uppsalavatten_se
       args:
-        city: "BJ\xD6RKLINGE"
-        street: "SADELV\xC4GEN 1"
+        city: BJÖRKLINGE
+        street: SADELVÄGEN 1
 ```

@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: ressourceindsamling_dk
       args:
-        streetName: "Kl\xF8vertoften"
+        streetName: Kløvertoften
         number: '61'
 ```
 

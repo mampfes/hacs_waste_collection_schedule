@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: nkom_lt
       args:
-        location: "Nem\u0117\u017Eis"
+        location: Nemėžis
 ```
 
 ## How to get the source arguments

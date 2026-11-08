@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: mestorudna_cz
       args:
-        city_part: "Sud\xE9 t\xFDdny"
+        city_part: Sudé týdny
 ```
 
 ## How to get the source arguments

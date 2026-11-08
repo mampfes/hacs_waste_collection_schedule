@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: vmab_se
       args:
-        street_address: "Rosenborgsv\xE4gen 35, Karlshamn"
+        street_address: Rosenborgsvägen 35, Karlshamn
 ```
 
 ## How to get the source arguments

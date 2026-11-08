@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: pireva_se
       args:
-        street_address: "Kolugnsv\xE4gen 1 R\xE4ddningstj\xE4nsten Mf"
+        street_address: Kolugnsvägen 1 Räddningstjänsten Mf
 ```
 
 ## How to get the source arguments

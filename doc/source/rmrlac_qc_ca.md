@@ -31,7 +31,7 @@ waste_collection_schedule:
     - name: rmrlac_qc_ca
       args:
         street_number_and_name: 1201 16e Chemin
-        locality: "M\xE9tabetchouan-Lac-\xE0-la-Croix"
+        locality: Métabetchouan-Lac-à-la-Croix
 ```
 
 ## How to get the source arguments

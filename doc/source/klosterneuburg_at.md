@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: klosterneuburg_at
       args:
-        street: "Kierlinger Stra\xDFe"
+        street: Kierlinger Straße
         house_number: '10'
 ```

@@ -30,5 +30,5 @@ waste_collection_schedule:
   sources:
     - name: awg_wuppertal_de
       args:
-        street: "Hauptstra\xDFe"
+        street: Hauptstraße
 ```

@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: douaisis_agglo_com
       args:
-        commune: "Flines-lez-R\xE2ches"
+        commune: Flines-lez-Râches
 ```
 
 ## How to get the source arguments

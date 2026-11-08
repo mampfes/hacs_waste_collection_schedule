@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: chiemgau_recycling_lk_rosenheim
       args:
-        district: "Bruckm\xFChl 1"
+        district: Bruckmühl 1
 ```

@@ -35,8 +35,8 @@ waste_collection_schedule:
     - name: city_osaka_lg_jp
       args:
         ward: abeno
-        address: "\u677E\u866B\u901A3\u4E01\u76EE5\u756A"
-        area: "\u4E0A\u8A18\u4EE5\u5916"
+        address: 松虫通3丁目5番
+        area: 上記以外
 ```
 
 ## How to get the source arguments

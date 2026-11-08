@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: eth_erd_hu
       args:
-        city: "\xC9rd"
-        street: "Hord\xF3 utca"
+        city: Érd
+        street: Hordó utca
 ```

@@ -31,5 +31,5 @@ waste_collection_schedule:
     - name: art_trier_de
       args:
         zip_code: '54296'
-        district: "Stadt Trier, Universit\xE4tsring"
+        district: Stadt Trier, Universitätsring
 ```

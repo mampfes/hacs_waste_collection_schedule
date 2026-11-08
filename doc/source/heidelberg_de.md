@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: heidelberg_de
       args:
-        street: "Alte Bergheimer Stra\xDFe"
+        street: Alte Bergheimer Straße
 ```
 
 ## How to get the source arguments

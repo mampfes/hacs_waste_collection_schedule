@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: vivab_se
       args:
-        street_address: "V\xE4stra Vallgatan 2, Varberg"
+        street_address: Västra Vallgatan 2, Varberg
 ```
 
 ## How to get the source arguments

@@ -34,6 +34,6 @@ waste_collection_schedule:
   sources:
     - name: karlsruhe_de
       args:
-        street: "\xD6stliche Rheinbr\xFCckenstra\xDFe"
+        street: Östliche Rheinbrückenstraße
         hnr: 1
 ```

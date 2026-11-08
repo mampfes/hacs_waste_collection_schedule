@@ -35,7 +35,7 @@ waste_collection_schedule:
     - name: awr_de
       args:
         city: Rendsburg
-        street: "Hindenburgstra\xDFe"
+        street: Hindenburgstraße
 ```
 
 ## How to get the source arguments

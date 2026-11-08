@@ -2496,7 +2496,7 @@
   "ics_mein_abfallkalender_online": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/mein_abfallkalender_online.md",
     "howto": {
-      "de": "- `mein-abfallkalender.online` nutzt eine Subdomain pro unterstützter Gemeinde/Stadt. Öffne die Subdomain deiner Region, z.B. <https://eppstein.mein-abfallkalender.online>. Wenn du die Subdomain deiner Region nicht kennst, kannst du die Referenzseite besuchen: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.\n- Wähle deine Region (falls nötig).\n- Klicke auf `Meine Termine anzeigen` [nicht für allen Regionen verfügbar nötig/verfügbar].\n- Klicke auf `Termine (iCal / WebCal)` [nicht für allen Regionen verfügbar nötig/verfügbar].\n- Vergiss nicht, deine E-Mail zu registrieren, sonst erhältst du keinen gültigen Webcal-Link!\n- Klicke auf `Termine via iCal/WebCal nutzen`.\n- Kopiere den Webcal-Link unter `Online=Kalender \"Google Kalender\" (manuell)`.\n- Verwende diese URL als `url`-Parameter.\n",
+      "de": "- `mein-abfallkalender.online` nutzt eine Subdomain pro unterstützter Gemeinde/Stadt. Öffne die Subdomain deiner Region, z.B. <https://eppstein.mein-abfallkalender.online>. Wenn du die Subdomain deiner Region nicht kennst, kannst du die Referenzseite besuchen: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.\n- Wähle deine Region (falls nötig).\n- Klicke auf `Meine Termine anzeigen` [nicht in allen Regionen verfügbar].\n- Klicke auf `Termine (iCal / WebCal)` [nicht in allen Regionen verfügbar].\n- Vergiss nicht, deine E-Mail zu registrieren, sonst erhältst du keinen gültigen Webcal-Link!\n- Klicke auf `Termine via iCal/WebCal nutzen`.\n- Kopiere den Webcal-Link unter `Online=Kalender \"Google Kalender\" (manuell)`.\n- Verwende diese URL als `url`-Parameter.\n",
       "en": "- `mein-abfallkalender.online` uses a subdomain per supported municipality/city. Open the subdomain of your location, e.g., <https://eppstein.mein-abfallkalender.online>. If you not know the subdomain for your location, you can check their references page: <https://www.mein-abfallkalender.de/unsere_referenzen.html>.\n- Select your location (if needed).\n- Click on `Meine Termine anzeigen` [not on all regions].\n- Click on `Termine (iCal / WebCal)` [not on all regions].\n- Don't forget to register your e-mail, otherwise you will not get a valid webcal link!\n- Click on `Termine via iCal/WebCal nutzen`.\n- Copy the webcal link below `Online=Kalender \"Google Kalender\" (manuell)`.\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
@@ -3909,7 +3909,7 @@
   "ics_wetzlar_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wetzlar_de.md",
     "howto": {
-      "de": "- Besuchen Sie https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/ und wählen Sie Jahreskalender <Jahr>.\n- Suchen Sie nach Ihrem `Ortsteil und Straße`.\n- Wählen Sie `Ansicht` und die gewünschte `Abfallart`.\n- Klicken Sie auf `anzeigen`.\n- Klicken Sie mit der rechten Maustaste auf den Link `Jahreskalender als iCal` und wählen Sie \"Link-Adresse kopieren\", um den ICAL-Link zu erhalten.\n- Verwenden Sie diesen Link als`url`.\n- Ersetzen Sie das Jahr in (`abfuhrtermine-2024`) mit {%Y}` im URL z.B. `abfuhrtermine-{%Y}`.\n",
+      "de": "- Besuchen Sie https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/ und wählen Sie Jahreskalender <Jahr>.\n- Suchen Sie nach Ihrem `Ortsteil und Straße`.\n- Wählen Sie `Ansicht` und die gewünschte `Abfallart`.\n- Klicken Sie auf `anzeigen`.\n- Klicken Sie mit der rechten Maustaste auf den Link `Jahreskalender als iCal` und wählen Sie \"Link-Adresse kopieren\", um den ICAL-Link zu erhalten.\n- Verwenden Sie diesen Link als `url`.\n- Ersetzen Sie das Jahr in (`abfuhrtermine-2024`) mit {%Y}` im URL z.B. `abfuhrtermine-{%Y}`.\n",
       "en": "- Visit <https://wetzlar.de/leben-in-wetzlar/abfall-und-entsorgung/> and select `Jahreskalender <Jahr>`.\n- Search for your `Ortsteil und Straße`.\n- Select `Ansicht` and the `Abfallart` you want to see.\n- Click `anzeigen`\n- Right-click copy link address on the `Jahreskalender als iCal` link to get a ICAL link.\n- Use this link as `url` parameter.\n- Replace the Year in(`abfuhrtermine-2024`) with `{%Y}` in the URL e.g. `abfuhrtermine-{%Y}`.\n"
     },
     "urls": {}
@@ -4065,7 +4065,7 @@
   "ics_muellkalender_uelzen_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/muellkalender_uelzen_de.md",
     "howto": {
-      "de": "- Gehe auf <https://www.muellkalender-uelzen.de/> and wähle deine Ortschaft aus\n- Wähle deine Mülltonnenarten\n- Kopiere den Link unten auf der Seite\n- Setze den kopierten Link als `url` Parameter ein\n",
+      "de": "- Gehe auf <https://www.muellkalender-uelzen.de/> und wähle deine Ortschaft aus\n- Wähle deine Mülltonnenarten\n- Kopiere den Link unten auf der Seite\n- Setze den kopierten Link als `url` Parameter ein\n",
       "en": "- Go to <https://www.muellkalender-uelzen.de/> and select your location.  \n- Choose your waste bins\n- Choose `iCal-Feed zum Abonnieren` at the bottom\n- Copy the link to the ics\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
@@ -4117,7 +4117,7 @@
   "ics_wilnsdorf_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/wilnsdorf_de.md",
     "howto": {
-      "de": "- Besuche <https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php> und wähle deinen Addresse.\n- Wähle `Jahreskalender` und deine gewünschten Abfallarten.\n- Rechtsklick -> `Linkadresse kopieren` auf den `Export in Kalenderanwendung` Button.\n- Verwende diese URL als `url` Parameter.\n- **wichtig**: ersetze das Jahr in der URL (`vJ=20XX`) mit `{%Y}` damit es automatisch aktualisiert wird.\n- Du musst möglicherweise `verify_ssl: False` setzen, da es ein Problem mit dem SSL-Zertifikat der Website zu geben scheint.\n- Mit dem Regex `(.+):.*` wird der Ort aus dem Titel entfernt.\n",
+      "de": "- Besuche <https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php> und wähle deine Adresse.\n- Wähle `Jahreskalender` und deine gewünschten Abfallarten.\n- Rechtsklick -> `Linkadresse kopieren` auf den `Export in Kalenderanwendung` Button.\n- Verwende diese URL als `url` Parameter.\n- **wichtig**: ersetze das Jahr in der URL (`vJ=20XX`) mit `{%Y}` damit es automatisch aktualisiert wird.\n- Du musst möglicherweise `verify_ssl: False` setzen, da es ein Problem mit dem SSL-Zertifikat der Website zu geben scheint.\n- Mit dem Regex `(.+):.*` wird der Ort aus dem Titel entfernt.\n",
       "en": "- Visit <https://www.wilnsdorf.de/Leben-Wohnen/Bauen-Wohnen-Umwelt/Abfall/Abfallkalender/index.php> and select your location.\n- Select `Jahreskalender` and your desired waste types.\n- Right-click -> `Copy link address` on the `Export in Kalenderanwendung` button.\n- Use this URL as the `url` parameter.\n- **important**: replace the year in the URL (`vJ=20XX`) with `{%Y}` so it will be automatically updated.\n- You might need to set `verify_ssl: False` as there seems to be an issue with the website's SSL certificate.\n- Using regex `(.+):.*` will remove the location from the title.\n"
     },
     "urls": {}
@@ -4158,7 +4158,7 @@
   "ics_zfa_iserlohn_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/zfa_iserlohn_de.md",
     "howto": {
-      "en": "- Go to <https://www.zfa-iserlohn.de/> and select your municipality.\n- Click on `Leerungstermine`\n- Right-click on `Leerungstermine 20xx als Kaldender-Datei (ICS-Format)` and copy link address.\n- Use this link as the `url` parameter.\n"
+      "en": "- Go to <https://www.zfa-iserlohn.de/> and select your municipality.\n- Click on `Leerungstermine`\n- Right-click on `Leerungstermine 20xx als Kalender-Datei (ICS-Format)` and copy link address.\n- Use this link as the `url` parameter.\n"
     },
     "urls": {}
   },

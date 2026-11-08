@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: stockholmvattenochavfall_se
       args:
-        address: "Hjortronv\xE4gen 3, Bromma"
+        address: Hjortronvägen 3, Bromma
 ```
 
 ## How to get the source arguments

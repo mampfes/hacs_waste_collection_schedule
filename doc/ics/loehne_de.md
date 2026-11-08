@@ -21,7 +21,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: "(.*?): L\xF6hne"
+        regex: '(.*?): Löhne'
         url: https://www.loehne.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=393.4&strasse=430.1.1&vtyp=2&vMo=01&vJ={%Y}&bMo=12
 ```
 ### Bahnhofstraße
@@ -31,7 +31,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: "(.*?): L\xF6hne"
+        regex: '(.*?): Löhne'
         url: https://www.loehne.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=393.4&strasse=430.110.1&vtyp=2&vMo=01&vJ={%Y}&bMo=12
 ```
 ### Königstraße
@@ -41,6 +41,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: "(.*?): L\xF6hne"
+        regex: '(.*?): Löhne'
         url: https://www.loehne.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=393.4&strasse=430.419.1&vtyp=2&vMo=01&vJ={%Y}&bMo=12
 ```

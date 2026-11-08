@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: ubzzw_de
       args:
-        street: "Vogesenstra\xDFe"
+        street: Vogesenstraße
         house_number: '75'
 ```

@@ -30,5 +30,5 @@ waste_collection_schedule:
   sources:
     - name: frankenberg_de
       args:
-        district: "Vierm\xFCnden"
+        district: Viermünden
 ```

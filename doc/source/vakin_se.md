@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: vakin_se
       args:
-        address: "Kajakv\xE4gen 3, T\xE4fte\xE5"
+        address: Kajakvägen 3, Täfteå
 ```
 
 ## How to get the source arguments

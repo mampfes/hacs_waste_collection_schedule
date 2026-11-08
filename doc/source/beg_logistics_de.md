@@ -34,6 +34,6 @@ waste_collection_schedule:
   sources:
     - name: beg_logistics_de
       args:
-        street: "Hafenstra\xDFe, Bremerhaven"
+        street: Hafenstraße, Bremerhaven
         hnr: 2
 ```

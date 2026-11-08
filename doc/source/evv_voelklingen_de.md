@@ -38,8 +38,8 @@ waste_collection_schedule:
   sources:
     - name: evv_voelklingen_de
       args:
-        ortsteil: "F\xFCrstenhausen"
-        strasse: "Kaiserstra\xDFe"
+        ortsteil: Fürstenhausen
+        strasse: Kaiserstraße
         hausnummer: '2'
 ```
 

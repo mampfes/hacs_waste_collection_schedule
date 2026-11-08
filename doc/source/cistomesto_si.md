@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: cistomesto_si
       args:
-        region: "Maj\u0161perk"
+        region: Majšperk
 ```

@@ -31,7 +31,7 @@ waste_collection_schedule:
     - name: paysdecraon_fr
       args:
         weekday: mercredi
-        commune: "Saint-Michel-de-la-Ro\xEB"
+        commune: Saint-Michel-de-la-Roë
 ```
 
 ## How to get the source arguments

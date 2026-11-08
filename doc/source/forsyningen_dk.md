@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: forsyningen_dk
       args:
-        address: "Hj\xF8rringvej 10"
+        address: Hjørringvej 10
 ```
 
 ## How to get the source arguments

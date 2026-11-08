@@ -59,7 +59,7 @@ waste_collection_schedule:
   sources:
     - name: awista_kommunal_de
       args:
-        street: "Merkurstra\xDFe"
+        street: Merkurstraße
         house_number: '45'
 ```
 

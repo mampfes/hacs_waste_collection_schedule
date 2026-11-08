@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: ssam_se
       args:
-        street_address: "Asteroidv\xE4gen 1, V\xE4xj\xF6"
+        street_address: Asteroidvägen 1, Växjö
 ```

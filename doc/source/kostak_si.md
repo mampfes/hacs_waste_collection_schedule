@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: kostak_si
       args:
-        address: "Senu\u0161e 3"
+        address: Senuše 3
 ```
 
 ## How to get the source arguments

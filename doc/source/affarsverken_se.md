@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: affarsverken_se
       args:
-        address: "Albatrossv\xE4gen 5, Ramdala"
+        address: Albatrossvägen 5, Ramdala
 ```
 
 ## How to get the source arguments

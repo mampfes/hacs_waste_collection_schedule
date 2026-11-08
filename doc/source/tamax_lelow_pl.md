@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tamax_lelow_pl
       args:
-        area: "Lel\xF3w (bez ul. Spacerowej), Lgota B\u0142otna, Lgota Gawronna"
+        area: Lelów (bez ul. Spacerowej), Lgota Błotna, Lgota Gawronna
 ```
 
 ## How to get the source arguments

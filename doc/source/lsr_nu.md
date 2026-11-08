@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: lsr_nu
       args:
-        street_address: "Saxtorpsv\xE4gen 115, Annel\xF6v"
+        street_address: Saxtorpsvägen 115, Annelöv
 ```

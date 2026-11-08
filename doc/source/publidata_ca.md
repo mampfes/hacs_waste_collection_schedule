@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: publidata_ca
       args:
-        address: "1580 Chem. du Fer-\xE0-Cheval, Sainte-Julie, QC J3E 0A2"
+        address: 1580 Chem. du Fer-à-Cheval, Sainte-Julie, QC J3E 0A2
 ```
 
 ## How to get the source arguments

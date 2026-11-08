@@ -39,7 +39,7 @@ waste_collection_schedule:
     - name: pisz_pl
       args:
         city: Pisz
-        street: "Wile\u0144ska"
+        street: Wileńska
 ```
 
 ## How to get the source arguments

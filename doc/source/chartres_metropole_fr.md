@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: chartres_metropole_fr
       args:
-        commune: "L\xE8ves"
+        commune: Lèves
 ```
 
 ## How to get the source arguments

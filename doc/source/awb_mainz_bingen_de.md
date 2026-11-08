@@ -31,7 +31,7 @@ waste_collection_schedule:
     - name: awb_mainz_bingen_de
       args:
         bezirk: Stadt Ingelheim
-        ort: "Ingelheim S\xFCd"
+        ort: Ingelheim Süd
 ```
 
 ## How to get the source arguments

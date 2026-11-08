@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: berndorf_gv_at
       args:
-        strasse: "Albertstra\xDFe"
+        strasse: Albertstraße
         hausnummer: '1'
 ```
 

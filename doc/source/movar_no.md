@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: movar_no
       args:
-        address: "V\xE5lerveien 1148, V\xE5ler"
+        address: Vålerveien 1148, Våler
 ```

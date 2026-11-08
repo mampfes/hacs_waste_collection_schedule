@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: popuvky_cz
       args:
-        place: "Pop\u016Fvky (Brno-venkov)"
+        place: Popůvky (Brno-venkov)
 ```
 
 ## How to get the source arguments

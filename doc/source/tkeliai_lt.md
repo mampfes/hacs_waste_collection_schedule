@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tkeliai_lt
       args:
-        location: "Butk\u0173 Juz\u0117s(1-31) g."
+        location: Butkų Juzės(1-31) g.
 ```
 
 ## How to get the source arguments

@@ -26,8 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tamax_koniusza_pl
       args:
-        area: "Muniaczkowice, Chor\u0105\u017Cyce, Dalewice, Rz\u0119dowice, Piotrkowice Wielkie,\
-          \ Budziejowice"
+        area: Muniaczkowice, Chorążyce, Dalewice, Rzędowice, Piotrkowice Wielkie, Budziejowice
 ```
 
 ## How to get the source arguments

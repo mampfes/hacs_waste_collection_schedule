@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: hartbeigraz_at
       args:
-        strasse: "Am Br\xFChlwald"
+        strasse: Am Brühlwald
         hausnummer: '15'
 ```
 

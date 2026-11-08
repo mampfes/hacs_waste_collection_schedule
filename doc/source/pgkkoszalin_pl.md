@@ -31,7 +31,7 @@ waste_collection_schedule:
     - name: pgkkoszalin_pl
       args:
         district: Raduszka
-        street: "Po\u0142czy\u0144ska"
+        street: Połczyńska
 ```
 
 ## How to get the source arguments

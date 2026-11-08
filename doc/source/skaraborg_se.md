@@ -30,8 +30,8 @@ waste_collection_schedule:
   sources:
     - name: skaraborg_se
       args:
-        address: "Gran\xE4ngsv\xE4gen 1"
-        city: "Sk\xF6vde"
+        address: Granängsvägen 1
+        city: Skövde
 ```
 
 ## How to get the source arguments

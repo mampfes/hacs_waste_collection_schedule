@@ -35,6 +35,6 @@ waste_collection_schedule:
     - name: ks_boerde_de
       args:
         village: Irxleben
-        street: "B\xF6rdestra\xDFe"
+        street: Bördestraße
         house_number: '8'
 ```

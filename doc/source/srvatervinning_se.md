@@ -30,5 +30,5 @@ waste_collection_schedule:
   sources:
     - name: srvatervinning_se
       args:
-        address: "Skansv\xE4gen"
+        address: Skansvägen
 ```

@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: rambo_se
       args:
-        address: "Grebbestad \xD6.l\xE5nggat./Storg., Grebbestad"
+        address: Grebbestad Ö.långgat./Storg., Grebbestad
 ```

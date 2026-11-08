@@ -26,8 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tamax_sedziszow_pl
       args:
-        area: "S\u0119dzisz\xF3w: Akacjowa, Batalion\xF3w Ch\u0142opskich, B\u0105kowska,\
-          \ Bohater\xF3w Swaryszowa\u2026"
+        area: 'Sędziszów: Akacjowa, Batalionów Chłopskich, Bąkowska, Bohaterów Swaryszowa…'
 ```
 
 ## How to get the source arguments

@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: bir_no
       args:
-        street_name: "Nord\xE5sgrenda"
+        street_name: Nordåsgrenda
         house_number: 7
         house_letter: ''
 ```

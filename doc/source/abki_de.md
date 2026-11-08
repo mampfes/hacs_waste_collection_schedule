@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: abki_de
       args:
-        street: "auguste-viktoria-stra\xDFe"
+        street: auguste-viktoria-straße
         number: 14
 ```

@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: bochnia_gmina_pl
       args:
-        town: "Baczk\xF3w"
+        town: Baczków
 ```
 
 ## How to get the source arguments

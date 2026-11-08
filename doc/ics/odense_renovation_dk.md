@@ -18,7 +18,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: "T\xF8mning af (.+?)\\s+p\xE5\\s+.*"
+        regex: Tømning af (.+?)\s+på\s+.*
         split_at: ',\s*'
         url: https://mit.odenserenovation.dk/api/Calendar/GetICalCalendar?addressNo=119490
 ```

@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: fkf_bo_hu
       args:
-        street: "Templom t\xE9r"
+        street: Templom tér
 ```
 
 ## How to get the source arguments

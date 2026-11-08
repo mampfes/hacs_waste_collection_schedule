@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: sepan_remondis_pl
       args:
-        city: "Pozna\u0144"
-        street_name: "\u015AWI\u0118TY MARCIN"
+        city: Poznań
+        street_name: ŚWIĘTY MARCIN
         street_number: '2'
 ```

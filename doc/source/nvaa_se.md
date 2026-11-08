@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: nvaa_se
       args:
-        street_address: "Hamndalsv\xE4gen 2, Norrt\xE4lje"
+        street_address: Hamndalsvägen 2, Norrtälje
 ```
 
 ## How to get the source arguments

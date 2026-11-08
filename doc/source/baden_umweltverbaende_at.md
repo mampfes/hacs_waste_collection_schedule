@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: baden_umweltverbaende_at
       args:
-        region: "Soo\xDF"
+        region: Sooß
 ```
 
 ## How to get the source arguments

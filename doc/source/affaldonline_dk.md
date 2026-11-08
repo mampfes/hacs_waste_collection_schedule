@@ -43,7 +43,7 @@ waste_collection_schedule:
     - name: affaldonline_dk
       args:
         municipality: aeroe
-        city: "\xC6r\xF8sk\xF8bing"
-        street: "N\xF8rregade|5970|\xC6r\xF8sk\xF8bing"
-        values: "N\xF8rregade|1||||5970|\xC6r\xF8sk\xF8bing|4214342|448776|0"
+        city: Ærøskøbing
+        street: Nørregade|5970|Ærøskøbing
+        values: Nørregade|1||||5970|Ærøskøbing|4214342|448776|0
 ```

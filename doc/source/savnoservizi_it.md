@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: savnoservizi_it
       args:
-        comune: "Oderzo \u2013 zona 3"
+        comune: Oderzo – zona 3
 ```
 
 ## How to get the source arguments

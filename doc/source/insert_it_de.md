@@ -66,6 +66,6 @@ waste_collection_schedule:
     - name: insert_it_de
       args:
         municipality: Offenbach
-        street: "Kaiserstra\xDFe"
+        street: Kaiserstraße
         hnr: 1
 ```

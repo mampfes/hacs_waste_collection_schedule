@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: dtkh_hu
       args:
-        city: "\xC1gasegyh\xE1za"
+        city: Ágasegyháza
 ```
 
 ## How to get the source arguments

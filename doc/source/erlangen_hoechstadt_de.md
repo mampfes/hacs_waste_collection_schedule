@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: erlangen_hoechstadt_de
       args:
-        city: "H\xF6chstadt"
-        street: "B\xF6hmerwaldstra\xDFe"
+        city: Höchstadt
+        street: Böhmerwaldstraße
 ```

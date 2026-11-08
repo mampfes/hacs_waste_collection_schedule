@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: muehlenkreis_de
       args:
-        strasse: "Hauptstra\xDFe"
+        strasse: Hauptstraße
         ort: Harlinghausen
 ```

@@ -35,7 +35,7 @@ waste_collection_schedule:
     - name: muellmann_app_de
       args:
         city: Radolfzell
-        street: "Mooser Stra\xDFe"
+        street: Mooser Straße
 ```
 
 ## How to get the source arguments

@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: ilm_kreis_de
       args:
-        strasse: "Gerhart-Hauptmann-Stra\xDFe"
+        strasse: Gerhart-Hauptmann-Straße
         ort: Arnstadt
 ```

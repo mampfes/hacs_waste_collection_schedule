@@ -19,6 +19,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: "(.*) \\d+ \\d+-w\xF6chentl\\."
+        regex: (.*) \d+ \d+-wöchentl\.
         url: https://abfall.alzey-worms.de/WasteManagementAlzeyworms/WasteManagementServiceServlet?ApplicationName=Calendar&SubmitAction=sync&StandortID=1053576001&AboID=313121&Fra=P;R;B;S;C;L&ObjektID=1145306001
 ```

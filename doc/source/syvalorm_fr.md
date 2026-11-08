@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: syvalorm_fr
       args:
-        municipality: "Beill\xE9"
+        municipality: Beillé
 ```
 
 ## How to get the source arguments

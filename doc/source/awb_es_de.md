@@ -35,5 +35,5 @@ waste_collection_schedule:
     - name: awb_es_de
       args:
         city: Aichwald
-        street: "Alte Dorfstra\xDFe Alle Hausnummern"
+        street: Alte Dorfstraße Alle Hausnummern
 ```

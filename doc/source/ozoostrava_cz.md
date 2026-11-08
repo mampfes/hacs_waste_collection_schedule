@@ -40,6 +40,6 @@ waste_collection_schedule:
       args:
         obec: Ostrava
         obvod: Poruba
-        ulice: "Hlavn\xED t\u0159\xEDda"
+        ulice: Hlavní třída
         cislo: '583'
 ```

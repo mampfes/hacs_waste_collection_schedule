@@ -38,7 +38,7 @@ waste_collection_schedule:
   sources:
     - name: minrenovasjon_no
       args:
-        street_name: "R\xE5dhustorget"
+        street_name: Rådhustorget
         house_number: 2
         street_code: 2469
         county_id: 3024

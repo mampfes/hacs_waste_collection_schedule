@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: wermelskirchen_de
       args:
-        street: "Telegrafenstra\xDFe"
+        street: Telegrafenstraße
         house_number: '29'
 ```

@@ -42,7 +42,7 @@ waste_collection_schedule:
   sources:
     - name: msva_se
       args:
-        street: "V\xE4stra Radiogatan"
+        street: Västra Radiogatan
         house_number: '18'
         postal_code: '85461'
         city: Sundsvall

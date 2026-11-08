@@ -51,7 +51,7 @@ waste_collection_schedule:
     - name: c_trace_de
       args:
         ort: Bremen
-        strasse: "Abbentorstra\xDFe"
+        strasse: Abbentorstraße
         hausnummer: 5
 ```
 

@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: maslow_pl
       args:
-        district: "D\u0105browa, Wi\u015Bni\xF3wka"
+        district: Dąbrowa, Wiśniówka
 ```
 
 ## How to get the source arguments

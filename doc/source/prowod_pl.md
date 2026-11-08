@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: prowod_pl
       args:
-        rejon: "Dobrze\u0144 Ma\u0142y DW II"
+        rejon: Dobrzeń Mały DW II
 ```
 
 ## How to get the source arguments

@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tamax_janow_pl
       args:
-        area: "Jan\xF3w"
+        area: Janów
 ```
 
 ## How to get the source arguments

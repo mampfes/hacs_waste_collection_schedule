@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: abfall_neunkirchen_siegerland_de
       args:
-        strasse: "Waldstra\xDFe (Altenseelbach)"
+        strasse: Waldstraße (Altenseelbach)
 ```
 
 ## How to get the source arguments

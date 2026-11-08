@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: gmina_radlow_pl
       args:
-        town: "Rad\u0142\xF3w"
+        town: Radłów
 ```
 
 ## How to get the source arguments

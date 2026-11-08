@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: sumavfall_no
       args:
-        address: "bl\xE5b\xE6rlia-16"
+        address: blåbærlia-16
 ```
 
 ## How to get the source arguments

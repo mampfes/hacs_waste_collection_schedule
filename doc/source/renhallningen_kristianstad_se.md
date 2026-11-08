@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: renhallningen_kristianstad_se
       args:
-        street_address: "\xD6stra Boulevarden 1"
+        street_address: Östra Boulevarden 1
 ```

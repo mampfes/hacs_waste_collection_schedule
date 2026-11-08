@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: telge_se
       args:
-        address: "BERGSGATAN 22, S\xD6DERT\xC4LJE"
+        address: BERGSGATAN 22, SÖDERTÄLJE
 ```
 
 ## How to get the source arguments

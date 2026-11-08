@@ -38,8 +38,8 @@ waste_collection_schedule:
   sources:
     - name: moje_odpady_pl
       args:
-        city: "Aleksandr\xF3w"
-        voivodeship: "woj. \u015Bl\u0105skie"
+        city: Aleksandrów
+        voivodeship: woj. śląskie
 ```
 
 ## How to get the source arguments

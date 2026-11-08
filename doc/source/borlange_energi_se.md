@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: borlange_energi_se
       args:
-        pickup_address: "Mats Knuts V\xE4g 100"
+        pickup_address: Mats Knuts Väg 100
 ```
 
 ## How to get the source arguments

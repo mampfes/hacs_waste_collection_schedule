@@ -39,7 +39,7 @@ waste_collection_schedule:
     - name: zakb_de
       args:
         ort: Abtsteinach
-        strasse: "Am Hofb\xF6hl"
+        strasse: Am Hofböhl
         hnr: '1'
         hnr_zusatz: ''
 ```

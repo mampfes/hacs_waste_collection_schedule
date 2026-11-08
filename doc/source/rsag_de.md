@@ -30,8 +30,8 @@ waste_collection_schedule:
   sources:
     - name: rsag_de
       args:
-        city: "K\xF6nigswinter"
-        street: "Winzerstra\xDFe"
+        city: Königswinter
+        street: Winzerstraße
 ```
 
 ## How to get the source arguments

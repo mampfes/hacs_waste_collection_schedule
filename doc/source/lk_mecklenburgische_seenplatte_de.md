@@ -31,5 +31,5 @@ waste_collection_schedule:
     - name: lk_mecklenburgische_seenplatte_de
       args:
         ort: Neubrandenburg
-        strasse: "Atelierstra\xDFe"
+        strasse: Atelierstraße
 ```

@@ -18,8 +18,7 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: "https://www.passail.at/wp-content/uploads/sites/18/2025/12/Kalender-von-M\xFC\
-          lltermine-Passail-Plenzengreith-teilw.-Arzberg.ics"
+        url: https://www.passail.at/wp-content/uploads/sites/18/2025/12/Kalender-von-Mülltermine-Passail-Plenzengreith-teilw.-Arzberg.ics
 ```
 ### Hohenau, Neudorf, Rest Arzberg
 
@@ -28,6 +27,5 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        url: "https://www.passail.at/wp-content/uploads/sites/18/2025/12/Kalender-von-M\xFC\
-          lltermine-Hohenau-Neudorf-Rest-Arzberg.ics"
+        url: https://www.passail.at/wp-content/uploads/sites/18/2025/12/Kalender-von-Mülltermine-Hohenau-Neudorf-Rest-Arzberg.ics
 ```

@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: stadt_ansbach_de
       args:
-        street: "Feuchtwanger Stra\xDFe"
+        street: Feuchtwanger Straße
 ```
 
 ## How to get the source arguments

@@ -38,8 +38,8 @@ waste_collection_schedule:
   sources:
     - name: rh_entsorgung_de
       args:
-        city: "Rheinb\xF6llen"
-        street: "Erbacher Stra\xDFe"
+        city: Rheinböllen
+        street: Erbacher Straße
         house_number: 13
         address_suffix: A
 ```

@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: kopavogur_is
       args:
-        district: "Vesturb\xE6r - Sm\xE1rahverfi"
+        district: Vesturbær - Smárahverfi
 ```
 
 ## How to get the source arguments

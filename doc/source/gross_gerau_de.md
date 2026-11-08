@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: gross_gerau_de
       args:
-        strasse: "Adam-Rauch-Stra\xDFe"
-        ort: "Gro\xDF-Gerau"
+        strasse: Adam-Rauch-Straße
+        ort: Groß-Gerau
 ```

@@ -39,7 +39,7 @@ waste_collection_schedule:
     - name: ahe_de
       args:
         city: Wetter
-        strasse: "Ahornstra\xDFe"
+        strasse: Ahornstraße
         hnr: Alle Hausnummern
 ```
 

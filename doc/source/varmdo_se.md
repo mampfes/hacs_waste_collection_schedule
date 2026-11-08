@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: varmdo_se
       args:
-        street_address: "Rosenmalmsv\xE4gen"
+        street_address: Rosenmalmsvägen
 ```
 
 ## How to get the source arguments

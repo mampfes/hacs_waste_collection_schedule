@@ -38,7 +38,7 @@ waste_collection_schedule:
   sources:
     - name: staedteservice_de
       args:
-        city: "R\xFCsselsheim"
+        city: Rüsselsheim
         street_number: '411'
         house_number: '3'
 ```

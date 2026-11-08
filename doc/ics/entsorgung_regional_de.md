@@ -22,9 +22,7 @@ waste_collection_schedule:
         method: POST
         params:
           ICS_DOWNLOAD: 3def184ad8f4755ff269862ea77393dd
-        url: "https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html?icsgemeinde=Engelsbrand&icsortsteil=Salmbach&icsabfallart[]=Bioabfall&icsabfallart[]=Elektrogro\xDF\
-          ger\xE4te&icsabfallart[]=Glas&icsabfallart[]=LVP&icsabfallart[]=Papier&icsabfallart[]=Restm\xFC\
-          ll&icsabfallart[]=Schadstoff&icsabfallart[]=Sperrm\xFCll"
+        url: https://www.abfallwirtschaft-enzkreis.de/entsorgung/leerungstermine/terminservice-ics-datei.html?icsgemeinde=Engelsbrand&icsortsteil=Salmbach&icsabfallart[]=Bioabfall&icsabfallart[]=Elektrogroßgeräte&icsabfallart[]=Glas&icsabfallart[]=LVP&icsabfallart[]=Papier&icsabfallart[]=Restmüll&icsabfallart[]=Schadstoff&icsabfallart[]=Sperrmüll
 ```
 ### Neuhausen - Schellbronn
 

@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tamax_ksiaz_wielki_pl
       args:
-        area: "Ksi\u0105\u017C Wielki, Wielka Wie\u015B"
+        area: Książ Wielki, Wielka Wieś
 ```
 
 ## How to get the source arguments

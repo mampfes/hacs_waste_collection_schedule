@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: roslagsvatten_se
       args:
-        street_address: "Andromedav\xE4gen 1, \xC5kersberga"
+        street_address: Andromedavägen 1, Åkersberga
         municipality: osteraker
 ```
 

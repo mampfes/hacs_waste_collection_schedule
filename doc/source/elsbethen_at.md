@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: elsbethen_at
       args:
-        strasse: "\xDCberfuhrstra\xDFe"
+        strasse: Überfuhrstraße
         hausnummer: '2'
 ```
 

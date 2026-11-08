@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: buermoos_at
       args:
-        strasse: "Birkenstra\xDFe"
+        strasse: Birkenstraße
         hausnummer: 76a
 ```
 

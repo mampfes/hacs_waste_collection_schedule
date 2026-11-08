@@ -55,7 +55,7 @@ waste_collection_schedule:
   sources:
     - name: hedemora_energi_se
       args:
-        address: "\xC5sgatan 28"
+        address: Åsgatan 28
 ```
 
 ## How to get the source arguments

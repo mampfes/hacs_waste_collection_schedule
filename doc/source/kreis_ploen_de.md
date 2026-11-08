@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: kreis_ploen_de
       args:
-        strasse: "Hauptstra\xDFe"
-        ort: "K\xF6hn"
+        strasse: Hauptstraße
+        ort: Köhn
 ```

@@ -21,6 +21,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: "M\xFCllabfuhr: (.*)"
+        regex: 'Müllabfuhr: (.*)'
         url: https://abfuhrkalender.detmold.de/icsmaker.php?strid=146&year={%Y}
 ```

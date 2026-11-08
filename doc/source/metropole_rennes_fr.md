@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: metropole_rennes_fr
       args:
-        commune: "Cesson-S\xE9vign\xE9"
+        commune: Cesson-Sévigné
 ```
 
 ## How to get the source arguments

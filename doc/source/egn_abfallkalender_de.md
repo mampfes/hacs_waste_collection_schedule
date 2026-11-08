@@ -40,7 +40,7 @@ waste_collection_schedule:
       args:
         city: Dormagen
         district: Hackenbroich
-        street: "Aggerstra\xDFe"
+        street: Aggerstraße
         housenumber: 2
 ```
 

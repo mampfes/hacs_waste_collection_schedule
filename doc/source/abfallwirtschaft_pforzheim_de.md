@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: abfallwirtschaft_pforzheim_de
       args:
-        street: "Abnobastra\xDFe"
+        street: Abnobastraße
         house_number: 3
         address_suffix: ''
 ```

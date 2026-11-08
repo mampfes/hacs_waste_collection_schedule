@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: iris_salten_no
       args:
-        address: "Alsosg\xE5rden 11"
-        kommune: "Bod\xF8 kommune"
+        address: Alsosgården 11
+        kommune: Bodø kommune
 ```

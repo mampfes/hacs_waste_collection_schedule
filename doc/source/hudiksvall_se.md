@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: hudiksvall_se
       args:
-        address: "Tr\xE4dg\xE5rdsgatan 4 Hudiksvall"
+        address: Trädgårdsgatan 4 Hudiksvall
 ```

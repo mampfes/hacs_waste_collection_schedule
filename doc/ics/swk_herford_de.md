@@ -21,6 +21,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: "HF (.*?),? \\d{1} w\xF6chentlich.*"
+        regex: HF (.*?),? \d{1} wöchentlich.*
         url: https://swk.herford.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=393.9&strasse=395.5.1&vtyp=2&vMo=01&vJ={%Y}&bMo=12
 ```

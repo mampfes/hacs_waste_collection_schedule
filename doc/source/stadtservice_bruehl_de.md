@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: stadtservice_bruehl_de
       args:
-        strasse: "Badorfer Stra\xDFe"
+        strasse: Badorfer Straße
         hnr: '1'
 ```

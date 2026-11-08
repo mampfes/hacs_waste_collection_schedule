@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: regioentsorgung_de
       args:
-        city: "W\xFCrselen"
-        street: "Merzbr\xFCck"
+        city: Würselen
+        street: Merzbrück
         house_number: 200
 ```

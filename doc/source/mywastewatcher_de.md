@@ -47,7 +47,7 @@ waste_collection_schedule:
     - name: mywastewatcher_de
       args:
         ort: Hamminkeln
-        strasse: "Molkereistra\xDFe"
+        strasse: Molkereistraße
 ```
 
 ## How to get the source arguments

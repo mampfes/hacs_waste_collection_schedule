@@ -20,6 +20,6 @@ waste_collection_schedule:
   sources:
     - name: ics
       args:
-        regex: "B\xDC (.*): B\xFCnde"
+        regex: 'BÜ (.*): Bünde'
         url: https://www.buende.de/output/abfall_export.php?csv_export=1&mode=vcal&ort=393.3&strasse=2619.2.1&vtyp=2&vMo=1&vJ={%Y}&bMo=12
 ```

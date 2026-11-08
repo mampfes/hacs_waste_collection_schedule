@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: kolbaskowo_pl
       args:
-        district: "Kur\xF3w"
+        district: Kurów
 ```
 
 ## How to get the source arguments

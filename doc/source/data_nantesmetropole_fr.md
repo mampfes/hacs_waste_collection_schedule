@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: data_nantesmetropole_fr
       args:
-        address: "16 Rue Abb\xE9 de l'Ep\xE9e, Nantes"
+        address: 16 Rue Abbé de l'Epée, Nantes
 ```
 
 ## How to get the source arguments

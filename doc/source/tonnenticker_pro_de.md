@@ -31,7 +31,7 @@ waste_collection_schedule:
     - name: tonnenticker_pro_de
       args:
         city: Steinhagen
-        street: "Waldbadstra\xDFe (Bahnhofstr. bis Rote Erde)"
+        street: Waldbadstraße (Bahnhofstr. bis Rote Erde)
 ```
 
 ## How to get the source arguments

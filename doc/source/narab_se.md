@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: narab_se
       args:
-        address: "Helsingborgsv\xE4gen 31"
+        address: Helsingborgsvägen 31
         kundNr: 25494
 ```
 

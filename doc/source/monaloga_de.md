@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: monaloga_de
       args:
-        street: "Adolf-Clarenbach-Stra\xDFe"
+        street: Adolf-Clarenbach-Straße
         plz: 42899
 ```
 

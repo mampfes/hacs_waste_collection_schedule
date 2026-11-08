@@ -31,5 +31,5 @@ waste_collection_schedule:
     - name: kaw_mainz_bingen_de
       args:
         bezirk: Stadt Ingelheim
-        ort: "Ingelheim S\xFCd"
+        ort: Ingelheim Süd
 ```

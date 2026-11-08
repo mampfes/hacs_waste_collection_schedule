@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tamax_szczekociny_pl
       args:
-        area: "Szczekociny: 8 Pu\u0142ku U\u0142an\xF3w, Boczna, Centralna, D\u0119bowa\u2026"
+        area: 'Szczekociny: 8 Pułku Ułanów, Boczna, Centralna, Dębowa…'
 ```
 
 ## How to get the source arguments

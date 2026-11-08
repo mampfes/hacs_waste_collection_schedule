@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: schaerding_ooe_gv_at
       args:
-        strasse: "Adalbert-Stifter-Stra\xDFe"
+        strasse: Adalbert-Stifter-Straße
         hausnummer: '1'
 ```

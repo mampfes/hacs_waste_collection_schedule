@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: monheim_de
       args:
-        street: "Marderstra\xDFe"
+        street: Marderstraße
 ```
 
 ## How to get the source arguments

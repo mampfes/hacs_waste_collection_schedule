@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: lodz_pl
       args:
-        street: "Podchor\u0105\u017Cych"
+        street: Podchorążych
         house_number: '1'
         building_type: '3'
 ```

@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: gvatulln_at
       args:
-        municipality: "Gro\xDFweikersdorf"
+        municipality: Großweikersdorf
 ```
 
 ## How to get the source arguments

@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tamax_wlodowice_pl
       args:
-        area: "W\u0142odowice (bez ul. Kopaniny, R\xF3\u017Cana i Leszczynowa), Morsko"
+        area: Włodowice (bez ul. Kopaniny, Różana i Leszczynowa), Morsko
 ```
 
 ## How to get the source arguments

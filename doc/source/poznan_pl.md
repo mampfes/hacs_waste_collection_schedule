@@ -30,7 +30,7 @@ waste_collection_schedule:
   sources:
     - name: poznan_pl
       args:
-        street_name: "\u015AWI\u0118TY MARCIN"
+        street_name: ŚWIĘTY MARCIN
         street_number: '2'
 ```
 

@@ -45,7 +45,7 @@ waste_collection_schedule:
   sources:
     - name: warszawa19115_pl
       args:
-        street_address: "MARSZA\u0141KOWSKA 84/92, 00-514 \u015Ar\xF3dmie\u015Bcie"
+        street_address: MARSZAŁKOWSKA 84/92, 00-514 Śródmieście
 ```
 
 ### Using geolocation_id

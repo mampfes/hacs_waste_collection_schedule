@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: gargzdusvara_eu
       args:
-        location: "Klemi\u0161k\u0117s I k."
+        location: Klemiškės I k.
 ```
 
 ## How to get the source arguments

@@ -31,7 +31,7 @@ waste_collection_schedule:
     - name: perfectwaste_dk
       args:
         municipality: Horsens
-        address: "S\xF8ndermarken 10, 8752 \xD8stbirk"
+        address: Søndermarken 10, 8752 Østbirk
 ```
 
 ## How to get the source arguments

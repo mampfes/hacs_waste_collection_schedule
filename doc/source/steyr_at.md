@@ -30,6 +30,6 @@ waste_collection_schedule:
   sources:
     - name: steyr_at
       args:
-        strasse: "Wolfernstra\xDFe"
+        strasse: Wolfernstraße
         hausnummer: '7'
 ```

@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: innherredrenovasjon_no
       args:
-        address: "Geving\xE5sen 206"
+        address: Gevingåsen 206
 ```

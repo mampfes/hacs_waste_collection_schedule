@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: gronau_de
       args:
-        street: "Viktoriastra\xDFe"
+        street: Viktoriastraße
 ```
 
 ## How to get the source arguments

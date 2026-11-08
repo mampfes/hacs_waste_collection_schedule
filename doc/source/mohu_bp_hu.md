@@ -39,7 +39,7 @@ waste_collection_schedule:
     - name: mohu_bp_hu
       args:
         district: 1114
-        street: "Szent Gell\xE9rt t\xE9r"
+        street: Szent Gellért tér
         house_number: 3
 ```
 

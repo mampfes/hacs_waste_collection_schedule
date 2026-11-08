@@ -34,6 +34,6 @@ waste_collection_schedule:
   sources:
     - name: fcc_group_eu
       args:
-        city: "C\xEDfer"
-        location: "J. Kub\xE1nyiho"
+        city: Cífer
+        location: J. Kubányiho
 ```

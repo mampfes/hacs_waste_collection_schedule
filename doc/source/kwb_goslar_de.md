@@ -51,7 +51,7 @@ waste_collection_schedule:
     - name: kwb_goslar_de
       args:
         ort: Seesen
-        strasse: "Marktstra\xDFe"
+        strasse: Marktstraße
 ```
 
 ## How to get the source arguments

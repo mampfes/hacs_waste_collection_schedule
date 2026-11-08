@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: kretsloppsydost_se
       args:
-        street_address: "H\xE4gnev\xE4gen 1, S\xE4vsj\xF6"
+        street_address: Hägnevägen 1, Sävsjö
 ```
 
 ## How to get the source arguments

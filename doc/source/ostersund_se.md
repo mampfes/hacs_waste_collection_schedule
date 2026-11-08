@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: ostersund_se
       args:
-        address: "\xC5terg\xE5ngen 1"
+        address: Återgången 1
 ```
 
 ## How to get the source arguments

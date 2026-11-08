@@ -38,9 +38,9 @@ waste_collection_schedule:
   sources:
     - name: koma_pl
       args:
-        gmina: "Nowy Dw\xF3r Gda\u0144ski"
-        miejscowosc: "Nowy Dw\xF3r Gda\u0144ski"
-        ulica: "Kana\u0142owa"
+        gmina: Nowy Dwór Gdański
+        miejscowosc: Nowy Dwór Gdański
+        ulica: Kanałowa
         numer_domu: '5'
 ```
 

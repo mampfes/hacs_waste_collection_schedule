@@ -1,8 +1,8 @@
-# Rushcliffe Brough Council
+# Rushcliffe Borough Council
 
-Support for schedules provided by [Rushcliffe Brough Council](https://www.rushcliffe.gov.uk/).
+Support for schedules provided by [Rushcliffe Borough Council](https://www.rushcliffe.gov.uk/).
 
-Source for Rushcliffe Brough Council.
+Source for Rushcliffe Borough Council.
 
 ## Configuration via configuration.yaml
 

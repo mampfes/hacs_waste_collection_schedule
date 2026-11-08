@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: tamax_bochnia_pl
       args:
-        area: "Trasa I: Bracka, Bernardy\u0144ska, Plac Czapli\u0144skiego, Solna\u2026"
+        area: 'Trasa I: Bracka, Bernardyńska, Plac Czaplińskiego, Solna…'
 ```
 
 ## How to get the source arguments

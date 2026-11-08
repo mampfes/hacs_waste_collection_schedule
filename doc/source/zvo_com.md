@@ -31,7 +31,7 @@ waste_collection_schedule:
     - name: zvo_com
       args:
         city: Bad Schwartau
-        street: "Lindenstra\xDFe"
+        street: Lindenstraße
 ```
 
 ## How to get the source arguments

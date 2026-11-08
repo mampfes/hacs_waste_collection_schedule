@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: fev_se
       args:
-        address: "R\xE5dmansv\xE4gen 3"
+        address: Rådmansvägen 3
 ```
 
 ## How to get the source arguments

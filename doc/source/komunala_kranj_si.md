@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: komunala_kranj_si
       args:
-        address: "Koro\u0161ka cesta 1, Kranj, 4000 Kranj"
+        address: Koroška cesta 1, Kranj, 4000 Kranj
 ```
 
 ## How to get the source arguments

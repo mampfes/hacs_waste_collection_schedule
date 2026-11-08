@@ -34,6 +34,6 @@ waste_collection_schedule:
   sources:
     - name: asr_chemnitz_de
       args:
-        street: "H\xFCbschmannstr."
+        street: Hübschmannstr.
         house_number: '4'
 ```

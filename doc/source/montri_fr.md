@@ -35,6 +35,6 @@ waste_collection_schedule:
     - name: montri_fr
       args:
         postal_code: '88000'
-        city_name: "Dinoz\xE9"
+        city_name: Dinozé
         address: 6 Place Georges Boizot
 ```

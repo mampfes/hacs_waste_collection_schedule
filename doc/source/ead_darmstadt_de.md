@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: ead_darmstadt_de
       args:
-        street: "Stresemannstra\xDFe"
+        street: Stresemannstraße
 ```

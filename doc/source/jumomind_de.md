@@ -65,7 +65,7 @@ waste_collection_schedule:
     - name: jumomind_de
       args:
         service_id: sbm
-        street: "Mei\xDFener Str."
+        street: Meißener Str.
         house_number: 6A
         city: Minden
 ```

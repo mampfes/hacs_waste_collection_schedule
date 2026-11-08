@@ -39,7 +39,7 @@ waste_collection_schedule:
     - name: suedwestpfalz_de
       args:
         city: Fischbach
-        street: "Daniel-Theysohn-Stra\xDFe"
+        street: Daniel-Theysohn-Straße
         house_number: '15'
 ```
 

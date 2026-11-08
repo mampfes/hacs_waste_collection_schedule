@@ -34,7 +34,7 @@ waste_collection_schedule:
   sources:
     - name: gyhg_hu
       args:
-        city: "\xC9cs"
+        city: Écs
         street: Ady Endre utca
         house_number: 1/A
 ```

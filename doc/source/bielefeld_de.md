@@ -34,6 +34,6 @@ waste_collection_schedule:
   sources:
     - name: bielefeld_de
       args:
-        street: "Eckendorfer Stra\xDFe"
+        street: Eckendorfer Straße
         house_number: 57
 ```

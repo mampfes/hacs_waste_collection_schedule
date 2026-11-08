@@ -26,7 +26,7 @@ waste_collection_schedule:
   sources:
     - name: rir_no
       args:
-        address: "\xD8vre veg 10C, Molde"
+        address: Øvre veg 10C, Molde
 ```
 
 ## How to get the source arguments

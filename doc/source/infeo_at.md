@@ -58,7 +58,7 @@ waste_collection_schedule:
   sources:
     - name: infeo_at
       args:
-        customer: "bogensch\xFCtz"
+        customer: bogenschütz
         zone: Dettenhausen
 ```
 

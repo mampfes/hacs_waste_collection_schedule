@@ -60,7 +60,7 @@ waste_collection_schedule:
     - name: sims_pl
       args:
         town: Ciemniki
-        owner: "Je\u017Cewo"
+        owner: Jeżewo
 ```
 
 ### Using owner_id

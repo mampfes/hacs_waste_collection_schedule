@@ -26,5 +26,5 @@ waste_collection_schedule:
   sources:
     - name: geoport_nwm_de
       args:
-        district: "R\xFCting"
+        district: Rüting
 ```

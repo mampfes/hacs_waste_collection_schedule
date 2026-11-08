@@ -34,6 +34,6 @@ waste_collection_schedule:
   sources:
     - name: stadt_bamberg_de
       args:
-        street: "Gartenstra\xDFe"
+        street: Gartenstraße
         house_number: 2
 ```

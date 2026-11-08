@@ -40,7 +40,7 @@ waste_collection_schedule:
       args:
         city: Wieliczka (miasto)
         street: ul. Adama Asnyka
-        number: "pozosta\u0142e"
+        number: pozostałe
 ```
 
 ## How to get the source arguments

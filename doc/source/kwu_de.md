@@ -35,6 +35,6 @@ waste_collection_schedule:
     - name: kwu_de
       args:
         city: Erkner
-        street: "Heinrich-Heine-Stra\xDFe"
+        street: Heinrich-Heine-Straße
         number: '11'
 ```
