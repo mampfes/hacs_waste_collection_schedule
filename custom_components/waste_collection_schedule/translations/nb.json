@@ -24800,6 +24800,33 @@
           "street_address": "Hele adressen din."
         }
       },
+      "args_krokom_se": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "address": "Adresse",
+          "city": "Sted"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "address": "Hele adressen din.",
+          "city": "Byen eller tettstedet ditt."
+        }
+      },
+      "reconfigure_krokom_se": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "address": "Adresse",
+          "city": "Sted"
+        },
+        "data_description": {
+          "address": "Hele adressen din.",
+          "city": "Byen eller tettstedet ditt."
+        }
+      },
       "args_kungsbacka_se": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",

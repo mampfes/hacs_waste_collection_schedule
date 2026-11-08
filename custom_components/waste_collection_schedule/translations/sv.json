@@ -24800,6 +24800,33 @@
           "street_address": "Din fullständiga adress."
         }
       },
+      "args_krokom_se": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "address": "Adress",
+          "city": "Ort"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress.",
+          "city": "Din stad eller ort."
+        }
+      },
+      "reconfigure_krokom_se": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "address": "Adress",
+          "city": "Ort"
+        },
+        "data_description": {
+          "address": "Din fullständiga adress.",
+          "city": "Din stad eller ort."
+        }
+      },
       "args_kungsbacka_se": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",

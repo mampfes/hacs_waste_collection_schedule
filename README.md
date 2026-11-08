@@ -4784,6 +4784,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Kretslopp Sydost](/doc/source/edpevent_se.md) / kretsloppsydost.se
 - [Kretslopp Sydost](/doc/source/kretsloppsydost_se.md) / kretsloppsydost.se
 - [Kristianstad Renhållning](/doc/source/renhallningen_kristianstad_se.md) / renhallningen-kristianstad.se
+- [Krokom](/doc/source/krokom_se.md) / krokom.se/bo-trafik-och-miljo/avfall-och-atervinning/avfallshamtning.html
 - [Kungsbacka](/doc/source/avfallsapp_se.md) / kungsbacka.se
 - [Kungsbacka kommun](/doc/source/kungsbacka_se.md) / sjalvservice.kungsbacka.se
 - [Kungälvs kommun Avfallshantering](/doc/source/kungalv_se.md) / kungalv.se/Bygga--bo--miljo/avfall-och-atervinning/avfall-fran-hushall

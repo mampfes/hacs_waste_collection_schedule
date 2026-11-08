@@ -5756,6 +5756,13 @@
     "howto": {},
     "urls": {}
   },
+  "krokom_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/krokom_se.md",
+    "howto": {
+      "en": "Enter your street and house number as shown by the 'När kommer sopbilen?' search on the [Krokom waste page](https://krokom.se/bo-trafik-och-miljo/avfall-och-atervinning/avfallshamtning.html), e.g. `Offerdalsvägen 1`. If the same street name exists in several towns, also enter the town (e.g. `Föllinge`). The service only publishes the next collection date."
+    },
+    "urls": {}
+  },
   "kungsbacka_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/kungsbacka_se.md",
     "howto": {
