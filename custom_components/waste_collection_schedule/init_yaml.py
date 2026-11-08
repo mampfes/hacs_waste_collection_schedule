@@ -10,6 +10,7 @@ from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.discovery import async_load_platform
 
+from .frontend import YAML_CONFIGURED, async_register_frontend
 from .service import get_fetch_all_service
 from .waste_collection_api import WasteCollectionApi
 
@@ -119,10 +120,12 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
 
     # Show canonical waste-type names in the Home Assistant UI language.
     set_display_language(hass.config.language)
+    await async_register_frontend(hass)
 
     # Skip for config flow
     if const.DOMAIN not in config:
         return True
+    hass.data[YAML_CONFIGURED] = True
 
     # create empty api object as singleton
     api = WasteCollectionApi(

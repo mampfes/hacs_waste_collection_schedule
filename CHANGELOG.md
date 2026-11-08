@@ -12,6 +12,14 @@ Releases are listed in reverse chronological order.
 - removed merton_gov_uk ("London Borough of Merton (Old)"): the `myneighbourhood.merton.gov.uk` waste services page answers HTTP 404. Use the ICS source with the "London Borough of Merton (New)" calendar link from fixmystreet.merton.gov.uk. It was not deprecated first because it could no longer return data
 - removed lrasha_de: since August 2025 (#4449) the source has only raised an error pointing to app_abfallplus_de (Kreis Schwäbisch-Hall). It was not deprecated first because it could no longer return data
 
+### Deprecated
+
+- `add_days_to` is accepted and ignored in YAML; `daysTo` is always exposed. Removal is scheduled for the next major release.
+
+### Added
+
+- Bundled Next collection, Schedule and Bins dashboard cards with configurable waste-type styles, localized dates and visual editors. Automatic card registration requires Home Assistant 2025.5 or newer; the visual editor requires 2026.6 or newer. Older supported Home Assistant versions retain their existing schedules and skip card registration; the integration minimum remains 2024.4.0.
+
 ### Changed
 
 - Dedicated calendars retain their category or provider-bin membership when types share a display alias, including description keys and trimmed legacy labels. The general calendar keeps non-dedicated collections and remains available when only part of the dedicated schedule is present; saved keys and calendar identities remain unchanged.
@@ -28,9 +36,8 @@ Releases are listed in reverse chronological order.
 - Generic `upcoming` retains `Collection` objects for local Jinja access. As before, Jinja's `to_json` filter cannot serialize these objects directly; the REST API serializes their rich records.
 - The `fetch_data` action skips disabled integration entries. Provider fetches taking longer than two minutes log a warning; later requests for that source continue waiting for the running fetch to finish.
 
-### Deprecated
-
-- `add_days_to` is accepted and ignored in YAML; `daysTo` is always exposed. Removal is scheduled for the next major release.
+- **Breaking:** A-Region, Köniz, ZAB Bazenheid, and Winterthur collections are labeled by their tour (General Waste, Paper & Cardboard, Organic Waste, Plastic, Garden Waste, Recycling, Hazardous Waste, Textiles, Other) instead of raw district titles such as "Kehrichtsammlung Eschlikon"; titles naming a known tour plus a place ("Schredderdienst Liebefeld", "Metall Wil Nord") map to that tour. Customizations keyed to the old district titles must be updated (#8106).
+- A-Region-based sources (a_region_ch, koeniz_ch, zab_ch, winterthur_ch): `district` accepts several names separated by `;` or as a YAML list, one per tour, so households spread across several district tours (e.g. Wil) can be configured. A single name behaves as before; a multi-district tour matching none of the requested names is skipped with a warning listing its districts (#8106).
 
 ## [3.0.0-beta.8] - 2026-10-26
 

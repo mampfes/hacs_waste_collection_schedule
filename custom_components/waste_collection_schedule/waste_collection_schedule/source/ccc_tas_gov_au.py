@@ -34,9 +34,11 @@ def _describe(record: dict, source: Any):
     """A recurring schedule from the two next dates the council publishes.
 
     Hardwaste is left out on purpose: the council no longer collects it.
+    An empty value means the address has no such service (e.g. no green
+    waste collection), so it is skipped rather than treated as an API change.
     """
     key = _SERVICES.get(record.get("name"))
-    if key is None:
+    if key is None or not record.get("value"):
         return
     dates = re.findall(DATE_REGEX, record["value"])
     # Anything but two dates means the API has changed.
@@ -61,6 +63,7 @@ class Source(BaseSource):
     TEST_CASES: ClassVar[dict] = {
         "80 Clarence St": {"address": "80 Clarence St"},
         "5 Cambridge Road": {"address": "5 Cambridge Road"},
+        "2 Estate Drive": {"address": "2 Estate Drive"},
     }
 
     PARAMS = (street_address(),)
