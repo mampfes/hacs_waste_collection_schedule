@@ -119,7 +119,11 @@ class MuellmaxRetriever(RetrieverFunc):
     """
 
     def __call__(self, source: "BaseSource"):
-        service = source.params["service"]
+        # The service id is part of the URL and must match Müllmax's spelling
+        # exactly; a stray space or different case (e.g. "Evs " or "EVS") makes
+        # the form silently reset and look like an address problem (#8130).
+        # Every Müllmax service id is capitalised ("Evs", "Awm", "Usb", ...).
+        service = str(source.params["service"]).strip().capitalize()
         url = (
             f"https://www.muellmax.de/abfallkalender/{service.lower()}"
             f"/res/{service}Start.php"
