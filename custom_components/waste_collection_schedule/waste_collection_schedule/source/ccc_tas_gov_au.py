@@ -22,7 +22,7 @@ PARAM_TRANSLATIONS = {"en": {"address": "123 Clarence St ROSNY TAS 7018"}}
 
 TEST_CASES = {
     "80 Clarence St": {"address": "80 Clarence St"},
-    "50 East Derwent Highway": {"address": "50 East Derwent Highway"},
+    "38 Bligh Street": {"address": "38 Bligh Street"},
     "2 Estate Drive": {"address": "2 Estate Drive"},
 }
 
@@ -105,7 +105,7 @@ def _query_api(address: str) -> dict:
     collection_url = f"{URL}/collection-search"
     collections = session.post(collection_url, json=collection_search_data)
 
-    if address_result.status_code != 200:
+    if collections.status_code != 200:
         raise Exception("Could not find collections")
 
     collections_result = collections.json()
