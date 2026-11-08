@@ -31,4 +31,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Find your collection sector on the City of Pointe-Claire website at https://www.pointe-claire.ca/en/residents/public-works/waste-management/
+Find your collection sector (A or B) with the City's address search: https://www.pointe-claire.ca/en/community-life/citizen-services/search-by-address. Leaf and Christmas tree collections use the garden-waste category. Mattress and ecocentre days are not included in the city feed.
