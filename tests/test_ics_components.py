@@ -321,3 +321,224 @@ def test_collapse_weeks_week_start_can_be_monday() -> None:
 def test_sort_rows_orders_by_date_then_key() -> None:
     a, b = datetime.date(2030, 1, 1), datetime.date(2030, 1, 2)
     assert SortRows()([(b, "x"), (a, "z"), (a, "y")]) == [(a, "y"), (a, "z"), (b, "x")]
+
+
+# --- UID/title classification through the configured ICS pipeline -----------
+
+
+def _pointe_claire_source(text: str, sector: str = "A") -> Any:
+    from unittest.mock import Mock
+
+    from waste_collection_schedule.source.pointe_claire_qc_ca import Source
+
+    source = Source(sector=sector)
+    source._session = Mock()
+    source._session.get.return_value = FakeResponse(text)
+    return source
+
+
+def _pointe_claire_calendar(*properties: str) -> str:
+    return (
+        "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Offline test//EN\r\n"
+        "BEGIN:VEVENT\r\n"
+        + "\r\n".join(properties)
+        + "\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+    )
+
+
+@pytest.mark.parametrize("sector,zone", [("A", 2), ("B", 3), (" a ", 2), ("b", 3)])
+def test_pointe_claire_sector_request(sector: str, zone: int) -> None:
+    from freezegun import freeze_time
+
+    with freeze_time("2026-11-08"):
+        source = _pointe_claire_source(
+            _pointe_claire_calendar("DTSTART;VALUE=DATE:20261109", "SUMMARY:Recyclage"),
+            sector,
+        )
+        entries = source.fetch()
+    assert len(entries) == 1
+    source.session.get.assert_called_once_with(
+        f"https://espace.pointe-claire.ca/avis/collectes/v2/calendrier.ics?collects={zone}",  # codespell:ignore espace
+        params=None,
+        headers=None,
+        cookies=None,
+        allow_redirects=True,
+        timeout=30,
+    )
+
+
+def test_pointe_claire_invalid_sector_does_not_request() -> None:
+    source = _pointe_claire_source("not requested", "C")
+    with pytest.raises(SourceArgumentNotFoundWithSuggestions):
+        source.fetch()
+    source.session.get.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    "uid,title,expected",
+    [
+        ("2026-11-09-DECHETS@pointe-claire", "Recyclage", "general_waste"),
+        ("2026-11-09-compost@pointe-claire", "", "organic"),
+        ("2026-11-09-encombrants@pointe-claire", "Renamed", "bulky_waste"),
+        ("2026-11-09-verts@pointe-claire", "Renamed", "garden_waste"),
+        ("2026-11-09-noel@pointe-claire", "Renamed", "garden_waste"),
+        ("2026-11-09-recyclage@pointe-claire", "Renamed", "recyclables"),
+        ("unknown", "DÉCHETS VERTS", "garden_waste"),
+        ("", "Feuilles", "garden_waste"),
+        ("", "Collecte de feuilles", "garden_waste"),
+        ("", "Arbre de Noe\u0308l", "garden_waste"),
+        ("", "Matières organiques", "organic"),
+        ("", "Déchets alimentaires", "organic"),
+        ("", "Ordures ménagères", "general_waste"),
+        ("", "Encombrants", "bulky_waste"),
+        ("", "Recyclage", "recyclables"),
+        ("unknown", "Collecte spéciale", "preserved:Collecte spéciale"),
+        ("", "未知の収集", "preserved:未知の収集"),
+    ],
+)
+def test_pointe_claire_uid_then_title_fallback(
+    uid: str, title: str, expected: str
+) -> None:
+    from freezegun import freeze_time
+
+    with freeze_time("2026-11-08"):
+        source = _pointe_claire_source(
+            _pointe_claire_calendar(
+                "DTSTART;VALUE=DATE:20261109", f"UID:{uid}", f"SUMMARY:{title}"
+            )
+        )
+        entries = source.fetch()
+    assert len(entries) == 1
+    assert entries[0].waste_type.id == expected
+    assert entries[0].date == datetime.date(2026, 11, 9)
+    assert entries[0].original_label
+    assert "@pointe-claire" not in entries[0].original_label
+    assert "\n" not in entries[0].original_label
+    if expected.startswith("preserved:"):
+        assert entries[0].original_label == title
+
+
+@pytest.mark.parametrize(
+    "body",
+    [
+        "<html>Maintenance</html>",
+        "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nEND:VCALENDAR\r\n",
+        _pointe_claire_calendar("SUMMARY:Recyclage"),
+        _pointe_claire_calendar("DTSTART;VALUE=DATE:20261340", "SUMMARY:Recyclage"),
+    ],
+)
+def test_pointe_claire_bad_or_empty_feed_is_not_silent(body: str) -> None:
+    from freezegun import freeze_time
+    from waste_collection_schedule.response_shape import ResponseShapeError
+
+    with (
+        freeze_time("2026-11-08"),
+        pytest.raises((ValueError, ResponseShapeError, AttributeError)),
+    ):
+        _pointe_claire_source(body).fetch()
+
+
+def test_pointe_claire_empty_unknown_title_is_not_a_bin() -> None:
+    from freezegun import freeze_time
+
+    with freeze_time("2026-11-08"), pytest.raises(SourceArgumentNotFound):
+        _pointe_claire_source(
+            _pointe_claire_calendar("DTSTART;VALUE=DATE:20261109", "UID:unknown")
+        ).fetch()
+
+
+def test_pointe_claire_http_errors_propagate() -> None:
+    source = _pointe_claire_source("Maintenance")
+    source.session.get.return_value = FakeResponse("Maintenance", status_code=503)
+    with pytest.raises(RuntimeError, match="HTTP 503"):
+        source.fetch()
+
+
+@pytest.mark.parametrize(
+    "start",
+    [
+        "DTSTART;VALUE=DATE:20261109",
+        "DTSTART:20261109T023000Z",
+        "DTSTART;TZID=America/Toronto:20261109T233000",
+    ],
+)
+def test_pointe_claire_retains_the_event_calendar_day(start: str) -> None:
+    from freezegun import freeze_time
+
+    with freeze_time("2026-11-08"):
+        entries = _pointe_claire_source(
+            _pointe_claire_calendar(start, "SUMMARY:Recyclage")
+        ).fetch()
+    assert entries[0].date == datetime.date(2026, 11, 9)
+    assert isinstance(entries[0].date, datetime.date)
+    assert not isinstance(entries[0].date, datetime.datetime)
+
+
+@pytest.mark.parametrize(
+    "sector,count,types",
+    [
+        (
+            "A",
+            47,
+            {"general_waste": 11, "recyclables": 20, "organic": 13, "garden_waste": 3},
+        ),
+        (
+            "B",
+            45,
+            {"general_waste": 10, "recyclables": 20, "organic": 12, "garden_waste": 3},
+        ),
+    ],
+)
+def test_pointe_claire_recorded_schedule_counts(
+    sector: str, count: int, types: dict[str, int]
+) -> None:
+    from collections import Counter
+    from pathlib import Path
+
+    from waste_collection_schedule.source.pointe_claire_qc_ca import Source
+
+    from tests import cassette
+
+    path = (
+        Path(__file__).parent
+        / "fixtures"
+        / "pointe_claire_qc_ca"
+        / f"sector_{sector.lower()}.json"
+    )
+    with cassette.replaying(str(path)):
+        entries = Source(sector=sector).fetch()
+    assert len(entries) == count
+    assert Counter(entry.waste_type.id for entry in entries) == types
+    assert len({(entry.date, entry.waste_type.id) for entry in entries}) == count
+    assert {entry.original_label for entry in entries} == {
+        "Déchets domestiques",
+        "Recyclage",
+        "Matières organiques",
+        "Feuilles",
+        "Arbre de Noël",
+    }
+
+
+def test_row_relabel_callable_runs_before_vocabulary() -> None:
+    from waste_collection_schedule.preprocessors import RowRelabel
+
+    date = datetime.date(2026, 11, 9)
+    rename = RowRelabel(
+        rename=lambda label: label.removeprefix("UID: "), vocabulary=["Paper"]
+    )
+    assert list(rename([(date, "UID: Paper collection"), (date, "Unknown")])) == [
+        (date, "Paper"),
+        (date, "Unknown"),
+    ]
+
+
+def test_row_relabel_mapping_keeps_unknown_and_empty_replacement() -> None:
+    from waste_collection_schedule.preprocessors import RowRelabel
+
+    date = datetime.date(2026, 11, 9)
+    rename = RowRelabel(rename={"Old": "New", "Drop": ""})
+    assert list(rename([(date, "Old"), (date, "Unknown"), (date, "Drop")])) == [
+        (date, "New"),
+        (date, "Unknown"),
+        (date, ""),
+    ]

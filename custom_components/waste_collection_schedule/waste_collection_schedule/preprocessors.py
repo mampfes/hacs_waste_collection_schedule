@@ -210,9 +210,10 @@ class RowRelabel(Preprocessor[Any, "tuple[datetime.date, str]"]):
     accumulating one entry per spelling variant.
 
     Args:
-        rename: a ``{old: new}`` mapping applied first; a key not listed is left
-            alone. Use it to fold a variant spelling of a round onto the name
-            the ``type_value_map`` knows.
+        rename: a ``{old: new}`` mapping or a callable receiving the label.
+            A key not listed in a mapping is left alone. A callable can classify
+            a UID/title pair rendered by ``IcsParser.title_template`` before the
+            transformer retains the label, without leaking the UID into it.
         vocabulary: when set, a key that is *not* in ``vocabulary`` is retried as
             its first whitespace-separated word, and rewritten to that word if
             the word is in the vocabulary. This is the common case of a provider
@@ -239,11 +240,11 @@ class RowRelabel(Preprocessor[Any, "tuple[datetime.date, str]"]):
 
     def __init__(
         self,
-        rename: "Mapping[str, str] | None" = None,
+        rename: "Mapping[str, str] | Callable[[str], str] | None" = None,
         vocabulary: "Iterable[str] | None" = None,
         strip: "str | None" = None,
     ):
-        self._rename = dict(rename or {})
+        self._rename = rename if callable(rename) else dict(rename or {})
         self._vocabulary = None if vocabulary is None else frozenset(vocabulary)
         self._strip = re.compile(strip) if strip else None
 
@@ -253,9 +254,12 @@ class RowRelabel(Preprocessor[Any, "tuple[datetime.date, str]"]):
         for collection_date, key in records:
             if self._strip is not None:
                 key = self._strip.sub("", key).strip()
-            renamed = self._rename.get(key)
-            if renamed is not None:
-                key = renamed
+            if callable(self._rename):
+                key = self._rename(key)
+            else:
+                renamed = self._rename.get(key)
+                if renamed is not None:
+                    key = renamed
             if self._vocabulary is not None and key not in self._vocabulary:
                 first_word = key.split(" ")[0]
                 if first_word in self._vocabulary:
