@@ -5485,27 +5485,38 @@ If you already have enough information for your municipality/region, you are ver
 - [City of Tallahassee](/doc/source/talgov_com.md) / talgov.com/you/swslookup
 - [Community Waste Disposal (CWD)](/doc/source/communitywastedisposal_com.md) / communitywastedisposal.com
 - [Davenport, Iowa, USA](/doc/ics/recollect.md) / davenportiowa.com
+- [Dolton, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/dolton
+- [Flossmoor, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/flossmoor
 - [Fort Lauderdale, FL](/doc/source/fort_lauderdale_fl_us.md) / fortlauderdale.gov/government/departments-i-z/public-works/operations/sanitation-operations/collection-programs
 - [Frederick County, Maryland, USA](/doc/source/recyclecoach_com.md) / frederickcountymd.gov/3447/Curbside-Collection-Schedule
 - [Fuquay-Varina, North Carolina](/doc/source/fuquay_varina_nc_us.md) / gis1.fuquay-varina.org
 - [Hanahan, SC](/doc/source/cityofhanahan_com.md) / cityofhanahan.com/publicworks/page/household-trash-collection-schedule
 - [Hardin Sanitation, Idaho, USA](/doc/ics/recollect.md) / hardinsanitation.com
+- [Homer Glen, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/homer-glen
+- [Homewood Disposal Service (NuWay)](/doc/source/mydisposal_com.md) / mydisposal.com
 - [Hoover, AL](/doc/source/hoover_al_us.md) / hooveralabama.gov
 - [Jacksonville, FL](/doc/source/jacksonville_fl_us.md) / myjax.custhelp.com/app/hauler
 - [Kansas City, MO](/doc/source/kansas_city_mo_us.md) / kcmo.gov/city-hall/trash
 - [Lakeshore Recycling Systems (LRS)](/doc/source/lrsrecycles_com.md) / lrsrecycles.com
+- [Lansing, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/lansing
 - [Lincoln, CA](/doc/source/lincoln_ca_us.md) / lincolnca.gov/recycling
+- [Lockport Township, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/lockport-township
 - [Louisville, Kentucky, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-ky-city-of-louisville
+- [Markham, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/markham
 - [Marysville, WA](/doc/source/marysville_wa_us.md) / marysvillewa.gov/172/Solid-Waste-Recycling
 - [McNamara Waste Services](/doc/source/mcwaste_com.md) / mcwaste.com
 - [Miami-Dade County](/doc/source/miamidade_gov.md) / miamidade.gov/global/solidwaste/home.page
 - [Mill Valley Refuse Service](/doc/source/millvalleyrefuse_com.md) / millvalleyrefuse.com
 - [Minneapolis MN USA](/doc/source/apps_ci_minneapolis_mn_us.md) / minneapolismn.gov
+- [Minooka, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/minooka-garbage
+- [Munster, IN](/doc/source/mydisposal_com.md) / mydisposal.com/towns/munster
+- [New Lenox, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/new-lenox
 - [New Rochelle (NY)](/doc/source/recyclecoach_com.md) / newrochelleny.gov/791/Collection-Dates
 - [New York City](/doc/source/nyc_gov.md) / nyc.gov
 - [Newark, Delaware, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-de-city-of-newark
 - [Noble Environmental](/doc/source/nobleenviro_com.md) / nobleenviro.com
 - [Northville Township, MI](/doc/source/northville_township_mi_us.md) / twp.northville.mi.us
+- [Oak Forest, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/oak-forest-garbage
 - [Olympia, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-olympia
 - [Orange County, FL](/doc/source/ocarcims_ocfl_net.md) / ocarcims.ocfl.net
 - [Palm Beach County, Florida, USA](/doc/source/recyclecoach_com.md) / swa.org/518/Pickup-Schedule
@@ -5520,12 +5531,15 @@ If you already have enough information for your municipality/region, you are ver
 - [Recycle Coach](/doc/source/recyclecoach_com.md) / recyclecoach.com
 - [Red Bank, Tennessee](/doc/source/red_bank_tn_us.md) / redbanktn.gov/257/Solid-Waste
 - [Republic Services](/doc/source/republicservices_com.md) / republicservices.com
+- [Richton Park, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/richton-park
 - [Rochester, NY](/doc/source/rochester_ny_us.md) / cityofrochester.gov
 - [Rogue Disposal & Recycling (Medford, OR)](/doc/ics/recollect.md) / roguedisposal.com
 - [Round Rock Texas](/doc/source/roundrocktexas_gov.md) / roundrocktexas.gov
 - [Sacramento County, CA](/doc/ics/recollect.md) / wmr.saccounty.gov
 - [Seattle Public Utilities](/doc/source/seattle_gov.md) / myutilities.seattle.gov
+- [South Holland, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/south-holland
 - [Tacoma, Washington, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-wa-city-of-tacoma
+- [Tinley Park, IL](/doc/source/mydisposal_com.md) / mydisposal.com/towns/tinley-park
 - [Town of Huntington, NY](/doc/source/huntington_ny_us.md) / huntingtonny.gov/trash-recycling
 - [TrashDayNow](/doc/ics/trashdaynow_com.md) / trashdaynow.com
 - [Tucson, Arizona, USA](/doc/source/recyclecoach_com.md) / recyclecoach.com/cities/usa-az-city-of-tucson

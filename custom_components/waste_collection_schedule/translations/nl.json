@@ -35509,6 +35509,33 @@
           "address": "Uw volledige adres."
         }
       },
+      "args_mydisposal_com": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "municipality": "Municipality",
+          "recycling_date": "Recycling Date"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "address": "Uw volledige adres."
+        }
+      },
+      "reconfigure_mydisposal_com": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "address": "Adres",
+          "municipality": "Municipality",
+          "recycling_date": "Recycling Date"
+        },
+        "data_description": {
+          "address": "Uw volledige adres."
+        }
+      },
       "args_fort_lauderdale_fl_us": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",

@@ -8949,6 +8949,13 @@
     },
     "urls": {}
   },
+  "mydisposal_com": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/mydisposal_com.md",
+    "howto": {
+      "en": "Enter your street address and pick your municipality; the pickup day comes from the map on your town's mydisposal.com page. Most towns collect recycling every other week: enter the date (YYYY-MM-DD) of any recycling pickup to get recycling dates, or leave it empty to skip recycling. Homer Glen and Lockport Township recycle weekly and need no date."
+    },
+    "urls": {}
+  },
   "fort_lauderdale_fl_us": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/fort_lauderdale_fl_us.md",
     "howto": {

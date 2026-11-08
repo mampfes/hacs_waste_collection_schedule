@@ -35508,6 +35508,33 @@
           "address": "Koko osoitteesi."
         }
       },
+      "args_mydisposal_com": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite",
+          "municipality": "Municipality",
+          "recycling_date": "Recycling Date"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "address": "Koko osoitteesi."
+        }
+      },
+      "reconfigure_mydisposal_com": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "address": "Osoite",
+          "municipality": "Municipality",
+          "recycling_date": "Recycling Date"
+        },
+        "data_description": {
+          "address": "Koko osoitteesi."
+        }
+      },
       "args_fort_lauderdale_fl_us": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",

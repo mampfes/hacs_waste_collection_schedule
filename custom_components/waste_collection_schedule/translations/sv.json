@@ -35509,6 +35509,33 @@
           "address": "Din fullständiga adress."
         }
       },
+      "args_mydisposal_com": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "address": "Adress",
+          "municipality": "Municipality",
+          "recycling_date": "Recycling Date"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "address": "Din fullständiga adress."
+        }
+      },
+      "reconfigure_mydisposal_com": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "address": "Adress",
+          "municipality": "Municipality",
+          "recycling_date": "Recycling Date"
+        },
+        "data_description": {
+          "address": "Din fullständiga adress."
+        }
+      },
       "args_fort_lauderdale_fl_us": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
