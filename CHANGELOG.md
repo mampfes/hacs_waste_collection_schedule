@@ -20,6 +20,10 @@ Releases are listed in reverse chronological order.
 
 - Bundled Next collection, Schedule and Bins dashboard cards with configurable waste-type styles, localized dates and visual editors. Automatic card registration requires Home Assistant 2025.5 or newer; the visual editor requires 2026.6 or newer. Older supported Home Assistant versions retain their existing schedules and skip card registration; the integration minimum remains 2024.4.0.
 
+### Fixed
+
+- Pointe-Claire: classify the official ICS feed by UID with accent-insensitive title fallback, reject empty feeds, and update sector guidance (port of #8133; official URLs already adopted in #7713). **Breaking label correction:** leaf pickups previously exposed as unresolved `Feuilles` now use canonical Garden Waste; filters/templates comparing the displayed `Feuilles` label may need updating. Existing canonical categories and `sector: A|B` configurations remain unchanged.
+
 ### Changed
 
 - Dedicated calendars retain their category or provider-bin membership when types share a display alias, including description keys and trimmed legacy labels. The general calendar keeps non-dedicated collections and remains available when only part of the dedicated schedule is present; saved keys and calendar identities remain unchanged.
