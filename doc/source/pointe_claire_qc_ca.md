@@ -2,6 +2,8 @@
 
 Waste collection schedules for the [City of Pointe-Claire](https://www.pointe-claire.ca), Québec, Canada.
 
+Dates come from the iCal feed published by the city through its [Espace citoyen](https://espace.pointe-claire.ca) portal. <!-- codespell:ignore espace -->
+
 ## Configuration via configuration.yaml
 
 ```yaml
@@ -21,17 +23,25 @@ Your collection sector — either `A` or `B`.
 
 #### How do I find my sector?
 
-Visit the [City of Pointe-Claire waste management page](https://www.pointe-claire.ca/en/residents/public-works/waste-management/) to determine which sector applies to your address.
+Enter your address in the city's [address search tool](https://www.pointe-claire.ca/en/community-life/citizen-services/search-by-address). It shows your collection sector.
+
+- **Sector A:** the entire area west of Saint-Jean Boulevard, and the entire area south of Highway 20.
+- **Sector B:** north of Highway 20, east of Saint-Jean Boulevard and south of Hymus Boulevard.
+
+The city's printable PDF calendars for each sector are on the [Collection Calendar and Sorting Guide](https://www.pointe-claire.ca/en/household-collections-and-residual-materials/collections/collection-calendar-and-sorting-guide) page.
 
 ## Collection Types
 
-| Type | Sector A | Sector B |
-|------|----------|----------|
-| Organic Waste | Weekly — every Monday | Weekly — every Monday |
-| Recyclables | Weekly — every Wednesday | Weekly — every Wednesday |
-| Household Waste | Every second Tuesday | Every second Thursday |
-| Bulky Items | First Wednesday of each month | First Wednesday of each month |
-| Christmas Tree Collection | Jan 7 & 14 | Jan 6 & 13 |
+| Type | City feed title |
+|------|-----------------|
+| Household Waste | Déchets domestiques |
+| Organic Waste | Matières organiques |
+| Recyclables | Recyclage |
+| Bulky Items | Encombrants |
+| Leaf Collection | Feuilles |
+| Christmas Tree Collection | Arbre de Noël |
+
+Mattress and box-spring collections and Saturday ecocentre days appear on the city's PDF calendars but are not included in the city's iCal feed, so this source does not report them.
 
 ## Example
 
