@@ -8,7 +8,9 @@ from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 
-from custom_components.waste_collection_schedule import frontend
+from custom_components.waste_collection_schedule import (
+    frontend_registration as frontend,
+)
 
 requires_registration = pytest.mark.skipif(
     frontend.StaticPathConfig is None, reason="Older HA has no async static paths"
@@ -279,3 +281,13 @@ def test_release_collection_attributes_use_calendar_alias_filters():
             paper.type: {"icon": "mdi:package-variant", "picture": "/local/paper.png"}
         }
     }
+
+
+def test_registration_imports_share_the_module_and_keep_asset_directory():
+    from custom_components.waste_collection_schedule import init_ui, init_yaml
+
+    assert init_ui.async_register_frontend is frontend.async_register_frontend
+    assert init_yaml.async_register_frontend is frontend.async_register_frontend
+    assert init_ui.async_unregister_frontend is frontend.async_unregister_frontend
+    assert frontend.FRONTEND_PATH.name == "frontend"
+    assert (frontend.FRONTEND_PATH / "waste-collection-cards.js").is_file()

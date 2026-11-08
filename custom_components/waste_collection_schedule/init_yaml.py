@@ -10,7 +10,7 @@ from homeassistant.const import CONF_NAME, CONF_VALUE_TEMPLATE
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.discovery import async_load_platform
 
-from .frontend import YAML_CONFIGURED, async_register_frontend
+from .frontend_registration import YAML_CONFIGURED, async_register_frontend
 from .service import get_fetch_all_service
 from .waste_collection_api import WasteCollectionApi
 
