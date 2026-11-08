@@ -1850,6 +1850,14 @@
     },
     "urls": {}
   },
+  "makarski_komunalac_hr": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/makarski_komunalac_hr.md",
+    "howto": {
+      "de": "Geben Sie Ihre Straße (ohne Hausnummer) in das Suchfeld auf https://makarski-komunalac.hr/info/kalendar_odvoza.html ein, um herauszufinden, ob Ihre Adresse nach dem Plan Ponedjeljak/Četvrtak (Montag/Donnerstag) oder Utorak/Subota (Dienstag/Samstag) abgeholt wird.",
+      "en": "Enter your street (without house number) in the search box on https://makarski-komunalac.hr/info/kalendar_odvoza.html to find out whether your address is collected on the Ponedjeljak/Četvrtak (Monday/Thursday) or the Utorak/Subota (Tuesday/Saturday) schedule."
+    },
+    "urls": {}
+  },
   "ics_detmarovice_glembovec_cz": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/detmarovice_glembovec_cz.md",
     "howto": {

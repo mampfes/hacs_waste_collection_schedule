@@ -1017,6 +1017,12 @@ If you already have enough information for your municipality/region, you are ver
 </details>
 
 <details>
+<summary>Croatia</summary>
+
+- [Makarski komunalac](/doc/source/makarski_komunalac_hr.md) / makarski-komunalac.hr
+</details>
+
+<details>
 <summary>Czech Republic</summary>
 
 - [Dětmarovice (part Glembovec)](/doc/ics/detmarovice_glembovec_cz.md) / detmarovice.cz

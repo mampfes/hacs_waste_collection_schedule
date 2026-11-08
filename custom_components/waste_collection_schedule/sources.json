@@ -6194,6 +6194,14 @@
       "id": "myutility_winnipeg_ca"
     }
   ],
+  "Croatia": [
+    {
+      "title": "Makarski komunalac",
+      "module": "makarski_komunalac_hr",
+      "default_params": {},
+      "id": "makarski_komunalac_hr"
+    }
+  ],
   "Czech Republic": [
     {
       "title": "D\u011btmarovice (part Glembovec)",

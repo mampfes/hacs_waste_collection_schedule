@@ -1,0 +1,34 @@
+# Makarski komunalac
+
+Support for schedules provided by [Makarski komunalac](https://makarski-komunalac.hr).
+
+Source for Makarski komunalac d.o.o., Makarska, Croatia waste collection.
+
+## Configuration via configuration.yaml
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: makarski_komunalac_hr
+      args:
+        schedule: SCHEDULE
+```
+
+### Configuration Variables
+
+**schedule**  
+*(string) (required)*
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: makarski_komunalac_hr
+      args:
+        schedule: Ponedjeljak/Četvrtak
+```
+
+## How to get the source arguments
+
+Enter your street (without house number) in the search box on https://makarski-komunalac.hr/info/kalendar_odvoza.html to find out whether your address is collected on the Ponedjeljak/Četvrtak (Monday/Thursday) or the Utorak/Subota (Tuesday/Saturday) schedule.

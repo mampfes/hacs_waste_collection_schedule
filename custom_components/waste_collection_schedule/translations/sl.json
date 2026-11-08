@@ -7480,6 +7480,26 @@
           "address": "Vaš celoten naslov."
         }
       },
+      "args_makarski_komunalac_hr": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "schedule": "Schedule"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+        }
+      },
+      "reconfigure_makarski_komunalac_hr": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "schedule": "Schedule"
+        },
+        "data_description": {}
+      },
       "args_ics_detmarovice_glembovec_cz": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
