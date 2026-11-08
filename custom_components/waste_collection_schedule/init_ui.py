@@ -15,7 +15,7 @@ from homeassistant.exceptions import ConfigEntryError, ConfigEntryNotReady
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers import entity_registry as er
 
-from .dashboard_cards import (
+from .frontend_registration import (
     YAML_CONFIGURED,
     async_register_frontend,
     async_unregister_frontend,

@@ -24798,6 +24798,33 @@
           "street_address": "Vaš celoten naslov."
         }
       },
+      "args_krokom_se": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Naslov",
+          "city": "Mesto"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "address": "Vaš celoten naslov.",
+          "city": "Vaše mesto ali kraj."
+        }
+      },
+      "reconfigure_krokom_se": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "address": "Naslov",
+          "city": "Mesto"
+        },
+        "data_description": {
+          "address": "Vaš celoten naslov.",
+          "city": "Vaše mesto ali kraj."
+        }
+      },
       "args_kungsbacka_se": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",

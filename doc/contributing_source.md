@@ -204,7 +204,7 @@ The default preprocessor wraps a single dict into a one-item list and passes exi
 | `RecurrenceExpander(describe)` | Project a recurring schedule (a weekday plus a cadence) into concrete dates. `describe(record, source)` yields `Schedule` objects. |
 | `Compose(*stages)` | Chain preprocessors. |
 | `HolidayShift(adjust)` | Shift dates that fall on holidays. |
-| `RowRelabel(rename=, vocabulary=, strip=)` | Tidy the label of `(date, key)` rows before the transformer maps it, e.g. `strip=` a trailing `"(<street>)"` group the provider appends to every ICS summary. |
+| `RowRelabel(rename=, vocabulary=, strip=)` | `rename` accepts a mapping or a label callable. Tidy the label of `(date, key)` rows before the transformer maps it, e.g. `strip=` a trailing `"(<street>)"` group the provider appends to every ICS summary. |
 | `CollapseWeeks(keys=, day=, week_start=6)` | Collapse a calendar that marks a whole week with an all-day event on each day into one row per week, dated the day the week starts or shifted to the weekday the `day` parameter names. |
 | `SortRows()` | Order `(date, key)` rows by date then key, for an endpoint that returns the same events in a different order on every request. |
 | `retrievers.AthosNoticeFilter(marker=...)` | The Athos platform's preprocess half (see `AthosWasteManagementRetriever`): drop the announcement VEVENT a deployment's ICS export carries beside its collections. |

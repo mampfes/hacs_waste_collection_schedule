@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-11-08",
+  "interactions": [
+    {
+      "key": "GET https://krokom.avfallsapp.se/api/widget/nova/v1/next-pickup/search ddcdcd3977",
+      "method": "GET",
+      "url": "https://krokom.avfallsapp.se/api/widget/nova/v1/next-pickup/search",
+      "final_url": "https://krokom.avfallsapp.se/api/widget/nova/v1/next-pickup/search?address=Bergfinkv%C3%A4gen+3",
+      "body": "{\"params\":[[\"address\",\"Bergfinkv\u00e4gen 3\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "x-powered-by": "PHP/8.3.36",
+        "cache-control": "no-cache, private",
+        "content-type": "application/json",
+        "access-control-allow-origin": "*",
+        "content-length": "285",
+        "content-encoding": "br",
+        "vary": "Accept-Encoding",
+        "date": "Sun, 08 Nov 2026 21:12:14 GMT",
+        "server": "LiteSpeed",
+        "alt-svc": "h3=\":443\"; ma=2592000, h3-29=\":443\"; ma=2592000"
+      },
+      "content_b64": "eyJcdTAwYzVTIjpbeyJhZGRyZXNzIjoiQmVyZ2Zpbmt2XHUwMGU0Z2VuIDMiLCJ6aXBfY2l0eSI6Ilx1MDBjNVMiLCJwbGFudF9udW1iZXIiOiJleUpwZGlJNkltSnRVSFJVUWxsSVJYUkpPRmhQZVVZMFkwUlllRUU5UFNJc0luWmhiSFZsSWpvaU1tZEpSVTR6YlZSSE5sWXlVMGRoUWpSWmIwbHlVVDA5SWl3aWJXRmpJam9pT1RBMk9EaGxZamM1T0RrM1pqZGtNakJsTXpJeE5EYzRNVEJpT0dVNVpqVTNPR0UxTXpRMVpUZzFaR015WmpWak5EVXlPR0V3WXpjd1pqQmpPV1kzTUNJc0luUmhaeUk2SWlKOSIsInR5cGUiOiJTb3BoXHUwMGU0bXRuaW5nIiwiYWRkcmVzc1R5cGUiOiJuZXh0LXBpY2t1cCJ9XX0="
+    },
+    {
+      "key": "POST https://krokom.avfallsapp.se/api/widget/nova/v1/next-pickup/address 5ebb53f642",
+      "method": "POST",
+      "url": "https://krokom.avfallsapp.se/api/widget/nova/v1/next-pickup/address",
+      "final_url": "https://krokom.avfallsapp.se/api/widget/nova/v1/next-pickup/address?plant_id=eyJpdiI6ImJtUHRUQllIRXRJOFhPeUY0Y0RYeEE9PSIsInZhbHVlIjoiMmdJRU4zbVRHNlYyU0dhQjRZb0lyUT09IiwibWFjIjoiOTA2ODhlYjc5ODk3ZjdkMjBlMzIxNDc4MTBiOGU5ZjU3OGE1MzQ1ZTg1ZGMyZjVjNDUyOGEwYzcwZjBjOWY3MCIsInRhZyI6IiJ9",
+      "body": "{\"params\":[[\"plant_id\",\"eyJpdiI6ImJtUHRUQllIRXRJOFhPeUY0Y0RYeEE9PSIsInZhbHVlIjoiMmdJRU4zbVRHNlYyU0dhQjRZb0lyUT09IiwibWFjIjoiOTA2ODhlYjc5ODk3ZjdkMjBlMzIxNDc4MTBiOGU5ZjU3OGE1MzQ1ZTg1ZGMyZjVjNDUyOGEwYzcwZjBjOWY3MCIsInRhZyI6IiJ9\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "x-powered-by": "PHP/8.3.36",
+        "cache-control": "no-cache, private",
+        "content-type": "application/json",
+        "access-control-allow-origin": "*",
+        "content-length": "286",
+        "content-encoding": "br",
+        "vary": "Accept-Encoding",
+        "date": "Sun, 08 Nov 2026 21:12:14 GMT",
+        "server": "LiteSpeed"
+      },
+      "content_b64": "eyJhZGRyZXNzIjoiQmVyZ2Zpbmt2XHUwMGU0Z2VuIDMiLCJjaXR5IjoiXHUwMGM1UyIsInBsYW50X2lkIjoiZXlKcGRpSTZJa1pFYzJkb1JrMTZhSFozTkdKR0wyUlBXRmczUTNjOVBTSXNJblpoYkhWbElqb2lTVnBLVFRCSlpWVkZkVTlIVGxWWlEzZE5NbGQ1WnowOUlpd2liV0ZqSWpvaU0yWmhOR00xTTJFMVl6SmlaVFUyWVRka01ERXhORFptWVRnMU1UUmlaREZpTmpsaE5EaGlNakJrWmpKak1UQTVZak5rTWpjeVpUa3lNREkzTlRCbU55SXNJblJoWnlJNklpSjkiLCJiaW5zIjpbeyJ0eXBlIjoiUmVzdGF2ZmFsbCIsInBpY2t1cF9kYXRlIjoiMjAyNi0xMS0yMCIsImZvcm1hdHRlZCI6IjIwIG5vdmVtYmVyIn1dfQ=="
+    }
+  ]
+}

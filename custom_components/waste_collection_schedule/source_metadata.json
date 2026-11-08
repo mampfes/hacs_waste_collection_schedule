@@ -1737,8 +1737,8 @@
   "pointe_claire_qc_ca": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/pointe_claire_qc_ca.md",
     "howto": {
-      "en": "Find your collection sector on the City of Pointe-Claire website at https://www.pointe-claire.ca/en/residents/public-works/waste-management/",
-      "fr": "Trouvez votre secteur de collecte sur le site de la Ville de Pointe-Claire à https://www.pointe-claire.ca/residents/travaux-publics/gestion-des-dechets/"
+      "en": "Find your collection sector (A or B) with the City's address search: https://www.pointe-claire.ca/en/community-life/citizen-services/search-by-address. Leaf and Christmas tree collections use the garden-waste category. Mattress and ecocentre days are not included in the city feed.",
+      "fr": "Trouvez votre secteur de collecte (A ou B) avec l'outil de recherche par adresse de la Ville de Pointe-Claire : https://www.pointe-claire.ca/vie-communautaire/services-aux-citoyens/recherche-par-adresse"
     },
     "urls": {}
   },
@@ -5754,6 +5754,13 @@
   "renhallningen_kristianstad_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/renhallningen_kristianstad_se.md",
     "howto": {},
+    "urls": {}
+  },
+  "krokom_se": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/krokom_se.md",
+    "howto": {
+      "en": "Enter your street and house number as shown by the 'När kommer sopbilen?' search on the [Krokom waste page](https://krokom.se/bo-trafik-och-miljo/avfall-och-atervinning/avfallshamtning.html), e.g. `Offerdalsvägen 1`. If the same street name exists in several towns, also enter the town (e.g. `Föllinge`). The service only publishes the next collection date."
+    },
     "urls": {}
   },
   "kungsbacka_se": {

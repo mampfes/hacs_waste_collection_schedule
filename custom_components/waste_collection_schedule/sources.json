@@ -34809,6 +34809,12 @@
       "id": "renhallningen_kristianstad_se"
     },
     {
+      "title": "Krokom",
+      "module": "krokom_se",
+      "default_params": {},
+      "id": "krokom_se"
+    },
+    {
       "title": "Kungsbacka",
       "module": "avfallsapp_se",
       "default_params": {
