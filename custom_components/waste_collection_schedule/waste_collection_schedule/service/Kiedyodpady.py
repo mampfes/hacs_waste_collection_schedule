@@ -171,10 +171,14 @@ class ScheduleParser:
             for item in types_response.json()
             if "id" in item
         }
-        return [
-            (
-                datetime.datetime.fromisoformat(occurrence["when"]).date(),
-                names.get(occurrence.get("what", ""), occurrence.get("what", "")),
+        # Some municipalities (e.g. Kórnik, Pabianice) list every occurrence
+        # twice; drop exact duplicates while keeping the API's order.
+        return list(
+            dict.fromkeys(
+                (
+                    datetime.datetime.fromisoformat(occurrence["when"]).date(),
+                    names.get(occurrence.get("what", ""), occurrence.get("what", "")),
+                )
+                for occurrence in schedule_response.json().get("occurrences", [])
             )
-            for occurrence in schedule_response.json().get("occurrences", [])
-        ]
+        )

@@ -20,6 +20,7 @@ _TYPE_MAP = {
     "Papier": wt.PAPER,
     "Szkło": wt.GLASS,
     "Zmieszane": wt.GENERAL_WASTE,
+    "Niesegregowane (zmieszane) odpady komunalne": wt.GENERAL_WASTE,
     "Metale i tworzywa sztuczne": [wt.PLASTIC, wt.METAL],
     "Odpady wielkogabarytowe": wt.BULKY_WASTE,
     "Akcja Liść": wt.GARDEN_WASTE,
@@ -53,6 +54,10 @@ class Source(BaseSource):
             "street": 'ul. 15 Pułku Piechoty "Wilków"',
             "number": "pozostałe",
         },
+        "Gmina Kórnik, Dachowa (wieś)": {
+            "municipality": "kornik",
+            "city": "Dachowa (wieś)",
+        },
     }
 
     PARAMS = (
@@ -73,6 +78,11 @@ class Source(BaseSource):
             "Pabianice",
             url="https://pabianice.kiedyodpady.pl",
             municipality="pabianice",
+        ),
+        region(
+            "Gmina Kórnik",
+            url="https://kornik.kiedyodpady.pl",
+            municipality="kornik",
         ),
     )
 
