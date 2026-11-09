@@ -3123,6 +3123,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Krotoszyce](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Kruszwica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Krzanowice](/doc/source/sims_pl.md) / sisms.pl
+- [Gmina Kórnik](/doc/source/kiedyodpady_pl.md) / kornik.kiedyodpady.pl
 - [Gmina Legnickie Pole](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Lubrza](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Miedziana Góra](/doc/source/sims_pl.md) / sisms.pl
