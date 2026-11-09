@@ -4425,6 +4425,14 @@
     },
     "urls": {}
   },
+  "comunesmart_it": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/comunesmart_it.md",
+    "howto": {
+      "en": "Select a supported municipality to pre-fill its public app access token. Currently, Capri Leone (ME) has a verified waste collection calendar.",
+      "it": "Seleziona un comune supportato per precompilare il token pubblico dell'app. Attualmente è verificato il calendario di Capri Leone (ME)."
+    },
+    "urls": {}
+  },
   "cidiu_it": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/cidiu_it.md",
     "howto": {

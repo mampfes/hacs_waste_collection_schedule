@@ -3424,6 +3424,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Caponago](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Caponago](/doc/source/siunet_it.md) / siunet.it
 - [Capraia e Limite](/doc/source/aliaserviziambientali_it.md) / aliaserviziambientali.it
+- [Capri Leone](/doc/source/comunesmart_it.md) / comune.caprileone.me.it
 - [Capriano del Colle](/doc/source/cbbo_it.md) / cbbo.it
 - [Capua - CZETA Spa - Ciclat](/doc/source/junker_app.md) / junker.app
 - [Carate Brianza](/doc/source/siunet_it.md) / siunet.it
@@ -3554,6 +3555,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Comazzo](/doc/source/cem_ambiente_it.md) / cemambiente.it
 - [Comazzo](/doc/source/siunet_it.md) / siunet.it
 - [Comignago](/doc/source/consorziomedionovarese_it.md) / consorziomedionovarese.it
+- [Comune Smart](/doc/source/comunesmart_it.md) / comunesmart.it
 - [Comune.Digital](/doc/source/comune_digital_it.md) / comune.digital
 - [Comuni della Convenzione di Sesto Calende - Econord](/doc/source/junker_app.md) / junker.app
 - [Comunità della Vallagarina - Dolomiti Ambiente Srl](/doc/source/junker_app.md) / junker.app

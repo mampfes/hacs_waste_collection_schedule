@@ -19624,6 +19624,26 @@
         },
         "data_description": {}
       },
+      "args_comunesmart_it": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "access_token": "Access Token"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+        }
+      },
+      "reconfigure_comunesmart_it": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "access_token": "Access Token"
+        },
+        "data_description": {}
+      },
       "args_cidiu_it": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",

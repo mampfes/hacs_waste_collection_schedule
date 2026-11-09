@@ -19624,6 +19624,26 @@
         },
         "data_description": {}
       },
+      "args_comunesmart_it": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "access_token": "Access Token"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+        }
+      },
+      "reconfigure_comunesmart_it": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "access_token": "Access Token"
+        },
+        "data_description": {}
+      },
       "args_cidiu_it": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",

@@ -25406,6 +25406,14 @@
       "id": "aliaserviziambientali_it"
     },
     {
+      "title": "Capri Leone",
+      "module": "comunesmart_it",
+      "default_params": {
+        "access_token": "n-PRl8rIpm"
+      },
+      "id": "comunesmart_it"
+    },
+    {
       "title": "Capriano del Colle",
       "module": "cbbo_it",
       "default_params": {
@@ -26375,6 +26383,12 @@
         "municipality": "Comignago"
       },
       "id": "consorziomedionovarese_it"
+    },
+    {
+      "title": "Comune Smart",
+      "module": "comunesmart_it",
+      "default_params": {},
+      "id": "comunesmart_it"
     },
     {
       "title": "Comune.Digital",

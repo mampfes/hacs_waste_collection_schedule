@@ -1,0 +1,34 @@
+# Comune Smart
+
+Support for schedules provided by [Comune Smart](https://comunesmart.it).
+
+Waste collection schedules from the Comune Smart app platform.
+
+## Configuration via configuration.yaml
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: comunesmart_it
+      args:
+        access_token: ACCESS_TOKEN
+```
+
+### Configuration Variables
+
+**access_token**  
+*(string) (required)*
+
+## Example
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: comunesmart_it
+      args:
+        access_token: n-PRl8rIpm
+```
+
+## How to get the source arguments
+
+Select a supported municipality to pre-fill its public app access token. Currently, Capri Leone (ME) has a verified waste collection calendar.
