@@ -22899,6 +22899,43 @@
         },
         "data_description": {}
       },
+      "args_kiedyodpady_pl": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "city": "Kaupunki",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Kunta",
+          "number": "Talon numero",
+          "street": "Katu"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "number": "Talon numero.",
+          "street": "Kadun nimi."
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "city": "Kaupunki",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Kunta",
+          "number": "Talon numero",
+          "street": "Katu"
+        },
+        "data_description": {
+          "city": "Kaupunkisi tai paikkakuntasi.",
+          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "number": "Talon numero.",
+          "street": "Kadun nimi."
+        }
+      },
       "args_tamax_lelow_pl": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -23364,43 +23401,6 @@
         "data_description": {
           "city": "Kaupunkisi tai paikkakuntasi.",
           "house_number": "Talon numero.",
-          "street": "Kadun nimi."
-        }
-      },
-      "args_kiedyodpady_pl": {
-        "title": "Määritä lähde",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "city": "Kaupunki",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Kunta",
-          "number": "Talon numero",
-          "street": "Katu"
-        },
-        "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
-          "city": "Kaupunkisi tai paikkakuntasi.",
-          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
-          "number": "Talon numero.",
-          "street": "Kadun nimi."
-        }
-      },
-      "reconfigure_kiedyodpady_pl": {
-        "title": "Määritä lähde uudelleen",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "city": "Kaupunki",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Kunta",
-          "number": "Talon numero",
-          "street": "Katu"
-        },
-        "data_description": {
-          "city": "Kaupunkisi tai paikkakuntasi.",
-          "municipality": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
-          "number": "Talon numero.",
           "street": "Kadun nimi."
         }
       },

@@ -22894,6 +22894,43 @@
         },
         "data_description": {}
       },
+      "args_kiedyodpady_pl": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "Ville",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Commune",
+          "number": "Numéro",
+          "street": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "city": "Votre ville ou village.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "city": "Ville",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Commune",
+          "number": "Numéro",
+          "street": "Rue"
+        },
+        "data_description": {
+          "city": "Votre ville ou village.",
+          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "number": "Votre numéro de rue.",
+          "street": "Le nom de votre rue."
+        }
+      },
       "args_tamax_lelow_pl": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -23359,43 +23396,6 @@
         "data_description": {
           "city": "Votre ville ou village.",
           "house_number": "Votre numéro de rue.",
-          "street": "Le nom de votre rue."
-        }
-      },
-      "args_kiedyodpady_pl": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Commune",
-          "number": "Numéro",
-          "street": "Rue"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "city": "Votre ville ou village.",
-          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
-          "number": "Votre numéro de rue.",
-          "street": "Le nom de votre rue."
-        }
-      },
-      "reconfigure_kiedyodpady_pl": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "city": "Ville",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Commune",
-          "number": "Numéro",
-          "street": "Rue"
-        },
-        "data_description": {
-          "city": "Votre ville ou village.",
-          "municipality": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
-          "number": "Votre numéro de rue.",
           "street": "Le nom de votre rue."
         }
       },

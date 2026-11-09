@@ -22894,6 +22894,43 @@
         },
         "data_description": {}
       },
+      "args_kiedyodpady_pl": {
+        "title": "Bron configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "city": "Plaats",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Gemeente",
+          "number": "Huisnummer",
+          "street": "Straat"
+        },
+        "data_description": {
+          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
+          "city": "Uw stad of dorp.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Bron opnieuw configureren",
+        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendertitel",
+          "city": "Plaats",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Gemeente",
+          "number": "Huisnummer",
+          "street": "Straat"
+        },
+        "data_description": {
+          "city": "Uw stad of dorp.",
+          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
+          "number": "Uw huisnummer.",
+          "street": "Uw straatnaam."
+        }
+      },
       "args_tamax_lelow_pl": {
         "title": "Bron configureren",
         "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
@@ -23359,43 +23396,6 @@
         "data_description": {
           "city": "Uw stad of dorp.",
           "house_number": "Uw huisnummer.",
-          "street": "Uw straatnaam."
-        }
-      },
-      "args_kiedyodpady_pl": {
-        "title": "Bron configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "city": "Plaats",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Gemeente",
-          "number": "Huisnummer",
-          "street": "Straat"
-        },
-        "data_description": {
-          "calendar_title": "Een leesbaardere, of gebruiksvriendelijkere, naam voor de afvalkalender. Als er niets wordt opgegeven, wordt de naam gebruikt die de bron teruggeeft.",
-          "city": "Uw stad of dorp.",
-          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
-          "number": "Uw huisnummer.",
-          "street": "Uw straatnaam."
-        }
-      },
-      "reconfigure_kiedyodpady_pl": {
-        "title": "Bron opnieuw configureren",
-        "description": "Configureer je serviceprovider. {howto}Meer details: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendertitel",
-          "city": "Plaats",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Gemeente",
-          "number": "Huisnummer",
-          "street": "Straat"
-        },
-        "data_description": {
-          "city": "Uw stad of dorp.",
-          "municipality": "De naam van uw gemeente, zoals weergegeven op de website van de aanbieder.",
-          "number": "Uw huisnummer.",
           "street": "Uw straatnaam."
         }
       },

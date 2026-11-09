@@ -22894,6 +22894,43 @@
         },
         "data_description": {}
       },
+      "args_kiedyodpady_pl": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Gemeinde",
+          "number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "city": "Ihre Stadt oder Gemeinde.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "Stadt",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Gemeinde",
+          "number": "Hausnummer",
+          "street": "Straße"
+        },
+        "data_description": {
+          "city": "Ihre Stadt oder Gemeinde.",
+          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "number": "Ihre Hausnummer.",
+          "street": "Ihr Straßenname."
+        }
+      },
       "args_tamax_lelow_pl": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -23359,43 +23396,6 @@
         "data_description": {
           "city": "Ihre Stadt oder Gemeinde.",
           "house_number": "Ihre Hausnummer.",
-          "street": "Ihr Straßenname."
-        }
-      },
-      "args_kiedyodpady_pl": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "city": "Stadt",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Gemeinde",
-          "number": "Hausnummer",
-          "street": "Straße"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "city": "Ihre Stadt oder Gemeinde.",
-          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
-          "number": "Ihre Hausnummer.",
-          "street": "Ihr Straßenname."
-        }
-      },
-      "reconfigure_kiedyodpady_pl": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "city": "Stadt",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Gemeinde",
-          "number": "Hausnummer",
-          "street": "Straße"
-        },
-        "data_description": {
-          "city": "Ihre Stadt oder Gemeinde.",
-          "municipality": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
-          "number": "Ihre Hausnummer.",
           "street": "Ihr Straßenname."
         }
       },

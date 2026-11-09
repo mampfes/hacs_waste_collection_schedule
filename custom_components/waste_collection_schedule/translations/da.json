@@ -22894,6 +22894,43 @@
         },
         "data_description": {}
       },
+      "args_kiedyodpady_pl": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "By",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Kommune",
+          "number": "Husnummer",
+          "street": "Gade"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "city": "Din by",
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "number": "Dit husnummer",
+          "street": "Dit gadenavn"
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "city": "By",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Kommune",
+          "number": "Husnummer",
+          "street": "Gade"
+        },
+        "data_description": {
+          "city": "Din by",
+          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "number": "Dit husnummer",
+          "street": "Dit gadenavn"
+        }
+      },
       "args_tamax_lelow_pl": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -23359,43 +23396,6 @@
         "data_description": {
           "city": "Din by",
           "house_number": "Dit husnummer",
-          "street": "Dit gadenavn"
-        }
-      },
-      "args_kiedyodpady_pl": {
-        "title": "Konfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "city": "By",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Kommune",
-          "number": "Husnummer",
-          "street": "Gade"
-        },
-        "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "city": "Din by",
-          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
-          "number": "Dit husnummer",
-          "street": "Dit gadenavn"
-        }
-      },
-      "reconfigure_kiedyodpady_pl": {
-        "title": "Omkonfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "city": "By",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Kommune",
-          "number": "Husnummer",
-          "street": "Gade"
-        },
-        "data_description": {
-          "city": "Din by",
-          "municipality": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
-          "number": "Dit husnummer",
           "street": "Dit gadenavn"
         }
       },

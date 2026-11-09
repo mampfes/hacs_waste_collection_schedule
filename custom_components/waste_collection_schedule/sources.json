@@ -33207,6 +33207,14 @@
       "id": "tamax_ksiaz_wielki_pl"
     },
     {
+      "title": "Gmina K\u00f3rnik",
+      "module": "kiedyodpady_pl",
+      "default_params": {
+        "municipality": "kornik"
+      },
+      "id": "kiedyodpady_pl"
+    },
+    {
       "title": "Gmina Legnickie Pole",
       "module": "sims_pl",
       "default_params": {

@@ -22940,6 +22940,43 @@
         },
         "data_description": {}
       },
+      "args_kiedyodpady_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Municipality",
+          "number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Your city or town.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "number": "Your house number.",
+          "street": "Your street name."
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "City",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Municipality",
+          "number": "House Number",
+          "street": "Street"
+        },
+        "data_description": {
+          "city": "Your city or town.",
+          "municipality": "The name of your municipality, as shown on the provider's website.",
+          "number": "Your house number.",
+          "street": "Your street name."
+        }
+      },
       "args_tamax_lelow_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -23405,43 +23442,6 @@
         "data_description": {
           "city": "Your city or town.",
           "house_number": "Your house number.",
-          "street": "Your street name."
-        }
-      },
-      "args_kiedyodpady_pl": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "city": "City",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Municipality",
-          "number": "House Number",
-          "street": "Street"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "Your city or town.",
-          "municipality": "The name of your municipality, as shown on the provider's website.",
-          "number": "Your house number.",
-          "street": "Your street name."
-        }
-      },
-      "reconfigure_kiedyodpady_pl": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "city": "City",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Municipality",
-          "number": "House Number",
-          "street": "Street"
-        },
-        "data_description": {
-          "city": "Your city or town.",
-          "municipality": "The name of your municipality, as shown on the provider's website.",
-          "number": "Your house number.",
           "street": "Your street name."
         }
       },

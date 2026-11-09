@@ -4542,6 +4542,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gmina Kruszwica](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Krzanowice](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Książ Wielki](/doc/source/tamax_ksiaz_wielki_pl.md) / tamax.net.pl
+- [Gmina Kórnik](/doc/source/kiedyodpady_pl.md) / kornik.kiedyodpady.pl
 - [Gmina Legnickie Pole](/doc/source/sims_pl.md) / sisms.pl
 - [Gmina Lelów](/doc/source/tamax_lelow_pl.md) / tamax.net.pl
 - [Gmina Lubrza](/doc/source/sims_pl.md) / sisms.pl

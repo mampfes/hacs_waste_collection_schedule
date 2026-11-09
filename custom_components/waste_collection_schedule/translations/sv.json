@@ -22894,6 +22894,43 @@
         },
         "data_description": {}
       },
+      "args_kiedyodpady_pl": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "city": "Ort",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Kommun",
+          "number": "Husnummer",
+          "street": "Gata"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "city": "Din stad eller ort.",
+          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats.",
+          "number": "Ditt husnummer.",
+          "street": "Ditt gatunamn."
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "city": "Ort",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Kommun",
+          "number": "Husnummer",
+          "street": "Gata"
+        },
+        "data_description": {
+          "city": "Din stad eller ort.",
+          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats.",
+          "number": "Ditt husnummer.",
+          "street": "Ditt gatunamn."
+        }
+      },
       "args_tamax_lelow_pl": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -23359,43 +23396,6 @@
         "data_description": {
           "city": "Din stad eller ort.",
           "house_number": "Ditt husnummer.",
-          "street": "Ditt gatunamn."
-        }
-      },
-      "args_kiedyodpady_pl": {
-        "title": "Konfigurera källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "city": "Ort",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Kommun",
-          "number": "Husnummer",
-          "street": "Gata"
-        },
-        "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
-          "city": "Din stad eller ort.",
-          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats.",
-          "number": "Ditt husnummer.",
-          "street": "Ditt gatunamn."
-        }
-      },
-      "reconfigure_kiedyodpady_pl": {
-        "title": "Konfigurera om källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "city": "Ort",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Kommun",
-          "number": "Husnummer",
-          "street": "Gata"
-        },
-        "data_description": {
-          "city": "Din stad eller ort.",
-          "municipality": "Namnet på din kommun, som det visas på leverantörens webbplats.",
-          "number": "Ditt husnummer.",
           "street": "Ditt gatunamn."
         }
       },

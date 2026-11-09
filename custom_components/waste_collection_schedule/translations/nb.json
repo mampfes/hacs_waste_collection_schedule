@@ -22894,6 +22894,43 @@
         },
         "data_description": {}
       },
+      "args_kiedyodpady_pl": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "city": "Sted",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Kommune",
+          "number": "Husnummer",
+          "street": "Gate"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "city": "Byen eller tettstedet ditt.",
+          "municipality": "Navnet på kommunen din, slik det står på leverandørens nettside.",
+          "number": "Husnummeret ditt.",
+          "street": "Gatenavnet ditt."
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "city": "Sted",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Kommune",
+          "number": "Husnummer",
+          "street": "Gate"
+        },
+        "data_description": {
+          "city": "Byen eller tettstedet ditt.",
+          "municipality": "Navnet på kommunen din, slik det står på leverandørens nettside.",
+          "number": "Husnummeret ditt.",
+          "street": "Gatenavnet ditt."
+        }
+      },
       "args_tamax_lelow_pl": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -23359,43 +23396,6 @@
         "data_description": {
           "city": "Byen eller tettstedet ditt.",
           "house_number": "Husnummeret ditt.",
-          "street": "Gatenavnet ditt."
-        }
-      },
-      "args_kiedyodpady_pl": {
-        "title": "Konfigurer kilde",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "city": "Sted",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Kommune",
-          "number": "Husnummer",
-          "street": "Gate"
-        },
-        "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
-          "city": "Byen eller tettstedet ditt.",
-          "municipality": "Navnet på kommunen din, slik det står på leverandørens nettside.",
-          "number": "Husnummeret ditt.",
-          "street": "Gatenavnet ditt."
-        }
-      },
-      "reconfigure_kiedyodpady_pl": {
-        "title": "Konfigurer kilde på nytt",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "city": "Sted",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Kommune",
-          "number": "Husnummer",
-          "street": "Gate"
-        },
-        "data_description": {
-          "city": "Byen eller tettstedet ditt.",
-          "municipality": "Navnet på kommunen din, slik det står på leverandørens nettside.",
-          "number": "Husnummeret ditt.",
           "street": "Gatenavnet ditt."
         }
       },

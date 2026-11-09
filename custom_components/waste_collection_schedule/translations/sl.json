@@ -22892,6 +22892,43 @@
         },
         "data_description": {}
       },
+      "args_kiedyodpady_pl": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "Mesto",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Občina",
+          "number": "Hišna številka",
+          "street": "Ulica"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "city": "Vaše mesto ali kraj.",
+          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
+        }
+      },
+      "reconfigure_kiedyodpady_pl": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "city": "Mesto",
+          "lookahead_days": "Lookahead Days",
+          "municipality": "Občina",
+          "number": "Hišna številka",
+          "street": "Ulica"
+        },
+        "data_description": {
+          "city": "Vaše mesto ali kraj.",
+          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "number": "Vaša hišna številka.",
+          "street": "Ime vaše ulice."
+        }
+      },
       "args_tamax_lelow_pl": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -23357,43 +23394,6 @@
         "data_description": {
           "city": "Vaše mesto ali kraj.",
           "house_number": "Vaša hišna številka.",
-          "street": "Ime vaše ulice."
-        }
-      },
-      "args_kiedyodpady_pl": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "city": "Mesto",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Občina",
-          "number": "Hišna številka",
-          "street": "Ulica"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "city": "Vaše mesto ali kraj.",
-          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
-          "number": "Vaša hišna številka.",
-          "street": "Ime vaše ulice."
-        }
-      },
-      "reconfigure_kiedyodpady_pl": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "city": "Mesto",
-          "lookahead_days": "Lookahead Days",
-          "municipality": "Občina",
-          "number": "Hišna številka",
-          "street": "Ulica"
-        },
-        "data_description": {
-          "city": "Vaše mesto ali kraj.",
-          "municipality": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
-          "number": "Vaša hišna številka.",
           "street": "Ime vaše ulice."
         }
       },
