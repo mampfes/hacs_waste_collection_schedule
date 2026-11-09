@@ -48,8 +48,7 @@ class Source(BaseSource):
         wt.ORGANIC,
         wt.PLASTIC,
         wt.PAPER,
-        wt.GLASS,
-        wt.METAL,
+        wt.RECYCLABLES,
         wt.GENERAL_WASTE,
     ]
 
@@ -77,7 +76,7 @@ class Source(BaseSource):
             "Ritiro Organico": wt.ORGANIC,
             "Ritiro Plastica": wt.PLASTIC,
             "Ritiro Carta e Cartone": wt.PAPER,
-            "Ritiro Vetro e Lattine": [wt.GLASS, wt.METAL],
+            "Ritiro Vetro e Lattine": wt.RECYCLABLES,
             "Ritiro Indifferenziato": wt.GENERAL_WASTE,
         },
     )
