@@ -25,6 +25,12 @@ EXTRA_INFO = [
         "country": "pl",
         "default_params": {"municipality": "pabianice"},
     },
+    {
+        "title": "Gmina Kórnik",
+        "url": "https://kornik.kiedyodpady.pl",
+        "country": "pl",
+        "default_params": {"municipality": "kornik"},
+    },
 ]
 
 TEST_CASES = {
@@ -39,6 +45,10 @@ TEST_CASES = {
         "city": "Pabianice (miasto)",
         "street": 'ul. 15 Pułku Piechoty "Wilków"',
         "number": "pozostałe",
+    },
+    "Gmina Kórnik, Dachowa (wieś)": {
+        "municipality": "kornik",
+        "city": "Dachowa (wieś)",
     },
 }
 
