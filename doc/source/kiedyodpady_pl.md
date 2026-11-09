@@ -46,6 +46,7 @@ waste_collection_schedule:
 |---|---|
 | Wieliczka | https://wieliczka.kiedyodpady.pl |
 | Pabianice | https://pabianice.kiedyodpady.pl |
+| Gmina Kórnik | https://kornik.kiedyodpady.pl |
 
 Other municipalities using the kiedyodpady.pl platform should also work — use the subdomain as the `municipality` value.
 
