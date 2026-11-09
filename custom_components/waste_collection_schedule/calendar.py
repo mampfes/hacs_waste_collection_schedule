@@ -101,18 +101,21 @@ class WasteCollectionCalendar(CalendarEntity):
 
     @property
     def extra_state_attributes(self):
-        """Return customised icons/pictures per waste type for the dashboard cards."""
+        """Return customised icons/pictures/colors per waste type for the dashboard cards."""
         waste_types: dict[str, dict[str, str]] = {}
         for collection in self._get_upcoming():
-            if collection.type in waste_types:
-                continue
-            style = {
-                key: value
-                for key in ("icon", "picture")
-                if (value := getattr(collection, key))
-            }
-            if style:
-                waste_types[collection.type] = style
+            # Merge per key so a later customized icon/picture is not blocked by
+            # an earlier default-only color entry. Color uses the same effective
+            # precedence as sensors (customize > source > default via
+            # Collection.color). Sensor-level color overrides stay sensor-only.
+            entry = waste_types.setdefault(collection.type, {})
+            for key in ("icon", "picture", "color"):
+                if key in entry:
+                    continue
+                value = getattr(collection, key, None)
+                if value:
+                    entry[key] = value
+        waste_types = {name: style for name, style in waste_types.items() if style}
         return {"waste_types": waste_types} if waste_types else None
 
     async def async_get_events(

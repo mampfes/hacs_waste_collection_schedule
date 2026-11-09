@@ -6,8 +6,10 @@ import { styles } from "./styles";
 import {
   addDays,
   countdown,
+  cssColor,
   displayDate,
   entityName,
+  isLiveCalendar,
   locale,
   nextPickups,
   normalizeEvents,
@@ -77,7 +79,10 @@ async function discover(hass: Hass): Promise<string[]> {
         e.platform === "waste_collection_schedule" &&
         e.entity_id.startsWith("calendar.") &&
         !e.disabled_by &&
-        !e.hidden_by,
+        !e.hidden_by &&
+        // Skip orphaned registry leftovers (unavailable / restored) so stub
+        // configs never auto-pick calendars that cannot load collections.
+        isLiveCalendar(hass, e.entity_id),
     )
     .map((e) => e.entity_id);
 }
@@ -294,7 +299,7 @@ export class WasteCard extends LitElement {
     // The source's own customize icon/picture, published by the calendar entity.
     const source = (
       attrs?.waste_types as
-        | Record<string, { icon?: string; picture?: string }>
+        | Record<string, { icon?: string; picture?: string; color?: string }>
         | undefined
     )?.[p.type];
     const icon =
@@ -303,10 +308,8 @@ export class WasteCard extends LitElement {
       this.config.show_pictures !== false
         ? safePicture(style.picture) || safePicture(source?.picture)
         : undefined;
-    const color =
-      style.color && CSS.supports("color", style.color)
-        ? style.color
-        : undefined;
+    // Card type style wins; otherwise use the calendar's published waste_types color.
+    const color = cssColor(style.color) ?? cssColor(source?.color);
     const name = style.name || p.type;
     const showIcons = this.config.show_icons !== false;
     return html`<button

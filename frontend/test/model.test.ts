@@ -2,8 +2,10 @@ import { describe, it, expect } from "vitest";
 import {
   addDays,
   countdown,
+  cssColor,
   dayNumber,
   entityName,
+  isLiveCalendar,
   nextPickups,
   normalizeEvents,
   safePicture,
@@ -11,6 +13,7 @@ import {
   todayKey,
   validateConfig,
 } from "../src/model";
+import type { Hass } from "../src/types";
 import { text } from "../src/localize";
 const config = { type: "custom:waste-collection-next-card" };
 describe("civil dates across regions", () => {
@@ -136,7 +139,6 @@ describe("provider-neutral selection", () => {
   });
 });
 
-import type { Hass } from "../src/types";
 describe("HA entity naming", () => {
   it("uses the native formatter on2026.11 and friendly names on older frontends", () => {
     const hass = {
@@ -153,5 +155,52 @@ describe("HA entity naming", () => {
       "Moreton Bay Waste collection",
     );
     expect(entityName(hass, "calendar.missing")).toBe("calendar.missing");
+  });
+});
+
+describe("live calendar discovery filter", () => {
+  const hass = (states: Hass["states"]) => ({ states }) as Hass;
+  it("accepts calendars with a live non-unavailable state", () => {
+    expect(
+      isLiveCalendar(
+        hass({
+          "calendar.live": { state: "2026-11-10", attributes: {} },
+        }),
+        "calendar.live",
+      ),
+    ).toBe(true);
+  });
+  it("rejects missing, unavailable, unknown and restored entities", () => {
+    const h = hass({
+      "calendar.gone": { state: "unavailable", attributes: {} },
+      "calendar.unk": { state: "unknown", attributes: {} },
+      "calendar.rest": { state: "idle", attributes: { restored: true } },
+    });
+    expect(isLiveCalendar(h, "calendar.missing")).toBe(false);
+    expect(isLiveCalendar(h, "calendar.gone")).toBe(false);
+    expect(isLiveCalendar(h, "calendar.unk")).toBe(false);
+    expect(isLiveCalendar(h, "calendar.rest")).toBe(false);
+    expect(isLiveCalendar(undefined, "calendar.live")).toBe(false);
+  });
+});
+describe("cssColor", () => {
+  it("keeps supported colors and drops invalid ones", () => {
+    const previous = globalThis.CSS;
+    Object.defineProperty(globalThis, "CSS", {
+      configurable: true,
+      value: {
+        supports: (_prop: string, value: string) => value.startsWith("#"),
+      },
+    });
+    try {
+      expect(cssColor("#ffeb3b")).toBe("#ffeb3b");
+      expect(cssColor("not-a-color")).toBeUndefined();
+      expect(cssColor(undefined)).toBeUndefined();
+    } finally {
+      Object.defineProperty(globalThis, "CSS", {
+        configurable: true,
+        value: previous,
+      });
+    }
   });
 });

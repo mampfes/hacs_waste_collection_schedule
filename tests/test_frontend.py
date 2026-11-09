@@ -223,10 +223,20 @@ def test_calendar_publishes_customized_icons_for_the_cards():
     )
 
     collections = [
-        {"type": "Paper", "icon": None, "picture": None},
-        {"type": "Paper", "icon": "mdi:package-variant", "picture": None},
-        {"type": "Glass", "icon": None, "picture": "/local/glass.png"},
-        {"type": "General", "icon": None, "picture": None},
+        {"type": "Paper", "icon": None, "picture": None, "color": "#795548"},
+        {
+            "type": "Paper",
+            "icon": "mdi:package-variant",
+            "picture": None,
+            "color": "#795548",
+        },
+        {
+            "type": "Glass",
+            "icon": None,
+            "picture": "/local/glass.png",
+            "color": "#009688",
+        },
+        {"type": "General", "icon": None, "picture": None, "color": "#6B6B6B"},
     ]
     aggregator = SimpleNamespace(
         get_upcoming=lambda **kwargs: [
@@ -239,8 +249,9 @@ def test_calendar_publishes_customized_icons_for_the_cards():
     calendar = WasteCollectionCalendar(aggregator, "Waste", "uid")
     assert calendar.extra_state_attributes == {
         "waste_types": {
-            "Paper": {"icon": "mdi:package-variant"},
-            "Glass": {"picture": "/local/glass.png"},
+            "Paper": {"icon": "mdi:package-variant", "color": "#795548"},
+            "Glass": {"picture": "/local/glass.png", "color": "#009688"},
+            "General": {"color": "#6B6B6B"},
         }
     }
     assert "waste_types" in calendar._unrecorded_attributes
@@ -278,8 +289,37 @@ def test_release_collection_attributes_use_calendar_alias_filters():
     )
     assert calendar.extra_state_attributes == {
         "waste_types": {
-            paper.type: {"icon": "mdi:package-variant", "picture": "/local/paper.png"}
+            paper.type: {
+                "icon": "mdi:package-variant",
+                "picture": "/local/paper.png",
+                "color": paper.color,
+            }
         }
+    }
+
+
+def test_calendar_publishes_collection_color_with_customize_precedence():
+    from datetime import date
+
+    from custom_components.waste_collection_schedule.calendar import (
+        WasteCollectionCalendar,
+    )
+    from custom_components.waste_collection_schedule.waste_collection_schedule.collection import (
+        Collection,
+    )
+    from custom_components.waste_collection_schedule.waste_collection_schedule.waste_types import (
+        PAPER,
+    )
+
+    paper = Collection(date.today(), PAPER, color="#abcdef")
+    paper.set_color("#112233", source="customize")
+    calendar = WasteCollectionCalendar(
+        SimpleNamespace(get_upcoming=lambda **kwargs: [paper]),
+        "Waste",
+        "uid",
+    )
+    assert calendar.extra_state_attributes == {
+        "waste_types": {paper.type: {"icon": paper.icon, "color": "#112233"}}
     }
 
 
