@@ -184,6 +184,27 @@ export function countdown(
   );
 }
 
+/** True when the entity has a live HA state suitable for stub/editor suggestions. */
+export function isLiveCalendar(
+  hass: Hass | undefined,
+  entityId: string,
+): boolean {
+  const state = hass?.states?.[entityId];
+  if (!state) return false;
+  if (state.state === "unavailable" || state.state === "unknown") return false;
+  // Registry leftovers after a removed entry keep attributes.restored until purged.
+  if (state.attributes?.restored) return false;
+  return true;
+}
+/** Accept only CSS-supported color strings for inline styles. */
+export function cssColor(value?: string): string | undefined {
+  return value &&
+    typeof CSS !== "undefined" &&
+    typeof CSS.supports === "function" &&
+    CSS.supports("color", value)
+    ? value
+    : undefined;
+}
 /** Prefer HA's device/entity naming policy; older frontends use friendly_name. */
 export function entityName(hass: Hass | undefined, entity: string): string {
   const state = hass?.states[entity];

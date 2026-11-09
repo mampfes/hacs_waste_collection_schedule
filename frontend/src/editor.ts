@@ -25,7 +25,10 @@ export class WasteCardEditor extends LitElement {
         selector: {
           entity: {
             multiple: true,
-            filter: { domain: "calendar" },
+            filter: {
+              domain: "calendar",
+              integration: "waste_collection_schedule",
+            },
             reorder: true,
           },
         },
