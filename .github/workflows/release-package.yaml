@@ -1,0 +1,65 @@
+---
+name: Package integration release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-package-${{ github.event.release.id }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Build exact release commit
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_SHA: ${{ github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
+          python tools/build_release_package.py --revision "$RELEASE_SHA" --tag "$RELEASE_TAG" --output "$RUNNER_TEMP/waste_collection_schedule.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: integration-release
+          path: ${{ runner.temp }}/waste_collection_schedule.zip
+          if-no-files-found: error
+
+  upload:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: integration-release
+          path: ${{ runner.temp }}
+      - name: Upload asset without replacing existing content
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_SHA: ${{ github.sha }}
+        run: |
+          test "$(gh api "repos/$GH_REPO/commits/$RELEASE_TAG" --jq .sha)" = "$RELEASE_SHA"
+          asset=waste_collection_schedule.zip
+          existing=$(gh release view "$RELEASE_TAG" --json assets --jq '.assets[] | select(.name == "waste_collection_schedule.zip") | .name')
+          if [ -n "$existing" ]; then
+            mkdir -p "$RUNNER_TEMP/existing"
+            gh release download "$RELEASE_TAG" --pattern "$asset" --dir "$RUNNER_TEMP/existing"
+            cmp "$RUNNER_TEMP/$asset" "$RUNNER_TEMP/existing/$asset"
+          else
+            gh release upload "$RELEASE_TAG" "$RUNNER_TEMP/$asset"
+          fi
