@@ -52,6 +52,7 @@
           "icon": "Icône",
           "picture": "Image",
           "use_dedicated_calendar": "Utiliser un calendrier dédié",
+          "day_offset": "Décalage en jours (ce type uniquement)",
           "dedicated_calendar_title": "Titre du calendrier dédié",
           "color": "Couleur (#RRGGBB ; vide = valeur par défaut)"
         },
@@ -61,6 +62,7 @@
           "icon": "L'icône du type de collecte. (seulement si vous souhaitez la modifier)",
           "picture": "Le chemin d'une image pour le type de collecte.",
           "use_dedicated_calendar": "Cochez si ce type de collecte doit avoir une entité de calendrier dédiée.",
+          "day_offset": "Décale les dates de ce type de collecte de ce nombre de jours (peut être négatif, p. ex. -1 = un jour plus tôt). Remplace le décalage en jours de la source pour ce type. Laisser vide pour utiliser le décalage de la source.",
           "dedicated_calendar_title": "Le titre de l'entité de calendrier dédiée."
         }
       },

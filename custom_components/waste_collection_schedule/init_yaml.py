@@ -36,6 +36,9 @@ CUSTOMIZE_CONFIG = vol.Schema(
         vol.Optional(const.CONF_COLOR): validate_color,
         vol.Optional(const.CONF_USE_DEDICATED_CALENDAR): cv.boolean,
         vol.Optional(const.CONF_DEDICATED_CALENDAR_TITLE): cv.string,
+        # Per-type day offset; replaces the source-level day_offset for this
+        # type. Omitted means "use the source's day_offset".
+        vol.Optional(const.CONF_DAY_OFFSET): int,
     }
 )
 
@@ -155,6 +158,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
                 dedicated_calendar_title=c.get(
                     const.CONF_DEDICATED_CALENDAR_TITLE, False
                 ),
+                day_offset=c.get(const.CONF_DAY_OFFSET),
             )
 
         await hass.async_add_executor_job(

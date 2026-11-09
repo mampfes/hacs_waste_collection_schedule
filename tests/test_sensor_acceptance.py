@@ -408,6 +408,147 @@ async def test_customization_form_serializes_and_validates_color(
 
 
 @pytest.mark.asyncio
+@pytest.mark.parametrize("surface", ["setup", "options"])
+async def test_customization_form_stores_per_type_day_offset(
+    running_entry, ha, surface
+):
+    """#7968: the per-type day_offset is optional (empty = unset), accepts
+    negative values and is stored with the type's other customisation."""
+    from homeassistant.helpers.data_entry_flow import FlowManagerIndexView
+
+    from custom_components.waste_collection_schedule.config_flow import (
+        WasteCollectionConfigFlow,
+    )
+
+    entry, _ = running_entry
+
+    def start():
+        if surface == "options":
+            flow = SensorOptionsFlow(entry)
+        else:
+            flow = WasteCollectionConfigFlow()
+            flow._customize_types = ["paper"]
+            flow._options = {}
+            flow._args_data = {"name": "ecoharmonogram_pl", "args": {}}
+            flow._title = "Acceptance"
+        flow.hass = ha
+        return flow
+
+    flow = start()
+    if surface == "options":
+        await flow.async_step_waste_types({"types": ["paper"]})
+    form = await flow.async_step_customize()
+    serialized = FlowManagerIndexView(None)._prepare_result_json(form)
+    field = next(x for x in serialized["data_schema"] if x["name"] == "day_offset")
+    assert field["optional"] is True
+    assert "default" not in field
+    # Left empty: nothing is stored, so the source-level offset applies.
+    saved = await flow.async_step_customize(form["data_schema"]({"show": True}))
+    options = saved["data"] if surface == "options" else saved["options"]
+    assert "day_offset" not in options["customize"]["paper"]
+
+    flow = start()
+    if surface == "options":
+        await flow.async_step_waste_types({"types": ["paper"]})
+    form = await flow.async_step_customize()
+    saved = await flow.async_step_customize(form["data_schema"]({"day_offset": -1}))
+    options = saved["data"] if surface == "options" else saved["options"]
+    assert options["customize"]["paper"]["day_offset"] == -1
+
+
+@pytest.mark.asyncio
+async def test_options_flow_reads_back_and_clears_per_type_day_offset(
+    running_entry, ha
+):
+    entry, _ = running_entry
+    ha.config_entries.async_update_entry(
+        entry,
+        options={
+            **entry.options,
+            "customize": {"paper": {"alias": "Blue bin", "day_offset": -1}},
+        },
+    )
+    await ha.async_block_till_done()
+    flow = SensorOptionsFlow(entry)
+    flow.hass = ha
+    await flow.async_step_waste_types({"types": ["paper"]})
+    form = await flow.async_step_customize()
+    marker = next(k for k in form["data_schema"].schema if str(k) == "day_offset")
+    assert marker.description["suggested_value"] == -1
+    # Submitting the form with the field cleared removes the stored value.
+    saved = await flow.async_step_customize(
+        form["data_schema"]({"alias": "Blue bin", "show": True})
+    )
+    stored = saved["data"]["customize"]["paper"]
+    assert stored["alias"] == "Blue bin"
+    assert "day_offset" not in stored
+
+
+@pytest.mark.asyncio
+async def test_ui_setup_passes_per_type_day_offset_to_customize(ha):
+    from unittest.mock import patch
+
+    from sensor_fixtures import FixtureSource, entry_for
+
+    shell = SourceShell(
+        source=FixtureSource(),
+        customize={},
+        title="Synthetic provider",
+        description="Offline fixture",
+        url=None,
+        calendar_title=None,
+        unique_id="fixture",
+        day_offset=0,
+    )
+    entry = entry_for(
+        ha,
+        {
+            "sensors": [],
+            "day_offset": 2,
+            "customize": {"paper": {"day_offset": -1}, "glass": {"alias": "G"}},
+        },
+    )
+    with patch(
+        "custom_components.waste_collection_schedule.init_ui.SourceShell.create",
+        return_value=shell,
+    ) as create:
+        assert await ha.config_entries.async_setup(entry.entry_id)
+        await ha.async_block_till_done()
+    try:
+        customize = create.call_args.args[1]
+        assert customize["paper"].day_offset == -1
+        assert customize["glass"].day_offset is None
+        assert create.call_args.args[4] == 2  # source-level offset unchanged
+    finally:
+        await ha.config_entries.async_unload(entry.entry_id)
+        await ha.async_block_till_done()
+
+
+def test_yaml_customize_schema_accepts_per_type_day_offset():
+    import voluptuous as vol
+
+    from custom_components.waste_collection_schedule.init_yaml import (
+        CUSTOMIZE_CONFIG,
+        SOURCE_CONFIG,
+    )
+
+    assert CUSTOMIZE_CONFIG({"type": "Restmüll", "day_offset": -1})["day_offset"] == -1
+    assert "day_offset" not in CUSTOMIZE_CONFIG({"type": "Restmüll"})
+    with pytest.raises(vol.Invalid):
+        CUSTOMIZE_CONFIG({"type": "Restmüll", "day_offset": "tomorrow"})
+    source = SOURCE_CONFIG(
+        {
+            "name": "ics",
+            "args": {},
+            "day_offset": 1,
+            "customize": [{"type": "Restmüll", "day_offset": -1}],
+        }
+    )
+    assert source["day_offset"] == 1
+    assert source["customize"][0]["day_offset"] == -1
+
+
+@pytest.mark.asyncio
 async def test_legacy_sensor_repair_remains_fixable_after_version4_reload(
     running_entry, ha
 ):

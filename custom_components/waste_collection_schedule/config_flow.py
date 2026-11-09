@@ -49,6 +49,7 @@ from .const import (
     CONF_ALIAS,
     CONF_COUNTRY_NAME,
     CONF_CUSTOMIZE,
+    CONF_DAY_OFFSET,
     CONF_DEDICATED_CALENDAR_TITLE,
     CONF_ICON,
     CONF_PICTURE,
@@ -369,6 +370,9 @@ def get_customize_schema(defaults: dict[str, Any] | None = None):
             CONF_DEDICATED_CALENDAR_TITLE,
             description=suggested(CONF_DEDICATED_CALENDAR_TITLE),
         ): str,
+        # Empty = not set: the source-level day_offset applies. A value
+        # (including 0) replaces it for this collection type.
+        vol.Optional(CONF_DAY_OFFSET, description=suggested(CONF_DAY_OFFSET)): int,
     }
     return schema
 

@@ -52,6 +52,7 @@
           "icon": "Icon",
           "picture": "Bild",
           "use_dedicated_calendar": "Eigenen Kalender verwenden",
+          "day_offset": "Tagesoffset (nur dieser Typ)",
           "dedicated_calendar_title": "Titel des eigenen Kalenders",
           "color": "Farbe (#RRGGBB; leer = Standard)"
         },
@@ -61,6 +62,7 @@
           "icon": "Das Icon des Mülltyps. (nur ausfüllen wenn du es ändern möchtest)",
           "picture": "Der Pfad zu einem Bild für den Mülltyp.",
           "use_dedicated_calendar_title": "Anhaken wenn dieser Mülltyp einen eigenen Kalender haben soll.",
+          "day_offset": "Verschiebt die Termine dieses Abfalltyps um so viele Tage (kann negativ sein, z.B. -1 = einen Tag früher). Ersetzt für diesen Typ den Tagesoffset der Quelle. Leer lassen, um den Tagesoffset der Quelle zu verwenden.",
           "dedicated_calendar_title": "Der Titel der eigenen Kalender Entität."
         }
       },
@@ -36348,6 +36350,7 @@
           "icon": "Icon",
           "picture": "Bild",
           "use_dedicated_calendar": "Eigenen Kalender verwenden",
+          "day_offset": "Tagesoffset (nur dieser Typ)",
           "dedicated_calendar_title": "Titel des eigenen Kalenders",
           "color": "Farbe (#RRGGBB; leer = Standard)"
         },
@@ -36358,6 +36361,7 @@
           "icon": "Das Icon des Mülltyps. (nur ausfüllen wenn du es ändern möchtest)",
           "picture": "Der Pfad zu einem Bild für den Mülltyp.",
           "use_dedicated_calendar": "Anhaken wenn dieser Mülltyp einen eigenen Kalender haben soll.",
+          "day_offset": "Verschiebt die Termine dieses Abfalltyps um so viele Tage (kann negativ sein, z.B. -1 = einen Tag früher). Ersetzt für diesen Typ den Tagesoffset der Quelle. Leer lassen, um den Tagesoffset der Quelle zu verwenden.",
           "dedicated_calendar_title": "Der Titel der eigenen Kalender Entität."
         }
       },

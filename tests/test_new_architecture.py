@@ -5985,6 +5985,213 @@ class TestSourceShellCustomize:
         apply_day_offset(c, -2)
         assert c.date == datetime.date(2026, 1, 8)
 
+    # --- Per-type day_offset in customize (#7968) ---------------------------
+
+    @staticmethod
+    def _per_type_shell(customize, day_offset=0, entries=None, **kwargs):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.source_shell import SourceShell
+        from waste_collection_schedule.waste_types import GENERAL_WASTE, RECYCLABLES
+
+        if entries is None:
+            entries = [
+                (datetime.date(2026, 1, 6), GENERAL_WASTE),
+                (datetime.date(2026, 1, 8), RECYCLABLES),
+            ]
+
+        class _FakeSource:
+            def fetch(self):
+                return [Collection(date=d, waste_type=t) for d, t in entries]
+
+        shell = SourceShell(
+            source=_FakeSource(),
+            customize=customize,
+            title="Test",
+            description="",
+            url=None,
+            calendar_title=None,
+            unique_id="test",
+            day_offset=day_offset,
+            **kwargs,
+        )
+        assert shell.fetch()
+        return shell
+
+    @staticmethod
+    def _dates_by_type(entries):
+        return {e.waste_type.id: e.date for e in entries}
+
+    def test_customize_day_offset_property_defaults_to_none(self):
+        from waste_collection_schedule.source_shell import Customize
+
+        assert Customize("general_waste").day_offset is None
+        assert Customize("general_waste", day_offset=-1).day_offset == -1
+        assert "day_offset=-1" in repr(Customize("general_waste", day_offset=-1))
+
+    def test_per_type_day_offset_shifts_only_matched_type(self):
+        from waste_collection_schedule.source_shell import Customize
+
+        shell = self._per_type_shell(
+            {"general_waste": Customize("general_waste", day_offset=-1)}
+        )
+        expected = {
+            "general_waste": datetime.date(2026, 1, 5),
+            "recyclables": datetime.date(2026, 1, 8),
+        }
+        # Calendar entries and the pre-merge sensor entries both see the shift.
+        assert self._dates_by_type(shell._entries) == expected
+        assert self._dates_by_type(shell._sensor_entries) == expected
+
+    def test_per_type_day_offset_replaces_global_offset(self):
+        """A per-type value replaces the source-level offset, it is not added."""
+        from waste_collection_schedule.source_shell import Customize
+
+        shell = self._per_type_shell(
+            {"general_waste": Customize("general_waste", day_offset=-1)},
+            day_offset=2,
+        )
+        assert self._dates_by_type(shell._entries) == {
+            "general_waste": datetime.date(2026, 1, 5),  # -1, not 2 + (-1)
+            "recyclables": datetime.date(2026, 1, 10),  # global +2
+        }
+
+    def test_per_type_day_offset_zero_overrides_global(self):
+        """An explicit 0 keeps that type on its original date."""
+        from waste_collection_schedule.source_shell import Customize
+
+        shell = self._per_type_shell(
+            {"general_waste": Customize("general_waste", day_offset=0)},
+            day_offset=2,
+        )
+        assert self._dates_by_type(shell._entries) == {
+            "general_waste": datetime.date(2026, 1, 6),
+            "recyclables": datetime.date(2026, 1, 10),
+        }
+
+    def test_per_type_day_offset_applies_with_global_zero(self):
+        from waste_collection_schedule.source_shell import Customize
+
+        shell = self._per_type_shell(
+            {"recyclables": Customize("recyclables", day_offset=3)}, day_offset=0
+        )
+        assert self._dates_by_type(shell._entries) == {
+            "general_waste": datetime.date(2026, 1, 6),
+            "recyclables": datetime.date(2026, 1, 11),
+        }
+
+    def test_per_type_day_offset_none_falls_back_to_global(self):
+        """A customize entry without day_offset (e.g. alias only) keeps the
+        source-level offset for that type."""
+        from waste_collection_schedule.source_shell import Customize
+
+        shell = self._per_type_shell(
+            {"general_waste": Customize("general_waste", alias="Bin")},
+            day_offset=1,
+        )
+        assert self._dates_by_type(shell._entries) == {
+            "general_waste": datetime.date(2026, 1, 7),
+            "recyclables": datetime.date(2026, 1, 9),
+        }
+        assert shell._entries[0].type == "Bin"
+
+    def test_per_type_day_offset_matched_by_display_name_and_alias_kept(self):
+        """Matching uses the same keys as customize (display name for
+        UI-stored customisation), resolved before the alias renames it."""
+        from waste_collection_schedule.source_shell import Customize
+
+        shell = self._per_type_shell(
+            {"General Waste": Customize("General Waste", alias="Rest", day_offset=-1)}
+        )
+        by_type = {e.type: e.date for e in shell._entries}
+        assert by_type == {
+            "Rest": datetime.date(2026, 1, 5),
+            "Recycling": datetime.date(2026, 1, 8),
+        }
+
+    def test_per_type_day_offset_glob_key(self):
+        from waste_collection_schedule.source_shell import Customize
+
+        shell = self._per_type_shell({"Gen*": Customize("Gen*", day_offset=-2)})
+        assert self._dates_by_type(shell._entries) == {
+            "general_waste": datetime.date(2026, 1, 4),
+            "recyclables": datetime.date(2026, 1, 8),
+        }
+
+    def test_per_type_day_offset_legacy_source(self):
+        from waste_collection_schedule.collection import LegacyCollection
+        from waste_collection_schedule.source_shell import Customize, SourceShell
+
+        class _FakeLegacySource:
+            def fetch(self):
+                return [
+                    LegacyCollection(date=datetime.date(2026, 1, 6), t="Restmüll"),
+                    LegacyCollection(date=datetime.date(2026, 1, 8), t="Gelber Sack"),
+                ]
+
+        shell = SourceShell(
+            source=_FakeLegacySource(),
+            customize={"Restmüll": Customize("Restmüll", day_offset=-1)},
+            title="Test",
+            description="",
+            url=None,
+            calendar_title=None,
+            unique_id="test",
+            day_offset=0,
+        )
+        shell.fetch()
+        assert {e.type: e.date for e in shell._entries} == {
+            "Restmüll": datetime.date(2026, 1, 5),
+            "Gelber Sack": datetime.date(2026, 1, 8),
+        }
+
+    def _colliding_shell(self, ignore_duplicates):
+        """Two provider variants of one canonical type; only the second is
+        shifted (via its raw label in description) onto the first's day."""
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.source_shell import Customize, SourceShell
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        class _FakeSource:
+            def fetch(self):
+                a = Collection(date=datetime.date(2026, 1, 6), waste_type=GENERAL_WASTE)
+                a.set_description("Restmülltonne")
+                b = Collection(date=datetime.date(2026, 1, 7), waste_type=GENERAL_WASTE)
+                b.set_description("Spartonne")
+                return [a, b]
+
+        shell = SourceShell(
+            source=_FakeSource(),
+            customize={"Spartonne": Customize("Spartonne", day_offset=-1)},
+            title="Test",
+            description="",
+            url=None,
+            calendar_title=None,
+            unique_id="test",
+            day_offset=0,
+            ignore_duplicates=ignore_duplicates,
+        )
+        shell.fetch()
+        return shell
+
+    def test_per_type_day_offset_collision_merged_with_ignore_duplicates(self):
+        shell = self._colliding_shell(ignore_duplicates=True)
+        # Calendar: one merged event, the shifted variant's label folded in.
+        assert len(shell._entries) == 1
+        assert shell._entries[0].date == datetime.date(2026, 1, 6)
+        assert shell._entries[0].description == "Restmülltonne, Spartonne"
+        # Sensors still see both distinct bins on the shifted date.
+        assert [e.date for e in shell._sensor_entries] == [
+            datetime.date(2026, 1, 6),
+            datetime.date(2026, 1, 6),
+        ]
+
+    def test_per_type_day_offset_collision_kept_without_ignore_duplicates(self):
+        shell = self._colliding_shell(ignore_duplicates=False)
+        assert [(e.date, e.description) for e in shell._entries] == [
+            (datetime.date(2026, 1, 6), "Restmülltonne"),
+            (datetime.date(2026, 1, 6), "Spartonne"),
+        ]
+
     # --- Regression tests for #6942 -----------------------------------------
     # SourceShell.fetch() used to call Collection.set_type() unconditionally on
     # every fetched entry (to strip incidental whitespace), which set

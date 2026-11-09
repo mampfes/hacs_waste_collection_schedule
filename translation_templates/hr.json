@@ -52,6 +52,7 @@
           "icon": "Ikona",
           "picture": "Slika",
           "use_dedicated_calendar": "Upotrijebiti zaseban kalendar",
+          "day_offset": "Pomak u danima (samo ova vrsta)",
           "dedicated_calendar_title": "Naziv zasebnog kalendara",
           "color": "Boja (#RRGGBB; zadana ako je prazno)"
         },
@@ -61,6 +62,7 @@
           "icon": "Ikona vrste odvoza (samo ako je želite promijeniti).",
           "picture": "Putanja do slike za tu vrstu odvoza.",
           "use_dedicated_calendar": "Označite ako ova vrsta odvoza treba imati vlastiti entitet kalendara.",
+          "day_offset": "Pomakne datume ove vrste odvoza za navedeni broj dana (može biti negativan, npr. -1 = jedan dan ranije). Za ovu vrstu zamjenjuje pomak u danima izvora. Ostavite prazno kako biste koristili pomak u danima izvora.",
           "dedicated_calendar_title": "Naziv entiteta zasebnog kalendara."
         }
       },
@@ -139,6 +141,7 @@
           "icon": "Ikona",
           "picture": "Slika",
           "use_dedicated_calendar": "Upotrijebiti zaseban kalendar",
+          "day_offset": "Pomak u danima (samo ova vrsta)",
           "dedicated_calendar_title": "Naziv zasebnog kalendara",
           "color": "Boja (#RRGGBB; zadana ako je prazno)"
         },
@@ -149,6 +152,7 @@
           "icon": "Ikona vrste odvoza (samo ako je želite promijeniti).",
           "picture": "Putanja do slike za tu vrstu odvoza.",
           "use_dedicated_calendar": "Označite ako ova vrsta odvoza treba imati vlastiti entitet kalendara.",
+          "day_offset": "Pomakne datume ove vrste odvoza za navedeni broj dana (može biti negativan, npr. -1 = jedan dan ranije). Za ovu vrstu zamjenjuje pomak u danima izvora. Ostavite prazno kako biste koristili pomak u danima izvora.",
           "dedicated_calendar_title": "Naziv entiteta zasebnog kalendara."
         }
       },

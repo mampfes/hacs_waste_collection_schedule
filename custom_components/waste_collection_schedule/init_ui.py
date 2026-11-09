@@ -79,6 +79,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             color=c.get(const.CONF_COLOR),
             use_dedicated_calendar=c.get(const.CONF_USE_DEDICATED_CALENDAR, False),
             dedicated_calendar_title=c.get(const.CONF_DEDICATED_CALENDAR_TITLE, False),
+            day_offset=c.get(const.CONF_DAY_OFFSET),
         )
 
     previous = hass.data.get(const.DOMAIN, {}).get(entry.entry_id)

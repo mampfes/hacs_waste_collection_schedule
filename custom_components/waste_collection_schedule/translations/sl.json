@@ -50,6 +50,7 @@
           "icon": "Icon",
           "picture": "Picture",
           "use_dedicated_calendar": "Use dedicated calendar",
+          "day_offset": "Zamik dni (samo ta vrsta)",
           "dedicated_calendar_title": "Dedicated calendar title",
           "color": "Barva (#RRGGBB; prazno = privzeto)"
         },
@@ -59,6 +60,7 @@
           "icon": "The icon of the collection type. (only if you want to change it)",
           "picture": "The path to a picture for the collection type.",
           "use_dedicated_calendar": "Check if this collection type should have its own calendar entity.",
+          "day_offset": "Premakne datume te vrste odpadkov za toliko dni (lahko je negativno, npr. -1 = en dan prej). Za to vrsto nadomesti zamik dni vira. Pustite prazno, da se uporabi zamik dni vira.",
           "dedicated_calendar_title": "The title of the dedicated calendar entity."
         }
       },
@@ -36346,6 +36348,7 @@
           "icon": "Icon",
           "picture": "Picture",
           "use_dedicated_calendar": "Use dedicated calendar",
+          "day_offset": "Zamik dni (samo ta vrsta)",
           "dedicated_calendar_title": "Dedicated calendar title",
           "color": "Barva (#RRGGBB; prazno = privzeto)"
         },
@@ -36356,6 +36359,7 @@
           "icon": "The icon of the collection type. (only if you want to change it)",
           "picture": "The path to a picture for the collection type.",
           "use_dedicated_calendar": "Check if this collection type should have its own calendar entity.",
+          "day_offset": "Premakne datume te vrste odpadkov za toliko dni (lahko je negativno, npr. -1 = en dan prej). Za to vrsto nadomesti zamik dni vira. Pustite prazno, da se uporabi zamik dni vira.",
           "dedicated_calendar_title": "The title of the dedicated calendar entity."
         }
       },

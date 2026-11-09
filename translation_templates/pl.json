@@ -52,6 +52,7 @@
           "icon": "Ikona",
           "picture": "Obraz",
           "use_dedicated_calendar": "Użyj osobnego kalendarza",
+          "day_offset": "Przesunięcie dnia (tylko ten rodzaj)",
           "dedicated_calendar_title": "Nazwa osobnego kalendarza",
           "color": "Kolor (#RRGGBB; pusty = domyślny)"
         },
@@ -61,6 +62,7 @@
           "icon": "Ikona rodzaju wywozu (tylko jeśli chcesz ją zmienić).",
           "picture": "Ścieżka do obrazu dla danego rodzaju wywozu.",
           "use_dedicated_calendar": "Zaznacz, jeśli ten rodzaj wywozu ma mieć własną encję kalendarza.",
+          "day_offset": "Przesuwa daty tego rodzaju wywozu o podaną liczbę dni (może być ujemne, np. -1 = o jeden dzień wcześniej). Zastępuje przesunięcie dnia źródła dla tego rodzaju. Pozostaw puste, aby użyć przesunięcia dnia źródła.",
           "dedicated_calendar_title": "Nazwa encji osobnego kalendarza."
         }
       },
@@ -139,6 +141,7 @@
           "icon": "Ikona",
           "picture": "Obraz",
           "use_dedicated_calendar": "Użyj osobnego kalendarza",
+          "day_offset": "Przesunięcie dnia (tylko ten rodzaj)",
           "dedicated_calendar_title": "Nazwa osobnego kalendarza",
           "color": "Kolor (#RRGGBB; pusty = domyślny)"
         },
@@ -149,6 +152,7 @@
           "icon": "Ikona rodzaju wywozu (tylko jeśli chcesz ją zmienić).",
           "picture": "Ścieżka do obrazu dla danego rodzaju wywozu.",
           "use_dedicated_calendar": "Zaznacz, jeśli ten rodzaj wywozu ma mieć własną encję kalendarza.",
+          "day_offset": "Przesuwa daty tego rodzaju wywozu o podaną liczbę dni (może być ujemne, np. -1 = o jeden dzień wcześniej). Zastępuje przesunięcie dnia źródła dla tego rodzaju. Pozostaw puste, aby użyć przesunięcia dnia źródła.",
           "dedicated_calendar_title": "Nazwa encji osobnego kalendarza."
         }
       },

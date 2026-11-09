@@ -113,6 +113,7 @@ waste_collection_schedule:
           picture: PICTURE
           use_dedicated_calendar: USE_DEDICATED_CALENDAR
           dedicated_calendar_title: DEDICATED_CALENDAR_TITLE
+          day_offset: TYPE_DAY_OFFSET
       day_offset: DAY_OFFSET
       calendar_title: CALENDAR_TITLE
   fetch_time: FETCH_TIME
@@ -167,6 +168,7 @@ waste_collection_schedule:
 | picture | string | optional | string representation of the path to a picture used to represent this specific waste type. Default is `None` |
 | use_dedicated_calendar | boolean | optional | Creates a calendar dedicated to this specific waste type. Default is `False` |
 | dedicated_calendar_title | string | optional | A more readable, or user-friendly, name for this specific waste calendar object. If nothing is provided, the name returned by the source will be used |
+| day_offset | int | optional | Offset in days for this waste type only (can be negative). When set, it **replaces** the source's `day_offset` for this type instead of adding to it, so `0` keeps this type on the provider's date even if the source has an offset. If omitted, the source's `day_offset` applies. Also available under Configure → Waste types. See [Day offset for a single waste type](#day-offset-for-a-single-waste-type) |
 
 ### Wildcard type matching
 
@@ -182,7 +184,26 @@ Matching rules:
 
 - An exact `type` match always takes precedence over a wildcard pattern, so you can override a single type while a pattern covers the rest.
 - Patterns are matched case-sensitively against the type returned by the source (after whitespace is stripped). A key counts as a pattern only if it contains `*`, `?`, or `[...]`.
-- Wildcards apply to `alias`, `show`, `icon`, `picture`, and `color`. They do **not** apply to `use_dedicated_calendar`: a dedicated calendar still requires an exact `type`, because one pattern can match several types.
+- Wildcards apply to `alias`, `show`, `icon`, `picture`, `color`, and `day_offset`. They do **not** apply to `use_dedicated_calendar`: a dedicated calendar still requires an exact `type`, because one pattern can match several types.
+
+### Day offset for a single waste type
+
+Sometimes one waste type is collected on a different day than the provider's schedule says, for example because your street is on a different general waste round than the rest of the municipality. Instead of adding the source twice, set `day_offset` on that type's `customize` entry. The example below moves general waste one day earlier and leaves all other types on the provider's dates:
+
+```yaml
+waste_collection_schedule:
+  sources:
+    - name: SOURCE
+      args:
+        arg1: ARG1
+      customize:
+        - type: Restmüll
+          day_offset: -1
+```
+
+- The per-type value replaces the source-level `day_offset` for that type; it is not added to it. With `day_offset: 2` on the source and `day_offset: -1` on `Restmüll`, general waste moves one day earlier and every other type two days later.
+- The shift is applied to sensors and calendars alike. A holiday shift the provider already applied is shifted again, so check the result around public holidays.
+- If a shifted collection lands on a day that already has the same collection type, the calendar merges the two when `ignore_duplicates` is enabled for the source.
 
 ## Configuring Sensor(s)
 

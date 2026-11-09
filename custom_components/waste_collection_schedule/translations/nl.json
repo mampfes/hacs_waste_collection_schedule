@@ -52,6 +52,7 @@
           "icon": "Icoon",
           "picture": "Afbeelding",
           "use_dedicated_calendar": "Eigen kalender gebruiken",
+          "day_offset": "Dagverschuiving (alleen dit type)",
           "dedicated_calendar_title": "Titel van eigen kalender",
           "color": "Kleur (#RRGGBB; leeg = standaard)"
         },
@@ -61,6 +62,7 @@
           "icon": "Het icoon van het ophaaltype. (alleen invullen als je deze wilt wijzigen)",
           "picture": "Het pad naar een afbeelding voor het ophaaltype.",
           "use_dedicated_calendar": "Vink aan als dit ophaaltype een eigen kalenderentity moet hebben.",
+          "day_offset": "Verschuift de datums van dit afvaltype met dit aantal dagen (kan negatief zijn, bijv. -1 = een dag eerder). Vervangt voor dit type de dagverschuiving van de bron. Laat leeg om de dagverschuiving van de bron te gebruiken.",
           "dedicated_calendar_title": "De titel van de eigen kalenderentity."
         }
       },
@@ -36348,6 +36350,7 @@
           "icon": "Icoon",
           "picture": "Afbeelding",
           "use_dedicated_calendar": "Eigen kalender gebruiken",
+          "day_offset": "Dagverschuiving (alleen dit type)",
           "dedicated_calendar_title": "Titel van eigen kalender",
           "color": "Kleur (#RRGGBB; leeg = standaard)"
         },
@@ -36358,6 +36361,7 @@
           "icon": "Het icoon van het ophaaltype. (alleen invullen als je deze wilt wijzigen)",
           "picture": "Het pad naar een afbeelding voor het ophaaltype.",
           "use_dedicated_calendar": "Vink aan als dit ophaaltype een eigen kalenderentity moet hebben.",
+          "day_offset": "Verschuift de datums van dit afvaltype met dit aantal dagen (kan negatief zijn, bijv. -1 = een dag eerder). Vervangt voor dit type de dagverschuiving van de bron. Laat leeg om de dagverschuiving van de bron te gebruiken.",
           "dedicated_calendar_title": "De titel van de eigen kalenderentity."
         }
       },

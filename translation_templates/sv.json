@@ -54,6 +54,7 @@
           "icon": "Ikon",
           "picture": "Bild",
           "use_dedicated_calendar": "Använd egen kalender",
+          "day_offset": "Dagsförskjutning (endast denna typ)",
           "dedicated_calendar_title": "Namn på egen kalender"
         },
         "data_description": {
@@ -62,6 +63,7 @@
           "icon": "Ikon för hämtningstypen (bara om du vill ändra den).",
           "picture": "Sökväg till en bild för hämtningstypen.",
           "use_dedicated_calendar": "Markera om hämtningstypen ska ha en egen kalenderentitet.",
+          "day_offset": "Flyttar datumen för denna avfallstyp med så många dagar (kan vara negativt, t.ex. -1 = en dag tidigare). Ersätter källans dagsförskjutning för denna typ. Lämna tomt för att använda källans dagsförskjutning.",
           "dedicated_calendar_title": "Namnet på den egna kalenderentiteten."
         }
       },
@@ -191,6 +193,7 @@
           "icon": "Ikon",
           "picture": "Bild",
           "use_dedicated_calendar": "Använd egen kalender",
+          "day_offset": "Dagsförskjutning (endast denna typ)",
           "dedicated_calendar_title": "Namn på egen kalender"
         },
         "data_description": {
@@ -200,6 +203,7 @@
           "icon": "Ikon för hämtningstypen (bara om du vill ändra den).",
           "picture": "Sökväg till en bild för hämtningstypen.",
           "use_dedicated_calendar": "Markera om hämtningstypen ska ha en egen kalenderentitet.",
+          "day_offset": "Flyttar datumen för denna avfallstyp med så många dagar (kan vara negativt, t.ex. -1 = en dag tidigare). Ersätter källans dagsförskjutning för denna typ. Lämna tomt för att använda källans dagsförskjutning.",
           "dedicated_calendar_title": "Namnet på den egna kalenderentiteten."
         }
       },
