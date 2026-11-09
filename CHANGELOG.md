@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [3.0.0-beta.11] - 2026-11-09
+
+Small follow-up to beta.10: one new source, one new municipality and a dashboard card fix. There are no breaking changes, removals or deprecations compared with beta.10. Users skipping earlier betas should also read the migration/breaking-change notes of beta.9.
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@otakon87 and @5zym3k. 🎉
+
+### Added Sources
+
+- added Comune Smart platform (comunesmart_it), Italy, starting with Capri Leone (thanks @otakon87) (#8137)
+- added Gmina Kórnik to kiedyodpady_pl, PL (thanks @5zym3k) (#8154)
+
+### Fixed
+
+- fixed dashboard cards: calendars with no live Home Assistant state (unavailable, unknown or leftover registry entries such as old "Static Source" entities) are no longer auto-selected when a card is created. The calendar entity now publishes the effective waste-type color, which cards use when `types[].color` is not set (a color set on the card still wins). The visual editor entity picker only lists this integration's calendars. (#8153)
+
 ## [3.0.0-beta.10] - 2026-11-09
 
 Packaging-only follow-up to beta.9. Provider logic and integration configuration are unchanged; users skipping beta.9 should also read its migration/breaking-change notes.
