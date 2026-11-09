@@ -40,16 +40,18 @@ will be re-created the next time Home Assistant starts.
 ## Customisation
 
 Every card has a visual editor for title, calendars, days ahead (1–366), item limit
-(1–100), dates, countdowns, icons, images, inclusion/exclusion lists and waste-type
+(1–100), dates, countdowns, icons, images, colours, inclusion/exclusion lists and waste-type
 styles. Styles match the **exact calendar event summary**, before any display
 rename. Each style can set a label, icon, colour and image. Styling a waste type
 does not alter the source, calendar, sensors or other cards.
 
-No country-specific colour assumptions are made. A style's colour tints the icon
-tile and draws its ring; names and dates use theme text colours and remain readable
-for light/dark themes and colour-blind users. Without a card style, icons and
-images come from the source's `customize` settings, then the calendar icon, then a
-neutral bin.
+No country-specific colour assumptions are made. When `show_colors` is enabled
+(default), a style's colour — or, if unset, the calendar's published waste-type
+colour — tints the icon tile and draws its ring; names and dates use theme text
+colours and remain readable for light/dark themes and colour-blind users. With
+`show_colors: false` tiles stay neutral regardless of configured colours. Without
+a card style, icons and images come from the source's `customize` settings, then
+the calendar icon, then a neutral bin.
 Images are optional: use `/local/...` paths or HTTPS URLs. Failed images fall back
 to the icon. Prefer your own/local images to avoid third-party requests.
 
@@ -64,6 +66,7 @@ show_countdown: true
 show_date: true
 show_icons: true
 show_pictures: true
+show_colors: true
 types:
   - type: Paper
     name: Paper and cardboard

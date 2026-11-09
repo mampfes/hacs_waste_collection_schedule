@@ -309,7 +309,11 @@ export class WasteCard extends LitElement {
         ? safePicture(style.picture) || safePicture(source?.picture)
         : undefined;
     // Card type style wins; otherwise use the calendar's published waste_types color.
-    const color = cssColor(style.color) ?? cssColor(source?.color);
+    // show_colors defaults on (absent = true), matching the other show_* toggles.
+    const color =
+      this.config.show_colors === false
+        ? undefined
+        : (cssColor(style.color) ?? cssColor(source?.color));
     const name = style.name || p.type;
     const showIcons = this.config.show_icons !== false;
     return html`<button

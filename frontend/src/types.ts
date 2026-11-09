@@ -35,6 +35,7 @@ export interface CardConfig {
   show_date?: boolean;
   show_icons?: boolean;
   show_pictures?: boolean;
+  show_colors?: boolean;
   types?: TypeStyle[];
   include_types?: string[];
   exclude_types?: string[];

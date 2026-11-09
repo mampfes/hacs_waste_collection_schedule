@@ -110,6 +110,30 @@ test("bin customisations keep text readable and arbitrary regional labels intact
     fullPage: true,
   });
 });
+test("show_colors false keeps tiles neutral despite type colours", async ({
+  page,
+}) => {
+  const card = await mount(page, "bins", {
+    show_colors: false,
+    types: [
+      {
+        type: "Recycling",
+        name: "Recycling",
+        icon: "mdi:recycle",
+        color: "#ffeb3b",
+      },
+    ],
+  });
+  const pickup = card.locator(".pickup").first();
+  await expect(pickup).toBeVisible();
+  await expect(pickup).not.toHaveClass(/styled/);
+  // No --bin-color when colours are disabled.
+  expect(
+    await pickup.evaluate((el) =>
+      getComputedStyle(el).getPropertyValue("--bin-color").trim(),
+    ),
+  ).toBe("");
+});
 test("unavailable calendar is an error, never no collections", async ({
   page,
 }) => {

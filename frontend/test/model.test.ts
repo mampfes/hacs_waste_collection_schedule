@@ -137,6 +137,12 @@ describe("provider-neutral selection", () => {
     expect(text("ja-JP", "next")).toBe("Next collection");
     expect(countdown("2026-10-26", "2026-10-26", "ja-JP")).toBe("今日");
   });
+  it("translates the show_colors editor label", () => {
+    expect(text("en", "show_colors")).toBe("Show colours");
+    expect(text("de", "show_colors")).toBe("Farben anzeigen");
+    expect(text("fr", "show_colors")).toBe("Afficher les couleurs");
+    expect(text("it", "show_colors")).toBe("Mostra colori");
+  });
 });
 
 describe("HA entity naming", () => {

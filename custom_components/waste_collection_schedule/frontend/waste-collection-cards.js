@@ -1052,6 +1052,7 @@ var Z = {
 		show_date: "Show date",
 		show_icons: "Show icons",
 		show_pictures: "Show pictures",
+		show_colors: "Show colours",
 		types: "Waste type styles",
 		include_types: "Only these waste types",
 		exclude_types: "Hide these waste types",
@@ -1083,6 +1084,7 @@ var Z = {
 		show_date: "Datum anzeigen",
 		show_icons: "Symbole anzeigen",
 		show_pictures: "Bilder anzeigen",
+		show_colors: "Farben anzeigen",
 		types: "Abfallarten gestalten",
 		include_types: "Nur diese Abfallarten",
 		exclude_types: "Diese Abfallarten ausblenden",
@@ -1114,6 +1116,7 @@ var Z = {
 		show_date: "Afficher la date",
 		show_icons: "Afficher les icônes",
 		show_pictures: "Afficher les images",
+		show_colors: "Afficher les couleurs",
 		types: "Styles des déchets",
 		include_types: "Uniquement ces déchets",
 		exclude_types: "Masquer ces déchets",
@@ -1145,6 +1148,7 @@ var Z = {
 		show_date: "Mostra data",
 		show_icons: "Mostra icone",
 		show_pictures: "Mostra immagini",
+		show_colors: "Mostra colori",
 		types: "Stili dei rifiuti",
 		include_types: "Solo questi rifiuti",
 		exclude_types: "Nascondi questi rifiuti",
@@ -1207,7 +1211,8 @@ var Ze = class extends V {
 				"show_countdown",
 				"show_date",
 				"show_icons",
-				"show_pictures"
+				"show_pictures",
+				"show_colors"
 			].map((e) => ({
 				name: e,
 				selector: { boolean: {} }
@@ -1261,9 +1266,9 @@ var Ze = class extends V {
 			schema: n
 		}), i = [
 			...n.slice(0, 4),
-			r("appearance", [...n.slice(4, 8), n[11]]),
-			r("types", n.slice(8, 9)),
-			r("filters", n.slice(9, 11))
+			r("appearance", [...n.slice(4, 9), n[12]]),
+			r("types", n.slice(9, 10)),
+			r("filters", n.slice(10, 12))
 		];
 		return j`<ha-form
       .hass=${this.hass}
@@ -1274,6 +1279,7 @@ var Ze = class extends V {
 			show_date: !0,
 			show_icons: !0,
 			show_pictures: !0,
+			show_colors: !0,
 			...this.config
 		}}
       .schema=${i}
@@ -1426,7 +1432,7 @@ var $ = class extends V {
 		}));
 	}
 	pickup(e, t, n, r) {
-		let i = Ge(e, this.config), a = this.hass?.states[e.entity]?.attributes, o = a?.waste_types?.[e.type], s = i.icon || o?.icon || a?.icon || "mdi:trash-can-outline", c = this.config.show_pictures === !1 ? void 0 : Ke(i.picture) || Ke(o?.picture), l = Xe(i.color) ?? Xe(o?.color), u = i.name || e.type, d = this.config.show_icons !== !1;
+		let i = Ge(e, this.config), a = this.hass?.states[e.entity]?.attributes, o = a?.waste_types?.[e.type], s = i.icon || o?.icon || a?.icon || "mdi:trash-can-outline", c = this.config.show_pictures === !1 ? void 0 : Ke(i.picture) || Ke(o?.picture), l = this.config.show_colors === !1 ? void 0 : Xe(i.color) ?? Xe(o?.color), u = i.name || e.type, d = this.config.show_icons !== !1;
 		return j`<button
       class=${l ? "pickup styled" : "pickup"}
       style=${Oe({ "--bin-color": l })}

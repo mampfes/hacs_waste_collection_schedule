@@ -38,9 +38,13 @@ export class WasteCardEditor extends LitElement {
         name: "max_items",
         selector: { number: { min: 1, max: 100, mode: "box" } },
       },
-      ...["show_countdown", "show_date", "show_icons", "show_pictures"].map(
-        (name) => ({ name, selector: { boolean: {} } }),
-      ),
+      ...[
+        "show_countdown",
+        "show_date",
+        "show_icons",
+        "show_pictures",
+        "show_colors",
+      ].map((name) => ({ name, selector: { boolean: {} } })),
       {
         name: "types",
         selector: {
@@ -80,9 +84,9 @@ export class WasteCardEditor extends LitElement {
     });
     const formSchema = [
       ...schema.slice(0, 4),
-      group("appearance", [...schema.slice(4, 8), schema[11]]),
-      group("types", schema.slice(8, 9)),
-      group("filters", schema.slice(9, 11)),
+      group("appearance", [...schema.slice(4, 9), schema[12]]),
+      group("types", schema.slice(9, 10)),
+      group("filters", schema.slice(10, 12)),
     ];
     return html`<ha-form
       .hass=${this.hass}
@@ -93,6 +97,7 @@ export class WasteCardEditor extends LitElement {
         show_date: true,
         show_icons: true,
         show_pictures: true,
+        show_colors: true,
         ...this.config,
       }}
       .schema=${formSchema}
