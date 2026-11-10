@@ -12,7 +12,9 @@ it has must be given. ``garbageorte/getAllGarbageCalendar`` then answers the
 calendars of the narrowest id. A calendar is a rule, not a list of dates: a start
 (``fromDate``, epoch milliseconds), an optional end (``toDate``) and a
 ``frequency`` in days. ``holidayViews`` lists the collections that move, as
-``holiday`` (the day it would fall on) and ``shiftTo``.
+``holiday`` (the day it would fall on) and ``shiftTo``. ``stations`` lists the
+stops of mobile collections (e.g. a hazardous waste vehicle), one entry per
+stop and date, the date in ``fromDate`` and the name in ``locationName``.
 
 ``BlupassionApp`` declares the lookups for ``retrievers.LookupChainRetriever``
 and ``BlupassionParser`` expands the rules, applying the holiday moves.
@@ -164,7 +166,9 @@ class BlupassionParser(Parser["list[tuple[datetime.date, str]]"]):
 
     Each calendar recurs every ``frequency`` days from ``fromDate`` until
     ``toDate`` (open-ended where missing), within a window from yesterday for a
-    year. A collection that falls on a holiday moves to its ``shiftTo``.
+    year. A collection that falls on a holiday moves to its ``shiftTo``. A
+    station adds one row on its ``fromDate``; a place with several stops on one
+    day gets one row for that day.
     """
 
     def __call__(self, response, source=None) -> "list[tuple[datetime.date, str]]":
@@ -188,4 +192,16 @@ class BlupassionParser(Parser["list[tuple[datetime.date, str]]"]):
                 until=min(until, window_end),
             )
             rows.extend((moves.get(date, date), calendar["name"]) for date in dates)
+
+        stops: set[tuple[datetime.date, str]] = set()
+        for station in data.get("stations") or []:
+            if not station.get("fromDate"):
+                continue
+            stop = (
+                _day(station["fromDate"]),
+                station.get("locationName") or station["name"],
+            )
+            if window_start <= stop[0] <= window_end and stop not in stops:
+                stops.add(stop)
+                rows.append(stop)
         return rows

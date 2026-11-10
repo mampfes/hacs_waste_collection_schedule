@@ -39,6 +39,7 @@ class Source(BaseSource):
         wt.ORGANIC,
         wt.PAPER,
         wt.RECYCLABLES,
+        wt.HAZARDOUS,
     ]
 
     TEST_CASES: ClassVar[dict] = {
@@ -70,4 +71,5 @@ class Source(BaseSource):
         headers={"Accept": "application/json, text/plain, */*"},
     )
     parse = BlupassionParser()
-    transform = RowTransformer()
+    # The mobile hazardous waste collection (Schadstoffmobil) stops.
+    transform = RowTransformer(type_value_map={"Schadstoffsammlung": wt.HAZARDOUS})

@@ -454,7 +454,7 @@ def _awb_bad_kreuznach_de(
     """Keep the configured address's options and the calendars' rules, not the lists.
 
     Every ``filterRegion`` answer lists all 121 cities; the calendar answer
-    carries the stations and holidays lists besides the rules the source reads.
+    carries the holidays list besides the rules and stations the source reads.
     """
 
     def same(name: Any, wanted: Any) -> bool:
@@ -487,8 +487,7 @@ def _awb_bad_kreuznach_de(
             _set_json(interaction, payload)
         elif "getAllGarbageCalendar" in interaction["url"]:
             payload = _json(interaction)
-            for key in ("stations", "holidays"):
-                payload["data"].pop(key, None)
+            payload["data"].pop("holidays", None)
             # The source reads moves within its one-year window; the list repeats
             # each holiday once per tour (the shift is the same for every tour).
             first = datetime.date.fromisoformat(today) - datetime.timedelta(days=3)
