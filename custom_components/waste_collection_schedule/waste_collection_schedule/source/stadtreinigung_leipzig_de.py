@@ -20,7 +20,7 @@ from waste_collection_schedule.exceptions import (
 from waste_collection_schedule.retrievers import Lookup, LookupChainRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
-_STREETS_URL = "https://stadtreinigung-leipzig.de/rest/Navision/Streets"
+_STREETS_URL = "https://stadtreinigung-leipzig.de/rest/odata/Streets"
 _ICS_URL = (
     "https://stadtreinigung-leipzig.de/wir-kommen-zu-ihnen/abfallkalender/ical.ics"
 )
@@ -50,27 +50,38 @@ def _clean(label: str) -> str:
 
 
 def _pick_position(response, street: str, house_number, **_) -> str:
-    """The feed's opaque position id for the street and house number."""
-    street_name = street
-    house_number_value = house_number
+    """The feed's opaque position ids for the street and house number.
 
-    data = json.loads(response.text)
-    if len(data["results"]) == 0:
-        raise SourceArgumentNotFound("street", street_name)
-    street_entry = data["results"].get(street_name)
-    if street_entry is None:
+    A house number can have several positions (e.g. one per bin), and the
+    calendar takes them all comma-separated.
+    """
+    streets = json.loads(response.text).get("results") or []
+    if len(streets) == 0:
+        raise SourceArgumentNotFound("street", street)
+    numbers = [
+        number
+        for entry in streets
+        if entry.get("name") == street
+        for number in entry.get("numbers") or []
+    ]
+    if not numbers:
         raise SourceArgumentNotFoundWithSuggestions(
-            "street", street_name, data["results"].keys()
+            "street", street, sorted({s.get("name") for s in streets})
         )
 
-    location_id = street_entry.get(str(house_number_value))
-    if location_id is None:
+    position_nos = [
+        position
+        for number in numbers
+        if str(number.get("number")) == str(house_number)
+        for position in number.get("position_nos") or []
+    ]
+    if not position_nos:
         raise SourceArgumentNotFoundWithSuggestions(
             "house_number",
-            house_number_value,
-            street_entry.keys(),
+            house_number,
+            [n.get("number") for n in numbers],
         )
-    return location_id
+    return ",".join(position_nos)
 
 
 @final
@@ -91,9 +102,9 @@ class Source(BaseSource):
         steps=(
             Lookup(
                 _STREETS_URL,
-                params=lambda street, **_: {"old_format": 1, "search": street},
+                params=lambda street, **_: {"search": street},
                 pick=_pick_position,
-                raise_for_status=False,
+                raise_for_status=True,
             ),
         ),
         url=_ICS_URL,
