@@ -132,6 +132,50 @@ def test_home_assistant_json_emits_color_metadata():
     assert payload["upcoming"][0]["color_source"] == "source"
 
 
+def test_neunkirchen_siegerland_applies_bin_lid_colours_by_ics_summary():
+    """Provider lid colours via ICSTransformer.color_key; unlisted labels stay default."""
+    from datetime import date
+
+    from waste_collection_schedule.source.abfall_neunkirchen_siegerland_de import (
+        _COLOUR_MAP,
+        Source,
+    )
+    from waste_collection_schedule.waste_types import (
+        GARDEN_WASTE,
+        GENERAL_WASTE,
+        HAZARDOUS,
+        ORGANIC,
+        PAPER,
+        RECYCLABLES,
+    )
+
+    day = date(2099, 9, 14)
+    expected = {
+        "Gelbe Tonne": (RECYCLABLES, "#FDD835"),
+        "Papiertonne / Papiercontainer": (PAPER, "#1E88E5"),
+        "Biotonne": (ORGANIC, "#795548"),
+        "Restmülltonne": (GENERAL_WASTE, "#424242"),
+        "Spartonne Restmüll": (GENERAL_WASTE, "#424242"),
+        "Container Restmüll": (GENERAL_WASTE, "#424242"),
+    }
+    for label, (waste_type, color) in expected.items():
+        entry = Source.transform((day, label))
+        assert entry.waste_type == waste_type
+        assert entry.color == color
+        assert entry.color_source == "source"
+        assert _COLOUR_MAP[label] == color
+
+    for label, waste_type in (
+        ("Astschnittsammlung", GARDEN_WASTE),
+        ("Schadstoffsammlung", HAZARDOUS),
+    ):
+        entry = Source.transform((day, label))
+        assert entry.waste_type == waste_type
+        assert entry.color == waste_type.color
+        assert entry.color_source == "default"
+        assert label not in _COLOUR_MAP
+
+
 def test_provider_can_supply_a_local_color_mapping():
     from waste_collection_schedule.transformers import JsonTransformer
 

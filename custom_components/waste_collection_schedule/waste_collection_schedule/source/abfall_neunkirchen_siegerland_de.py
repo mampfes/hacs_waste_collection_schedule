@@ -21,6 +21,11 @@ exact same day (whenever a "Spartonne" date coincides with its underlying
 "Restmülltonne" date) collapse into one instead of showing as a duplicate.
 "Container Restmüll" runs on its own dates, so it is never touched by that
 merge — an address with both a bin and a container keeps both.
+
+Provider bin-lid colours (Gelbe Tonne yellow, paper blue, organic brown,
+residual grey) are attached via ``ICSTransformer.color_key`` as source
+colours; customise still overrides them. Astschnitt- and Schadstoffsammlung
+keep the canonical waste-type defaults.
 """
 
 from typing import ClassVar, final
@@ -33,6 +38,18 @@ from waste_collection_schedule.service.SiteparkIES import SiteparkIESRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
 _BASE_URL = "https://www.neunkirchen-siegerland.de"
+
+# Local bin-lid colours keyed by the ICS SUMMARY labels (case-sensitive match
+# of the provider string; lookup is exact). Unlisted labels (Astschnitt- /
+# Schadstoffsammlung) leave Collection.color on the waste-type default.
+_COLOUR_MAP = {
+    "Gelbe Tonne": "#FDD835",
+    "Papiertonne / Papiercontainer": "#1E88E5",
+    "Biotonne": "#795548",
+    "Restmülltonne": "#424242",
+    "Spartonne Restmüll": "#424242",
+    "Container Restmüll": "#424242",
+}
 
 
 @final
@@ -105,5 +122,7 @@ class Source(BaseSource):
             "Astschnittsammlung": wt.GARDEN_WASTE,
             "Schadstoffsammlung": wt.HAZARDOUS,
         },
+        # IcsParser yields (date, summary); map the summary to a bin colour.
+        color_key=lambda record: _COLOUR_MAP.get(record[1]),
         carry_raw_label=True,
     )
