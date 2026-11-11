@@ -249,4 +249,23 @@ class Source:
                     )
                 )
 
+        # Mobile collection points (e.g. Schadstoffmobil): one entry per date.
+        # Larger places have several stops per date, so keep one per day.
+        station_dates: set[tuple[date, str]] = set()
+        for station in data["data"].get("stations") or []:
+            if not station.get("fromDate"):
+                continue
+            name = station.get("locationName") or station.get("name")
+            station_date = datetime.fromtimestamp(station["fromDate"] / 1000).date()
+            if (station_date, name) in station_dates:
+                continue
+            station_dates.add((station_date, name))
+            entries.append(
+                Collection(
+                    station_date,
+                    name,
+                    ICON_MAP.get(name, Icons.HAZARDOUS),
+                )
+            )
+
         return entries
