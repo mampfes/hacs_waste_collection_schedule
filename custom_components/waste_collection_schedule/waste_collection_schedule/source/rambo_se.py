@@ -47,7 +47,7 @@ class Source:
         }
 
         # get json file
-        r = requests.get(API_URL.format("address-flat"), params=args, headers=HEADERS)
+        r = requests.get(API_URL.format("address-flat"), params=args, headers=HEADERS, verify=False)
         r.raise_for_status()
 
         data = r.json()
@@ -76,6 +76,7 @@ class Source:
             API_URL.format("next-pickup-web"),
             params={"plant-number": plant_number},
             headers=HEADERS,
+            verify=False
         )
 
         r.raise_for_status()
