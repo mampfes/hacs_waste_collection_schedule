@@ -40,7 +40,7 @@
           "type": "Typ (voliteľné)"
         },
         "data_description": {
-          "type": "V ďalšom kroku budete môcť zmeniť názov alebo ikonu, nastaviť vlastný kalendár a rozhodnúť, či položku zobraziť."
+          "type": "V ďalšom kroku budete môcť zmeniť názov alebo ikonu, nastaviť samostatný kalendár alebo typ odvozu skryť."
         }
       },
       "customize": {
