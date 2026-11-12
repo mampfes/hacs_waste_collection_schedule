@@ -31854,10 +31854,58 @@
   ],
   "Luxembourg": [
     {
+      "title": "Beaufort",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Beaufort"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Bech",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Bech"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Beckerich",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Beckerich"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Berdorf",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Berdorf"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
       "title": "Bettembourg",
       "module": "ics",
       "default_params": {},
       "id": "ics_bettembourg_lu"
+    },
+    {
+      "title": "Bettembourg",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Bettembourg"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Bettendorf",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Bettendorf"
+      },
+      "id": "luxembourg_lu"
     },
     {
       "title": "Betzdorf",
@@ -31866,10 +31914,210 @@
       "id": "betzdorf_lu"
     },
     {
+      "title": "Betzdorf",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Betzdorf"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Bissen",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Bissen"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Biwer",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Biwer"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Boulaide",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Boulaide"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Bourscheid",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Bourscheid"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Bous-Waldbredimus",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Bous-Waldbredimus"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Clervaux",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Clervaux"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Colmar-Berg",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Colmar-Berg"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Consdorf",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Consdorf"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Contern",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Contern"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Dalheim",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Dalheim"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Diekirch",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Diekirch"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Differdange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Differdange"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Dippach",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Dippach"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Dudelange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Dudelange"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Echternach",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Echternach"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Ell",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Ell"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Erpeldange-sur-S\u00fbre",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Erpeldange-sur-S\u00fbre"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Esch-sur-Alzette",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Esch-sur-Alzette"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
       "title": "Esch-sur-Alzette",
       "module": "esch_lu",
       "default_params": {},
       "id": "esch_lu"
+    },
+    {
+      "title": "Esch-sur-S\u00fbre",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Esch-sur-S\u00fbre"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Ettelbruck",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Ettelbruck"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Feulen",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Feulen"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Fischbach",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Fischbach"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Flaxweiler",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Flaxweiler"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Frisange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Frisange"
+      },
+      "id": "luxembourg_lu"
     },
     {
       "title": "Gemeng B\u00e4ertref",
@@ -31878,9 +32126,337 @@
       "id": "berdorf_lu"
     },
     {
+      "title": "Goesdorf",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Goesdorf"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Grevenmacher",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Grevenmacher"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Groussbus-Wal",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Groussbus-Wal"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Heffingen",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Heffingen"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Helperknapp",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Helperknapp"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Hesperange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Hesperange"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Kayl",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Kayl"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Kiischpelt",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Kiischpelt"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "K\u00e4erjeng",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "K\u00e4erjeng"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Lac de la Haute-S\u00fbre",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Lac de la Haute-S\u00fbre"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Larochette",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Larochette"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Lenningen",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Lenningen"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Leudelange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Leudelange"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Lintgen",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Lintgen"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
       "title": "Luxembourg",
       "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Luxembourg"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Luxembourg (all communes)",
+      "module": "luxembourg_lu",
       "default_params": {},
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Mamer",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Mamer"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Manternach",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Manternach"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Mersch",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Mersch"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Mertert",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Mertert"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Mertzig",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Mertzig"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Mondorf-les-Bains",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Mondorf-les-Bains"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Niederanven",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Niederanven"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Nommern",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Nommern"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Parc Hosingen",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Parc Hosingen"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Pr\u00e9izerdaul",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Pr\u00e9izerdaul"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Putscheid",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Putscheid"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "P\u00e9tange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "P\u00e9tange"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Rambrouch",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Rambrouch"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Reckange-sur-Mess",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Reckange-sur-Mess"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Redange/Attert",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Redange/Attert"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Reisdorf",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Reisdorf"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Remich",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Remich"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Roeser",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Roeser"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Rumelange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Rumelange"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Saeul",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Saeul"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Sandweiler",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Sandweiler"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Sanem",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Sanem"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Schengen",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Schengen"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Schieren",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Schieren"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Schifflange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Schifflange"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Schuttrange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Schuttrange"
+      },
       "id": "luxembourg_lu"
     },
     {
@@ -31896,10 +32472,138 @@
       "id": "sidec_lu"
     },
     {
+      "title": "Stadtbredimus",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Stadtbredimus"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Steinsel",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Steinsel"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Tandel",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Tandel"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Troisvierges",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Troisvierges"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Useldange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Useldange"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Vall\u00e9e de l'Ernz",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Vall\u00e9e de l'Ernz"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
       "title": "Valorlux",
       "module": "valorlux_lu",
       "default_params": {},
       "id": "valorlux_lu"
+    },
+    {
+      "title": "Vianden",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Vianden"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Vichten",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Vichten"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Waldbillig",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Waldbillig"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Walferdange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Walferdange"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Weiler-la-Tour",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Weiler-la-Tour"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Weiswampach",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Weiswampach"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Wiltz",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Wiltz"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Wincrange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Wincrange"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Winseler",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Winseler"
+      },
+      "id": "luxembourg_lu"
+    },
+    {
+      "title": "Wormeldange",
+      "module": "luxembourg_lu",
+      "default_params": {
+        "commune": "Wormeldange"
+      },
+      "id": "luxembourg_lu"
     }
   ],
   "Malta": [

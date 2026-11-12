@@ -4326,14 +4326,102 @@ If you already have enough information for your municipality/region, you are ver
 <details>
 <summary>Luxembourg</summary>
 
+- [Beaufort](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Bech](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Beckerich](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Berdorf](/doc/source/luxembourg_lu.md) / data.public.lu
 - [Bettembourg](/doc/ics/bettembourg_lu.md) / bettembourg.lu
+- [Bettembourg](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Bettendorf](/doc/source/luxembourg_lu.md) / data.public.lu
 - [Betzdorf](/doc/source/betzdorf_lu.md) / betzdorf.lu
+- [Betzdorf](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Bissen](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Biwer](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Boulaide](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Bourscheid](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Bous-Waldbredimus](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Clervaux](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Colmar-Berg](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Consdorf](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Contern](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Dalheim](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Diekirch](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Differdange](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Dippach](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Dudelange](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Echternach](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Ell](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Erpeldange-sur-Sûre](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Esch-sur-Alzette](/doc/source/luxembourg_lu.md) / data.public.lu
 - [Esch-sur-Alzette](/doc/source/esch_lu.md) / esch.lu
+- [Esch-sur-Sûre](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Ettelbruck](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Feulen](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Fischbach](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Flaxweiler](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Frisange](/doc/source/luxembourg_lu.md) / data.public.lu
 - [Gemeng Bäertref](/doc/source/berdorf_lu.md) / berdorf.lu
+- [Goesdorf](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Grevenmacher](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Groussbus-Wal](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Heffingen](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Helperknapp](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Hesperange](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Kayl](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Kiischpelt](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Käerjeng](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Lac de la Haute-Sûre](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Larochette](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Lenningen](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Leudelange](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Lintgen](/doc/source/luxembourg_lu.md) / data.public.lu
 - [Luxembourg](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Luxembourg (all communes)](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Mamer](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Manternach](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Mersch](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Mertert](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Mertzig](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Mondorf-les-Bains](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Niederanven](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Nommern](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Parc Hosingen](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Préizerdaul](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Putscheid](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Pétange](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Rambrouch](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Reckange-sur-Mess](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Redange/Attert](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Reisdorf](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Remich](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Roeser](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Rumelange](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Saeul](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Sandweiler](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Sanem](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Schengen](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Schieren](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Schifflange](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Schuttrange](/doc/source/luxembourg_lu.md) / data.public.lu
 - [SICA](/doc/source/sica_lu.md) / sica.lu
 - [SIDEC](/doc/source/sidec_lu.md) / sidec.lu
+- [Stadtbredimus](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Steinsel](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Tandel](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Troisvierges](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Useldange](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Vallée de l'Ernz](/doc/source/luxembourg_lu.md) / data.public.lu
 - [Valorlux](/doc/source/valorlux_lu.md) / valorlux.lu
+- [Vianden](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Vichten](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Waldbillig](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Walferdange](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Weiler-la-Tour](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Weiswampach](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Wiltz](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Wincrange](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Winseler](/doc/source/luxembourg_lu.md) / data.public.lu
+- [Wormeldange](/doc/source/luxembourg_lu.md) / data.public.lu
 </details>
 
 <details>

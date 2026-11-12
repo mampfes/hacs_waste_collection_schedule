@@ -20410,6 +20410,37 @@
           "street": "Ihr Straßenname."
         }
       },
+      "args_luxembourg_lu": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Gemeinde",
+          "localite": "Ortsteil",
+          "rue": "Straße"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "localite": "Ihr Ortsteil oder Stadtteil.",
+          "rue": "Ihr Straßenname."
+        }
+      },
+      "reconfigure_luxembourg_lu": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Gemeinde",
+          "localite": "Ortsteil",
+          "rue": "Straße"
+        },
+        "data_description": {
+          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "localite": "Ihr Ortsteil oder Stadtteil.",
+          "rue": "Ihr Straßenname."
+        }
+      },
       "args_ics_bettembourg_lu": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -20509,37 +20540,6 @@
           "calendar_title": "Kalender Titel"
         },
         "data_description": {}
-      },
-      "args_luxembourg_lu": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "commune": "Gemeinde",
-          "localite": "Ortsteil",
-          "rue": "Straße"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
-          "localite": "Ihr Ortsteil oder Stadtteil.",
-          "rue": "Ihr Straßenname."
-        }
-      },
-      "reconfigure_luxembourg_lu": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "commune": "Gemeinde",
-          "localite": "Ortsteil",
-          "rue": "Straße"
-        },
-        "data_description": {
-          "commune": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
-          "localite": "Ihr Ortsteil oder Stadtteil.",
-          "rue": "Ihr Straßenname."
-        }
       },
       "args_sica_lu": {
         "title": "Quelle konfigurieren",

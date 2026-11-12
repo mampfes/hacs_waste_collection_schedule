@@ -20410,6 +20410,37 @@
           "street": "Gatenavnet ditt."
         }
       },
+      "args_luxembourg_lu": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "commune": "Kommune",
+          "localite": "Område",
+          "rue": "Gate"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
+          "commune": "Navnet på kommunen din, slik det står på leverandørens nettside.",
+          "localite": "Bydelen eller delen av kommunen du bor i.",
+          "rue": "Gatenavnet ditt."
+        }
+      },
+      "reconfigure_luxembourg_lu": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "commune": "Kommune",
+          "localite": "Område",
+          "rue": "Gate"
+        },
+        "data_description": {
+          "commune": "Navnet på kommunen din, slik det står på leverandørens nettside.",
+          "localite": "Bydelen eller delen av kommunen du bor i.",
+          "rue": "Gatenavnet ditt."
+        }
+      },
       "args_ics_bettembourg_lu": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
@@ -20509,37 +20540,6 @@
           "calendar_title": "Kalendernavn"
         },
         "data_description": {}
-      },
-      "args_luxembourg_lu": {
-        "title": "Konfigurer kilde",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "commune": "Kommune",
-          "localite": "Område",
-          "rue": "Gate"
-        },
-        "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
-          "commune": "Navnet på kommunen din, slik det står på leverandørens nettside.",
-          "localite": "Bydelen eller delen av kommunen du bor i.",
-          "rue": "Gatenavnet ditt."
-        }
-      },
-      "reconfigure_luxembourg_lu": {
-        "title": "Konfigurer kilde på nytt",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "commune": "Kommune",
-          "localite": "Område",
-          "rue": "Gate"
-        },
-        "data_description": {
-          "commune": "Navnet på kommunen din, slik det står på leverandørens nettside.",
-          "localite": "Bydelen eller delen av kommunen du bor i.",
-          "rue": "Gatenavnet ditt."
-        }
       },
       "args_sica_lu": {
         "title": "Konfigurer kilde",

@@ -4654,6 +4654,13 @@
     },
     "urls": {}
   },
+  "luxembourg_lu": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/luxembourg_lu.md",
+    "howto": {
+      "en": "Search for your commune in the source list (each commune is listed on its own) or pick Luxembourg (all communes). The form then offers a dropdown for the commune, and - only when that commune splits its schedule - for the locality and the street. Values must match the open data set on data.public.lu (accents, the 'Rue ' prefix). A missing or wrong value still lists the valid ones."
+    },
+    "urls": {}
+  },
   "ics_bettembourg_lu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/bettembourg_lu.md",
     "howto": {
@@ -4674,13 +4681,6 @@
   "berdorf_lu": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/berdorf_lu.md",
     "howto": {},
-    "urls": {}
-  },
-  "luxembourg_lu": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/luxembourg_lu.md",
-    "howto": {
-      "en": "Enter your commune as listed in the open data set on data.public.lu (the 'Commune' column, with accents). Communes that split their schedule also need the locality ('Localité') and, for some localities, the street ('Rue'). A missing or wrong value lists the valid ones."
-    },
     "urls": {}
   },
   "sica_lu": {

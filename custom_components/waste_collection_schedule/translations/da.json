@@ -20410,6 +20410,37 @@
           "street": "Dit gadenavn"
         }
       },
+      "args_luxembourg_lu": {
+        "title": "Konfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Kommune",
+          "localite": "Distrikt",
+          "rue": "Gade"
+        },
+        "data_description": {
+          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
+          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "localite": "Dit distrikt eller del af kommunen",
+          "rue": "Dit gadenavn"
+        }
+      },
+      "reconfigure_luxembourg_lu": {
+        "title": "Omkonfigurer Kilde",
+        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "commune": "Kommune",
+          "localite": "Distrikt",
+          "rue": "Gade"
+        },
+        "data_description": {
+          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
+          "localite": "Dit distrikt eller del af kommunen",
+          "rue": "Dit gadenavn"
+        }
+      },
       "args_ics_bettembourg_lu": {
         "title": "Konfigurer Kilde",
         "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
@@ -20509,37 +20540,6 @@
           "calendar_title": "Kalender Titel"
         },
         "data_description": {}
-      },
-      "args_luxembourg_lu": {
-        "title": "Konfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "commune": "Kommune",
-          "localite": "Distrikt",
-          "rue": "Gade"
-        },
-        "data_description": {
-          "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",
-          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
-          "localite": "Dit distrikt eller del af kommunen",
-          "rue": "Dit gadenavn"
-        }
-      },
-      "reconfigure_luxembourg_lu": {
-        "title": "Omkonfigurer Kilde",
-        "description": "Konfigurer din service udbyder. {howto}Flere detaljer: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "commune": "Kommune",
-          "localite": "Distrikt",
-          "rue": "Gade"
-        },
-        "data_description": {
-          "commune": "Navnet på din kommune, som vist på din leverandørs hjemmeside.",
-          "localite": "Dit distrikt eller del af kommunen",
-          "rue": "Dit gadenavn"
-        }
       },
       "args_sica_lu": {
         "title": "Konfigurer Kilde",

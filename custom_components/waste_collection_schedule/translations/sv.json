@@ -20410,6 +20410,37 @@
           "street": "Ditt gatunamn."
         }
       },
+      "args_luxembourg_lu": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "commune": "Kommun",
+          "localite": "Distrikt",
+          "rue": "Gata"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "commune": "Namnet på din kommun, som det visas på leverantörens webbplats.",
+          "localite": "Ditt distrikt eller del av kommunen.",
+          "rue": "Ditt gatunamn."
+        }
+      },
+      "reconfigure_luxembourg_lu": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "commune": "Kommun",
+          "localite": "Distrikt",
+          "rue": "Gata"
+        },
+        "data_description": {
+          "commune": "Namnet på din kommun, som det visas på leverantörens webbplats.",
+          "localite": "Ditt distrikt eller del av kommunen.",
+          "rue": "Ditt gatunamn."
+        }
+      },
       "args_ics_bettembourg_lu": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -20509,37 +20540,6 @@
           "calendar_title": "Kalendernamn"
         },
         "data_description": {}
-      },
-      "args_luxembourg_lu": {
-        "title": "Konfigurera källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "commune": "Kommun",
-          "localite": "Distrikt",
-          "rue": "Gata"
-        },
-        "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
-          "commune": "Namnet på din kommun, som det visas på leverantörens webbplats.",
-          "localite": "Ditt distrikt eller del av kommunen.",
-          "rue": "Ditt gatunamn."
-        }
-      },
-      "reconfigure_luxembourg_lu": {
-        "title": "Konfigurera om källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "commune": "Kommun",
-          "localite": "Distrikt",
-          "rue": "Gata"
-        },
-        "data_description": {
-          "commune": "Namnet på din kommun, som det visas på leverantörens webbplats.",
-          "localite": "Ditt distrikt eller del av kommunen.",
-          "rue": "Ditt gatunamn."
-        }
       },
       "args_sica_lu": {
         "title": "Konfigurera källa",

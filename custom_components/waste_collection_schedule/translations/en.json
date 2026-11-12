@@ -20456,6 +20456,37 @@
           "street": "Your street name."
         }
       },
+      "args_luxembourg_lu": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality",
+          "localite": "District",
+          "rue": "Street"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "commune": "The name of your municipality, as shown on the provider's website.",
+          "localite": "Your district or part of the municipality.",
+          "rue": "Your street name."
+        }
+      },
+      "reconfigure_luxembourg_lu": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "commune": "Municipality",
+          "localite": "District",
+          "rue": "Street"
+        },
+        "data_description": {
+          "commune": "The name of your municipality, as shown on the provider's website.",
+          "localite": "Your district or part of the municipality.",
+          "rue": "Your street name."
+        }
+      },
       "args_ics_bettembourg_lu": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -20555,37 +20586,6 @@
           "calendar_title": "Calendar Title"
         },
         "data_description": {}
-      },
-      "args_luxembourg_lu": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "commune": "Municipality",
-          "localite": "District",
-          "rue": "Street"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
-          "commune": "The name of your municipality, as shown on the provider's website.",
-          "localite": "Your district or part of the municipality.",
-          "rue": "Your street name."
-        }
-      },
-      "reconfigure_luxembourg_lu": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "commune": "Municipality",
-          "localite": "District",
-          "rue": "Street"
-        },
-        "data_description": {
-          "commune": "The name of your municipality, as shown on the provider's website.",
-          "localite": "Your district or part of the municipality.",
-          "rue": "Your street name."
-        }
       },
       "args_sica_lu": {
         "title": "Configure Source",

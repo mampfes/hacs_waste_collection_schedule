@@ -20410,6 +20410,37 @@
           "street": "Il nome della vostra via."
         }
       },
+      "args_luxembourg_lu": {
+        "title": "Configurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "commune": "Comune",
+          "localite": "Quartiere",
+          "rue": "Via"
+        },
+        "data_description": {
+          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "localite": "Il vostro quartiere o parte del comune.",
+          "rue": "Il nome della vostra via."
+        }
+      },
+      "reconfigure_luxembourg_lu": {
+        "title": "Riconfigurazione Sorgente",
+        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
+        "data": {
+          "calendar_title": "Nome Calendario",
+          "commune": "Comune",
+          "localite": "Quartiere",
+          "rue": "Via"
+        },
+        "data_description": {
+          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
+          "localite": "Il vostro quartiere o parte del comune.",
+          "rue": "Il nome della vostra via."
+        }
+      },
       "args_ics_bettembourg_lu": {
         "title": "Configurazione Sorgente",
         "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
@@ -20509,37 +20540,6 @@
           "calendar_title": "Nome Calendario"
         },
         "data_description": {}
-      },
-      "args_luxembourg_lu": {
-        "title": "Configurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "commune": "Comune",
-          "localite": "Quartiere",
-          "rue": "Via"
-        },
-        "data_description": {
-          "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",
-          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
-          "localite": "Il vostro quartiere o parte del comune.",
-          "rue": "Il nome della vostra via."
-        }
-      },
-      "reconfigure_luxembourg_lu": {
-        "title": "Riconfigurazione Sorgente",
-        "description": "Compila i campi per ottenere le informazioni sul tuo servizio di raccolta. {howto}Per maggiori informazioni: {docs_url}.",
-        "data": {
-          "calendar_title": "Nome Calendario",
-          "commune": "Comune",
-          "localite": "Quartiere",
-          "rue": "Via"
-        },
-        "data_description": {
-          "commune": "Il nome del vostro comune, come indicato sul sito del fornitore.",
-          "localite": "Il vostro quartiere o parte del comune.",
-          "rue": "Il nome della vostra via."
-        }
       },
       "args_sica_lu": {
         "title": "Configurazione Sorgente",

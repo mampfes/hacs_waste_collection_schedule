@@ -1,8 +1,8 @@
-# Luxembourg
+# Luxembourg (all communes)
 
-Support for schedules provided by [Luxembourg](https://data.public.lu).
+Support for schedules provided by [Luxembourg (all communes)](https://data.public.lu).
 
-Source for Luxembourg waste collection using data.public.lu
+National waste collection calendars for every Luxembourg commune, published as open data on data.public.lu. Choose a commune, then a locality and street when that commune splits its schedule.
 
 ## Configuration via configuration.yaml
 
@@ -19,7 +19,7 @@ waste_collection_schedule:
 ### Configuration Variables
 
 **commune**  
-*(string) (required)*
+*(string) (optional)*
 
 **localite**  
 *(string) (optional)*
@@ -39,4 +39,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Enter your commune as listed in the open data set on data.public.lu (the 'Commune' column, with accents). Communes that split their schedule also need the locality ('Localité') and, for some localities, the street ('Rue'). A missing or wrong value lists the valid ones.
+Search for your commune in the source list (each commune is listed on its own) or pick Luxembourg (all communes). The form then offers a dropdown for the commune, and - only when that commune splits its schedule - for the locality and the street. Values must match the open data set on data.public.lu (accents, the 'Rue ' prefix). A missing or wrong value still lists the valid ones.

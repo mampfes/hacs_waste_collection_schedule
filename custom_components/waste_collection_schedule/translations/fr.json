@@ -20410,6 +20410,37 @@
           "street": "Le nom de votre rue."
         }
       },
+      "args_luxembourg_lu": {
+        "title": "Configurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "commune": "Commune",
+          "localite": "Quartier",
+          "rue": "Rue"
+        },
+        "data_description": {
+          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
+          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "localite": "Votre quartier ou partie de la commune.",
+          "rue": "Le nom de votre rue."
+        }
+      },
+      "reconfigure_luxembourg_lu": {
+        "title": "Reconfigurer la Source",
+        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
+        "data": {
+          "calendar_title": "Titre du Calendrier",
+          "commune": "Commune",
+          "localite": "Quartier",
+          "rue": "Rue"
+        },
+        "data_description": {
+          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
+          "localite": "Votre quartier ou partie de la commune.",
+          "rue": "Le nom de votre rue."
+        }
+      },
       "args_ics_bettembourg_lu": {
         "title": "Configurer la Source",
         "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
@@ -20509,37 +20540,6 @@
           "calendar_title": "Titre du Calendrier"
         },
         "data_description": {}
-      },
-      "args_luxembourg_lu": {
-        "title": "Configurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "commune": "Commune",
-          "localite": "Quartier",
-          "rue": "Rue"
-        },
-        "data_description": {
-          "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",
-          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
-          "localite": "Votre quartier ou partie de la commune.",
-          "rue": "Le nom de votre rue."
-        }
-      },
-      "reconfigure_luxembourg_lu": {
-        "title": "Reconfigurer la Source",
-        "description": "Configurez votre fournisseur de services. {howto}Plus de détails : {docs_url}.",
-        "data": {
-          "calendar_title": "Titre du Calendrier",
-          "commune": "Commune",
-          "localite": "Quartier",
-          "rue": "Rue"
-        },
-        "data_description": {
-          "commune": "Le nom de votre commune, tel qu'il apparaît sur le site du fournisseur.",
-          "localite": "Votre quartier ou partie de la commune.",
-          "rue": "Le nom de votre rue."
-        }
       },
       "args_sica_lu": {
         "title": "Configurer la Source",

@@ -20415,6 +20415,37 @@
           "street": "Kadun nimi."
         }
       },
+      "args_luxembourg_lu": {
+        "title": "Määritä lähde",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta",
+          "localite": "Kaupunginosa",
+          "rue": "Katu"
+        },
+        "data_description": {
+          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "localite": "Kaupunginosasi tai kunnan osa.",
+          "rue": "Kadun nimi."
+        }
+      },
+      "reconfigure_luxembourg_lu": {
+        "title": "Määritä lähde uudelleen",
+        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalenterin nimi",
+          "commune": "Kunta",
+          "localite": "Kaupunginosa",
+          "rue": "Katu"
+        },
+        "data_description": {
+          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
+          "localite": "Kaupunginosasi tai kunnan osa.",
+          "rue": "Kadun nimi."
+        }
+      },
       "args_ics_bettembourg_lu": {
         "title": "Määritä lähde",
         "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
@@ -20514,37 +20545,6 @@
           "calendar_title": "Kalenterin nimi"
         },
         "data_description": {}
-      },
-      "args_luxembourg_lu": {
-        "title": "Määritä lähde",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "commune": "Kunta",
-          "localite": "Kaupunginosa",
-          "rue": "Katu"
-        },
-        "data_description": {
-          "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",
-          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
-          "localite": "Kaupunginosasi tai kunnan osa.",
-          "rue": "Kadun nimi."
-        }
-      },
-      "reconfigure_luxembourg_lu": {
-        "title": "Määritä lähde uudelleen",
-        "description": "Määritä palveluntarjoajasi. {howto}Lisätietoja: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalenterin nimi",
-          "commune": "Kunta",
-          "localite": "Kaupunginosa",
-          "rue": "Katu"
-        },
-        "data_description": {
-          "commune": "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
-          "localite": "Kaupunginosasi tai kunnan osa.",
-          "rue": "Kadun nimi."
-        }
       },
       "args_sica_lu": {
         "title": "Määritä lähde",
