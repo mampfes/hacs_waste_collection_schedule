@@ -9604,6 +9604,81 @@ class TestGossFormComponents:
                 SimpleNamespace(text="no data")
             )
 
+    @pytest.mark.parametrize(
+        "prefix",
+        ["WASTECOLLECTIONDAYS202627OCT", "WASTECOLLECTIONDAYS202627"],
+    )
+    def test_east_lindsey_form_pattern_accepts_year_and_month_suffix(self, prefix):
+        """East Lindsey's form name is the financial year, plus an optional month
+        suffix after a mid-year route update. Bare field names and the
+        processsubmission action are unchanged; only the prefix differs.
+        """
+        from pathlib import Path
+
+        from waste_collection_schedule.base_source import BaseSource
+        from waste_collection_schedule.service.GossForm import (
+            GossFormRetriever,
+            encode_variables,
+        )
+        from waste_collection_schedule.source.e_lindsey_gov_uk import Source
+
+        fixture = (
+            Path(__file__).parent
+            / "fixtures/e_lindsey_gov_uk/_waste_collection_days_202627oct_form.html"
+        ).read_text()
+        html = fixture.replace("WASTECOLLECTIONDAYS202627OCT", prefix)
+        source = BaseSource()
+        source.params = {"uprn": "100030786099"}
+        source._session = MagicMock()
+        page = SimpleNamespace(
+            url="https://www.e-lindsey.gov.uk/mywastecollections",
+            text=html,
+            raise_for_status=MagicMock(),
+        )
+        source._session.get.return_value = page
+        source._session.post.return_value = page
+        # Use the source's own form pattern and lookup step.
+        prepare = Source.retrieve.prepare
+        assert isinstance(prepare, GossFormRetriever)
+        assert prepare._form_name(page) == prefix
+        result = prepare(source)
+        assert result is page
+        call = source._session.post.call_args
+        assert "processsubmission" in call.args[0]
+        data = call.kwargs["data"]
+        assert data[f"{prefix}_PAGENAME"] == "LOOKUP"
+        assert data[f"{prefix}_LOOKUP_CHOSENADDRESS"] == "100030786099"
+        assert data[f"{prefix}_VARIABLES"] == encode_variables(
+            {"ADDRESSSOURCE": "NLPGEL", "ADDRESSUPRN": "100030786099"}
+        )
+        assert data[f"{prefix}_FORMACTION_NEXT"] == f"{prefix}_LOOKUP_FIELD2"
+
+    def test_east_lindsey_form_pattern_ignores_unrelated_goss_forms(self):
+        from waste_collection_schedule.source.e_lindsey_gov_uk import Source
+
+        html = (
+            '<form id="RESIDENTCOLLECTIONDATES_FORM">'
+            '<input name="RESIDENTCOLLECTIONDATES_PAGENAME" value="SEARCH">'
+            "</form>"
+            '<form id="WASTECOLLECTIONDAYS202627OCT_FORM" action="/processsubmission">'
+            '<input name="WASTECOLLECTIONDAYS202627OCT_PAGENAME" value="LOOKUP">'
+            "</form>"
+        )
+        page = SimpleNamespace(text=html, url="https://council.test/")
+        assert (
+            Source.retrieve.prepare._form_name(page) == "WASTECOLLECTIONDAYS202627OCT"
+        )
+        # A nearby council form must not be selected just because it has _PAGENAME.
+        other = SimpleNamespace(
+            text=(
+                '<form id="RESIDENTCOLLECTIONDATES_FORM" action="/other">'
+                '<input name="RESIDENTCOLLECTIONDATES_PAGENAME" value="SEARCH">'
+                "</form>"
+            ),
+            url="https://council.test/",
+        )
+        assert Source.retrieve.prepare._form_name(other) == ""
+
 
 class TestLinkedAssetRetriever:
     @pytest.mark.parametrize("page_error", [None, "requests", "curl"])

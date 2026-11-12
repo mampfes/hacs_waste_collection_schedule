@@ -44,15 +44,17 @@ class Source(BaseSource):
         "en": "Find your UPRN using a tool like findmyaddress.co.uk or finders.io."
     }
 
-    # The form's name carries the financial year (WASTECOLLECTIONDAYS202627), so
-    # it is matched rather than spelled; NLPGEL is East Lindsey's address gazetteer.
+    # The form's name carries the financial year and, after a mid-year route
+    # update, an optional month suffix (WASTECOLLECTIONDAYS202627, then
+    # WASTECOLLECTIONDAYS202627OCT), so it is matched rather than spelled;
+    # NLPGEL is East Lindsey's address gazetteer.
     # The reply names the next refuse, recycling, purple-bin and food-waste
     # dates and the garden-waste calendar PDF, which is read for its dated
     # collections.
     retrieve = retrievers.FanOutRetriever(
         prepare=GossFormRetriever(
             "https://www.e-lindsey.gov.uk/mywastecollections",
-            form=re.compile(r"WASTECOLLECTIONDAYS\d+"),
+            form=re.compile(r"WASTECOLLECTIONDAYS\d+[A-Z]*"),
             steps=(
                 GossStep(
                     "LOOKUP_FIELD2",
