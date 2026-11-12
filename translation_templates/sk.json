@@ -1,0 +1,732 @@
+{
+  "title": "Harmonogram odvozu odpadu",
+  "config": {
+    "abort": {
+      "already_configured": "Tento zdroj je už nakonfigurovaný."
+    },
+    "step": {
+      "user": {
+        "title": "Vyberte krajinu",
+        "data": {
+          "country": "Krajina"
+        },
+        "data_description": {
+          "country": "Vyberte svoju krajinu alebo možnosť *Generic*, ak chcete nastaviť zdroj *ICS*."
+        }
+      },
+      "source": {
+        "title": "Vyberte zdroj",
+        "description": "Vyberte poskytovateľa služby zo zoznamu.",
+        "data": {
+          "name": "Zdroj"
+        }
+      },
+      "flow_type": {
+        "title": "Vyberte podrobnosti konfigurácie",
+        "description": "Vyberte, do akej miery chcete túto integráciu nakonfigurovať. Ak chcete nastaviť iba základný kalendár, ponechajte pole prázdne.",
+        "data": {
+          "show_customize_config": "Zobraziť nastavenia prispôsobenia udalostí odvozu",
+          "default_sensors": "Predvolené senzory"
+        },
+        "data_description": {
+          "show_customize_config": "Začiarknite, ak chcete prispôsobiť typy odvozu.",
+          "default_sensors": "Vyberte základné senzory, ktoré chcete vytvoriť. Môžete ich kombinovať s vlastnými senzormi."
+        }
+      },
+      "customize_select": {
+        "title": "Prispôsobenie typu odvozu: vyberte (voliteľné)",
+        "description": "Vyberte typy odvozu, ktoré chcete prispôsobiť v ďalšom kroku.",
+        "data": {
+          "type": "Typ (voliteľné)"
+        },
+        "data_description": {
+          "type": "V ďalšom kroku budete môcť zmeniť názov alebo ikonu, nastaviť samostatný kalendár alebo typ odvozu skryť."
+        }
+      },
+      "customize": {
+        "title": "Prispôsobenie typu odvozu ({index}/{total}): {type}",
+        "description": "Prispôsobte typ {type}. Ak chcete použiť predvolené hodnoty, nechajte všetky polia prázdne.",
+        "data": {
+          "alias": "Alternatívny názov",
+          "show": "Zobraziť",
+          "icon": "Ikona",
+          "picture": "Obrázok",
+          "use_dedicated_calendar": "Použiť samostatný kalendár",
+          "dedicated_calendar_title": "Názov samostatného kalendára",
+          "color": "Farba (#RRGGBB; predvolená pri prázdnom poli)"
+        },
+        "data_description": {
+          "alias": "Nový názov typu odvozu (iba ak ho chcete zmeniť).",
+          "show": "Zrušením začiarknutia skryjete tento typ odvozu.",
+          "icon": "Ikona typu odvozu (iba ak ju chcete zmeniť).",
+          "picture": "Cesta k obrázku pre daný typ odvozu.",
+          "use_dedicated_calendar": "Začiarknite, ak má mať tento typ odvozu vlastnú entitu kalendára.",
+          "dedicated_calendar_title": "Názov entity samostatného kalendára."
+        }
+      },
+      "args": {
+        "title": "Konfigurovať zdroj",
+        "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
+        "data": {
+          "calendar_title": "Názov kalendára"
+        },
+        "data_description": {
+          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom."
+        }
+      },
+      "cascade_confirm": {
+        "title": "Konfigurovať zdroj",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Názov kalendára",
+          "app_id": "ID aplikácie",
+          "f_abfallarten": "Druhy odpadu",
+          "hpid": "ID domovskej stránky",
+          "key": "Kľúč API",
+          "municipality": "Obec",
+          "ort": "Okres",
+          "realmid": "ID realmu",
+          "split_bins": "Rozdeliť nádoby podľa zložiek odpadu",
+          "wasteTypes": "Druhy odpadu"
+        },
+        "data_description": {
+          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom.",
+          "f_abfallarten": "Voliteľný filter: druhy odpadu, ktoré sa majú zahrnúť."
+        }
+      },
+      "reconfigure": {
+        "title": "Znovu nakonfigurovať zdroj",
+        "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
+        "data": {
+          "calendar_title": "Názov kalendára"
+        }
+      }
+    },
+    "error": {
+      "invalid_weekday": "Neplatný deň v týždni. Zadajte platný deň (MO, TU, WE, TH, FR, SA, SU).",
+      "invalid_count": "Neplatný počet. Zadajte platné číslo.",
+      "invalid_weekdays": "Neplatný formát dňa v týždni. Zadajte skratku (MO, TU, WE, TH, FR, SA, SU) alebo slovník, napríklad MO: 1.",
+      "invalid_source": "Nevybrali ste zdroj. Vyberte platný zdroj.",
+      "fetch_error": "Zdroj vrátil neplatnú odpoveď: „{fetch_error_message}“. Skontrolujte zadané argumenty a skúste to znova.",
+      "invalid_arg": "Neplatný argument: „{invalid_arg_message}“",
+      "fetch_empty": "Zdroj vrátil prázdnu odpoveď. Skontrolujte zadané argumenty a skúste to znova.",
+      "invalid_template": "Šablóna je neplatná. Skontrolujte syntax a skúste to znova.",
+      "skip_additional": "Nie je možné súčasne preskočiť aktuálny senzor a pridať ďalšie senzory.",
+      "name_exists": "Názov senzora už existuje. Vyberte iný názov.",
+      "preset_selected": "Nie je možné súčasne vybrať predvoľbu a zadať vlastné hodnoty.",
+      "sensor_name_empty": "Názov senzora nesmie byť prázdny. Zadajte názov.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Názov samostatného kalendára môžete zadať iba vtedy, ak je samostatný kalendár zapnutý.",
+      "invalid_sensor": "Skontrolujte nastavenia senzora, šablóny a farbu vo formáte #RRGGBB."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Harmonogram odvozu odpadu",
+        "menu_options": {
+          "source_settings": "Nastavenia zdroja",
+          "sensors": "Senzory",
+          "waste_types": "Druhy odpadu"
+        }
+      },
+      "customize": {
+        "title": "Upraviť/vytvoriť prispôsobenie typu odvozu ({index}/{total}): {type}",
+        "description": "Upraviť/vytvoriť prispôsobenie pre „{type}“. Ak chcete použiť predvolené hodnoty, nechajte všetky polia prázdne.",
+        "data": {
+          "delete": "Odstrániť",
+          "alias": "Alternatívny názov",
+          "show": "Zobraziť",
+          "icon": "Ikona",
+          "picture": "Obrázok",
+          "use_dedicated_calendar": "Použiť samostatný kalendár",
+          "dedicated_calendar_title": "Názov samostatného kalendára",
+          "color": "Farba (#RRGGBB; predvolená pri prázdnom poli)"
+        },
+        "data_description": {
+          "delete": "Odstrániť toto prispôsobenie.",
+          "alias": "Nový názov typu odvozu (iba ak ho chcete zmeniť).",
+          "show": "Zrušením začiarknutia skryjete tento typ odvozu.",
+          "icon": "Ikona typu odvozu (iba ak ju chcete zmeniť).",
+          "picture": "Cesta k obrázku pre daný typ odvozu.",
+          "use_dedicated_calendar": "Začiarknite, ak má mať tento typ odvozu vlastnú entitu kalendára.",
+          "dedicated_calendar_title": "Názov entity samostatného kalendára."
+        }
+      },
+      "source_settings": {
+        "description": "Aktualizovať podrobnosti harmonogramu odvozu odpadu.",
+        "data": {
+          "calendar_title": "Názov kalendára",
+          "separator": "Oddeľovač",
+          "fetch_time": "Čas načítania",
+          "random_fetch_time_offset": "Náhodný posun načítania (minúty)",
+          "day_switch_time": "Čas zmeny dňa",
+          "fetch_interval_days": "Počet dní medzi načítaniami",
+          "day_offset": "Posun dňa",
+          "ignore_duplicates": "Ignorovať duplicitné položky za deň",
+          "show_original_label": "Zobraziť pôvodný názov poskytovateľa"
+        },
+        "data_description": {
+          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom.",
+          "separator": "Používa sa na spájanie položiek, ak zdroj vráti viacero hodnôt pre jeden deň.",
+          "fetch_time": "Čas vo formáte „HH:MM“, keď Home Assistant požiada poskytovateľa o najnovší harmonogram odvozu.",
+          "random_fetch_time_offset": "Čas načítania sa náhodne posunie až o zadaný počet minút. Pomáha rozložiť požiadavky Home Assistant v čase a znížiť špičkové zaťaženie poskytovateľov služieb.",
+          "day_switch_time": "Čas vo formáte „HH:MM“, keď Home Assistant ukončí aktuálnu položku a prejde na ďalšiu.",
+          "fetch_interval_days": "Určuje, ako často Home Assistant načítava udalosti odvozu odpadu z tohto zdroja kalendára. Predvolená hodnota je 1 deň. Pri hodnote 2 sa udalosti načítajú každé 2 dni.",
+          "day_offset": "Posun dátumu odvozu v dňoch (môže byť záporný). Ak nezadáte hodnotu, použije sa predvolená hodnota 0.",
+          "ignore_duplicates": "Ak je táto možnosť zapnutá, duplicitné záznamy rovnakého druhu odpadu v ten istý deň sa odstránia a pre každý druh zostane iba jeden záznam.",
+          "show_original_label": "Ak je táto možnosť zapnutá (predvolené nastavenie), niektoré zdroje ponechajú v popise odvozu pôvodný názov poskytovateľa (napr. presný názov nádoby) aj po priradení k štandardnému druhu odpadu. Vypnutím pôvodný názov skryjete."
+        },
+        "title": "Nastavenia zdroja"
+      },
+      "sensors": {
+        "title": "Senzory",
+        "data": {
+          "predefined": "Preddefinované senzory",
+          "edit_sensor": "Upraviť senzor",
+          "device_controls": "Ovládacie prvky zariadenia",
+          "auto_add_types": "Automaticky pridávať novo zistené typy"
+        }
+      },
+      "edit_sensor": {
+        "title": "Upraviť senzor",
+        "data": {
+          "name": "Názov",
+          "enabled": "Zapnuté",
+          "state_format": "Text stavu",
+          "language": "Jazyk",
+          "date_format": "Formát dátumu",
+          "details_format": "Formát podrobností",
+          "count": "Počet",
+          "leadtime": "Predstih (dni)",
+          "unique_types": "Každý typ iba raz",
+          "exclude_types": "Vylúčiť typy",
+          "advanced": "Rozšírené nastavenia",
+          "action": "Akcia",
+          "types": "Druhy odpadu",
+          "kind": "Typ senzora"
+        }
+      },
+      "sensor_advanced": {
+        "title": "Rozšírené nastavenia",
+        "data": {
+          "event_index": "Index odvozu",
+          "value_template": "Vlastná šablóna stavu",
+          "date_template": "Vlastná šablóna dátumu",
+          "color": "Farba (#RRGGBB; predvolená pri prázdnom poli)"
+        }
+      },
+      "waste_types": {
+        "title": "Druhy odpadu",
+        "data": {
+          "types": "Druhy odpadu"
+        }
+      }
+    },
+    "error": {
+      "time_format": "Časy treba zadávať vo formáte HH:MM.",
+      "invalid_template": "Šablóna je neplatná. Skontrolujte syntax a skúste to znova.",
+      "name_exists": "Názov senzora už existuje. Vyberte iný názov.",
+      "preset_selected": "Nie je možné súčasne vybrať predvoľbu a zadať vlastné hodnoty.",
+      "sensor_name_empty": "Názov senzora nesmie byť prázdny. Zadajte názov.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Názov samostatného kalendára môžete zadať iba vtedy, ak je samostatný kalendár zapnutý.",
+      "invalid_sensor": "Skontrolujte nastavenia senzora, šablóny a farbu vo formáte #RRGGBB."
+    },
+    "abort": {
+      "sensor_removed": "Tento senzor bol odstránený, keď bol otvorený editor. Znova otvorte možnosti senzora."
+    }
+  },
+  "selector": {
+    "details_format": {
+      "options": {
+        "types_in_days": "Typy a odpočítavanie",
+        "in_days": "Odpočítavanie",
+        "relative": "Dnes / zajtra / o N dní",
+        "date": "Dátum odvozu",
+        "types": "Typy odvozu",
+        "days": "Počet dní",
+        "custom": "Vlastná šablóna",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Deň v týždni, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Deň v týždni, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Deň v týždni, YYYY-MM-DD",
+        "upcoming": "Nadchádzajúce dátumy",
+        "appointment_types": "Najbližší dátum pre každý typ",
+        "generic": "Štruktúrované záznamy",
+        "hidden": "Skryť podrobnosti",
+        "schedule": "Harmonogram odvozu",
+        "days_to": "Dní do odvozu",
+        "last_update": "Posledná aktualizácia",
+        "auto": "Jazyk Home Assistant",
+        "en": "Angličtina",
+        "de": "Nemčina",
+        "fr": "Francúzština",
+        "it": "Taliančina",
+        "nl": "Holandčina",
+        "sl": "Slovinčina",
+        "da": "Dánčina",
+        "fi": "Fínčina",
+        "sv": "Švédčina",
+        "nb": "Nórčina (bokmål)",
+        "add_custom": "Pridať vlastný senzor",
+        "save": "Uložiť",
+        "reset": "Obnoviť predvolené hodnoty",
+        "duplicate": "Duplikovať ako vlastný senzor",
+        "delete": "Odstrániť vlastný senzor"
+      }
+    },
+    "default_sensors": {
+      "options": {
+        "legacy": "Jeden senzor pre každý druh odpadu",
+        "new": "Prehľadové senzory (najbližší odvoz, počet dní do odvozu, posledná aktualizácia)"
+      }
+    },
+    "custom_flow_types": {
+      "options": {
+        "yearly": "Ročne",
+        "monthly": "Mesačne",
+        "weekly": "Týždenne",
+        "daily": "Denne"
+      }
+    },
+    "sensor_select": {
+      "options": {
+        "sensor_select_add_new": "Pridať nový senzor"
+      }
+    },
+    "state_format": {
+      "options": {
+        "types_in_days": "Typy a odpočítavanie",
+        "in_days": "Odpočítavanie",
+        "relative": "Dnes / zajtra / o N dní",
+        "date": "Dátum odvozu",
+        "types": "Typy odvozu",
+        "days": "Počet dní",
+        "custom": "Vlastná šablóna",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Deň v týždni, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Deň v týždni, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Deň v týždni, YYYY-MM-DD",
+        "upcoming": "Nadchádzajúce dátumy",
+        "appointment_types": "Najbližší dátum pre každý typ",
+        "generic": "Štruktúrované záznamy",
+        "hidden": "Skryť podrobnosti",
+        "schedule": "Harmonogram odvozu",
+        "days_to": "Dní do odvozu",
+        "last_update": "Posledná aktualizácia",
+        "auto": "Jazyk Home Assistant",
+        "en": "Angličtina",
+        "de": "Nemčina",
+        "fr": "Francúzština",
+        "it": "Taliančina",
+        "nl": "Holandčina",
+        "sl": "Slovinčina",
+        "da": "Dánčina",
+        "fi": "Fínčina",
+        "sv": "Švédčina",
+        "nb": "Nórčina (bokmål)",
+        "add_custom": "Pridať vlastný senzor",
+        "save": "Uložiť",
+        "reset": "Obnoviť predvolené hodnoty",
+        "duplicate": "Duplikovať ako vlastný senzor",
+        "delete": "Odstrániť vlastný senzor"
+      }
+    },
+    "date_format": {
+      "options": {
+        "types_in_days": "Typy a odpočítavanie",
+        "in_days": "Odpočítavanie",
+        "relative": "Dnes / zajtra / o N dní",
+        "date": "Dátum odvozu",
+        "types": "Typy odvozu",
+        "days": "Počet dní",
+        "custom": "Vlastná šablóna",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Deň v týždni, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Deň v týždni, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Deň v týždni, YYYY-MM-DD",
+        "upcoming": "Nadchádzajúce dátumy",
+        "appointment_types": "Najbližší dátum pre každý typ",
+        "generic": "Štruktúrované záznamy",
+        "hidden": "Skryť podrobnosti",
+        "schedule": "Harmonogram odvozu",
+        "days_to": "Dní do odvozu",
+        "last_update": "Posledná aktualizácia",
+        "auto": "Jazyk Home Assistant",
+        "en": "Angličtina",
+        "de": "Nemčina",
+        "fr": "Francúzština",
+        "it": "Taliančina",
+        "nl": "Holandčina",
+        "sl": "Slovinčina",
+        "da": "Dánčina",
+        "fi": "Fínčina",
+        "sv": "Švédčina",
+        "nb": "Nórčina (bokmål)",
+        "add_custom": "Pridať vlastný senzor",
+        "save": "Uložiť",
+        "reset": "Obnoviť predvolené hodnoty",
+        "duplicate": "Duplikovať ako vlastný senzor",
+        "delete": "Odstrániť vlastný senzor"
+      }
+    },
+    "language": {
+      "options": {
+        "types_in_days": "Typy a odpočítavanie",
+        "in_days": "Odpočítavanie",
+        "relative": "Dnes / zajtra / o N dní",
+        "date": "Dátum odvozu",
+        "types": "Typy odvozu",
+        "days": "Počet dní",
+        "custom": "Vlastná šablóna",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Deň v týždni, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Deň v týždni, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Deň v týždni, YYYY-MM-DD",
+        "upcoming": "Nadchádzajúce dátumy",
+        "appointment_types": "Najbližší dátum pre každý typ",
+        "generic": "Štruktúrované záznamy",
+        "hidden": "Skryť podrobnosti",
+        "schedule": "Harmonogram odvozu",
+        "days_to": "Dní do odvozu",
+        "last_update": "Posledná aktualizácia",
+        "auto": "Jazyk Home Assistant",
+        "en": "Angličtina",
+        "de": "Nemčina",
+        "fr": "Francúzština",
+        "it": "Taliančina",
+        "nl": "Holandčina",
+        "sl": "Slovinčina",
+        "da": "Dánčina",
+        "fi": "Fínčina",
+        "sv": "Švédčina",
+        "nb": "Nórčina (bokmål)",
+        "add_custom": "Pridať vlastný senzor",
+        "save": "Uložiť",
+        "reset": "Obnoviť predvolené hodnoty",
+        "duplicate": "Duplikovať ako vlastný senzor",
+        "delete": "Odstrániť vlastný senzor"
+      }
+    },
+    "kind": {
+      "options": {
+        "types_in_days": "Typy a odpočítavanie",
+        "in_days": "Odpočítavanie",
+        "relative": "Dnes / zajtra / o N dní",
+        "date": "Dátum odvozu",
+        "types": "Typy odvozu",
+        "days": "Počet dní",
+        "custom": "Vlastná šablóna",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Deň v týždni, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Deň v týždni, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Deň v týždni, YYYY-MM-DD",
+        "upcoming": "Nadchádzajúce dátumy",
+        "appointment_types": "Najbližší dátum pre každý typ",
+        "generic": "Štruktúrované záznamy",
+        "hidden": "Skryť podrobnosti",
+        "schedule": "Harmonogram odvozu",
+        "days_to": "Dní do odvozu",
+        "last_update": "Posledná aktualizácia",
+        "auto": "Jazyk Home Assistant",
+        "en": "Angličtina",
+        "de": "Nemčina",
+        "fr": "Francúzština",
+        "it": "Taliančina",
+        "nl": "Holandčina",
+        "sl": "Slovinčina",
+        "da": "Dánčina",
+        "fi": "Fínčina",
+        "sv": "Švédčina",
+        "nb": "Nórčina (bokmål)",
+        "add_custom": "Pridať vlastný senzor",
+        "save": "Uložiť",
+        "reset": "Obnoviť predvolené hodnoty",
+        "duplicate": "Duplikovať ako vlastný senzor",
+        "delete": "Odstrániť vlastný senzor"
+      }
+    },
+    "action": {
+      "options": {
+        "types_in_days": "Typy a odpočítavanie",
+        "in_days": "Odpočítavanie",
+        "relative": "Dnes / zajtra / o N dní",
+        "date": "Dátum odvozu",
+        "types": "Typy odvozu",
+        "days": "Počet dní",
+        "custom": "Vlastná šablóna",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Deň v týždni, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Deň v týždni, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Deň v týždni, YYYY-MM-DD",
+        "upcoming": "Nadchádzajúce dátumy",
+        "appointment_types": "Najbližší dátum pre každý typ",
+        "generic": "Štruktúrované záznamy",
+        "hidden": "Skryť podrobnosti",
+        "schedule": "Harmonogram odvozu",
+        "days_to": "Dní do odvozu",
+        "last_update": "Posledná aktualizácia",
+        "auto": "Jazyk Home Assistant",
+        "en": "Angličtina",
+        "de": "Nemčina",
+        "fr": "Francúzština",
+        "it": "Taliančina",
+        "nl": "Holandčina",
+        "sl": "Slovinčina",
+        "da": "Dánčina",
+        "fi": "Fínčina",
+        "sv": "Švédčina",
+        "nb": "Nórčina (bokmål)",
+        "add_custom": "Pridať vlastný senzor",
+        "save": "Uložiť",
+        "reset": "Obnoviť predvolené hodnoty",
+        "duplicate": "Duplikovať ako vlastný senzor",
+        "delete": "Odstrániť vlastný senzor"
+      }
+    }
+  },
+  "issues": {
+    "legacy_sensors": {
+      "title": "Senzory, ktoré zostali po predchádzajúcom premenovaní",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Odstrániť záznamy zastaraných senzorov",
+            "description": "Tieto zastarané senzory nemajú uloženú konfiguráciu: {entities}. Pred odstránením skontrolujte automatizácie a nástenky.\n\nOdstrániť uvedené zastarané záznamy z registra? Aktívne migrované senzory zostanú zachované."
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "state_format": {
+        "name": "Text stavu",
+        "state": {
+          "types_in_days": "Typy a odpočítavanie",
+          "in_days": "Odpočítavanie",
+          "relative": "Dnes / zajtra / o N dní",
+          "date": "Dátum odvozu",
+          "types": "Typy odvozu",
+          "days": "Počet dní",
+          "custom": "Vlastná šablóna",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Deň v týždni, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Deň v týždni, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Deň v týždni, YYYY-MM-DD",
+          "upcoming": "Nadchádzajúce dátumy",
+          "appointment_types": "Najbližší dátum pre každý typ",
+          "generic": "Štruktúrované záznamy",
+          "hidden": "Skryť podrobnosti",
+          "schedule": "Harmonogram odvozu",
+          "days_to": "Dní do odvozu",
+          "last_update": "Posledná aktualizácia",
+          "auto": "Jazyk Home Assistant",
+          "en": "Angličtina",
+          "de": "Nemčina",
+          "fr": "Francúzština",
+          "it": "Taliančina",
+          "nl": "Holandčina",
+          "sl": "Slovinčina",
+          "da": "Dánčina",
+          "fi": "Fínčina",
+          "sv": "Švédčina",
+          "nb": "Nórčina (bokmål)",
+          "add_custom": "Pridať vlastný senzor",
+          "save": "Uložiť",
+          "reset": "Obnoviť predvolené hodnoty",
+          "duplicate": "Duplikovať ako vlastný senzor",
+          "delete": "Odstrániť vlastný senzor"
+        }
+      },
+      "language": {
+        "name": "Jazyk",
+        "state": {
+          "types_in_days": "Typy a odpočítavanie",
+          "in_days": "Odpočítavanie",
+          "relative": "Dnes / zajtra / o N dní",
+          "date": "Dátum odvozu",
+          "types": "Typy odvozu",
+          "days": "Počet dní",
+          "custom": "Vlastná šablóna",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Deň v týždni, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Deň v týždni, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Deň v týždni, YYYY-MM-DD",
+          "upcoming": "Nadchádzajúce dátumy",
+          "appointment_types": "Najbližší dátum pre každý typ",
+          "generic": "Štruktúrované záznamy",
+          "hidden": "Skryť podrobnosti",
+          "schedule": "Harmonogram odvozu",
+          "days_to": "Dní do odvozu",
+          "last_update": "Posledná aktualizácia",
+          "auto": "Jazyk Home Assistant",
+          "en": "Angličtina",
+          "de": "Nemčina",
+          "fr": "Francúzština",
+          "it": "Taliančina",
+          "nl": "Holandčina",
+          "sl": "Slovinčina",
+          "da": "Dánčina",
+          "fi": "Fínčina",
+          "sv": "Švédčina",
+          "nb": "Nórčina (bokmål)",
+          "add_custom": "Pridať vlastný senzor",
+          "save": "Uložiť",
+          "reset": "Obnoviť predvolené hodnoty",
+          "duplicate": "Duplikovať ako vlastný senzor",
+          "delete": "Odstrániť vlastný senzor"
+        }
+      },
+      "date_format": {
+        "name": "Formát dátumu",
+        "state": {
+          "types_in_days": "Typy a odpočítavanie",
+          "in_days": "Odpočítavanie",
+          "relative": "Dnes / zajtra / o N dní",
+          "date": "Dátum odvozu",
+          "types": "Typy odvozu",
+          "days": "Počet dní",
+          "custom": "Vlastná šablóna",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Deň v týždni, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Deň v týždni, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Deň v týždni, YYYY-MM-DD",
+          "upcoming": "Nadchádzajúce dátumy",
+          "appointment_types": "Najbližší dátum pre každý typ",
+          "generic": "Štruktúrované záznamy",
+          "hidden": "Skryť podrobnosti",
+          "schedule": "Harmonogram odvozu",
+          "days_to": "Dní do odvozu",
+          "last_update": "Posledná aktualizácia",
+          "auto": "Jazyk Home Assistant",
+          "en": "Angličtina",
+          "de": "Nemčina",
+          "fr": "Francúzština",
+          "it": "Taliančina",
+          "nl": "Holandčina",
+          "sl": "Slovinčina",
+          "da": "Dánčina",
+          "fi": "Fínčina",
+          "sv": "Švédčina",
+          "nb": "Nórčina (bokmål)",
+          "add_custom": "Pridať vlastný senzor",
+          "save": "Uložiť",
+          "reset": "Obnoviť predvolené hodnoty",
+          "duplicate": "Duplikovať ako vlastný senzor",
+          "delete": "Odstrániť vlastný senzor"
+        }
+      },
+      "details_format": {
+        "name": "Formát podrobností",
+        "state": {
+          "types_in_days": "Typy a odpočítavanie",
+          "in_days": "Odpočítavanie",
+          "relative": "Dnes / zajtra / o N dní",
+          "date": "Dátum odvozu",
+          "types": "Typy odvozu",
+          "days": "Počet dní",
+          "custom": "Vlastná šablóna",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Deň v týždni, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Deň v týždni, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Deň v týždni, YYYY-MM-DD",
+          "upcoming": "Nadchádzajúce dátumy",
+          "appointment_types": "Najbližší dátum pre každý typ",
+          "generic": "Štruktúrované záznamy",
+          "hidden": "Skryť podrobnosti",
+          "schedule": "Harmonogram odvozu",
+          "days_to": "Dní do odvozu",
+          "last_update": "Posledná aktualizácia",
+          "auto": "Jazyk Home Assistant",
+          "en": "Angličtina",
+          "de": "Nemčina",
+          "fr": "Francúzština",
+          "it": "Taliančina",
+          "nl": "Holandčina",
+          "sl": "Slovinčina",
+          "da": "Dánčina",
+          "fi": "Fínčina",
+          "sv": "Švédčina",
+          "nb": "Nórčina (bokmål)",
+          "add_custom": "Pridať vlastný senzor",
+          "save": "Uložiť",
+          "reset": "Obnoviť predvolené hodnoty",
+          "duplicate": "Duplikovať ako vlastný senzor",
+          "delete": "Odstrániť vlastný senzor"
+        }
+      }
+    },
+    "number": {
+      "count": {
+        "name": "Počet (0 = ∞)"
+      },
+      "leadtime": {
+        "name": "Predstih (dni) (-1 = ∞)"
+      },
+      "event_index": {
+        "name": "Index odvozu"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Zapnuté"
+      },
+      "unique_types": {
+        "name": "Každý typ iba raz"
+      },
+      "advanced": {
+        "name": "Rozšírené nastavenia"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Názov"
+      },
+      "value_template": {
+        "name": "Vlastná šablóna stavu"
+      },
+      "date_template": {
+        "name": "Vlastná šablóna dátumu"
+      },
+      "color": {
+        "name": "Farba (#RRGGBB; predvolená pri prázdnom poli)"
+      }
+    },
+    "button": {
+      "create_sensor": {
+        "name": "Vytvoriť senzor {name}"
+      },
+      "delete": {
+        "name": "Odstrániť vlastný senzor"
+      }
+    }
+  },
+  "exceptions": {
+    "type_unavailable": {
+      "message": "Tento typ odvozu už nie je v aktuálnom harmonograme."
+    },
+    "custom_template_required": {
+      "message": "Najprv nastavte vlastnú šablónu stavu v rozšírených nastaveniach."
+    }
+  }
+}

@@ -2,6 +2,23 @@ import json
 from collections.abc import Iterable
 
 DEFAULT_PARAM_TRANSLATIONS = {
+    "sk": {
+        "address": "Adresa",
+        "bill_number": "Číslo faktúry",
+        "calendar_title": "Názov kalendára",
+        "city": "Mesto",
+        "district": "Okres",
+        "house_number": "Číslo domu",
+        "municipality": "Obec",
+        "password": "Heslo",
+        "postcode": "PSČ",
+        "street": "Ulica",
+        "town": "Mesto",
+        "types": "Druhy odpadu",
+        "url": "URL",
+        "username": "Používateľské meno",
+        "zone": "Zóna",
+    },
     "nb": {
         "address": "Adresse",
         "bill_number": "Fakturanummer",

@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 # would only cover a fixed value set and not these surfaces. Any HA language
 # outside this set falls back to English. Add a language here AND to the
 # config-flow allowlist (update_docu_links.LANGUAGES) to keep the two in step.
-SUPPORTED_LANGUAGES = ("en", "de", "fr", "it", "nl", "sl", "da", "fi", "sv", "nb")
+SUPPORTED_LANGUAGES = ("en", "de", "fr", "it", "nl", "sl", "da", "fi", "sv", "nb", "sk")
 
 
 @dataclass(frozen=True)
@@ -85,6 +85,7 @@ GENERAL_WASTE = WasteType(
         "nl": "Restafval",
         "sl": "Mešani komunalni odpadki",
         "da": "Restaffald",
+        "sk": "Zmesový komunálny odpad",
     },
     aliases={
         "en": [
@@ -128,6 +129,7 @@ RECYCLABLES = WasteType(
         "nl": "Recycling",
         "sl": "Mešana embalaža",
         "da": "Genanvendeligt affald",
+        "sk": "Recyklovateľný odpad",
     },
     aliases={
         "en": [
@@ -182,6 +184,7 @@ ORGANIC = WasteType(
         "nl": "GFT-afval",
         "sl": "Biološki odpadki",
         "da": "Organisk affald",
+        "sk": "Biologický odpad",
     },
     aliases={
         "en": ["organic", "biowaste", "fogo", "food and garden"],
@@ -216,6 +219,7 @@ PAPER = WasteType(
         "nl": "Papier en karton",
         "sl": "Papir",
         "da": "Pap og papir",
+        "sk": "Papier",
     },
     aliases={
         "en": ["paper", "cardboard", "paper and card", "blue bin"],
@@ -265,6 +269,7 @@ GLASS = WasteType(
         "nl": "Glas",
         "sl": "Steklo",
         "da": "Glas",
+        "sk": "Sklo",
     },
     aliases={
         "en": ["glass bottles"],
@@ -291,6 +296,7 @@ FOOD_WASTE = WasteType(
         "nl": "Etensresten",
         "sl": "Ostanki hrane",
         "da": "Madaffald",
+        "sk": "Kuchynský bioodpad",
     },
     aliases={
         "en": ["food", "food scraps", "food caddy"],
@@ -318,6 +324,7 @@ GARDEN_WASTE = WasteType(
         "nl": "Tuinafval",
         "sl": "Zeleni odrez",
         "da": "Haveaffald",
+        "sk": "Záhradný bioodpad",
     },
     aliases={
         "en": [
@@ -373,6 +380,7 @@ BULKY_WASTE = WasteType(
         "nl": "Grofvuil",
         "sl": "Kosovni odpadki",
         "da": "Storskrald",
+        "sk": "Objemný odpad",
     },
     aliases={
         "en": ["bulky", "bulk waste", "hard waste", "large items"],
@@ -401,6 +409,7 @@ HAZARDOUS = WasteType(
         "nl": "Klein chemisch afval",
         "sl": "Nevarni odpadki",
         "da": "Farligt affald",
+        "sk": "Nebezpečný odpad",
     },
     aliases={
         "en": ["hazardous", "household hazardous waste", "hhw", "chemicals"],
@@ -440,6 +449,7 @@ ELECTRONICS = WasteType(
         "nl": "Elektronisch afval",
         "sl": "Elektronski odpadki",
         "da": "Elektronikaffald",
+        "sk": "Elektroodpad",
     },
     aliases={
         "en": ["electronics", "e-waste", "weee", "white goods", "appliances"],
@@ -482,6 +492,7 @@ TEXTILES = WasteType(
         "nl": "Textiel",
         "sl": "Tekstil",
         "da": "Tekstiler",
+        "sk": "Textil",
     },
     aliases={
         "en": [
@@ -538,6 +549,7 @@ METAL = WasteType(
         "nl": "Metaal",
         "sl": "Kovina",
         "da": "Metal",
+        "sk": "Kovy",
     },
     aliases={},
     auto_resolve=False,
@@ -558,6 +570,7 @@ PLASTIC = WasteType(
         "nl": "Plastic",
         "sl": "Plastika",
         "da": "Plastik",
+        "sk": "Plast",
     },
     aliases={},
     auto_resolve=False,
@@ -578,6 +591,7 @@ CARTONS = WasteType(
         "nl": "Drank- en voedselkartons",
         "sl": "Kartonska embalaža za živila in pijače",
         "da": "Mad- og drikkekartoner",
+        "sk": "Nápojové kartóny",
     },
     aliases={},
     auto_resolve=False,
@@ -598,6 +612,7 @@ OTHER = WasteType(
         "nl": "Overig",
         "sl": "Drugo",
         "da": "Andet",
+        "sk": "Iné",
     },
     auto_resolve=False,
 )
