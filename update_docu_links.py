@@ -14,7 +14,12 @@ from typing import Any, NotRequired, TypedDict, TypeVar
 import yaml
 
 from default_translations import default_descriptions, default_translations
-from doc_generator import _is_base_source, render_source_doc
+from doc_generator import (
+    GENERATED_MD_HEADER,
+    GENERATED_SECTION_NOTICE,
+    _is_base_source,
+    render_source_doc,
+)
 from sensor_translations import apply_sensor_translations
 
 SECRET_FILENAME = "secrets.yaml"
@@ -638,7 +643,7 @@ def write_ics_md_file(filename: Path, data: IcsSourceData) -> None:
         )
         return
 
-    md = f"# {data['title']}\n"
+    md = GENERATED_MD_HEADER + f"# {data['title']}\n"
     md += "\n"
     md += f"{data['title']} is supported by the generic [ICS](/doc/source/ics.md) source. For all available configuration options, please refer to the source description.\n"
     md += "\n"
@@ -1046,7 +1051,11 @@ def update_readme_md(countries: dict[str, list[SourceInfo]]):
         str += "</details>\n"
         str += "\n"
 
-    _patch_file(PROJECT_ROOT / "README.md", "country", str)
+    _patch_file(
+        PROJECT_ROOT / "README.md",
+        "country",
+        GENERATED_SECTION_NOTICE + "\n" + str,
+    )
 
 
 def update_info_md(countries: dict[str, list[SourceInfo]]):

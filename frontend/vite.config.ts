@@ -30,6 +30,12 @@ export default defineConfig({
     target: "es2022",
     outDir: "../custom_components/waste_collection_schedule/frontend",
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        banner:
+          "/* Generated from frontend/src by `npm run build`. Do not edit by hand. */",
+      },
+    },
     lib: {
       entry: "src/cards.ts",
       formats: ["es"],

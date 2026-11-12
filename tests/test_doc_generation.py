@@ -31,8 +31,19 @@ sys.path.insert(
 # doc_generator lives at the repo root (next to update_docu_links.py).
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from doc_generator import render_source_doc
+from doc_generator import (
+    GENERATED_MD_HEADER,
+    GENERATED_SECTION_NOTICE,
+    render_source_doc,
+)
 from sensor_translations import apply_sensor_translations
+
+
+def _body(doc: str) -> str:
+    """Strip the generated-file HTML comment so structural asserts stay stable."""
+    if doc.startswith("<!--"):
+        return doc.split("-->", 1)[1].lstrip("\n")
+    return doc
 
 
 def _load_source(source_id: str):
@@ -116,7 +127,8 @@ def test_render_contains_title_and_url(source_id, expects_howto):
     source_cls = _load_source(source_id)
     doc = render_source_doc(source_id, source_cls)
 
-    assert doc.startswith(f"# {source_cls.TITLE}\n")
+    assert doc.startswith(GENERATED_MD_HEADER)
+    assert _body(doc).startswith(f"# {source_cls.TITLE}\n")
     assert source_cls.URL in doc
 
 
@@ -277,3 +289,50 @@ def test_ics_regions_key_wins_when_both_are_present():
     }
     titles = [r.title for r in ics._regions_from_definition(definition)]
     assert titles == ["Example", "New"], "the `regions:` key must win over the old one"
+
+
+def test_render_source_doc_starts_with_generated_header():
+    """The header is what tells contributors not to edit pipeline source docs."""
+    source_cls = _load_source("koppl_at")
+    doc = render_source_doc("koppl_at", source_cls)
+    assert doc.startswith(GENERATED_MD_HEADER)
+    assert _body(doc).startswith(f"# {source_cls.TITLE}\n")
+
+
+def test_write_ics_md_file_starts_with_generated_header(tmp_path):
+    import update_docu_links as generator
+
+    data = {
+        "title": "Example ICS provider",
+        "url": "https://example.invalid/calendar.ics",
+        "howto": {"en": "Download the ICS file from the provider website."},
+        "test_cases": {"Example": {"url": "https://example.invalid/calendar.ics"}},
+    }
+    out = tmp_path / "example.md"
+    generator.write_ics_md_file(out, data)
+    text = out.read_text(encoding="utf-8")
+    assert text.startswith(GENERATED_MD_HEADER)
+    assert "# Example ICS provider" in text
+
+
+def test_readme_country_section_is_prefixed_with_a_notice(tmp_path, monkeypatch):
+    """The country list is patched in place; a notice is written inside the section.
+
+    info.md is not given an extra comment line: its country marker sits at the
+    end of a table row, and a line between rows would break the HACS/GitHub table.
+    """
+    import update_docu_links as generator
+
+    readme = tmp_path / "README.md"
+    readme.write_text(
+        "intro\n<!--Begin of country section-->\nold\n<!--End of country section-->\nfooter\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(generator, "PROJECT_ROOT", tmp_path)
+    generator.update_readme_md({"Atlantis": []})
+    text = readme.read_text(encoding="utf-8")
+    assert "<!--Begin of country section-->\n" + GENERATED_SECTION_NOTICE in text
+    assert "intro" in text and "footer" in text
+    assert text.index(GENERATED_SECTION_NOTICE) < text.index(
+        "<!--End of country section-->"
+    )

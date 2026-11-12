@@ -181,4 +181,4 @@ The project follows strict semantic versioning (Option A; full policy in `doc/ve
 4. `python -m pytest tests/` passes locally.
 5. Changed files are formatted and linted with `ruff format` and `ruff check --fix`.
 6. PR targets `master` of `mampfes/hacs_waste_collection_schedule`.
-7. Do **not** commit changes to `README.md`, `info.md`, `sources.json`, `source_metadata.json`, `translations/*.json`, or `doc/ics/*.md` (CI regenerates these after merge).
+7. Do **not** commit changes to fully generated files (`sources.json`, `source_metadata.json`, `.github/source_owners.json`, `doc/ics/*.md`, pipeline `doc/source/<id>.md`). CI regenerates them after merge and a PR check rejects those edits. `README.md` / `info.md` country lists and `translations/*.json` `args_*` sections are also generated — leave them alone — but the intro, `options.step.init`, and `translation_templates/` are hand-maintained. Rebuild the frontend bundle with `npm run build` when you change `frontend/src`.
