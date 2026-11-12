@@ -52,8 +52,8 @@ ICON_MAP = {
 # conditional_field: if set, skip this waste type if the field value is falsy
 COLLECTION_FIELDS = [
     ("RefuseNextCol", "Residual waste", "residual", None),
-    ("PaperNextCol", "Green recycling box", "green", None),
-    ("DMRNextCol", "Red recycling box", "red", None),
+    ("PaperNextCol", "Red recycling box", "red", None),
+    ("DMRNextCol", "Green recycling box", "green", None),
     ("FoodNextCol", "Food waste", "food", None),
     ("GardenNextCol", "Garden waste", "garden", "ActiveGardenCollection"),
 ]
