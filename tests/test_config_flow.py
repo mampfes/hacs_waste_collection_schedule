@@ -717,7 +717,12 @@ def _walk_real_cascade(module_name: str, context: dict | None = None):
 
 
 def test_the_wizard_walks_a_recorded_cascade_one_level_per_view() -> None:
-    for module_name in ("kiedysmieci_info", "aw_harburg_de", "beachwood_oh_us"):
+    for module_name in (
+        "kiedysmieci_info",
+        "aw_harburg_de",
+        "beachwood_oh_us",
+        "luxembourg_lu",
+    ):
         asked, form, meta = _walk_real_cascade(module_name)
 
         # Every level the recording resolved was asked for on its own view, in

@@ -171,7 +171,12 @@ def record_cascading_choices(module_name: str) -> bool:
     }
     try:
         resolved = []
-        with cassette.recording(path, today, extra=extra):
+        # A process-level rows cache (luxembourg_lu) must not hide the HTTP
+        # this walk is meant to record.
+        if getattr(source_cls, "_choice_rows", "absent") != "absent":
+            source_cls._choice_rows = None
+        scrub = cassette_scrubbers.for_choices(module_name)
+        with cassette.recording(path, today, extra=extra, scrub=scrub):
             selections = dict(context)
             for field in fields:
                 if field not in expected:

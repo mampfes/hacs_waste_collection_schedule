@@ -1,0 +1,183 @@
+---
+# Commune registry for the luxembourg_lu source (national data.public.lu dataset).
+#
+# Build-time only: each entry becomes its own README / sources.json listing with
+# commune pre-filled, via regions.from_yaml() in source/luxembourg_lu.py. The source
+# does not read this file at fetch time; config-flow dropdowns come from the live CSV.
+# Re-generate from the current dataset when communes are added or renamed.
+  - title: Beaufort
+    commune: Beaufort
+  - title: Bech
+    commune: Bech
+  - title: Beckerich
+    commune: Beckerich
+  - title: Berdorf
+    commune: Berdorf
+  - title: Bettembourg
+    commune: Bettembourg
+  - title: Bettendorf
+    commune: Bettendorf
+  - title: Betzdorf
+    commune: Betzdorf
+  - title: Bissen
+    commune: Bissen
+  - title: Biwer
+    commune: Biwer
+  - title: Boulaide
+    commune: Boulaide
+  - title: Bourscheid
+    commune: Bourscheid
+  - title: Bous-Waldbredimus
+    commune: Bous-Waldbredimus
+  - title: Clervaux
+    commune: Clervaux
+  - title: Colmar-Berg
+    commune: Colmar-Berg
+  - title: Consdorf
+    commune: Consdorf
+  - title: Contern
+    commune: Contern
+  - title: Dalheim
+    commune: Dalheim
+  - title: Diekirch
+    commune: Diekirch
+  - title: Differdange
+    commune: Differdange
+  - title: Dippach
+    commune: Dippach
+  - title: Dudelange
+    commune: Dudelange
+  - title: Echternach
+    commune: Echternach
+  - title: Ell
+    commune: Ell
+  - title: Erpeldange-sur-Sûre
+    commune: Erpeldange-sur-Sûre
+  - title: Esch-sur-Alzette
+    commune: Esch-sur-Alzette
+  - title: Esch-sur-Sûre
+    commune: Esch-sur-Sûre
+  - title: Ettelbruck
+    commune: Ettelbruck
+  - title: Feulen
+    commune: Feulen
+  - title: Fischbach
+    commune: Fischbach
+  - title: Flaxweiler
+    commune: Flaxweiler
+  - title: Frisange
+    commune: Frisange
+  - title: Goesdorf
+    commune: Goesdorf
+  - title: Grevenmacher
+    commune: Grevenmacher
+  - title: Groussbus-Wal
+    commune: Groussbus-Wal
+  - title: Heffingen
+    commune: Heffingen
+  - title: Helperknapp
+    commune: Helperknapp
+  - title: Hesperange
+    commune: Hesperange
+  - title: Kayl
+    commune: Kayl
+  - title: Kiischpelt
+    commune: Kiischpelt
+  - title: Käerjeng
+    commune: Käerjeng
+  - title: Lac de la Haute-Sûre
+    commune: Lac de la Haute-Sûre
+  - title: Larochette
+    commune: Larochette
+  - title: Lenningen
+    commune: Lenningen
+  - title: Leudelange
+    commune: Leudelange
+  - title: Lintgen
+    commune: Lintgen
+  - title: Luxembourg
+    commune: Luxembourg
+  - title: Mamer
+    commune: Mamer
+  - title: Manternach
+    commune: Manternach
+  - title: Mersch
+    commune: Mersch
+  - title: Mertert
+    commune: Mertert
+  - title: Mertzig
+    commune: Mertzig
+  - title: Mondorf-les-Bains
+    commune: Mondorf-les-Bains
+  - title: Niederanven
+    commune: Niederanven
+  - title: Nommern
+    commune: Nommern
+  - title: Parc Hosingen
+    commune: Parc Hosingen
+  - title: Préizerdaul
+    commune: Préizerdaul
+  - title: Putscheid
+    commune: Putscheid
+  - title: Pétange
+    commune: Pétange
+  - title: Rambrouch
+    commune: Rambrouch
+  - title: Reckange-sur-Mess
+    commune: Reckange-sur-Mess
+  - title: Redange/Attert
+    commune: Redange/Attert
+  - title: Reisdorf
+    commune: Reisdorf
+  - title: Remich
+    commune: Remich
+  - title: Roeser
+    commune: Roeser
+  - title: Rumelange
+    commune: Rumelange
+  - title: Saeul
+    commune: Saeul
+  - title: Sandweiler
+    commune: Sandweiler
+  - title: Sanem
+    commune: Sanem
+  - title: Schengen
+    commune: Schengen
+  - title: Schieren
+    commune: Schieren
+  - title: Schifflange
+    commune: Schifflange
+  - title: Schuttrange
+    commune: Schuttrange
+  - title: Stadtbredimus
+    commune: Stadtbredimus
+  - title: Steinsel
+    commune: Steinsel
+  - title: Tandel
+    commune: Tandel
+  - title: Troisvierges
+    commune: Troisvierges
+  - title: Useldange
+    commune: Useldange
+  - title: Vallée de l'Ernz
+    commune: Vallée de l'Ernz
+  - title: Vianden
+    commune: Vianden
+  - title: Vichten
+    commune: Vichten
+  - title: Waldbillig
+    commune: Waldbillig
+  - title: Walferdange
+    commune: Walferdange
+  - title: Weiler-la-Tour
+    commune: Weiler-la-Tour
+  - title: Weiswampach
+    commune: Weiswampach
+  - title: Wiltz
+    commune: Wiltz
+  - title: Wincrange
+    commune: Wincrange
+  - title: Winseler
+    commune: Winseler
+  - title: Wormeldange
+    commune: Wormeldange
