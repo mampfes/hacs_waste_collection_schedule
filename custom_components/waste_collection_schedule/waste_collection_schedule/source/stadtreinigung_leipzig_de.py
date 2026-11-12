@@ -24,35 +24,43 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
-        params = {
-            "old_format": 1,
-            "search": self._street,
-        }
-
         # get list of streets and house numbers
         r = requests.get(
-            "https://stadtreinigung-leipzig.de/rest/Navision/Streets", params=params
+            "https://stadtreinigung-leipzig.de/rest/odata/Streets",
+            params={"search": self._street},
         )
+        r.raise_for_status()
 
-        data = json.loads(r.text)
-        if len(data["results"]) == 0:
+        streets = json.loads(r.text).get("results") or []
+        if len(streets) == 0:
             raise SourceArgumentNotFound("street", self._street)
-        street_entry = data["results"].get(self._street)
-        if street_entry is None:
+        numbers = [
+            number
+            for entry in streets
+            if entry.get("name") == self._street
+            for number in entry.get("numbers") or []
+        ]
+        if not numbers:
             raise SourceArgumentNotFoundWithSuggestions(
-                "street", self._street, data["results"].keys()
+                "street", self._street, sorted({s.get("name") for s in streets})
             )
 
-        id = street_entry.get(str(self._house_number))
-        if id is None:
+        # a house number can have several positions (e.g. one per bin type)
+        position_nos = [
+            position
+            for number in numbers
+            if str(number.get("number")) == str(self._house_number)
+            for position in number.get("position_nos") or []
+        ]
+        if not position_nos:
             raise SourceArgumentNotFoundWithSuggestions(
                 "house_number",
                 self._house_number,
-                street_entry.keys(),
+                [n.get("number") for n in numbers],
             )
-        # get ics file
+        # get ics file, the calendar takes all positions comma-separated
         params = {
-            "position_nos": id,
+            "position_nos": ",".join(position_nos),
             "name": f"{self._street} {self._house_number}",
             "mode": "download",
         }
