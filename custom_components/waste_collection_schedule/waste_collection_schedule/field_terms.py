@@ -341,7 +341,7 @@ STATE = _term(
     "Osavaltio",
     "Delstat",
     "Delstat",
-    "Spolková krajina",
+    "Štát",
 )
 # COUNTY and DISTRICT sit at opposite ends of the same hierarchy, so keep the
 # English labels distinct: a COUNTY (Landkreis) contains municipalities, while a
