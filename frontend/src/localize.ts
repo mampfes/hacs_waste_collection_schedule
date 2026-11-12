@@ -149,7 +149,7 @@ const messages = {
     show_icons: "Zobraziť ikony",
     show_pictures: "Zobraziť obrázky",
     show_colors: "Zobraziť farby",
-    types: "Štýly druhov odpadu",
+    types: "Upraviť vzhľad druhov odpadu",
     include_types: "Iba tieto druhy odpadu",
     exclude_types: "Skryť tieto druhy odpadu",
     language: "Jazyk (voliteľné)",
