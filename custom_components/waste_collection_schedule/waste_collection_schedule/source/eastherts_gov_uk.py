@@ -1,4 +1,3 @@
-import datetime
 from typing import ClassVar, final
 
 from waste_collection_schedule import date_parsers
@@ -20,29 +19,6 @@ _NEXT_DATE = date_parsers.without_ordinals(date_parsers.next_weekday("%A %d %B")
 # date part is meaningful, as in the portal's own display logic.
 _LAST_DATE = date_parsers.auto
 _ANY_DATE = date_parsers.first_of(_NEXT_DATE, _LAST_DATE)
-
-
-def _use_key(key: str, row: dict) -> bool:
-    """Use a ``LastDateRaw`` only when it is today's collection.
-
-    Once the portal has recorded today's collection it advances ``NextDate`` to
-    the following one, so today's collection is only in ``LastDateRaw``. Earlier
-    last dates are past collections and are ignored. If the same bin's
-    ``NextDate`` is still today, that already provides the entry.
-    """
-    if not key.endswith("LastDateRaw"):
-        return True
-    today = datetime.date.today()
-    try:
-        if _LAST_DATE(str(row[key])) != today:
-            return False
-    except (ValueError, OverflowError):
-        return False
-    next_text = row.get(key.removesuffix("LastDateRaw") + "NextDate")
-    try:
-        return not (next_text and _NEXT_DATE(str(next_text)) == today)
-    except ValueError:
-        return True
 
 
 @final
@@ -89,11 +65,12 @@ class Source(BaseSource):
     )
     parse = AchieveFormsRowsParser()
     # One row with a "<Bin>NextDate" per bin ("Tuesday 6th October") and a
-    # "<Bin>LastDateRaw" (ISO timestamp), the latter used only for today.
+    # "<Bin>LastDateRaw" (ISO timestamp). keep_today uses the latter only when
+    # it is today's collection and NextDate is not already today.
     preprocess = AchieveFormsDynamicRowsPreprocessor(
         r"^(.+?)(?:NextDate|LastDateRaw)$",
-        key_filter=_use_key,
         parse_date=_ANY_DATE,
+        keep_today=("LastDateRaw", "NextDate"),
     )
     transform = RowTransformer(
         type_value_map={

@@ -2045,6 +2045,77 @@ class TestPreprocessors:
         assert seen == ["good", "no pickup scheduled", ""]
 
 
+class TestAchieveFormsKeepToday:
+    """Opt-in last-date handling on AchieveFormsDynamicRowsPreprocessor."""
+
+    _PATTERN = r"^(.+?)(?:NextDate|LastDateRaw)$"
+
+    def _preprocess(self, **kwargs):
+        from waste_collection_schedule import date_parsers
+        from waste_collection_schedule.service.AchieveForms import (
+            AchieveFormsDynamicRowsPreprocessor,
+        )
+
+        return AchieveFormsDynamicRowsPreprocessor(
+            self._PATTERN,
+            parse_date=date_parsers.auto,
+            **kwargs,
+        )
+
+    @freeze_time("2026-11-04")
+    def test_keeps_last_date_when_it_is_today(self):
+        rows = {
+            "0": {
+                "RefuseNextDate": "2026-11-18",
+                "RefuseLastDateRaw": "2026-11-04T06:00:00+00:00",
+                "RecyclingNextDate": "2026-11-11",
+                "RecyclingLastDateRaw": "2026-10-28T06:00:00+00:00",
+            }
+        }
+        assert list(self._preprocess(keep_today=("LastDateRaw", "NextDate"))(rows)) == [
+            (datetime.date(2026, 11, 18), "Refuse"),
+            (datetime.date(2026, 11, 4), "Refuse"),
+            (datetime.date(2026, 11, 11), "Recycling"),
+        ]
+
+    @freeze_time("2026-11-04")
+    def test_skips_last_date_when_next_date_is_already_today(self):
+        rows = {
+            "0": {
+                "RefuseNextDate": "2026-11-04",
+                "RefuseLastDateRaw": "2026-11-04T06:00:00+00:00",
+            }
+        }
+        assert list(self._preprocess(keep_today=("LastDateRaw", "NextDate"))(rows)) == [
+            (datetime.date(2026, 11, 4), "Refuse"),
+        ]
+
+    @freeze_time("2026-11-04")
+    def test_ignores_a_past_last_date(self):
+        rows = {
+            "0": {
+                "RefuseNextDate": "2026-11-18",
+                "RefuseLastDateRaw": "2026-10-28T06:00:00+00:00",
+            }
+        }
+        assert list(self._preprocess(keep_today=("LastDateRaw", "NextDate"))(rows)) == [
+            (datetime.date(2026, 11, 18), "Refuse"),
+        ]
+
+    @freeze_time("2026-11-04")
+    def test_option_off_leaves_past_last_dates_unchanged(self):
+        rows = {
+            "0": {
+                "RefuseNextDate": "2026-11-18",
+                "RefuseLastDateRaw": "2026-10-28T06:00:00+00:00",
+            }
+        }
+        assert list(self._preprocess()(rows)) == [
+            (datetime.date(2026, 11, 18), "Refuse"),
+            (datetime.date(2026, 10, 28), "Refuse"),
+        ]
+
+
 class TestPipelineContext:
     """Parser/preprocessor receive the source; source exposes a lazy session."""
 
