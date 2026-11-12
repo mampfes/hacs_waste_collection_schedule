@@ -267,7 +267,7 @@ POSTCODE = _term(
     "Postinumero",
     "Postnummer",
     "Postnummer",
-    "PSČ",
+    "Poštové smerovacie číslo",
     desc=(
         "Your postcode.",
         "Ihre Postleitzahl.",
@@ -279,7 +279,7 @@ POSTCODE = _term(
         "Postinumerosi.",
         "Ditt postnummer.",
         "Postnummeret ditt.",
-        "Vaše PSČ.",
+        "Vaše Poštové smerovacie číslo.",
     ),
 )
 ADDRESS = _term(
