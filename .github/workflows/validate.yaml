@@ -126,3 +126,27 @@ jobs:
         run: |
           # Informational migration metric (RFC #6561); never fails the build.
           python tools/arch_coverage.py
+
+  generated-files:
+    name: generated files
+    if: github.event_name == 'pull_request' && github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Fetch the PR base
+        # checkout@v5 on pull_request checks out the merge commit. fetch-depth
+        # 0 brings in the PR head as a parent; this extra fetch makes the base
+        # sha available for fork PRs too. Compare against HEAD (the merge
+        # commit) so we do not depend on head.sha being a named ref.
+        run: git fetch --no-tags origin ${{ github.event.pull_request.base.sha }}
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Reject edits to fully generated files
+        run: >
+          python tools/check_generated_files.py
+          --base ${{ github.event.pull_request.base.sha }}
+          --head HEAD

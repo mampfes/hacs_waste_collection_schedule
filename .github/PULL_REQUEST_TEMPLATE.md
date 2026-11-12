@@ -15,7 +15,7 @@
 - [ ] `python -m pytest tests/test_source_components.py -q` passes
 - [ ] New sources use the `BaseSource` pipeline (new legacy-style sources are not accepted; fixes to existing legacy sources are fine)
 - [ ] `ruff check --fix` and `ruff format` run on changed source files
-- [ ] No generated files in diff (README.md, info.md, sources.json, translations/*.json, CI regenerates these post-merge)
+- [ ] No fully generated files in the diff (`sources.json`, `source_metadata.json`, `.github/source_owners.json`, `doc/ics/*.md`, pipeline `doc/source/*.md`; CI regenerates these post-merge). `translations/*.json` only if you edited hand-maintained UI (`options.step.init` / a translation template), not generated `args_*` steps. Frontend bundle rebuilt with `npm run build` if `frontend/src` changed.
 - [ ] `doc/source/<name>.md` created for new legacy sources (pipeline sources generate theirs)
 - [ ] TEST_CASES use real, publicly accessible addresses (not my own)
 

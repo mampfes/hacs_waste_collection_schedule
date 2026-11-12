@@ -26,3 +26,26 @@
 *.gif   binary
 *.ico   binary
 *.zip   binary
+
+# ---------------------------------------------------------------------------
+# Generated outputs. GitHub linguist hides these from language stats and
+# marks them as generated in diffs. Existing text/eol rules above still apply.
+#
+# doc/source/*.md is mixed: pipeline source pages are generated, but legacy
+# source pages and doc/source/ics.md, static.md and multiple.md are
+# hand-written. Those generated pages are enforced by
+# tools/check_generated_files.py rather than a blanket linguist pattern.
+# translations/*.json are only partly generated (config.step.args_*); they are
+# marked for linguist but not hard-blocked by the PR guard (options.step.init
+# and translation_templates/ are hand-maintained).
+# ---------------------------------------------------------------------------
+README.md linguist-generated=true
+info.md linguist-generated=true
+doc/ics/*.md linguist-generated=true
+custom_components/waste_collection_schedule/sources.json linguist-generated=true
+custom_components/waste_collection_schedule/source_metadata.json linguist-generated=true
+custom_components/waste_collection_schedule/translations/*.json linguist-generated=true
+.github/source_owners.json linguist-generated=true
+custom_components/waste_collection_schedule/frontend/waste-collection-cards.js linguist-generated=true
+custom_components/waste_collection_schedule/frontend/THIRD-PARTY-NOTICES.txt linguist-generated=true
+
