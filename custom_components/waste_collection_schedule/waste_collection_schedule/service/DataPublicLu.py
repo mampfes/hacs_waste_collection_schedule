@@ -24,9 +24,46 @@ CSV_URL = "https://data.public.lu/fr/datasets/r/c3805ec5-7836-49a4-9983-effaf819
 
 ALL_STREETS = "Toutes les rues"
 
+_CSV = CsvParser(delimiter=";", require=["Date", "Type de collecte", "Commune"])
+
 
 def _cell(row: dict[str, str], column: str) -> str:
     return (row.get(column) or "").strip()
+
+
+def parse_rows(response: Any) -> "list[dict[str, str]]":
+    """The CSV rows of a data.public.lu calendar response."""
+    return _CSV(response)
+
+
+def column_options(
+    rows: "list[dict[str, str]]",
+    column: str,
+    *,
+    keep_blank: bool = False,
+    wildcard: str = "",
+) -> list[str]:
+    """Distinct values in ``column``, omitting blanks and an optional catch-all."""
+    generic = {""} | ({wildcard} if wildcard else set())
+    return sorted({_cell(r, column) for r in rows} - (generic if keep_blank else set()))
+
+
+def matching_rows(
+    rows: "list[dict[str, str]]",
+    column: str,
+    wanted: str,
+    *,
+    keep_blank: bool = False,
+    wildcard: str = "",
+) -> "list[dict[str, str]]":
+    """Rows whose ``column`` is ``wanted``, plus generic rows when ``keep_blank``."""
+    wanted = wanted.strip()
+    generic = {""} | ({wildcard} if wildcard else set())
+    return [
+        r
+        for r in rows
+        if _cell(r, column) == wanted or (keep_blank and _cell(r, column) in generic)
+    ]
 
 
 class CalendarParser(Parser["list[dict[str, str]]"]):
@@ -41,9 +78,7 @@ class CalendarParser(Parser["list[dict[str, str]]"]):
         self.commune = commune
         self.locality = locality
         self.street = street
-        self._csv = CsvParser(
-            delimiter=";", require=["Date", "Type de collecte", "Commune"]
-        )
+        self._csv = _CSV
 
     def __call__(
         self, response: Any, source: "BaseSource | None" = None
@@ -97,10 +132,7 @@ class CalendarParser(Parser["list[dict[str, str]]"]):
         from and is ignored.
         """
         wanted = wanted.strip()
-        generic = {""} | ({wildcard} if wildcard else set())
-        options = sorted(
-            {_cell(r, column) for r in rows} - (generic if keep_blank else set())
-        )
+        options = column_options(rows, column, keep_blank=keep_blank, wildcard=wildcard)
         if keep_blank and not options:
             return rows
         if not wanted:
@@ -111,9 +143,6 @@ class CalendarParser(Parser["list[dict[str, str]]"]):
             raise SourceArgumentNotFoundWithSuggestions(argument, wanted, options)
         if wanted not in options:
             raise SourceArgumentNotFoundWithSuggestions(argument, wanted, options)
-        return [
-            r
-            for r in rows
-            if _cell(r, column) == wanted
-            or (keep_blank and _cell(r, column) in generic)
-        ]
+        return matching_rows(
+            rows, column, wanted, keep_blank=keep_blank, wildcard=wildcard
+        )

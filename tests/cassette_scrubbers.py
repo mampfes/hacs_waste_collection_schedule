@@ -150,6 +150,36 @@ def _sica_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None
             )
 
 
+def _luxembourg_lu_choices(
+    interactions: list[dict], args: dict[str, Any], today: str
+) -> None:
+    """Keep one row per distinct commune/locality/street (enough for get_choices)."""
+    import csv
+
+    for interaction in interactions:
+        if "data.public.lu" not in interaction["url"]:
+            continue
+        text = base64.b64decode(interaction["content_b64"]).decode("utf-8-sig")
+        kept = []
+        seen: set[tuple[str, str, str]] = set()
+        for number, line in enumerate(text.splitlines()):
+            if number == 0:
+                kept.append(line)
+                continue
+            _date, _kind, commune, locality, street = next(
+                csv.reader([line], delimiter=";")
+            )
+            key = (commune, locality, street)
+            if key in seen:
+                continue
+            seen.add(key)
+            kept.append(line)
+        raw = "\n".join(kept) + "\n"
+        interaction["content_b64"] = base64.b64encode(raw.encode("utf-8-sig")).decode(
+            "ascii"
+        )
+
+
 def _luxembourg_lu(interactions: list[dict], args: dict[str, Any], today: str) -> None:
     """Keep the rows of the configured commune, locality and street, from today on."""
     import csv
@@ -839,6 +869,10 @@ SCRUBBERS: dict[str, Scrubber] = {
     "tkeliai_lt": _tkeliai_lt,
 }
 
+CHOICE_SCRUBBERS = {
+    "luxembourg_lu": _luxembourg_lu_choices,
+}
+
 
 def for_case(
     module_name: str, args: dict[str, Any], today: str
@@ -848,3 +882,11 @@ def for_case(
     if scrubber is None:
         return None
     return lambda interactions: scrubber(interactions, args, today)
+
+
+def for_choices(module_name: str) -> Callable[[list[dict]], None] | None:
+    """The scrubber for a ``get_choices`` walk of ``module_name``, if it has one."""
+    scrubber = CHOICE_SCRUBBERS.get(module_name)
+    if scrubber is None:
+        return None
+    return lambda interactions: scrubber(interactions, {}, "")
