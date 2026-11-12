@@ -433,7 +433,7 @@ UPRN = _term(
         "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta https://www.findmyaddress.co.uk/",
         "Ditt Unique Property Reference Number. Hitta det på https://www.findmyaddress.co.uk/",
         "Ditt Unique Property Reference Number. Finn det på https://www.findmyaddress.co.uk/",
-        "Vaše Unique Property Reference Number (UPRN). Nájdete ho na https://www.findmyaddress.co.uk/",
+        "Vaše Unikátne referenčné číslo nehnuteľnosti (UPRN). Nájdete ho na https://www.findmyaddress.co.uk/",
     ),
     # A UPRN is a run of digits, but YAML types an unquoted one as an int and
     # every provider wants it as text. This was the single most repeated
