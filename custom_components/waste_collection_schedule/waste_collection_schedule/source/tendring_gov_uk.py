@@ -58,8 +58,8 @@ class Source(BaseSource):
     preprocess = AchieveFormsFieldMapPreprocessor(
         fields=[
             ("RefuseNextCol", "Residual waste"),
-            ("PaperNextCol", "Green recycling box"),
-            ("DMRNextCol", "Red recycling box"),
+            ("PaperNextCol", "Red recycling box"),
+            ("DMRNextCol", "Green recycling box"),
             ("FoodNextCol", "Food waste"),
             ("GardenNextCol", "Garden waste", "ActiveGardenCollection"),
         ],
