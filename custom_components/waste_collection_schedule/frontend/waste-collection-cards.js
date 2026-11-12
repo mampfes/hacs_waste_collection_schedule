@@ -1158,6 +1158,38 @@ var Z = {
 		icon: "Icona",
 		color: "Colore",
 		picture: "URL immagine"
+	},
+	sk: {
+		appearance: "Vzhľad",
+		filters: "Filtre",
+		next: "Najbližší odvoz",
+		schedule: "Harmonogram odvozu",
+		bins: "Vaše nádoby",
+		loading: "Načítavajú sa odvozy…",
+		empty: "V tomto období nie sú žiadne odvozy",
+		choose: "V editore karty vyberte kalendáre odvozu odpadu.",
+		error: "Odvozy sa nepodarilo načítať",
+		partial: "Niektoré kalendáre sa nepodarilo načítať",
+		retry: "Skúsiť znova",
+		calendar: "Kalendár",
+		title: "Názov",
+		entities: "Kalendáre",
+		days: "Predstih (dni)",
+		max_items: "Maximálny počet položiek",
+		show_countdown: "Zobraziť odpočítavanie",
+		show_date: "Zobraziť dátum",
+		show_icons: "Zobraziť ikony",
+		show_pictures: "Zobraziť obrázky",
+		show_colors: "Zobraziť farby",
+		types: "Štýly druhov odpadu",
+		include_types: "Iba tieto druhy odpadu",
+		exclude_types: "Skryť tieto druhy odpadu",
+		language: "Jazyk (voliteľné)",
+		type: "Druh odpadu poskytovateľa",
+		name: "Zobrazený názov",
+		icon: "Ikona",
+		color: "Farba",
+		picture: "URL obrázka"
 	}
 };
 function Q(e, t) {

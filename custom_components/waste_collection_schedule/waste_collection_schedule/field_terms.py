@@ -375,7 +375,7 @@ _MAP_HELP = (
     "Valitse sijaintisi kartalta.",
     "Välj din plats på kartan.",
     "Velg posisjonen din på kartet.",
-    "Vyberte svoju polohu na mape.",
+    "Vyberte svoju polohu na mape.",  # codespell:ignore mape
 )
 LATITUDE = _term(
     "latitude",
