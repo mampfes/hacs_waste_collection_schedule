@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-11-13",
+  "interactions": [
+    {
+      "key": "POST https://www.wanneroo.wa.gov.au/spatial/addresslookup ff7f7b4b87",
+      "method": "POST",
+      "url": "https://www.wanneroo.wa.gov.au/spatial/addresslookup",
+      "final_url": "https://www.wanneroo.wa.gov.au/spatial/addresslookup",
+      "body": "{\"body\":{\"address\":\"99 Two Rocks RD TWO ROCKS\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 13 Nov 2026 19:49:10 GMT"
+      },
+      "content_b64": "W3sibWFwSWQiOiIxNDMyODMiLCJhZGRyZXNzIjoiOTkgVHdvIFJvY2tzIFJEIFRXTyBST0NLUyJ9XQ=="
+    },
+    {
+      "key": "POST https://www.wanneroo.wa.gov.au/spatial/bindaylookup 356fbbfa80",
+      "method": "POST",
+      "url": "https://www.wanneroo.wa.gov.au/spatial/bindaylookup",
+      "final_url": "https://www.wanneroo.wa.gov.au/spatial/bindaylookup",
+      "body": "{\"body\":{\"mapId\":\"143283\"}}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "date": "Fri, 13 Nov 2026 19:49:11 GMT"
+      },
+      "content_b64": "eyJnZW5lcmFsV2FzdGUiOnsiZGlzcGxheURhdGUiOiJNb25kYXkgbmV4dCB3ZWVrIiwiY29sbGVjdERhdGUiOiIyMDI2LTExLTE2VDAwOjAwOjAwKzA4OjAwIn0sInJlY3ljbGVXYXN0ZSI6eyJkaXNwbGF5RGF0ZSI6Ik1vbmRheSBuZXh0IHdlZWsiLCJjb2xsZWN0RGF0ZSI6IjIwMjYtMTEtMTZUMDA6MDA6MDArMDg6MDAifSwiZ3JlZW5XYXN0ZSI6eyJkaXNwbGF5RGF0ZSI6Ik1vbmRheSB3ZWVrIGFmdGVyIG5leHQiLCJjb2xsZWN0RGF0ZSI6IjIwMjYtMTEtMjNUMDA6MDA6MDArMDg6MDAifX0="
+    }
+  ]
+}
