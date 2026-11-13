@@ -48,7 +48,7 @@ body:
     attributes:
       label: Integration Version
       description: Which version of the integration are you running?
-      placeholder: ex. 2.19.0 or master
+      placeholder: ex. 2.19.0
     validations:
       required: true
   - type: input
@@ -63,7 +63,7 @@ body:
     attributes:
       label: Checklist
       options:
-        - label: I have tested with the latest version (master branch)
+        - label: I have tested with the latest release (or the latest beta)
           required: true
         - label: This is not a source-specific problem (it affects the integration itself)
           required: true

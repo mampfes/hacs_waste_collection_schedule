@@ -49,7 +49,7 @@ body:
     attributes:
       label: Checklist
       options:
-        - label: I have tested with the latest version (master branch) via HACS → 3-dot menu → Redownload → select `master`
+        - label: I have tested with the latest release (or the latest beta) via HACS → 3-dot menu → Redownload
           required: true
         - label: The service provider's website is still working
           required: true
