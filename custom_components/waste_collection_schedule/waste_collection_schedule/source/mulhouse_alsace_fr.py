@@ -139,6 +139,25 @@ _REPORT_RE = re.compile(
     rf"{_DATE_TOKEN}\s+report[ée]\s+(?:au|le)\s+{_DATE_TOKEN}", re.IGNORECASE
 )
 _NON_REPORTE_RE = re.compile(rf"{_DATE_TOKEN}\s+non\s+report[ée]", re.IGNORECASE)
+_VEGETAL_PERIOD_RE = re.compile(
+    r"uniquement\s+du\s+(\d{1,2})\s+([a-zà-ÿ]+)\s+au\s+"
+    r"(\d{1,2})\s+([a-zà-ÿ]+)\s+(\d{4})",
+    re.IGNORECASE,
+)
+_FR_MONTHS = {
+    "janvier": 1,
+    "février": 2,
+    "mars": 3,
+    "avril": 4,
+    "mai": 5,
+    "juin": 6,
+    "juillet": 7,
+    "août": 8,
+    "septembre": 9,
+    "octobre": 10,
+    "novembre": 11,
+    "décembre": 12,
+}
 
 
 def _parse_french_date(value: str) -> date | None:
@@ -167,6 +186,36 @@ def _french_holidays(year: int) -> set[date]:
         date(year, 12, 25),
         date(year, 12, 26),  # Saint-Étienne (Alsace-Moselle)
     }
+
+
+def _parse_vegetal_period(comment: str | None) -> tuple[date, date] | None:
+    """Read the annual green-waste collection window from the provider comment."""
+    if not comment:
+        return None
+    match = _VEGETAL_PERIOD_RE.search(comment)
+    if match is None:
+        return None
+
+    start_day, start_month, end_day, end_month, year = match.groups()
+    try:
+        start = date(int(year), _FR_MONTHS[start_month.lower()], int(start_day))
+        end = date(int(year), _FR_MONTHS[end_month.lower()], int(end_day))
+    except (KeyError, ValueError):
+        return None
+    return start, end
+
+
+def _is_in_vegetal_period(collection_date: date, period: tuple[date, date]) -> bool:
+    start, end = period
+    collection_month_day = (collection_date.month, collection_date.day)
+    start_month_day = (start.month, start.day)
+    end_month_day = (end.month, end.day)
+
+    if start_month_day <= end_month_day:
+        return start_month_day <= collection_month_day <= end_month_day
+    return (
+        collection_month_day >= start_month_day or collection_month_day <= end_month_day
+    )
 
 
 def _parse_ferie(
@@ -284,6 +333,7 @@ class Source:
         today = date.today()
         end = today + timedelta(weeks=HORIZON_WEEKS)
         moves, cancellations = _parse_ferie(row.get("ferie"), (today, end))
+        vegetal_period = _parse_vegetal_period(row.get("comment"))
 
         entries: list[Collection] = []
         for freq_field, jour_field, label, icon in WASTE_FIELDS:
@@ -293,10 +343,22 @@ class Source:
                 continue
 
             for collection_date in _project_dates(jour, freq, today, HORIZON_WEEKS):
+                if (
+                    label == "Déchets verts"
+                    and vegetal_period is not None
+                    and not _is_in_vegetal_period(collection_date, vegetal_period)
+                ):
+                    continue
                 if collection_date in cancellations:
                     continue
                 effective = moves.get(collection_date, collection_date)
                 if effective in cancellations:
+                    continue
+                if (
+                    label == "Déchets verts"
+                    and vegetal_period is not None
+                    and not _is_in_vegetal_period(effective, vegetal_period)
+                ):
                     continue
                 entries.append(Collection(date=effective, t=label, icon=icon))
 
