@@ -76,7 +76,7 @@ def test_finnish_translation_seed_generates_provider_steps(
         assert "Kiertokapulan" in steps[step]["data_description"]["username"]
 
 
-@pytest.mark.parametrize("lang", ["fi", "sv", "nb", "sk", "hr"])
+@pytest.mark.parametrize("lang", ["fi", "sv", "nb", "sk", "hr", "pl"])
 def test_ui_template_has_all_common_keys_and_matching_placeholders(lang):
     """Translation must not remove fields or break HA formatting variables."""
     root = pathlib.Path(__file__).resolve().parent.parent

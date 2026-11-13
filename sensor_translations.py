@@ -165,6 +165,22 @@ FIELD_LABELS = {
         "Avfallstyper",
         "Sensortype",
     ),
+    "pl": (
+        "Nazwa",
+        "Włączone",
+        "Tekst stanu",  # codespell:ignore tekst
+        "Język",
+        "Format daty",  # codespell:ignore daty
+        "Format szczegółów",
+        "Liczba",
+        "Wyprzedzenie (dni)",
+        "Każdy rodzaj tylko raz",
+        "Wyklucz rodzaje",
+        "Ustawienia zaawansowane",
+        "Akcja",
+        "Rodzaje odpadów",
+        "Typ sensora",
+    ),
     "sk": (
         "Názov",
         "Zapnuté",
@@ -305,6 +321,15 @@ MENUS = {
         "Enhetskontroller",
         "Legg til nye typer automatisk",
     ),
+    "pl": (
+        "Ustawienia źródła",
+        "Sensory",
+        "Rodzaje odpadów",
+        "Edytuj sensor",
+        "Wstępnie zdefiniowane sensory",
+        "Elementy sterujące urządzenia",
+        "Automatycznie dodawaj nowo wykryte rodzaje",
+    ),
     "sk": (
         "Nastavenia zdroja",
         "Senzory",
@@ -358,6 +383,7 @@ CHOICE_LABELS = {
     "nb": "Norsk bokmål",
     "sk": "Slovenčina",
     "hr": "Hrvatski",
+    "pl": "Polski",
     "add_custom": "Add custom sensor",
     "save": "Save",
     "reset": "Reset to defaults",

@@ -34,6 +34,7 @@ LANGUAGES = (
     "nb",
     "sk",
     "hr",
+    "pl",
 )
 KINDS = ("schedule", "days_to", "last_update")
 DETAILS_FORMATS = ("upcoming", "appointment_types", "generic", "hidden")

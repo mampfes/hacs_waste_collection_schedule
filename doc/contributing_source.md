@@ -291,7 +291,7 @@ Two consequences worth knowing. An empty string counts as unset, so a field the 
 
 `cascading_select(*levels)` is the N-level generalisation, for a wizard deeper than two levels (e.g. kommune to district to street to house number). The source implements `get_choices(field, selections) -> list[str] | list[(label, value)]`, returning one level's options given the levels chosen so far. A `(label, value)` pair shows a human name while storing an opaque id (so the stored config and `TEST_CASES` can stay id-based); a level whose `get_choices` returns `[]` for the current selections is not applicable and is skipped. Pair it with `RAISE_ON_EMPTY = True`. See `abfall_io.py`.
 
-**Field labels and translations.** A config field is a standard *concept*; the only thing that varies per source is the *wire name* (the property the value is sent as / the `__init__` kwarg). Use the standard field factories and bind each to its wire name. The localised label and per-field help come from the shared catalogue (`field_terms.py`) in every supported language (en/de/fr/it/nl/sl/da/fi/sv/nb/sk/hr), so you never hand-write a label, a translation, or a HOWTO for a standard field:
+**Field labels and translations.** A config field is a standard *concept*; the only thing that varies per source is the *wire name* (the property the value is sent as / the `__init__` kwarg). Use the standard field factories and bind each to its wire name. The localised label and per-field help come from the shared catalogue (`field_terms.py`) in every supported language (en/de/fr/it/nl/sl/da/fi/sv/nb/sk/hr/pl), so you never hand-write a label, a translation, or a HOWTO for a standard field:
 
 ```python
 PARAMS = [

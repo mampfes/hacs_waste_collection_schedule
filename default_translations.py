@@ -19,6 +19,23 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "username": "Korisničko ime",
         "zone": "Zona",
     },
+    "pl": {
+        "address": "Adres",  # codespell:ignore adres
+        "bill_number": "Numer faktury",
+        "calendar_title": "Nazwa kalendarza",
+        "city": "Miasto",
+        "district": "Dzielnica",
+        "house_number": "Numer domu",
+        "municipality": "Gmina",
+        "password": "Hasło",
+        "postcode": "Kod pocztowy",
+        "street": "Ulica",
+        "town": "Miejscowość",
+        "types": "Rodzaje odpadów",
+        "url": "URL",
+        "username": "Nazwa użytkownika",
+        "zone": "Strefa",
+    },
     "sk": {
         "address": "Adresa",
         "bill_number": "Číslo faktúry",

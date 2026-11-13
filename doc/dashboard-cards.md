@@ -89,8 +89,8 @@ All-day dates are preserved as calendar days. Timed events and today's date use
 Home Assistant's time zone (or the browser zone if your HA profile selects local
 time). Calendar-day arithmetic avoids DST countdown errors. Dates and countdowns
 use the selected HA language; `language` can override it per card. UI labels are
-translated into English, German, French, Italian, Slovak and Croatian, with English
-fallback for other languages. Waste names remain as provided unless you customise them.
+translated into English, German, French, Italian, Slovak, Croatian and Polish, with
+English fallback for other languages. Waste names remain as provided unless you customise them.
 
 Cards support Sections resizing (`getGridOptions`) and masonry sizing. Native
 buttons support touch and keyboard; selecting a pickup opens calendar more-info.
