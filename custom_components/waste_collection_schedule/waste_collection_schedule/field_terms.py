@@ -28,7 +28,7 @@ from typing import Any
 
 from waste_collection_schedule.waste_types import SUPPORTED_LANGUAGES
 
-_LANGS = ("en", "de", "fr", "it", "nl", "sl", "da", "fi", "sv", "nb")
+_LANGS = ("en", "de", "fr", "it", "nl", "sl", "da", "fi", "sv", "nb", "sk")
 
 
 def as_text(value: object) -> str:
@@ -90,11 +90,12 @@ def _term(
     fi: str,
     sv: str,
     nb: str,
+    sk: str,
     *,
-    desc: tuple[str, str, str, str, str, str, str, str, str, str] | None = None,
+    desc: tuple[str, str, str, str, str, str, str, str, str, str, str] | None = None,
     coerce: "Callable[[Any], Any] | None" = None,
 ) -> FieldTerm:
-    """Define a term. ``desc`` is the help text as ``(en, de, fr, it, nl, sl, da, fi, sv, nb)``."""
+    """Define a term. ``desc`` is the help text as ``(en, de, fr, it, nl, sl, da, fi, sv, nb, sk)``."""
     return FieldTerm(
         key=key,
         labels={
@@ -108,6 +109,7 @@ def _term(
             "fi": fi,
             "sv": sv,
             "nb": nb,
+            "sk": sk,
         },
         descriptions=dict(zip(_LANGS, desc, strict=True)) if desc else {},
         coerce=coerce,
@@ -127,6 +129,7 @@ MUNICIPALITY = _term(
     "Kunta",
     "Kommun",
     "Kommune",
+    "Obec",
     desc=(
         "The name of your municipality, as shown on the provider's website.",
         "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
@@ -138,6 +141,7 @@ MUNICIPALITY = _term(
         "Kuntasi nimi palveluntarjoajan verkkosivuston mukaisesti.",
         "Namnet på din kommun, som det visas på leverantörens webbplats.",  # codespell:ignore som
         "Navnet på kommunen din, slik det står på leverandørens nettside.",
+        "Názov vašej obce tak, ako je uvedený na webovej stránke poskytovateľa.",
     ),
 )
 CITY = _term(
@@ -152,6 +156,7 @@ CITY = _term(
     "Kaupunki",
     "Ort",
     "Sted",
+    "Mesto",
     desc=(
         "Your city or town.",
         "Ihre Stadt oder Gemeinde.",
@@ -163,6 +168,7 @@ CITY = _term(
         "Kaupunkisi tai paikkakuntasi.",
         "Din stad eller ort.",
         "Byen eller tettstedet ditt.",
+        "Vaše mesto alebo obec.",
     ),
 )
 DISTRICT = _term(
@@ -177,6 +183,7 @@ DISTRICT = _term(
     "Kaupunginosa",
     "Distrikt",
     "Område",
+    "Okres",
     desc=(
         "Your district or part of the municipality.",
         "Ihr Ortsteil oder Stadtteil.",
@@ -188,6 +195,7 @@ DISTRICT = _term(
         "Kaupunginosasi tai kunnan osa.",
         "Ditt distrikt eller del av kommunen.",
         "Bydelen eller delen av kommunen du bor i.",
+        "Váš okres alebo časť obce.",
     ),
 )
 STREET = _term(
@@ -202,6 +210,7 @@ STREET = _term(
     "Katu",
     "Gata",
     "Gate",
+    "Ulica",
     desc=(
         "Your street name.",
         "Ihr Straßenname.",
@@ -213,6 +222,7 @@ STREET = _term(
         "Kadun nimi.",
         "Ditt gatunamn.",
         "Gatenavnet ditt.",
+        "Názov vašej ulice.",
     ),
 )
 HOUSE_NUMBER = _term(
@@ -227,6 +237,7 @@ HOUSE_NUMBER = _term(
     "Talon numero",
     "Husnummer",
     "Husnummer",
+    "Číslo domu",
     desc=(
         "Your house number.",
         "Ihre Hausnummer.",
@@ -238,6 +249,7 @@ HOUSE_NUMBER = _term(
         "Talon numero.",
         "Ditt husnummer.",
         "Husnummeret ditt.",
+        "Vaše číslo domu.",
     ),
     # YAML types a bare `4` as an int, and a house number is text everywhere it
     # is sent (it may be "4a"), so normalise rather than leave each source to.
@@ -255,6 +267,7 @@ POSTCODE = _term(
     "Postinumero",
     "Postnummer",
     "Postnummer",
+    "Poštové smerovacie číslo",
     desc=(
         "Your postcode.",
         "Ihre Postleitzahl.",
@@ -266,6 +279,7 @@ POSTCODE = _term(
         "Postinumerosi.",
         "Ditt postnummer.",
         "Postnummeret ditt.",
+        "Vaše Poštové smerovacie číslo.",
     ),
 )
 ADDRESS = _term(
@@ -280,6 +294,7 @@ ADDRESS = _term(
     "Osoite",
     "Adress",  # codespell:ignore adress
     "Adresse",
+    "Adresa",
     desc=(
         "Your full address.",
         "Ihre vollständige Adresse.",
@@ -291,6 +306,7 @@ ADDRESS = _term(
         "Koko osoitteesi.",
         "Din fullständiga adress.",  # codespell:ignore adress
         "Hele adressen din.",
+        "Vaša úplná adresa.",
     ),
     # A pasted address routinely carries leading or trailing whitespace, which
     # breaks an exact-match lookup for a reason the user cannot see.
@@ -308,6 +324,7 @@ REGION = _term(
     "Alue",  # codespell:ignore alue
     "Region",
     "Region",
+    "Región",
 )
 # Administrative levels above the municipality (used by German platforms whose
 # cascade is Bundesland -> Landkreis -> Kommune). fr/it/nl labels keep the
@@ -324,6 +341,7 @@ STATE = _term(
     "Osavaltio",
     "Delstat",
     "Delstat",
+    "Štát",
 )
 # COUNTY and DISTRICT sit at opposite ends of the same hierarchy, so keep the
 # English labels distinct: a COUNTY (Landkreis) contains municipalities, while a
@@ -342,6 +360,7 @@ COUNTY = _term(
     "Maakunta",
     "Län",
     "Fylke",
+    "Okres",
 )
 
 # --- Coordinates -------------------------------------------------------------
@@ -356,6 +375,7 @@ _MAP_HELP = (
     "Valitse sijaintisi kartalta.",
     "Välj din plats på kartan.",
     "Velg posisjonen din på kartet.",
+    "Vyberte svoju polohu na mape.",  # codespell:ignore mape
 )
 LATITUDE = _term(
     "latitude",
@@ -369,6 +389,7 @@ LATITUDE = _term(
     "Leveysaste",
     "Latitud",
     "Breddegrad",
+    "Zemepisná šírka",
     desc=_MAP_HELP,
 )
 LONGITUDE = _term(
@@ -383,12 +404,14 @@ LONGITUDE = _term(
     "Pituusaste",
     "Longitud",
     "Lengdegrad",
+    "Zemepisná dĺžka",
     desc=_MAP_HELP,
 )
 
 # --- Identifiers -------------------------------------------------------------
 UPRN = _term(
     "uprn",
+    "UPRN",
     "UPRN",
     "UPRN",
     "UPRN",
@@ -410,6 +433,7 @@ UPRN = _term(
         "Kiinteistösi yksilöllinen UPRN-tunnus. Löydät sen osoitteesta https://www.findmyaddress.co.uk/",
         "Ditt Unique Property Reference Number. Hitta det på https://www.findmyaddress.co.uk/",
         "Ditt Unique Property Reference Number. Finn det på https://www.findmyaddress.co.uk/",
+        "Vaše Unikátne referenčné číslo nehnuteľnosti (UPRN). Nájdete ho na https://www.findmyaddress.co.uk/",
     ),
     # A UPRN is a run of digits, but YAML types an unquoted one as an int and
     # every provider wants it as text. This was the single most repeated
@@ -428,6 +452,7 @@ LOCATION_ID = _term(
     "Sijainnin tunnus",
     "Plats-ID",
     "Lokasjons-ID",
+    "ID polohy",
 )
 AREA_ID = _term(
     "area_id",
@@ -441,6 +466,7 @@ AREA_ID = _term(
     "Alueen tunnus",
     "Områdes-ID",
     "Område-ID",
+    "ID oblasti",
 )
 CITY_ID = _term(
     "city_id",
@@ -454,6 +480,7 @@ CITY_ID = _term(
     "Kaupungin tunnus",
     "Ort-ID",
     "Steds-ID",
+    "ID mesta",
 )
 SERVICE_ID = _term(
     "service_id",
@@ -467,6 +494,7 @@ SERVICE_ID = _term(
     "Palvelun tunnus",
     "Tjänste-ID",
     "Tjeneste-ID",
+    "ID služby",
 )
 CUSTOMER_NUMBER = _term(
     "customer_number",
@@ -480,6 +508,7 @@ CUSTOMER_NUMBER = _term(
     "Asiakasnumero",
     "Kundnummer",
     "Kundenummer",
+    "Číslo zákazníka",
 )
 API_KEY = _term(
     "api_key",
@@ -493,6 +522,7 @@ API_KEY = _term(
     "API-avain",
     "API-nyckel",
     "API-nøkkel",
+    "Kľúč API",
 )
 
 # --- Waste-specific ----------------------------------------------------------
@@ -508,6 +538,7 @@ WASTE_TYPES = _term(
     "Jätelajit",
     "Avfallstyper",
     "Avfallstyper",
+    "Druhy odpadu",
     desc=(
         "Optional filter: the waste types to include.",
         "Optionaler Filter: die einzuschließenden Abfallarten.",
@@ -519,6 +550,7 @@ WASTE_TYPES = _term(
         "Valinnainen suodatin: sisällytettävät jätelajit.",
         "Valfritt filter: de avfallstyper som ska tas med.",  # codespell:ignore som
         "Valgfritt filter: avfallstypene som skal tas med.",  # codespell:ignore som
+        "Voliteľný filter: druhy odpadu, ktoré sa majú zahrnúť.",
     ),
     # Rendered as a plain text field (no generic multi-select), so the
     # config-flow UI stores what the visitor typed as one comma separated
@@ -539,6 +571,7 @@ WASTE_SECTOR = _term(
     "Sekajätealue",
     "Avfallssektor",
     "Avfallssektor",
+    "Sektor odpadu",
     desc=(
         "This is the default sector.",
         "Dies ist der Standardsektor.",
@@ -550,6 +583,7 @@ WASTE_SECTOR = _term(
         "Tämä on oletusalue.",
         "Detta är standardsektorn.",
         "Dette er standardsektoren.",
+        "Toto je predvolený sektor.",
     ),
 )
 
@@ -566,6 +600,7 @@ RECYCLING_SECTOR = _term(
     "Kierrätysalue",
     "Återvinningssektor",
     "Gjenvinningssektor",
+    "Sektor recyklovateľného odpadu",
     desc=(
         "If value is different from waste sector.",
         "Wenn der Wert vom Abfallsektor abweicht.",
@@ -577,6 +612,7 @@ RECYCLING_SECTOR = _term(
         "Jos alue eroaa sekajätealueesta.",  # codespell:ignore alue
         "Om värdet skiljer sig från avfallssektorn.",
         "Hvis verdien er forskjellig fra avfallssektoren.",
+        "Ak sa hodnota líši od sektora odpadu.",
     ),
 )
 
@@ -593,6 +629,7 @@ BULKY_ITEMS_SECTOR = _term(
     "Suurjätealue",
     "Grovavfallssektor",
     "Grovavfallssektor",
+    "Sektor objemného odpadu",
     desc=(
         "If value is different from waste sector.",
         "Wenn der Wert vom Abfallsektor abweicht.",
@@ -604,6 +641,7 @@ BULKY_ITEMS_SECTOR = _term(
         "Jos alue eroaa sekajätealueesta.",  # codespell:ignore alue
         "Om värdet skiljer sig från avfallssektorn.",
         "Hvis verdien er forskjellig fra avfallssektoren.",
+        "Ak sa hodnota líši od sektora odpadu.",
     ),
 )
 
@@ -620,6 +658,7 @@ FOOD_WASTE_SECTOR = _term(
     "Ruokajätealue",
     "Matavfallssektor",
     "Matavfallssektor",
+    "Sektor kuchynského odpadu",
     desc=(
         "If value is different from waste sector.",
         "Wenn der Wert vom Abfallsektor abweicht.",
@@ -631,6 +670,7 @@ FOOD_WASTE_SECTOR = _term(
         "Jos alue eroaa sekajätealueesta.",  # codespell:ignore alue
         "Om värdet skiljer sig från avfallssektorn.",
         "Hvis verdien er forskjellig fra avfallssektoren.",
+        "Ak sa hodnota líši od sektora odpadu.",
     ),
 )
 
@@ -647,6 +687,7 @@ GREEN_WASTE_SECTOR = _term(
     "Puutarhajätteen ja lehtien alue",  # codespell:ignore alue
     "Sektor för trädgårdsavfall och löv",
     "Sektor for hageavfall og løv",
+    "Sektor zeleného odpadu a lístia",
     desc=(
         "If value is different from waste sector.",
         "Wenn der Wert vom Abfallsektor abweicht.",
@@ -658,6 +699,7 @@ GREEN_WASTE_SECTOR = _term(
         "Jos alue eroaa sekajätealueesta.",  # codespell:ignore alue
         "Om värdet skiljer sig från avfallssektorn.",
         "Hvis verdien er forskjellig fra avfallssektoren.",
+        "Ak sa hodnota líši od sektora odpadu.",
     ),
 )
 

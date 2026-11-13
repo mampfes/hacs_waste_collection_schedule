@@ -165,6 +165,22 @@ FIELD_LABELS = {
         "Avfallstyper",
         "Sensortype",
     ),
+    "sk": (
+        "Názov",
+        "Zapnuté",
+        "Text stavu",
+        "Jazyk",
+        "Formát dátumu",
+        "Formát podrobností",
+        "Počet",
+        "Predstih (dni)",
+        "Každý typ iba raz",
+        "Vylúčiť typy",
+        "Rozšírené nastavenia",
+        "Akcia",
+        "Druhy odpadu",
+        "Typ senzora",
+    ),
 }
 FIELD_KEYS = (
     "name",
@@ -273,6 +289,15 @@ MENUS = {
         "Enhetskontroller",
         "Legg til nye typer automatisk",
     ),
+    "sk": (
+        "Nastavenia zdroja",
+        "Senzory",
+        "Druhy odpadu",
+        "Upraviť senzor",
+        "Preddefinované senzory",
+        "Ovládacie prvky zariadenia",
+        "Automaticky pridávať novo zistené typy",
+    ),
 }
 CHOICE_LABELS = {
     "types_in_days": "Types and countdown",
@@ -306,6 +331,7 @@ CHOICE_LABELS = {
     "fi": "Suomi",
     "sv": "Svenska",
     "nb": "Norsk bokmål",
+    "sk": "Slovenčina",
     "add_custom": "Add custom sensor",
     "save": "Save",
     "reset": "Reset to defaults",
