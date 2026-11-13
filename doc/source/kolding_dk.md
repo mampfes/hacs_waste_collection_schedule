@@ -33,4 +33,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Go to https://kolding.infovision.dk/public/selectaddress and search for your address. Your ID is in the URL, e.g. `00007b8c-0002-0001-4164-647265737320`.
+Go to https://kolding.infovision.dk/public/search and search for your address. After you select it, the address ID (a UUID like `00007b8c-0002-0001-4164-647265737320`) is in the page URL, for example under `/public/form-group-overview/address/<id>`.
