@@ -54,12 +54,10 @@ class Source(BaseSource):
 
     HOWTO: ClassVar[dict] = {
         "en": (
-            "To get your address ID: go to "
-            "https://kalundborg.infovision.dk/public/selectaddress and search for "
-            "your address. You will find the ID in the URL of the address page, "
-            "e.g. https://kalundborg.infovision.dk/public/address/"
-            "00006ac8-0002-0001-4164-647265737320, a UUID like "
-            "`00006ac8-0002-0001-4164-647265737320`."
+            "Go to https://kalundborg.infovision.dk/public/search and search for "
+            "your address. After you select it, the address ID (a UUID like "
+            "`00006ac8-0002-0001-4164-647265737320`) is in the page URL, for "
+            "example under `/public/form-group-overview/address/<id>`."
         ),
     }
 
