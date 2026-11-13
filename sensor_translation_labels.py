@@ -541,7 +541,7 @@ COMMON_LABELS = {
         "types": "Rodzaje wywozu",
         "days": "Liczba dni",
         "custom": "Własny szablon",
-        "upcoming": "Nadchodzące daty",
+        "upcoming": "Nadchodzące daty",  # codespell:ignore daty
         "appointment_types": "Najbliższa data dla każdego rodzaju",
         "generic": "Ustrukturyzowane wpisy",
         "hidden": "Ukryj szczegóły",
@@ -569,7 +569,7 @@ COMMON_LABELS = {
         "add_custom": "Dodaj własny sensor",
         "event_index": "Indeks odbioru",
         "value_template": "Własny szablon stanu",
-        "date_template": "Własny szablon daty",
+        "date_template": "Własny szablon daty",  # codespell:ignore daty
         "color": "Kolor (#RRGGBB; pusty = domyślny)",
         "random_offset": "Losowe przesunięcie pobierania (minuty)",
         "invalid_sensor": "Sprawdź ustawienia sensora, szablony oraz kolor w formacie #RRGGBB.",

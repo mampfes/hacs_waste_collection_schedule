@@ -325,7 +325,7 @@ ADDRESS = _term(
     "Adresse",
     "Adresa",
     "Adresa",
-    "Adres",
+    "Adres",  # codespell:ignore adres
     desc=(
         "Your full address.",
         "Ihre vollständige Adresse.",
@@ -339,7 +339,7 @@ ADDRESS = _term(
         "Hele adressen din.",
         "Vaša úplná adresa.",
         "Vaša potpuna adresa.",
-        "Twój pełny adres.",
+        "Twój pełny adres.",  # codespell:ignore adres
     ),
     # A pasted address routinely carries leading or trailing whitespace, which
     # breaks an exact-match lookup for a reason the user cannot see.

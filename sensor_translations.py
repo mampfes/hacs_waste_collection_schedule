@@ -168,9 +168,9 @@ FIELD_LABELS = {
     "pl": (
         "Nazwa",
         "Włączone",
-        "Tekst stanu",
+        "Tekst stanu",  # codespell:ignore tekst
         "Język",
-        "Format daty",
+        "Format daty",  # codespell:ignore daty
         "Format szczegółów",
         "Liczba",
         "Wyprzedzenie (dni)",

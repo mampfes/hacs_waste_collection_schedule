@@ -20,7 +20,7 @@ DEFAULT_PARAM_TRANSLATIONS = {
         "zone": "Zona",
     },
     "pl": {
-        "address": "Adres",
+        "address": "Adres",  # codespell:ignore adres
         "bill_number": "Numer faktury",
         "calendar_title": "Nazwa kalendarza",
         "city": "Miasto",
