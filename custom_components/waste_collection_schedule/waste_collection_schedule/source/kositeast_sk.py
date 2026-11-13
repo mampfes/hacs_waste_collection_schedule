@@ -16,6 +16,7 @@ class Source(BaseSource):
     DESCRIPTION = "Source for KOSIT EAST waste collection."
     URL = "https://kositeast.sk"
     COUNTRY = "sk"
+    SOURCE_CODEOWNERS: ClassVar[list[str]] = ["@jan-tdy"]
     RAISE_ON_EMPTY = True
 
     WASTE_TYPES: ClassVar[list] = [
