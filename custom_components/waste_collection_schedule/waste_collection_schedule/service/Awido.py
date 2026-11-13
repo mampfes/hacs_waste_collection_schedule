@@ -112,11 +112,18 @@ class AwidoParser(Parser["list[dict[str, Any]]"]):
         data = response.json()
         names = {fraction["snm"]: fraction["nm"] for fraction in data["fracts"]}
         records: list[dict[str, Any]] = []
+        # Some clients (e.g. azv-hef-rof) put codes such as GTS/PG in the
+        # calendar that are not named in ``fracts``. A missing name used to
+        # KeyError and fail the whole fetch (#8180). Skip those entries.
+        unknown: set[str] = set()
         for day in data["calendar"]:
             if day["ad"] is None:
                 continue
             addresses = day.get("ad") or []
             for index, code in enumerate(day.get("fr") or []):
+                if code not in names:
+                    unknown.add(code)
+                    continue
                 address = addresses[index] if index < len(addresses) else None
                 records.append(
                     {
@@ -125,4 +132,10 @@ class AwidoParser(Parser["list[dict[str, Any]]"]):
                         "description": address or None,
                     }
                 )
+        if unknown:
+            _LOGGER.warning(
+                "AWIDO calendar has fraction code(s) %s with no name in "
+                "fracts; skipping those entries",
+                ", ".join(sorted(unknown)),
+            )
         return records
