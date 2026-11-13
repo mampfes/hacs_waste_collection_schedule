@@ -97,6 +97,11 @@ class Source(BaseSource):
             "city": "Ulm",
             "street": "Bahnhofplatz",
         },
+        "Hersfeld-Rotenburg, Bad Hersfeld, Allmershausen": {
+            "customer": "azv-hef-rof",
+            "city": "Bad Hersfeld",
+            "street": "Allmershausen",
+        },
     }
 
     REGIONS = regions.from_yaml("awido_de", customer="customer", city="city")
