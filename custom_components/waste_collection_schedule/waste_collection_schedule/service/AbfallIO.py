@@ -199,7 +199,19 @@ class AbfallIoRetriever(RetrieverFunc):
         end = today + datetime.timedelta(days=365)
         args["f_zeitraum"] = f"{today:%Y%m%d}-{end:%Y%m%d}"
 
-        return post("export_ics", args)
+        exported = post("export_ics", args)
+        if (
+            exported.status_code != 200
+            or not exported.content
+            or b"BEGIN:VCALENDAR" not in exported.content
+        ):
+            raise ValueError(
+                "abfall.io did not return a calendar for these address IDs "
+                f"(HTTP {exported.status_code}). The street or house-number IDs "
+                "may have changed; please reconfigure the source and re-select "
+                "the address."
+            )
+        return exported
 
 
 class AbfallIoParser(Parser["list[tuple[datetime.date, str]]"]):

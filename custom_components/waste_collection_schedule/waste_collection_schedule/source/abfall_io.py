@@ -79,7 +79,7 @@ class Source(BaseSource):
         "AVR Kommunal, Brühl, Adlerstr.": {
             "key": "914fb9d000a9a05af4fd54cfba478860",
             "f_id_kommune": 3826,
-            "f_id_strasse": 7430,
+            "f_id_strasse": 7431,
         },
         "Landkreis Prignitz, Gemeinde Karstädt, Blüthen": {
             "key": "798f59a75627f5d7686dab0c7226c877",
