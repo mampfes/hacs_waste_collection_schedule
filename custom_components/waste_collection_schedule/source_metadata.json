@@ -412,7 +412,7 @@
   "wanneroo_wa_gov_au": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/wanneroo_wa_gov_au.md",
     "howto": {
-      "en": "Enter your street address including suburb (e.g. '23 Bakana LP LANDSDALE')."
+      "en": "Enter your street address including suburb (e.g. '1 Atlanta DR TWO ROCKS')."
     },
     "urls": {}
   },

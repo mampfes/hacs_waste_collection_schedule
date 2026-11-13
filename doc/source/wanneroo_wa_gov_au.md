@@ -28,9 +28,9 @@ waste_collection_schedule:
   sources:
     - name: wanneroo_wa_gov_au
       args:
-        address: 23 Bakana LP LANDSDALE
+        address: 1 Atlanta DR TWO ROCKS
 ```
 
 ## How to get the source arguments
 
-Enter your street address including suburb (e.g. '23 Bakana LP LANDSDALE').
+Enter your street address including suburb (e.g. '1 Atlanta DR TWO ROCKS').
