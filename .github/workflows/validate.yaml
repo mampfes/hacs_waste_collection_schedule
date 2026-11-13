@@ -138,8 +138,11 @@ jobs:
       - name: Fetch the PR base
         # checkout@v5 on pull_request checks out the merge commit. fetch-depth
         # 0 brings in the PR head as a parent; this extra fetch makes the base
-        # sha available for fork PRs too. Compare against HEAD (the merge
-        # commit) so we do not depend on head.sha being a named ref.
+        # sha available for fork PRs too. Compare against HEAD^2 (the PR head,
+        # second parent of the merge commit) so we do not depend on head.sha
+        # being a named ref. HEAD itself would also contain every commit that
+        # landed on the base branch since the PR was opened (e.g. the
+        # post-merge docs regeneration) and flag those as PR edits.
         run: git fetch --no-tags origin ${{ github.event.pull_request.base.sha }}
       - name: Set up Python 3.12
         uses: actions/setup-python@v6
@@ -149,4 +152,4 @@ jobs:
         run: >
           python tools/check_generated_files.py
           --base ${{ github.event.pull_request.base.sha }}
-          --head HEAD
+          --head HEAD^2
