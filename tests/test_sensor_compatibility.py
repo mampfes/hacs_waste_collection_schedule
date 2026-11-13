@@ -424,7 +424,7 @@ def test_generated_common_translations_cover_project_language_contract():
         )
         content = json.loads(path.read_text())
         apply_sensor_translations(content, path.stem)
-        assert "pl" not in content["selector"]["language"]["options"]
+        assert "cs" not in content["selector"]["language"]["options"]
         assert content["entity"]["button"]["create_sensor"]["name"].count("{name}") == 1
         repair = content["issues"]["legacy_sensors"]
         # HA's issue schema makes description and fix_flow mutually exclusive.

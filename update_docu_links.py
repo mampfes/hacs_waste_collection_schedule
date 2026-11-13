@@ -50,7 +50,21 @@ END_COUNTRY_SECTION = "<!--End of country section-->"
 START_SERVICE_SECTION = "<!--Begin of service section-->"
 END_SERVICE_SECTION = "<!--End of service section-->"
 
-LANGUAGES = ["en", "de", "it", "fr", "nl", "sl", "da", "fi", "sv", "nb", "sk", "hr"]
+LANGUAGES = [
+    "en",
+    "de",
+    "it",
+    "fr",
+    "nl",
+    "sl",
+    "da",
+    "fi",
+    "sv",
+    "nb",
+    "sk",
+    "hr",
+    "pl",
+]
 ARG_TRANSLATIONS_TO_KEEP = ["calendar_title"]
 ARG_DESCRIPTIONS_TO_KEEP = ["calendar_title"]
 ARG_GENERAL_KEYS_TO_KEEP = ["title", "description"]

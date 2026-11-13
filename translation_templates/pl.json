@@ -1,0 +1,732 @@
+{
+  "title": "Harmonogram wywozu odpadów",
+  "config": {
+    "abort": {
+      "already_configured": "To źródło jest już skonfigurowane."
+    },
+    "step": {
+      "user": {
+        "title": "Wybierz kraj",
+        "data": {
+          "country": "Kraj"
+        },
+        "data_description": {
+          "country": "Wybierz swój kraj lub opcję *Generic*, jeśli chcesz skonfigurować źródło *ICS*."
+        }
+      },
+      "source": {
+        "title": "Wybierz źródło",
+        "description": "Wybierz usługodawcę z listy.",
+        "data": {
+          "name": "Źródło"
+        }
+      },
+      "flow_type": {
+        "title": "Wybierz szczegóły konfiguracji",
+        "description": "Wybierz, jak szczegółowo chcesz skonfigurować tę integrację. Pozostaw puste, jeśli chcesz skonfigurować tylko podstawowy kalendarz.",
+        "data": {
+          "show_customize_config": "Pokaż ustawienia dostosowywania zdarzeń wywozu",
+          "default_sensors": "Domyślne sensory"
+        },
+        "data_description": {
+          "show_customize_config": "Zaznacz, jeśli chcesz dostosować rodzaje wywozu.",
+          "default_sensors": "Wybierz, które domyślne sensory mają zostać utworzone. Można je łączyć z własnymi sensorami."
+        }
+      },
+      "customize_select": {
+        "title": "Dostosowanie rodzaju wywozu: wybierz (opcjonalnie)",
+        "description": "Wybierz rodzaje wywozu, które chcesz dostosować w następnym kroku.",
+        "data": {
+          "type": "Rodzaj (opcjonalnie)"
+        },
+        "data_description": {
+          "type": "W następnym kroku będzie można zmienić nazwę lub ikonę, ustawić osobny kalendarz albo ukryć rodzaj wywozu."
+        }
+      },
+      "customize": {
+        "title": "Dostosowanie rodzaju wywozu ({index}/{total}): {type}",
+        "description": "Dostosuj typ {type}. Jeśli chcesz użyć wartości domyślnych, pozostaw wszystkie pola puste.",
+        "data": {
+          "alias": "Nazwa alternatywna",
+          "show": "Pokaż",
+          "icon": "Ikona",
+          "picture": "Obraz",
+          "use_dedicated_calendar": "Użyj osobnego kalendarza",
+          "dedicated_calendar_title": "Nazwa osobnego kalendarza",
+          "color": "Kolor (#RRGGBB; pusty = domyślny)"
+        },
+        "data_description": {
+          "alias": "Nowa nazwa rodzaju wywozu (tylko jeśli chcesz ją zmienić).",
+          "show": "Usuń zaznaczenie, aby ukryć ten rodzaj wywozu.",
+          "icon": "Ikona rodzaju wywozu (tylko jeśli chcesz ją zmienić).",
+          "picture": "Ścieżka do obrazu dla danego rodzaju wywozu.",
+          "use_dedicated_calendar": "Zaznacz, jeśli ten rodzaj wywozu ma mieć własną encję kalendarza.",
+          "dedicated_calendar_title": "Nazwa encji osobnego kalendarza."
+        }
+      },
+      "args": {
+        "title": "Konfiguruj źródło",
+        "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
+        "data": {
+          "calendar_title": "Nazwa kalendarza"
+        },
+        "data_description": {
+          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło."
+        }
+      },
+      "cascade_confirm": {
+        "title": "Konfiguruj źródło",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Nazwa kalendarza",
+          "app_id": "ID aplikacji",
+          "f_abfallarten": "Rodzaje odpadów",
+          "hpid": "ID strony głównej",
+          "key": "Klucz API",
+          "municipality": "Gmina",
+          "ort": "Dzielnica",
+          "realmid": "ID realm",
+          "split_bins": "Podziel pojemniki według frakcji odpadów",
+          "wasteTypes": "Rodzaje odpadów"
+        },
+        "data_description": {
+          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło.",
+          "f_abfallarten": "Opcjonalny filtr: rodzaje odpadów, które mają zostać uwzględnione."
+        }
+      },
+      "reconfigure": {
+        "title": "Ponownie skonfiguruj źródło",
+        "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
+        "data": {
+          "calendar_title": "Nazwa kalendarza"
+        }
+      }
+    },
+    "error": {
+      "invalid_weekday": "Nieprawidłowy dzień tygodnia. Podaj poprawny dzień (MO, TU, WE, TH, FR, SA, SU).",
+      "invalid_count": "Nieprawidłowa liczba. Podaj poprawną wartość liczbową.",
+      "invalid_weekdays": "Nieprawidłowy format dnia tygodnia. Podaj skrót (MO, TU, WE, TH, FR, SA, SU) lub słownik, na przykład MO: 1.",
+      "invalid_source": "Nie wybrano źródła. Wybierz poprawne źródło.",
+      "fetch_error": "Źródło zwróciło nieprawidłową odpowiedź: „{fetch_error_message}”. Sprawdź podane argumenty i spróbuj ponownie.",
+      "invalid_arg": "Nieprawidłowy argument: „{invalid_arg_message}”",
+      "fetch_empty": "Źródło zwróciło pustą odpowiedź. Sprawdź podane argumenty i spróbuj ponownie.",
+      "invalid_template": "Szablon jest nieprawidłowy. Sprawdź składnię i spróbuj ponownie.",
+      "skip_additional": "Nie można jednocześnie pominąć bieżącego sensora i dodać kolejnych sensorów.",
+      "name_exists": "Nazwa sensora już istnieje. Wybierz inną nazwę.",
+      "preset_selected": "Nie można jednocześnie wybrać ustawienia wstępnego i podać wartości niestandardowych.",
+      "sensor_name_empty": "Nazwa sensora nie może być pusta. Podaj nazwę.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Nazwę osobnego kalendarza można podać tylko wtedy, gdy osobny kalendarz jest włączony.",
+      "invalid_sensor": "Sprawdź ustawienia sensora, szablony oraz kolor w formacie #RRGGBB."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Harmonogram wywozu odpadów",
+        "menu_options": {
+          "source_settings": "Ustawienia źródła",
+          "sensors": "Sensory",
+          "waste_types": "Rodzaje odpadów"
+        }
+      },
+      "customize": {
+        "title": "Edytuj/utwórz dostosowanie rodzaju wywozu ({index}/{total}): {type}",
+        "description": "Edytuj/utwórz dostosowanie dla „{type}”. Jeśli chcesz użyć wartości domyślnych, pozostaw wszystkie pola puste.",
+        "data": {
+          "delete": "Usuń",
+          "alias": "Nazwa alternatywna",
+          "show": "Pokaż",
+          "icon": "Ikona",
+          "picture": "Obraz",
+          "use_dedicated_calendar": "Użyj osobnego kalendarza",
+          "dedicated_calendar_title": "Nazwa osobnego kalendarza",
+          "color": "Kolor (#RRGGBB; pusty = domyślny)"
+        },
+        "data_description": {
+          "delete": "Usuń to dostosowanie.",
+          "alias": "Nowa nazwa rodzaju wywozu (tylko jeśli chcesz ją zmienić).",
+          "show": "Usuń zaznaczenie, aby ukryć ten rodzaj wywozu.",
+          "icon": "Ikona rodzaju wywozu (tylko jeśli chcesz ją zmienić).",
+          "picture": "Ścieżka do obrazu dla danego rodzaju wywozu.",
+          "use_dedicated_calendar": "Zaznacz, jeśli ten rodzaj wywozu ma mieć własną encję kalendarza.",
+          "dedicated_calendar_title": "Nazwa encji osobnego kalendarza."
+        }
+      },
+      "source_settings": {
+        "description": "Zaktualizuj szczegóły harmonogramu wywozu odpadów.",
+        "data": {
+          "calendar_title": "Nazwa kalendarza",
+          "separator": "Separator",
+          "fetch_time": "Czas pobierania",
+          "random_fetch_time_offset": "Losowe przesunięcie pobierania (minuty)",
+          "day_switch_time": "Czas zmiany dnia",
+          "fetch_interval_days": "Liczba dni między pobieraniami",
+          "day_offset": "Przesunięcie dnia",
+          "ignore_duplicates": "Ignoruj zduplikowane wpisy w tym samym dniu",
+          "show_original_label": "Pokaż oryginalną nazwę usługodawcy"
+        },
+        "data_description": {
+          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło.",
+          "separator": "Służy do łączenia wpisów, gdy źródło zwraca wiele wartości dla jednego dnia.",
+          "fetch_time": "Czas w formacie „HH:MM”, o którym Home Assistant pobiera od usługodawcy najnowszy harmonogram wywozu.",
+          "random_fetch_time_offset": "Czas pobierania jest losowo przesuwany o maksymalnie podaną liczbę minut. Pomaga rozłożyć żądania Home Assistant w czasie i zmniejszyć szczytowe obciążenie usługodawców.",
+          "day_switch_time": "Czas w formacie „HH:MM”, o którym Home Assistant kończy bieżący wpis i przechodzi do następnego.",
+          "fetch_interval_days": "Określa, jak często Home Assistant pobiera zdarzenia wywozu odpadów z tego źródła kalendarza. Wartość domyślna to 1 dzień. Przy wartości 2 zdarzenia są pobierane co 2 dni.",
+          "day_offset": "Przesunięcie daty wywozu w dniach (może być ujemne). Jeśli nie podasz wartości, używana jest wartość domyślna 0.",
+          "ignore_duplicates": "Po włączeniu zduplikowane wpisy tego samego rodzaju odpadów w tym samym dniu są usuwane i dla każdego rodzaju pozostaje tylko jeden wpis.",
+          "show_original_label": "Po włączeniu (ustawienie domyślne) niektóre źródła pozostawiają w opisie wywozu oryginalną nazwę usługodawcy (np. dokładną nazwę pojemnika) nawet po przypisaniu do standardowego rodzaju odpadów. Wyłącz, aby ukryć oryginalną nazwę."
+        },
+        "title": "Ustawienia źródła"
+      },
+      "sensors": {
+        "title": "Sensory",
+        "data": {
+          "predefined": "Wstępnie zdefiniowane sensory",
+          "edit_sensor": "Edytuj sensor",
+          "device_controls": "Elementy sterujące urządzenia",
+          "auto_add_types": "Automatycznie dodawaj nowo wykryte rodzaje"
+        }
+      },
+      "edit_sensor": {
+        "title": "Edytuj sensor",
+        "data": {
+          "name": "Nazwa",
+          "enabled": "Włączone",
+          "state_format": "Tekst stanu",
+          "language": "Język",
+          "date_format": "Format daty",
+          "details_format": "Format szczegółów",
+          "count": "Liczba",
+          "leadtime": "Wyprzedzenie (dni)",
+          "unique_types": "Każdy rodzaj tylko raz",
+          "exclude_types": "Wyklucz rodzaje",
+          "advanced": "Ustawienia zaawansowane",
+          "action": "Akcja",
+          "types": "Rodzaje odpadów",
+          "kind": "Typ sensora"
+        }
+      },
+      "sensor_advanced": {
+        "title": "Ustawienia zaawansowane",
+        "data": {
+          "event_index": "Indeks odbioru",
+          "value_template": "Własny szablon stanu",
+          "date_template": "Własny szablon daty",
+          "color": "Kolor (#RRGGBB; pusty = domyślny)"
+        }
+      },
+      "waste_types": {
+        "title": "Rodzaje odpadów",
+        "data": {
+          "types": "Rodzaje odpadów"
+        }
+      }
+    },
+    "error": {
+      "time_format": "Czas należy podawać w formacie HH:MM.",
+      "invalid_template": "Szablon jest nieprawidłowy. Sprawdź składnię i spróbuj ponownie.",
+      "name_exists": "Nazwa sensora już istnieje. Wybierz inną nazwę.",
+      "preset_selected": "Nie można jednocześnie wybrać ustawienia wstępnego i podać wartości niestandardowych.",
+      "sensor_name_empty": "Nazwa sensora nie może być pusta. Podaj nazwę.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Nazwę osobnego kalendarza można podać tylko wtedy, gdy osobny kalendarz jest włączony.",
+      "invalid_sensor": "Sprawdź ustawienia sensora, szablony oraz kolor w formacie #RRGGBB."
+    },
+    "abort": {
+      "sensor_removed": "Ten sensor został usunięty, gdy edytor był otwarty. Otwórz ponownie opcje sensora."
+    }
+  },
+  "selector": {
+    "details_format": {
+      "options": {
+        "types_in_days": "Rodzaje i odliczanie",
+        "in_days": "Odliczanie",
+        "relative": "Dzisiaj / jutro / za N dni",
+        "date": "Data wywozu",
+        "types": "Rodzaje wywozu",
+        "days": "Liczba dni",
+        "custom": "Własny szablon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dzień tygodnia, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dzień tygodnia, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dzień tygodnia, YYYY-MM-DD",
+        "upcoming": "Nadchodzące daty",
+        "appointment_types": "Najbliższa data dla każdego rodzaju",
+        "generic": "Ustrukturyzowane wpisy",
+        "hidden": "Ukryj szczegóły",
+        "schedule": "Harmonogram wywozu",
+        "days_to": "Dni do wywozu",
+        "last_update": "Ostatnia aktualizacja",
+        "auto": "Język Home Assistant",
+        "en": "Angielski",
+        "de": "Niemiecki",
+        "fr": "Francuski",
+        "it": "Włoski",
+        "nl": "Niderlandzki",
+        "sl": "Słoweński",
+        "da": "Duński",
+        "fi": "Fiński",
+        "sv": "Szwedzki",
+        "nb": "Norweski (bokmål)",
+        "add_custom": "Dodaj własny sensor",
+        "save": "Zapisz",
+        "reset": "Przywróć wartości domyślne",
+        "duplicate": "Duplikuj jako własny sensor",
+        "delete": "Usuń własny sensor"
+      }
+    },
+    "default_sensors": {
+      "options": {
+        "legacy": "Jeden sensor dla każdego rodzaju odpadów",
+        "new": "Sensory przeglądowe (najbliższy odbiór, dni do wywozu, ostatnia aktualizacja)"
+      }
+    },
+    "custom_flow_types": {
+      "options": {
+        "yearly": "Rocznie",
+        "monthly": "Miesięcznie",
+        "weekly": "Tygodniowo",
+        "daily": "Codziennie"
+      }
+    },
+    "sensor_select": {
+      "options": {
+        "sensor_select_add_new": "Dodaj nowy sensor"
+      }
+    },
+    "state_format": {
+      "options": {
+        "types_in_days": "Rodzaje i odliczanie",
+        "in_days": "Odliczanie",
+        "relative": "Dzisiaj / jutro / za N dni",
+        "date": "Data wywozu",
+        "types": "Rodzaje wywozu",
+        "days": "Liczba dni",
+        "custom": "Własny szablon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dzień tygodnia, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dzień tygodnia, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dzień tygodnia, YYYY-MM-DD",
+        "upcoming": "Nadchodzące daty",
+        "appointment_types": "Najbliższa data dla każdego rodzaju",
+        "generic": "Ustrukturyzowane wpisy",
+        "hidden": "Ukryj szczegóły",
+        "schedule": "Harmonogram wywozu",
+        "days_to": "Dni do wywozu",
+        "last_update": "Ostatnia aktualizacja",
+        "auto": "Język Home Assistant",
+        "en": "Angielski",
+        "de": "Niemiecki",
+        "fr": "Francuski",
+        "it": "Włoski",
+        "nl": "Niderlandzki",
+        "sl": "Słoweński",
+        "da": "Duński",
+        "fi": "Fiński",
+        "sv": "Szwedzki",
+        "nb": "Norweski (bokmål)",
+        "add_custom": "Dodaj własny sensor",
+        "save": "Zapisz",
+        "reset": "Przywróć wartości domyślne",
+        "duplicate": "Duplikuj jako własny sensor",
+        "delete": "Usuń własny sensor"
+      }
+    },
+    "date_format": {
+      "options": {
+        "types_in_days": "Rodzaje i odliczanie",
+        "in_days": "Odliczanie",
+        "relative": "Dzisiaj / jutro / za N dni",
+        "date": "Data wywozu",
+        "types": "Rodzaje wywozu",
+        "days": "Liczba dni",
+        "custom": "Własny szablon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dzień tygodnia, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dzień tygodnia, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dzień tygodnia, YYYY-MM-DD",
+        "upcoming": "Nadchodzące daty",
+        "appointment_types": "Najbliższa data dla każdego rodzaju",
+        "generic": "Ustrukturyzowane wpisy",
+        "hidden": "Ukryj szczegóły",
+        "schedule": "Harmonogram wywozu",
+        "days_to": "Dni do wywozu",
+        "last_update": "Ostatnia aktualizacja",
+        "auto": "Język Home Assistant",
+        "en": "Angielski",
+        "de": "Niemiecki",
+        "fr": "Francuski",
+        "it": "Włoski",
+        "nl": "Niderlandzki",
+        "sl": "Słoweński",
+        "da": "Duński",
+        "fi": "Fiński",
+        "sv": "Szwedzki",
+        "nb": "Norweski (bokmål)",
+        "add_custom": "Dodaj własny sensor",
+        "save": "Zapisz",
+        "reset": "Przywróć wartości domyślne",
+        "duplicate": "Duplikuj jako własny sensor",
+        "delete": "Usuń własny sensor"
+      }
+    },
+    "language": {
+      "options": {
+        "types_in_days": "Rodzaje i odliczanie",
+        "in_days": "Odliczanie",
+        "relative": "Dzisiaj / jutro / za N dni",
+        "date": "Data wywozu",
+        "types": "Rodzaje wywozu",
+        "days": "Liczba dni",
+        "custom": "Własny szablon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dzień tygodnia, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dzień tygodnia, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dzień tygodnia, YYYY-MM-DD",
+        "upcoming": "Nadchodzące daty",
+        "appointment_types": "Najbliższa data dla każdego rodzaju",
+        "generic": "Ustrukturyzowane wpisy",
+        "hidden": "Ukryj szczegóły",
+        "schedule": "Harmonogram wywozu",
+        "days_to": "Dni do wywozu",
+        "last_update": "Ostatnia aktualizacja",
+        "auto": "Język Home Assistant",
+        "en": "Angielski",
+        "de": "Niemiecki",
+        "fr": "Francuski",
+        "it": "Włoski",
+        "nl": "Niderlandzki",
+        "sl": "Słoweński",
+        "da": "Duński",
+        "fi": "Fiński",
+        "sv": "Szwedzki",
+        "nb": "Norweski (bokmål)",
+        "add_custom": "Dodaj własny sensor",
+        "save": "Zapisz",
+        "reset": "Przywróć wartości domyślne",
+        "duplicate": "Duplikuj jako własny sensor",
+        "delete": "Usuń własny sensor"
+      }
+    },
+    "kind": {
+      "options": {
+        "types_in_days": "Rodzaje i odliczanie",
+        "in_days": "Odliczanie",
+        "relative": "Dzisiaj / jutro / za N dni",
+        "date": "Data wywozu",
+        "types": "Rodzaje wywozu",
+        "days": "Liczba dni",
+        "custom": "Własny szablon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dzień tygodnia, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dzień tygodnia, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dzień tygodnia, YYYY-MM-DD",
+        "upcoming": "Nadchodzące daty",
+        "appointment_types": "Najbliższa data dla każdego rodzaju",
+        "generic": "Ustrukturyzowane wpisy",
+        "hidden": "Ukryj szczegóły",
+        "schedule": "Harmonogram wywozu",
+        "days_to": "Dni do wywozu",
+        "last_update": "Ostatnia aktualizacja",
+        "auto": "Język Home Assistant",
+        "en": "Angielski",
+        "de": "Niemiecki",
+        "fr": "Francuski",
+        "it": "Włoski",
+        "nl": "Niderlandzki",
+        "sl": "Słoweński",
+        "da": "Duński",
+        "fi": "Fiński",
+        "sv": "Szwedzki",
+        "nb": "Norweski (bokmål)",
+        "add_custom": "Dodaj własny sensor",
+        "save": "Zapisz",
+        "reset": "Przywróć wartości domyślne",
+        "duplicate": "Duplikuj jako własny sensor",
+        "delete": "Usuń własny sensor"
+      }
+    },
+    "action": {
+      "options": {
+        "types_in_days": "Rodzaje i odliczanie",
+        "in_days": "Odliczanie",
+        "relative": "Dzisiaj / jutro / za N dni",
+        "date": "Data wywozu",
+        "types": "Rodzaje wywozu",
+        "days": "Liczba dni",
+        "custom": "Własny szablon",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dzień tygodnia, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dzień tygodnia, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dzień tygodnia, YYYY-MM-DD",
+        "upcoming": "Nadchodzące daty",
+        "appointment_types": "Najbliższa data dla każdego rodzaju",
+        "generic": "Ustrukturyzowane wpisy",
+        "hidden": "Ukryj szczegóły",
+        "schedule": "Harmonogram wywozu",
+        "days_to": "Dni do wywozu",
+        "last_update": "Ostatnia aktualizacja",
+        "auto": "Język Home Assistant",
+        "en": "Angielski",
+        "de": "Niemiecki",
+        "fr": "Francuski",
+        "it": "Włoski",
+        "nl": "Niderlandzki",
+        "sl": "Słoweński",
+        "da": "Duński",
+        "fi": "Fiński",
+        "sv": "Szwedzki",
+        "nb": "Norweski (bokmål)",
+        "add_custom": "Dodaj własny sensor",
+        "save": "Zapisz",
+        "reset": "Przywróć wartości domyślne",
+        "duplicate": "Duplikuj jako własny sensor",
+        "delete": "Usuń własny sensor"
+      }
+    }
+  },
+  "issues": {
+    "legacy_sensors": {
+      "title": "Sensory pozostałe po wcześniejszej zmianie nazw",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Usuń wpisy przestarzałych sensorów",
+            "description": "Te przestarzałe sensory nie mają zapisanej konfiguracji: {entities}. Przed usunięciem sprawdź automatyzacje i pulpity.\n\nUsunąć wymienione przestarzałe wpisy z rejestru? Aktywne zmigrowane sensory zostaną zachowane."
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "state_format": {
+        "name": "Tekst stanu",
+        "state": {
+          "types_in_days": "Rodzaje i odliczanie",
+          "in_days": "Odliczanie",
+          "relative": "Dzisiaj / jutro / za N dni",
+          "date": "Data wywozu",
+          "types": "Rodzaje wywozu",
+          "days": "Liczba dni",
+          "custom": "Własny szablon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Dzień tygodnia, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Dzień tygodnia, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Dzień tygodnia, YYYY-MM-DD",
+          "upcoming": "Nadchodzące daty",
+          "appointment_types": "Najbliższa data dla każdego rodzaju",
+          "generic": "Ustrukturyzowane wpisy",
+          "hidden": "Ukryj szczegóły",
+          "schedule": "Harmonogram wywozu",
+          "days_to": "Dni do wywozu",
+          "last_update": "Ostatnia aktualizacja",
+          "auto": "Język Home Assistant",
+          "en": "Angielski",
+          "de": "Niemiecki",
+          "fr": "Francuski",
+          "it": "Włoski",
+          "nl": "Niderlandzki",
+          "sl": "Słoweński",
+          "da": "Duński",
+          "fi": "Fiński",
+          "sv": "Szwedzki",
+          "nb": "Norweski (bokmål)",
+          "add_custom": "Dodaj własny sensor",
+          "save": "Zapisz",
+          "reset": "Przywróć wartości domyślne",
+          "duplicate": "Duplikuj jako własny sensor",
+          "delete": "Usuń własny sensor"
+        }
+      },
+      "language": {
+        "name": "Język",
+        "state": {
+          "types_in_days": "Rodzaje i odliczanie",
+          "in_days": "Odliczanie",
+          "relative": "Dzisiaj / jutro / za N dni",
+          "date": "Data wywozu",
+          "types": "Rodzaje wywozu",
+          "days": "Liczba dni",
+          "custom": "Własny szablon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Dzień tygodnia, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Dzień tygodnia, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Dzień tygodnia, YYYY-MM-DD",
+          "upcoming": "Nadchodzące daty",
+          "appointment_types": "Najbliższa data dla każdego rodzaju",
+          "generic": "Ustrukturyzowane wpisy",
+          "hidden": "Ukryj szczegóły",
+          "schedule": "Harmonogram wywozu",
+          "days_to": "Dni do wywozu",
+          "last_update": "Ostatnia aktualizacja",
+          "auto": "Język Home Assistant",
+          "en": "Angielski",
+          "de": "Niemiecki",
+          "fr": "Francuski",
+          "it": "Włoski",
+          "nl": "Niderlandzki",
+          "sl": "Słoweński",
+          "da": "Duński",
+          "fi": "Fiński",
+          "sv": "Szwedzki",
+          "nb": "Norweski (bokmål)",
+          "add_custom": "Dodaj własny sensor",
+          "save": "Zapisz",
+          "reset": "Przywróć wartości domyślne",
+          "duplicate": "Duplikuj jako własny sensor",
+          "delete": "Usuń własny sensor"
+        }
+      },
+      "date_format": {
+        "name": "Format daty",
+        "state": {
+          "types_in_days": "Rodzaje i odliczanie",
+          "in_days": "Odliczanie",
+          "relative": "Dzisiaj / jutro / za N dni",
+          "date": "Data wywozu",
+          "types": "Rodzaje wywozu",
+          "days": "Liczba dni",
+          "custom": "Własny szablon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Dzień tygodnia, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Dzień tygodnia, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Dzień tygodnia, YYYY-MM-DD",
+          "upcoming": "Nadchodzące daty",
+          "appointment_types": "Najbliższa data dla każdego rodzaju",
+          "generic": "Ustrukturyzowane wpisy",
+          "hidden": "Ukryj szczegóły",
+          "schedule": "Harmonogram wywozu",
+          "days_to": "Dni do wywozu",
+          "last_update": "Ostatnia aktualizacja",
+          "auto": "Język Home Assistant",
+          "en": "Angielski",
+          "de": "Niemiecki",
+          "fr": "Francuski",
+          "it": "Włoski",
+          "nl": "Niderlandzki",
+          "sl": "Słoweński",
+          "da": "Duński",
+          "fi": "Fiński",
+          "sv": "Szwedzki",
+          "nb": "Norweski (bokmål)",
+          "add_custom": "Dodaj własny sensor",
+          "save": "Zapisz",
+          "reset": "Przywróć wartości domyślne",
+          "duplicate": "Duplikuj jako własny sensor",
+          "delete": "Usuń własny sensor"
+        }
+      },
+      "details_format": {
+        "name": "Format szczegółów",
+        "state": {
+          "types_in_days": "Rodzaje i odliczanie",
+          "in_days": "Odliczanie",
+          "relative": "Dzisiaj / jutro / za N dni",
+          "date": "Data wywozu",
+          "types": "Rodzaje wywozu",
+          "days": "Liczba dni",
+          "custom": "Własny szablon",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Dzień tygodnia, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Dzień tygodnia, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Dzień tygodnia, YYYY-MM-DD",
+          "upcoming": "Nadchodzące daty",
+          "appointment_types": "Najbliższa data dla każdego rodzaju",
+          "generic": "Ustrukturyzowane wpisy",
+          "hidden": "Ukryj szczegóły",
+          "schedule": "Harmonogram wywozu",
+          "days_to": "Dni do wywozu",
+          "last_update": "Ostatnia aktualizacja",
+          "auto": "Język Home Assistant",
+          "en": "Angielski",
+          "de": "Niemiecki",
+          "fr": "Francuski",
+          "it": "Włoski",
+          "nl": "Niderlandzki",
+          "sl": "Słoweński",
+          "da": "Duński",
+          "fi": "Fiński",
+          "sv": "Szwedzki",
+          "nb": "Norweski (bokmål)",
+          "add_custom": "Dodaj własny sensor",
+          "save": "Zapisz",
+          "reset": "Przywróć wartości domyślne",
+          "duplicate": "Duplikuj jako własny sensor",
+          "delete": "Usuń własny sensor"
+        }
+      }
+    },
+    "number": {
+      "count": {
+        "name": "Liczba (0 = ∞)"
+      },
+      "leadtime": {
+        "name": "Wyprzedzenie (dni) (-1 = ∞)"
+      },
+      "event_index": {
+        "name": "Indeks odbioru"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Włączone"
+      },
+      "unique_types": {
+        "name": "Każdy rodzaj tylko raz"
+      },
+      "advanced": {
+        "name": "Ustawienia zaawansowane"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Nazwa"
+      },
+      "value_template": {
+        "name": "Własny szablon stanu"
+      },
+      "date_template": {
+        "name": "Własny szablon daty"
+      },
+      "color": {
+        "name": "Kolor (#RRGGBB; pusty = domyślny)"
+      }
+    },
+    "button": {
+      "create_sensor": {
+        "name": "Utwórz sensor {name}"
+      },
+      "delete": {
+        "name": "Usuń własny sensor"
+      }
+    }
+  },
+  "exceptions": {
+    "type_unavailable": {
+      "message": "Ten rodzaj wywozu nie występuje już w bieżącym harmonogramie."
+    },
+    "custom_template_required": {
+      "message": "Najpierw ustaw własny szablon stanu w ustawieniach zaawansowanych."
+    }
+  }
+}

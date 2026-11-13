@@ -36,6 +36,7 @@ SUPPORTED_LANGUAGES = (
     "nb",
     "sk",
     "hr",
+    "pl",
 )
 
 
@@ -100,6 +101,7 @@ GENERAL_WASTE = WasteType(
         "da": "Restaffald",
         "sk": "Zmesový komunálny odpad",
         "hr": "Miješani komunalni otpad",
+        "pl": "Zmieszane odpady komunalne",
     },
     aliases={
         "en": [
@@ -152,6 +154,7 @@ RECYCLABLES = WasteType(
         "da": "Genanvendeligt affald",
         "sk": "Recyklovateľný odpad",
         "hr": "Ambalažni otpad",
+        "pl": "Odpady recyklingowe",
     },
     aliases={
         "en": [
@@ -214,6 +217,7 @@ ORGANIC = WasteType(
         "da": "Organisk affald",
         "sk": "Biologický odpad",
         "hr": "Biorazgradivi otpad",
+        "pl": "Odpady biodegradowalne",
     },
     aliases={
         "en": ["organic", "biowaste", "fogo", "food and garden"],
@@ -255,6 +259,7 @@ PAPER = WasteType(
         "da": "Pap og papir",
         "sk": "Papier",
         "hr": "Papir i karton",
+        "pl": "Papier i tektura",
     },
     aliases={
         "en": ["paper", "cardboard", "paper and card", "blue bin"],
@@ -311,6 +316,7 @@ GLASS = WasteType(
         "da": "Glas",
         "sk": "Sklo",
         "hr": "Staklo",
+        "pl": "Szkło",
     },
     aliases={
         "en": ["glass bottles"],
@@ -343,6 +349,7 @@ FOOD_WASTE = WasteType(
         "da": "Madaffald",
         "sk": "Kuchynský bioodpad",
         "hr": "Kuhinjski otpad",
+        "pl": "Odpady kuchenne",
     },
     aliases={
         "en": ["food", "food scraps", "food caddy"],
@@ -378,6 +385,7 @@ GARDEN_WASTE = WasteType(
         "da": "Haveaffald",
         "sk": "Záhradný bioodpad",
         "hr": "Vrtni otpad",
+        "pl": "Odpady zielone",
     },
     aliases={
         "en": [
@@ -442,6 +450,7 @@ BULKY_WASTE = WasteType(
         "da": "Storskrald",
         "sk": "Objemný odpad",
         "hr": "Glomazni otpad",
+        "pl": "Odpady wielkogabarytowe",
     },
     aliases={
         "en": ["bulky", "bulk waste", "hard waste", "large items"],
@@ -476,6 +485,7 @@ HAZARDOUS = WasteType(
         "da": "Farligt affald",
         "sk": "Nebezpečný odpad",
         "hr": "Opasni otpad",
+        "pl": "Odpady niebezpieczne",
     },
     aliases={
         "en": ["hazardous", "household hazardous waste", "hhw", "chemicals"],
@@ -521,6 +531,7 @@ ELECTRONICS = WasteType(
         "da": "Elektronikaffald",
         "sk": "Elektroodpad",
         "hr": "Elektronički otpad",
+        "pl": "Elektroodpady",
     },
     aliases={
         "en": ["electronics", "e-waste", "weee", "white goods", "appliances"],
@@ -571,6 +582,7 @@ TEXTILES = WasteType(
         "da": "Tekstiler",
         "sk": "Textil",
         "hr": "Tekstil",
+        "pl": "Tekstylia",
     },
     aliases={
         "en": [
@@ -633,6 +645,7 @@ METAL = WasteType(
         "da": "Metal",
         "sk": "Kovy",
         "hr": "Metal",
+        "pl": "Metale",
     },
     aliases={},
     auto_resolve=False,
@@ -655,6 +668,7 @@ PLASTIC = WasteType(
         "da": "Plastik",
         "sk": "Plast",
         "hr": "Plastika",
+        "pl": "Tworzywa sztuczne",
     },
     aliases={},
     auto_resolve=False,
@@ -677,6 +691,7 @@ CARTONS = WasteType(
         "da": "Mad- og drikkekartoner",
         "sk": "Nápojové kartóny",
         "hr": "Kartonska ambalaža za piće",
+        "pl": "Kartony po napojach",
     },
     aliases={},
     auto_resolve=False,
@@ -699,6 +714,7 @@ OTHER = WasteType(
         "da": "Andet",
         "sk": "Iné",
         "hr": "Ostalo",
+        "pl": "Inne",
     },
     auto_resolve=False,
 )
