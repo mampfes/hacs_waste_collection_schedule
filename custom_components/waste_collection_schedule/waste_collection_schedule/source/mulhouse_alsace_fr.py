@@ -50,6 +50,26 @@ _REPORT_RE = re.compile(
     rf"{_DATE_TOKEN}\s+report[ée]\s+(?:au|le)\s+{_DATE_TOKEN}", re.IGNORECASE
 )
 _NON_REPORTE_RE = re.compile(rf"{_DATE_TOKEN}\s+non\s+report[ée]", re.IGNORECASE)
+_VEGETAL_PERIOD_RE = re.compile(
+    r"uniquement\s+du\s+(\d{1,2})\s+([a-zà-ÿ]+)\s+au\s+"
+    r"(\d{1,2})\s+([a-zà-ÿ]+)\s+(\d{4})",
+    re.IGNORECASE,
+)
+_FR_MONTHS = {
+    "janvier": 1,
+    "février": 2,
+    "mars": 3,
+    "avril": 4,
+    "mai": 5,
+    "juin": 6,
+    "juillet": 7,
+    "août": 8,
+    "septembre": 9,
+    "octobre": 10,
+    "novembre": 11,
+    "décembre": 12,
+}
+_GREEN_WASTE_LABEL = "Déchets verts"
 
 # The ferie notes use either a 4- or 2-digit year; try both known formats.
 _FR_DATE_FORMATS = (
@@ -65,6 +85,41 @@ def _parse_french_date(value: str) -> date | None:
         except ValueError:
             continue
     return None
+
+
+def _parse_vegetal_period(comment: str | None) -> tuple[date, date] | None:
+    """Read the annual green-waste collection window from the provider comment."""
+    if not comment:
+        return None
+    match = _VEGETAL_PERIOD_RE.search(comment)
+    if match is None:
+        return None
+
+    start_day, start_month, end_day, end_month, year = match.groups()
+    try:
+        start = date(int(year), _FR_MONTHS[start_month.lower()], int(start_day))
+        end = date(int(year), _FR_MONTHS[end_month.lower()], int(end_day))
+    except (KeyError, ValueError):
+        return None
+    return start, end
+
+
+def _is_in_vegetal_period(collection_date: date, period: tuple[date, date]) -> bool:
+    """Whether ``collection_date`` falls in the comment's month/day window.
+
+    The parsed year is not reused: a window taken from a 2026 comment is
+    applied in later years as well. The check does not invent dates.
+    """
+    start, end = period
+    collection_month_day = (collection_date.month, collection_date.day)
+    start_month_day = (start.month, start.day)
+    end_month_day = (end.month, end.day)
+
+    if start_month_day <= end_month_day:
+        return start_month_day <= collection_month_day <= end_month_day
+    return (
+        collection_month_day >= start_month_day or collection_month_day <= end_month_day
+    )
 
 
 def _parse_ferie(
@@ -130,6 +185,9 @@ def _describe(row: dict, source: Any = None):
     end = today + timedelta(weeks=HORIZON_WEEKS)
     # Read once here, applied per collection by _adjust below.
     source.ferie = _parse_ferie(row.get("ferie"), (today, end))
+    # Season window from the comment, if any; _adjust only drops dates
+    # already produced by RecurrenceExpander, it never projects new ones.
+    source.vegetal_period = _parse_vegetal_period(row.get("comment"))
 
     for freq_field, jour_field, label, _waste_type in WASTE_FIELDS:
         jour = row.get(jour_field)
@@ -148,12 +206,28 @@ def _describe(row: dict, source: Any = None):
 
 
 def _adjust(collection_date: date, key: str, source: Any = None) -> "date | None":
-    """Apply the district's holiday notes: move a collection, or cancel it."""
+    """Apply the district's holiday notes: move a collection, or cancel it.
+
+    Green-waste dates outside the comment's season window are dropped (both
+    the original date and the holiday-shifted date must fall inside it).
+    """
     moves, cancellations = getattr(source, "ferie", ({}, set()))
     if collection_date in cancellations:
         return None
     effective = moves.get(collection_date, collection_date)
-    return None if effective in cancellations else effective
+    if effective in cancellations:
+        return None
+    period = getattr(source, "vegetal_period", None)
+    if (
+        key == _GREEN_WASTE_LABEL
+        and period is not None
+        and (
+            not _is_in_vegetal_period(collection_date, period)
+            or not _is_in_vegetal_period(effective, period)
+        )
+    ):
+        return None
+    return effective
 
 
 @final
@@ -171,6 +245,7 @@ class Source(BaseSource):
         "Wittelsheim": {"commune": "Wittelsheim"},
         "Mulhouse - Centre Ville": {"commune": "Mulhouse", "quartier": "Centre Ville"},
         "Habsheim": {"commune": "Habsheim"},
+        "Richwiller": {"commune": "Richwiller"},
     }
 
     # One structure, many communes: each is a Region (the same pipeline with a
