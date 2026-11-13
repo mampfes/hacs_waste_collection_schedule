@@ -181,6 +181,22 @@ FIELD_LABELS = {
         "Druhy odpadu",
         "Typ senzora",
     ),
+    "hr": (
+        "Naziv",
+        "Omogućeno",
+        "Tekst stanja",  # codespell:ignore tekst
+        "Jezik",
+        "Format datuma",
+        "Format pojedinosti",
+        "Broj",
+        "Unaprijed (dana)",
+        "Svaka vrsta samo jednom",
+        "Isključi vrste",
+        "Napredne postavke",
+        "Radnja",
+        "Vrste otpada",
+        "Vrsta senzora",
+    ),
 }
 FIELD_KEYS = (
     "name",
@@ -298,6 +314,15 @@ MENUS = {
         "Ovládacie prvky zariadenia",
         "Automaticky pridávať novo zistené typy",
     ),
+    "hr": (
+        "Postavke izvora",
+        "Senzori",
+        "Vrste otpada",
+        "Uredi senzor",
+        "Unaprijed definirani senzori",
+        "Kontrole uređaja",
+        "Automatski dodaj novo otkrivene vrste",
+    ),
 }
 CHOICE_LABELS = {
     "types_in_days": "Types and countdown",
@@ -332,6 +357,7 @@ CHOICE_LABELS = {
     "sv": "Svenska",
     "nb": "Norsk bokmål",
     "sk": "Slovenčina",
+    "hr": "Hrvatski",
     "add_custom": "Add custom sensor",
     "save": "Save",
     "reset": "Reset to defaults",

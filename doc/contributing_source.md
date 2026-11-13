@@ -291,7 +291,7 @@ Two consequences worth knowing. An empty string counts as unset, so a field the 
 
 `cascading_select(*levels)` is the N-level generalisation, for a wizard deeper than two levels (e.g. kommune to district to street to house number). The source implements `get_choices(field, selections) -> list[str] | list[(label, value)]`, returning one level's options given the levels chosen so far. A `(label, value)` pair shows a human name while storing an opaque id (so the stored config and `TEST_CASES` can stay id-based); a level whose `get_choices` returns `[]` for the current selections is not applicable and is skipped. Pair it with `RAISE_ON_EMPTY = True`. See `abfall_io.py`.
 
-**Field labels and translations.** A config field is a standard *concept*; the only thing that varies per source is the *wire name* (the property the value is sent as / the `__init__` kwarg). Use the standard field factories and bind each to its wire name. The localised label and per-field help come from the shared catalogue (`field_terms.py`) in every supported language (en/de/fr/it/nl/sl/da/fi/sv/nb/sk), so you never hand-write a label, a translation, or a HOWTO for a standard field:
+**Field labels and translations.** A config field is a standard *concept*; the only thing that varies per source is the *wire name* (the property the value is sent as / the `__init__` kwarg). Use the standard field factories and bind each to its wire name. The localised label and per-field help come from the shared catalogue (`field_terms.py`) in every supported language (en/de/fr/it/nl/sl/da/fi/sv/nb/sk/hr), so you never hand-write a label, a translation, or a HOWTO for a standard field:
 
 ```python
 PARAMS = [
@@ -695,7 +695,7 @@ On a pipeline source the metadata lives on the class:
 | `COUNTRY` | str | Lowercase country code. Optional if the file name ends in a valid code; otherwise required. UK is `"uk"`, Canada is `"ca"`. This is ISO 3166-1 alpha-2 (Slovenia is `si`); language codes in translations are ISO 639-1, a different namespace (Slovenian is `sl`). |
 | `TEST_CASES` | dict | Maps a case name to constructor kwargs. Must not be empty. |
 | `PARAMS` | list | Typed `ConfigParam` descriptors driving the config flow and validation. |
-| `HOWTO` | dict | Optional per-language guidance shown above the config form. Keys must be in the supported set: `en`, `de`, `it`, `fr`, `nl`. |
+| `HOWTO` | dict | Optional per-language guidance shown above the config form. Keys must be in the supported set: `en`, `de`, `it`, `fr`, `nl`, `sl`, `da`, `fi`, `sv`, `nb`, `sk`, `hr`. |
 | `RAISE_ON_EMPTY` | bool | Optional. `True` for address/lookup sources so an empty result raises. |
 | `IGNORE_DUPLICATES_DEFAULT` | bool | Optional. Default `False`. The source's own recommendation for the end-user "Ignore Duplicate Entries per Day" option (`ignore_duplicates`) — the value it's preselected with the first time a user opens this source's config-entry options, before they've explicitly chosen either way. A legacy source declares the same name as a plain module-level variable instead (no `BaseSource` class to hang it on). Set `True` when a `type_value_map` collapses labels whose underlying schedules can land on the same day for some occurrences (see "Carrying the provider's raw label", above); leave unset otherwise. Never changes anything on its own — the actual merge happens in `SourceShell`, keyed on the user's stored choice (or this default, until they make one), never inside `fetch()` itself, so a bare `Source().fetch()` call (offline fixtures, `test_sources.py -l`, `dump_collections.py`) always sees the raw, un-merged output. |
 | `SOURCE_CODEOWNERS` | list | Optional. GitHub handles (each starting with `@`) who maintain this source. Feeds `.github/source_owners.json` and the notify-source-owners workflow. Strongly encouraged. |
@@ -745,7 +745,7 @@ Set the class metadata correctly so generation produces the right entries. An in
 
 ## Legacy module-level sources
 
-The earlier contract is still supported and powers most existing sources. A module defines `TITLE`, `DESCRIPTION`, `URL`, `COUNTRY`, `TEST_CASES`, an `ICON_MAP` of `Icons` enum members, optional `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS`, and a `Source` class with `__init__(**kwargs)` and `fetch() -> list[Collection]` that returns `Collection(date, t, icon=...)`. The CI-enforced rules (icon enum, country allowlist, the `en`/`de`/`it`/`fr`/`nl` language allowlist) apply to both styles. New sources should prefer the pipeline, but a bug fix to an existing legacy source does not need to convert it.
+The earlier contract is still supported and powers most existing sources. A module defines `TITLE`, `DESCRIPTION`, `URL`, `COUNTRY`, `TEST_CASES`, an `ICON_MAP` of `Icons` enum members, optional `PARAM_TRANSLATIONS` / `PARAM_DESCRIPTIONS`, and a `Source` class with `__init__(**kwargs)` and `fetch() -> list[Collection]` that returns `Collection(date, t, icon=...)`. The CI-enforced rules (icon enum, country allowlist, the `en`/`de`/`it`/`fr`/`nl`/`sl`/`da`/`fi`/`sv`/`nb`/`sk`/`hr` language allowlist) apply to both styles. New sources should prefer the pipeline, but a bug fix to an existing legacy source does not need to convert it.
 
 ## Versioning and deprecation
 
