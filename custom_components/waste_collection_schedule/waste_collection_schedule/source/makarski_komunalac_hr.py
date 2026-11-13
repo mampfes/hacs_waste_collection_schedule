@@ -56,6 +56,7 @@ class Source(BaseSource):
     HOWTO: ClassVar[dict[str, str]] = {
         "en": "Enter your street (without house number) in the search box on https://makarski-komunalac.hr/info/kalendar_odvoza.html to find out whether your address is collected on the Ponedjeljak/Četvrtak (Monday/Thursday) or the Utorak/Subota (Tuesday/Saturday) schedule.",
         "de": "Geben Sie Ihre Straße (ohne Hausnummer) in das Suchfeld auf https://makarski-komunalac.hr/info/kalendar_odvoza.html ein, um herauszufinden, ob Ihre Adresse nach dem Plan Ponedjeljak/Četvrtak (Montag/Donnerstag) oder Utorak/Subota (Dienstag/Samstag) abgeholt wird.",
+        "hr": "U okvir za pretraživanje na https://makarski-komunalac.hr/info/kalendar_odvoza.html unesite svoju ulicu (bez kućnog broja) kako biste saznali je li vaša adresa na rasporedu Ponedjeljak/Četvrtak ili Utorak/Subota.",
     }
 
     PARAMS = (dropdown("schedule", list(_SCHEDULES), "Collection schedule"),)

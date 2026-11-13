@@ -1191,6 +1191,38 @@ var Z = {
 		icon: "Ikona",
 		color: "Farba",
 		picture: "URL obrázka"
+	},
+	hr: {
+		appearance: "Izgled",
+		filters: "Filtri",
+		next: "Sljedeći odvoz",
+		schedule: "Raspored odvoza",
+		bins: "Vaši spremnici",
+		loading: "Učitavanje odvoza…",
+		empty: "U ovom razdoblju nema odvoza",
+		choose: "U uređivaču kartice odaberite kalendare odvoza otpada.",
+		error: "Odvoze nije moguće učitati",
+		partial: "Neke kalendare nije moguće učitati",
+		retry: "Pokušaj ponovno",
+		calendar: "Kalendar",
+		title: "Naziv",
+		entities: "Kalendari",
+		days: "Unaprijed (dana)",
+		max_items: "Najveći broj stavki",
+		show_countdown: "Prikaži odbrojavanje",
+		show_date: "Prikaži datum",
+		show_icons: "Prikaži ikone",
+		show_pictures: "Prikaži slike",
+		show_colors: "Prikaži boje",
+		types: "Uredi izgled vrsta otpada",
+		include_types: "Samo ove vrste otpada",
+		exclude_types: "Sakrij ove vrste otpada",
+		language: "Jezik (neobavezno)",
+		type: "Vrsta otpada pružatelja usluge",
+		name: "Prikazani naziv",
+		icon: "Ikona",
+		color: "Boja",
+		picture: "URL slike"
 	}
 };
 function Q(e, t) {

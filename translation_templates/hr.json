@@ -1,0 +1,732 @@
+{
+  "title": "Raspored odvoza otpada",
+  "config": {
+    "abort": {
+      "already_configured": "Ovaj je izvor već konfiguriran."
+    },
+    "step": {
+      "user": {
+        "title": "Odaberite zemlju",
+        "data": {
+          "country": "Zemlja"
+        },
+        "data_description": {
+          "country": "Odaberite svoju zemlju ili mogućnost *Generic* ako želite postaviti izvor *ICS*."
+        }
+      },
+      "source": {
+        "title": "Odaberite izvor",
+        "description": "Odaberite pružatelja usluge s popisa.",
+        "data": {
+          "name": "Izvor"
+        }
+      },
+      "flow_type": {
+        "title": "Odaberite pojedinosti konfiguracije",
+        "description": "Odaberite koliko detaljno želite konfigurirati ovu integraciju. Ostavite prazno ako želite postaviti samo osnovni kalendar.",
+        "data": {
+          "show_customize_config": "Prikaži postavke prilagodbe događaja odvoza",
+          "default_sensors": "Zadani senzori"
+        },
+        "data_description": {
+          "show_customize_config": "Označite ako želite prilagoditi vrste odvoza.",
+          "default_sensors": "Odaberite zadane senzore koje želite stvoriti. Možete ih kombinirati s vlastitim senzorima."
+        }
+      },
+      "customize_select": {
+        "title": "Prilagodba vrste odvoza: odabir (neobavezno)",
+        "description": "Odaberite vrste odvoza koje želite prilagoditi u sljedećem koraku.",
+        "data": {
+          "type": "Vrsta (neobavezno)"
+        },
+        "data_description": {
+          "type": "U sljedećem ćete koraku moći promijeniti naziv ili ikonu, postaviti zaseban kalendar ili sakriti vrstu odvoza."
+        }
+      },
+      "customize": {
+        "title": "Prilagodba vrste odvoza ({index}/{total}): {type}",
+        "description": "Prilagodite vrstu {type}. Ako želite upotrijebiti zadane vrijednosti, ostavite sva polja prazna.",
+        "data": {
+          "alias": "Zamjenski naziv",
+          "show": "Prikaži",
+          "icon": "Ikona",
+          "picture": "Slika",
+          "use_dedicated_calendar": "Upotrijebiti zaseban kalendar",
+          "dedicated_calendar_title": "Naziv zasebnog kalendara",
+          "color": "Boja (#RRGGBB; zadana ako je prazno)"
+        },
+        "data_description": {
+          "alias": "Novi naziv vrste odvoza (samo ako ga želite promijeniti).",
+          "show": "Uklonite kvačicu da biste sakrili ovu vrstu odvoza.",
+          "icon": "Ikona vrste odvoza (samo ako je želite promijeniti).",
+          "picture": "Putanja do slike za tu vrstu odvoza.",
+          "use_dedicated_calendar": "Označite ako ova vrsta odvoza treba imati vlastiti entitet kalendara.",
+          "dedicated_calendar_title": "Naziv entiteta zasebnog kalendara."
+        }
+      },
+      "args": {
+        "title": "Konfiguriraj izvor",
+        "description": "Konfigurirajte pružatelja usluge. {howto}Više pojedinosti: {docs_url}.",
+        "data": {
+          "calendar_title": "Naziv kalendara"
+        },
+        "data_description": {
+          "calendar_title": "Čitljiviji naziv kalendara odvoza otpada. Ako ga ne unesete, upotrebljava se naziv koji daje izvor."
+        }
+      },
+      "cascade_confirm": {
+        "title": "Konfiguriraj izvor",
+        "description": "{cascade_summary}",
+        "data": {
+          "calendar_title": "Naziv kalendara",
+          "app_id": "ID aplikacije",
+          "f_abfallarten": "Vrste otpada",
+          "hpid": "ID početne stranice",
+          "key": "API ključ",
+          "municipality": "Općina",
+          "ort": "Četvrt",
+          "realmid": "ID realma",
+          "split_bins": "Podijeli spremnike prema frakcijama otpada",
+          "wasteTypes": "Vrste otpada"
+        },
+        "data_description": {
+          "calendar_title": "Čitljiviji naziv kalendara odvoza otpada. Ako ga ne unesete, upotrebljava se naziv koji daje izvor.",
+          "f_abfallarten": "Neobavezni filtar: vrste otpada koje treba uključiti."
+        }
+      },
+      "reconfigure": {
+        "title": "Ponovno konfiguriraj izvor",
+        "description": "Konfigurirajte pružatelja usluge. {howto}Više pojedinosti: {docs_url}.",
+        "data": {
+          "calendar_title": "Naziv kalendara"
+        }
+      }
+    },
+    "error": {
+      "invalid_weekday": "Nevažeći dan u tjednu. Unesite valjani dan (MO, TU, WE, TH, FR, SA, SU).",
+      "invalid_count": "Nevažeći broj. Unesite valjani broj.",
+      "invalid_weekdays": "Nevažeći format dana u tjednu. Unesite kraticu (MO, TU, WE, TH, FR, SA, SU) ili rječnik, npr. MO: 1.",
+      "invalid_source": "Niste odabrali izvor. Odaberite valjani izvor.",
+      "fetch_error": "Izvor je vratio nevažeći odgovor: „{fetch_error_message}“. Provjerite unesene argumente i pokušajte ponovno.",
+      "invalid_arg": "Nevažeći argument: „{invalid_arg_message}“",
+      "fetch_empty": "Izvor je vratio prazan odgovor. Provjerite unesene argumente i pokušajte ponovno.",
+      "invalid_template": "Predložak nije valjan. Provjerite sintaksu i pokušajte ponovno.",
+      "skip_additional": "Ne možete istodobno preskočiti trenutačni senzor i dodati dodatne senzore.",
+      "name_exists": "Naziv senzora već postoji. Odaberite drugi naziv.",
+      "preset_selected": "Ne možete istodobno odabrati unaprijed postavljenu vrijednost i unijeti prilagođene vrijednosti.",
+      "sensor_name_empty": "Naziv senzora ne smije biti prazan. Unesite naziv.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Naziv zasebnog kalendara možete unijeti samo ako je zaseban kalendar omogućen.",
+      "invalid_sensor": "Provjerite postavke senzora, predloške i boju u formatu #RRGGBB."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Raspored odvoza otpada",
+        "menu_options": {
+          "source_settings": "Postavke izvora",
+          "sensors": "Senzori",
+          "waste_types": "Vrste otpada"
+        }
+      },
+      "customize": {
+        "title": "Uredi/stvori prilagodbu vrste odvoza ({index}/{total}): {type}",
+        "description": "Uredite/stvorite prilagodbu za „{type}“. Ako želite upotrijebiti zadane vrijednosti, ostavite sva polja prazna.",
+        "data": {
+          "delete": "Ukloni",
+          "alias": "Zamjenski naziv",
+          "show": "Prikaži",
+          "icon": "Ikona",
+          "picture": "Slika",
+          "use_dedicated_calendar": "Upotrijebiti zaseban kalendar",
+          "dedicated_calendar_title": "Naziv zasebnog kalendara",
+          "color": "Boja (#RRGGBB; zadana ako je prazno)"
+        },
+        "data_description": {
+          "delete": "Ukloni ovu prilagodbu.",
+          "alias": "Novi naziv vrste odvoza (samo ako ga želite promijeniti).",
+          "show": "Uklonite kvačicu da biste sakrili ovu vrstu odvoza.",
+          "icon": "Ikona vrste odvoza (samo ako je želite promijeniti).",
+          "picture": "Putanja do slike za tu vrstu odvoza.",
+          "use_dedicated_calendar": "Označite ako ova vrsta odvoza treba imati vlastiti entitet kalendara.",
+          "dedicated_calendar_title": "Naziv entiteta zasebnog kalendara."
+        }
+      },
+      "source_settings": {
+        "description": "Ažurirajte pojedinosti rasporeda odvoza otpada.",
+        "data": {
+          "calendar_title": "Naziv kalendara",
+          "separator": "Razdjelnik",
+          "fetch_time": "Vrijeme dohvaćanja",
+          "random_fetch_time_offset": "Nasumični pomak dohvaćanja (minute)",
+          "day_switch_time": "Vrijeme prebacivanja dana",
+          "fetch_interval_days": "Dani između dohvaćanja",
+          "day_offset": "Pomak u danima",
+          "ignore_duplicates": "Zanemari dvostruke unose na isti dan",
+          "show_original_label": "Prikaži izvorni naziv pružatelja usluge"
+        },
+        "data_description": {
+          "calendar_title": "Čitljiviji naziv kalendara odvoza otpada. Ako ga ne unesete, upotrebljava se naziv koji daje izvor.",
+          "separator": "Upotrebljava se za spajanje unosa ako izvor za isti dan vrati više vrijednosti.",
+          "fetch_time": "Vrijeme u formatu 'HH:MM' kada Home Assistant dohvaća najnoviji raspored odvoza od pružatelja usluge.",
+          "random_fetch_time_offset": "Nasumično pomiče vrijeme dohvaćanja do x minuta. Time se naredbe dohvaćanja Home Assistanta mogu rasporediti na dulje razdoblje kako bi se izbjegla vršna opterećenja kod pružatelja usluga.",
+          "day_switch_time": "Vrijeme u formatu 'HH:MM' kada Home Assistant zatvara trenutačni unos i prelazi na sljedeći.",
+          "fetch_interval_days": "Određuje koliko često Home Assistant dohvaća događaje odvoza otpada iz ovog izvora kalendara. Zadana vrijednost je 1 dan. Uz vrijednost 2 događaji odvoza dohvaćaju se svaka 2 dana.",
+          "day_offset": "Pomak u danima koji se dodaje datumu odvoza (može biti negativan). Ako ne unesete vrijednost, upotrebljava se zadana vrijednost 0",
+          "ignore_duplicates": "Kada je omogućeno, uklanjaju se dvostruki unosi odvoza iste vrste otpada na isti dan, tako da ostaje samo jedan unos po vrsti po danu.",
+          "show_original_label": "Kada je omogućeno (zadano), neki izvori zadržavaju izvorni naziv pružatelja usluge (npr. točan naziv spremnika) u opisu odvoza i nakon preslikavanja na standardnu vrstu otpada. Onemogućite da biste sakrili taj izvorni naziv."
+        },
+        "title": "Postavke izvora"
+      },
+      "sensors": {
+        "title": "Senzori",
+        "data": {
+          "predefined": "Unaprijed definirani senzori",
+          "edit_sensor": "Uredi senzor",
+          "device_controls": "Kontrole uređaja",
+          "auto_add_types": "Automatski dodaj novo otkrivene vrste"
+        }
+      },
+      "edit_sensor": {
+        "title": "Uredi senzor",
+        "data": {
+          "name": "Naziv",
+          "enabled": "Omogućeno",
+          "state_format": "Tekst stanja",
+          "language": "Jezik",
+          "date_format": "Format datuma",
+          "details_format": "Format pojedinosti",
+          "count": "Broj",
+          "leadtime": "Unaprijed (dana)",
+          "unique_types": "Svaka vrsta samo jednom",
+          "exclude_types": "Isključi vrste",
+          "advanced": "Napredne postavke",
+          "action": "Radnja",
+          "types": "Vrste otpada",
+          "kind": "Vrsta senzora"
+        }
+      },
+      "sensor_advanced": {
+        "title": "Napredne postavke",
+        "data": {
+          "event_index": "Indeks odvoza",
+          "value_template": "Prilagođeni predložak stanja",
+          "date_template": "Prilagođeni predložak datuma",
+          "color": "Boja (#RRGGBB; zadana ako je prazno)"
+        }
+      },
+      "waste_types": {
+        "title": "Vrste otpada",
+        "data": {
+          "types": "Vrste otpada"
+        }
+      }
+    },
+    "error": {
+      "time_format": "Vrijeme mora biti uneseno u formatu HH:MM.",
+      "invalid_template": "Predložak nije valjan. Provjerite sintaksu i pokušajte ponovno.",
+      "name_exists": "Naziv senzora već postoji. Odaberite drugi naziv.",
+      "preset_selected": "Ne možete istodobno odabrati unaprijed postavljenu vrijednost i unijeti prilagođene vrijednosti.",
+      "sensor_name_empty": "Naziv senzora ne smije biti prazan. Unesite naziv.",
+      "dedicated_calendar_title_without_use_dedicated_calendar": "Naziv zasebnog kalendara možete unijeti samo ako je zaseban kalendar omogućen.",
+      "invalid_sensor": "Provjerite postavke senzora, predloške i boju u formatu #RRGGBB."
+    },
+    "abort": {
+      "sensor_removed": "Ovaj je senzor uklonjen dok je uređivač bio otvoren. Ponovno otvorite mogućnosti senzora."
+    }
+  },
+  "selector": {
+    "details_format": {
+      "options": {
+        "types_in_days": "Vrste i odbrojavanje",
+        "in_days": "Odbrojavanje",
+        "relative": "Danas / sutra / za N dana",
+        "date": "Datum odvoza",
+        "types": "Vrste odvoza",
+        "days": "Broj dana",
+        "custom": "Prilagođeni predložak",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dan u tjednu, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dan u tjednu, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dan u tjednu, YYYY-MM-DD",
+        "upcoming": "Nadolazeći datumi",
+        "appointment_types": "Sljedeći datum za svaku vrstu",
+        "generic": "Strukturirani zapisi",
+        "hidden": "Sakrij pojedinosti",
+        "schedule": "Raspored odvoza",
+        "days_to": "Dana do odvoza",
+        "last_update": "Zadnje ažuriranje",
+        "auto": "Jezik Home Assistanta",
+        "en": "Engleski",
+        "de": "Njemački",
+        "fr": "Francuski",
+        "it": "Talijanski",
+        "nl": "Nizozemski",
+        "sl": "Slovenski",
+        "da": "Danski",
+        "fi": "Finski",
+        "sv": "Švedski",
+        "nb": "Norveški (bokmål)",
+        "add_custom": "Dodaj prilagođeni senzor",
+        "save": "Spremi",
+        "reset": "Vrati na zadane vrijednosti",
+        "duplicate": "Dupliciraj kao prilagođeni senzor",
+        "delete": "Ukloni prilagođeni senzor"
+      }
+    },
+    "default_sensors": {
+      "options": {
+        "legacy": "Jedan senzor po vrsti otpada",
+        "new": "Pregledni senzori (sljedeći odvoz, dana do odvoza, zadnje ažuriranje)"
+      }
+    },
+    "custom_flow_types": {
+      "options": {
+        "yearly": "Godišnje",
+        "monthly": "Mjesečno",
+        "weekly": "Tjedno",
+        "daily": "Dnevno"
+      }
+    },
+    "sensor_select": {
+      "options": {
+        "sensor_select_add_new": "Dodaj novi senzor"
+      }
+    },
+    "state_format": {
+      "options": {
+        "types_in_days": "Vrste i odbrojavanje",
+        "in_days": "Odbrojavanje",
+        "relative": "Danas / sutra / za N dana",
+        "date": "Datum odvoza",
+        "types": "Vrste odvoza",
+        "days": "Broj dana",
+        "custom": "Prilagođeni predložak",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dan u tjednu, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dan u tjednu, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dan u tjednu, YYYY-MM-DD",
+        "upcoming": "Nadolazeći datumi",
+        "appointment_types": "Sljedeći datum za svaku vrstu",
+        "generic": "Strukturirani zapisi",
+        "hidden": "Sakrij pojedinosti",
+        "schedule": "Raspored odvoza",
+        "days_to": "Dana do odvoza",
+        "last_update": "Zadnje ažuriranje",
+        "auto": "Jezik Home Assistanta",
+        "en": "Engleski",
+        "de": "Njemački",
+        "fr": "Francuski",
+        "it": "Talijanski",
+        "nl": "Nizozemski",
+        "sl": "Slovenski",
+        "da": "Danski",
+        "fi": "Finski",
+        "sv": "Švedski",
+        "nb": "Norveški (bokmål)",
+        "add_custom": "Dodaj prilagođeni senzor",
+        "save": "Spremi",
+        "reset": "Vrati na zadane vrijednosti",
+        "duplicate": "Dupliciraj kao prilagođeni senzor",
+        "delete": "Ukloni prilagođeni senzor"
+      }
+    },
+    "date_format": {
+      "options": {
+        "types_in_days": "Vrste i odbrojavanje",
+        "in_days": "Odbrojavanje",
+        "relative": "Danas / sutra / za N dana",
+        "date": "Datum odvoza",
+        "types": "Vrste odvoza",
+        "days": "Broj dana",
+        "custom": "Prilagođeni predložak",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dan u tjednu, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dan u tjednu, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dan u tjednu, YYYY-MM-DD",
+        "upcoming": "Nadolazeći datumi",
+        "appointment_types": "Sljedeći datum za svaku vrstu",
+        "generic": "Strukturirani zapisi",
+        "hidden": "Sakrij pojedinosti",
+        "schedule": "Raspored odvoza",
+        "days_to": "Dana do odvoza",
+        "last_update": "Zadnje ažuriranje",
+        "auto": "Jezik Home Assistanta",
+        "en": "Engleski",
+        "de": "Njemački",
+        "fr": "Francuski",
+        "it": "Talijanski",
+        "nl": "Nizozemski",
+        "sl": "Slovenski",
+        "da": "Danski",
+        "fi": "Finski",
+        "sv": "Švedski",
+        "nb": "Norveški (bokmål)",
+        "add_custom": "Dodaj prilagođeni senzor",
+        "save": "Spremi",
+        "reset": "Vrati na zadane vrijednosti",
+        "duplicate": "Dupliciraj kao prilagođeni senzor",
+        "delete": "Ukloni prilagođeni senzor"
+      }
+    },
+    "language": {
+      "options": {
+        "types_in_days": "Vrste i odbrojavanje",
+        "in_days": "Odbrojavanje",
+        "relative": "Danas / sutra / za N dana",
+        "date": "Datum odvoza",
+        "types": "Vrste odvoza",
+        "days": "Broj dana",
+        "custom": "Prilagođeni predložak",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dan u tjednu, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dan u tjednu, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dan u tjednu, YYYY-MM-DD",
+        "upcoming": "Nadolazeći datumi",
+        "appointment_types": "Sljedeći datum za svaku vrstu",
+        "generic": "Strukturirani zapisi",
+        "hidden": "Sakrij pojedinosti",
+        "schedule": "Raspored odvoza",
+        "days_to": "Dana do odvoza",
+        "last_update": "Zadnje ažuriranje",
+        "auto": "Jezik Home Assistanta",
+        "en": "Engleski",
+        "de": "Njemački",
+        "fr": "Francuski",
+        "it": "Talijanski",
+        "nl": "Nizozemski",
+        "sl": "Slovenski",
+        "da": "Danski",
+        "fi": "Finski",
+        "sv": "Švedski",
+        "nb": "Norveški (bokmål)",
+        "add_custom": "Dodaj prilagođeni senzor",
+        "save": "Spremi",
+        "reset": "Vrati na zadane vrijednosti",
+        "duplicate": "Dupliciraj kao prilagođeni senzor",
+        "delete": "Ukloni prilagođeni senzor"
+      }
+    },
+    "kind": {
+      "options": {
+        "types_in_days": "Vrste i odbrojavanje",
+        "in_days": "Odbrojavanje",
+        "relative": "Danas / sutra / za N dana",
+        "date": "Datum odvoza",
+        "types": "Vrste odvoza",
+        "days": "Broj dana",
+        "custom": "Prilagođeni predložak",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dan u tjednu, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dan u tjednu, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dan u tjednu, YYYY-MM-DD",
+        "upcoming": "Nadolazeći datumi",
+        "appointment_types": "Sljedeći datum za svaku vrstu",
+        "generic": "Strukturirani zapisi",
+        "hidden": "Sakrij pojedinosti",
+        "schedule": "Raspored odvoza",
+        "days_to": "Dana do odvoza",
+        "last_update": "Zadnje ažuriranje",
+        "auto": "Jezik Home Assistanta",
+        "en": "Engleski",
+        "de": "Njemački",
+        "fr": "Francuski",
+        "it": "Talijanski",
+        "nl": "Nizozemski",
+        "sl": "Slovenski",
+        "da": "Danski",
+        "fi": "Finski",
+        "sv": "Švedski",
+        "nb": "Norveški (bokmål)",
+        "add_custom": "Dodaj prilagođeni senzor",
+        "save": "Spremi",
+        "reset": "Vrati na zadane vrijednosti",
+        "duplicate": "Dupliciraj kao prilagođeni senzor",
+        "delete": "Ukloni prilagođeni senzor"
+      }
+    },
+    "action": {
+      "options": {
+        "types_in_days": "Vrste i odbrojavanje",
+        "in_days": "Odbrojavanje",
+        "relative": "Danas / sutra / za N dana",
+        "date": "Datum odvoza",
+        "types": "Vrste odvoza",
+        "days": "Broj dana",
+        "custom": "Prilagođeni predložak",
+        "dmy": "DD.MM.YYYY",
+        "weekday_dmy": "Dan u tjednu, DD.MM.YYYY",
+        "mdy": "MM/DD/YYYY",
+        "weekday_mdy": "Dan u tjednu, MM/DD/YYYY",
+        "iso": "YYYY-MM-DD",
+        "weekday_iso": "Dan u tjednu, YYYY-MM-DD",
+        "upcoming": "Nadolazeći datumi",
+        "appointment_types": "Sljedeći datum za svaku vrstu",
+        "generic": "Strukturirani zapisi",
+        "hidden": "Sakrij pojedinosti",
+        "schedule": "Raspored odvoza",
+        "days_to": "Dana do odvoza",
+        "last_update": "Zadnje ažuriranje",
+        "auto": "Jezik Home Assistanta",
+        "en": "Engleski",
+        "de": "Njemački",
+        "fr": "Francuski",
+        "it": "Talijanski",
+        "nl": "Nizozemski",
+        "sl": "Slovenski",
+        "da": "Danski",
+        "fi": "Finski",
+        "sv": "Švedski",
+        "nb": "Norveški (bokmål)",
+        "add_custom": "Dodaj prilagođeni senzor",
+        "save": "Spremi",
+        "reset": "Vrati na zadane vrijednosti",
+        "duplicate": "Dupliciraj kao prilagođeni senzor",
+        "delete": "Ukloni prilagođeni senzor"
+      }
+    }
+  },
+  "issues": {
+    "legacy_sensors": {
+      "title": "Senzori koji su ostali nakon prethodnog preimenovanja",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Ukloni zapise zastarjelih senzora",
+            "description": "Ovi zastarjeli senzori nemaju spremljenu konfiguraciju: {entities}. Prije uklanjanja provjerite automatizacije i nadzorne ploče.\n\nUkloniti navedene zastarjele zapise iz registra? Aktivni migrirani senzori ostat će sačuvani."
+          }
+        }
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "state_format": {
+        "name": "Tekst stanja",
+        "state": {
+          "types_in_days": "Vrste i odbrojavanje",
+          "in_days": "Odbrojavanje",
+          "relative": "Danas / sutra / za N dana",
+          "date": "Datum odvoza",
+          "types": "Vrste odvoza",
+          "days": "Broj dana",
+          "custom": "Prilagođeni predložak",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Dan u tjednu, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Dan u tjednu, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Dan u tjednu, YYYY-MM-DD",
+          "upcoming": "Nadolazeći datumi",
+          "appointment_types": "Sljedeći datum za svaku vrstu",
+          "generic": "Strukturirani zapisi",
+          "hidden": "Sakrij pojedinosti",
+          "schedule": "Raspored odvoza",
+          "days_to": "Dana do odvoza",
+          "last_update": "Zadnje ažuriranje",
+          "auto": "Jezik Home Assistanta",
+          "en": "Engleski",
+          "de": "Njemački",
+          "fr": "Francuski",
+          "it": "Talijanski",
+          "nl": "Nizozemski",
+          "sl": "Slovenski",
+          "da": "Danski",
+          "fi": "Finski",
+          "sv": "Švedski",
+          "nb": "Norveški (bokmål)",
+          "add_custom": "Dodaj prilagođeni senzor",
+          "save": "Spremi",
+          "reset": "Vrati na zadane vrijednosti",
+          "duplicate": "Dupliciraj kao prilagođeni senzor",
+          "delete": "Ukloni prilagođeni senzor"
+        }
+      },
+      "language": {
+        "name": "Jezik",
+        "state": {
+          "types_in_days": "Vrste i odbrojavanje",
+          "in_days": "Odbrojavanje",
+          "relative": "Danas / sutra / za N dana",
+          "date": "Datum odvoza",
+          "types": "Vrste odvoza",
+          "days": "Broj dana",
+          "custom": "Prilagođeni predložak",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Dan u tjednu, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Dan u tjednu, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Dan u tjednu, YYYY-MM-DD",
+          "upcoming": "Nadolazeći datumi",
+          "appointment_types": "Sljedeći datum za svaku vrstu",
+          "generic": "Strukturirani zapisi",
+          "hidden": "Sakrij pojedinosti",
+          "schedule": "Raspored odvoza",
+          "days_to": "Dana do odvoza",
+          "last_update": "Zadnje ažuriranje",
+          "auto": "Jezik Home Assistanta",
+          "en": "Engleski",
+          "de": "Njemački",
+          "fr": "Francuski",
+          "it": "Talijanski",
+          "nl": "Nizozemski",
+          "sl": "Slovenski",
+          "da": "Danski",
+          "fi": "Finski",
+          "sv": "Švedski",
+          "nb": "Norveški (bokmål)",
+          "add_custom": "Dodaj prilagođeni senzor",
+          "save": "Spremi",
+          "reset": "Vrati na zadane vrijednosti",
+          "duplicate": "Dupliciraj kao prilagođeni senzor",
+          "delete": "Ukloni prilagođeni senzor"
+        }
+      },
+      "date_format": {
+        "name": "Format datuma",
+        "state": {
+          "types_in_days": "Vrste i odbrojavanje",
+          "in_days": "Odbrojavanje",
+          "relative": "Danas / sutra / za N dana",
+          "date": "Datum odvoza",
+          "types": "Vrste odvoza",
+          "days": "Broj dana",
+          "custom": "Prilagođeni predložak",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Dan u tjednu, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Dan u tjednu, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Dan u tjednu, YYYY-MM-DD",
+          "upcoming": "Nadolazeći datumi",
+          "appointment_types": "Sljedeći datum za svaku vrstu",
+          "generic": "Strukturirani zapisi",
+          "hidden": "Sakrij pojedinosti",
+          "schedule": "Raspored odvoza",
+          "days_to": "Dana do odvoza",
+          "last_update": "Zadnje ažuriranje",
+          "auto": "Jezik Home Assistanta",
+          "en": "Engleski",
+          "de": "Njemački",
+          "fr": "Francuski",
+          "it": "Talijanski",
+          "nl": "Nizozemski",
+          "sl": "Slovenski",
+          "da": "Danski",
+          "fi": "Finski",
+          "sv": "Švedski",
+          "nb": "Norveški (bokmål)",
+          "add_custom": "Dodaj prilagođeni senzor",
+          "save": "Spremi",
+          "reset": "Vrati na zadane vrijednosti",
+          "duplicate": "Dupliciraj kao prilagođeni senzor",
+          "delete": "Ukloni prilagođeni senzor"
+        }
+      },
+      "details_format": {
+        "name": "Format pojedinosti",
+        "state": {
+          "types_in_days": "Vrste i odbrojavanje",
+          "in_days": "Odbrojavanje",
+          "relative": "Danas / sutra / za N dana",
+          "date": "Datum odvoza",
+          "types": "Vrste odvoza",
+          "days": "Broj dana",
+          "custom": "Prilagođeni predložak",
+          "dmy": "DD.MM.YYYY",
+          "weekday_dmy": "Dan u tjednu, DD.MM.YYYY",
+          "mdy": "MM/DD/YYYY",
+          "weekday_mdy": "Dan u tjednu, MM/DD/YYYY",
+          "iso": "YYYY-MM-DD",
+          "weekday_iso": "Dan u tjednu, YYYY-MM-DD",
+          "upcoming": "Nadolazeći datumi",
+          "appointment_types": "Sljedeći datum za svaku vrstu",
+          "generic": "Strukturirani zapisi",
+          "hidden": "Sakrij pojedinosti",
+          "schedule": "Raspored odvoza",
+          "days_to": "Dana do odvoza",
+          "last_update": "Zadnje ažuriranje",
+          "auto": "Jezik Home Assistanta",
+          "en": "Engleski",
+          "de": "Njemački",
+          "fr": "Francuski",
+          "it": "Talijanski",
+          "nl": "Nizozemski",
+          "sl": "Slovenski",
+          "da": "Danski",
+          "fi": "Finski",
+          "sv": "Švedski",
+          "nb": "Norveški (bokmål)",
+          "add_custom": "Dodaj prilagođeni senzor",
+          "save": "Spremi",
+          "reset": "Vrati na zadane vrijednosti",
+          "duplicate": "Dupliciraj kao prilagođeni senzor",
+          "delete": "Ukloni prilagođeni senzor"
+        }
+      }
+    },
+    "number": {
+      "count": {
+        "name": "Broj (0 = ∞)"
+      },
+      "leadtime": {
+        "name": "Unaprijed (dana) (-1 = ∞)"
+      },
+      "event_index": {
+        "name": "Indeks odvoza"
+      }
+    },
+    "switch": {
+      "enabled": {
+        "name": "Omogućeno"
+      },
+      "unique_types": {
+        "name": "Svaka vrsta samo jednom"
+      },
+      "advanced": {
+        "name": "Napredne postavke"
+      }
+    },
+    "text": {
+      "name": {
+        "name": "Naziv"
+      },
+      "value_template": {
+        "name": "Prilagođeni predložak stanja"
+      },
+      "date_template": {
+        "name": "Prilagođeni predložak datuma"
+      },
+      "color": {
+        "name": "Boja (#RRGGBB; zadana ako je prazno)"
+      }
+    },
+    "button": {
+      "create_sensor": {
+        "name": "Stvori senzor {name}"
+      },
+      "delete": {
+        "name": "Ukloni prilagođeni senzor"
+      }
+    }
+  },
+  "exceptions": {
+    "type_unavailable": {
+      "message": "Ova vrsta odvoza više nije u trenutačnom rasporedu."
+    },
+    "custom_template_required": {
+      "message": "Najprije postavite prilagođeni predložak stanja u naprednim postavkama."
+    }
+  }
+}
