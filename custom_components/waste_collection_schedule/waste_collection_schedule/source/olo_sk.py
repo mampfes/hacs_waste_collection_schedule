@@ -24,6 +24,14 @@ class Source(BaseSource):
         street(optional=True),
         text_field("registrationNumber", "Registration number", optional=True),
     )
+    WASTE_TYPES: ClassVar[list] = [
+        wt.GENERAL_WASTE,
+        wt.FOOD_WASTE,
+        wt.GARDEN_WASTE,
+        wt.RECYCLABLES,
+        wt.PAPER,
+        wt.GLASS,
+    ]
 
     retrieve = CalendarRetriever()
     parse = CalendarParser()
@@ -34,7 +42,7 @@ class Source(BaseSource):
             "Zmesový komunálny odpad": wt.GENERAL_WASTE,
             "Kuchynský bioodpad": wt.FOOD_WASTE,
             "Záhradný bioodpad": wt.GARDEN_WASTE,
-            "Plast, kovy a nápojové kartóny": [wt.PLASTIC, wt.METAL, wt.CARTONS],
+            "Plast, kovy a nápojové kartóny": wt.RECYCLABLES,
             "Papier": wt.PAPER,
             "Sklo": wt.GLASS,
         },
