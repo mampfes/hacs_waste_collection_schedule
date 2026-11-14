@@ -24941,10 +24941,11 @@
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
         "data": {
           "calendar_title": "Nazwa kalendarza",
-          "street_address": "Street Address"
+          "street_address": "Adres"
         },
         "data_description": {
-          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło."
+          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło.",
+          "street_address": "Twój pełny adres."
         }
       },
       "reconfigure_lerum_se": {
@@ -24952,9 +24953,11 @@
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
         "data": {
           "calendar_title": "Nazwa kalendarza",
-          "street_address": "Street Address"
+          "street_address": "Adres"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Twój pełny adres."
+        }
       },
       "args_ljusdalenergi_se": {
         "title": "Konfiguruj źródło",

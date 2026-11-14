@@ -24941,10 +24941,11 @@
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
         "data": {
           "calendar_title": "Názov kalendára",
-          "street_address": "Street Address"
+          "street_address": "Adresa"
         },
         "data_description": {
-          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom."
+          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom.",
+          "street_address": "Vaša úplná adresa."
         }
       },
       "reconfigure_lerum_se": {
@@ -24952,9 +24953,11 @@
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
         "data": {
           "calendar_title": "Názov kalendára",
-          "street_address": "Street Address"
+          "street_address": "Adresa"
         },
-        "data_description": {}
+        "data_description": {
+          "street_address": "Vaša úplná adresa."
+        }
       },
       "args_ljusdalenergi_se": {
         "title": "Konfigurovať zdroj",

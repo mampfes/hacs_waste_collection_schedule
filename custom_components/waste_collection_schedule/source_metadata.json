@@ -5801,7 +5801,9 @@
   },
   "lerum_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/lerum_se.md",
-    "howto": {},
+    "howto": {
+      "en": "Enter your street address as the provider's own address search lists it, including the locality."
+    },
     "urls": {}
   },
   "ljusdalenergi_se": {
