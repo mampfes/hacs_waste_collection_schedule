@@ -52,6 +52,7 @@
           "icon": "Ikon",
           "picture": "Bilde",
           "use_dedicated_calendar": "Bruk egen kalender",
+          "day_offset": "Dagsforskyvning (kun denne typen)",
           "dedicated_calendar_title": "Navn på egen kalender",
           "color": "Farge (#RRGGBB; tomt = standard)"
         },
@@ -61,6 +62,7 @@
           "icon": "Ikon for tømmetypen (bare hvis du vil endre det).",
           "picture": "Sti til et bilde for tømmetypen.",
           "use_dedicated_calendar": "Merk av hvis tømmetypen skal ha sin egen kalenderentitet.",
+          "day_offset": "Flytter datoene for denne avfallstypen med så mange dager (kan være negativt, f.eks. -1 = én dag tidligere). Erstatter kildens dagsforskyvning for denne typen. La feltet stå tomt for å bruke kildens dagsforskyvning.",
           "dedicated_calendar_title": "Navnet på den egne kalenderentiteten."
         }
       },
@@ -36351,6 +36353,7 @@
           "icon": "Ikon",
           "picture": "Bilde",
           "use_dedicated_calendar": "Bruk egen kalender",
+          "day_offset": "Dagsforskyvning (kun denne typen)",
           "dedicated_calendar_title": "Navn på egen kalender",
           "color": "Farge (#RRGGBB; tomt = standard)"
         },
@@ -36361,6 +36364,7 @@
           "icon": "Ikon for tømmetypen (bare hvis du vil endre det).",
           "picture": "Sti til et bilde for tømmetypen.",
           "use_dedicated_calendar": "Merk av hvis tømmetypen skal ha sin egen kalenderentitet.",
+          "day_offset": "Flytter datoene for denne avfallstypen med så mange dager (kan være negativt, f.eks. -1 = én dag tidligere). Erstatter kildens dagsforskyvning for denne typen. La feltet stå tomt for å bruke kildens dagsforskyvning.",
           "dedicated_calendar_title": "Navnet på den egne kalenderentiteten."
         }
       },

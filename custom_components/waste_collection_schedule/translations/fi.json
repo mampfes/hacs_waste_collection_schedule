@@ -52,6 +52,7 @@
           "icon": "Kuvake",
           "picture": "Kuva",
           "use_dedicated_calendar": "Käytä omaa kalenteria",
+          "day_offset": "Päivämäärän siirto (vain tämä tyyppi)",
           "dedicated_calendar_title": "Oman kalenterin nimi",
           "color": "Väri (#RRGGBB; tyhjä = oletus)"
         },
@@ -61,6 +62,7 @@
           "icon": "Jätelajin kuvake (vain jos haluat muuttaa sitä).",
           "picture": "Jätelajin kuvan polku.",
           "use_dedicated_calendar": "Valitse, jos tällä jätelajilla tulee olla oma kalenterientiteetti.",
+          "day_offset": "Siirtää tämän jätetyypin päivämääriä näin monella päivällä (voi olla negatiivinen, esim. -1 = yhtä päivää aiemmin). Korvaa tälle tyypille lähteen päivämäärän siirron. Jätä tyhjäksi käyttääksesi lähteen päivämäärän siirtoa.",
           "dedicated_calendar_title": "Oman kalenterientiteetin nimi."
         }
       },
@@ -36350,6 +36352,7 @@
           "icon": "Kuvake",
           "picture": "Kuva",
           "use_dedicated_calendar": "Käytä omaa kalenteria",
+          "day_offset": "Päivämäärän siirto (vain tämä tyyppi)",
           "dedicated_calendar_title": "Oman kalenterin nimi",
           "color": "Väri (#RRGGBB; tyhjä = oletus)"
         },
@@ -36360,6 +36363,7 @@
           "icon": "Jätelajin kuvake (vain jos haluat muuttaa sitä).",
           "picture": "Jätelajin kuvan polku.",
           "use_dedicated_calendar": "Valitse, jos tällä jätelajilla tulee olla oma kalenterientiteetti.",
+          "day_offset": "Siirtää tämän jätetyypin päivämääriä näin monella päivällä (voi olla negatiivinen, esim. -1 = yhtä päivää aiemmin). Korvaa tälle tyypille lähteen päivämäärän siirron. Jätä tyhjäksi käyttääksesi lähteen päivämäärän siirtoa.",
           "dedicated_calendar_title": "Oman kalenterientiteetin nimi."
         }
       },
