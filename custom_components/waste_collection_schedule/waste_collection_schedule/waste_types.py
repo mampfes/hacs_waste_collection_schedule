@@ -60,28 +60,30 @@ class WasteType:
     auto_resolve: bool = True
 
 
-# Display language for WasteType names. Defaults to English for standalone
-# library use; the Home Assistant integration sets it to the UI language at
-# startup. Collection.type reads it, so a source's displayed label and any
-# type-based filtering speak one language (e.g. a French HA instance shows
-# "Ordures ménagères", not "General Waste").
-_display_language = "en"
+DEFAULT_DISPLAY_LANGUAGE = "en"
 
 
-def set_display_language(language: str | None) -> None:
-    """Set the language used for WasteType display names (falls back to English).
+def normalize_language(language: str | None) -> str:
+    """Base language code for display names (``"fr-CA"`` -> ``"fr"``).
 
-    Accepts a full locale (``"fr-CA"``) or bare code (``"fr"``); only the base
-    language is used.
+    Empty or ``None`` means English.
     """
-    global _display_language
-    _display_language = (language or "en").split("-")[0].lower()
+    return (language or DEFAULT_DISPLAY_LANGUAGE).split("-")[0].lower()
 
 
-def display_name(waste_type: "WasteType") -> str:
-    """A WasteType's name in the configured display language, else English."""
+def display_name(
+    waste_type: "WasteType", language: str | None = DEFAULT_DISPLAY_LANGUAGE
+) -> str:
+    """A WasteType's name in ``language``, else English, else its id.
+
+    The language is always passed explicitly; there is no process-wide
+    display language (#7025). Home Assistant reads it from
+    ``hass.config.language`` on the event loop and hands it to the
+    ``SourceShell``, which binds it to the collections it fetched, so a fetch
+    on an executor thread cannot see another entry's language.
+    """
     names = waste_type.names
-    return names.get(_display_language) or names.get("en") or waste_type.id
+    return names.get(normalize_language(language)) or names.get("en") or waste_type.id
 
 
 GENERAL_WASTE = WasteType(

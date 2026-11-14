@@ -3,6 +3,7 @@ import datetime
 import hashlib
 import json
 import logging
+from copy import copy
 from dataclasses import dataclass, field
 from random import randrange
 from typing import Any
@@ -187,6 +188,8 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self._shell._sensor_entries = sensor_entries
         self._shell._raw_labels = raw_labels
         self._shell._refreshtime = refreshtime
+        # restored collections render in the shell's current display language
+        self._shell.set_display_language(self._shell.display_language)
         return True
 
     async def async_fetch_with_retry(self, *_) -> None:
@@ -331,8 +334,11 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 and previous.shell.refreshtime.date() == today
             ):
                 # A completed setup fetch is valid even if it returned no dates.
-                self._shell._entries = previous.shell._entries
-                self._shell._sensor_entries = previous.shell._sensor_entries
+                self._shell._entries = [copy(e) for e in previous.shell._entries]
+                self._shell._sensor_entries = [
+                    copy(e) for e in previous.shell._sensor_entries
+                ]
+                self._shell.set_display_language(self._shell.display_language)
                 self._shell._raw_labels = previous.shell._raw_labels
                 self._shell._refreshtime = previous.shell._refreshtime
                 self._last_fetch_date = previous.shell.refreshtime.date()

@@ -4,10 +4,13 @@ import importlib
 import logging
 import traceback
 from collections.abc import Iterable
+from copy import copy
+from threading import Lock
 from typing import Protocol, cast
 
 from .collection import Collection, LegacyCollection
 from .colors import validate_color
+from .waste_types import display_name, normalize_language
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -250,6 +253,7 @@ class SourceShell:
         day_offset: int,
         ignore_duplicates: bool = False,
         show_original_label: bool = True,
+        display_language: str | None = None,
     ):
         self._source = source
         self._customize = customize
@@ -265,6 +269,37 @@ class SourceShell:
         self._ignore_duplicates = ignore_duplicates
         self._show_original_label = show_original_label
         self._raw_labels: list[str] = []
+        # Language of the canonical waste-type names this shell renders. Held
+        # per shell and bound to every collection it fetches, instead of a
+        # process-wide setting that a fetch on an executor thread would read
+        # (#7025). Home Assistant sets it from hass.config.language.
+        self._display_language = normalize_language(display_language)
+        self._entries_lock = Lock()
+
+    @property
+    def display_language(self) -> str:
+        return self._display_language
+
+    def set_display_language(self, language: str | None) -> None:
+        """Change the display language and re-render the current entries.
+
+        Called on the event loop (entry setup, reload); the next fetch binds
+        the new language to its entries as well.
+        """
+        with self._entries_lock:
+            self._display_language = normalize_language(language)
+            self._bind_display_language(self._sensor_entries)
+            if self._sensor_entries:
+                # Merge afresh: the visible fallback descriptions depend on
+                # language, and the previous merge may have hidden a label.
+                self._entries = self._calendar_entries()
+            else:
+                self._bind_display_language(self._entries)
+
+    def _bind_display_language(self, entries: Iterable[Collection]) -> None:
+        language = self._display_language
+        for e in entries:
+            e.set_display_language(language)
 
     @property
     def raw_labels(self) -> list[str]:
@@ -309,7 +344,20 @@ class SourceShell:
                 f"fetch failed for source {self._title}:\n{traceback.format_exc()}"
             )
             return False
+        # Provider I/O stays outside the lock. Language binding, customization
+        # and publication form one operation with respect to language changes.
+        entries = list(entries)
+        with self._entries_lock:
+            return self._process_entries(entries)
+
+    def _process_entries(self, entries: list[Collection]) -> bool:
+        """Bind and publish a fetch while holding ``_entries_lock``."""
         self._refreshtime = datetime.datetime.now()
+
+        # Bind the display language before anything reads ``type``: customize
+        # matching below compares the localised name, as the config flow
+        # stored it.
+        self._bind_display_language(entries)
 
         # Strip incidental whitespace from legacy sources' raw type strings.
         #
@@ -330,18 +378,17 @@ class SourceShell:
 
         # Remember the raw labels before any of them are hidden below, so the
         # config flow can offer them in the customize selection (#7444).
-        entries = list(entries)
         self._raw_labels = raw_labels_of(entries)
 
         # filter hidden entries
-        entries = filter(lambda x: filter_function(x, self._customize), entries)
+        visible = filter(lambda x: filter_function(x, self._customize), entries)
 
         # customize fetched entries and apply the day offset. The offset is
         # resolved per entry before customize_function runs, because an alias
         # renames the entry and would change which customize key it matches.
         # A per-type customize day_offset replaces the source-level one.
         result: list[Collection] = []
-        for x in entries:
+        for x in visible:
             offset = resolve_day_offset(x, self._customize, self._day_offset)
             x = customize_function(x, self._customize)
             if offset != 0:
@@ -361,40 +408,25 @@ class SourceShell:
 
         # Sensor filters need the distinct bins before the calendar's merge.
         # Copy because merging descriptions below mutates the retained event.
-        from copy import copy
-
         self._sensor_entries = [copy(e) for e in result]
 
-        # Remove duplicate (date, identity) pairs, folding any distinguishing
-        # description from a discarded duplicate into the entry that's kept
-        # instead of just dropping it.
-        #
-        # Keyed on Collection._identity_key (locale-independent: the
-        # customize alias if one was set, else the canonical WasteType.id),
-        # not the displayed .type — two entries must not compare equal in one
-        # UI language and unequal in another. This also catches a case that
-        # slipping .type in as the key could not: a source's type_value_map
-        # can map several distinct provider labels (e.g. a bin-size or
-        # rhythm variant it can't yet filter by) onto one canonical type, and
-        # where the underlying schedules overlap on some dates, the two
-        # entries for that day would otherwise show up as a visible
-        # duplicate once canonicalisation makes their labels identical (see
-        # abfall_neunkirchen_siegerland_de and koppl_at).
+        self._entries = self._calendar_entries()
+        return True
+
+    def _calendar_entries(self) -> list[Collection]:
+        """Build the display view without mutating the distinct sensor bins."""
+        result = [copy(e) for e in self._sensor_entries]
         if self._ignore_duplicates:
             by_key: dict[tuple, Collection] = {}
-            order: list[tuple] = []
             for e in result:
                 key = (e.date, e._identity_key)
                 kept = by_key.get(key)
                 if kept is None:
                     by_key[key] = e
-                    order.append(key)
                 else:
                     kept._merge_description(e)
-            result = [by_key[key] for key in order]
-
-        self._entries = result
-        return True
+            result = list(by_key.values())
+        return result
 
     def get_dedicated_calendar_types(self) -> set[str]:
         """Return set of waste types with a dedicated calendar.
@@ -429,11 +461,9 @@ class SourceShell:
         for entry in self._entries:
             if type in (entry.type, entry.waste_type.id):
                 return entry.type
-        from waste_collection_schedule.waste_types import display_name
-
         return next(
             (
-                display_name(t)
+                display_name(t, self._display_language)
                 for t in getattr(self._source, "WASTE_TYPES", ())
                 if t.id == type
             ),
@@ -449,6 +479,7 @@ class SourceShell:
         day_offset: int = 0,
         ignore_duplicates: bool | None = None,
         show_original_label: bool = True,
+        display_language: str | None = None,
     ) -> "SourceShell | None":
         """Build a SourceShell for ``source_name``.
 
@@ -534,6 +565,7 @@ class SourceShell:
             day_offset=day_offset,
             ignore_duplicates=ignore_duplicates,
             show_original_label=show_original_label,
+            display_language=display_language,
         )
 
         return g

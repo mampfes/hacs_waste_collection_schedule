@@ -57,12 +57,14 @@ class SensorManager:
         from waste_collection_schedule.waste_types import ALL_TYPES, display_name
 
         customizations = self.entry.options.get("customize", {})
+        # the language the shell renders its collections in
+        language = self.coordinator.shell.display_language
         labels = {
             e.waste_type.id: customizations.get(e.waste_type.id, {}).get("alias")
-            or display_name(e.waste_type)
+            or display_name(e.waste_type, language)
             for e in self.coordinator.shell._entries
         }
-        known = {wt.id: display_name(wt) for wt in ALL_TYPES}
+        known = {wt.id: display_name(wt, language) for wt in ALL_TYPES}
         for record in self.entry.options.get("sensors", []):
             if record["origin"].startswith("type:"):
                 type_id = record["origin"].removeprefix("type:")

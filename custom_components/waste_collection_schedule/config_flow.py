@@ -327,10 +327,11 @@ def _build_schema_from_params(
     return vol.Schema(vol_args)
 
 
-def _get_waste_types_for_customize(source_cls) -> list[str]:
+def _get_waste_types_for_customize(source_cls, language: str | None) -> list[str]:
     """Get waste type names from WASTE_TYPES for customization.
 
-    Returns each canonical WasteType's name in the active display language, so
+    Returns each canonical WasteType's name in ``language`` (the HA UI
+    language, which the entry's SourceShell renders its collections in), so
     the names match the labels ``Collection.type`` produces at fetch time.
     Returning the English name regardless of the UI language made the config
     flow offer an English duplicate of every type already fetched under its
@@ -342,7 +343,7 @@ def _get_waste_types_for_customize(source_cls) -> list[str]:
     waste_types = getattr(source_cls, "WASTE_TYPES", None)
     if not waste_types:
         return []
-    return [display_name(wt) for wt in waste_types]
+    return [display_name(wt, language) for wt in waste_types]
 
 
 def get_customize_schema(defaults: dict[str, Any] | None = None):
@@ -905,12 +906,11 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             await self.async_set_unique_id(source + json.dumps(args_input))
             self._abort_if_unique_id_configured()
 
-        # Collection labels are localised to the HA UI language at fetch time;
-        # align the display language here so the types offered and auto-created
-        # during setup match what the entry will show once running (#6561).
-        from waste_collection_schedule.waste_types import set_display_language
-
-        set_display_language(self.hass.config.language)
+        # Collection labels are localised to the HA UI language; render them in
+        # it here too so the types offered and auto-created during setup match
+        # what the entry will show once running (#6561). Passed explicitly, not
+        # through a process-wide setting (#7025).
+        language = self.hass.config.language
 
         try:
             instance = await self.hass.async_add_executor_job(
@@ -923,6 +923,8 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
             if len(resp) == 0:
                 errors["base"] = "fetch_empty"
+            for x in resp:
+                x.set_display_language(language)
             # The types actually collected at this address. These, and only
             # these, seed the sensors auto-created in finish() on the default
             # path (#6937): a type the source could produce but did not fetch
@@ -936,7 +938,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
             # user can pre-make a sensor for a type not seen in this fetch.
             self._fetched_types = list(fetched_types)
             source_cls = module.Source
-            waste_type_names = _get_waste_types_for_customize(source_cls)
+            waste_type_names = _get_waste_types_for_customize(source_cls, language)
             if waste_type_names:
                 self._fetched_types = list(
                     set(self._fetched_types) | set(waste_type_names)
@@ -946,7 +948,7 @@ class WasteCollectionConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call
 
             customize_labels.update(
                 {
-                    wt.id: display_name(wt)
+                    wt.id: display_name(wt, language)
                     for wt in getattr(source_cls, "WASTE_TYPES", ())
                 }
             )

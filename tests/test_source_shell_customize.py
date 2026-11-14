@@ -3,8 +3,6 @@ import os
 import sys
 from datetime import date
 
-import pytest
-
 # Make the core library importable as `waste_collection_schedule`.
 sys.path.append(
     os.path.join(
@@ -25,7 +23,6 @@ from waste_collection_schedule.source_shell import (
     filter_function,
     match_customize,
 )
-from waste_collection_schedule.waste_types import set_display_language
 
 D = date(2024, 1, 1)
 
@@ -119,26 +116,19 @@ _JUNKER_FIXTURE = os.path.join(
 _JUNKER_ARGS = {"municipality": "Udine", "area": "Zona 2-4-5-6 - Utenze domestiche"}
 
 
-@pytest.fixture
-def italian_display():
-    """Run the test with collection labels localised to Italian, as #7117 was."""
-    set_display_language("it")
-    try:
-        yield
-    finally:
-        set_display_language("en")
-
-
-def _junker_labels(customize: dict[str, Customize]) -> set[str]:
-    """Replay the Udine cassette through SourceShell and return the labels shown."""
-    shell = SourceShell.create("junker_app", customize, _JUNKER_ARGS)
+def _junker_labels(customize: dict[str, Customize], language: str = "it") -> set[str]:
+    """Replay the Udine cassette through SourceShell and return the labels shown,
+    localised to Italian as #7117 was."""
+    shell = SourceShell.create(
+        "junker_app", customize, _JUNKER_ARGS, display_language=language
+    )
     assert shell is not None
     with cassette.replaying(_JUNKER_FIXTURE):
         assert shell.fetch(), "cassette replay produced no collections"
     return {entry.type for entry in shell._entries}
 
 
-def test_junker_cassette_shows_the_reporters_italian_labels(italian_display):
+def test_junker_cassette_shows_the_reporters_italian_labels():
     """Guard the premise of the tests below: these are the labels #7117 is about."""
     labels = _junker_labels({})
 
@@ -148,7 +138,7 @@ def test_junker_cassette_shows_the_reporters_italian_labels(italian_display):
     assert "Napkins" in labels
 
 
-def test_alias_keyed_on_the_display_label_applies(italian_display):
+def test_alias_keyed_on_the_display_label_applies():
     # The exact #7117 scenario: the user sees "Differenziata" and aliases it.
     labels = _junker_labels(
         {"Differenziata": Customize("Differenziata", alias="Plastica e metallo")}
@@ -158,7 +148,7 @@ def test_alias_keyed_on_the_display_label_applies(italian_display):
     assert "Differenziata" not in labels
 
 
-def test_alias_keyed_on_the_canonical_id_still_applies(italian_display):
+def test_alias_keyed_on_the_canonical_id_still_applies():
     # The other half of the pair, and the only one that worked before #6950.
     labels = _junker_labels(
         {"recyclables": Customize("recyclables", alias="Plastica e metallo")}
@@ -168,7 +158,7 @@ def test_alias_keyed_on_the_canonical_id_still_applies(italian_display):
     assert "Differenziata" not in labels
 
 
-def test_a_preserved_type_is_customisable_by_both_of_its_keys(italian_display):
+def test_a_preserved_type_is_customisable_by_both_of_its_keys():
     # A preserved type reaches the same fallback by a different route: the id is
     # "preserved:Napkins" and the display label is the bare "Napkins".
     by_label = _junker_labels({"Napkins": Customize("Napkins", alias="Tovaglioli")})
@@ -182,7 +172,7 @@ def test_a_preserved_type_is_customisable_by_both_of_its_keys(italian_display):
     assert "Napkins" not in by_id
 
 
-def test_hiding_a_type_by_its_display_label_applies(italian_display):
+def test_hiding_a_type_by_its_display_label_applies():
     # filter_function shares the same key lookup, so it has the same exposure.
     labels = _junker_labels({"Differenziata": Customize("Differenziata", show=False)})
 

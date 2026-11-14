@@ -21,7 +21,6 @@ from waste_collection_schedule.transformers import JsonTransformer
 from waste_collection_schedule.waste_types import (
     PAPER,
     RECYCLABLES,
-    set_display_language,
 )
 
 from custom_components.waste_collection_schedule.config_flow import (
@@ -264,16 +263,13 @@ def test_unique_types_keeps_earliest_bin_before_index_and_group_limits():
     assert aggregator.get_upcoming_group_by_day(
         unique_types=True, start_index=1, count=1
     )[0].date == date(2099, 1, 3)
-    set_display_language("de")
-    try:
-        assert [
-            c.original_label
-            for c in aggregator.get_upcoming(
-                include_types=["recyclables"], unique_types=True
-            )
-        ] == ["Small", "Large"]
-    finally:
-        set_display_language("en")
+    shell.set_display_language("de")
+    assert [
+        c.original_label
+        for c in aggregator.get_upcoming(
+            include_types=["recyclables"], unique_types=True
+        )
+    ] == ["Small", "Large"]
 
 
 def test_filtered_duplicates_merge_descriptions_without_mutating_bin_records():
