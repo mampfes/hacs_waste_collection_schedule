@@ -89,7 +89,8 @@
           "ort": "Ortsteil",
           "realmid": "Realm-ID",
           "split_bins": "Behälter in Fraktionen aufteilen",
-          "wasteTypes": "Abfallarten"
+          "wasteTypes": "Abfallarten",
+        "zip": "Postleitzahl"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",

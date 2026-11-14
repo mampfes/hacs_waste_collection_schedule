@@ -89,7 +89,8 @@
           "ort": "Distrikt",
           "realmid": "Realm ID",
           "split_bins": "Opdel beholdere i fraktioner",
-          "wasteTypes": "Affaldstyper"
+          "wasteTypes": "Affaldstyper",
+        "zip": "Postnummer"
         },
         "data_description": {
           "calendar_title": "Et mere læsevenligt eller brugervenligt navn til affaldskalenderen. Hvis der ikke angives noget, bruges det navn, som kilden returnerer.",

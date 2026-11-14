@@ -89,7 +89,8 @@
           "ort": "District",
           "realmid": "Realm ID",
           "split_bins": "Split Bins Into Fractions",
-          "wasteTypes": "Waste Types"
+          "wasteTypes": "Waste Types",
+        "zip": "Postcode"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",

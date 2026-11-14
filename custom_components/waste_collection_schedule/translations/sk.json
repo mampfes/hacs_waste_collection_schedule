@@ -89,7 +89,8 @@
           "ort": "Okres",
           "realmid": "ID realmu",
           "split_bins": "Rozdeliť nádoby podľa zložiek odpadu",
-          "wasteTypes": "Druhy odpadu"
+          "wasteTypes": "Druhy odpadu",
+        "zip": "Poštové smerovacie číslo"
         },
         "data_description": {
           "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom.",

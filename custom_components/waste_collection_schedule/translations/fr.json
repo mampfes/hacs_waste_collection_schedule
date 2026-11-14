@@ -89,7 +89,8 @@
           "ort": "Quartier",
           "realmid": "ID du domaine",
           "split_bins": "Diviser les bacs en fractions",
-          "wasteTypes": "Types de déchets"
+          "wasteTypes": "Types de déchets",
+        "zip": "Code postal"
         },
         "data_description": {
           "calendar_title": "Un nom plus lisible ou convivial pour le calendrier des déchets. Si aucun n'est fourni, le nom renvoyé par la source sera utilisé.",

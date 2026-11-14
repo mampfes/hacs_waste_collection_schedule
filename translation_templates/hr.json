@@ -89,7 +89,8 @@
           "ort": "Četvrt",
           "realmid": "ID realma",
           "split_bins": "Podijeli spremnike prema frakcijama otpada",
-          "wasteTypes": "Vrste otpada"
+          "wasteTypes": "Vrste otpada",
+        "zip": "Poštanski broj"
         },
         "data_description": {
           "calendar_title": "Čitljiviji naziv kalendara odvoza otpada. Ako ga ne unesete, upotrebljava se naziv koji daje izvor.",

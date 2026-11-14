@@ -89,7 +89,8 @@
           "ort": "Alue",
           "realmid": "Realm-tunnus",
           "split_bins": "Jaa astiat jätelajeihin",
-          "wasteTypes": "Jätelajit"
+          "wasteTypes": "Jätelajit",
+        "zip": "Postinumero"
         },
         "data_description": {
           "calendar_title": "Jätekalenterin selkeämpi nimi. Jos nimi jätetään tyhjäksi, käytetään lähteen antamaa nimeä.",

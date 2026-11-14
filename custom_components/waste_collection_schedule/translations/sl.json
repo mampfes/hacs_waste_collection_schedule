@@ -87,7 +87,8 @@
           "ort": "Okrožje",
           "realmid": "ID območja",
           "split_bins": "Razdeli zabojnike na frakcije",
-          "wasteTypes": "Tipi odpadkov"
+          "wasteTypes": "Tipi odpadkov",
+        "zip": "Poštna številka"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
