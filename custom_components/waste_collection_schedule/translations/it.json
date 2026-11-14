@@ -52,6 +52,7 @@
           "icon": "Icona",
           "picture": "Immagine",
           "use_dedicated_calendar": "Usa calendario dedicato",
+          "day_offset": "Offset giorni (solo questo tipo)",
           "dedicated_calendar_title": "Titolo calendario dedicato",
           "color": "Colore (#RRGGBB; vuoto = predefinito)"
         },
@@ -61,6 +62,7 @@
           "icon": "L'icona del tipo di raccolta. (solo se vuoi cambiarlo)",
           "picture": "Il percorso di un'immagine per il tipo di raccolta.",
           "use_dedicated_calendar": "Seleziona se questo tipo di raccolta deve avere una propria entità calendario.",
+          "day_offset": "Sposta le date di questo tipo di raccolta di questo numero di giorni (può essere negativo, ad es. -1 = un giorno prima). Sostituisce l'offset giorni della fonte per questo tipo. Lasciare vuoto per usare l'offset giorni della fonte.",
           "dedicated_calendar_title": "Il titolo dell'entità calendario dedicata."
         }
       },
@@ -36350,6 +36352,7 @@
           "icon": "Icona",
           "picture": "Immagine",
           "use_dedicated_calendar": "Usa calendario dedicato",
+          "day_offset": "Offset giorni (solo questo tipo)",
           "dedicated_calendar_title": "Titolo del calendario dedicato",
           "color": "Colore (#RRGGBB; vuoto = predefinito)"
         },
@@ -36360,6 +36363,7 @@
           "icon": "L'icona del tipo di raccolta. (solo se vuoi cambiarla)",
           "picture": "Il percorso di un'immagine per il tipo di raccolta.",
           "use_dedicated_calendar": "Seleziona se questo tipo di raccolta dovrebbe avere una propria entità calendario.",
+          "day_offset": "Sposta le date di questo tipo di raccolta di questo numero di giorni (può essere negativo, ad es. -1 = un giorno prima). Sostituisce l'offset giorni della fonte per questo tipo. Lasciare vuoto per usare l'offset giorni della fonte.",
           "dedicated_calendar_title": "Il titolo dell'entità calendario dedicata."
         }
       },

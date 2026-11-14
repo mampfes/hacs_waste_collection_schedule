@@ -52,6 +52,7 @@
           "icon": "Ikona",
           "picture": "Obrázok",
           "use_dedicated_calendar": "Použiť samostatný kalendár",
+          "day_offset": "Posun dňa (iba tento typ)",
           "dedicated_calendar_title": "Názov samostatného kalendára",
           "color": "Farba (#RRGGBB; predvolená pri prázdnom poli)"
         },
@@ -61,6 +62,7 @@
           "icon": "Ikona typu odvozu (iba ak ju chcete zmeniť).",
           "picture": "Cesta k obrázku pre daný typ odvozu.",
           "use_dedicated_calendar": "Začiarknite, ak má mať tento typ odvozu vlastnú entitu kalendára.",
+          "day_offset": "Posunie dátumy tohto typu odvozu o toľko dní (môže byť záporný, napr. -1 = o deň skôr). Pre tento typ nahrádza posun dňa zdroja. Nechajte prázdne, aby sa použil posun dňa zdroja.",
           "dedicated_calendar_title": "Názov entity samostatného kalendára."
         }
       },
@@ -139,6 +141,7 @@
           "icon": "Ikona",
           "picture": "Obrázok",
           "use_dedicated_calendar": "Použiť samostatný kalendár",
+          "day_offset": "Posun dňa (iba tento typ)",
           "dedicated_calendar_title": "Názov samostatného kalendára",
           "color": "Farba (#RRGGBB; predvolená pri prázdnom poli)"
         },
@@ -149,6 +152,7 @@
           "icon": "Ikona typu odvozu (iba ak ju chcete zmeniť).",
           "picture": "Cesta k obrázku pre daný typ odvozu.",
           "use_dedicated_calendar": "Začiarknite, ak má mať tento typ odvozu vlastnú entitu kalendára.",
+          "day_offset": "Posunie dátumy tohto typu odvozu o toľko dní (môže byť záporný, napr. -1 = o deň skôr). Pre tento typ nahrádza posun dňa zdroja. Nechajte prázdne, aby sa použil posun dňa zdroja.",
           "dedicated_calendar_title": "Názov entity samostatného kalendára."
         }
       },

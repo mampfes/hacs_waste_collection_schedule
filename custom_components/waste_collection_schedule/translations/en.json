@@ -52,6 +52,7 @@
           "icon": "Icon",
           "picture": "Picture",
           "use_dedicated_calendar": "Use dedicated calendar",
+          "day_offset": "Day offset (this type only)",
           "dedicated_calendar_title": "Dedicated calendar title",
           "color": "Color (#RRGGBB; empty = default)"
         },
@@ -61,6 +62,7 @@
           "icon": "The icon of the collection type. (only if you want to change it)",
           "picture": "The path to a picture for the collection type.",
           "use_dedicated_calendar": "Check if this collection type should have its own calendar entity.",
+          "day_offset": "Shift the dates of this collection type by this many days (can be negative, e.g. -1 = one day earlier). Replaces the source's day offset for this type. Leave empty to use the source's day offset.",
           "dedicated_calendar_title": "The title of the dedicated calendar entity."
         }
       },
@@ -36428,6 +36430,7 @@
           "icon": "Icon",
           "picture": "Picture",
           "use_dedicated_calendar": "Use dedicated calendar",
+          "day_offset": "Day offset (this type only)",
           "dedicated_calendar_title": "Dedicated calendar title",
           "color": "Color (#RRGGBB; empty = default)"
         },
@@ -36438,6 +36441,7 @@
           "icon": "The icon of the collection type. (only if you want to change it)",
           "picture": "The path to a picture for the collection type.",
           "use_dedicated_calendar": "Check if this collection type should have its own calendar entity.",
+          "day_offset": "Shift the dates of this collection type by this many days (can be negative, e.g. -1 = one day earlier). Replaces the source's day offset for this type. Leave empty to use the source's day offset.",
           "dedicated_calendar_title": "The title of the dedicated calendar entity."
         }
       },

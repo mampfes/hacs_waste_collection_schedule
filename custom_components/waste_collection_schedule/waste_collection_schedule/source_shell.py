@@ -80,6 +80,7 @@ class Customize:
         use_dedicated_calendar: bool = False,
         dedicated_calendar_title: str | None = None,
         color: str | None = None,
+        day_offset: int | None = None,
     ):
         self._waste_type = waste_type
         self._alias = alias
@@ -89,6 +90,7 @@ class Customize:
         self._color = validate_color(color) if color is not None else None
         self._use_dedicated_calendar = use_dedicated_calendar
         self._dedicated_calendar_title = dedicated_calendar_title
+        self._day_offset = day_offset
 
     @property
     def waste_type(self):
@@ -122,8 +124,13 @@ class Customize:
     def dedicated_calendar_title(self):
         return self._dedicated_calendar_title
 
+    @property
+    def day_offset(self) -> int | None:
+        """Per-type day offset, or None to use the source's day_offset."""
+        return self._day_offset
+
     def __repr__(self):
-        return f"Customize{{waste_type={self._waste_type}, alias={self._alias}, show={self._show}, icon={self._icon}, picture={self._picture}}}"
+        return f"Customize{{waste_type={self._waste_type}, alias={self._alias}, show={self._show}, icon={self._icon}, picture={self._picture}, day_offset={self._day_offset}}}"
 
 
 def _get_customize_key(entry: Collection) -> str:
@@ -181,6 +188,23 @@ def filter_function(entry: Collection, customize: dict[str, Customize]):
     if c is None:
         return True
     return c.show
+
+
+def resolve_day_offset(
+    entry: Collection, customize: dict[str, Customize], default: int
+) -> int:
+    """Day offset for ``entry``: its customize entry's, else ``default``.
+
+    Uses the same lookup as :func:`customize_function` (exact keys before
+    globs, legacy vs new-style keys), so it must be called *before*
+    customize_function renames the entry via an alias. A per-type value
+    replaces the source-level ``default`` rather than adding to it; ``None``
+    means "not set" and falls back to ``default``.
+    """
+    c = _match_customize_keys(customize, _customize_keys(entry))
+    if c is not None and c.day_offset is not None:
+        return c.day_offset
+    return default
 
 
 def customize_function(entry: Collection, customize: dict[str, Customize]):
@@ -312,14 +336,17 @@ class SourceShell:
         # filter hidden entries
         entries = filter(lambda x: filter_function(x, self._customize), entries)
 
-        # customize fetched entries
-        entries = (customize_function(x, self._customize) for x in entries)
-
-        # apply day offset
-        if self._day_offset != 0:
-            entries = (apply_day_offset(x, self._day_offset) for x in entries)
-
-        result = list(entries)
+        # customize fetched entries and apply the day offset. The offset is
+        # resolved per entry before customize_function runs, because an alias
+        # renames the entry and would change which customize key it matches.
+        # A per-type customize day_offset replaces the source-level one.
+        result: list[Collection] = []
+        for x in entries:
+            offset = resolve_day_offset(x, self._customize, self._day_offset)
+            x = customize_function(x, self._customize)
+            if offset != 0:
+                x = apply_day_offset(x, offset)
+            result.append(x)
 
         # Hide a transformer's auto-carried raw label (carry_raw_label) if the
         # user doesn't want it — but never a source's own genuine description

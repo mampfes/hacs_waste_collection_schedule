@@ -52,6 +52,7 @@
           "icon": "Ikon",
           "picture": "Billede",
           "use_dedicated_calendar": "Brug dedikeret kalender",
+          "day_offset": "Dagsforskydning (kun denne type)",
           "dedicated_calendar_title": "Dedikeret kalender titel",
           "color": "Farve (#RRGGBB; tom = standard)"
         },
@@ -61,6 +62,7 @@
           "icon": "Ikonet for afhentnings typen. (kun hvis du vil ændre det)",
           "picture": "Stien til et billede for afhentnings typen.",
           "use_dedicated_calendar": "Marker hvis denne afhentnings type skal have sin egen kalender entitet.",
+          "day_offset": "Forskyder datoerne for denne affaldstype med dette antal dage (kan være negativ, f.eks. -1 = en dag tidligere). Erstatter kildens dagsforskydning for denne type. Lad feltet være tomt for at bruge kildens dagsforskydning.",
           "dedicated_calendar_title": "Titlen til den dedikerede kalender entitet."
         }
       },
@@ -36351,6 +36353,7 @@
           "icon": "Ikon",
           "picture": "Billede",
           "use_dedicated_calendar": "Brug dedikeret kalender",
+          "day_offset": "Dagsforskydning (kun denne type)",
           "dedicated_calendar_title": "Dedikeret kalender titel",
           "color": "Farve (#RRGGBB; tom = standard)"
         },
@@ -36361,6 +36364,7 @@
           "icon": "Ikonet for afhentnings typen. (kun hvis du vil ændre det)",
           "picture": "Stien til et billede for afhentnings typen.",
           "use_dedicated_calendar": "Marker hvis denne afhentnings type skal have sin egen kalender entitet.",
+          "day_offset": "Forskyder datoerne for denne affaldstype med dette antal dage (kan være negativ, f.eks. -1 = en dag tidligere). Erstatter kildens dagsforskydning for denne type. Lad feltet være tomt for at bruge kildens dagsforskydning.",
           "dedicated_calendar_title": "Titlen til den dedikerede kalender entitet."
         }
       },
