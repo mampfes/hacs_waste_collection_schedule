@@ -5686,11 +5686,9 @@
     },
     {
       "title": "Laval (QC)",
-      "module": "ics",
-      "default_params": {
-        "regex": "Collecte\\s*-\\s(\\w+)"
-      },
-      "id": "ics_laval_ca"
+      "module": "laval_ca",
+      "default_params": {},
+      "id": "laval_ca"
     },
     {
       "title": "London (ON)",
@@ -10805,17 +10803,9 @@
     },
     {
       "title": "Abfallwirtschaft Sonneberg",
-      "module": "ics",
-      "default_params": {
-        "method": "POST",
-        "params": {
-          "ort": "",
-          "stadtteil": "",
-          "strasse": ""
-        },
-        "url": "https://www.abfallwirtschaft-sonneberg.de/PHPtoICS{%Y}.php"
-      },
-      "id": "ics_abfallwirtschaft_sonneberg_de"
+      "module": "abfallwirtschaft_sonneberg_de",
+      "default_params": {},
+      "id": "abfallwirtschaft_sonneberg_de"
     },
     {
       "title": "Abfallwirtschaft Stadt F\u00fcrth",
@@ -15729,27 +15719,9 @@
     },
     {
       "title": "Ginsheim-Gustavsburg",
-      "module": "ics",
-      "default_params": {
-        "method": "POST",
-        "params": {
-          "dateFrom": "2026-01-01",
-          "dateTo": "2026-12-31",
-          "category": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"
-          ]
-        },
-        "url": "https://abfallkalender.gigu.de/export"
-      },
-      "id": "ics_gigu_de"
+      "module": "gigu_de",
+      "default_params": {},
+      "id": "gigu_de"
     },
     {
       "title": "Gipsprojekt",
@@ -18269,24 +18241,9 @@
     },
     {
       "title": "Landkreis Heidenheim",
-      "module": "ics",
-      "default_params": {
-        "method": "POST",
-        "params": {
-          "tag": "0",
-          "uhrzeit": "",
-          "bio": "1",
-          "garten": "1",
-          "gs": "1",
-          "rest": "1",
-          "papier": "1",
-          "papiertonne": "1"
-        },
-        "split_at": "\\+",
-        "url": "https://mobil.abfallwirtschaft-heidenheim.de/ical.php",
-        "year_field": "jahr"
-      },
-      "id": "ics_abfall_hdh_de"
+      "module": "abfall_hdh_de",
+      "default_params": {},
+      "id": "abfall_hdh_de"
     },
     {
       "title": "Landkreis Helmstedt",
@@ -36235,19 +36192,6 @@
       "id": "zab_ch"
     },
     {
-      "title": "Canton of Z\u00fcrich",
-      "module": "ics",
-      "default_params": {
-        "params": {
-          "region": "",
-          "zip": "",
-          "area": ""
-        },
-        "regex": "(.*), .*"
-      },
-      "id": "ics_openerz_metaodi_ch"
-    },
-    {
       "title": "Degersheim",
       "module": "zab_ch",
       "default_params": {
@@ -36964,6 +36908,12 @@
         "municipality": "Oberwangen"
       },
       "id": "koeniz_ch"
+    },
+    {
+      "title": "OpenERZ",
+      "module": "openerz_metaodi_ch",
+      "default_params": {},
+      "id": "openerz_metaodi_ch"
     },
     {
       "title": "Pfyn-Dettighofen",

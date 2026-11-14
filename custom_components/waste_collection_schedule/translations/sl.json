@@ -88,7 +88,7 @@
           "realmid": "ID območja",
           "split_bins": "Razdeli zabojnike na frakcije",
           "wasteTypes": "Tipi odpadkov",
-        "zip": "Poštna številka"
+          "zip": "Poštna številka"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
@@ -6728,47 +6728,25 @@
           "sector": "To je privzeti sektor."
         }
       },
-      "args_ics_laval_ca": {
+      "args_laval_ca": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "Ime datoteke",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Metoda",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Preveri SSL",
-          "version": "Verzija",
-          "year_field": "Year Field"
+          "codeZone": "Code Zone",
+          "matricule": "Matricule"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_laval_ca": {
+      "reconfigure_laval_ca": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "Ime datoteke",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Metoda",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Preveri SSL",
-          "version": "Verzija",
-          "year_field": "Year Field"
+          "codeZone": "Code Zone",
+          "matricule": "Matricule"
         },
         "data_description": {}
       },
@@ -10728,49 +10706,36 @@
           "strasse": "Ime vaše ulice."
         }
       },
-      "args_ics_abfallwirtschaft_sonneberg_de": {
+      "args_abfallwirtschaft_sonneberg_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "Ime datoteke",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Metoda",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Preveri SSL",
-          "version": "Verzija",
-          "year_field": "Year Field"
+          "ort": "Občina",
+          "stadtteil": "Naselje",
+          "strasse": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "ort": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "stadtteil": "Vaše naselje ali del občine.",
+          "strasse": "Ime vaše ulice."
         }
       },
-      "reconfigure_ics_abfallwirtschaft_sonneberg_de": {
+      "reconfigure_abfallwirtschaft_sonneberg_de": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "Ime datoteke",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Metoda",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Preveri SSL",
-          "version": "Verzija",
-          "year_field": "Year Field"
+          "ort": "Občina",
+          "stadtteil": "Naselje",
+          "strasse": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "ort": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "stadtteil": "Vaše naselje ali del občine.",
+          "strasse": "Ime vaše ulice."
+        }
       },
       "args_abfallwirtschaft_fuerth_eu": {
         "title": "Configure Source",
@@ -14367,47 +14332,23 @@
           "street": "Ime vaše ulice."
         }
       },
-      "args_ics_gigu_de": {
+      "args_gigu_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "Ime datoteke",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Metoda",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Preveri SSL",
-          "version": "Verzija",
-          "year_field": "Year Field"
+          "district": "Okrožje"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
         }
       },
-      "reconfigure_ics_gigu_de": {
+      "reconfigure_gigu_de": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "Ime datoteke",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Metoda",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Preveri SSL",
-          "version": "Verzija",
-          "year_field": "Year Field"
+          "district": "Okrožje"
         },
         "data_description": {}
       },
@@ -15244,49 +15185,36 @@
         },
         "data_description": {}
       },
-      "args_ics_abfall_hdh_de": {
+      "args_abfall_hdh_de": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "Ime datoteke",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Metoda",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Preveri SSL",
-          "version": "Verzija",
-          "year_field": "Year Field"
+          "gemeinde": "Občina",
+          "ortsteil": "Naselje",
+          "strasse": "Ulica"
         },
         "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "gemeinde": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "ortsteil": "Vaše naselje ali del občine.",
+          "strasse": "Ime vaše ulice."
         }
       },
-      "reconfigure_ics_abfall_hdh_de": {
+      "reconfigure_abfall_hdh_de": {
         "title": "Reconfigure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
         "data": {
           "calendar_title": "Calendar Title",
-          "file": "Ime datoteke",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Metoda",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Preveri SSL",
-          "version": "Verzija",
-          "year_field": "Year Field"
+          "gemeinde": "Občina",
+          "ortsteil": "Naselje",
+          "strasse": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "gemeinde": "Ime vaše občine, kot je prikazano na spletni strani ponudnika.",
+          "ortsteil": "Vaše naselje ali del občine.",
+          "strasse": "Ime vaše ulice."
+        }
       },
       "args_landkreis_helmstedt_de": {
         "title": "Configure Source",
@@ -25990,50 +25918,6 @@
         },
         "data_description": {}
       },
-      "args_ics_openerz_metaodi_ch": {
-        "title": "Configure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "file": "Ime datoteke",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Metoda",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Preveri SSL",
-          "version": "Verzija",
-          "year_field": "Year Field"
-        },
-        "data_description": {
-          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used."
-        }
-      },
-      "reconfigure_ics_openerz_metaodi_ch": {
-        "title": "Reconfigure Source",
-        "description": "Configure your service provider. {howto}More details: {docs_url}.",
-        "data": {
-          "calendar_title": "Calendar Title",
-          "file": "Ime datoteke",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Metoda",
-          "offset": "Offset",
-          "params": "Parametri",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Preveri SSL",
-          "version": "Verzija",
-          "year_field": "Year Field"
-        },
-        "data_description": {}
-      },
       "args_bern_ch": {
         "title": "Configure Source",
         "description": "Configure your service provider. {howto}More details: {docs_url}.",
@@ -26487,6 +26371,33 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_openerz_metaodi_ch": {
+        "title": "Configure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Area",
+          "region": "Regija",
+          "zip": "Poštna številka"
+        },
+        "data_description": {
+          "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
+          "zip": "Vaša poštna številka."
+        }
+      },
+      "reconfigure_openerz_metaodi_ch": {
+        "title": "Reconfigure Source",
+        "description": "Configure your service provider. {howto}More details: {docs_url}.",
+        "data": {
+          "calendar_title": "Calendar Title",
+          "area": "Area",
+          "region": "Regija",
+          "zip": "Poštna številka"
+        },
+        "data_description": {
+          "zip": "Vaša poštna številka."
+        }
       },
       "args_rapperswil_be_ch": {
         "title": "Configure Source",

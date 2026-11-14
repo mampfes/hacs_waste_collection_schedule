@@ -947,7 +947,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Lakeshore (ON)](/doc/source/recyclecoach_com.md) / lakeshore.ca
 - [Lantier](/doc/source/ritl_ca.md) / ritl.ca/calendrier-lantier
 - [LaSalle (ON)](/doc/source/recyclecoach_com.md) / lasalle.ca
-- [Laval (QC)](/doc/ics/laval_ca.md) / laval.ca
+- [Laval (QC)](/doc/source/laval_ca.md) / laval.ca
 - [London (ON)](/doc/source/recyclecoach_com.md) / london.ca
 - [Longueuil (QC)](/doc/ics/longueuil_quebec.md) / longueuil.quebec
 - [Lévis / Québec](/doc/ics/ville_levis_qc_ca.md) / ville.levis.qc.ca
@@ -1645,7 +1645,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Abfallwirtschaft Rems-Murr (AWRM) - ICS Version](/doc/ics/abfallwirtschaft_rems_murr_de.md) / abfallwirtschaft-rems-murr.de
 - [Abfallwirtschaft Rendsburg](/doc/source/awr_de.md) / awr.de
 - [Abfallwirtschaft Rheingau-Taunus-Kreis](/doc/source/c_trace_de.md) / eaw-rheingau-taunus.de
-- [Abfallwirtschaft Sonneberg](/doc/ics/abfallwirtschaft_sonneberg_de.md) / abfallwirtschaft-sonneberg.de
+- [Abfallwirtschaft Sonneberg](/doc/source/abfallwirtschaft_sonneberg_de.md) / abfallwirtschaft-sonneberg.de
 - [Abfallwirtschaft Stadt Fürth](/doc/source/abfallwirtschaft_fuerth_eu.md) / abfallwirtschaft.fuerth.eu
 - [Abfallwirtschaft Stadt Nürnberg](/doc/source/abfallnavi_de.md) / nuernberg.de
 - [Abfallwirtschaft Stadt Schweinfurt](/doc/source/schweinfurt_de.md) / schweinfurt.de
@@ -2221,7 +2221,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gillenbeuren](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Gillenbeuren (Gillenbeuren)](/doc/source/buergerportal_de.md) / cochem-zell-online.de
 - [Gillersheim](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
-- [Ginsheim-Gustavsburg](/doc/ics/gigu_de.md) / gigu.de
+- [Ginsheim-Gustavsburg](/doc/source/gigu_de.md) / gigu.de
 - [Gipsprojekt](/doc/ics/gipsprojekt_de.md) / gipsprojekt.de
 - [Gladebeck](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Gladenbach](/doc/source/buergerportal_de.md) / mzv-biedenkopf.de
@@ -2518,7 +2518,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Landkreis Günzburg](/doc/source/awido_de.md) / kaw.landkreis-guenzburg.de
 - [Landkreis Hameln-Pyrmont](/doc/ics/hameln_pyrmont_de.md) / hameln-pyrmont.de
 - [Landkreis Harz](/doc/source/jumomind_de.md) / enwi-hz.de
-- [Landkreis Heidenheim](/doc/ics/abfall_hdh_de.md) / abfall-hdh.de
+- [Landkreis Heidenheim](/doc/source/abfall_hdh_de.md) / abfall-hdh.de
 - [Landkreis Helmstedt](/doc/source/landkreis_helmstedt_de.md) / landkreis-helmstedt.de
 - [Landkreis Hildburghausen](/doc/source/muellabfuhr_de.md) / portal.muellabfuhr-deutschland.de
 - [Landkreis Holzminden](/doc/ics/abfall_app_net.md) / landkreis-holzminden.de
@@ -4985,7 +4985,6 @@ If you already have enough information for your municipality/region, you are ver
 - [Büren an der Aare](/doc/source/localcities_ch.md) / bueren.ch
 - [Bürglen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Bütschwil-Ganterschwil](/doc/source/zab_ch.md) / zab.citymobile.ch
-- [Canton of Zürich](/doc/ics/openerz_metaodi_ch.md) / openerz.metaodi.ch
 - [Degersheim](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Diessenhofen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Dozwil](/doc/source/kvatg_ch.md) / kvatg.ch
@@ -5080,6 +5079,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Oberbüren](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Oberuzwil](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Oberwangen](/doc/source/koeniz_ch.md) / koeniz.citymobile.ch
+- [OpenERZ](/doc/source/openerz_metaodi_ch.md) / openerz.metaodi.ch
 - [Pfyn-Dettighofen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Ramsen](/doc/source/kvatg_ch.md) / kvatg.ch
 - [Raperswilen](/doc/source/kvatg_ch.md) / kvatg.ch

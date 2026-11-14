@@ -90,7 +90,7 @@
           "realmid": "Realm-ID",
           "split_bins": "Dela upp kärl i fraktioner",
           "wasteTypes": "Avfallstyper",
-        "zip": "Postnummer"
+          "zip": "Postnummer"
         },
         "data_description": {
           "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
@@ -6730,47 +6730,25 @@
           "sector": "Detta är standardsektorn."
         }
       },
-      "args_ics_laval_ca": {
+      "args_laval_ca": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "codeZone": "Code Zone",
+          "matricule": "Matricule"
         },
         "data_description": {
           "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
         }
       },
-      "reconfigure_ics_laval_ca": {
+      "reconfigure_laval_ca": {
         "title": "Konfigurera om källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "codeZone": "Code Zone",
+          "matricule": "Matricule"
         },
         "data_description": {}
       },
@@ -10730,49 +10708,36 @@
           "strasse": "Ditt gatunamn."
         }
       },
-      "args_ics_abfallwirtschaft_sonneberg_de": {
+      "args_abfallwirtschaft_sonneberg_de": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "ort": "Kommun",
+          "stadtteil": "Distrikt",
+          "strasse": "Gata"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "ort": "Namnet på din kommun, som det visas på leverantörens webbplats.",
+          "stadtteil": "Ditt distrikt eller del av kommunen.",
+          "strasse": "Ditt gatunamn."
         }
       },
-      "reconfigure_ics_abfallwirtschaft_sonneberg_de": {
+      "reconfigure_abfallwirtschaft_sonneberg_de": {
         "title": "Konfigurera om källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "ort": "Kommun",
+          "stadtteil": "Distrikt",
+          "strasse": "Gata"
         },
-        "data_description": {}
+        "data_description": {
+          "ort": "Namnet på din kommun, som det visas på leverantörens webbplats.",
+          "stadtteil": "Ditt distrikt eller del av kommunen.",
+          "strasse": "Ditt gatunamn."
+        }
       },
       "args_abfallwirtschaft_fuerth_eu": {
         "title": "Konfigurera källa",
@@ -14369,47 +14334,23 @@
           "street": "Ditt gatunamn."
         }
       },
-      "args_ics_gigu_de": {
+      "args_gigu_de": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "district": "Distrikt"
         },
         "data_description": {
           "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
         }
       },
-      "reconfigure_ics_gigu_de": {
+      "reconfigure_gigu_de": {
         "title": "Konfigurera om källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "district": "Distrikt"
         },
         "data_description": {}
       },
@@ -15246,49 +15187,36 @@
         },
         "data_description": {}
       },
-      "args_ics_abfall_hdh_de": {
+      "args_abfall_hdh_de": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "gemeinde": "Kommun",
+          "ortsteil": "Distrikt",
+          "strasse": "Gata"
         },
         "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "gemeinde": "Namnet på din kommun, som det visas på leverantörens webbplats.",
+          "ortsteil": "Ditt distrikt eller del av kommunen.",
+          "strasse": "Ditt gatunamn."
         }
       },
-      "reconfigure_ics_abfall_hdh_de": {
+      "reconfigure_abfall_hdh_de": {
         "title": "Konfigurera om källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
         "data": {
           "calendar_title": "Kalendernamn",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "gemeinde": "Kommun",
+          "ortsteil": "Distrikt",
+          "strasse": "Gata"
         },
-        "data_description": {}
+        "data_description": {
+          "gemeinde": "Namnet på din kommun, som det visas på leverantörens webbplats.",
+          "ortsteil": "Ditt distrikt eller del av kommunen.",
+          "strasse": "Ditt gatunamn."
+        }
       },
       "args_landkreis_helmstedt_de": {
         "title": "Konfigurera källa",
@@ -25992,50 +25920,6 @@
         },
         "data_description": {}
       },
-      "args_ics_openerz_metaodi_ch": {
-        "title": "Konfigurera källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger."
-        }
-      },
-      "reconfigure_ics_openerz_metaodi_ch": {
-        "title": "Konfigurera om källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {}
-      },
       "args_bern_ch": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
@@ -26489,6 +26373,33 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_openerz_metaodi_ch": {
+        "title": "Konfigurera källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area",
+          "region": "Region",
+          "zip": "Postnummer"
+        },
+        "data_description": {
+          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
+          "zip": "Ditt postnummer."
+        }
+      },
+      "reconfigure_openerz_metaodi_ch": {
+        "title": "Konfigurera om källa",
+        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernamn",
+          "area": "Area",
+          "region": "Region",
+          "zip": "Postnummer"
+        },
+        "data_description": {
+          "zip": "Ditt postnummer."
+        }
       },
       "args_rapperswil_be_ch": {
         "title": "Konfigurera källa",

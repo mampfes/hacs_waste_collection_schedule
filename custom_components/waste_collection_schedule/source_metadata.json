@@ -1640,11 +1640,11 @@
     },
     "urls": {}
   },
-  "ics_laval_ca": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/laval_ca.md",
+  "laval_ca": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/laval_ca.md",
     "howto": {
-      "en": "- If you don't know your sector, go to `https://www.laval.ca/recherche-par-adresse/` and enter your address to identify your house matricule and zone.\n- Right-click 'Add to my calendar' and select `Copy link address`.\n- Use this copied URL as the `url` parameter.\n- You can trim the tracking data after the `codeZone=#`\n",
-      "fr": "- Si vous ne connaissez pas votre secteur, allez à `https://www.laval.ca/recherche-par-adresse/` et entrez votre adresse pour identifier votre matricule de maison et votre zone.\n- Faites un clic droit sur 'Ajouter à mon agenda' et sélectionnez `Copier l'adresse du lien`.\n- Utilisez ce lien copié comme paramètre `url`.\n- Vous pouvez supprimer les données de suivi après `codeZone=#`\n"
+      "en": "Enter your property roll number (matricule) and collection zone (codeZone). If you do not know them, look up your address at https://www.laval.ca/recherche-par-adresse/.",
+      "fr": "Saisissez votre numéro de matricule et votre code de zone de collecte (codeZone). Si vous ne les connaissez pas, recherchez votre adresse sur https://www.laval.ca/recherche-par-adresse/."
     },
     "urls": {}
   },
@@ -2615,10 +2615,11 @@
     },
     "urls": {}
   },
-  "ics_abfallwirtschaft_sonneberg_de": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfallwirtschaft_sonneberg_de.md",
+  "abfallwirtschaft_sonneberg_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfallwirtschaft_sonneberg_de.md",
     "howto": {
-      "en": "- Go to <https://www.abfallwirtschaft-sonneberg.de/abfallkalender/>.\n- Select your municipality (`Ort`), district (`Ortsteil`) and - if necessary - street (`Straße`).\n- Right-click each dropdown field an click `Inspect`. This will open your browser's developer tools and display the corresponding HTML source:\n\n  ```html\n    <!-- Some lines of code have been removed from the below for readability -->\n\n    <select class=\"form-control\" id=\"ort\" name=\"ort\">\n        <option value=\"\">Bitte Ort wählen</option>\n        <option value=\"Föritztal\">Föritztal</option>\n        <option value=\"Neuhaus am Rennweg\">Neuhaus am Rennweg</option>\n        <option value=\"Sonneberg\">Sonneberg</option>\n    </select>\n\n    <select class=\"form-control stadtteil\" name=\"stadtteil\" id=\"stadtteil\">\n        <option value=\"\" selected=\"\"></option>\n        <option value=\"Bettelhecken\">Bettelhecken (ab Bettelhecker Straße Nr. 57 und 66)</option>\n        <option value=\"Hönbach\">Hönbach</option>\n        <option value=\"Innenstadtbereich\">Innenstadtbereich</option>\n        <option value=\"Steinbach\">Steinbach (einschl. gesamte Bergstr.)</option>\n    </select>\n\n    <select class=\"form-control\" name=\"strasse\" id=\"strasse\">\n        <option value=\"\" selected=\"\"></option>\n        <option value=\"Alte Molkerei\">Alte Molkerei</option>\n        <option value=\"Bettelhecker Straße bis Nr. 55 und 64\">Bettelhecker Straße bis Nr. 55 und 64 (Coburger Allee bis Eisenbahnbrücke)</option>\n    </select>\n  ```\n\n  You will need to get the exact `value` of your selected option as an option's value might differ from the text shown in the dropdown field for certain options, especially for the longer.\n  \n- Replace the corresponding `params` in the example configuration with your values.\n\n  *Please note that there's usually no need to replace umlauts in parameter values with their respective Unicode number (e.g. `ä` -> `\\xE4`).*\n  *This just happens while generating this documentation from source.*\n  *Refer to [Abfallwirtschaft Sonneberg's documentation source](/doc/ics/yaml/abfallwirtschaft_sonneberg_de.yaml) for unaltered examples.*\n"
+      "de": "Wählen Sie Ihren Ort und anschließend den Ortsteil. Eine Straße ist nur nötig, wenn das Formular eine anbietet — zum Beispiel Sonneberg / Innenstadtbereich.",
+      "en": "Select your municipality (Ort), then the district (Ortsteil). A street is only required when the form offers one — for example Sonneberg / Innenstadtbereich."
     },
     "urls": {}
   },
@@ -3315,11 +3316,11 @@
     },
     "urls": {}
   },
-  "ics_gigu_de": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gigu_de.md",
+  "gigu_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gigu_de.md",
     "howto": {
-      "de": "- Gehe zu <https://www.gigu.de/service-rathaus/dienstleistungen-online-rathaus/abfall/abfallkalender/> und wähle deinen Stadtteil aus.\n- Setze `district` auf deine Stadtteilnummer (`1` für Ginsheim, `2` für Gustavsburg).\n- Die `category`-Liste wählt die Abfallarten aus (1-9 für alle Abfallarten). Passe die Liste nach Bedarf an.\n- Setze `dateFrom` und `dateTo` auf den gewünschten Zeitraum (Format: `YYYY-MM-DD`).\n",
-      "en": "- Go to <https://www.gigu.de/service-rathaus/dienstleistungen-online-rathaus/abfall/abfallkalender/> and select your district.\n- Set `district` to your district number (`1` for Ginsheim, `2` for Gustavsburg).\n- The `category` list selects which waste types to include (1-9 for all types). Adjust as needed.\n- Set `dateFrom` and `dateTo` to the desired date range (format: `YYYY-MM-DD`).\n"
+      "de": "Wählen Sie Ihren Stadtteil (Ginsheim oder Gustavsburg).",
+      "en": "Select your district (Ginsheim or Gustavsburg)."
     },
     "urls": {}
   },
@@ -3485,11 +3486,11 @@
     },
     "urls": {}
   },
-  "ics_abfall_hdh_de": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/abfall_hdh_de.md",
+  "abfall_hdh_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/abfall_hdh_de.md",
     "howto": {
-      "de": "- Gehen Sie auf <https://www.abfall-hdh.de/internet/inhalt/inhalt.php?seite=98> und wählen Sie Ihren Standort.\n- Die meisten Felder sind vorausgefüllt. Fügen Sie im Feld **Parameter** Ihre `gemeinde`, `ortsteil` und `strasse` zum vorhandenen JSON hinzu, z.B.: `{\"gemeinde\": \"Dischingen\", \"ortsteil\": \"Hofen\", \"strasse\": \"\", \"bio\": \"1\", ...}`\n- Setzen Sie `split_at` auf `\\+`, wenn Termine kombinierte Abfallarten enthalten.\n- Setzen Sie Abfallart-Schalter (`bio`, `garten`, `gs`, `rest`, `papier`, `papiertonne`) auf `\"0\"`, um ungewünschte Typen auszublenden.\n",
-      "en": "- Go to <https://www.abfall-hdh.de/internet/inhalt/inhalt.php?seite=98> and select your location.\n- Most fields are pre-filled. In the **Params** field, add your `gemeinde`, `ortsteil` and `strasse` to the existing JSON, e.g.: `{\"gemeinde\": \"Dischingen\", \"ortsteil\": \"Hofen\", \"strasse\": \"\", \"bio\": \"1\", ...}`\n- Set `split_at` to `\\+` if events contain combined waste types.\n- Set waste type toggles (`bio`, `garten`, `gs`, `rest`, `papier`, `papiertonne`) to `\"0\"` to hide unwanted types.\n"
+      "de": "Geben Sie Ihre Gemeinde, den Ortsteil und — falls der Kalender eine verlangt — die Straße ein. Die Abfallart-Schalter des bisherigen ICS-Presets werden automatisch mitgeschickt.",
+      "en": "Enter your municipality (Gemeinde), district (Ortsteil) and, if the calendar asks for one, the street. The waste-type toggles of the previous ICS preset are requested automatically."
     },
     "urls": {}
   },
@@ -6101,13 +6102,6 @@
     },
     "urls": {}
   },
-  "ics_openerz_metaodi_ch": {
-    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/openerz_metaodi_ch.md",
-    "howto": {
-      "en": "- Leave the url as is.\n- Set the region to one of the ones listed below.\n- Set the zip (not needed for all regions). \"The zip code for the collection. Some regions (e.g. Basel) do not provide zip codes.\" - Website\n- Set the area to one of the ones listed below.\n- You probably want to leave the regex as is to remove unnecessary information from the summary.\n\n| Region | Areas |\n| ------ | ----- |\n| adliswil | No Areas |\n| basel | A, B, C, D, E, F, G, H |\n| bassersdorf | No Areas |\n| duebendorf | 1, 2, 3, 4, oekibus-dienstag, oekibus-donnerstag, oekibus-mittwoch, oekibus-montag |\n| embrach | ost, west |\n| horgen | A, B, C, D |\n| kilchberg | A, B |\n| langnau | No Areas |\n| oberrieden | No Areas |\n| richterswil | A, B |\n| rueschlikon | A, B |\n| stgallen | A, B, C, D, E, F, G, H, I, K, L Ost, L West |\n| thalwil | A, B, C |\n| uster | 1, 2, 3, 4 |\n| waedenswil | A, B, C, D |\n| wangen-bruttisellen | No Areas |\n| zurich | 8001, 8002, 8003, 8004, 8005, 8006, 8008, 8032, 8037, 8038, 8041, 8044, 8045, 8046, 8047, 8048, 8049, 8050, 8051, 8052, 8053, 8055, 8057, 8064 |\n"
-    },
-    "urls": {}
-  },
   "bern_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/bern_ch.md",
     "howto": {
@@ -6226,6 +6220,15 @@
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/muensingen_ch.md",
     "howto": {
       "en": "- Go to [Abfallkalender](https://www.muensingen.ch/de/verwaltung/dienstleistungen/detail/detail.php?i=90) to get the url of the ICal file.\n- Replace the URL in the Example section with the url of the ICal file.\n- Replace the year in the url with `{%Y}`.\n"
+    },
+    "urls": {}
+  },
+  "openerz_metaodi_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/openerz_metaodi_ch.md",
+    "howto": {
+      "de": "Wählen Sie Ihre Region. Geben Sie eine Postleitzahl ein, wenn die Region eine verwendet (zum Beispiel Zürich oder Langnau); einige Regionen wie Basel tun das nicht. Anschließend wählen Sie ein Sammelgebiet, falls die Region welche anbietet — das Feld entfällt, wenn die API keines listet.",
+      "en": "Select your region. Enter a postcode if the region uses one (for example Zürich or Langnau); some regions such as Basel do not. Then pick a collection area if the region has any — the field is skipped when the API lists none.",
+      "fr": "Sélectionnez votre région. Saisissez un code postal si la région en utilise un (tels que Zurich ou Langnau) ; certaines régions comme Bâle n'en ont pas. Choisissez ensuite une zone de collecte si la région en propose — le champ est masqué lorsque l'API n'en liste aucune."
     },
     "urls": {}
   },

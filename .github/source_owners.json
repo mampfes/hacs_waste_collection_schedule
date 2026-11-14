@@ -1,7 +1,13 @@
 {
   "default": [],
   "sources": {
+    "abfall_hdh_de": [
+      "@bbr111"
+    ],
     "abfall_neunkirchen_siegerland_de": [
+      "@bbr111"
+    ],
+    "abfallwirtschaft_sonneberg_de": [
       "@bbr111"
     ],
     "affaldonline_dk": [
@@ -124,6 +130,9 @@
     "gemeinde24_at": [
       "@markvp"
     ],
+    "gigu_de": [
+      "@bbr111"
+    ],
     "gmina_oswiecim_pl": [
       "@bbr111"
     ],
@@ -205,6 +214,9 @@
     "larochelle_fr": [
       "@fanfounet"
     ],
+    "laval_ca": [
+      "@bbr111"
+    ],
     "lawrence_ma_us": [
       "@markvp"
     ],
@@ -273,6 +285,9 @@
     ],
     "ocarcims_ocfl_net": [
       "@rbusquet"
+    ],
+    "openerz_metaodi_ch": [
+      "@bbr111"
     ],
     "osielsko_pl": [
       "@bbr111"

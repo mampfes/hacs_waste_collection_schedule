@@ -90,7 +90,7 @@
           "realmid": "ID realm",
           "split_bins": "Podziel pojemniki według frakcji odpadów",
           "wasteTypes": "Rodzaje odpadów",
-        "zip": "Kod pocztowy"
+          "zip": "Kod pocztowy"
         },
         "data_description": {
           "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło.",
@@ -6730,47 +6730,25 @@
           "sector": "To jest domyślny sektor."
         }
       },
-      "args_ics_laval_ca": {
+      "args_laval_ca": {
         "title": "Konfiguruj źródło",
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
         "data": {
           "calendar_title": "Nazwa kalendarza",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "codeZone": "Code Zone",
+          "matricule": "Matricule"
         },
         "data_description": {
           "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło."
         }
       },
-      "reconfigure_ics_laval_ca": {
+      "reconfigure_laval_ca": {
         "title": "Ponownie skonfiguruj źródło",
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
         "data": {
           "calendar_title": "Nazwa kalendarza",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "codeZone": "Code Zone",
+          "matricule": "Matricule"
         },
         "data_description": {}
       },
@@ -10730,49 +10708,36 @@
           "strasse": "Nazwa Twojej ulicy."
         }
       },
-      "args_ics_abfallwirtschaft_sonneberg_de": {
+      "args_abfallwirtschaft_sonneberg_de": {
         "title": "Konfiguruj źródło",
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
         "data": {
           "calendar_title": "Nazwa kalendarza",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "ort": "Gmina",
+          "stadtteil": "Dzielnica",
+          "strasse": "Ulica"
         },
         "data_description": {
-          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło."
+          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło.",
+          "ort": "Nazwa Twojej gminy, tak jak jest podana na stronie usługodawcy.",
+          "stadtteil": "Twoja dzielnica lub część gminy.",
+          "strasse": "Nazwa Twojej ulicy."
         }
       },
-      "reconfigure_ics_abfallwirtschaft_sonneberg_de": {
+      "reconfigure_abfallwirtschaft_sonneberg_de": {
         "title": "Ponownie skonfiguruj źródło",
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
         "data": {
           "calendar_title": "Nazwa kalendarza",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "ort": "Gmina",
+          "stadtteil": "Dzielnica",
+          "strasse": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "ort": "Nazwa Twojej gminy, tak jak jest podana na stronie usługodawcy.",
+          "stadtteil": "Twoja dzielnica lub część gminy.",
+          "strasse": "Nazwa Twojej ulicy."
+        }
       },
       "args_abfallwirtschaft_fuerth_eu": {
         "title": "Konfiguruj źródło",
@@ -14369,47 +14334,23 @@
           "street": "Nazwa Twojej ulicy."
         }
       },
-      "args_ics_gigu_de": {
+      "args_gigu_de": {
         "title": "Konfiguruj źródło",
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
         "data": {
           "calendar_title": "Nazwa kalendarza",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "district": "Dzielnica"
         },
         "data_description": {
           "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło."
         }
       },
-      "reconfigure_ics_gigu_de": {
+      "reconfigure_gigu_de": {
         "title": "Ponownie skonfiguruj źródło",
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
         "data": {
           "calendar_title": "Nazwa kalendarza",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "district": "Dzielnica"
         },
         "data_description": {}
       },
@@ -15246,49 +15187,36 @@
         },
         "data_description": {}
       },
-      "args_ics_abfall_hdh_de": {
+      "args_abfall_hdh_de": {
         "title": "Konfiguruj źródło",
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
         "data": {
           "calendar_title": "Nazwa kalendarza",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "gemeinde": "Gmina",
+          "ortsteil": "Dzielnica",
+          "strasse": "Ulica"
         },
         "data_description": {
-          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło."
+          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło.",
+          "gemeinde": "Nazwa Twojej gminy, tak jak jest podana na stronie usługodawcy.",
+          "ortsteil": "Twoja dzielnica lub część gminy.",
+          "strasse": "Nazwa Twojej ulicy."
         }
       },
-      "reconfigure_ics_abfall_hdh_de": {
+      "reconfigure_abfall_hdh_de": {
         "title": "Ponownie skonfiguruj źródło",
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
         "data": {
           "calendar_title": "Nazwa kalendarza",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "gemeinde": "Gmina",
+          "ortsteil": "Dzielnica",
+          "strasse": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "gemeinde": "Nazwa Twojej gminy, tak jak jest podana na stronie usługodawcy.",
+          "ortsteil": "Twoja dzielnica lub część gminy.",
+          "strasse": "Nazwa Twojej ulicy."
+        }
       },
       "args_landkreis_helmstedt_de": {
         "title": "Konfiguruj źródło",
@@ -25992,50 +25920,6 @@
         },
         "data_description": {}
       },
-      "args_ics_openerz_metaodi_ch": {
-        "title": "Konfiguruj źródło",
-        "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
-        "data": {
-          "calendar_title": "Nazwa kalendarza",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {
-          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło."
-        }
-      },
-      "reconfigure_ics_openerz_metaodi_ch": {
-        "title": "Ponownie skonfiguruj źródło",
-        "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
-        "data": {
-          "calendar_title": "Nazwa kalendarza",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {}
-      },
       "args_bern_ch": {
         "title": "Konfiguruj źródło",
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
@@ -26489,6 +26373,33 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_openerz_metaodi_ch": {
+        "title": "Konfiguruj źródło",
+        "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
+        "data": {
+          "calendar_title": "Nazwa kalendarza",
+          "area": "Area",
+          "region": "Region",
+          "zip": "Kod pocztowy"
+        },
+        "data_description": {
+          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło.",
+          "zip": "Twój kod pocztowy."
+        }
+      },
+      "reconfigure_openerz_metaodi_ch": {
+        "title": "Ponownie skonfiguruj źródło",
+        "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
+        "data": {
+          "calendar_title": "Nazwa kalendarza",
+          "area": "Area",
+          "region": "Region",
+          "zip": "Kod pocztowy"
+        },
+        "data_description": {
+          "zip": "Twój kod pocztowy."
+        }
       },
       "args_rapperswil_be_ch": {
         "title": "Konfiguruj źródło",

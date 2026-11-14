@@ -90,7 +90,7 @@
           "realmid": "Realm-ID",
           "split_bins": "Behälter in Fraktionen aufteilen",
           "wasteTypes": "Abfallarten",
-        "zip": "Postleitzahl"
+          "zip": "Postleitzahl"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
@@ -6730,47 +6730,25 @@
           "sector": "Dies ist der Standardsektor."
         }
       },
-      "args_ics_laval_ca": {
+      "args_laval_ca": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "codeZone": "Code Zone",
+          "matricule": "Matricule"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
-      "reconfigure_ics_laval_ca": {
+      "reconfigure_laval_ca": {
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "codeZone": "Code Zone",
+          "matricule": "Matricule"
         },
         "data_description": {}
       },
@@ -10730,49 +10708,36 @@
           "strasse": "Ihr Straßenname."
         }
       },
-      "args_ics_abfallwirtschaft_sonneberg_de": {
+      "args_abfallwirtschaft_sonneberg_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "ort": "Gemeinde",
+          "stadtteil": "Ortsteil",
+          "strasse": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "ort": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "stadtteil": "Ihr Ortsteil oder Stadtteil.",
+          "strasse": "Ihr Straßenname."
         }
       },
-      "reconfigure_ics_abfallwirtschaft_sonneberg_de": {
+      "reconfigure_abfallwirtschaft_sonneberg_de": {
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "ort": "Gemeinde",
+          "stadtteil": "Ortsteil",
+          "strasse": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "ort": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "stadtteil": "Ihr Ortsteil oder Stadtteil.",
+          "strasse": "Ihr Straßenname."
+        }
       },
       "args_abfallwirtschaft_fuerth_eu": {
         "title": "Quelle konfigurieren",
@@ -14369,47 +14334,23 @@
           "street": "Ihr Straßenname."
         }
       },
-      "args_ics_gigu_de": {
+      "args_gigu_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "district": "Bezirk"
         },
         "data_description": {
           "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
         }
       },
-      "reconfigure_ics_gigu_de": {
+      "reconfigure_gigu_de": {
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "district": "Bezirk"
         },
         "data_description": {}
       },
@@ -15246,49 +15187,36 @@
         },
         "data_description": {}
       },
-      "args_ics_abfall_hdh_de": {
+      "args_abfall_hdh_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "gemeinde": "Gemeinde",
+          "ortsteil": "Ortsteil",
+          "strasse": "Straße"
         },
         "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "gemeinde": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "ortsteil": "Ihr Ortsteil oder Stadtteil.",
+          "strasse": "Ihr Straßenname."
         }
       },
-      "reconfigure_ics_abfall_hdh_de": {
+      "reconfigure_abfall_hdh_de": {
         "title": "Quelle Neu Konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
         "data": {
           "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "gemeinde": "Gemeinde",
+          "ortsteil": "Ortsteil",
+          "strasse": "Straße"
         },
-        "data_description": {}
+        "data_description": {
+          "gemeinde": "Der Name Ihrer Gemeinde, wie auf der Website des Anbieters angezeigt.",
+          "ortsteil": "Ihr Ortsteil oder Stadtteil.",
+          "strasse": "Ihr Straßenname."
+        }
       },
       "args_landkreis_helmstedt_de": {
         "title": "Quelle konfigurieren",
@@ -25992,50 +25920,6 @@
         },
         "data_description": {}
       },
-      "args_ics_openerz_metaodi_ch": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet."
-        }
-      },
-      "reconfigure_ics_openerz_metaodi_ch": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Methode",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {}
-      },
       "args_bern_ch": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
@@ -26489,6 +26373,33 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_openerz_metaodi_ch": {
+        "title": "Quelle konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area",
+          "region": "Region",
+          "zip": "Postleitzahl"
+        },
+        "data_description": {
+          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
+          "zip": "Ihre Postleitzahl."
+        }
+      },
+      "reconfigure_openerz_metaodi_ch": {
+        "title": "Quelle Neu Konfigurieren",
+        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
+        "data": {
+          "calendar_title": "Kalender Titel",
+          "area": "Area",
+          "region": "Region",
+          "zip": "Postleitzahl"
+        },
+        "data_description": {
+          "zip": "Ihre Postleitzahl."
+        }
       },
       "args_rapperswil_be_ch": {
         "title": "Quelle konfigurieren",

@@ -90,7 +90,7 @@
           "realmid": "ID realmu",
           "split_bins": "Rozdeliť nádoby podľa zložiek odpadu",
           "wasteTypes": "Druhy odpadu",
-        "zip": "Poštové smerovacie číslo"
+          "zip": "Poštové smerovacie číslo"
         },
         "data_description": {
           "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom.",
@@ -6730,47 +6730,25 @@
           "sector": "Toto je predvolený sektor."
         }
       },
-      "args_ics_laval_ca": {
+      "args_laval_ca": {
         "title": "Konfigurovať zdroj",
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
         "data": {
           "calendar_title": "Názov kalendára",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "codeZone": "Code Zone",
+          "matricule": "Matricule"
         },
         "data_description": {
           "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom."
         }
       },
-      "reconfigure_ics_laval_ca": {
+      "reconfigure_laval_ca": {
         "title": "Znovu nakonfigurovať zdroj",
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
         "data": {
           "calendar_title": "Názov kalendára",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "codeZone": "Code Zone",
+          "matricule": "Matricule"
         },
         "data_description": {}
       },
@@ -10730,49 +10708,36 @@
           "strasse": "Názov vašej ulice."
         }
       },
-      "args_ics_abfallwirtschaft_sonneberg_de": {
+      "args_abfallwirtschaft_sonneberg_de": {
         "title": "Konfigurovať zdroj",
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
         "data": {
           "calendar_title": "Názov kalendára",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "ort": "Obec",
+          "stadtteil": "Okres",
+          "strasse": "Ulica"
         },
         "data_description": {
-          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom."
+          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom.",
+          "ort": "Názov vašej obce tak, ako je uvedený na webovej stránke poskytovateľa.",
+          "stadtteil": "Váš okres alebo časť obce.",
+          "strasse": "Názov vašej ulice."
         }
       },
-      "reconfigure_ics_abfallwirtschaft_sonneberg_de": {
+      "reconfigure_abfallwirtschaft_sonneberg_de": {
         "title": "Znovu nakonfigurovať zdroj",
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
         "data": {
           "calendar_title": "Názov kalendára",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "ort": "Obec",
+          "stadtteil": "Okres",
+          "strasse": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "ort": "Názov vašej obce tak, ako je uvedený na webovej stránke poskytovateľa.",
+          "stadtteil": "Váš okres alebo časť obce.",
+          "strasse": "Názov vašej ulice."
+        }
       },
       "args_abfallwirtschaft_fuerth_eu": {
         "title": "Konfigurovať zdroj",
@@ -14369,47 +14334,23 @@
           "street": "Názov vašej ulice."
         }
       },
-      "args_ics_gigu_de": {
+      "args_gigu_de": {
         "title": "Konfigurovať zdroj",
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
         "data": {
           "calendar_title": "Názov kalendára",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "district": "Okres"
         },
         "data_description": {
           "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom."
         }
       },
-      "reconfigure_ics_gigu_de": {
+      "reconfigure_gigu_de": {
         "title": "Znovu nakonfigurovať zdroj",
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
         "data": {
           "calendar_title": "Názov kalendára",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "district": "Okres"
         },
         "data_description": {}
       },
@@ -15246,49 +15187,36 @@
         },
         "data_description": {}
       },
-      "args_ics_abfall_hdh_de": {
+      "args_abfall_hdh_de": {
         "title": "Konfigurovať zdroj",
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
         "data": {
           "calendar_title": "Názov kalendára",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "gemeinde": "Obec",
+          "ortsteil": "Okres",
+          "strasse": "Ulica"
         },
         "data_description": {
-          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom."
+          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom.",
+          "gemeinde": "Názov vašej obce tak, ako je uvedený na webovej stránke poskytovateľa.",
+          "ortsteil": "Váš okres alebo časť obce.",
+          "strasse": "Názov vašej ulice."
         }
       },
-      "reconfigure_ics_abfall_hdh_de": {
+      "reconfigure_abfall_hdh_de": {
         "title": "Znovu nakonfigurovať zdroj",
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
         "data": {
           "calendar_title": "Názov kalendára",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
+          "gemeinde": "Obec",
+          "ortsteil": "Okres",
+          "strasse": "Ulica"
         },
-        "data_description": {}
+        "data_description": {
+          "gemeinde": "Názov vašej obce tak, ako je uvedený na webovej stránke poskytovateľa.",
+          "ortsteil": "Váš okres alebo časť obce.",
+          "strasse": "Názov vašej ulice."
+        }
       },
       "args_landkreis_helmstedt_de": {
         "title": "Konfigurovať zdroj",
@@ -25992,50 +25920,6 @@
         },
         "data_description": {}
       },
-      "args_ics_openerz_metaodi_ch": {
-        "title": "Konfigurovať zdroj",
-        "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
-        "data": {
-          "calendar_title": "Názov kalendára",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {
-          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom."
-        }
-      },
-      "reconfigure_ics_openerz_metaodi_ch": {
-        "title": "Znovu nakonfigurovať zdroj",
-        "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
-        "data": {
-          "calendar_title": "Názov kalendára",
-          "file": "File",
-          "headers": "Headers",
-          "impersonate": "Impersonate",
-          "method": "Method",
-          "offset": "Offset",
-          "params": "Params",
-          "regex": "Regex",
-          "split_at": "Split At",
-          "title_template": "Title Template",
-          "url": "URL",
-          "verify_ssl": "Verify Ssl",
-          "version": "Version",
-          "year_field": "Year Field"
-        },
-        "data_description": {}
-      },
       "args_bern_ch": {
         "title": "Konfigurovať zdroj",
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
@@ -26489,6 +26373,33 @@
           "year_field": "Year Field"
         },
         "data_description": {}
+      },
+      "args_openerz_metaodi_ch": {
+        "title": "Konfigurovať zdroj",
+        "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
+        "data": {
+          "calendar_title": "Názov kalendára",
+          "area": "Area",
+          "region": "Región",
+          "zip": "Poštové smerovacie číslo"
+        },
+        "data_description": {
+          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom.",
+          "zip": "Vaše Poštové smerovacie číslo."
+        }
+      },
+      "reconfigure_openerz_metaodi_ch": {
+        "title": "Znovu nakonfigurovať zdroj",
+        "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
+        "data": {
+          "calendar_title": "Názov kalendára",
+          "area": "Area",
+          "region": "Región",
+          "zip": "Poštové smerovacie číslo"
+        },
+        "data_description": {
+          "zip": "Vaše Poštové smerovacie číslo."
+        }
       },
       "args_rapperswil_be_ch": {
         "title": "Konfigurovať zdroj",
