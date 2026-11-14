@@ -78,6 +78,7 @@ SERVICE_PROVIDERS = {
     "Chieti - Formula Ambiente Spa",
     "Lucca - Sistema Ambiente Spa",
     "Capannori - Ascit",
+    "Appignano - COSMARI",
     "Marcallo con Casone",
     "Priolo Gargallo -  IGM rifiuti industriali",
     "Unione Basso Biferno - Impregico Srl",
@@ -357,6 +358,7 @@ TEST_CASES = {
         "area": "Zona A",
     },
     "Capannori, Via Fillungo": {"municipality": "Capannori", "area": "Via Fillungo"},
+    "Appignano, Zona Centro": {"municipality": "Appignano", "area": "Zona Centro"},
 }
 
 
