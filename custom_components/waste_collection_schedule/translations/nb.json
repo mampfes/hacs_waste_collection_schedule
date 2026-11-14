@@ -89,7 +89,8 @@
           "ort": "Område",
           "realmid": "Realm-ID",
           "split_bins": "Del opp beholdere i fraksjoner",
-          "wasteTypes": "Avfallstyper"
+          "wasteTypes": "Avfallstyper",
+        "zip": "Postnummer"
         },
         "data_description": {
           "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",

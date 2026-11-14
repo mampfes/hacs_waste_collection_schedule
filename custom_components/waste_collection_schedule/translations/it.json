@@ -89,7 +89,8 @@
           "ort": "Quartiere",
           "realmid": "ID Realm",
           "split_bins": "Dividi i bidoni in frazioni",
-          "wasteTypes": "Tipi di rifiuto"
+          "wasteTypes": "Tipi di rifiuto",
+        "zip": "CAP"
         },
         "data_description": {
           "calendar_title": "Puoi cambiare il nome del calendario della raccolta dei rifiuti, altrimenti di default verra' utilizzato il nome del tuo fornitore di servizi.",

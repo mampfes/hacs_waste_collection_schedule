@@ -89,7 +89,8 @@
           "ort": "Dzielnica",
           "realmid": "ID realm",
           "split_bins": "Podziel pojemniki według frakcji odpadów",
-          "wasteTypes": "Rodzaje odpadów"
+          "wasteTypes": "Rodzaje odpadów",
+        "zip": "Kod pocztowy"
         },
         "data_description": {
           "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło.",

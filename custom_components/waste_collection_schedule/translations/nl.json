@@ -89,7 +89,8 @@
           "ort": "Wijk",
           "realmid": "Realm-ID",
           "split_bins": "Containers opsplitsen in fracties",
-          "wasteTypes": "Afvalsoorten"
+          "wasteTypes": "Afvalsoorten",
+        "zip": "Postcode"
         },
         "data_description": {
           "calendar_title": "A more readable, or user-friendly, name for the waste calendar. If nothing is provided, the name returned by the source will be used.",
