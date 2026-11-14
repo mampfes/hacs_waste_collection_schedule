@@ -16,13 +16,13 @@ when the count reaches zero.
 | 1 | Special / not a provider | 4 | Not a provider. Decide per module whether it stays a utility or gets a pipeline form. |
 | 2 | Retire (deprecated shim or broken stub) | 2 left (of 9, +1 from class 7) | Delete, or reduce to an alias, in the major release following the deprecation lifecycle in `versioning.md`. Migrating them is wasted work. |
 | 3 | Login required | 10 | `CLAUDE.md` allows login-required endpoints only when the account holder is a code owner or provides a test account. Decide per source: keep (owner or test account available), or remove. |
-| 4 | Migrate onto an existing platform component | 1 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
+| 4 | Migrate onto an existing platform component | 0 left (of 9) | A reusable component already exists in `service/`. Mostly mechanical; verify with a cassette. |
 | 5 | Shared backend, build one component for the cluster | 0 left (of 44) | Several legacy sources share one backend. Write the shared component once, then each source is a few lines. Highest leverage. |
 | 6 | PDF schedule | 1 left (of 14) | The schedule is a PDF: use the PDF parsers and preprocessors from the guide. |
 | 7 | Singleton, small (<150 lines, <=2 requests) | 5 left (of 58, -1 to class 2) | Standalone and simple: one or two requests, short module. Fast, independent migrations. |
 | 8 | Singleton, medium | 10 left (of 78) | Standalone, moderate: needs a declared multi-step retriever (`Lookup`/`Chain`) or a custom `pick`. |
 | 9 | Singleton, large (>=350 lines or >=5 requests) | 2 left (of 24, +1 from class 4) | Standalone, large or many-step. Likely wants a new shared component or a split; do last. |
-| | **Total** | **35** (281 when this file was written; equals `Legacy fetch() sources` in `python tools/arch_coverage.py`. See the notes in class 5 to 8 and the reconciliation below) | |
+| | **Total** | **34** (281 when this file was written; equals `Legacy fetch() sources` in `python tools/arch_coverage.py`. See the notes in class 5 to 8 and the reconciliation below) | |
 
 ## 1. Special / not a provider
 
@@ -55,7 +55,7 @@ The other six (`awb_mainz_bingen_de`, `byron_nsw_gov_au`, `chiltern_gov_uk`, `gr
 
 ## 4. Migrate onto an existing platform component
 
-Worked through on `release/3.0.0`. Done (7), with what the "existing platform" turned out to be:
+Worked through on `release/3.0.0`. Done (8), with what the "existing platform" turned out to be:
 
 - `braintree_gov_uk`: `JaduXfp.XfpFormRetriever`, matching the property by `address=`.
 - `norwich_gov_uk`: `WhitespaceWRP` (street as an extra form field).
@@ -64,11 +64,9 @@ Worked through on `release/3.0.0`. Done (7), with what the "existing platform" t
 - `movar_no`: same fraction/calendar shape as MinRenovasjon but another host, token and camelCase keys; `MinRenovasjonParser` now reads either casing, the requests are a declared `FanOutRetriever`.
 - `evv_voelklingen_de`: same vendor as `Buergerportal`, but a different parameter model (district only, container filter), so a declared `YearlyRetriever` cascade rather than the shared retriever.
 - `sumavfall_no`: the `Tommekalender` parser does not fit this markup; `HtmlLabelledDates` does. Combined rounds are now split into canonical types.
+- `lerum_se`: `EdpFutureWeb`. Rechecked 2026-11-14 from this environment: `vatjanst.lerum.se` answers again (the 403 / connection drop from 2026-10-31 is gone), so the existing test addresses could be recorded and the source migrated onto the shared component.
 
-Not done:
-
-- `lerum_se`: fits `EdpFutureWeb` (written and discarded), but `vatjanst.lerum.se` answers this environment with `403 Access denied`, so it can be neither verified nor recorded. Retry from an allowed network. Rechecked 2026-10-31: the host also drops the connection from a Swedish exit and in a regular browser, yet the municipality's current e-service ("Hämtningsdagar för ditt hushållsavfall", `sjalvservice.lerum.se/oversikt/external/346`) still redirects to `vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SimpleWastePickup`. That reads as an outage, not a retirement, so it is not deprecated; recheck before deciding (next recheck 2026-11-14).
-- `south_norfolk_and_broadland_gov_uk`: migrated since in #7992. Was: reclassify as class 9. Three retrieval paths (cookie payload, postcode lookup, and a SOAP calendar chosen by a link on the summary page) need a component of their own; `WebAspxCollections` only covers the SOAP leg.
+Left: none. (`south_norfolk_and_broadland_gov_uk` was migrated in #7992 and was going to move to class 9; it is a pipeline source now.)
 
 ## 5. Shared backend: one component per cluster
 

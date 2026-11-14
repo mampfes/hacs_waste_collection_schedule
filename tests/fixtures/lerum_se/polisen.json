@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-11-14",
+  "interactions": [
+    {
+      "key": "POST https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SearchAdress 1f8c819037",
+      "method": "POST",
+      "url": "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "final_url": "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"G\u00f6teborgsv\u00e4gen 16, Lerum\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Sat, 14 Nov 2026 08:17:07 GMT",
+        "content-length": "69",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJHw7Z0ZWJvcmdzdsOkZ2VuIDE2LCBMZXJ1bSAoNTI5MTUpIl19"
+    },
+    {
+      "key": "GET https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule a15badd93f",
+      "method": "GET",
+      "url": "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=G%C3%B6teborgsv%C3%A4gen+16%2C+Lerum+%2852915%29",
+      "body": "{\"params\":[[\"address\",\"G\u00f6teborgsv\u00e4gen 16, Lerum (52915)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Sat, 14 Nov 2026 08:17:08 GMT",
+        "content-length": "2267",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMTEtMTYiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjo1MiwiV2FzdGVUeXBlIjoiUmVzdGF2ZmFsbCIsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiTcOlbmRhZyB2YXJqZSB2ZWNrYSAiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJNw6VuZGFnIHZhcmplIHZlY2thICIsIkJpblR5cGUiOnsiQ29kZSI6Iks2NjAiLCJTaXplIjo2NjAuMDAsIlVuaXQiOiJsIiwiQ29udGFpbmVyVHlwZSI6IkvDpHJsIn0sIk51bWJlck9mQmlucyI6MS4wMCwiRmVlIjp7IkRlc2NyaXB0aW9uIjoiNjYwIGwgS8OkcmwgZsO2ciBSZXN0YXZmYWxsIG1lZCB0w7ZtbmluZyBzZSBrw7ZybGlzdGEiLCJCaW5UeXBlIjp7IkNvZGUiOiJLNjYwIiwiU2l6ZSI6NjYwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjo1MiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJzZSBrw7ZybGlzdGEiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJLTCIsIldhc3RlVHlwZSI6IlJlc3RhdmZhbGwiLCJDaGFuZ2VTaXplT2ZCaW5UZXh0IjpudWxsLCJDaGFuZ2VGcmVxdWVuY3lUZXh0IjpudWxsLCJDb2RlIjoiSEs2NjBSNTIiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiSGVsw6VyIDY2MCBsIGvDpHJsIHJlc3RhdmZhbGwgdmFyamUgdmVja2EiLCJDYWxjdWxhdGVkQ29zdCI6MCwiSXNDb3N0Q2FsY3VsYXRlZCI6ZmFsc2UsIlBhcnRZZWFyU3RhcnRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRW5kcyI6IlwvRGF0ZSgtNjIxMzU1OTY4MDAwMDApXC8iLCJQYXJ0WWVhckRlc2NyaXB0aW9uIjoiIiwiSUQiOjB9LCJOdW1iZXJPZkJpbnNBbnRsIjowLCJJc0FjdGl2ZSI6dHJ1ZSwiSUQiOjg0ODYzLCJEZXNjcmlwdGlvbiI6IjEgc3QgNjYwIGwga8OkcmwgZsO2ciByZXN0YXZmYWxsIG1lZCB0w7ZtbmluZyBtw6VuZGFnIHZhcmplIHZlY2thICIsIlN0YXJ0RGF0ZSI6IlwvRGF0ZSgxNTE0NzYxMjAwMDAwKVwvIiwiU3RvcERhdGUiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiQnVpbGRpbmdJRCI6IjUyOTE1In0seyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMTEtMTYiLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjo1MiwiV2FzdGVUeXBlIjoiTWF0YXZmYWxsIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJNw6VuZGFnIHZhcmplIHZlY2thICIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6Ik3DpW5kYWcgdmFyamUgdmVja2EgIiwiQmluVHlwZSI6eyJDb2RlIjoiSzE0MCIsIlNpemUiOjE0MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiTnVtYmVyT2ZCaW5zIjoxLjAwLCJGZWUiOnsiRGVzY3JpcHRpb24iOiIxNDAgbCBLw6RybCBmw7ZyIE1hdGF2ZmFsbCBtZWQgdMO2bW5pbmcgc2Uga8O2cmxpc3RhIiwiQmluVHlwZSI6eyJDb2RlIjoiSzE0MCIsIlNpemUiOjE0MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6NTIsIldhc3RlUGlja3VwRnJlcXVlbmN5Ijoic2Uga8O2cmxpc3RhIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiS0wiLCJXYXN0ZVR5cGUiOiJNYXRhdmZhbGwiLCJDaGFuZ2VTaXplT2ZCaW5UZXh0IjpudWxsLCJDaGFuZ2VGcmVxdWVuY3lUZXh0IjpudWxsLCJDb2RlIjoiSEsxNDBNNTIiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiSGVsw6VyIDE0MCBsIGvDpHJsIG1hdGF2ZmFsbCB2YXJqZSB2ZWNrYSIsIkNhbGN1bGF0ZWRDb3N0IjowLCJJc0Nvc3RDYWxjdWxhdGVkIjpmYWxzZSwiUGFydFllYXJTdGFydHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJFbmRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRGVzY3JpcHRpb24iOiIiLCJJRCI6MH0sIk51bWJlck9mQmluc0FudGwiOjAsIklzQWN0aXZlIjp0cnVlLCJJRCI6ODQ4NjIsIkRlc2NyaXB0aW9uIjoiMSBzdCAxNDAgbCBrw6RybCBmw7ZyIG1hdGF2ZmFsbCBtZWQgdMO2bW5pbmcgbcOlbmRhZyB2YXJqZSB2ZWNrYSAiLCJTdGFydERhdGUiOiJcL0RhdGUoMTUxNDc2MTIwMDAwMClcLyIsIlN0b3BEYXRlIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIkJ1aWxkaW5nSUQiOiI1MjkxNSJ9XX0="
+    }
+  ]
+}
