@@ -705,7 +705,9 @@ async def test_setup_retry_rebinds_adopted_entries_without_changing_previous_she
         source.fetch.assert_called_once_with()
         for attr in ("_entries", "_sensor_entries"):
             assert [e.type for e in getattr(retry.shell, attr)] == [PAPER.names["de"]]
-            assert [e.type for e in getattr(previous.shell, attr)] == [PAPER.names["en"]]
+            assert [e.type for e in getattr(previous.shell, attr)] == [
+                PAPER.names["en"]
+            ]
     finally:
         await previous.async_shutdown()
         await retry.async_shutdown()
