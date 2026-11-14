@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-11-14",
+  "interactions": [
+    {
+      "key": "GET https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics 47a00701e4",
+      "method": "GET",
+      "url": "https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics",
+      "final_url": "https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics?matricule=0000&codeZone=00",
+      "body": "{\"params\":[[\"codeZone\",\"00\"],[\"matricule\",\"0000\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sat, 14 Nov 2026 10:57:33 GMT",
+        "content-type": "text/calendar",
+        "content-length": "357",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self';",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "permissions-policy": "geolocation=(),microphone=(),camera=(),payment=()",
+        "api-supported-versions": "1.0",
+        "content-disposition": "attachment; filename=calCollecteVDL_2026.ics; filename*=UTF-8''calCollecteVDL_2026.ics"
+      },
+      "content_b64": "QkVHSU46VkNBTEVOREFSClZFUlNJT046Mi4wClBST0RJRDotLy9WSUxMRURFTEFWQUwvL0FQSSBDT0xMRUNURVMvL0ZSCkNBTFNDQUxFOkdSRUdPUklBTgpNRVRIT0Q6UFVCTElTSApYLVdSLUNBTE5BTUU6Q29sbGVjdGVzIC0gVmlsbGUgZGUgTGF2YWwKWC1XUi1USU1FWk9ORTpBbWVyaWNhL1Rvcm9udG8KQkVHSU46VkVWRU5UClVJRDpjb2xsZWN0ZS0wMDAwLS0wMDAxMDEwMQpEVFNUQU1QOjIwMjYxMTE0VDEwNTczM1oKRFRTVEFSVDtWQUxVRT1EQVRFOjAwMDEwMTAxCkRURU5EO1ZBTFVFPURBVEU6MDAwMTAxMDIKTE9DQVRJT046TGF2YWwgLSBab25lOiAwMApDQVRFR09SSUVTOgpFTkQ6VkVWRU5UCkVORDpWQ0FMRU5EQVIK"
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentExceptionMultiple",
+    "message": "No calendar was returned for this matricule and zone code."
+  }
+}
