@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-11-14",
+  "interactions": [
+    {
+      "key": "GET https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics 83fa841098",
+      "method": "GET",
+      "url": "https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics",
+      "final_url": "https://api-prd.laval.ca/ext/sitewebsearch-ext/v1/collecte/export-ics?matricule=8546-45-9730-2-000-0000&codeZone=12",
+      "body": "{\"params\":[[\"codeZone\",\"12\"],[\"matricule\",\"8546-45-9730-2-000-0000\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "date": "Sat, 14 Nov 2026 10:57:31 GMT",
+        "content-type": "text/calendar",
+        "content-length": "1557",
+        "strict-transport-security": "max-age=63072000; includeSubDomains; preload",
+        "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self';",
+        "x-frame-options": "SAMEORIGIN",
+        "x-content-type-options": "nosniff",
+        "referrer-policy": "no-referrer",
+        "permissions-policy": "geolocation=(),microphone=(),camera=(),payment=()",
+        "api-supported-versions": "1.0",
+        "content-disposition": "attachment; filename=calCollecteVDL_2026.ics; filename*=UTF-8''calCollecteVDL_2026.ics"
+      },
+      "content_b64": "QkVHSU46VkNBTEVOREFSClZFUlNJT046Mi4wClBST0RJRDotLy9WSUxMRURFTEFWQUwvL0FQSSBDT0xMRUNURVMvL0ZSCkNBTFNDQUxFOkdSRUdPUklBTgpNRVRIT0Q6UFVCTElTSApYLVdSLUNBTE5BTUU6Q29sbGVjdGVzIC0gVmlsbGUgZGUgTGF2YWwKWC1XUi1USU1FWk9ORTpBbWVyaWNhL1Rvcm9udG8KQkVHSU46VkVWRU5UClVJRDpjb2xsZWN0ZS04NTQ2LTQ1LTk3MzAtMi0wMDAtMDAwMC1kw6ljaGV0LTIwMjYxMTE5CkRUU1RBTVA6MjAyNjExMTRUMTA1NzMxWgpEVFNUQVJUO1ZBTFVFPURBVEU6MjAyNjExMTkKRFRFTkQ7VkFMVUU9REFURToyMDI2MTEyMApTVU1NQVJZO0xBTkdVQUdFPWZyLWNhOkNvbGxlY3RlIC0gRMOpY2hldHMKREVTQ1JJUFRJT046Q29sbGVjdGUgLSBEw6ljaGV0cwpMT0NBVElPTjpMYXZhbCAtIFpvbmU6IDEyClJSVUxFOkZSRVE9V0VFS0xZO0lOVEVSVkFMPTI7QllEQVk9VEg7VU5USUw9MjAyNjEyMzFUMjM1OTU5WgpDQVRFR09SSUVTOmTDqWNoZXQKRU5EOlZFVkVOVApCRUdJTjpWRVZFTlQKVUlEOmNvbGxlY3RlLTg1NDYtNDUtOTczMC0yLTAwMC0wMDAwLW9yZ2FuaXF1ZS0yMDI2MTExNgpEVFNUQU1QOjIwMjYxMTE0VDEwNTczMVoKRFRTVEFSVDtWQUxVRT1EQVRFOjIwMjYxMTE2CkRURU5EO1ZBTFVFPURBVEU6MjAyNjExMTcKU1VNTUFSWTtMQU5HVUFHRT1mci1jYTpDb2xsZWN0ZSAtIE9yZ2FuaXF1ZQpERVNDUklQVElPTjpDb2xsZWN0ZSAtIE9yZ2FuaXF1ZQpMT0NBVElPTjpMYXZhbCAtIFpvbmU6IDEyClJSVUxFOkZSRVE9V0VFS0xZO0JZREFZPU1PO1VOVElMPTIwMjYxMTIzVDIzNTk1OVoKQ0FURUdPUklFUzpvcmdhbmlxdWUKRU5EOlZFVkVOVApCRUdJTjpWRVZFTlQKVUlEOmNvbGxlY3RlLTg1NDYtNDUtOTczMC0yLTAwMC0wMDAwLW9yZ2FuaXF1ZS0yMDI2MTIwNwpEVFNUQU1QOjIwMjYxMTE0VDEwNTczMVoKRFRTVEFSVDtWQUxVRT1EQVRFOjIwMjYxMjA3CkRURU5EO1ZBTFVFPURBVEU6MjAyNjEyMDgKU1VNTUFSWTtMQU5HVUFHRT1mci1jYTpDb2xsZWN0ZSAtIE9yZ2FuaXF1ZQpERVNDUklQVElPTjpDb2xsZWN0ZSAtIE9yZ2FuaXF1ZQpMT0NBVElPTjpMYXZhbCAtIFpvbmU6IDEyClJSVUxFOkZSRVE9V0VFS0xZO0lOVEVSVkFMPTI7QllEQVk9TU87VU5USUw9MjAyNjEyMjFUMjM1OTU5WgpDQVRFR09SSUVTOm9yZ2FuaXF1ZQpFTkQ6VkVWRU5UCkJFR0lOOlZFVkVOVApVSUQ6Y29sbGVjdGUtODU0Ni00NS05NzMwLTItMDAwLTAwMDAtcmVjeWNsYWdlLTIwMjYxMTI2CkRUU1RBTVA6MjAyNjExMTRUMTA1NzMxWgpEVFNUQVJUO1ZBTFVFPURBVEU6MjAyNjExMjYKRFRFTkQ7VkFMVUU9REFURToyMDI2MTEyNwpTVU1NQVJZO0xBTkdVQUdFPWZyLWNhOkNvbGxlY3RlIC0gUsOpY3Vww6lyYXRpb24KREVTQ1JJUFRJT046Q29sbGVjdGUgLSBSw6ljdXDDqXJhdGlvbgpMT0NBVElPTjpMYXZhbCAtIFpvbmU6IDEyClJSVUxFOkZSRVE9V0VFS0xZO0lOVEVSVkFMPTI7QllEQVk9VEg7VU5USUw9MjAyNjEyMjRUMjM1OTU5WgpDQVRFR09SSUVTOnJlY3ljbGFnZQpFTkQ6VkVWRU5UCkVORDpWQ0FMRU5EQVIK"
+    }
+  ]
+}
