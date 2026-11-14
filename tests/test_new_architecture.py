@@ -4864,6 +4864,111 @@ class TestDisplayLanguage:
         c.set_description("Restmüll")
         assert c.description == "Restmüll"
 
+    @pytest.mark.parametrize("genuine_first", [False, True])
+    def test_equal_genuine_description_survives_language_change(self, genuine_first):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        fallback = Collection(datetime.date(2026, 1, 1), GENERAL_WASTE)
+        fallback.set_description_from_raw_label("Restmüll")
+        genuine = Collection(datetime.date(2026, 1, 1), GENERAL_WASTE)
+        genuine.set_description("Restmüll")
+        kept, other = (genuine, fallback) if genuine_first else (fallback, genuine)
+        kept._merge_description(other)
+        kept.set_display_language("de")
+        assert kept.description == "Restmüll"
+        assert not kept.description_is_raw_label_fallback
+
+    @pytest.mark.parametrize("initial,changed", [("en", "de"), ("de", "en")])
+    def test_language_change_rebuilds_merged_descriptions(self, initial, changed):
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.waste_types import GENERAL_WASTE
+
+        def fetch():
+            entries = []
+            for label in ("Restmüll", "Spartonne Restmüll"):
+                entry = Collection(datetime.date(2026, 1, 1), GENERAL_WASTE)
+                entry.set_description_from_raw_label(label)
+                entries.append(entry)
+            return entries
+
+        shell = self._shell(initial)
+        shell._source = SimpleNamespace(fetch=fetch)
+        shell._ignore_duplicates = True
+        assert shell.fetch()
+        shell.set_display_language(changed)
+        rebound = [e.as_dict() for e in shell._entries]
+        assert shell.fetch()
+        assert [e.as_dict() for e in shell._entries] == rebound
+        assert len(shell._sensor_entries) == 2
+
+    def test_language_change_waits_for_fetch_publication(self, monkeypatch):
+        import threading
+        from concurrent.futures import ThreadPoolExecutor
+
+        from waste_collection_schedule.collection import Collection
+
+        binding = threading.Event()
+        release = threading.Event()
+        changing = threading.Event()
+        changed = threading.Event()
+        original = Collection.set_display_language
+        shell = self._shell("en")
+
+        def bind(entry, language):
+            if not binding.is_set():
+                binding.set()
+                assert release.wait(5)
+            original(entry, language)
+
+        def change():
+            changing.set()
+            shell.set_display_language("de")
+            changed.set()
+
+        monkeypatch.setattr(Collection, "set_display_language", bind)
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            fetched = pool.submit(shell.fetch)
+            try:
+                assert binding.wait(5)
+                setter = pool.submit(change)
+                assert changing.wait(5)
+                assert not changed.wait(0.1)
+            finally:
+                release.set()
+            assert fetched.result(timeout=5)
+            setter.result(timeout=5)
+        assert shell.display_language == "de"
+        assert all(
+            e.display_language == "de"
+            for e in [*shell._entries, *shell._sensor_entries]
+        )
+
+    def test_language_can_change_while_provider_is_blocked(self):
+        import threading
+        from concurrent.futures import ThreadPoolExecutor
+
+        fetching = threading.Event()
+        release = threading.Event()
+        shell = self._shell("en")
+        original = shell._source.fetch
+
+        def fetch():
+            fetching.set()
+            assert release.wait(5)
+            return original()
+
+        shell._source = SimpleNamespace(fetch=fetch)
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            fetched = pool.submit(shell.fetch)
+            try:
+                assert fetching.wait(5)
+                pool.submit(shell.set_display_language, "de").result(timeout=2)
+            finally:
+                release.set()
+            assert fetched.result(timeout=5)
+        assert all(e.display_language == "de" for e in shell._entries)
+
 
 class TestAwbEsDeCadence:
     """awb_es_de keeps only the resident's Restmüll cadence (#6926).

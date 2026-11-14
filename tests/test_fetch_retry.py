@@ -668,3 +668,44 @@ async def test_unreadable_cache_does_not_block_a_live_fetch(
     calls = source.fetch_count
     assert await ha.config_entries.async_setup(entry.entry_id)
     assert source.fetch_count == calls + 1
+
+
+@pytest.mark.asyncio
+async def test_setup_retry_rebinds_adopted_entries_without_changing_previous_shell(ha):
+    from sensor_fixtures import entry_for
+
+    from custom_components.waste_collection_schedule import wcs_coordinator
+
+    source = Mock()
+    source.fetch.return_value = [Collection(date=date(2099, 1, 1), waste_type=PAPER)]
+    entry = entry_for(ha, {})
+
+    def coordinator(language):
+        shell = SourceShell(
+            source,
+            {},
+            "Test",
+            "Test",
+            None,
+            None,
+            "retry",
+            0,
+            display_language=language,
+        )
+        return wcs_coordinator.WCSCoordinator(
+            ha, entry, shell, ", ", "01:00", 1, 0, "10:00"
+        )
+
+    previous = coordinator("en")
+    previous._setup_timed_out = True
+    retry = coordinator("de")
+    try:
+        assert await previous._fetch_now()
+        assert await retry._fetch_now()
+        source.fetch.assert_called_once_with()
+        for attr in ("_entries", "_sensor_entries"):
+            assert [e.type for e in getattr(retry.shell, attr)] == [PAPER.names["de"]]
+            assert [e.type for e in getattr(previous.shell, attr)] == [PAPER.names["en"]]
+    finally:
+        await previous.async_shutdown()
+        await retry.async_shutdown()

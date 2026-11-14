@@ -190,6 +190,14 @@ class Collection:
         return self._bin_label or self.waste_type.id
 
     def _merge_description(self, other: "Collection") -> None:
+        # An equal genuine description must promote a fallback too; otherwise
+        # a later language change could hide the source's own metadata.
+        if (
+            other.description
+            and other.description == self.description
+            and not other.description_is_raw_label_fallback
+        ):
+            self._description_is_raw_label_fallback = False
         if other.description and other.description != self.description:
             self.set_description(
                 ", ".join(
