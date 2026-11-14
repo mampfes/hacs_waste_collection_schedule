@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-11-14",
+  "interactions": [],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'district' with the value 'Nirgendwo', you may want to use one of the following: ['Ginsheim', 'Gustavsburg']"
+  }
+}
