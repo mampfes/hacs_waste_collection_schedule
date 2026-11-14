@@ -98,3 +98,58 @@ def test_classify_paths_splits_blocked_and_warnings() -> None:
         "doc/source/koppl_at.md",
     ]
     assert warnings == ["README.md"]
+
+
+def test_ics_md_path_is_still_blocked_without_diff_status() -> None:
+    # Path-only classification does not know whether the change is a deletion.
+    assert guard.classify("doc/ics/abfall_hdh_de.md") == "block"
+    blocked, warnings = guard.classify_paths(["doc/ics/abfall_hdh_de.md"])
+    assert blocked == ["doc/ics/abfall_hdh_de.md"]
+    assert warnings == []
+
+
+def test_paired_ics_yaml_and_md_deletions_are_allowed() -> None:
+    md = "doc/ics/abfall_hdh_de.md"
+    yaml = "doc/ics/yaml/abfall_hdh_de.yaml"
+    blocked, warnings = guard.classify_paths(
+        [yaml, md],
+        status_by_path={yaml: "D", md: "D"},
+    )
+    assert blocked == []
+    assert warnings == []
+
+
+@pytest.mark.parametrize(
+    "md_status, yaml_status, yaml_path",
+    [
+        ("M", "D", "doc/ics/yaml/abfall_hdh_de.yaml"),
+        ("A", "D", "doc/ics/yaml/abfall_hdh_de.yaml"),
+        ("D", "M", "doc/ics/yaml/abfall_hdh_de.yaml"),
+        ("D", None, None),
+        ("D", "D", "doc/ics/yaml/other_provider.yaml"),
+    ],
+)
+def test_ics_md_change_stays_blocked_without_matching_yaml_deletion(
+    md_status: str, yaml_status: str | None, yaml_path: str | None
+) -> None:
+    md = "doc/ics/abfall_hdh_de.md"
+    paths = [md]
+    status_by_path = {md: md_status}
+    if yaml_path is not None and yaml_status is not None:
+        paths.append(yaml_path)
+        status_by_path[yaml_path] = yaml_status
+    blocked, warnings = guard.classify_paths(paths, status_by_path=status_by_path)
+    assert md in blocked
+    assert warnings == []
+
+
+def test_paired_ics_deletion_does_not_exempt_other_blocked_paths() -> None:
+    md = "doc/ics/abfall_hdh_de.md"
+    yaml = "doc/ics/yaml/abfall_hdh_de.yaml"
+    sources = "custom_components/waste_collection_schedule/sources.json"
+    blocked, warnings = guard.classify_paths(
+        [yaml, md, sources],
+        status_by_path={yaml: "D", md: "D", sources: "M"},
+    )
+    assert blocked == [sources]
+    assert warnings == []
