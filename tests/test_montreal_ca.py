@@ -10,9 +10,10 @@ without touching the network.
 import calendar  # noqa: F401 - load stdlib before adding the integration path
 import os
 import sys
-from datetime import date
+from datetime import date, timedelta
 
 import pytest
+from freezegun import freeze_time
 
 sys.path.insert(
     0,
@@ -21,7 +22,12 @@ sys.path.insert(
     ),
 )
 
-from waste_collection_schedule.service.MontrealCollectes import parse_collection
+from waste_collection_schedule.service.MontrealCollectes import (
+    apply_seasonal_biweekly,
+    parse_collection,
+    schedule_rows,
+    seasonal_biweekly_season,
+)
 
 # Anjou sector ANJ-1: seasonal ranges either side of a biweekly summer list.
 ANJ1_GREEN = " Collection days in 2026 :   \n  - Spring : from April 1 to May 27, every week on Wednesday  \n  -  Summer : June 10 and 24; July 8 and 22; August 5 and 19; September 2 and 16 (every two weeks on Wednesday)  - Autumn: from September 30 to November 25, every week on Wednesday  \n   \n Hours :  Take out containers between 7 p.m. the evening before and 7 a.m. the day of collection  \nContainers accepted : \n - Reusable rigid containers \n - Paper bags \n - Cardboard boxes\n *The use of plastic bags as containers is prohibited"
@@ -214,3 +220,108 @@ def test_reroute_requires_dates_the_parser_can_reach():
     parsed = parse(MTN1_GREEN)
     assert len(parsed) > 40
     assert all(d.weekday() == 4 for d in parsed)
+
+
+# Mercier-Hochelaga-Maisonneuve: a weekday-only message, with the winter
+# biweekly season stated in EXCEPTION_EN (MHM_43E_A) or appended to the
+# message itself (MHM_44_A). Verbatim from the 2026-11 Waste feed.
+MHM_43E_A_WASTE = "Collection day :  Thursday\n Hours :  Take out containers between 7 p.m. the evening before and 7 a.m. on collection day. \n\nTo view collection schedule,  click here."
+MHM_WINTER_NOTE = "Note: From November 1 to April 30, household waste is collected once every two weeks."
+MHM_44_A_WASTE = "Collection day :  Friday\n Hours :  Take out containers between 7 p.m. the evening before and 7 a.m. on collection day. \n\nTo view collection schedule,  click here.Note: From November 1 to April 30, household waste is collected once every two weeks."
+WINTER = ((11, 1), (4, 30))
+
+
+def _feature(sector, message, exception=None):
+    return {
+        "properties": {
+            "SECTEUR": sector,
+            "JOUR": None,
+            "FREQUENCE": None,  # codespell:ignore frequence
+            "MESSAGE_EN": message,
+            "EXCEPTION_EN": exception,
+        }
+    }
+
+
+def _waste(sector, message, exception=None):
+    features = [_feature(sector, message, exception)]
+    return sorted(day for day, _ in schedule_rows("Waste", features, sector, None))
+
+
+def _weekly(start, stop):
+    rows, day = [], start
+    while day <= stop:
+        rows.append((day, "Waste"))
+        day += timedelta(days=7)
+    return rows
+
+
+def test_winter_note_is_read_as_a_season():
+    assert seasonal_biweekly_season(MHM_WINTER_NOTE) == WINTER
+    assert seasonal_biweekly_season(MHM_44_A_WASTE) == WINTER
+    assert seasonal_biweekly_season(MHM_43E_A_WASTE) is None
+    assert seasonal_biweekly_season(VSMPE2A_WASTE) is None
+
+
+@freeze_time("2026-11-14")
+def test_exception_note_makes_winter_biweekly():
+    """#8193: MHM_43E_A is collected on Nov 5 and 19, not Nov 12.
+
+    Expected dates are the borough's own calendar for the sector (Mercier-Est,
+    green sector), weekly until October 31 and every other Thursday after.
+    """
+    dates = _waste("MHM_43E_A", MHM_43E_A_WASTE, MHM_WINTER_NOTE)
+    assert [d for d in dates if d >= date(2026, 10, 15)] == [
+        date(2026, 10, 15),
+        date(2026, 10, 22),
+        date(2026, 10, 29),
+        date(2026, 11, 5),
+        date(2026, 11, 19),
+        date(2026, 12, 3),
+        date(2026, 12, 17),
+        date(2026, 12, 31),
+    ]
+    assert {date(2026, 4, 9), date(2026, 4, 23)} <= set(dates)
+    assert date(2026, 4, 16) not in dates
+    assert {date(2026, 5, d) for d in (7, 14, 21, 28)} <= set(dates)
+
+
+@freeze_time("2026-11-14")
+def test_b_sector_takes_the_other_week():
+    """MHM_43O_B (Mercier-Ouest, pink sector): Nov 12 and 26."""
+    dates = _waste("MHM_43O_B", MHM_43E_A_WASTE, MHM_WINTER_NOTE)
+    assert [d.day for d in dates if d.month == 11] == [12, 26]
+
+
+@freeze_time("2026-11-14")
+def test_note_inside_the_message_no_longer_empties_the_schedule():
+    """MHM_44_A's note sits in MESSAGE_EN and used to yield no dates at all."""
+    dates = _waste("MHM_44_A", MHM_44_A_WASTE)
+    assert [d.day for d in dates if d.month == 11] == [6, 20]
+    assert {date(2026, 10, d) for d in (2, 9, 16, 23, 30)} <= set(dates)
+
+
+def test_season_wraps_into_the_next_year():
+    """January to April belong to the season that began the November before.
+
+    In 2025 November 1 was a Saturday, so the first full week starts on
+    November 3, and the A Thursdays of spring 2026 are April 9 and 23.
+    """
+    rows = _weekly(date(2026, 3, 26), date(2026, 5, 14))
+    kept = [d for d, _ in apply_seasonal_biweekly(rows, WINTER, "MHM_43E_A")]
+    assert kept == [
+        date(2026, 3, 26),
+        date(2026, 4, 9),
+        date(2026, 4, 23),
+        date(2026, 5, 7),
+        date(2026, 5, 14),
+    ]
+    rows = _weekly(date(2026, 12, 31), date(2027, 1, 28))
+    kept = [d for d, _ in apply_seasonal_biweekly(rows, WINTER, "MHM_43E_A")]
+    assert kept == [date(2026, 12, 31), date(2027, 1, 14), date(2027, 1, 28)]
+
+
+def test_sector_without_phase_stays_weekly():
+    """No A/B suffix: keep every week rather than guess which ones to drop."""
+    rows = _weekly(date(2026, 11, 5), date(2026, 11, 26))
+    assert apply_seasonal_biweekly(rows, WINTER, "XYZ-1") == rows

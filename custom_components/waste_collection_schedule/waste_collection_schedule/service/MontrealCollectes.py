@@ -13,7 +13,7 @@ waste", without a weekday of their own, and then follow the Green schedule.
 
 import logging
 import re
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from typing import Any
 
 from waste_collection_schedule.parsers import Parser
@@ -82,6 +82,89 @@ FOOD_INCLUDED_IN_GREEN_PATTERN = re.compile(
 # "once every two weeks". The substring "week" also matches the weekly branch
 # below, so these lines have to be recognised and excluded from it explicitly.
 BIWEEKLY_PATTERN = re.compile(r"every\s+(?:two|second|other|2)\s+weeks?", re.IGNORECASE)
+
+# Some boroughs keep the weekly weekday message and state a winter biweekly
+# season in a separate note, either in ``EXCEPTION_EN`` or appended to the
+# message itself, e.g. Mercier-Hochelaga-Maisonneuve:
+# "Note: From November 1 to April 30, household waste is collected once every
+# two weeks." The note gives the season but not which weeks are collected.
+SEASONAL_BIWEEKLY_PATTERN = re.compile(
+    rf"(?:Note\s*:\s*)?From\s+({MONTH_PATTERN})\s+(\d{{1,2}})(?:st|nd|rd|th)?\s+"
+    rf"to\s+({MONTH_PATTERN})\s+(\d{{1,2}})(?:st|nd|rd|th)?,?\s+[^.\n]*?"
+    r"\bcollected\s+(?:once\s+)?every\s+(?:two|second|other|2)\s+weeks?\.?",
+    re.IGNORECASE,
+)
+
+# Those sectors come in pairs whose ID ends in "A" or "B" (MHM-1-A / MHM-1-B,
+# MHM_43E_A / MHM_43O_B, ...). The borough's own calendars (the ICS files
+# behind the QR codes on its sector PDFs) show that "A" sectors are collected
+# in the first full week of the season, the Monday-to-Saturday week starting
+# on or after the season start, and "B" sectors in the week after; checked for
+# all twelve MHM sectors against the 2025-26 and 2026-27 seasons.
+SECTOR_PHASE_PATTERN = re.compile(r"[-_]([AB])$", re.IGNORECASE)
+
+
+def seasonal_biweekly_season(
+    text: str | None,
+) -> tuple[tuple[int, int], tuple[int, int]] | None:
+    """The ((month, day), (month, day)) bounds of a biweekly-season note, if any."""
+    if not text:
+        return None
+    match = SEASONAL_BIWEEKLY_PATTERN.search(text)
+    if not match:
+        return None
+    start_month, start_day, stop_month, stop_day = match.groups()
+    return (
+        (MONTHS[start_month.capitalize()], int(start_day)),
+        (MONTHS[stop_month.capitalize()], int(stop_day)),
+    )
+
+
+def _season_start(
+    day: date, season: tuple[tuple[int, int], tuple[int, int]]
+) -> date | None:
+    """The start date of the season ``day`` falls in, or None outside it."""
+    start, stop = season
+    month_day = (day.month, day.day)
+    if start <= stop:
+        return date(day.year, *start) if start <= month_day <= stop else None
+    # The season wraps over New Year (November to April).
+    if month_day >= start:
+        return date(day.year, *start)
+    if month_day <= stop:
+        return date(day.year - 1, *start)
+    return None
+
+
+def apply_seasonal_biweekly(
+    entries: list[tuple[Any, str]],
+    season: tuple[tuple[int, int], tuple[int, int]],
+    sector: str,
+) -> list[tuple[Any, str]]:
+    """Thin weekly rows to every other week inside a biweekly season.
+
+    The phase comes from the sector's A/B suffix. Without one the rows are
+    left weekly, since dropping a week on a guess could hide a real collection.
+    """
+    phase_match = SECTOR_PHASE_PATTERN.search(sector)
+    if not phase_match:
+        LOGGER.warning(
+            "Sector %s is collected every two weeks in part of the year, but its "
+            "ID has no A/B suffix to tell which weeks; showing weekly dates.",
+            sector,
+        )
+        return entries
+    phase = 0 if phase_match.group(1).upper() == "A" else 1
+    result = []
+    for day, source_type in entries:
+        season_start = _season_start(day, season)
+        if season_start is not None:
+            first_week = season_start + timedelta(days=(7 - season_start.weekday()) % 7)
+            if ((day - first_week).days // 7) % 2 != phase:
+                continue
+        result.append((day, source_type))
+    return result
+
 
 # A sector that enumerates collection days across several months has
 # published a schedule, not prose that happens to mention a date. Such a
@@ -287,6 +370,12 @@ def schedule_rows(
         message = properties["MESSAGE_EN"]
         if not message:
             continue
+        season = seasonal_biweekly_season(message) or seasonal_biweekly_season(
+            properties.get("EXCEPTION_EN")
+        )
+        # The note's "every two weeks" would otherwise send a plain weekday
+        # message down the date-list branch, which finds no dates in it.
+        message = SEASONAL_BIWEEKLY_PATTERN.sub("", message)
         if source_type == "Food" and FOOD_INCLUDED_IN_GREEN_PATTERN.search(message):
             message = _message(green_features or [], sector)
             if message is None:
@@ -297,7 +386,10 @@ def schedule_rows(
                     sector,
                 )
                 continue
-        entries += parse_collection(source_type, message)
+        rows = parse_collection(source_type, message)
+        if season is not None:
+            rows = apply_seasonal_biweekly(rows, season, sector)
+        entries += rows
     return entries
 
 
