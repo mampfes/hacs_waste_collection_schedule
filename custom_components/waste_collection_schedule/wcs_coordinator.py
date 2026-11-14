@@ -187,6 +187,8 @@ class WCSCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self._shell._sensor_entries = sensor_entries
         self._shell._raw_labels = raw_labels
         self._shell._refreshtime = refreshtime
+        # restored collections render in the shell's current display language
+        self._shell.set_display_language(self._shell.display_language)
         return True
 
     async def async_fetch_with_retry(self, *_) -> None:

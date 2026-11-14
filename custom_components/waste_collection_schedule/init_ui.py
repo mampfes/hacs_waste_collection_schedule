@@ -41,11 +41,6 @@ FIRST_FETCH_TIMEOUT = 10
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up component from a config entry, entry contains data from config entry database."""
-    from waste_collection_schedule.waste_types import set_display_language
-
-    # Show canonical waste-type names in the Home Assistant UI language.
-    set_display_language(hass.config.language)
-
     options = entry.options
     _LOGGER.debug(
         "Setting up entry %s, with data %s and options %s",
@@ -118,6 +113,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             "reconfigure this integration entry. See the Home Assistant logs "
             "for details."
         )
+
+    # Show canonical waste-type names in the Home Assistant UI language. Set
+    # on every setup, also for a reused shell, so a reload picks up a changed
+    # UI language; the shell binds it to the entries it fetches (#7025).
+    shell.set_display_language(hass.config.language)
 
     coordinator = WCSCoordinator(
         hass,

@@ -13,7 +13,6 @@ from waste_collection_schedule.waste_types import (
     GLASS,
     PAPER,
     RECYCLABLES,
-    set_display_language,
 )
 
 from custom_components.waste_collection_schedule.const import DOMAIN
@@ -82,17 +81,12 @@ def test_old_ui_alias_migrates_to_id_and_survives_alias_and_language_changes():
         calendar_title=None,
         unique_id="fixture",
         day_offset=0,
+        display_language="de",
     )
-    set_display_language("de")
-    try:
-        shell.fetch()
-        selected = CollectionAggregator([shell]).get_upcoming(
-            include_types=record["types"]
-        )
-        assert len(selected) == 1
-        assert selected[0].type == "New bin name"
-    finally:
-        set_display_language("en")
+    shell.fetch()
+    selected = CollectionAggregator([shell]).get_upcoming(include_types=record["types"])
+    assert len(selected) == 1
+    assert selected[0].type == "New bin name"
 
 
 @pytest.mark.parametrize("hidden", [False, True])
@@ -359,18 +353,34 @@ async def test_options_catalogue_uses_current_ha_display_language(running_entry,
     from sensor_fixtures import entry_for
 
     entry, _ = running_entry
-    set_display_language("de")
-    try:
-        assert (
-            ha.data[DOMAIN][entry.entry_id].sensor_manager.type_labels["paper"]
-            == PAPER.names["de"]
-        )
-        offline = entry_for(ha, {"sensors": entry.options["sensors"]})
-        flow = SensorOptionsFlow(offline)
-        flow.hass = ha
-        assert flow.type_labels["paper"] == PAPER.names["de"]
-    finally:
-        set_display_language("en")
+    coordinator = ha.data[DOMAIN][entry.entry_id]
+    # the running entry follows its shell's language (set from the HA UI
+    # language on setup/reload)
+    coordinator.shell.set_display_language("de")
+    assert coordinator.sensor_manager.type_labels["paper"] == PAPER.names["de"]
+    # an entry that is not running uses the current HA UI language directly
+    ha.config.language = "de"
+    offline = entry_for(ha, {"sensors": entry.options["sensors"]})
+    flow = SensorOptionsFlow(offline)
+    flow.hass = ha
+    assert flow.type_labels["paper"] == PAPER.names["de"]
+
+
+@pytest.mark.asyncio
+async def test_reload_picks_up_a_changed_ha_display_language(running_entry, ha):
+    """Setup hands hass.config.language to the entry's shell (#7025); there is
+    no process-wide language, so a reload is what applies a changed one."""
+    entry, _ = running_entry
+    coordinator = ha.data[DOMAIN][entry.entry_id]
+    assert coordinator.shell.display_language == "en"
+    assert {e.type for e in coordinator.shell._entries} == {PAPER.names["en"]}
+    ha.config.language = "de-DE"
+    assert await ha.config_entries.async_reload(entry.entry_id)
+    await ha.async_block_till_done()
+    coordinator = ha.data[DOMAIN][entry.entry_id]
+    assert coordinator.shell.display_language == "de"
+    assert {e.type for e in coordinator.shell._entries} == {PAPER.names["de"]}
+    assert coordinator.sensor_manager.type_labels["paper"] == PAPER.names["de"]
 
 
 @pytest.mark.asyncio

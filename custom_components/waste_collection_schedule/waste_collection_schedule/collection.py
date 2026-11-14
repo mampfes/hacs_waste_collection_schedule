@@ -3,7 +3,12 @@ import logging
 from typing import TYPE_CHECKING, Any, Union, overload
 
 from .colors import normalize_color
-from .waste_types import WasteType, display_name
+from .waste_types import (
+    DEFAULT_DISPLAY_LANGUAGE,
+    WasteType,
+    display_name,
+    normalize_language,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -90,6 +95,11 @@ class Collection:
         # auto-carried fallback text without ever touching a source's genuine
         # per-event description.
         self._description_is_raw_label_fallback: bool = False
+        # Language of the canonical display name (``type``). Bound by whoever
+        # renders the collection (SourceShell, the config flow) rather than read
+        # from a process-wide setting, so concurrent fetches with different
+        # languages cannot see each other's labels (#7025).
+        self._display_language: str = DEFAULT_DISPLAY_LANGUAGE
 
     @property
     def date(self) -> datetime.date:
@@ -104,8 +114,18 @@ class Collection:
         return self._waste_type
 
     @property
+    def display_language(self) -> str:
+        return self._display_language
+
+    def set_display_language(self, language: str | None) -> None:
+        """Render ``type`` in ``language`` (base code; falls back to English)."""
+        self._display_language = normalize_language(language)
+
+    @property
     def type(self) -> str:
-        return self._type_override or display_name(self._waste_type)
+        return self._type_override or display_name(
+            self._waste_type, self._display_language
+        )
 
     @property
     def icon(self) -> str:
@@ -141,6 +161,16 @@ class Collection:
 
     @property
     def description(self):
+        # A transformer's carry_raw_label fallback that just repeats the
+        # canonical name in the bound display language adds nothing. This is
+        # decided here, at render time, because the transformer runs inside
+        # fetch() and does not know the display language (#7025).
+        if (
+            self._description_is_raw_label_fallback
+            and self._description
+            == display_name(self._waste_type, self._display_language)
+        ):
+            return None
         return self._description
 
     @property
@@ -218,8 +248,8 @@ class Collection:
         }
         if self._location is not None:
             d["location"] = self._location
-        if self._description is not None:
-            d["description"] = self._description
+        if self.description is not None:
+            d["description"] = self.description
         return d
 
     # State that as_dict() (the display view) drops but customize and the

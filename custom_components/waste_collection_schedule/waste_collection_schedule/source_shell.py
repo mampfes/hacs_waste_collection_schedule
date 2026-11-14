@@ -8,6 +8,7 @@ from typing import Protocol, cast
 
 from .collection import Collection, LegacyCollection
 from .colors import validate_color
+from .waste_types import display_name, normalize_language
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -250,6 +251,7 @@ class SourceShell:
         day_offset: int,
         ignore_duplicates: bool = False,
         show_original_label: bool = True,
+        display_language: str | None = None,
     ):
         self._source = source
         self._customize = customize
@@ -265,6 +267,30 @@ class SourceShell:
         self._ignore_duplicates = ignore_duplicates
         self._show_original_label = show_original_label
         self._raw_labels: list[str] = []
+        # Language of the canonical waste-type names this shell renders. Held
+        # per shell and bound to every collection it fetches, instead of a
+        # process-wide setting that a fetch on an executor thread would read
+        # (#7025). Home Assistant sets it from hass.config.language.
+        self._display_language = normalize_language(display_language)
+
+    @property
+    def display_language(self) -> str:
+        return self._display_language
+
+    def set_display_language(self, language: str | None) -> None:
+        """Change the display language and re-render the current entries.
+
+        Called on the event loop (entry setup, reload); the next fetch binds
+        the new language to its entries as well.
+        """
+        self._display_language = normalize_language(language)
+        self._bind_display_language(self._entries)
+        self._bind_display_language(self._sensor_entries)
+
+    def _bind_display_language(self, entries: Iterable[Collection]) -> None:
+        language = self._display_language
+        for e in entries:
+            e.set_display_language(language)
 
     @property
     def raw_labels(self) -> list[str]:
@@ -310,6 +336,12 @@ class SourceShell:
             )
             return False
         self._refreshtime = datetime.datetime.now()
+
+        # Bind the display language before anything reads ``type``: customize
+        # matching below compares the localised name, as the config flow
+        # stored it.
+        entries = list(entries)
+        self._bind_display_language(entries)
 
         # Strip incidental whitespace from legacy sources' raw type strings.
         #
@@ -394,6 +426,10 @@ class SourceShell:
             result = [by_key[key] for key in order]
 
         self._entries = result
+        # set_display_language() may have run on the event loop meanwhile and
+        # re-rendered only the previous entries.
+        self._bind_display_language(self._entries)
+        self._bind_display_language(self._sensor_entries)
         return True
 
     def get_dedicated_calendar_types(self) -> set[str]:
@@ -429,11 +465,9 @@ class SourceShell:
         for entry in self._entries:
             if type in (entry.type, entry.waste_type.id):
                 return entry.type
-        from waste_collection_schedule.waste_types import display_name
-
         return next(
             (
-                display_name(t)
+                display_name(t, self._display_language)
                 for t in getattr(self._source, "WASTE_TYPES", ())
                 if t.id == type
             ),
@@ -449,6 +483,7 @@ class SourceShell:
         day_offset: int = 0,
         ignore_duplicates: bool | None = None,
         show_original_label: bool = True,
+        display_language: str | None = None,
     ) -> "SourceShell | None":
         """Build a SourceShell for ``source_name``.
 
@@ -534,6 +569,7 @@ class SourceShell:
             day_offset=day_offset,
             ignore_duplicates=ignore_duplicates,
             show_original_label=show_original_label,
+            display_language=display_language,
         )
 
         return g
