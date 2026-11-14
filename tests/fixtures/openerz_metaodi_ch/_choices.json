@@ -1,0 +1,61 @@
+{
+  "recorded_at": "2026-11-14",
+  "interactions": [
+    {
+      "key": "GET https://openerz.metaodi.ch/api/parameter/regions ",
+      "method": "GET",
+      "url": "https://openerz.metaodi.ch/api/parameter/regions",
+      "final_url": "https://openerz.metaodi.ch/api/parameter/regions",
+      "body": "",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "accept-ranges": "bytes",
+        "cache-control": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 14 Nov 2026 10:52:17 GMT",
+        "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+        "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=H9vhcjtLby0BTtVaelHGaZP66gGOPTWciHUMZfwQnoM%3D\\u0026sid=812dcc77-0bd0-43b1-a5f1-b25750382959\\u0026ts=1794653537\"}],\"max_age\":3600}",
+        "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=H9vhcjtLby0BTtVaelHGaZP66gGOPTWciHUMZfwQnoM%3D&sid=812dcc77-0bd0-43b1-a5f1-b25750382959&ts=1794653537\"",
+        "server": "Heroku",
+        "via": "2.0 heroku-router",
+        "content-length": "333"
+      },
+      "content_b64": "eyJfbWV0YWRhdGEiOnsidG90YWxfY291bnQiOjIzLCJyb3dfY291bnQiOjIzfSwicmVzdWx0IjpbImFkbGlzd2lsIiwiYmFzZWwiLCJiYXNzZXJzZG9yZiIsImR1ZWJlbmRvcmYiLCJlbWJyYWNoIiwiZ29zc2F1LXpoIiwiaG9tYnJlY2h0aWtvbiIsImhvcmdlbiIsImtpbGNoYmVyZyIsImxhbmduYXUiLCJvYmVycmllZGVuIiwicmljaHRlcnN3aWwiLCJydWVzY2hsaWtvbiIsInNlb24iLCJzdGdhbGxlbiIsInRoYWx3aWwiLCJ1c3RlciIsIndhZWRlbnN3aWwiLCJ3YW5nZW4tYnJ1dHRpc2VsbGVuIiwid2V0emlrb24iLCJ3aWVzZW5kYW5nZW4iLCJ3aW50ZXJ0aHVyIiwienVyaWNoIl19"
+    },
+    {
+      "key": "GET https://openerz.metaodi.ch/api/parameter/areas b0621736fc",
+      "method": "GET",
+      "url": "https://openerz.metaodi.ch/api/parameter/areas",
+      "final_url": "https://openerz.metaodi.ch/api/parameter/areas?region=zurich",
+      "body": "{\"params\":[[\"region\",\"zurich\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "accept-ranges": "bytes",
+        "cache-control": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 14 Nov 2026 10:52:18 GMT",
+        "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+        "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=ZYfcyP3rB1pIDEScLRyKHjeiplu8iQwZzxla3KDcL44%3D\\u0026sid=812dcc77-0bd0-43b1-a5f1-b25750382959\\u0026ts=1794653538\"}],\"max_age\":3600}",
+        "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=ZYfcyP3rB1pIDEScLRyKHjeiplu8iQwZzxla3KDcL44%3D&sid=812dcc77-0bd0-43b1-a5f1-b25750382959&ts=1794653538\"",
+        "server": "Heroku",
+        "via": "2.0 heroku-router",
+        "content-length": "874"
+      },
+      "content_b64": "eyJfbWV0YWRhdGEiOnsidG90YWxfY291bnQiOjI0LCJyb3dfY291bnQiOjI0fSwicmVzdWx0IjpbeyJyZWdpb24iOiJ6dXJpY2giLCJhcmVhIjoiODAwMSJ9LHsicmVnaW9uIjoienVyaWNoIiwiYXJlYSI6IjgwMDIifSx7InJlZ2lvbiI6Inp1cmljaCIsImFyZWEiOiI4MDAzIn0seyJyZWdpb24iOiJ6dXJpY2giLCJhcmVhIjoiODAwNCJ9LHsicmVnaW9uIjoienVyaWNoIiwiYXJlYSI6IjgwMDUifSx7InJlZ2lvbiI6Inp1cmljaCIsImFyZWEiOiI4MDA2In0seyJyZWdpb24iOiJ6dXJpY2giLCJhcmVhIjoiODAwOCJ9LHsicmVnaW9uIjoienVyaWNoIiwiYXJlYSI6IjgwMzIifSx7InJlZ2lvbiI6Inp1cmljaCIsImFyZWEiOiI4MDM3In0seyJyZWdpb24iOiJ6dXJpY2giLCJhcmVhIjoiODAzOCJ9LHsicmVnaW9uIjoienVyaWNoIiwiYXJlYSI6IjgwNDEifSx7InJlZ2lvbiI6Inp1cmljaCIsImFyZWEiOiI4MDQ0In0seyJyZWdpb24iOiJ6dXJpY2giLCJhcmVhIjoiODA0NSJ9LHsicmVnaW9uIjoienVyaWNoIiwiYXJlYSI6IjgwNDYifSx7InJlZ2lvbiI6Inp1cmljaCIsImFyZWEiOiI4MDQ3In0seyJyZWdpb24iOiJ6dXJpY2giLCJhcmVhIjoiODA0OCJ9LHsicmVnaW9uIjoienVyaWNoIiwiYXJlYSI6IjgwNDkifSx7InJlZ2lvbiI6Inp1cmljaCIsImFyZWEiOiI4MDUwIn0seyJyZWdpb24iOiJ6dXJpY2giLCJhcmVhIjoiODA1MSJ9LHsicmVnaW9uIjoienVyaWNoIiwiYXJlYSI6IjgwNTIifSx7InJlZ2lvbiI6Inp1cmljaCIsImFyZWEiOiI4MDUzIn0seyJyZWdpb24iOiJ6dXJpY2giLCJhcmVhIjoiODA1NSJ9LHsicmVnaW9uIjoienVyaWNoIiwiYXJlYSI6IjgwNTcifSx7InJlZ2lvbiI6Inp1cmljaCIsImFyZWEiOiI4MDY0In1dfQ=="
+    }
+  ],
+  "widget": "cascading_select",
+  "fields": [
+    "region",
+    "area"
+  ],
+  "context": {
+    "zip": "8048"
+  },
+  "expected": {
+    "region": "zurich",
+    "area": "8048"
+  }
+}

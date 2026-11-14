@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-11-14",
+  "interactions": [
+    {
+      "key": "GET https://openerz.metaodi.ch/api/calendar.ics e1e4f59533",
+      "method": "GET",
+      "url": "https://openerz.metaodi.ch/api/calendar.ics",
+      "final_url": "https://openerz.metaodi.ch/api/calendar.ics?region=nowhere&start=2026-01-01&end=2026-12-31&sort=date&limit=500",
+      "body": "{\"params\":[[\"end\",\"2026-12-31\"],[\"limit\",\"500\"],[\"region\",\"nowhere\"],[\"sort\",\"date\"],[\"start\",\"2026-01-01\"]]}",
+      "status": 400,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "date": "Sat, 14 Nov 2026 10:52:18 GMT",
+        "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+        "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=ZYfcyP3rB1pIDEScLRyKHjeiplu8iQwZzxla3KDcL44%3D\\u0026sid=812dcc77-0bd0-43b1-a5f1-b25750382959\\u0026ts=1794653538\"}],\"max_age\":3600}",
+        "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=ZYfcyP3rB1pIDEScLRyKHjeiplu8iQwZzxla3KDcL44%3D&sid=812dcc77-0bd0-43b1-a5f1-b25750382959&ts=1794653538\"",
+        "server": "Heroku",
+        "via": "2.0 heroku-router",
+        "content-length": "80"
+      },
+      "content_b64": "eyJzdGF0dXNDb2RlIjo0MDAsImVycm9yIjoiQmFkIFJlcXVlc3QiLCJtZXNzYWdlIjoiSW52YWxpZCByZXF1ZXN0IHF1ZXJ5IGlucHV0In0="
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'region' with the value 'nowhere', the service does not know this value, please check the address and try again."
+  }
+}
