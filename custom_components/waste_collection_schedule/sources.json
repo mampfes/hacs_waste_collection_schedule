@@ -24296,6 +24296,12 @@
       "id": "siunet_it"
     },
     {
+      "title": "Appignano - COSMARI",
+      "module": "junker_app",
+      "default_params": {},
+      "id": "junker_app"
+    },
+    {
       "title": "Aprica S.p.A.",
       "module": "apricaspa_it",
       "default_params": {},

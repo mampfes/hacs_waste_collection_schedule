@@ -3280,6 +3280,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Annone Di Brianza](/doc/source/siunet_it.md) / siunet.it
 - [Anzola dell'Emilia](/doc/source/geovest_it.md) / geovest.bluemilk.dev
 - [Anzola Dell'Emilia](/doc/source/siunet_it.md) / siunet.it
+- [Appignano - COSMARI](/doc/source/junker_app.md) / junker.app
 - [Aprica S.p.A.](/doc/source/apricaspa_it.md) / apricaspa.it
 - [Apricena](/doc/source/siunet_it.md) / siunet.it
 - [Aprilia - Progetto Ambiente Spa](/doc/source/junker_app.md) / junker.app
