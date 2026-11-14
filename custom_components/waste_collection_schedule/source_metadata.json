@@ -5938,8 +5938,8 @@
   "stockholmvattenochavfall_se": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/stockholmvattenochavfall_se.md",
     "howto": {
-      "en": "In the UI, type the street name and then pick your address from the list. Enter the address of a house or townhouse (villa och radhus) as on https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, e.g. `Hjortronvägen 3, Bromma`. The postcode is optional. The website only shows the next collection of each bin, so the schedule is refreshed once a day (the default fetch interval).",
-      "sv": "I gränssnittet skriver du gatunamnet och väljer sedan din adress i listan. Ange adressen till en villa eller ett radhus som på https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, t.ex. `Hjortronvägen 3, Bromma`. Postnumret är valfritt. Webbplatsen visar bara nästa tömning av varje kärl, så schemat uppdateras en gång om dagen (standardintervallet)."
+      "en": "In the UI, type the street name and then pick your address from the list. Enter the address of a house or townhouse (villa och radhus) as on https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, e.g. `Hjortronvägen 3, Bromma`. The postcode is optional; a missing space (`12941`) is accepted. The website only shows the next collection of each bin, so the schedule is refreshed once a day (the default fetch interval).",
+      "sv": "I gränssnittet skriver du gatunamnet och väljer sedan din adress i listan. Ange adressen till en villa eller ett radhus som på https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, t.ex. `Hjortronvägen 3, Bromma`. Postnumret är valfritt; utan mellanslag (`12941`) går också bra. Webbplatsen visar bara nästa tömning av varje kärl, så schemat uppdateras en gång om dagen (standardintervallet)."
     },
     "urls": {}
   },

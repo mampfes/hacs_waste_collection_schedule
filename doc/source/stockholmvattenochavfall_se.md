@@ -37,4 +37,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-In the UI, type the street name and then pick your address from the list. Enter the address of a house or townhouse (villa och radhus) as on https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, e.g. `Hjortronvägen 3, Bromma`. The postcode is optional. The website only shows the next collection of each bin, so the schedule is refreshed once a day (the default fetch interval).
+In the UI, type the street name and then pick your address from the list. Enter the address of a house or townhouse (villa och radhus) as on https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, e.g. `Hjortronvägen 3, Bromma`. The postcode is optional; a missing space (`12941`) is accepted. The website only shows the next collection of each bin, so the schedule is refreshed once a day (the default fetch interval).
