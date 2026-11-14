@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-11-14",
+  "interactions": [
+    {
+      "key": "POST https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SearchAdress 645ae3dc8e",
+      "method": "POST",
+      "url": "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "final_url": "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Floda stationsv\u00e4g 5, Floda\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Sat, 14 Nov 2026 08:17:04 GMT",
+        "content-length": "70",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6WyJGbG9kYSBTdGF0aW9uc3bDpGcgNSwgRmxvZGEgKDUxOTkyKSJdfQ=="
+    },
+    {
+      "key": "GET https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule 86a8315ac5",
+      "method": "GET",
+      "url": "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule",
+      "final_url": "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/GetWastePickupSchedule?address=Floda+Stationsv%C3%A4g+5%2C+Floda+%2851992%29",
+      "body": "{\"params\":[[\"address\",\"Floda Stationsv\u00e4g 5, Floda (51992)\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Sat, 14 Nov 2026 08:17:06 GMT",
+        "content-length": "2300",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      },
+      "content_b64": "eyJSaFNlcnZpY2VzIjpbeyJCaW5EaXJlY3Rpb24iOm51bGwsIk5leHRXYXN0ZVBpY2t1cCI6IjIwMjYtMTEtMjciLCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVUeXBlIjoiUmVzdGF2ZmFsbCIsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiRnJlZGFnIGrDpG1uIHZlY2thICIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IkZyZWRhZyBqw6RtbiB2ZWNrYSAiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMTkwIiwiU2l6ZSI6MTkwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJOdW1iZXJPZkJpbnMiOjEuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IjE5MCBsIEvDpHJsIGbDtnIgUmVzdGF2ZmFsbCBtZWQgdMO2bW5pbmcgc2Uga8O2cmxpc3RhIiwiQmluVHlwZSI6eyJDb2RlIjoiSzE5MCIsIlNpemUiOjE5MC4wMCwiVW5pdCI6ImwiLCJDb250YWluZXJUeXBlIjoiS8OkcmwifSwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MjYsIldhc3RlUGlja3VwRnJlcXVlbmN5Ijoic2Uga8O2cmxpc3RhIiwiV2FzdGVQaWNrdXBGcmVxdWVuY3lDb2RlIjoiS0wiLCJXYXN0ZVR5cGUiOiJSZXN0YXZmYWxsIiwiQ2hhbmdlU2l6ZU9mQmluVGV4dCI6bnVsbCwiQ2hhbmdlRnJlcXVlbmN5VGV4dCI6bnVsbCwiQ29kZSI6IkhLMTkwUjI2VkVSSyIsIlByb2R1Y3QiOiJSRU5IIiwiUGFydFByb2R1Y3QiOiJIVVNIIiwiRGVzaWduYXRpb24iOiJIZWzDpXIgMTkwIGwga8OkcmwgcmVzdGF2ZmFsbCB2YXJhbm5hbiB2ZWNrYSwgdmVya3NhbWhldCIsIkNhbGN1bGF0ZWRDb3N0IjowLCJJc0Nvc3RDYWxjdWxhdGVkIjpmYWxzZSwiUGFydFllYXJTdGFydHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJFbmRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRGVzY3JpcHRpb24iOiIiLCJJRCI6MH0sIk51bWJlck9mQmluc0FudGwiOjAsIklzQWN0aXZlIjp0cnVlLCJJRCI6ODMzMjgsIkRlc2NyaXB0aW9uIjoiMSBzdCAxOTAgbCBrw6RybCBmw7ZyIHJlc3RhdmZhbGwgbWVkIHTDtm1uaW5nIGZyZWRhZyBqw6RtbiB2ZWNrYSAiLCJTdGFydERhdGUiOiJcL0RhdGUoMTUxNDc2MTIwMDAwMClcLyIsIlN0b3BEYXRlIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIkJ1aWxkaW5nSUQiOiI1MTk5MiJ9LHsiQmluRGlyZWN0aW9uIjpudWxsLCJOZXh0V2FzdGVQaWNrdXAiOiIyMDI2LTExLTI3IiwiV2FzdGVQaWNrdXBzUGVyWWVhciI6MjYsIldhc3RlVHlwZSI6Ik1hdGF2ZmFsbCIsIldhc3RlUGlja3VwRnJlcXVlbmN5IjoiRnJlZGFnIGrDpG1uIHZlY2thICIsIldhc3RlUGlja3VwRnJlcXVlbmN5Q29kZSI6IkZyZWRhZyBqw6RtbiB2ZWNrYSAiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMTQwIiwiU2l6ZSI6MTQwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJOdW1iZXJPZkJpbnMiOjEuMDAsIkZlZSI6eyJEZXNjcmlwdGlvbiI6IjE0MCBsIEvDpHJsIGbDtnIgTWF0YXZmYWxsIG1lZCB0w7ZtbmluZyBzZSBrw7ZybGlzdGEiLCJCaW5UeXBlIjp7IkNvZGUiOiJLMTQwIiwiU2l6ZSI6MTQwLjAwLCJVbml0IjoibCIsIkNvbnRhaW5lclR5cGUiOiJLw6RybCJ9LCJXYXN0ZVBpY2t1cHNQZXJZZWFyIjoyNiwiV2FzdGVQaWNrdXBGcmVxdWVuY3kiOiJzZSBrw7ZybGlzdGEiLCJXYXN0ZVBpY2t1cEZyZXF1ZW5jeUNvZGUiOiJLTCIsIldhc3RlVHlwZSI6Ik1hdGF2ZmFsbCIsIkNoYW5nZVNpemVPZkJpblRleHQiOm51bGwsIkNoYW5nZUZyZXF1ZW5jeVRleHQiOm51bGwsIkNvZGUiOiJISzE0ME0yNlZFUksiLCJQcm9kdWN0IjoiUkVOSCIsIlBhcnRQcm9kdWN0IjoiSFVTSCIsIkRlc2lnbmF0aW9uIjoiSGVsw6VyIDE0MCBsIGvDpHJsIG1hdGF2ZmFsbCB2YXJhbm5hbiB2ZWNrYSwgdmVya3NhbWhldCIsIkNhbGN1bGF0ZWRDb3N0IjowLCJJc0Nvc3RDYWxjdWxhdGVkIjpmYWxzZSwiUGFydFllYXJTdGFydHMiOiJcL0RhdGUoLTYyMTM1NTk2ODAwMDAwKVwvIiwiUGFydFllYXJFbmRzIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIlBhcnRZZWFyRGVzY3JpcHRpb24iOiIiLCJJRCI6MH0sIk51bWJlck9mQmluc0FudGwiOjAsIklzQWN0aXZlIjp0cnVlLCJJRCI6MTUxNzg0LCJEZXNjcmlwdGlvbiI6IjEgc3QgMTQwIGwga8OkcmwgZsO2ciBtYXRhdmZhbGwgbWVkIHTDtm1uaW5nIGZyZWRhZyBqw6RtbiB2ZWNrYSAiLCJTdGFydERhdGUiOiJcL0RhdGUoMTc0NjEzNjgwMDAwMClcLyIsIlN0b3BEYXRlIjoiXC9EYXRlKC02MjEzNTU5NjgwMDAwMClcLyIsIkJ1aWxkaW5nSUQiOiI1MTk5MiJ9XX0="
+    }
+  ]
+}

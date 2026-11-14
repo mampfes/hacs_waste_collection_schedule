@@ -1,0 +1,32 @@
+{
+  "recorded_at": "2026-11-14",
+  "interactions": [
+    {
+      "key": "POST https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SearchAdress 88028b2a65",
+      "method": "POST",
+      "url": "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "final_url": "https://vatjanst.lerum.se/FutureWeb/SimpleWastePickup/SearchAdress",
+      "body": "{\"body\":[[\"searchText\",\"Ingen gata 999\"]]}",
+      "status": 200,
+      "encoding": "utf-8",
+      "headers": {
+        "cache-control": "no-cache, no-store, must-revalidate",
+        "pragma": "no-cache",
+        "content-type": "application/json; charset=utf-8",
+        "expires": "-1",
+        "server": "Microsoft-IIS/10.0",
+        "x-aspnetmvc-version": "5.2",
+        "x-aspnet-version": "4.0.30319",
+        "x-powered-by": "ASP.NET",
+        "date": "Sat, 14 Nov 2026 08:17:09 GMT",
+        "content-length": "33",
+        "strict-transport-security": "max-age=31536000; includeSubDomains"
+      },
+      "content_b64": "eyJTdWNjZWVkZWQiOnRydWUsIkJ1aWxkaW5ncyI6W119"
+    }
+  ],
+  "expected_error": {
+    "type": "SourceArgumentNotFound",
+    "message": "We could not find values for the argument 'street_address' with the value 'Ingen gata 999', please check the spelling and try again."
+  }
+}
