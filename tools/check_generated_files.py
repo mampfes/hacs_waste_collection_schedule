@@ -5,6 +5,12 @@ These files are rewritten by the post-merge "Update generated documentation"
 workflow (or, for the dashboard-card bundle, by ``npm run build``). Contributor
 edits are overwritten or cause review noise, so this check blocks them.
 
+One exception: a *deletion* of ``doc/ics/<id>.md`` is allowed when the same
+diff also deletes ``doc/ics/yaml/<id>.yaml``. That pairing is required by
+``tests/test_source_components.py::test_no_extra_ics_mds`` when an ICS YAML
+preset is retired. Edits or additions of ``doc/ics/*.md``, and a markdown
+deletion without a matching YAML deletion, stay blocked.
+
 Hybrid / partly generated files (README.md, info.md, translations/*.json) are
 reported as warnings only: the country lists and ``config.step.args_*`` blocks
 are generated, but the surrounding prose, ``options.step.init``, and
@@ -73,15 +79,48 @@ WARN_EXACT = frozenset({"README.md", "info.md"})
 DOCS_BOTS = frozenset({"github-actions[bot]"})
 
 
-def _git_diff_names(base: str, head: str) -> list[str]:
+def _git_diff_name_status(base: str, head: str) -> list[tuple[str, str]]:
+    """Return ``(status, path)`` pairs for the ``base...head`` diff.
+
+    ``status`` is the ``git diff --name-status`` letter (``A``, ``D``, ``M``,
+    or a scored ``R100`` / ``C075`` for rename/copy). For those two-path
+    records the returned path is the destination.
+    """
     result = subprocess.run(
-        ["git", "diff", "--name-only", "--diff-filter=ACDMRTUXB", f"{base}...{head}"],
+        ["git", "diff", "--name-status", "--diff-filter=ACDMRTUXB", f"{base}...{head}"],
         cwd=REPO_ROOT,
         check=True,
         capture_output=True,
         text=True,
     )
-    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+    rows: list[tuple[str, str]] = []
+    for line in result.stdout.splitlines():
+        if not line.strip():
+            continue
+        status, *paths = line.split("	")
+        if not paths:
+            continue
+        rows.append((status, paths[-1]))
+    return rows
+
+
+def _git_diff_names(base: str, head: str) -> list[str]:
+    return [path for _, path in _git_diff_name_status(base, head)]
+
+
+def _is_allowed_ics_md_deletion(
+    path: str, status: str, deleted_paths: set[str]
+) -> bool:
+    """True for a ``doc/ics/<id>.md`` deletion paired with its YAML preset."""
+    if status != "D":
+        return False
+    posix = path.replace("\\", "/")
+    if not (
+        posix.startswith("doc/ics/") and posix.endswith(".md") and "/yaml/" not in posix
+    ):
+        return False
+    stem = posix.rsplit("/", 1)[-1][: -len(".md")]
+    return f"doc/ics/yaml/{stem}.yaml" in deleted_paths
 
 
 def _is_pipeline_source(stem: str) -> bool:
@@ -144,10 +183,30 @@ def classify(path: str) -> str | None:
     return None
 
 
-def classify_paths(paths: list[str]) -> tuple[list[str], list[str]]:
+def classify_paths(
+    paths: list[str],
+    *,
+    status_by_path: dict[str, str] | None = None,
+) -> tuple[list[str], list[str]]:
+    """Split *paths* into blocked and warning lists.
+
+    ``status_by_path`` is the ``git diff --name-status`` letter for each path
+    (optional; omitted in unit tests that only care about path classification).
+    A ``doc/ics/<id>.md`` path whose status is ``D`` is allowed — and omitted
+    from both lists — when ``doc/ics/yaml/<id>.yaml`` is also deleted in the
+    same mapping.
+    """
+    statuses = {
+        path.replace("\\", "/"): status
+        for path, status in (status_by_path or {}).items()
+    }
+    deleted = {path for path, status in statuses.items() if status == "D"}
     blocked: list[str] = []
     warnings: list[str] = []
     for path in paths:
+        posix = path.replace("\\", "/")
+        if _is_allowed_ics_md_deletion(posix, statuses.get(posix, ""), deleted):
+            continue
         kind = classify(path)
         if kind == "block":
             blocked.append(path)
@@ -177,8 +236,10 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
 
-    changed = _git_diff_names(args.base, args.head)
-    blocked, warnings = classify_paths(changed)
+    changes = _git_diff_name_status(args.base, args.head)
+    changed = [path for _, path in changes]
+    status_by_path = {path: status for status, path in changes}
+    blocked, warnings = classify_paths(changed, status_by_path=status_by_path)
 
     if warnings:
         print(
