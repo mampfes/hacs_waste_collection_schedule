@@ -23,6 +23,9 @@ _AUTOCOMPLETE_LIMIT = 5
 # Bound dropdown discovery on long streets; users can still type an address.
 _MAX_QUERIES = 60
 _STREET_OF = re.compile(r"^(.*?)\s+\d+\w*,")
+# AutoCompleteMe misses a trailing 5-digit postcode without its usual space
+# ("12941"), even though /Search accepts that form.
+_UNSPACED_POSTCODE = re.compile(r"(?:,\s*|\s+)(?P<code>\d{5})\s*$")
 
 _AUTOCOMPLETE = retrievers.Request(
     AUTOCOMPLETE_URL,
@@ -39,13 +42,27 @@ def _normalise(value: str) -> str:
     return " ".join(value.casefold().replace(",", " ").split())
 
 
+def _space_swedish_postcode(value: str | None) -> str:
+    """Insert a space in a trailing 5-digit Swedish postcode ("12941" -> "129 41").
+
+    Spaced postcodes and addresses without a postcode are left unchanged.
+    """
+    if not value:
+        return value or ""
+    match = _UNSPACED_POSTCODE.search(value)
+    if not match:
+        return value
+    code = match.group("code")
+    return f"{value[: match.start('code')]}{code[:3]} {code[3:]}{value[match.end('code') :]}"
+
+
 def _address(response, *keys, address=None, street=None, **params) -> str:
     """The full address ("Street 1, District, 123 45") the address search matched.
 
     The search page only accepts the complete address, so a partial one is
     completed through the same autocomplete the website uses.
     """
-    address = address or street or ""
+    address = _space_swedish_postcode(address or street or "")
     values = [str(r["value"]) for r in response.json() or [] if r.get("value")]
     if not values:
         raise SourceArgumentNotFound("address", address)
@@ -79,7 +96,8 @@ class Source(BaseSource):
             "In the UI, type the street name and then pick your address from the list. "
             "Enter the address of a house or townhouse (villa och radhus) as on "
             "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, "
-            "e.g. `Hjortronvägen 3, Bromma`. The postcode is optional. "
+            "e.g. `Hjortronvägen 3, Bromma`. The postcode is optional; "
+            "a missing space (`12941`) is accepted. "
             "The website only shows the next collection of each bin, so the "
             "schedule is refreshed once a day (the default fetch interval)."
         ),
@@ -87,7 +105,8 @@ class Source(BaseSource):
             "I gränssnittet skriver du gatunamnet och väljer sedan din adress i listan. "  # codespell:ignore adress
             "Ange adressen till en villa eller ett radhus som på "  # codespell:ignore som
             "https://www.stockholmvattenochavfall.se/villa-och-radhus/avfallstjanster/nar-kommer-sopbilen/, "
-            "t.ex. `Hjortronvägen 3, Bromma`. Postnumret är valfritt. "
+            "t.ex. `Hjortronvägen 3, Bromma`. Postnumret är valfritt; "
+            "utan mellanslag (`12941`) går också bra. "
             "Webbplatsen visar bara nästa tömning av varje kärl, så schemat "
             "uppdateras en gång om dagen (standardintervallet)."
         ),
@@ -118,6 +137,9 @@ class Source(BaseSource):
         "Björkvägen 3, Enskede": {"address": "Björkvägen 3, Enskede"},
         "Gamla Tyresövägen 305, Enskededalen": {
             "address": "Gamla Tyresövägen 305, Enskededalen"
+        },
+        "Storsvängen 1, Hägersten, 12941": {
+            "address": "Storsvängen 1, Hägersten, 12941"
         },
     }
 
@@ -181,7 +203,7 @@ class Source(BaseSource):
             retrievers.Lookup(
                 AUTOCOMPLETE_URL,
                 params=lambda address=None, street=None, **kwargs: {
-                    "query": address or street
+                    "query": _space_swedish_postcode(address or street)
                 },
                 pick=_address,
             ),

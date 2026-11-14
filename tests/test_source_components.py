@@ -43,6 +43,28 @@ def test_stockholm_address_errors_blame_the_entered_address(case):
         assert "villa och radhus" in str(error.value)
 
 
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    [
+        ("Storsvängen 1, Hägersten, 12941", "Storsvängen 1, Hägersten, 129 41"),
+        ("Storsvängen 1, Hägersten, 129 41", "Storsvängen 1, Hägersten, 129 41"),
+        ("Storsvängen 1, Hägersten", "Storsvängen 1, Hägersten"),
+        ("Daltorpsvägen 28, Vällingby, 16244", "Daltorpsvägen 28, Vällingby, 162 44"),
+        ("Hjortronvägen 3, Bromma", "Hjortronvägen 3, Bromma"),
+        ("Gamla Tyresövägen 305, Enskededalen", "Gamla Tyresövägen 305, Enskededalen"),
+        ("Storsvängen 1, Hägersten,12941", "Storsvängen 1, Hägersten,129 41"),
+        ("", ""),
+        (None, ""),
+    ],
+)
+def test_stockholm_unspaced_postcode_is_normalised(value, expected):
+    from waste_collection_schedule.source.stockholmvattenochavfall_se import (
+        _space_swedish_postcode,
+    )
+
+    assert _space_swedish_postcode(value) == expected
+
+
 @pytest.mark.parametrize("area_name", [None, ""])
 def test_threer_empty_area_offers_the_top_level(area_name):
     from waste_collection_schedule.exceptions import (
