@@ -48,6 +48,8 @@ class Source(BaseSource):
             "bulky": "RPP-REGIE-22",
         },
         "Pierrefonds-Roxboro": {"sector": "PIRO-1"},
+        # Weekly in summer, every other week from November 1 to April 30 (#8193).
+        "Mercier-Est winter biweekly": {"sector": "MHM_43E_A"},
     }
 
     PARAMS = (
