@@ -117,7 +117,7 @@ class SensorOptionsFlow(OptionsFlow):
             return self.manager.type_labels
         from waste_collection_schedule.waste_types import ALL_TYPES, display_name
 
-        known = {wt.id: display_name(wt) for wt in ALL_TYPES}
+        known = {wt.id: display_name(wt, self.hass.config.language) for wt in ALL_TYPES}
         customizations = self._entry.options.get("customize", {})
         return {
             key: customizations.get(key, {}).get("alias") or known.get(key, key)

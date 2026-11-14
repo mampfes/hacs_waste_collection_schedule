@@ -57,7 +57,7 @@ from bs4 import Tag
 from . import date_parsers
 from .collection import Collection
 from .service.ICS import IcsEvent
-from .waste_types import WasteType, display_name, preserved, resolve
+from .waste_types import WasteType, preserved, resolve
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -262,9 +262,11 @@ class BaseTransformer(ABC, Generic[T]):
         so a ``type_value_map`` that maps several distinct provider labels
         (e.g. "Restmülltonne" and "Spartonne Restmüll", the same
         residual-waste stream on different cycles) onto one WasteType doesn't
-        silently make them indistinguishable. Skipped when it would just
-        repeat the canonical display name (e.g. a ``preserved()`` fallback,
-        whose display name already *is* the raw label).
+        silently make them indistinguishable. ``Collection.description``
+        hides it when it just repeats the canonical display name in the bound
+        display language (e.g. a ``preserved()`` fallback, whose display name
+        already *is* the raw label); that is decided at render time because the
+        display language is not known here (#7025).
         """
         if resolved is None:
             return None
@@ -278,7 +280,7 @@ class BaseTransformer(ABC, Generic[T]):
                 collection.set_description(description)
             elif raw_label and self._carry_raw_label:
                 candidate = " ".join(str(raw_label).split())
-                if candidate and candidate != display_name(waste_type):
+                if candidate:
                     collection.set_description_from_raw_label(candidate)
             return collection
 

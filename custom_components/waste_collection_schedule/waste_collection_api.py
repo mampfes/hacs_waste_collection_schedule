@@ -98,6 +98,8 @@ class WasteCollectionApi:
             day_offset=day_offset,
             ignore_duplicates=ignore_duplicates,
             show_original_label=show_original_label,
+            # canonical waste-type names in the Home Assistant UI language
+            display_language=self._hass.config.language,
         )
 
         if new_shell:

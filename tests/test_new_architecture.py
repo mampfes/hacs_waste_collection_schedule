@@ -4668,60 +4668,201 @@ class TestRegions:
 
 
 class TestDisplayLanguage:
-    """Collection.type localises to the configured display language."""
+    """Collection.type localises to the language bound to it, never to a
+    process-wide setting (#7025)."""
 
-    def test_collection_type_follows_display_language(self):
+    def test_collection_type_follows_bound_display_language(self):
         from waste_collection_schedule import waste_types as w
         from waste_collection_schedule.collection import Collection
 
         day = datetime.date(2026, 1, 1)
-        try:
-            # Default is English.
-            assert Collection(date=day, waste_type=w.GENERAL_WASTE).type == (
-                "General Waste"
-            )
-            # A French instance sees the French canonical name.
-            w.set_display_language("fr")
-            assert Collection(date=day, waste_type=w.GENERAL_WASTE).type == (
-                "Ordures ménagères"
-            )
-            # A full locale falls back to the base language.
-            w.set_display_language("de-DE")
-            assert Collection(date=day, waste_type=w.GENERAL_WASTE).type == "Restmüll"
-            # An unsupported language falls back to English.
-            w.set_display_language("es")
-            assert Collection(date=day, waste_type=w.GENERAL_WASTE).type == (
-                "General Waste"
-            )
-        finally:
-            # Restore the default so other tests keep seeing English labels.
-            w.set_display_language("en")
+        c = Collection(date=day, waste_type=w.GENERAL_WASTE)
+        # Default is English.
+        assert c.display_language == "en"
+        assert c.type == "General Waste"
+        # A French instance sees the French canonical name.
+        c.set_display_language("fr")
+        assert c.type == "Ordures ménagères"
+        # A full locale falls back to the base language.
+        c.set_display_language("de-DE")
+        assert c.display_language == "de"
+        assert c.type == "Restmüll"
+        # An unsupported language falls back to English, as does None.
+        c.set_display_language("es")
+        assert c.type == "General Waste"
+        c.set_display_language(None)
+        assert c.type == "General Waste"
+        # Binding one collection leaves every other one alone.
+        assert Collection(date=day, waste_type=w.GENERAL_WASTE).type == (
+            "General Waste"
+        )
+
+    def test_display_name_takes_the_language_explicitly(self):
+        from waste_collection_schedule import waste_types as w
+
+        assert w.display_name(w.PAPER) == w.PAPER.names["en"]
+        assert w.display_name(w.PAPER, "de") == w.PAPER.names["de"]
+        assert w.display_name(w.PAPER, "fr-CA") == w.PAPER.names["fr"]
+        assert w.display_name(w.PAPER, "es") == w.PAPER.names["en"]
+        assert w.display_name(w.PAPER, None) == w.PAPER.names["en"]
+        nameless = w.WasteType(id="x", icon="mdi:x", color="#000000", names={})
+        assert w.display_name(nameless, "de") == "x"
+
+    def test_no_process_wide_display_language(self):
+        """The module-global and its setter are gone; nothing can leak a
+        language across entries or threads through waste_types."""
+        from waste_collection_schedule import waste_types as w
+
+        assert not hasattr(w, "_display_language")
+        assert not hasattr(w, "set_display_language")
 
     def test_waste_type_ui_name_matches_collection_type(self):
         """The name the config flow offers for a WASTE_TYPE must match the
-        label its Collections carry at runtime.
+        label its Collections carry at runtime, in the same language.
 
-        The config flow surfaces a source's WASTE_TYPES via
-        ``waste_types.display_name`` (localised). Hardcoding the English name
-        instead (the pre-fix behaviour) meant a non-English instance was offered
-        an English duplicate of a type already fetched under its localised name,
-        which then became an empty extra sensor (v3 beta feedback, #6561).
+        Hardcoding the English name instead (the pre-fix behaviour) meant a
+        non-English instance was offered an English duplicate of a type already
+        fetched under its localised name, which then became an empty extra
+        sensor (v3 beta feedback, #6561).
         """
         from waste_collection_schedule import waste_types as w
         from waste_collection_schedule.collection import Collection
 
         day = datetime.date(2026, 1, 1)
-        try:
-            w.set_display_language("de")
-            for wt in (w.GENERAL_WASTE, w.RECYCLABLES, w.PAPER):
-                offered = w.display_name(wt)  # what the config flow now offers
-                fetched = Collection(date=day, waste_type=wt).type
-                assert offered == fetched
-                # And it must not be the English name a German instance would
-                # never produce (the phantom-sensor cause).
-                assert offered != wt.names["en"]
-        finally:
-            w.set_display_language("en")
+        for wt in (w.GENERAL_WASTE, w.RECYCLABLES, w.PAPER):
+            offered = w.display_name(wt, "de")  # what the config flow offers
+            fetched = Collection(date=day, waste_type=wt)
+            fetched.set_display_language("de")
+            assert offered == fetched.type
+            assert offered != wt.names["en"]
+
+    @staticmethod
+    def _shell(language=None, barrier=None):
+        from waste_collection_schedule import waste_types as w
+        from waste_collection_schedule.collection import Collection
+        from waste_collection_schedule.source_shell import SourceShell
+
+        class _Source:
+            def fetch(self):
+                if barrier is not None:
+                    # both fetches are in flight at once
+                    barrier.wait(timeout=5)
+                return [
+                    Collection(date=datetime.date(2026, 1, 1), waste_type=wt)
+                    for wt in (w.GENERAL_WASTE, w.PAPER)
+                ]
+
+        kwargs = {} if language is None else {"display_language": language}
+        return SourceShell(
+            source=_Source(),
+            customize={},
+            title="Test",
+            description="",
+            url=None,
+            calendar_title=None,
+            unique_id=f"test-{language}",
+            day_offset=0,
+            **kwargs,
+        )
+
+    def test_concurrent_shells_keep_their_own_language(self):
+        """Two entries with different languages fetched at the same time on
+        worker threads each get their own labels."""
+        import threading
+        from concurrent.futures import ThreadPoolExecutor
+
+        from waste_collection_schedule import waste_types as w
+
+        for _ in range(20):
+            barrier = threading.Barrier(2)
+            de = self._shell("de", barrier)
+            fr = self._shell("fr", barrier)
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                assert all(pool.map(lambda s: s.fetch(), (de, fr)))
+            assert [e.type for e in de._entries] == [
+                w.GENERAL_WASTE.names["de"],
+                w.PAPER.names["de"],
+            ]
+            assert [e.type for e in fr._entries] == [
+                w.GENERAL_WASTE.names["fr"],
+                w.PAPER.names["fr"],
+            ]
+            assert [e.type for e in de._sensor_entries] == [e.type for e in de._entries]
+
+    def test_executor_fetch_uses_the_configured_language(self):
+        """Home Assistant sets the language on the event loop and fetches via
+        run_in_executor, which does not carry context into the worker thread
+        (why a ContextVar would not do); the shell attribute does."""
+        import asyncio
+
+        from waste_collection_schedule import waste_types as w
+
+        async def setup_and_fetch():
+            shell = self._shell()
+            shell.set_display_language("de")  # event loop, like init_ui
+            loop = asyncio.get_running_loop()
+            assert await loop.run_in_executor(None, shell.fetch)
+            return shell
+
+        shell = asyncio.run(setup_and_fetch())
+        assert shell.display_language == "de"
+        assert [e.type for e in shell._entries] == [
+            w.GENERAL_WASTE.names["de"],
+            w.PAPER.names["de"],
+        ]
+        assert shell.get_collection_type_name("paper") == w.PAPER.names["de"]
+
+    def test_shell_defaults_to_english_and_relabels_on_language_change(self):
+        from waste_collection_schedule import waste_types as w
+
+        shell = self._shell()
+        assert shell.display_language == "en"
+        assert shell.fetch()
+        assert shell._entries[0].type == "General Waste"
+        shell_es = self._shell("es")
+        assert shell_es.fetch()
+        assert shell_es._entries[0].type == "General Waste"  # English fallback
+        # A reload after the UI language changed re-renders without a fetch.
+        shell.set_display_language("nl-BE")
+        assert shell._entries[0].type == w.GENERAL_WASTE.names["nl"]
+        assert shell._sensor_entries[0].type == w.GENERAL_WASTE.names["nl"]
+
+    def test_customize_matches_the_name_in_the_shell_language(self):
+        """The config flow stores customize keys as localised names; the shell
+        matches them in its own language even when fetching on a thread."""
+        import threading
+
+        from waste_collection_schedule import waste_types as w
+        from waste_collection_schedule.source_shell import Customize
+
+        shell = self._shell("de")
+        key = w.PAPER.names["de"]
+        shell._customize = {key: Customize(key, alias="Blaue Tonne")}
+        worker = threading.Thread(target=shell.fetch)
+        worker.start()
+        worker.join()
+        assert [e.type for e in shell._entries] == [
+            w.GENERAL_WASTE.names["de"],
+            "Blaue Tonne",
+        ]
+
+    def test_raw_label_matching_the_display_name_is_hidden_per_language(self):
+        """carry_raw_label hides a label that repeats the canonical name in the
+        bound language, decided at render time since the transformer runs in
+        fetch() without a language."""
+        from waste_collection_schedule import waste_types as w
+        from waste_collection_schedule.collection import Collection
+
+        c = Collection(date=datetime.date(2026, 1, 1), waste_type=w.GENERAL_WASTE)
+        c.set_description_from_raw_label("Restmüll")
+        assert c.description == "Restmüll"  # English UI: worth showing
+        assert c.as_dict()["description"] == "Restmüll"
+        c.set_display_language("de")
+        assert c.description is None  # German UI: repeats the label
+        assert "description" not in c.as_dict()
+        # A source's own description is never hidden.
+        c.set_description("Restmüll")
+        assert c.description == "Restmüll"
 
 
 class TestAwbEsDeCadence:
@@ -6202,7 +6343,6 @@ class TestSourceShellCustomize:
     # display languages.
 
     def test_shell_fetch_keeps_identity_locale_independent_6942(self):
-        from waste_collection_schedule import waste_types as w
         from waste_collection_schedule.collection import Collection
         from waste_collection_schedule.source_shell import SourceShell
         from waste_collection_schedule.waste_types import GENERAL_WASTE
@@ -6213,7 +6353,7 @@ class TestSourceShellCustomize:
                     Collection(date=datetime.date(2026, 1, 1), waste_type=GENERAL_WASTE)
                 ]
 
-        def fetch_one():
+        def fetch_one(language):
             shell = SourceShell(
                 source=_FakeSource(),
                 customize={},
@@ -6223,35 +6363,30 @@ class TestSourceShellCustomize:
                 calendar_title=None,
                 unique_id="test",
                 day_offset=0,
+                display_language=language,
             )
             shell.fetch()
             return shell._entries[0]
 
-        try:
-            w.set_display_language("en")
-            entry_en = fetch_one()
-            w.set_display_language("de")
-            entry_de = fetch_one()
+        entry_en = fetch_one("en")
+        entry_de = fetch_one("de")
 
-            # Identity must be the locale-independent WasteType.id, never the
-            # localised display string. Before #6942, SourceShell.fetch() called
-            # set_type() on every entry, freezing _type_override to the display
-            # name at fetch time and so making identity locale-dependent (the
-            # de-fetched entry would key on "Restmüll", the en one on "General
-            # Waste", and the two compared unequal).
-            assert entry_en._identity_key == "general_waste"
-            assert entry_de._identity_key == "general_waste"
-            assert entry_en == entry_de
-            assert hash(entry_en) == hash(entry_de)
+        # Identity must be the locale-independent WasteType.id, never the
+        # localised display string. Before #6942, SourceShell.fetch() called
+        # set_type() on every entry, freezing _type_override to the display
+        # name at fetch time and so making identity locale-dependent (the
+        # de-fetched entry would key on "Restmüll", the en one on "General
+        # Waste", and the two compared unequal).
+        assert entry_en._identity_key == "general_waste"
+        assert entry_de._identity_key == "general_waste"
+        assert entry_en == entry_de
+        assert hash(entry_en) == hash(entry_de)
 
-            # Display still localises: .type is a live property resolved under
-            # the current display language, not frozen at fetch time.
-            w.set_display_language("en")
-            assert entry_de.type == "General Waste"
-            w.set_display_language("de")
-            assert entry_de.type == "Restmüll"
-        finally:
-            w.set_display_language("en")
+        # Display still localises: .type is resolved under the bound display
+        # language at read time, not frozen at fetch time.
+        assert entry_de.type == "Restmüll"
+        entry_de.set_display_language("en")
+        assert entry_de.type == "General Waste"
 
     def test_shell_fetch_still_strips_legacy_whitespace_6942(self):
         """The whitespace-stripping behaviour the loop existed for is kept,
