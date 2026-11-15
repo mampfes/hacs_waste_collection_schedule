@@ -19,15 +19,18 @@ def _query(
     street,
     house_number,
     postal_code,
-    city="Sundsvall",
     additional_information=None,
     **_,
 ):
+    # The API treats ``city`` as the postal town (postort), not the municipality.
+    # The default "Sundsvall" therefore returns an empty list for addresses in
+    # Matfors, Kvissleby, and other localities in Sundsvall kommun (#8209).
+    # Street, house number and postcode already uniquely identify the property,
+    # so city is accepted as a config parameter but is not sent.
     params = {
         "street": street,
         "houseNumber": str(house_number),
         "postalCode": str(postal_code),
-        "city": city,
     }
     if additional_information:
         params["additionalInformation"] = additional_information
@@ -75,17 +78,23 @@ class Source(BaseSource):
         "en": (
             "Enter the full street address for a property in Sundsvall kommun. "
             "The API only supports Sundsvall (municipality code 2281); Timrå and "
-            "Nordanstig addresses are not covered. Use the same street, house "
-            "number, postal code and city you would enter on msva.se. "
-            "Additional information is a house letter or unit identifier, e.g. "
-            "'A'; leave it empty if not applicable."
+            "Nordanstig addresses are not covered. Use the street, house number "
+            "and postal code as on msva.se. City is optional and is the postal "
+            "town (postort), for example Matfors or Sundsvall -- not the "
+            "municipality name if they differ. The lookup uses street, house "
+            "number and postcode only, so a mismatched city will not hide the "
+            "schedule. Additional information is a house letter or unit "
+            "identifier, e.g. 'A'; leave it empty if not applicable."
         ),
         "de": (
             "Geben Sie die vollständige Adresse für ein Grundstück in der "
             "Gemeinde Sundsvall ein. Die API unterstützt nur Sundsvall "
             "(Gemeindecode 2281); Adressen in Timrå und Nordanstig werden nicht "
-            "abgedeckt. Zusatzinformation ist eine Hauskennung, z.B. 'A'; leer "
-            "lassen, falls nicht zutreffend."
+            "abgedeckt. Stadt ist optional und meint den Postort (z. B. Matfors "
+            "oder Sundsvall), nicht den Gemeindenamen, falls sich beide "
+            "unterscheiden. Die Abfrage verwendet nur Straße, Hausnummer und "
+            "Postleitzahl. Zusatzinformation ist eine Hauskennung, z.B. 'A'; "
+            "leer lassen, falls nicht zutreffend."
         ),
     }
 

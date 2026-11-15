@@ -1,16 +1,16 @@
 {
-  "recorded_at": "2026-10-01",
+  "recorded_at": "2026-11-15",
   "interactions": [
     {
-      "key": "GET https://api.sundsvall.se/Garbage/2281/schedules 579bebee56",
+      "key": "GET https://api.sundsvall.se/Garbage/2281/schedules 5d6d14eaf6",
       "method": "GET",
       "url": "https://api.sundsvall.se/Garbage/2281/schedules",
-      "final_url": "https://api.sundsvall.se/Garbage/2281/schedules?street=V%C3%A4stra+Radiogatan&houseNumber=18&postalCode=85461&city=Sundsvall",
-      "body": "{\"params\":[[\"city\",\"Sundsvall\"],[\"houseNumber\",\"18\"],[\"postalCode\",\"85461\"],[\"street\",\"V\u00e4stra Radiogatan\"]]}",
+      "final_url": "https://api.sundsvall.se/Garbage/2281/schedules?street=V%C3%A4stra+Radiogatan&houseNumber=18&postalCode=85461",
+      "body": "{\"params\":[[\"houseNumber\",\"18\"],[\"postalCode\",\"85461\"],[\"street\",\"V\u00e4stra Radiogatan\"]]}",
       "status": 200,
       "encoding": "utf-8",
       "headers": {
-        "x-request-id": "87b12e93-1dd1-45ed-a71b-2349741312fc",
+        "x-request-id": "361dcc3a-582f-4c71-a629-d48f42a124e3",
         "expires": "0",
         "access-control-allow-origin": "*",
         "access-control-allow-methods": "GET",
@@ -18,16 +18,16 @@
         "access-control-allow-headers": "authorization,Access-Control-Allow-Origin,Content-Type,SOAPAction,apikey,Internal-Key,testKey,ApiKey",
         "pragma": "no-cache",
         "strict-transport-security": "max-age=31536000 ; includeSubDomains",
-        "activityid": "6b3c6b0c-5277-49ea-8379-16eaefbd6a7b",
-        "set-cookie": "6129c47c7d8931214d50dd76da6de6c6=44e87997a139b9b585781dbec8d1f801; path=/; HttpOnly; Secure; SameSite=None",
+        "activityid": "9052e640-e40f-4084-9680-c351d133d4a5",
+        "set-cookie": "6129c47c7d8931214d50dd76da6de6c6=cc6243580d9bc01f2d8284fb70afa991; path=/; HttpOnly; Secure; SameSite=None",
         "access-control-expose-headers": "",
         "x-content-type-options": "nosniff",
         "x-xss-protection": "0",
         "content-type": "application/json",
         "cache-control": "no-store",
-        "date": "Thu, 01 Oct 2026 09:53:12 GMT"
+        "date": "Sun, 15 Nov 2026 17:21:27 GMT"
       },
-      "content_b64": "WyB7CiAgImFkZGl0aW9uYWxJbmZvcm1hdGlvbiIgOiAiIiwKICAiYWRkcmVzcyIgOiB7CiAgICAiY2l0eSIgOiAiU3VuZHN2YWxsIiwKICAgICJob3VzZU51bWJlciIgOiAiMTgiLAogICAgInBvc3RhbENvZGUiIDogIjg1NDYxIiwKICAgICJzdHJlZXQiIDogIlbDpHN0cmEgUmFkaW9nYXRhbiIKICB9LAogICJmYWNpbGl0eUNhdGVnb3J5IiA6ICJWSUxMQSIsCiAgImdhcmJhZ2VTY2hlZHVsZWREYXkiIDogIldFRE5FU0RBWSIsCiAgImdhcmJhZ2VTY2hlZHVsZWRXZWVrIiA6ICJPREQiLAogICJzY2hlZHVsZXMiIDogWyB7CiAgICAibmV4dFBpY2t1cERhdGUiIDogIjIwMjYtMTAtMDciLAogICAgIndhc3RlVHlwZSIgOiAiV0FTVEUiCiAgfSwgewogICAgIm5leHRQaWNrdXBEYXRlIiA6ICIyMDI2LTEwLTA3IiwKICAgICJ3YXN0ZVR5cGUiIDogIkZPT0QiCiAgfSwgewogICAgIm5leHRQaWNrdXBEYXRlIiA6ICIyMDI2LTEwLTIxIiwKICAgICJ3YXN0ZVR5cGUiIDogIlBBUEVSIgogIH0sIHsKICAgICJuZXh0UGlja3VwRGF0ZSIgOiAiMjAyNi0xMS0wNCIsCiAgICAid2FzdGVUeXBlIiA6ICJQTEFTVElDIgogIH0gXQp9IF0="
+      "content_b64": "WyB7CiAgImFkZGl0aW9uYWxJbmZvcm1hdGlvbiIgOiAiIiwKICAiYWRkcmVzcyIgOiB7CiAgICAiY2l0eSIgOiAiU3VuZHN2YWxsIiwKICAgICJob3VzZU51bWJlciIgOiAiMTgiLAogICAgInBvc3RhbENvZGUiIDogIjg1NDYxIiwKICAgICJzdHJlZXQiIDogIlbDpHN0cmEgUmFkaW9nYXRhbiIKICB9LAogICJmYWNpbGl0eUNhdGVnb3J5IiA6ICJWSUxMQSIsCiAgImdhcmJhZ2VTY2hlZHVsZWREYXkiIDogIldFRE5FU0RBWSIsCiAgImdhcmJhZ2VTY2hlZHVsZWRXZWVrIiA6ICJPREQiLAogICJzY2hlZHVsZXMiIDogWyB7CiAgICAibmV4dFBpY2t1cERhdGUiIDogIjIwMjYtMTEtMTgiLAogICAgIndhc3RlVHlwZSIgOiAiV0FTVEUiCiAgfSwgewogICAgIm5leHRQaWNrdXBEYXRlIiA6ICIyMDI2LTExLTE4IiwKICAgICJ3YXN0ZVR5cGUiIDogIkZPT0QiCiAgfSwgewogICAgIm5leHRQaWNrdXBEYXRlIiA6ICIyMDI2LTEyLTAyIiwKICAgICJ3YXN0ZVR5cGUiIDogIlBBUEVSIgogIH0sIHsKICAgICJuZXh0UGlja3VwRGF0ZSIgOiAiMjAyNi0xMi0xNiIsCiAgICAid2FzdGVUeXBlIiA6ICJQTEFTVElDIgogIH0gXQp9IF0="
     }
   ]
 }
