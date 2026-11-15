@@ -1256,6 +1256,15 @@ class AchieveFormsDynamicRowsPreprocessor(
             skipped. Default 2000.
         parse_date: a ``date_parsers`` callable used to parse each matched
             value. Defaults to ``date_parsers.auto``.
+        keep_today: opt-in ``(last_date_suffix, next_date_suffix)`` pair.
+            When set, a key ending in ``last_date_suffix`` is used only if
+            its parsed date is today and the same bin's matching
+            ``{prefix}{next_date_suffix}`` field is not already today.
+            Earlier last dates are past collections and are ignored; if
+            the next date is still today, that already provides the entry
+            (no duplicate). Default None: every pattern-matching key is
+            used, as before. Enable with one line, e.g.
+            ``keep_today=("LastDateRaw", "NextDate")``.
     """
 
     def __init__(
@@ -1267,8 +1276,19 @@ class AchieveFormsDynamicRowsPreprocessor(
         key_filter: "Callable[[str, dict], bool] | None" = None,
         min_year: int = 2000,
         parse_date: "Any | None" = None,
+        keep_today: "tuple[str, str] | None" = None,
     ):
         from waste_collection_schedule import date_parsers
+
+        if keep_today is not None and (
+            not isinstance(keep_today, tuple)
+            or len(keep_today) != 2
+            or not all(isinstance(part, str) and part for part in keep_today)
+        ):
+            raise ValueError(
+                "keep_today must be a (last_date_suffix, next_date_suffix) "
+                "pair of non-empty strings"
+            )
 
         self.key_pattern = (
             re.compile(key_pattern) if isinstance(key_pattern, str) else key_pattern
@@ -1278,6 +1298,33 @@ class AchieveFormsDynamicRowsPreprocessor(
         self.key_filter = key_filter
         self.min_year = min_year
         self.parse_date = parse_date or date_parsers.auto
+        self.keep_today = keep_today
+
+    def _use_last_date(self, key: str, row: dict) -> bool:
+        """Use a last-date field only when it is today's collection.
+
+        Once the portal has recorded today's collection it may advance the
+        matching next-date field to the following one, so today's collection
+        is only in the last-date field. Earlier last dates are past
+        collections and are ignored. If the same bin's next date is still
+        today, that already provides the entry.
+        """
+        if self.keep_today is None:
+            return True
+        last_suffix, next_suffix = self.keep_today
+        if not key.endswith(last_suffix):
+            return True
+        today = datetime.date.today()
+        try:
+            if self.parse_date(str(row[key])) != today:
+                return False
+        except (ValueError, OverflowError, TypeError):
+            return False
+        next_text = row.get(key.removesuffix(last_suffix) + next_suffix)
+        try:
+            return not (next_text and self.parse_date(str(next_text)) == today)
+        except (ValueError, OverflowError, TypeError):
+            return True
 
     def __call__(self, rows: Any, source: "BaseSource | None" = None) -> "Any":
         row = _single_row(rows, _row_key(self.row_key, source))
@@ -1287,6 +1334,8 @@ class AchieveFormsDynamicRowsPreprocessor(
                 continue
             match = self.key_pattern.match(key)
             if not match:
+                continue
+            if not self._use_last_date(key, row):
                 continue
             if self.key_filter is not None and not self.key_filter(key, row):
                 continue
