@@ -461,6 +461,13 @@ class Source:
                 collection_dates = [next_date]
             for collection_date in collection_dates:
                 for expanded_title in self._expand_optional_collections(title):
+                    # Pendle suspends garden waste collections over winter:
+                    # https://www.pendle.gov.uk/gardenwaste
+                    if (
+                        expanded_title.strip().lower() == "green collection"
+                        and collection_date.month in {12, 1, 2}
+                    ):
+                        continue
                     entries.append(
                         Collection(
                             date=collection_date,
