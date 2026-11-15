@@ -27,7 +27,14 @@ class Source(BaseSource):
         }
     }
     HOWTO: ClassVar[dict] = {
-        "en": "Enter the postcode and address as returned by Pendle Borough Council. Set garden_waste_bin to true when the property has a green garden waste bin, and set collection_zone only if Pendle returns multiple schedules for the address."
+        "en": (
+            "Enter the postcode and address as returned by Pendle Borough Council. "
+            "Set garden_waste_bin to true when the property has a green garden waste "
+            "bin, and set collection_zone only if Pendle returns multiple schedules "
+            "for the address. Garden waste is collected from March to November; "
+            "Green Collection dates in December, January and February are omitted, "
+            "including when future dates are enabled."
+        )
     }
     COUNTRY = "uk"
     PARAMS = (
