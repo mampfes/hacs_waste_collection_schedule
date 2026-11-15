@@ -1,6 +1,7 @@
 import os
 import sys
 from collections.abc import Iterable
+from datetime import date
 from functools import cache
 from importlib import import_module
 from inspect import Parameter, signature
@@ -275,6 +276,77 @@ def test_no_extra_ics_mds() -> None:
     source_md = _get_ics_md()
     for source in source_md:
         assert source in sources, f"found orphaned ics markdown file: {source}.md"
+
+
+def _pendle_parse_on(first_date, title="Blue Collection", future=False, garden=True):
+    from waste_collection_schedule.service.PendleCalendar import _CalendarClient
+
+    client = _CalendarClient(
+        postcode="BB9 7LJ",
+        address="Test address",
+        garden_waste_bin=garden,
+        future_collection_dates=future,
+    )
+    item = {"title": title, "frequency": 2}
+    with patch.object(client, "_resolve_next_collection_date", return_value=first_date):
+        return client.parse([item])
+
+
+@pytest.mark.parametrize(
+    "title", ["Blue Collection", "Brown Collection", "Green Collection"]
+)
+@pytest.mark.parametrize(
+    ("day", "active"),
+    [
+        (date(2026, 11, 30), True),
+        (date(2026, 12, 1), False),
+        (date(2027, 1, 1), False),
+        (date(2027, 2, 28), False),
+        (date(2028, 2, 29), False),
+        (date(2027, 3, 1), True),
+    ],
+)
+def test_pendle_garden_waste_is_skipped_in_winter(day, active, title):
+    entries = _pendle_parse_on(day, title)
+    assert any(entry["type"] == "Green Collection" for entry in entries) == active
+    if title != "Green Collection":
+        assert [
+            (entry["date"], entry["type"])
+            for entry in entries
+            if entry["type"] == title
+        ] == [(day, title)]
+
+
+@pytest.mark.parametrize("first_date", [date(2026, 11, 20), date(2027, 2, 19)])
+def test_pendle_future_dates_omit_winter_garden_waste(first_date):
+    from waste_collection_schedule.service.PendleCalendar import _CalendarClient
+
+    entries = _pendle_parse_on(first_date, future=True)
+    expected_dates = _CalendarClient._expand_dates(first_date, 2)
+    assert [
+        entry["date"] for entry in entries if entry["type"] == "Blue Collection"
+    ] == expected_dates
+    assert [
+        entry["date"] for entry in entries if entry["type"] == "Green Collection"
+    ] == [day for day in expected_dates if 3 <= day.month <= 11]
+
+
+def test_pendle_garden_waste_remains_optional():
+    assert {
+        entry["type"] for entry in _pendle_parse_on(date(2027, 3, 1), garden=False)
+    } == {"Blue Collection"}
+
+
+@pytest.mark.parametrize(
+    "title", ["Grey Collection", "Food Collection", "Food Waste Collection"]
+)
+def test_pendle_other_collections_continue_in_winter(title):
+    from waste_collection_schedule.service.PendleCalendar import _CalendarClient
+
+    entries = _pendle_parse_on(date(2027, 1, 1), title, future=True)
+    expected_dates = _CalendarClient._expand_dates(date(2027, 1, 1), 2)
+    assert {entry["type"] for entry in entries} == {title}
+    assert [entry["date"] for entry in entries] == expected_dates
 
 
 def test_enfield_address_match_uses_whole_house_number() -> None:
