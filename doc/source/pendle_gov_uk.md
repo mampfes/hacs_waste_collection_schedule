@@ -50,4 +50,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Enter the postcode and address as returned by Pendle Borough Council. Set garden_waste_bin to true when the property has a green garden waste bin, and set collection_zone only if Pendle returns multiple schedules for the address.
+Enter the postcode and address as returned by Pendle Borough Council. Set garden_waste_bin to true when the property has a green garden waste bin, and set collection_zone only if Pendle returns multiple schedules for the address. Garden waste is collected from March to November; Green Collection dates in December, January and February are omitted, including when future dates are enabled.

@@ -52,4 +52,4 @@ waste_collection_schedule:
 
 ## How to get the source arguments
 
-Enter the full street address for a property in Sundsvall kommun. The API only supports Sundsvall (municipality code 2281); Timrå and Nordanstig addresses are not covered. Use the same street, house number, postal code and city you would enter on msva.se. Additional information is a house letter or unit identifier, e.g. 'A'; leave it empty if not applicable.
+Enter the full street address for a property in Sundsvall kommun. The API only supports Sundsvall (municipality code 2281); Timrå and Nordanstig addresses are not covered. Use the street, house number and postal code as on msva.se. City is optional and is the postal town (postort), for example Matfors or Sundsvall -- not the municipality name if they differ. The lookup uses street, house number and postcode only, so a mismatched city will not hide the schedule. Additional information is a house letter or unit identifier, e.g. 'A'; leave it empty if not applicable.
