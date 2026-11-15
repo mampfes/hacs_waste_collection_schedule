@@ -26,6 +26,9 @@ waste_collection_schedule:
 **garden_waste_bin**  
 *(boolean) (optional, default: false)*  
 Set to `true` when the property has a green garden waste bin collected with the blue and brown bins.
+Garden waste collections run from March to November. No green bin dates are returned
+for December, January or February, including when future dates are enabled, in line
+with [Pendle's garden waste service](https://www.pendle.gov.uk/gardenwaste).
 
 **future_collection_dates**  
 *(boolean) (optional, default: false)*  
