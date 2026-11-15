@@ -26156,6 +26156,26 @@
         },
         "data_description": {}
       },
+      "args_gwpzh_ch": {
+        "title": "Konfiguriraj izvor",
+        "description": "Konfigurirajte pružatelja usluge. {howto}Više pojedinosti: {docs_url}.",
+        "data": {
+          "calendar_title": "Naziv kalendara",
+          "zone": "Zona"
+        },
+        "data_description": {
+          "calendar_title": "Čitljiviji naziv kalendara odvoza otpada. Ako ga ne unesete, upotrebljava se naziv koji daje izvor."
+        }
+      },
+      "reconfigure_gwpzh_ch": {
+        "title": "Ponovno konfiguriraj izvor",
+        "description": "Konfigurirajte pružatelja usluge. {howto}Više pojedinosti: {docs_url}.",
+        "data": {
+          "calendar_title": "Naziv kalendara",
+          "zone": "Zona"
+        },
+        "data_description": {}
+      },
       "args_ics_gossau_zh_ch": {
         "title": "Konfiguriraj izvor",
         "description": "Konfigurirajte pružatelja usluge. {howto}Više pojedinosti: {docs_url}.",

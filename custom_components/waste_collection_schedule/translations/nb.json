@@ -26156,6 +26156,26 @@
         },
         "data_description": {}
       },
+      "args_gwpzh_ch": {
+        "title": "Konfigurer kilde",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "zone": "Sone"
+        },
+        "data_description": {
+          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir."
+        }
+      },
+      "reconfigure_gwpzh_ch": {
+        "title": "Konfigurer kilde på nytt",
+        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
+        "data": {
+          "calendar_title": "Kalendernavn",
+          "zone": "Sone"
+        },
+        "data_description": {}
+      },
       "args_ics_gossau_zh_ch": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",

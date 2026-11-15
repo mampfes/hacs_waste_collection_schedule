@@ -26156,6 +26156,26 @@
         },
         "data_description": {}
       },
+      "args_gwpzh_ch": {
+        "title": "Konfigurovať zdroj",
+        "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
+        "data": {
+          "calendar_title": "Názov kalendára",
+          "zone": "Zóna"
+        },
+        "data_description": {
+          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom."
+        }
+      },
+      "reconfigure_gwpzh_ch": {
+        "title": "Znovu nakonfigurovať zdroj",
+        "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
+        "data": {
+          "calendar_title": "Názov kalendára",
+          "zone": "Zóna"
+        },
+        "data_description": {}
+      },
       "args_ics_gossau_zh_ch": {
         "title": "Konfigurovať zdroj",
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",

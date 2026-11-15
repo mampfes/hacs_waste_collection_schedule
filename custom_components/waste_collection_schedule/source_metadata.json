@@ -6170,6 +6170,14 @@
     },
     "urls": {}
   },
+  "gwpzh_ch": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/gwpzh_ch.md",
+    "howto": {
+      "de": "Wählen Sie Ihren Sammelkreis auf dem Abfallkalender unter https://www.gwpzh.ch/kalender. Die Gebiete sind dort beschrieben: Sammelkreis 1 liegt nördlich der Bahnlinie bis Hochstrasse 199, inkl. Irgenhausen, Neuhof, Oberwil, Bussenhausen, Steinacker, Berg, Wallikon, Humbel, Hermatswil, Ravensbüel, Rick, Seiler, Schür und Sulzberg. Sammelkreis 2 liegt südlich der Bahnlinie ab Bahnhofstrasse/Hochstrasse/Pilatusstrasse in Richtung Wetzikon sowie ab Hochstrasse 200, Tumbelen, Bächliacher, Sitzbühl, Lierennagel, Unter- und Oberbalm und Auslikon. Sammelkreis 3 liegt südlich der Bahnlinie ab Bahnhofstrasse/Hochstrasse/Pilatusstrasse in Richtung Fehraltorf, inkl. Frohwies, Matten, Im Spitz, Büel, Industriegebiet Schanz und Witzberg, Faichrüti und Ruetschberg. Altpapier, Karton und Sonderabfall gelten gemeindeweit. Die Beispieladresse Wallikerstrasse 81 (Wallikon) gehört zu Sammelkreis 1.",
+      "en": "Select your Sammelkreis (collection district) on the waste calendar at https://www.gwpzh.ch/kalender. The districts are described there: Sammelkreis 1 is north of the railway line up to Hochstrasse 199, including Irgenhausen, Neuhof, Oberwil, Bussenhausen, Steinacker, Berg, Wallikon, Humbel, Hermatswil, Ravensbüel, Rick, Seiler, Schür and Sulzberg. Sammelkreis 2 is south of the railway line from Bahnhofstrasse/Hochstrasse/Pilatusstrasse towards Wetzikon, plus from Hochstrasse 200, Tumbelen, Bächliacher, Sitzbühl, Lierennagel, Unter- and Oberbalm and Auslikon. Sammelkreis 3 is south of the railway line from Bahnhofstrasse/Hochstrasse/Pilatusstrasse towards Fehraltorf, including Frohwies, Matten, Im Spitz, Büel, the Schanz and Witzberg industrial areas, Faichrüti and Ruetschberg. Altpapier, Karton and Sonderabfall are municipality-wide. The example address Wallikerstrasse 81 (Wallikon) is Sammelkreis 1."
+    },
+    "urls": {}
+  },
   "ics_gossau_zh_ch": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/ics/gossau_zh_ch.md",
     "howto": {

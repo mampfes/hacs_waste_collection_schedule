@@ -26156,6 +26156,26 @@
         },
         "data_description": {}
       },
+      "args_gwpzh_ch": {
+        "title": "Konfiguruj źródło",
+        "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
+        "data": {
+          "calendar_title": "Nazwa kalendarza",
+          "zone": "Strefa"
+        },
+        "data_description": {
+          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło."
+        }
+      },
+      "reconfigure_gwpzh_ch": {
+        "title": "Ponownie skonfiguruj źródło",
+        "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
+        "data": {
+          "calendar_title": "Nazwa kalendarza",
+          "zone": "Strefa"
+        },
+        "data_description": {}
+      },
       "args_ics_gossau_zh_ch": {
         "title": "Konfiguruj źródło",
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",

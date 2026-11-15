@@ -5013,6 +5013,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Gemeinde Muttenz](/doc/source/muttenz_ch.md) / muttenz.ch
 - [Gemeinde Seuzach](/doc/source/seuzach_ch.md) / seuzach.ch
 - [Gemeinde Würenlos](/doc/ics/wuerenlos_ch.md) / wuerenlos.ch
+- [Gemeindewerke Pfäffikon ZH](/doc/source/gwpzh_ch.md) / gwpzh.ch/kalender
 - [Goldach](/doc/source/a_region_ch.md) / a-region.ch
 - [Gossau](/doc/source/zab_ch.md) / zab.citymobile.ch
 - [Gossau ZH](/doc/ics/gossau_zh_ch.md) / gossau-zh.ch
