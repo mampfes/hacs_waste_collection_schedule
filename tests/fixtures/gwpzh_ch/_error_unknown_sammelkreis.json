@@ -1,0 +1,8 @@
+{
+  "recorded_at": "2026-11-15",
+  "interactions": [],
+  "expected_error": {
+    "type": "SourceArgumentNotFoundWithSuggestions",
+    "message": "We could not find values for the argument 'zone' with the value 'Sammelkreis 4', you may want to use one of the following: ['Sammelkreis 1', 'Sammelkreis 2', 'Sammelkreis 3']"
+  }
+}
