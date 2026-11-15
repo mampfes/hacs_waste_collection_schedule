@@ -9,11 +9,11 @@ value rather than relying on a re-scrape, so this shape needed no
 adjustment for the retriever's single-scrape mechanic (contrast
 ``zke_sb_de``/``zaw_sr_de``, which did).
 
-Known gap (documented, not reproduced here): the legacy source re-ran the
-whole wizard for the following year every December, keyed off a "Zeitraum"
-value it never actually sent (the line setting it was commented out), so
-that extra run always POSTed byte-identical data and only ever duplicated
-the same collections. Dropping it does not lose collections.
+The year is a ``Zeitraum`` radio (``Jahresübersicht <year>``) that the legacy
+source never sent (the line setting it was commented out), so the server's
+preselection wins -- and from autumn on that is next year, which leaves
+every collection until the end of the current year missing. ``iterate_field``
+runs the wizard once per offered year instead, as ``zke_sb_de`` does.
 
 Not independently live-verified: ``ebbweb.stadt.bamberg.de`` was
 unreachable (connection timeout) from the environment this conversion was
@@ -68,6 +68,7 @@ class Source(BaseSource):
     retrieve = AthosWasteManagementRetriever(
         url=_SERVLET,
         initial_params={"SubmitAction": "wasteDisposalServices", "InFrameMode": "TRUE"},
+        iterate_field="Zeitraum",
         steps=[
             {
                 "submit_action": "CITYCHANGED",
@@ -92,7 +93,7 @@ class Source(BaseSource):
             },
         ],
     )
-    parse = parsers.IcsParser()
+    parse = parsers.EachResponse(parsers.IcsParser())
     transform = ICSTransformer(
         clean=lambda label: label.split()[0],
         type_value_map={
