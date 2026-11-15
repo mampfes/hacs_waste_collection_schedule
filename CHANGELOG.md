@@ -4,6 +4,64 @@ All notable changes to this project will be documented in this file.
 
 Releases are listed in reverse chronological order.
 
+## [3.0.0-beta.12] - 2026-11-15
+
+This is a pre-release (beta) following beta.11. It retires five named ICS presets in favour of dedicated pipeline sources, migrates `lerum_se` to the BaseSource pipeline, adds one new source, per-waste-type `day_offset`, three new display languages (Slovak, Polish, Croatian) and a number of source fixes. If you tried an earlier beta, please update; if you haven't yet, opt in via HACS' "show beta versions" toggle. Report problems as regular GitHub issues. Stable installs are unaffected until 3.0.0 ships. Users skipping earlier betas should also read the migration/breaking-change notes of beta.9.
+
+**Breaking changes: please read before updating.**
+
+- **Five named ICS presets are retired** and replaced by dedicated sources of the same id with labelled dropdowns: `abfallwirtschaft_sonneberg_de`, `openerz_metaodi_ch`, `gigu_de`, `laval_ca` and `abfall_hdh_de`. If you used one of them through the `ics` source, add the new source of the same name; the old preset page is gone.
+- **Waste-type labels change** for these five migrated sources and for `lerum_se` (for example `Matavfall` / `Restavfall` become Food Waste / General Waste). Labels are now the canonical, localised waste-type names. Check any automation, template, customisation or card that compares an exact label string. Further label corrections: `tendring_gov_uk` (red/green recycling boxes) and `olo_sk` (plastic/metal/cartons round is now Recyclables).
+- `waste_types.set_display_language()` (only ever shipped in 3.0.0 pre-releases) is removed; the display language is now passed explicitly. `display_name(waste_type)` keeps working and returns English. This only affects custom code, not configurations.
+
+**Upgrade guidance:** back up Home Assistant before updating a beta. Entries migrated to entry version 4 in beta.9 cannot be loaded by older integration versions, so restore a backup before downgrading. After updating, review sensors, automations and dashboards that use the labels of the sources listed above.
+
+A warm welcome and huge thank-you to our **first-time contributors** in this release:
+@Zedas030, @hynd, @jlssmt and @orohde. 🎉
+Thanks as well to our returning contributors (@bbr111, @jan-tdy) for the fixes, sources and migrations below.
+
+### Removed
+
+- removed the named ICS presets abfallwirtschaft_sonneberg_de, openerz_metaodi_ch, gigu_de, laval_ca and abfall_hdh_de (their YAML presets and generated pages are deleted); use the dedicated BaseSource sources of the same ids, which offer labelled dropdowns instead of a raw `params` object and canonical waste-type labels (#8197, #8198, #8199, #8200, #8201)
+- removed `waste_types.set_display_language()` (never shipped in a stable release); the display language is passed explicitly via `display_name(waste_type, language)`, `Collection` and `SourceShell` (#8203)
+
+### Added Sources
+
+- added Gemeindewerke Pfäffikon ZH (gwpzh_ch), Switzerland (#8208)
+- added Appignano (COSMARI) to junker_app, Italy (#8204)
+- added per-region commune dropdowns (commune, locality, street) to luxembourg_lu, now titled "Luxembourg (all communes)" (#8173)
+- added Slovak (sk) translations (thanks @jan-tdy) (#8168, #8167)
+- added Polish (pl) and Croatian (hr) as display languages: UI templates, canonical waste-type names and common field labels (#8191, #8192)
+- added per-waste-type `day_offset` to `customize` (YAML `customize[].day_offset`, optional field in the UI): it replaces the source-level offset for the matched type; `0` keeps the provider date (#8196)
+- added an opt-in `keep_today` option for AchieveForms sources; eastherts_gov_uk now uses it (#8176)
+
+### Fixed Sources
+
+- fixed stadtreinigung_leipzig_de: use the new odata street lookup (port of #8162) (thanks @Zedas030) (#8163)
+- fixed awb_bad_kreuznach_de: add Schadstoffmobil dates from the Blupassion stations and re-record cassettes (thanks @orohde) (#8165, #8181)
+- fixed tendring_gov_uk: correct red/green recycling box labels (port of #8171) (thanks @hynd) (#8172)
+- fixed stadt_bamberg_de: iterate the offered years (thanks @jlssmt) (#8212)
+- fixed e_lindsey_gov_uk: accept the month suffix on the GOSS form name (#8170)
+- fixed awido_de: skip calendar fraction codes missing from fracts (#8184)
+- fixed wanneroo_wa_gov_au: use the council spatial lookup APIs (#8185)
+- fixed abfall_io: refresh the AVR Adlerstr. street ID and clarify export errors (#8186)
+- fixed mulhouse_alsace_fr: drop green-waste dates outside the collection season (port of #8175) (#8188)
+- fixed olo_sk: map the plastic/metal/cartons round to Recyclables (#8190)
+- fixed montreal_ca: biweekly winter household waste in Mercier-Hochelaga-Maisonneuve (#8195)
+- fixed stockholmvattenochavfall_se: accept unspaced Swedish postcodes (#8206)
+- fixed msva_se: look up the schedule without the city parameter (#8213)
+- fixed pendle_gov_uk: skip the Green Collection during the winter suspension (port of #8211) (#8214)
+
+### Other
+
+- migrated lerum_se to the shared EdpFutureWeb pipeline. **Breaking:** waste-type labels change to the canonical names (#8194)
+- added Neunkirchen Siegerland provider bin-lid colours (#8158)
+- kolding_dk, kalundborg_dk: updated the Infovision address-search HOWTO (#8187)
+- added a source owner for kositeast_sk (thanks @jan-tdy) (#8167)
+- the display language is now threaded explicitly instead of held in a process-global, which fixes a thread-safety issue between the event loop and executor threads (#8203)
+- CI: generated files are now marked `linguist-generated` and hand-edits are rejected in PRs; the check compares against the PR head and allows paired ICS yaml+md deletions (#8174, #8189, #8202)
+- issue templates: dropped the outdated "Redownload, select master" hint (#8183)
+
 ## [3.0.0-beta.11] - 2026-11-09
 
 Small follow-up to beta.10: one new source, one new municipality, a dashboard card fix and a new `show_colors` card option. There are no breaking changes, removals or deprecations compared with beta.10. Users skipping earlier betas should also read the migration/breaking-change notes of beta.9.
