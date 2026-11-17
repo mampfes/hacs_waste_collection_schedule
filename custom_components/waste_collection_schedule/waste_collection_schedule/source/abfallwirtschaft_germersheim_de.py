@@ -58,6 +58,7 @@ class Source:
             API_URL,
             params=params,
             data={"ICS_DOWNLOAD": ics_download, "REQUEST_TOKEN": request_token},
+            headers={"Origin": URL},
         )
         r.raise_for_status()
 
