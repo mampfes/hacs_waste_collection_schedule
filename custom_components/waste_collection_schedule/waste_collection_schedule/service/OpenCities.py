@@ -19,6 +19,7 @@ per-council source files stay a thin ``OpenCitiesConfig`` + ``Source`` shim.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from typing import Any, Literal
@@ -95,6 +96,13 @@ class OpenCitiesConfig:
     """
 
     date_format: str = DEFAULT_DATE_FORMAT
+
+    embedded_date_formats: tuple[str, ...] = ()
+    """
+    Fallback ``strptime`` formats tried against a "D Month YYYY" fragment found
+    anywhere inside the date text (e.g. "Your summer scheduled clean-up service
+    is on: Mon 4 January 2027"), used only when ``date_format`` doesn't match.
+    """
 
     icon_keywords: dict[str, Any] | None = None
     """Lower-cased waste-type substring -> icon, checked in insertion order."""
@@ -406,6 +414,15 @@ class OpenCitiesClient:
             return datetime.strptime(text, self._cfg.date_format).date()
         except ValueError:
             pass
+        if self._cfg.embedded_date_formats:
+            match = re.search(r"\b\d{1,2}\s+[A-Za-z]+\s+\d{4}\b", text)
+            if match:
+                fragment = " ".join(match.group(0).split())
+                for fmt in self._cfg.embedded_date_formats:
+                    try:
+                        return datetime.strptime(fragment, fmt).date()
+                    except ValueError:
+                        continue
         # Some deployments describe a recurring service as "Every <Weekday>"
         # instead of a concrete next date (no explicit next occurrence is
         # given by the API at all) -- resolve it to the next occurrence of

@@ -38,6 +38,9 @@ _CONFIG = OpenCitiesConfig(
     headers=HEADERS,
     use_curl_cffi=True,
     warm_up_url=DEEPLINK,
+    # Scheduled clean-ups read "Your summer scheduled clean-up service is on:
+    # Mon 4 January 2027" rather than the "Mon 23/11/2026" used by bins.
+    embedded_date_formats=("%d %B %Y", "%d %b %Y"),
     icon_keywords=ICON_MAP,
     # Woollahra mixes a recurring problem-waste promo tile into the same
     # response as real dated collections. It is not a kerbside collection.
