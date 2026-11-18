@@ -3713,6 +3713,14 @@
     },
     "urls": {}
   },
+  "prezero_helmstedt_de": {
+    "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/prezero_helmstedt_de.md",
+    "howto": {
+      "de": "Wählen Sie Ihren Abfuhrbezirk (Gemeinde/Samtgemeinde) aus dem PreZero-Abfuhrkalender für den Landkreis Helmstedt (https://prezero.com/de/landkreis-helmstedt) sowie Ihren Ort, Ortsteil bzw. Ihre Straße.",
+      "en": "Select your collection district (municipality) from the PreZero Landkreis Helmstedt schedule (https://prezero.com/de/landkreis-helmstedt) and enter your village/district or street."
+    },
+    "urls": {}
+  },
   "rh_entsorgung_de": {
     "docs_url": "https://github.com/mampfes/hacs_waste_collection_schedule/blob/master/doc/source/rh_entsorgung_de.md",
     "howto": {
