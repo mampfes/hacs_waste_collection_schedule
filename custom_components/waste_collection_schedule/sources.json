@@ -20737,6 +20737,12 @@
       "id": "abfallkalender_prezero_network"
     },
     {
+      "title": "PreZero Landkreis Helmstedt (Gelbe Tonne)",
+      "module": "prezero_helmstedt_de",
+      "default_params": {},
+      "id": "prezero_helmstedt_de"
+    },
+    {
       "title": "Prignitz",
       "module": "app_abfallplus_de",
       "default_params": {

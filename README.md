@@ -2818,6 +2818,7 @@ If you already have enough information for your municipality/region, you are ver
 - [Portenhagen](/doc/source/nerdbridge_de.md) / abfall.nerdbridge.de
 - [Potsdam](/doc/source/potsdam_de.md) / potsdam.de
 - [PreZero](/doc/source/abfallkalender_prezero_network.md) / abfallkalender.prezero.network
+- [PreZero Landkreis Helmstedt (Gelbe Tonne)](/doc/source/prezero_helmstedt_de.md) / prezero.com/de/landkreis-helmstedt
 - [Prignitz](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Prignitz](/doc/source/app_abfallplus_de.md) / abfallplus.de
 - [Prignitz](/doc/source/app_abfallplus_de.md) / abfallplus.de
