@@ -41,16 +41,18 @@ def _check_response(r: requests.Response) -> None:
 
     Since November 2026 apps.ci.minneapolis.mn.us answers every visitor,
     including regular browsers, with an interactive Cloudflare challenge
-    ("Verify you are human") instead of the schedule page.
+    ("Verify you are human") instead of the schedule page, see #8245.
     """
+    content_type = r.headers.get("content-type", "")
     if r.headers.get("cf-mitigated") == "challenge" or (
-        "just a moment" in r.text[:2000].lower()
+        "text/html" in content_type and "just a moment" in r.text[:2000].lower()
     ):
         raise ValueError(
             "The City of Minneapolis website (apps.ci.minneapolis.mn.us) blocks "
             "automated requests with a Cloudflare 'Verify you are human' "
             "challenge, so collection dates cannot be fetched. This is a change "
-            "on the city's side."
+            "on the city's side, see "
+            "https://github.com/mampfes/hacs_waste_collection_schedule/issues/8245"
         )
     r.raise_for_status()
 
