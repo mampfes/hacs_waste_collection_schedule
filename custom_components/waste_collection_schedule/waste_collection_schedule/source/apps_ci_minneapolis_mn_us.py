@@ -1,10 +1,16 @@
 import logging
 from datetime import datetime
 
+import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentRequired
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentRequired,
+)
 from waste_collection_schedule.service.SSLError import get_legacy_session
+
+_LOGGER = logging.getLogger(__name__)
 
 PARAM_TRANSLATIONS = {"en": {"apn": "APN"}}
 
@@ -27,6 +33,27 @@ ICON_MAP = {
 }
 
 
+def _check_response(r: requests.Response) -> None:
+    """Raise a clear error when the city's site blocks the request.
+
+    Since November 2026 apps.ci.minneapolis.mn.us answers every visitor,
+    including regular browsers, with an interactive Cloudflare challenge
+    ("Verify you are human") instead of the schedule page, see #8245.
+    """
+    content_type = r.headers.get("content-type", "")
+    if r.headers.get("cf-mitigated") == "challenge" or (
+        "text/html" in content_type and "just a moment" in r.text[:2000].lower()
+    ):
+        raise ValueError(
+            "The City of Minneapolis website (apps.ci.minneapolis.mn.us) blocks "
+            "automated requests with a Cloudflare 'Verify you are human' "
+            "challenge, so collection dates cannot be fetched. This is a change "
+            "on the city's side, see "
+            "https://github.com/mampfes/hacs_waste_collection_schedule/issues/8245"
+        )
+    r.raise_for_status()
+
+
 class Source:
     def __init__(self, apn):
         """Initialize the Minneapolis City waste collection source.
@@ -44,9 +71,21 @@ class Source:
             )
         self._area_number = apn
 
-    logging.basicConfig(
-        level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
-    )
+    def _find_date(self, soup, label):
+        """Return the date linked after a label, or raise if it is missing."""
+        strong = soup.find("strong", string=label)
+        link = strong.find_next("a") if strong else None
+        if link is None:
+            raise SourceArgumentNotFound(
+                "apn",
+                self._area_number,
+                "no collection dates were found. Check the APN at "
+                "https://apps.ci.minneapolis.mn.us/AddressPortalApp/Search?AppID=RecycleFinderApp",
+            )
+        text = link.text.strip()
+        _LOGGER.debug("%s %s", label, text)
+        date_str = " ".join(text.split()[1:])  # Remove first word (day of the week)
+        return datetime.strptime(date_str, "%b. %d, %Y")
 
     # Updated request using SSL code snippet
     def fetch(self):
@@ -63,43 +102,14 @@ class Source:
             f"https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx?AppID=RecycleFinderApp&apn={self._area_number}",
             headers=headers,
         )
+        _check_response(response)
         soup = BeautifulSoup(response.text, "html.parser")
 
-        entries = []
-
         # 1. Find the next garbage collection date
-        garbage_collection_text = (
-            soup.find("strong", text="Next Garbage Collection:")
-            .find_next("a")
-            .text.strip()
-        )
-        logging.info("garbage_collection_text: %s", garbage_collection_text)
-        garbage_collection_date_str = " ".join(
-            garbage_collection_text.split()[1:]
-        )  # Remove first word (day of the week)
-        logging.info("garbage_collection_date_str: %s", garbage_collection_date_str)
-        garbage_collection_date = datetime.strptime(
-            garbage_collection_date_str, "%b. %d, %Y"
-        )
-        logging.info("garbage_collection_date: %s", garbage_collection_date)
+        garbage_collection_date = self._find_date(soup, "Next Garbage Collection:")
 
         # 2. Find the next recycling collection date
-        recycling_collection_text = (
-            soup.find("strong", text="Next Recycling Collection:")
-            .find_next("a")
-            .text.strip()
-        )
-        logging.info("recycling_collection_text: %s", recycling_collection_text)
-        grecycling_collection_date_str = " ".join(
-            recycling_collection_text.split()[1:]
-        )  # Remove first word (day of the week)
-        logging.info(
-            "recycling_collection_date_str: %s", grecycling_collection_date_str
-        )
-        recycling_collection_date = datetime.strptime(
-            grecycling_collection_date_str, "%b. %d, %Y"
-        )
-        logging.info("recycling_collection_date: %s", recycling_collection_date)
+        recycling_collection_date = self._find_date(soup, "Next Recycling Collection:")
 
         entries = []  # List that holds collection schedule
 
@@ -107,7 +117,7 @@ class Source:
             Collection(
                 date=garbage_collection_date.date(),
                 t="Garbage",  # Collection type
-                icon="mdi:trash-can",  # Collection icon
+                icon=ICON_MAP["DOMESTIC"],  # Collection icon
             )
         )
 
@@ -115,7 +125,7 @@ class Source:
             Collection(
                 date=recycling_collection_date.date(),
                 t="Recycling",  # Collection type
-                icon="mdi:leaf",  # Collection icon
+                icon=ICON_MAP["RECYCLE"],  # Collection icon
             )
         )
 
