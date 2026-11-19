@@ -3,6 +3,10 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 from waste_collection_schedule import Collection  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "Landkreis Erlangen-Höchstadt"
@@ -51,22 +55,30 @@ class Source:
         if not loc_select:
             raise ValueError("Could not find selection field (locid).")
 
-        loc_id = None
-        for option in loc_select.find_all("option"):
-            text = option.get_text(strip=True)
-            if self._city.lower() in text.lower():
-                loc_id = option.get("value")
-                break
-
-        if not loc_id:
-            available_cities = [
-                opt.get_text(strip=True)
-                for opt in loc_select.find_all("option")
-                if opt.get("value")
-            ]
-            raise ValueError(
-                f"Location '{self._city}' not found. Available: {available_cities[:10]}..."
+        city_options = [
+            (option.get("value"), option.get_text(strip=True))
+            for option in loc_select.find_all("option")
+            if option.get("value")
+        ]
+        exact_cities = [
+            (value, label)
+            for value, label in city_options
+            if self._city.casefold() == label.casefold()
+        ]
+        city_matches = exact_cities or [
+            (value, label)
+            for value, label in city_options
+            if self._city.casefold() in label.casefold()
+        ]
+        if len(city_matches) > 1:
+            raise SourceArgAmbiguousWithSuggestions(
+                "city", self._city, [label for _, label in city_matches]
             )
+        if not city_matches:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "city", self._city, [label for _, label in city_options]
+            )
+        loc_id, _ = city_matches[0]
 
         # -------------------------------------------------------------
         # 2. Straße (pois) über Autocomplete-Endpunkt ermitteln
@@ -90,19 +102,25 @@ class Source:
         resp.raise_for_status()
         suggestions = resp.json()
 
-        pois_id = None
-        poiname = ""
-        for value, label in suggestions:
-            if self._street.lower() in label.lower():
-                pois_id = value
-                poiname = label
-                break
-
-        if not pois_id:
-            raise ValueError(
-                f"Street '{self._street}' not found in '{self._city}'."
-                f" Available: {[label for _, label in suggestions[:10]]}..."
+        exact_streets = [
+            (value, label)
+            for value, label in suggestions
+            if self._street.casefold() == label.casefold()
+        ]
+        street_matches = exact_streets or [
+            (value, label)
+            for value, label in suggestions
+            if self._street.casefold() in label.casefold()
+        ]
+        if len(street_matches) > 1:
+            raise SourceArgAmbiguousWithSuggestions(
+                "street", self._street, [label for _, label in street_matches]
             )
+        if not street_matches:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "street", self._street, [label for _, label in suggestions]
+            )
+        pois_id, poiname = street_matches[0]
 
         # -------------------------------------------------------------
         # 3. Get calendar with locid & pois and get ICS link
@@ -133,9 +151,7 @@ class Source:
             ics_btn = soup.find(class_="waste-ical-btn")
 
             if not ics_btn or not ics_btn.get("data-href"):
-                raise ValueError(
-                    "Download link could not extracted from ICS file."
-                )
+                raise ValueError("Download link could not extracted from ICS file.")
 
             download_url = urljoin(self._base_url, ics_btn["data-href"])
             ics_resp = session.get(download_url, timeout=30)
