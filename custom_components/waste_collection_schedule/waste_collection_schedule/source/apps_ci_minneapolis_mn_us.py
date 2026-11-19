@@ -1,10 +1,16 @@
 import logging
-from datetime import datetime
+import re
+from datetime import date, datetime
 
 from bs4 import BeautifulSoup
+from curl_cffi import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
-from waste_collection_schedule.exceptions import SourceArgumentRequired
-from waste_collection_schedule.service.SSLError import get_legacy_session
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentRequired,
+)
+
+_LOGGER = logging.getLogger(__name__)
 
 PARAM_TRANSLATIONS = {"en": {"apn": "APN"}}
 
@@ -21,10 +27,54 @@ TEST_CASES = {
 # https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx?AppID=RecycleFinderApp&apn=0902824440154
 API_URL = "https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx"
 ICON_MAP = {
-    "DOMESTIC": Icons.GENERAL_WASTE,
-    "RECYCLE": Icons.RECYCLING,
-    "ORGANIC": Icons.ORGANIC,
+    "Garbage": Icons.GENERAL_WASTE,
+    "Recycling": Icons.RECYCLING,
 }
+LABELS = {
+    "Garbage": "Next Garbage Collection:",
+    "Recycling": "Next Recycling Collection:",
+}
+
+
+def _check_response(r: requests.Response) -> None:
+    """Raise a clear error when the city's site blocks the request.
+
+    Since November 2026 apps.ci.minneapolis.mn.us answers every visitor,
+    including regular browsers, with an interactive Cloudflare challenge
+    ("Verify you are human") instead of the schedule page.
+    """
+    if r.headers.get("cf-mitigated") == "challenge" or (
+        "just a moment" in r.text[:2000].lower()
+    ):
+        raise ValueError(
+            "The City of Minneapolis website (apps.ci.minneapolis.mn.us) blocks "
+            "automated requests with a Cloudflare 'Verify you are human' "
+            "challenge, so collection dates cannot be fetched. This is a change "
+            "on the city's side."
+        )
+    r.raise_for_status()
+
+
+def _parse_date(soup: BeautifulSoup, label: str) -> date | None:
+    """Return the date linked after a label such as 'Next Garbage Collection:'."""
+    tag = soup.find("strong", string=re.compile(r"^\s*" + re.escape(label) + r"\s*$"))
+    if tag is None:
+        return None
+    link = tag.find_next("a")
+    if link is None:
+        return None
+    # e.g. "Friday, Nov. 20, 2026" -> "Nov. 20, 2026"
+    text = " ".join(link.get_text().split()[1:])
+    # Accept both abbreviated ("Nov.") and full ("May") month names.
+    text = re.sub(r"^(\w+)\.?", r"\1", text)
+    text = re.sub(r"^Sept\b", "Sep", text)
+    for fmt in ("%b %d, %Y", "%B %d, %Y"):
+        try:
+            return datetime.strptime(text, fmt).date()
+        except ValueError:
+            continue
+    _LOGGER.warning("Could not parse %s date from %r", label, link.get_text())
+    return None
 
 
 class Source:
@@ -44,79 +94,34 @@ class Source:
             )
         self._area_number = apn
 
-    logging.basicConfig(
-        level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s"
-    )
-
-    # Updated request using SSL code snippet
-    def fetch(self):
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-            "Referer": "https://www.minneapolismn.gov/solid-waste/",
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-            "Accept-Encoding": "gzip, deflate, br, zstd",
-            "Accept-Language": "en-US,en;q=0.9",
-            "sec-ch-ua-platform": "macOS",
-        }
-
-        response = get_legacy_session().get(
-            f"https://apps.ci.minneapolis.mn.us/RecyclingFinderApp/RecyclingRpt.aspx?AppID=RecycleFinderApp&apn={self._area_number}",
-            headers=headers,
+    def fetch(self) -> list[Collection]:
+        session = requests.Session(impersonate="chrome")
+        r = session.get(
+            API_URL,
+            params={"AppID": "RecycleFinderApp", "apn": self._area_number},
+            headers={"Referer": "https://www.minneapolismn.gov/solid-waste/"},
+            timeout=30,
         )
-        soup = BeautifulSoup(response.text, "html.parser")
+        _check_response(r)
+        soup = BeautifulSoup(r.text, "html.parser")
 
         entries = []
+        for waste_type, label in LABELS.items():
+            collection_date = _parse_date(soup, label)
+            if collection_date is not None:
+                entries.append(
+                    Collection(
+                        date=collection_date,
+                        t=waste_type,
+                        icon=ICON_MAP.get(waste_type),
+                    )
+                )
 
-        # 1. Find the next garbage collection date
-        garbage_collection_text = (
-            soup.find("strong", text="Next Garbage Collection:")
-            .find_next("a")
-            .text.strip()
-        )
-        logging.info("garbage_collection_text: %s", garbage_collection_text)
-        garbage_collection_date_str = " ".join(
-            garbage_collection_text.split()[1:]
-        )  # Remove first word (day of the week)
-        logging.info("garbage_collection_date_str: %s", garbage_collection_date_str)
-        garbage_collection_date = datetime.strptime(
-            garbage_collection_date_str, "%b. %d, %Y"
-        )
-        logging.info("garbage_collection_date: %s", garbage_collection_date)
-
-        # 2. Find the next recycling collection date
-        recycling_collection_text = (
-            soup.find("strong", text="Next Recycling Collection:")
-            .find_next("a")
-            .text.strip()
-        )
-        logging.info("recycling_collection_text: %s", recycling_collection_text)
-        grecycling_collection_date_str = " ".join(
-            recycling_collection_text.split()[1:]
-        )  # Remove first word (day of the week)
-        logging.info(
-            "recycling_collection_date_str: %s", grecycling_collection_date_str
-        )
-        recycling_collection_date = datetime.strptime(
-            grecycling_collection_date_str, "%b. %d, %Y"
-        )
-        logging.info("recycling_collection_date: %s", recycling_collection_date)
-
-        entries = []  # List that holds collection schedule
-
-        entries.append(
-            Collection(
-                date=garbage_collection_date.date(),
-                t="Garbage",  # Collection type
-                icon="mdi:trash-can",  # Collection icon
+        if not entries:
+            raise SourceArgumentNotFound(
+                "apn",
+                self._area_number,
+                "no collection dates were found. Check the APN at "
+                "https://apps.ci.minneapolis.mn.us/AddressPortalApp/Search?AppID=RecycleFinderApp",
             )
-        )
-
-        entries.append(
-            Collection(
-                date=recycling_collection_date.date(),
-                t="Recycling",  # Collection type
-                icon="mdi:leaf",  # Collection icon
-            )
-        )
-
         return entries
