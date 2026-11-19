@@ -483,6 +483,11 @@ TEST_CASES = {
         "city": "Ulm",
         "street": "Bahnhofplatz",
     },
+    "Hersfeld-Rotenburg, Neuenstein": {
+        "customer": "azv-hef-rof",
+        "city": "Neuenstein",
+        "street": "Neuenstein",
+    },
 }
 
 _LOGGER = logging.getLogger(__name__)
@@ -694,6 +699,10 @@ class Source:
         calendar = [item for item in cal_json["calendar"] if item["ad"] is not None]
 
         entries = []
+        # Some customers (e.g. azv-hef-rof) use fraction codes such as GTS/PG
+        # in the calendar that are not defined in 'fracts'. Skip those entries
+        # instead of failing the whole fetch.
+        unknown: set[str] = set()
         for calitem in calendar:
             date = datetime.datetime.strptime(calitem["dt"], "%Y%m%d").date()
 
@@ -703,6 +712,9 @@ class Source:
 
             # Add all fractions for this date
             for i, fracitem in enumerate(fr_list):
+                if fracitem not in fractions:
+                    unknown.add(fracitem)
+                    continue
                 waste_type = fractions[fracitem]
                 extra: dict = {}
                 if i < len(ad_list) and ad_list[i]:
@@ -710,5 +722,12 @@ class Source:
                 c = Collection(date, waste_type)
                 c.update(extra)
                 entries.append(c)
+
+        if unknown:
+            _LOGGER.debug(
+                "Skipping calendar entries with fraction code(s) %s not defined "
+                "in fracts",
+                ", ".join(sorted(unknown)),
+            )
 
         return entries
