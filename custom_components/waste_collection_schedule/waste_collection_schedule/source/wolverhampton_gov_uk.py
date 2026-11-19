@@ -1,5 +1,6 @@
 import logging
-from datetime import datetime
+import re
+from datetime import date, datetime
 
 import requests
 from bs4 import BeautifulSoup
@@ -30,6 +31,31 @@ HEADERS = {
 }
 
 
+def _parse_date(text: str, today: date) -> date:
+    """Parse a collection date such as "November 25" or "November 25, 2026".
+
+    The council page used to show "Next date: November 25, 2026" and now shows
+    just "November 25". Without a year, assume the next occurrence: a date more
+    than a month in the past belongs to next year (December -> January).
+    """
+    text = re.sub(r"^\s*Next date:\s*", "", text).strip()
+    for fmt in ("%B %d, %Y", "%B %d %Y", "%d %B %Y"):
+        try:
+            return datetime.strptime(text, fmt).date()
+        except ValueError:
+            pass
+    for fmt in ("%B %d", "%d %B"):
+        try:
+            parsed = datetime.strptime(text, fmt)
+        except ValueError:
+            continue
+        result = date(today.year, parsed.month, parsed.day)
+        if (today - result).days > 31:
+            result = date(today.year + 1, parsed.month, parsed.day)
+        return result
+    raise ValueError(f"unrecognised date format: {text!r}")
+
+
 class Source:
     def __init__(self, postcode: str, uprn: str):
         self._postcode = postcode.replace(" ", "").upper()
@@ -54,8 +80,25 @@ class Source:
         soup = BeautifulSoup(r.text, "html.parser")
         entries = []
 
-        # Find all waste containers
-        waste_containers = soup.find_all("div", class_="col-md-4")
+        # Find the waste containers: the columns under the "Bin collection days"
+        # heading. The column class has changed before (col-md-4 -> col-md-3), and
+        # matching any col-md-* across the whole page also picks up the
+        # councillor and school blocks further down.
+        heading = soup.find(
+            lambda tag: (
+                tag.name in ("h2", "h3")
+                and "bin collection days" in tag.get_text(strip=True).lower()
+            )
+        )
+        if heading is None:
+            raise Exception(
+                "Could not find the 'Bin collection days' section on the Wolverhampton Council page"
+            )
+        section = heading.find_parent("div") or soup
+        waste_containers = section.find_all(
+            "div", class_=re.compile(r"^col-(xs|sm|md|lg)-\d+$")
+        )
+        today = date.today()
 
         for container in waste_containers:
             waste_type_tag = container.find("h3")
@@ -68,11 +111,10 @@ class Source:
                 waste_type_key = waste_type_raw.replace(" ", "_").lower()
 
                 # Extract next collection date
-                next_date_text = next_date_tag.text.replace("Next date: ", "").strip()
+                next_date_text = next_date_tag.text.strip()
 
                 try:
-                    # Parse the date (format: "Month Day, Year")
-                    date_obj = datetime.strptime(next_date_text, "%B %d, %Y").date()
+                    date_obj = _parse_date(next_date_text, today)
 
                     # Map the waste type to our standard types for icons
                     if "general" in waste_type_key or "refuse" in waste_type_key:
