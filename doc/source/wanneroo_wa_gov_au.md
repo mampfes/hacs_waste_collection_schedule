@@ -26,10 +26,10 @@ waste_collection_schedule:
     sources:
     - name: wanneroo_wa_gov_au
       args:
-        address: 23 Bakana Loop LANDSDALE
+        address: 1 Atlanta DR TWO ROCKS
         
 ```
 
 ## How to get the source argument
 
-Find the parameter of your address using [https://www.wanneroo.wa.gov.au/info/20008/waste_services](https://www.wanneroo.wa.gov.au/info/20008/waste_services) and write them exactly like on the web page.
+Find the parameter of your address using [https://www.wanneroo.wa.gov.au/residential-services/waste-and-recycling/bin-collections](https://www.wanneroo.wa.gov.au/residential-services/waste-and-recycling/bin-collections) and write them exactly like on the web page.
