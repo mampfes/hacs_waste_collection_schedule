@@ -17,6 +17,15 @@ ICON_MAP = {
     "Recycling": Icons.RECYCLING,
 }
 HEADERS = {"User-Agent": "Mozilla/5.0"}
+WEEKDAYS = [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
+]
 
 TEST_CASES = {
     "Test1": {"address": "200 Heretaunga Street East"},
@@ -29,6 +38,12 @@ TEST_CASES = {
 class Source:
     def __init__(self, address):
         self._address = address
+
+    def _matches_address(self, item):
+        # property_location is "<address> <TOWN> <POSTCODE>"
+        wanted = " ".join(self._address.split()).lower()
+        location = " ".join(str(item.get("property_location", "")).split()).lower()
+        return location == wanted or location.startswith(wanted + " ")
 
     def fetch_property_details(self):
         params = {
@@ -55,11 +70,15 @@ class Source:
             ].get("value", ""):
                 raise ValueError(f"No record found for address: {self._address}")
 
-            # Check if there is more than one result
+            # If there is more than one result, prefer an exact address match
+            # (e.g. "200 Heretaunga Street East" also finds "1200 ...")
             if len(data) > 1:
-                raise ValueError(
-                    f"Multiple results found for address: {self._address}. Must be a single address only."
-                )
+                exact = [item for item in data if self._matches_address(item)]
+                if len(exact) != 1:
+                    raise ValueError(
+                        f"Multiple results found for address: {self._address}. Must be a single address only."
+                    )
+                data = exact
 
             # Check if the expected keys exist in the first item of the data list
             if (
@@ -126,7 +145,10 @@ class Source:
                     days = collection_info.split(". ")[0].split("/")  # Extract the days
                     for day in days:
                         # Calculate the weekday index of the target day
-                        target_weekday = datetime.datetime.strptime(day, "%A").weekday()
+                        try:
+                            target_weekday = WEEKDAYS.index(day.strip().lower())
+                        except ValueError:
+                            raise ValueError(f"Unknown collection day: {day}") from None
 
                         today = datetime.date.today()
 
