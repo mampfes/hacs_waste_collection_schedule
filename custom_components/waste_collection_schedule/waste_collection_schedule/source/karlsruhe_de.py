@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import requests
 import urllib3
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
@@ -45,7 +43,7 @@ ICON_MAP = {
 }
 
 
-API_URL = "https://web{i}.karlsruhe.de/service/abfall/akal/akal_{year}.php"
+API_URL = "https://web{i}.karlsruhe.de/service/abfall/akal/akal.php"
 
 
 PARAM_TRANSLATIONS = {
@@ -70,14 +68,12 @@ class Source:
         self.ics = ICS()
 
     def fetch(self):
-        now = datetime.now()
         error = None
-        for year in (now.year, now.year + 1, now.year - 1):
-            for i in (4, 6):
-                try:
-                    return self.get_data(API_URL.format(year=year, i=i))
-                except Exception as e:
-                    error = e
+        for i in (4, 6):
+            try:
+                return self.get_data(API_URL.format(i=i))
+            except Exception as e:
+                error = e
         raise error
 
     def get_data(self, url):
