@@ -117,7 +117,7 @@ class Source:
             Collection(
                 date=garbage_collection_date.date(),
                 t="Garbage",  # Collection type
-                icon="mdi:trash-can",  # Collection icon
+                icon=ICON_MAP["DOMESTIC"],  # Collection icon
             )
         )
 
@@ -125,7 +125,7 @@ class Source:
             Collection(
                 date=recycling_collection_date.date(),
                 t="Recycling",  # Collection type
-                icon="mdi:leaf",  # Collection icon
+                icon=ICON_MAP["RECYCLE"],  # Collection icon
             )
         )
 
