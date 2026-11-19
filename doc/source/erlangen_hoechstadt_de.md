@@ -23,4 +23,4 @@ waste_collection_schedule:
 
 ### How to get the source arguments
 
-Visit [erlangen-hoechstadt.de](https://www.erlangen-hoechstadt.de/aktuelles/abfallkalender/) and search for your area. Use the value from the "Ort" dropdown as `city` argument and the one from "Ortsteil/Straße" as `street`. `street` is case sensitive!
+Visit [erlangen-hoechstadt.de](https://www.erlangen-hoechstadt.de/aktuelles/abfallkalender/) and search for your area. Use the value from the "Ort" dropdown as `city` argument and the matching street from the "Straße auswählen" autocomplete field as `street`. The matching is case-insensitive and matches on substrings (e.g. `street: "Ort inkl. aller Ortsteile"` selects all districts of a municipality).
