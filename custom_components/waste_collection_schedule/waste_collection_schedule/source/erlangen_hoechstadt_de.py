@@ -37,25 +37,19 @@ class Source:
 
     def fetch(self):
         session = requests.Session()
-        session.headers.update(
-            {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-            }
-        )
 
         # -------------------------------------------------------------
-        # 1. Ort (locid) finden
+        # 1. Find location (locid)
         # -------------------------------------------------------------
         resp = session.get(self._base_url, timeout=30)
         resp.raise_for_status()
         soup = BeautifulSoup(resp.text, "html.parser")
 
-        # Select-Box für Ort ermitteln (meist name='locid' oder 'ort')
         loc_select = soup.find("select", {"name": "locid"}) or soup.find(
             "select", attrs={"id": lambda i: i and "locid" in i.lower()}
         )
         if not loc_select:
-            raise ValueError("Konnte das Orts-Auswahlfeld (locid) nicht finden.")
+            raise ValueError("Could not find selection field (locid).")
 
         loc_id = None
         for option in loc_select.find_all("option"):
@@ -71,7 +65,7 @@ class Source:
                 if opt.get("value")
             ]
             raise ValueError(
-                f"Ort '{self._city}' wurde nicht gefunden. Verfügbar: {available_cities[:10]}..."
+                f"Location '{self._city}' not found. Available: {available_cities[:10]}..."
             )
 
         # -------------------------------------------------------------
@@ -106,12 +100,12 @@ class Source:
 
         if not pois_id:
             raise ValueError(
-                f"Straße '{self._street}' wurde in '{self._city}' nicht gefunden."
-                f" Verfügbar: {[label for _, label in suggestions[:10]]}..."
+                f"Street '{self._street}' not found in '{self._city}'."
+                f" Available: {[label for _, label in suggestions[:10]]}..."
             )
 
         # -------------------------------------------------------------
-        # 3. Kalenderseite mit locid & pois abrufen und ICS-Link finden
+        # 3. Get calendar with locid & pois and get ICS link
         # -------------------------------------------------------------
         cal_params = {
             "ModID": "48",
@@ -130,17 +124,17 @@ class Source:
         cal_resp = session.get(self._base_url, params=cal_params, timeout=30)
         cal_resp.raise_for_status()
 
-        # Prüfen, ob die URL direkt eine ICS ausgibt
+        # Check if URL provides a direct download
         if "BEGIN:VCALENDAR" in cal_resp.text:
             ics_text = cal_resp.text
         else:
             soup = BeautifulSoup(cal_resp.text, "html.parser")
-            # iCal-Download-Button (data-href) heraussuchen
+            # get i-cal download button (data-href)
             ics_btn = soup.find(class_="waste-ical-btn")
 
             if not ics_btn or not ics_btn.get("data-href"):
                 raise ValueError(
-                    "Download-Link für ICS-Datei konnte nicht extrahiert werden."
+                    "Download link could not extracted from ICS file."
                 )
 
             download_url = urljoin(self._base_url, ics_btn["data-href"])
@@ -150,7 +144,7 @@ class Source:
             ics_text = ics_resp.text
 
         # -------------------------------------------------------------
-        # 4. In Collection-Objekte parsen
+        # 4. Fill collection objects
         # -------------------------------------------------------------
         dates = self._ics.convert(ics_text)
         return [Collection(d[0], d[1]) for d in dates]
