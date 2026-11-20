@@ -1,9 +1,12 @@
-import json
 import re
 from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgumentNotFound,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWB Abfallwirtschaft Vechta"
@@ -34,6 +37,23 @@ ICON_MAP = {
 }
 
 
+# ids of the "staedte" options embedded in the calendar page (the 10 municipalities of the county)
+CITY_IDS = {
+    "Bakum": 1,
+    "Damme": 2,
+    "Dinklage": 3,
+    "Goldenstedt": 4,
+    "Holdorf": 5,
+    "Lohne": 6,
+    "Neuenkirchen-Vörden": 7,
+    "Steinfeld": 8,
+    "Vechta": 9,
+    "Visbek": 10,
+}
+
+API_URL = "https://www.abfallwirtschaft-vechta.de/index.php"
+
+
 class Source:
     def __init__(self, stadt: str, strasse: str):
         self._stadt: str = stadt
@@ -46,53 +66,75 @@ class Source:
         if now.month != 12:
             return entries
         try:
-            return entries + self.get_data(now.year + 1)
+            next_year = self.get_data(now.year + 1)
         except Exception:
-            pass
+            return entries
+        # the next year's calendar may not be published yet, then the current one is returned again
+        seen = {(e.date, e.type) for e in entries}
+        return entries + [e for e in next_year if (e.date, e.type) not in seen]
+
+    def get_street(self) -> dict:
+        city_id = next(
+            (
+                cid
+                for name, cid in CITY_IDS.items()
+                if name.lower() == self._stadt.lower()
+            ),
+            None,
+        )
+        if city_id is None:
+            # the old city search matched a prefix, so keep accepting one that names a single city
+            prefixed = [
+                cid
+                for name, cid in CITY_IDS.items()
+                if name.lower().startswith(self._stadt.strip().lower())
+            ]
+            if self._stadt.strip() and len(prefixed) == 1:
+                city_id = prefixed[0]
+        if city_id is None:
+            raise SourceArgumentNotFoundWithSuggestions(
+                "stadt", self._stadt, CITY_IDS.keys()
+            )
+
+        r = requests.get(
+            API_URL,
+            params={
+                "option": "com_abfuhrkalender",
+                "task": "proxy.strassen",
+                "format": "json",
+                "stadt": city_id,
+                "q": self._strasse,
+            },
+        )
+        r.raise_for_status()
+        streets = r.json()["data"]
+        if not streets:
+            raise SourceArgumentNotFound("strasse", self._strasse)
+        return next(
+            (s for s in streets if s["name"].lower() == self._strasse.lower()),
+            streets[0],
+        )
 
     def get_data(self, jahr):
-        args = {"stadt": self._stadt, "strasse": self._strasse}
+        street = self.get_street()
 
         collection_entries = []
         string_entries = []
 
+        # the paper provider is chosen by the user on the website, so fetch every one available for the street
         for papier_typ in ["pamo", "siemer"]:
-            session = requests.Session()
-            session.cookies.set("jahr", str(jahr))
+            if not street.get(papier_typ):
+                continue
 
-            r = session.get(
-                "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_stadt.php",
-                params={"term": self._stadt},
-            )
-            r.raise_for_status()
-            city_id = r.json()[0]["id"]
-            session.cookies.set("stadt", str(city_id))
-
-            r = session.get(
-                "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_strasse.php",
-                params={"stadt": city_id, "term": self._strasse},
-            )
-            r.raise_for_status()
-            street = json.loads(r.text[1:-2])["strassen"][0]
-            session.cookies.set("stadt", str(street["id"]))
-            session.cookies.set("abfuhrbezirk", str(street["abfuhrbezirk"]))
-            session.cookies.set("abfuhrbezirkpapir", str(street[papier_typ]))
-            session.cookies.set("papier", papier_typ)
-
-            args = {
-                "stadt": city_id,
-                "strasse": street["id"],
-                "abfuhrbezirkpapier": street[papier_typ],
-                "jahr": jahr,
-                "papier": papier_typ,
-                "trigger": "false",
-                "triggerday": "false",
-                "triggertime": "false",
-            }
-
-            r = session.get(
-                "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.get_calender_ics.php",
-                params=args,
+            r = requests.get(
+                API_URL,
+                params={
+                    "option": "com_abfuhrkalender",
+                    "task": "proxy.ics",
+                    "strasse": street["id"],
+                    "jahr": jahr,
+                    "papier": papier_typ,
+                },
             )
             r.raise_for_status()
             r.encoding = "utf-8"
