@@ -1,4 +1,5 @@
 import re
+from datetime import date
 from difflib import get_close_matches
 
 import requests
@@ -84,6 +85,13 @@ def _extract_select_options(html: str, select_id: str) -> list[str]:
     return re.findall(r'value="([^"]*)"', match.group(0))
 
 
+def _extract_offered_years(html: str) -> list[int]:
+    # aos[Zeitraum] radio values look like "Jahresübersicht 2026"
+    return sorted(
+        {int(y) for y in re.findall(r'value="Jahresübersicht (\d{4})"', html)}
+    )
+
+
 class Source:
     def __init__(self, ort: str, strasse: str, hnr: str | int, hnr_zusatz: str = ""):
         self._ort: str = ort
@@ -142,20 +150,36 @@ class Source:
         args["aos[Hausnummer]"] = self._hnr
         args["aos[Hausnummerzusatz]"] = self._hnr_zusatz
 
-        # make request to set data for session
-        args["submitAction"] = "nextPage"
-        r = session.post(API_URL, data=args)
-        r.raise_for_status()
+        # The form preselects the newest published year (e.g. "Jahresübersicht 2027"
+        # from autumn on), which would drop the remaining dates of the current year.
+        # Request the current year explicitly and the next year too if it is offered.
+        current_year = date.today().year
+        offered_years = _extract_offered_years(r.text)
+        years = [y for y in (current_year, current_year + 1) if y in offered_years]
+        if not years:
+            years = [current_year]
 
-        # make request to get ical file
-        r = session.post(
-            API_URL,
-            data={"submitAction": "filedownload_ICAL", "pageName": "Terminliste"},
-        )
-        r.raise_for_status()
-
-        dates = self._ics.convert(r.text)
         entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1].strip(), ICON_MAP.get(d[1].strip())))
+        seen = set()
+        for year in years:
+            args["aos[Zeitraum]"] = f"Jahresübersicht {year}"
+
+            # make request to set data for session
+            args["submitAction"] = "nextPage"
+            r = session.post(API_URL, data=args)
+            r.raise_for_status()
+
+            # make request to get ical file
+            r = session.post(
+                API_URL,
+                data={"submitAction": "filedownload_ICAL", "pageName": "Terminliste"},
+            )
+            r.raise_for_status()
+
+            for d in self._ics.convert(r.text):
+                waste_type = d[1].strip()
+                if (d[0], waste_type) in seen:
+                    continue
+                seen.add((d[0], waste_type))
+                entries.append(Collection(d[0], waste_type, ICON_MAP.get(waste_type)))
         return entries
