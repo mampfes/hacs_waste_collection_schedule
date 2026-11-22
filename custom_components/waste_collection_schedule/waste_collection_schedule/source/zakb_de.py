@@ -93,6 +93,29 @@ class Source:
         self._ics = ICS()
 
     def fetch(self):
+        # The site offers a "Zeitraum" (period) choice. Late in the year its default
+        # switches to the next year's overview, which drops the remaining dates of the
+        # current year. Request every offered "Jahresübersicht" and merge them.
+        r = requests.get(API_URL)
+        r.raise_for_status()
+        zeitraum_options = re.findall(
+            r'name="aos\[Zeitraum\]" value="(Jahres[^"]*)"', r.text
+        )
+
+        entries = []
+        seen = set()
+        for zeitraum in zeitraum_options or [None]:
+            for d in self._fetch_zeitraum(zeitraum):
+                key = (d[0], d[1].strip())
+                if key in seen:
+                    continue
+                seen.add(key)
+                entries.append(
+                    Collection(d[0], d[1].strip(), ICON_MAP.get(d[1].strip()))
+                )
+        return entries
+
+    def _fetch_zeitraum(self, zeitraum):
         # inizilize session
         session = requests.Session()
 
@@ -122,6 +145,8 @@ class Source:
             "submitAction": "CITYCHANGED",
             "pageName": "Lageadresse",
         }
+        if zeitraum:
+            args["aos[Zeitraum]"] = zeitraum
 
         # make request to call CITYCHANGED and get the streets available for this city.
         # The site uses its own street-name spelling (e.g. hyphens instead of spaces),
@@ -154,8 +179,4 @@ class Source:
         )
         r.raise_for_status()
 
-        dates = self._ics.convert(r.text)
-        entries = []
-        for d in dates:
-            entries.append(Collection(d[0], d[1].strip(), ICON_MAP.get(d[1].strip())))
-        return entries
+        return self._ics.convert(r.text)
