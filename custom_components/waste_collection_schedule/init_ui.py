@@ -563,11 +563,11 @@ async def _migrate_registry_unique_ids(
     await er.async_migrate_entries(hass, config_entry.entry_id, _update_unique_id)
 
     device_registry = dr.async_get(hass)
-    device_entry = device_registry.async_get_device(
-        identifiers={(const.DOMAIN, old_base)}
-    )
-    if device_entry is not None:
-        device_registry.async_update_device(
-            device_entry.id,
-            new_identifiers={(const.DOMAIN, new_base)},
-        )
+    for device_entry in dr.async_entries_for_config_entry(
+        device_registry, config_entry.entry_id
+    ):
+        if (const.DOMAIN, old_base) in device_entry.identifiers:
+            device_registry.async_update_device(
+                device_entry.id,
+                new_identifiers={(const.DOMAIN, new_base)},
+            )

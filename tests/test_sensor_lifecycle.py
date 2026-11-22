@@ -111,6 +111,37 @@ async def test_v2_registry_migrates_source_and_sensor_identity_in_one_pass(ha):
 
 
 @pytest.mark.asyncio
+async def test_v2_migration_rekeys_the_entry_device(ha, caplog):
+    from homeassistant.helpers import device_registry as dr
+
+    from custom_components.waste_collection_schedule.init_ui import (
+        _get_source_unique_id,
+    )
+
+    entry = entry_for(
+        ha,
+        {
+            "sensors": [
+                {
+                    "name": "Paper",
+                    "types": [PAPER.names["en"]],
+                    "value_template": LEGACY_VALUE_TEMPLATE,
+                }
+            ]
+        },
+        version=2,
+    )
+    registry = dr.async_get(ha)
+    device = registry.async_get_or_create(
+        config_entry_id=entry.entry_id,
+        identifiers={(DOMAIN, _get_source_unique_id(entry.data))},
+    )
+    assert await async_migrate_entry(ha, entry)
+    assert registry.async_get(device.id).identifiers == {(DOMAIN, entry.entry_id)}
+    assert "async_get_device" not in caplog.text
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize("frozen", [False, True])
 async def test_published_device_preview_sensor_identity_is_migrated(ha, frozen):
     old = {
