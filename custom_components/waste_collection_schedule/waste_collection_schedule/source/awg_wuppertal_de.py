@@ -7,7 +7,10 @@ from waste_collection_schedule.service.ICS import ICS
 TITLE = "AWG Wuppertal"
 DESCRIPTION = "Source for AWG Wuppertal."
 URL = "https://awg-wuppertal.de/"
-TEST_CASES = {"Hauptstraße": {"street": "Hauptstraße"}}
+TEST_CASES = {
+    "Hauptstraße": {"street": "Hauptstraße"},
+    "Höhe": {"street": "Höhe"},
+}
 
 
 ICON_MAP = {
@@ -44,6 +47,26 @@ class Source:
         if not data and len(street) > 3:
             return Source._search_street(street[:-1])
         return data
+
+    @staticmethod
+    def _find_ical_links(soup: BeautifulSoup) -> list:
+        # get all links where text ends on "als iCal"
+        return soup.find_all(
+            "a", text=lambda text: text and text.lower().strip().endswith("als ical")
+        )
+
+    def _find_street_link(self, soup: BeautifulSoup) -> str | None:
+        wanted = (self._confirmed_street or "").lower().replace(" ", "")
+        for link in soup.find_all("a", href=True):
+            if link.get_text(strip=True).lower().replace(" ", "") != wanted:
+                continue
+            href = link["href"]
+            if not isinstance(href, str):
+                continue
+            if href.startswith("/"):
+                href = BASE_URL + href
+            return href
+        return None
 
     def confirm_street(self) -> None:
         streets = Source._search_street(self._street)
@@ -83,10 +106,17 @@ class Source:
         r = requests.post(action, data=data)
         soup = BeautifulSoup(r.text, "html.parser")
 
-        # get all links where text ends on "als iCal"
-        ical_links = soup.find_all(
-            "a", text=lambda text: text and text.lower().strip().endswith("als ical")
-        )
+        ical_links = self._find_ical_links(soup)
+        if not ical_links:
+            # The site answers with a list of similar street names when the
+            # name matches more than one street (e.g. "Höhe" also matches
+            # "Briller Höhe"). Follow the link of the exact match.
+            street_href = self._find_street_link(soup)
+            if street_href:
+                r = requests.get(street_href)
+                r.raise_for_status()
+                soup = BeautifulSoup(r.text, "html.parser")
+                ical_links = self._find_ical_links(soup)
         entries = []
         for link in ical_links:
             href = link["href"]
