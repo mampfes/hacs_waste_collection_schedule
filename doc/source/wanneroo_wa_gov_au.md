@@ -32,4 +32,6 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-Find the parameter of your address using [https://www.wanneroo.wa.gov.au/info/20008/waste_services](https://www.wanneroo.wa.gov.au/info/20008/waste_services) and write them exactly like on the web page.
+Search for your address in the "Find your bin collection day" box at [https://www.wanneroo.wa.gov.au/residential-services/waste-and-recycling/bin-collections](https://www.wanneroo.wa.gov.au/residential-services/waste-and-recycling/bin-collections) and use the address exactly as it is suggested there, e.g. `23 Bakana LP LANDSDALE`. Spelled-out street types (`23 Bakana Loop, Landsdale`) are also accepted.
+
+For a unit, include the unit number as shown on the website, e.g. `13/26 Princeton CIR ALEXANDER HEIGHTS`.
