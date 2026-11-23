@@ -1,8 +1,9 @@
+import datetime
 import re
 from collections.abc import Iterable
 from typing import Any, ClassVar, NotRequired, TypedDict, final
 
-from waste_collection_schedule import date_parsers, lookups, parsers, recurrence
+from waste_collection_schedule import date_parsers, lookups, parsers
 from waste_collection_schedule import waste_types as wt
 from waste_collection_schedule.base_source import BaseSource
 from waste_collection_schedule.config_params import street_address
@@ -12,12 +13,10 @@ from waste_collection_schedule.exceptions import (
 )
 from waste_collection_schedule.preprocessors import (
     Compose,
+    DateFields,
     Deduplicate,
-    RecurrenceExpander,
     RequireRecords,
-    Schedule,
 )
-from waste_collection_schedule.response_shape import ResponseShapeError
 from waste_collection_schedule.retrievers import HttpGetRetriever
 from waste_collection_schedule.transformers import ICSTransformer
 
@@ -32,8 +31,10 @@ HEADERS = {
     "X-Requested-With": "XMLHttpRequest",
 }
 
-# Response field -> waste type. Each field holds either explicit dates
-# ("13.01.2026, 27.01.2026, ...") or a weekday for a weekly round ("środa").
+# Response field -> waste type. A field holds either explicit dates
+# ("13.01.2026, 27.01.2026, ...") or only a weekday for a weekly round
+# ("środa"). Only the explicit dates are used: a weekday is not projected into
+# dates, since that would miss holiday shifts and schedule changes.
 TYPES = {
     "mixed": wt.GENERAL_WASTE,
     "selective": wt.RECYCLABLES,
@@ -41,17 +42,23 @@ TYPES = {
     "bulk": wt.BULKY_WASTE,
 }
 
-# Values ZGK uses for "no collection of this kind here", as normalize_loose
-# folds them ("-" folds to "").
-NO_COLLECTION = {"", "brak", "brak odbioru", "nie dotyczy", "nie wystepuje"}
-
-# A weekday round is published without dates, so project it a year ahead.
-WEEKS_AHEAD = 52
 MAX_SUGGESTIONS = 10
 
-DATE = re.compile(r"(?<!\d)\d{1,2}\.\d{1,2}\.\d{4}(?!\d)")
-WORD = re.compile(r"[^\W\d_]+")
-parse_date = date_parsers.for_format("%d.%m.%Y")
+# A date at the start of one comma-separated part. The last bulk date carries a
+# trailing note ("03.08.2026 - podane ...").
+DATE = re.compile(r"(\d{1,2}\.\d{1,2}\.\d{4})(?!\d)")
+_parse_dmy = date_parsers.for_format("%d.%m.%Y")
+
+
+def _parse_date(value: object) -> datetime.date | None:
+    """The date a part starts with; None for a weekday, a marker or a bad date."""
+    match = DATE.match(str(value or "").strip())
+    if match is None:
+        return None
+    try:
+        return _parse_dmy(match.group(1))
+    except ValueError:
+        return None  # an impossible date (31.02.) is one bad entry
 
 
 class Suggestion(TypedDict):
@@ -98,38 +105,6 @@ def _select_address(
     return exact[:1]
 
 
-def _describe(record: Suggestion, source: BaseSource | None) -> Iterable[Schedule]:
-    for field in TYPES:
-        text = str(record.get(field) or "").strip()
-        if lookups.normalize_loose(text) in NO_COLLECTION:
-            continue
-
-        found = DATE.findall(text)
-        if found:
-            for raw in found:
-                try:
-                    yield Schedule(field, parse_date(raw))
-                except ValueError:
-                    continue  # an impossible date (31.02.) is one bad entry
-            continue
-
-        weekdays = {
-            day
-            for word in WORD.findall(text)
-            if (day := recurrence.weekday(word, "pl", abbreviated=True)) is not None
-        }
-        if not weekdays:
-            raise ResponseShapeError(
-                "zgk_net_pl",
-                f"unsupported schedule {text!r} for {field!r}, "
-                "expected dd.mm.yyyy dates or Polish weekday names",
-            )
-        for day in sorted(weekdays):
-            yield Schedule(
-                field, recurrence.next_weekday(day), recurrence.WEEKLY, WEEKS_AHEAD
-            )
-
-
 @final
 class Source(BaseSource):
     TITLE = "ZGK Zielona Góra"
@@ -148,12 +123,22 @@ class Source(BaseSource):
     HOWTO: ClassVar[dict[str, str]] = {
         "en": (
             f"Search for your address at {SEARCH_URL} and enter it exactly as "
-            "suggested there, without the part in brackets (e.g. 'AKADEMICKA 1')."
+            "suggested there, without the part in brackets (e.g. 'AKADEMICKA 1'). "
+            "Only rounds ZGK publishes with dates are included (currently "
+            "selective and bulky waste). Mixed and bio waste are published only "
+            "as a weekday (e.g. 'środa') and are not included; add them yourself "
+            "with a 'static' source (frequency WEEKLY) and keep holiday shifts "
+            "up to date in its 'excludes' and 'dates'."
         ),
         "pl": (
             f"Wyszukaj ulicę i numer budynku na stronie {SEARCH_URL} i wpisz je "
             "dokładnie tak, jak podpowiada wyszukiwarka, bez części w nawiasie "
-            "(np. 'AKADEMICKA 1')."
+            "(np. 'AKADEMICKA 1'). Uwzględniane są tylko odbiory, dla których "
+            "ZGK podaje terminy (obecnie selektywne i gabaryty). Odpady "
+            "zmieszane i BIO ZGK opisuje wyłącznie dniem tygodnia (np. 'środa'), "
+            "więc nie są pobierane; dodaj je samodzielnie źródłem 'static' "
+            "(frequency WEEKLY), a przesunięcia świąteczne uzupełniaj w jego "
+            "'excludes' i 'dates'."
         ),
     }
 
@@ -177,7 +162,9 @@ class Source(BaseSource):
             hint="use the spelling the ZGK search suggests, with Polish characters.",
         ),
         _select_address,
-        RecurrenceExpander(_describe),
+        DateFields(
+            fields={field: field for field in TYPES}, parse_date=_parse_date, split=","
+        ),
         Deduplicate(),
     )
     transform = ICSTransformer(type_value_map=TYPES)
