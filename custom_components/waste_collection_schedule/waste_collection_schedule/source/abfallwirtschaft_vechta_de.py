@@ -4,6 +4,10 @@ from datetime import datetime
 
 import requests
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
+from waste_collection_schedule.exceptions import (
+    SourceArgAmbiguousWithSuggestions,
+    SourceArgumentNotFoundWithSuggestions,
+)
 from waste_collection_schedule.service.ICS import ICS
 
 TITLE = "AWB Abfallwirtschaft Vechta"
@@ -31,7 +35,13 @@ ICON_MAP = {
     "Altpapier Siemer": Icons.PAPER,
     "Altpapier Pamo": Icons.PAPER,
     "Gelbe Tonne": Icons.PLASTIC_PACKAGING,
+    "Altkleider": Icons.TEXTILE,
+    "Mobile Schadstoff.": Icons.HAZARDOUS,
 }
+
+BASE_URL = "https://www.abfallwirtschaft-vechta.de/index.php"
+COMPONENT = "com_abfuhrkalender"
+PAPIER_TYPES = ("pamo", "siemer")
 
 
 class Source:
@@ -39,61 +49,95 @@ class Source:
         self._stadt: str = stadt
         self._strasse: str = strasse
         self._ics = ICS()
+        self._session = requests.Session()
+        self._street: dict | None = None
 
-    def fetch(self):
+    def fetch(self) -> list[Collection]:
+        if self._street is None:
+            self._street = self._get_street(self._get_city_id())
+
         now = datetime.now()
-        entries = self.get_data(now.year)
-        if now.month != 12:
-            return entries
-        try:
-            return entries + self.get_data(now.year + 1)
-        except Exception:
-            pass
+        entries = self._get_data(now.year)
+        if now.month == 12:
+            try:
+                entries += self._get_data(now.year + 1)
+            except Exception:
+                pass
+        return entries
 
-    def get_data(self, jahr):
-        args = {"stadt": self._stadt, "strasse": self._strasse}
+    def _get_city_id(self) -> int:
+        r = self._session.get(
+            BASE_URL, params={"option": COMPONENT, "view": "kalender"}
+        )
+        r.raise_for_status()
+        match = re.search(
+            r'<script[^>]*class="joomla-script-options[^"]*"[^>]*>(.*?)</script>',
+            r.text,
+            re.DOTALL,
+        )
+        if not match:
+            raise ValueError("Could not find city list on abfallwirtschaft-vechta.de")
+        cities = json.loads(match.group(1))[COMPONENT]["staedte"]
 
-        collection_entries = []
-        string_entries = []
+        for city in cities:
+            if city["name"].casefold() == self._stadt.strip().casefold():
+                return city["id"]
+        raise SourceArgumentNotFoundWithSuggestions(
+            "stadt", self._stadt, [c["name"] for c in cities]
+        )
 
-        for papier_typ in ["pamo", "siemer"]:
-            session = requests.Session()
-            session.cookies.set("jahr", str(jahr))
-
-            r = session.get(
-                "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_stadt.php",
-                params={"term": self._stadt},
-            )
-            r.raise_for_status()
-            city_id = r.json()[0]["id"]
-            session.cookies.set("stadt", str(city_id))
-
-            r = session.get(
-                "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.suche_strasse.php",
-                params={"stadt": city_id, "term": self._strasse},
-            )
-            r.raise_for_status()
-            street = json.loads(r.text[1:-2])["strassen"][0]
-            session.cookies.set("stadt", str(street["id"]))
-            session.cookies.set("abfuhrbezirk", str(street["abfuhrbezirk"]))
-            session.cookies.set("abfuhrbezirkpapir", str(street[papier_typ]))
-            session.cookies.set("papier", papier_typ)
-
-            args = {
+    def _get_street(self, city_id: int) -> dict:
+        # The street search is a prefix search on the street name only, so strip a
+        # possible " (Ortsteil)" suffix which is used to disambiguate streets.
+        wanted = self._strasse.strip()
+        query = re.sub(r"\s*\(.*\)\s*$", "", wanted)
+        r = self._session.get(
+            BASE_URL,
+            params={
+                "option": COMPONENT,
+                "task": "proxy.strassen",
+                "format": "json",
                 "stadt": city_id,
-                "strasse": street["id"],
-                "abfuhrbezirkpapier": street[papier_typ],
-                "jahr": jahr,
-                "papier": papier_typ,
-                "trigger": "false",
-                "triggerday": "false",
-                "triggertime": "false",
-            }
+                "q": query,
+            },
+        )
+        r.raise_for_status()
+        streets = r.json().get("data", [])
 
-            r = session.get(
-                "https://www.abfallwirtschaft-vechta.de/CALENDER/inc.get_calender_ics.php",
-                params=args,
+        def label(s: dict) -> str:
+            return f"{s['name']} ({s['ortsteil']})" if s.get("ortsteil") else s["name"]
+
+        matches = [s for s in streets if label(s).casefold() == wanted.casefold()]
+        if not matches:
+            matches = [s for s in streets if s["name"].casefold() == wanted.casefold()]
+        if len(matches) == 1:
+            return matches[0]
+        if len(matches) > 1:
+            raise SourceArgAmbiguousWithSuggestions(
+                "strasse", self._strasse, [label(s) for s in matches]
             )
+        raise SourceArgumentNotFoundWithSuggestions(
+            "strasse", self._strasse, [label(s) for s in streets]
+        )
+
+    def _get_data(self, jahr: int) -> list[Collection]:
+        assert self._street is not None
+        papier_types = [p for p in PAPIER_TYPES if self._street.get(p)] or [None]
+
+        collection_entries: list[Collection] = []
+        seen: set[tuple] = set()
+
+        for papier_typ in papier_types:
+            params = {
+                "option": COMPONENT,
+                "task": "proxy.ics",
+                "strasse": self._street["id"],
+                "jahr": jahr,
+            }
+            if papier_typ:
+                params["papier"] = papier_typ
+
+            r = self._session.get(BASE_URL, params=params)
             r.raise_for_status()
             r.encoding = "utf-8"
 
@@ -109,9 +153,9 @@ class Source:
                     .strip()
                 )
 
-                if f"{bin_type} {d[0]!s}" in string_entries:
+                if (d[0], bin_type) in seen:
                     continue
-                string_entries.append(f"{bin_type} {d[0]!s}")
+                seen.add((d[0], bin_type))
 
                 collection_entries.append(
                     Collection(

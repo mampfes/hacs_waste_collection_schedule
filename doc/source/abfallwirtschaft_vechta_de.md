@@ -36,7 +36,9 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-Find the parameter of your address using [https://www.abfallwirtschaft-vechta.de/index.php/termine/abfuhrkalender](https://www.abfallwirtschaft-vechta.de/index.php/termine/abfuhrkalender) and write them exactly like on the web page.
+Find the parameter of your address using [https://www.abfallwirtschaft-vechta.de/termine/abfuhrkalender?view=kalender](https://www.abfallwirtschaft-vechta.de/termine/abfuhrkalender?view=kalender) and write them exactly like on the web page.
+
+If the same street name exists in several districts (Ortsteile), use the name as shown in the street suggestions, e.g. `An der Hasenweide (Oythe)`.
 
 ## Filtering
 
