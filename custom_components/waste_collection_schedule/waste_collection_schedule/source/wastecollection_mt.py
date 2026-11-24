@@ -1,8 +1,8 @@
 import logging
 from datetime import datetime, timedelta
 
-import requests
 from bs4 import BeautifulSoup, Tag
+from curl_cffi import requests
 from dateutil.rrule import FR, MO, MONTHLY, SA, SU, TH, TU, WE, WEEKLY, rrule
 from waste_collection_schedule import Collection, Icons  # type: ignore[attr-defined]
 
@@ -115,7 +115,7 @@ class Source:
 
     def fetch(self) -> list[Collection]:
         rules: dict[str, list[rrule]] = {}
-        r = requests.get(API_URL)
+        r = requests.get(API_URL, impersonate="chrome")
         r.raise_for_status()
 
         soup = BeautifulSoup(r.text, "html.parser")
