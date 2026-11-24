@@ -3,7 +3,7 @@ title: Abfallwirtschaft Potsdam-Mittelmark (APM)
 url: https://www.apm-niemegk.de/
 howto:
   en: |
-    - Go to <https://www.apm-niemegk.de/kundenservice/abfuhrtermine/> and select your location.  
+    - Go to <https://www.apm-niemegk.de/kundenservice/abfuhrtermine/> and select your location.
     - Click on `Exportieren iCal` to get a webcal link below `URL in Kalender-App einbinden`.
     - Use this link as the `url` parameter.
     - Replace the Year in the URL with `{%Y}`

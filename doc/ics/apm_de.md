@@ -6,7 +6,7 @@ Abfallwirtschaft Potsdam-Mittelmark (APM) is supported by the generic [ICS](/doc
 
 ## How to get the configuration arguments
 
-- Go to <https://www.apm-niemegk.de/kundenservice/abfuhrtermine/> and select your location.  
+- Go to <https://www.apm-niemegk.de/kundenservice/abfuhrtermine/> and select your location.
 - Click on `Exportieren iCal` to get a webcal link below `URL in Kalender-App einbinden`.
 - Use this link as the `url` parameter.
 - Replace the Year in the URL with `{%Y}`

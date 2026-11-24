@@ -3,7 +3,7 @@ title: Bamberg (Landkreis)
 url: https://www.abfalltermine-bamberg.de/
 howto:
   en: |
-    - Go to <https://www.abfalltermine-bamberg.de/> and select your location.  
+    - Go to <https://www.abfalltermine-bamberg.de/> and select your location.
     - Copy the link of the Herunterladen button below Digitaler Kalender.
     - Use this link as the `url` parameter.
 test_cases:

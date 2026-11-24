@@ -6,7 +6,7 @@ Abfallkalender Delmenhorst is supported by the generic [ICS](/doc/source/ics.md)
 
 ## How to get the configuration arguments
 
-- Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> 
+- Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php>
 - Open the pdf file _"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour"_
 - Find your street in the pdf and copy the link labeled "iCalendar"
 - Use this link as the `url` parameter.

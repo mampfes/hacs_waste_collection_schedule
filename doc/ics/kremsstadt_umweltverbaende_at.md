@@ -6,7 +6,7 @@ City of Krems is supported by the generic [ICS](/doc/source/ics.md) source. For 
 
 ## How to get the configuration arguments
 
-- Visit <https://awa.abfuhrtermine.at> and select your location.  
+- Visit <https://awa.abfuhrtermine.at> and select your location.
 - Right click -> copy link address on the `Termine {YEAR}` button.
 - Use this URL as the `url` parameter.
 

@@ -3,7 +3,7 @@ title: Baden Baden
 url: https://www.baden-baden.de/
 howto:
   en: |
-    - Go to <https://www.baden-baden.de/buergerservice/umwelt/entsorgung/umweltkalender/> and select your location.  
+    - Go to <https://www.baden-baden.de/buergerservice/umwelt/entsorgung/umweltkalender/> and select your location.
     - Rightclick on the link `iCal Download` link above the calendar table and copy the liink address.
     - Use this url as `url` parameter.
     - Set Params to `jahr: ""` and year_field to `jahr`.
@@ -23,4 +23,3 @@ test_cases:
     params:
       jahr: ''
     year_field: jahr
-

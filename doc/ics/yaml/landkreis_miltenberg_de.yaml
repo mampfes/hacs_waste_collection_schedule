@@ -3,7 +3,7 @@ title: Landratsamt Miltenberg
 url: https://landkreis-miltenberg.de
 howto:
   en: |
-    - Go to <https://sperrgut.landkreis-miltenberg.de/WasteManagementMiltenberg/WasteManagementServlet?SubmitAction=wasteDisposalServices> and select your location.  
+    - Go to <https://sperrgut.landkreis-miltenberg.de/WasteManagementMiltenberg/WasteManagementServlet?SubmitAction=wasteDisposalServices> and select your location.
     - Click on `URL ANZEIGEN` to get a webcal link.
     - Use this link as the `url` parameter.
 test_cases:

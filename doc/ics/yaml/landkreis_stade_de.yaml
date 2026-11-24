@@ -3,7 +3,7 @@ title: Landkreis Stade
 url: https://www.landkreis-stade.de
 howto:
   en: |
-    - Go to <https://abfall.landkreis-stade.de/abfuhrkalender/> and select your location.  
+    - Go to <https://abfall.landkreis-stade.de/abfuhrkalender/> and select your location.
     - Right-click on `Als Kalenderdatei (.ics) herunterladen` and copy link address.
     - Use this link as the `url` parameter.
 test_cases:

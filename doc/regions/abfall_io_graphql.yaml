@@ -4,64 +4,64 @@
 # Each entry becomes its own listing in README.md / sources.json, with its
 # params pre-filled, via regions.from_yaml() in source/abfall_io_graphql.py. Adding a
 # provider is a change to this file alone.
-  - title: Landkreis Märkisch-Oderland
-    url: https://www.maerkisch-oderland.de/
-    service_id: efb75cbd1f08fae1d4e47ae72a85c655
-  - title: ALBA Berlin
-    url: https://berlin.alba.info/
-    service_id: 1f1371466654fbe4e69725dc9f0bb223
-  - title: Holding Graz
-    url: https://www.holding-graz.at/
-    service_id: 1c230a689579b6d3ddb9ceb5a56c6072
-    country: at
-  - title: Landkreis Reutlingen
-    url: https://www.kreis-reutlingen.de/
-    service_id: 15f69fab91c4cae50d9dbb5bcfd383f0
-  - title: Entsorgungsbetriebe Essen
-    url: https://www.ebe-essen.de/
-    service_id: 51be67f3758f1fb57b420efe065c0663
-  - title: KELL Kommunalentsorgung Landkreis Leipzig GmbH
-    url: https://kell-gmbh.de/
-    service_id: 0d7a92192ba3ae914c028ac37d73e222
-  - title: Wirtschaftsbetriebe Duisburg (WBD)
-    url: https://www.wb-duisburg.de/
-    service_id: 80acad6c77fe9342ebafad29a8c58bf6
-  - title: Landkreis Göttingen
-    url: https://www.landkreisgoettingen.de/
-    service_id: 4b5702d771c82b611c386ebbc7629026
-  - title: Abfallwirtschaft Landkreis Böblingen
-    url: https://www.awb-bb.de/
-    service_id: 76bdaac8568082d77e7a90cb41129f9b
-  - title: ASG Nordsachsen
-    url: https://www.asg-nordsachsen.de/
-    service_id: 2085afd95285e645e15ee9623d0c5172
-  - title: Amt für Abfallwirtschaft Schwarzwald-Baar-Kreis
-    url: https://www.lrasbk.de/
-    service_id: 30628292bdd8b43db86a48f7e0d85f85
-  - title: ASO Abfall-Service Osterholz
-    url: https://www.aso-ohz.de/
-    service_id: 8b016df0116d1d5094fa339bebea0c65
-  - title: AWG Abfallwirtschaft Landkreis Calw
-    url: https://www.awg-info.de/
-    service_id: 0813ea99f520c462373386564a99a51e
-  - title: Landkreis Bayreuth
-    url: https://www.landkreis-bayreuth.de/
-    service_id: 41cec8bb0482f3002c699cc11a9ea678
-  - title: Landkreis Ostallgäu
-    url: https://www.landkreis-ostallgaeu.de/
-    service_id: 254ef8a2f4aa7cd1bff7f372d5dcfc53
-  - title: Landkreis Sigmaringen
-    url: https://www.landkreis-sigmaringen.de/
-    service_id: b24ea660ffd230210376afd62f54bdda
-  - title: Landratsamt Traunstein
-    url: https://www.traunstein.com/
-    service_id: 4f015b3440c907b8ed7d46fc0f09c02a
-  - title: Landkreis Limburg-Weilburg
-    url: https://www.landkreis-limburg-weilburg.de/
-    service_id: 29727e74d11041d98df0c0d013a846c6
-  - title: Landkreis Rottweil
-    url: https://www.landkreis-rottweil.de/
-    service_id: 30f9958cb64ca47a83f40e0a738ddea0
-  - title: Abfallwirtschaft Landkreis Neuwied
-    url: https://abfall-nr.de/
-    service_id: de4957b006c53e47f8b9c21bc2c768f0
+- title: Landkreis Märkisch-Oderland
+  url: https://www.maerkisch-oderland.de/
+  service_id: efb75cbd1f08fae1d4e47ae72a85c655
+- title: ALBA Berlin
+  url: https://berlin.alba.info/
+  service_id: 1f1371466654fbe4e69725dc9f0bb223
+- title: Holding Graz
+  url: https://www.holding-graz.at/
+  service_id: 1c230a689579b6d3ddb9ceb5a56c6072
+  country: at
+- title: Landkreis Reutlingen
+  url: https://www.kreis-reutlingen.de/
+  service_id: 15f69fab91c4cae50d9dbb5bcfd383f0
+- title: Entsorgungsbetriebe Essen
+  url: https://www.ebe-essen.de/
+  service_id: 51be67f3758f1fb57b420efe065c0663
+- title: KELL Kommunalentsorgung Landkreis Leipzig GmbH
+  url: https://kell-gmbh.de/
+  service_id: 0d7a92192ba3ae914c028ac37d73e222
+- title: Wirtschaftsbetriebe Duisburg (WBD)
+  url: https://www.wb-duisburg.de/
+  service_id: 80acad6c77fe9342ebafad29a8c58bf6
+- title: Landkreis Göttingen
+  url: https://www.landkreisgoettingen.de/
+  service_id: 4b5702d771c82b611c386ebbc7629026
+- title: Abfallwirtschaft Landkreis Böblingen
+  url: https://www.awb-bb.de/
+  service_id: 76bdaac8568082d77e7a90cb41129f9b
+- title: ASG Nordsachsen
+  url: https://www.asg-nordsachsen.de/
+  service_id: 2085afd95285e645e15ee9623d0c5172
+- title: Amt für Abfallwirtschaft Schwarzwald-Baar-Kreis
+  url: https://www.lrasbk.de/
+  service_id: 30628292bdd8b43db86a48f7e0d85f85
+- title: ASO Abfall-Service Osterholz
+  url: https://www.aso-ohz.de/
+  service_id: 8b016df0116d1d5094fa339bebea0c65
+- title: AWG Abfallwirtschaft Landkreis Calw
+  url: https://www.awg-info.de/
+  service_id: 0813ea99f520c462373386564a99a51e
+- title: Landkreis Bayreuth
+  url: https://www.landkreis-bayreuth.de/
+  service_id: 41cec8bb0482f3002c699cc11a9ea678
+- title: Landkreis Ostallgäu
+  url: https://www.landkreis-ostallgaeu.de/
+  service_id: 254ef8a2f4aa7cd1bff7f372d5dcfc53
+- title: Landkreis Sigmaringen
+  url: https://www.landkreis-sigmaringen.de/
+  service_id: b24ea660ffd230210376afd62f54bdda
+- title: Landratsamt Traunstein
+  url: https://www.traunstein.com/
+  service_id: 4f015b3440c907b8ed7d46fc0f09c02a
+- title: Landkreis Limburg-Weilburg
+  url: https://www.landkreis-limburg-weilburg.de/
+  service_id: 29727e74d11041d98df0c0d013a846c6
+- title: Landkreis Rottweil
+  url: https://www.landkreis-rottweil.de/
+  service_id: 30f9958cb64ca47a83f40e0a738ddea0
+- title: Abfallwirtschaft Landkreis Neuwied
+  url: https://abfall-nr.de/
+  service_id: de4957b006c53e47f8b9c21bc2c768f0

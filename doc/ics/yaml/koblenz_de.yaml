@@ -3,7 +3,7 @@ title: Stadt Koblenz
 url: https://www.koblenz.de/
 howto:
   en: |
-    - Go to <https://servicebetrieb.koblenz.de/abfallwirtschaft/entsorgungstermine-digital/>.  
+    - Go to <https://servicebetrieb.koblenz.de/abfallwirtschaft/entsorgungstermine-digital/>.
     - Right-click on your municipality and copy link address.
     - Use this link as the `url` parameter.
     - Replace the year in the url by {%Y}.

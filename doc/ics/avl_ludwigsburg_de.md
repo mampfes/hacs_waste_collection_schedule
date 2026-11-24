@@ -6,7 +6,7 @@ AVL - Abfallverwertungsgesellschaft des Landkreises Ludwigsburg mbH is supported
 
 ## How to get the configuration arguments
 
-- Go to <https://www.avl-ludwigsburg.de/> and select your location.  
+- Go to <https://www.avl-ludwigsburg.de/> and select your location.
 - Click on `URL ANZEIGEN` to get a webcal link.
 - Use this link as the `url` parameter.
 

@@ -6,7 +6,7 @@ Goes is supported by the generic [ICS](/doc/source/ics.md) source. For all avail
 
 ## How to get the configuration arguments
 
-- Visit <https://afvalkalender.goes.nl/> and select your location.  
+- Visit <https://afvalkalender.goes.nl/> and select your location.
 - Right click copy link address on the `Persoonlijke afvalkalender` button.
 - Use this link as the `url` parameter.
 - Replace the current year with `{%Y}` in the link.

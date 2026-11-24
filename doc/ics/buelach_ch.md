@@ -6,7 +6,7 @@ Stadt Bülach is supported by the generic [ICS](/doc/source/ics.md) source. For 
 
 ## How to get the configuration arguments
 
-- Visit <https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender>.  
+- Visit <https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender>.
 - Right-click -> copy link address on the "Entsorgungskalender" link to get the link to the ICS file.
 - Use this url as the `url` argument.
 

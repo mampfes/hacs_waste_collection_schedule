@@ -3,7 +3,7 @@ title: GDA Amstetten
 url: https://gda.gv.at
 howto:
   en: |
-    - Go to <https://gda.gv.at/abholtermine> and select your location.  
+    - Go to <https://gda.gv.at/abholtermine> and select your location.
     - Copy the link of the `iCal` Button.
     - Use this link as the `url` parameter.
 test_cases:

@@ -6,7 +6,7 @@ BEST - Bottrop is supported by the generic [ICS](/doc/source/ics.md) source. For
 
 ## How to get the configuration arguments
 
-- Visit <https://www.best-bottrop.de/abfuhrtermine-0910213539.html> and select your location.  
+- Visit <https://www.best-bottrop.de/abfuhrtermine-0910213539.html> and select your location.
 - Click on `Termine für Kalender exportieren` then `Kalender abonnieren` to get an ical subscription link.
 - Use this link as the `url` parameter.
 

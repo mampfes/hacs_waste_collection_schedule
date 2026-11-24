@@ -6,7 +6,7 @@ Abfall App is supported by the generic [ICS](/doc/source/ics.md) source. For all
 
 ## How to get the configuration arguments
 
-- Go to your providers web site collections calendar (alternative https://{service}.abfall-app.net) and select your location.  
+- Go to your providers web site collections calendar (alternative https://{service}.abfall-app.net) and select your location.
 - Copy the link of the `Sync zu Kalender` Button.
 - Use this link as the `url` parameter.
 

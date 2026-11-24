@@ -6,7 +6,7 @@ Abfallentsorgung Kreis Kassel is supported by the generic [ICS](/doc/source/ics.
 
 ## How to get the configuration arguments
 
-- Go to <https://www.abfall-kreis-kassel.de/abfallkalender> and select your location.  
+- Go to <https://www.abfall-kreis-kassel.de/abfallkalender> and select your location.
 - Click on `Dateien und App` expand.
 - Click on `ICS - Kalender importieren`
 - Click once on the `Datei herunterladen` button you do not need to save the file, but the link of the button changes after the click.

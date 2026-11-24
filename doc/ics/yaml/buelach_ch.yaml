@@ -3,7 +3,7 @@ title: Stadt Bülach
 url: https://www.buelach.ch/
 howto:
   en: |
-    - Visit <https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender>.  
+    - Visit <https://www.buelach.ch/themen/umwelt-energie-entsorgung/entsorgung/entsorgung-entsorgungskalender>.
     - Right-click -> copy link address on the "Entsorgungskalender" link to get the link to the ICS file.
     - Use this url as the `url` argument.
 test_cases:

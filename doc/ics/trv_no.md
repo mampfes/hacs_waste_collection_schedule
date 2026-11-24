@@ -6,7 +6,7 @@ Trondheim is supported by the generic [ICS](/doc/source/ics.md) source. For all 
 
 ## How to get the configuration arguments
 
-- Go to <https://trv.no/plan/> and search for your address.  
+- Go to <https://trv.no/plan/> and search for your address.
 - Copy the link address of `Legg til i kalender (iCal)` to get a webcal link.
 - Use this link as the `url` parameter.
 

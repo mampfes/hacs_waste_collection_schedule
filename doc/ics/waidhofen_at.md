@@ -6,7 +6,7 @@ Waidhofen an der Ybbs is supported by the generic [ICS](/doc/source/ics.md) sour
 
 ## How to get the configuration arguments
 
-- Visit <https://m.abfuhrtermine.at/> and select your location.  
+- Visit <https://m.abfuhrtermine.at/> and select your location.
 - Right click -> copy link address on the `Termine importieren` button.
 - Use this URL as the `url` parameter.
 

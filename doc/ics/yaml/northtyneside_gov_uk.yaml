@@ -4,7 +4,7 @@ url: https://www.northtyneside.gov.uk
 country: uk
 howto:
   en: |
-    - Go to <https://www.northtyneside.gov.uk/waste-collection-schedule> and search your address.  
+    - Go to <https://www.northtyneside.gov.uk/waste-collection-schedule> and search your address.
     - Copy the link from `Add to iCalendar`
     - Use this link as the `url` parameter.
 test_cases:

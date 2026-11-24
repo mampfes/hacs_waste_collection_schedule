@@ -6,7 +6,7 @@ Entsorgungsbetrieb Märkisch-Oderland is supported by the generic [ICS](/doc/sou
 
 ## How to get the configuration arguments
 
-- Go to <https://www.entsorgungsbetrieb-mol.de/de/tourenplan-2024.html> and select your location.  
+- Go to <https://www.entsorgungsbetrieb-mol.de/de/tourenplan-2024.html> and select your location.
 - copy the link of the `ICS` button.
 - Use this link as the `url` parameter.
 - Replace the year in the url with `{%Y}` (as shown in the example).

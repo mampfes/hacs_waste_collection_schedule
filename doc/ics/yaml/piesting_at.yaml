@@ -3,7 +3,7 @@ title: Markt Piesting Dreistetten
 url: https://www.piesting.at/
 howto:
   en: |
-    - Visit <https://www.piesting.at/muellentsorgung/>.  
+    - Visit <https://www.piesting.at/muellentsorgung/>.
     - Right-click -> copy link address on the "Herunterladen" button below "digitaler Kalender".
     - Use this link as the `url` parameter.
 test_cases:

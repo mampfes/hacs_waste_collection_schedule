@@ -6,7 +6,7 @@ ZBG Gladbeck is supported by the generic [ICS](/doc/source/ics.md) source. For a
 
 ## How to get the configuration arguments
 
-- Visit <https://www.zb-gladbeck.de/Abfuhrkalender-2326374551.html> and select your location.  
+- Visit <https://www.zb-gladbeck.de/Abfuhrkalender-2326374551.html> and select your location.
 - Click on `Termine für Kalender exportieren`, then `Kalender abonnieren` to get the ical link.
 - Use this url as `url` parameter.
 

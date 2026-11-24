@@ -3,7 +3,7 @@ title: Landkreis Amberg-Sulzbach
 url: https://landkreis-as.de
 howto:
   en: |
-    - Go to <https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php> and select your location.  
+    - Go to <https://landkreis-as.de/abfallwirtschaft/abfuhrtermine.php> and select your location.
     - Click on `Kalenderübersicht anzegen`.
     - Right click -> copy link address on the `exportieren` link.
     - Use this link as the `url` parameter.

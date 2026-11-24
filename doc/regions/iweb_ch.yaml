@@ -7,12 +7,12 @@
 # municipality whose https://<website>/abfalldaten page lists dated
 # collections (a page with only "regular" collections returns nothing).
 
-  - title: Bremgarten AG
-    url: https://www.bremgarten.ch
-    website: https://www.bremgarten.ch
-  - title: Flums
-    url: https://www.flums.ch
-    website: https://www.flums.ch
-  - title: Uetikon am See
-    url: https://www.uetikonamsee.ch
-    website: https://www.uetikonamsee.ch
+- title: Bremgarten AG
+  url: https://www.bremgarten.ch
+  website: https://www.bremgarten.ch
+- title: Flums
+  url: https://www.flums.ch
+  website: https://www.flums.ch
+- title: Uetikon am See
+  url: https://www.uetikonamsee.ch
+  website: https://www.uetikonamsee.ch

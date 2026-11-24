@@ -6,7 +6,7 @@ Alzey-Worms is supported by the generic [ICS](/doc/source/ics.md) source. For al
 
 ## How to get the configuration arguments
 
-- Visit <https://www.kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine/> and select your location.  
+- Visit <https://www.kreis-alzey-worms.de/aktuelles/nichts-mehr-verpassen/abfalltermine/> and select your location.
 - Click on `URL anzeigen` to see the ICS link.
 - Use this url for the `url` parameter.
 - You might want to add regex `(.*) \d+ \d+-wöchentl\.` parameter to remove the size and frequency of collections (e.g. `Restmüll 240 02-wöchentl.` -> `Restmüll`).
