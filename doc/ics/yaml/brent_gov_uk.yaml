@@ -3,7 +3,7 @@ title: Brent Council
 url: https://www.brent.gov.uk
 howto:
   en: |
-    - Go to <https://recyclingservices.brent.gov.uk/waste> and enter your post code, and on the following page select your address.  
+    - Go to <https://recyclingservices.brent.gov.uk/waste> and enter your post code, and on the following page select your address.
     - Right click -> copy the url of the `Add to your calendar (.ics file)` link.
     - Use this link as the `url` parameter. (If you know your address reference, you can just replace the last part of the url with it.)
 

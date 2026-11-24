@@ -35,11 +35,10 @@ repos:
         # canonical-icons migration. Source-level security review is
         # a separate effort.
         exclude: ^custom_components/waste_collection_schedule/waste_collection_schedule/source/
-  - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
-    rev: 0.2.3
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.21.0
     hooks:
       - id: yamlfmt
-        args: [--mapping, '2', --sequence, '4', --width, '150', --offset, '2']
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:

@@ -3,7 +3,7 @@ title: Gelsendienste Gelsenkirchen
 url: https://www.gelsendienste.de
 howto:
   en: |
-    - Go to <https://www.gelsendienste.de/privathaushalte/abfallkalender> and select your location.  
+    - Go to <https://www.gelsendienste.de/privathaushalte/abfallkalender> and select your location.
     - Click on `Abfallkalender abonnieren` to open a sub-frame, and then copy the link address.
     - Use this link as the `url` parameter.
 test_cases:

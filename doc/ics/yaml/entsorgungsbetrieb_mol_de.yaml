@@ -3,7 +3,7 @@ title: Entsorgungsbetrieb Märkisch-Oderland
 url: https://www.entsorgungsbetrieb-mol.de/
 howto:
   en: |
-    - Go to <https://www.entsorgungsbetrieb-mol.de/de/tourenplan-2024.html> and select your location.  
+    - Go to <https://www.entsorgungsbetrieb-mol.de/de/tourenplan-2024.html> and select your location.
     - copy the link of the `ICS` button.
     - Use this link as the `url` parameter.
     - Replace the year in the url with `{%Y}` (as shown in the example).

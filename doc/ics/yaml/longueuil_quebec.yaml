@@ -13,7 +13,7 @@ howto:
     - Si vous ne connaissez pas votre secteur, rendez-vous sur https://longueuil.quebec/fr/collectes et utilisez l'`Outil interactif - Collectes` (entrez votre adresse ou votre code postal) pour identifier votre secteur.
     - Une fois que vous connaissez le numéro de votre secteur, faites défiler la page et ouvrez la section intitulée `Calendrier des collectes XXXX : secteurs 1 à 10` (remplacez XXXX par l'année).
     - Faites défiler jusqu'à la sous-section `Versions virtuelles`.
-    - Cliquez droit sur votre secteur et sélectionnez `Copier l'url`.      
+    - Cliquez droit sur votre secteur et sélectionnez `Copier l'url`.
     - Utilisez cette URL copiée comme paramètre `url`.
 test_cases:
   Secteur 3:

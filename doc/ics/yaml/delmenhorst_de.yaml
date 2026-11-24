@@ -4,13 +4,13 @@ url: https://www.delmenhorst.de
 country: de
 howto:
   de: |
-    - Öffnen Sie die Seite <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> 
+    - Öffnen Sie die Seite <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php>
     - Öffnen Sie die PDF-Datei unter _"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour"_
     - Suchen Sie in der Übersicht die passende Straße heraus und kopieren Sie den rechts stehenden Link zu _"iCalendar"_
     - Fügen Sie den Link in diesem Formular unter `URL` ein.
     - **WICHTIG** Ersetzen Sie die Jahreszahl `20xx` *(die ersten vier Ziffern im Namen der .ics Datei)* durch die Variable `{%Y}`. Damit werden ab Dezember bereits die Einträge für das Folgejahr automatisch mit berücksichtigt.
   en: |
-    - Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> 
+    - Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php>
     - Open the pdf file _"Abfuhrbezirke [YYYY] - Straßenverzeichnis mit Zuordnung zur Altpapiertour"_
     - Find your street in the pdf and copy the link labeled "iCalendar"
     - Use this link as the `url` parameter.

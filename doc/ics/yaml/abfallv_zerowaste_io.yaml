@@ -3,7 +3,7 @@ title: Umweltv
 url: https://abfallv.zerowaste.io
 howto:
   en: |
-    - Go to <https://abfallv.zerowaste.io/web-reminder> and select your location and waste types. 
+    - Go to <https://abfallv.zerowaste.io/web-reminder> and select your location and waste types.
     - Click on `Kalender Bo/Download` and copy the URL below `Adresse zum Abonnieren`.
     - Use this link as the `url` parameter.
 country: at

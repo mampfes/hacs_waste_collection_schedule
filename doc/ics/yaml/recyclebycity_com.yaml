@@ -20,12 +20,12 @@ regions:
   - title: City of Flagstaff, AZ
     url: https://www.flagstaff.az.gov
   - title: City of Chicago, IL
-  # - title: Lafayette, CO # Seems not to be integrated (yet???) links to external site
-  # - title: Sedona # seems not to be integrated (yet???) does not contain Calendar section
-  # - title: City of Los Angeles, CA
-  # - title: shoreline # seems not to be integrated (yet???) does not contain Calendar section
-  # - title: Highland Park, IL # seems not to be integrated (yet???) does not contain Calendar section
-  # - title: Philadelphia # seems not to be integrated (yet???) does not contain Calendar section
-  # - title: West Hollywood # seems not to be integrated (yet???) does not contain Calendar section
-  # - title: Houston # seems not to be integrated (yet???) does not contain Calendar section
-  # - title: Santa Monica # seems not to be integrated (yet???) does not contain Calendar section
+# - title: Lafayette, CO # Seems not to be integrated (yet???) links to external site
+# - title: Sedona # seems not to be integrated (yet???) does not contain Calendar section
+# - title: City of Los Angeles, CA
+# - title: shoreline # seems not to be integrated (yet???) does not contain Calendar section
+# - title: Highland Park, IL # seems not to be integrated (yet???) does not contain Calendar section
+# - title: Philadelphia # seems not to be integrated (yet???) does not contain Calendar section
+# - title: West Hollywood # seems not to be integrated (yet???) does not contain Calendar section
+# - title: Houston # seems not to be integrated (yet???) does not contain Calendar section
+# - title: Santa Monica # seems not to be integrated (yet???) does not contain Calendar section
