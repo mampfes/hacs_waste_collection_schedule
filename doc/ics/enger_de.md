@@ -6,7 +6,7 @@ Stadt Enger is supported by the generic [ICS](/doc/source/ics.md) source. For al
 
 ## How to get the configuration arguments
 
-- Visit <https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/> and select your Street.  
+- Visit <https://www.enger.de/Leben-in-Enger/Planen-Bauen-Wohnen/Abfall-Stra%C3%9Fenreinigung/Abfallkalender/> and select your Street.
 - Select `Jahreskalender` and the bin types you want to see (leave all unchecked to get all types).
 - Right-click copy link address on the `Export in Kalenderanwendung` link to get a ICAL link.
 - Use this link as `url` parameter.

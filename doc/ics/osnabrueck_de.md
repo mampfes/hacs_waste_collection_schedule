@@ -6,7 +6,7 @@ Stadt Osnabrück is supported by the generic [ICS](/doc/source/ics.md) source. F
 
 ## How to get the configuration arguments
 
-- Go to <https://nachhaltig.osnabrueck.de/de/abfall/muellabfuhr/muellabfuhr-digital/online-abfuhrkalender/> and select your location.  
+- Go to <https://nachhaltig.osnabrueck.de/de/abfall/muellabfuhr/muellabfuhr-digital/online-abfuhrkalender/> and select your location.
 - Right-click on `Termine importieren` and copy link address.
 - Use this link as the `url` parameter.
 

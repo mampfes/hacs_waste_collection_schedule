@@ -6,10 +6,9 @@ Stadt Delmenhorst is supported by the generic [ICS](/doc/source/ics.md) source. 
 
 ## How to get the configuration arguments
 
-- Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> and determine your collection district and the waste paper route.  
+- Go to <https://www.delmenhorst.de/leben/umwelt/abfallentsorgung/abfallkalender.php> and determine your collection district and the waste paper route.
 - Right-click on `iCalendar <year> Altpapiertour <A or B>` of your collection district and copy link address.
 - Use this link as the `url` parameter. You can replace the year in the URL with "{%Y}" to make it work the next years.
--
 
 ## Examples
 

@@ -6,7 +6,7 @@ North Tyneside Council is supported by the generic [ICS](/doc/source/ics.md) sou
 
 ## How to get the configuration arguments
 
-- Go to <https://www.northtyneside.gov.uk/waste-collection-schedule> and search your address.  
+- Go to <https://www.northtyneside.gov.uk/waste-collection-schedule> and search your address.
 - Copy the link from `Add to iCalendar`
 - Use this link as the `url` parameter.
 

@@ -6,7 +6,7 @@ Baden Baden is supported by the generic [ICS](/doc/source/ics.md) source. For al
 
 ## How to get the configuration arguments
 
-- Go to <https://www.baden-baden.de/buergerservice/umwelt/entsorgung/umweltkalender/> and select your location.  
+- Go to <https://www.baden-baden.de/buergerservice/umwelt/entsorgung/umweltkalender/> and select your location.
 - Rightclick on the link `iCal Download` link above the calendar table and copy the liink address.
 - Use this url as `url` parameter.
 - Set Params to `jahr: ""` and year_field to `jahr`.

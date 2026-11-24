@@ -6,7 +6,7 @@ Stadtgemeinde Traiskirchen is supported by the generic [ICS](/doc/source/ics.md)
 
 ## How to get the configuration arguments
 
-- Go to <https://traiskirchen.gv.at/abfall-entsorgung/online-abfuhrplan/> and search your address.  
+- Go to <https://traiskirchen.gv.at/abfall-entsorgung/online-abfuhrplan/> and search your address.
 - Copy the link of `Abfuhrbereich...` below `Kalender zum Download als ICS` button.
 - Use this link as the `url` parameter.
 

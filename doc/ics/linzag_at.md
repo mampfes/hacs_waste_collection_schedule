@@ -6,7 +6,7 @@ Linz AG is supported by the generic [ICS](/doc/source/ics.md) source. For all av
 
 ## How to get the configuration arguments
 
-- Go to <https://www.linzag.at/portal/de/privatkunden/zuhause/abfall/service_dienstleistungen/abfallkalender> and select your location.  
+- Go to <https://www.linzag.at/portal/de/privatkunden/zuhause/abfall/service_dienstleistungen/abfallkalender> and select your location.
 - Click on the download `Abfallkalender (ICS)` button and copy the download link or copy the link of the button after you already pressed it (href changes after first click).
 - Use this link as the `url` parameter.
 - Replace the date in the url (after `downloadStartDate=`) with `01-01-{%Y}` this way the link keep valid for following years.

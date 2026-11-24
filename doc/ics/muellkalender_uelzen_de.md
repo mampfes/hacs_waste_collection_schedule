@@ -6,7 +6,7 @@ Uelzen (Landkreis) is supported by the generic [ICS](/doc/source/ics.md) source.
 
 ## How to get the configuration arguments
 
-- Go to <https://www.muellkalender-uelzen.de/> and select your location.  
+- Go to <https://www.muellkalender-uelzen.de/> and select your location.
 - Choose your waste bins
 - Choose `iCal-Feed zum Abonnieren` at the bottom
 - Copy the link to the ics

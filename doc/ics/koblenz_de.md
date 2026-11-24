@@ -6,7 +6,7 @@ Stadt Koblenz is supported by the generic [ICS](/doc/source/ics.md) source. For 
 
 ## How to get the configuration arguments
 
-- Go to <https://servicebetrieb.koblenz.de/abfallwirtschaft/entsorgungstermine-digital/>.  
+- Go to <https://servicebetrieb.koblenz.de/abfallwirtschaft/entsorgungstermine-digital/>.
 - Right-click on your municipality and copy link address.
 - Use this link as the `url` parameter.
 - Replace the year in the url by {%Y}.

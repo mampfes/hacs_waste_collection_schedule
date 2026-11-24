@@ -6,7 +6,7 @@ Valleyfield, Québec is supported by the generic [ICS](/doc/source/ics.md) sourc
 
 ## How to get the configuration arguments
 
-- Visit <https://www.ville.valleyfield.qc.ca/calendrier-electronique-collecte> and open the IOS tab.  
+- Visit <https://www.ville.valleyfield.qc.ca/calendrier-electronique-collecte> and open the IOS tab.
 - Copy the google calendar ICS link of your sector.
 - Use this link as the `url` parameter.
 - You can use the regex `Collecte (?:du|des) (.*)` to shorten the event titles (will remove the `Collecte du `/`Collecte des ` prefix).

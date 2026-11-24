@@ -6,7 +6,7 @@ Mörfelden-Walldorf is supported by the generic [ICS](/doc/source/ics.md) source
 
 ## How to get the configuration arguments
 
-- Visit <https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/index.jsp> and select your street.  
+- Visit <https://abfallkalender.regioit.de/kalender-moerfelden-walldorf/index.jsp> and select your street.
 - Click on `Herunterladen (ICS)` and select `Keine Erinnerung`.
 - Easy way (firefox):
   - Click on `Herunterladen (ICS)` to start the download.

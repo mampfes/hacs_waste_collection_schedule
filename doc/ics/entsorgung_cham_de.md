@@ -6,10 +6,10 @@ Cham Landkreis is supported by the generic [ICS](/doc/source/ics.md) source. For
 
 ## How to get the configuration arguments
 
-- Go to <https://pwa.entsorgung-cham.de/termine> and select your location.  
+- Go to <https://pwa.entsorgung-cham.de/termine> and select your location.
 - Click on `Termine {YEAR} im Kalender speichern (ICS)` and `Kalenderdaten {YEAR} herunterladen`.
 - Copy the download link address.
-- Use this link as the `url` parameter. 
+- Use this link as the `url` parameter.
 - Replace the year argument with `{%Y}`, so the source will work for all years.
 - For easier automations and source configurations you probably want to add the `regex` argument like in the example below. This will remove the date from the event title.
 
