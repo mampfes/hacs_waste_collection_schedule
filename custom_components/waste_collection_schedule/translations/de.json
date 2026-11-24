@@ -16323,31 +16323,6 @@
           "strasse": "Ihr Straßenname."
         }
       },
-      "args_prezero_helmstedt_de": {
-        "title": "Quelle konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "district": "Ortsteil",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "calendar_title": "Ein lesbarerer oder benutzerfreundlicherer Name für den Müllkalender. Wenn nichts angegeben wird, wird der Name der Quelle verwendet.",
-          "district": "Ihr Ortsteil oder Stadtteil."
-        }
-      },
-      "reconfigure_prezero_helmstedt_de": {
-        "title": "Quelle Neu Konfigurieren",
-        "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",
-        "data": {
-          "calendar_title": "Kalender Titel",
-          "district": "Ortsteil",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "district": "Ihr Ortsteil oder Stadtteil."
-        }
-      },
       "args_rh_entsorgung_de": {
         "title": "Quelle konfigurieren",
         "description": "Konfiguriere deinen Service Provider. {howto}Mehr details: {docs_url}",

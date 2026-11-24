@@ -16323,31 +16323,6 @@
           "strasse": "Ditt gatunamn."
         }
       },
-      "args_prezero_helmstedt_de": {
-        "title": "Konfigurera källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "district": "Distrikt",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "calendar_title": "Ett mer lättläst namn på avfallskalendern. Lämnas fältet tomt används namnet som källan anger.",
-          "district": "Ditt distrikt eller del av kommunen."
-        }
-      },
-      "reconfigure_prezero_helmstedt_de": {
-        "title": "Konfigurera om källa",
-        "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernamn",
-          "district": "Distrikt",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "district": "Ditt distrikt eller del av kommunen."
-        }
-      },
       "args_rh_entsorgung_de": {
         "title": "Konfigurera källa",
         "description": "Konfigurera din avfallsleverantör. {howto}Mer information: {docs_url}.",

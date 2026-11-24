@@ -16323,31 +16323,6 @@
           "strasse": "Názov vašej ulice."
         }
       },
-      "args_prezero_helmstedt_de": {
-        "title": "Konfigurovať zdroj",
-        "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
-        "data": {
-          "calendar_title": "Názov kalendára",
-          "district": "Okres",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "calendar_title": "Čitateľnejší názov kalendára odvozu odpadu. Ak ho nezadáte, použije sa názov poskytnutý zdrojom.",
-          "district": "Váš okres alebo časť obce."
-        }
-      },
-      "reconfigure_prezero_helmstedt_de": {
-        "title": "Znovu nakonfigurovať zdroj",
-        "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",
-        "data": {
-          "calendar_title": "Názov kalendára",
-          "district": "Okres",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "district": "Váš okres alebo časť obce."
-        }
-      },
       "args_rh_entsorgung_de": {
         "title": "Konfigurovať zdroj",
         "description": "Nakonfigurujte poskytovateľa služby. {howto}Ďalšie informácie: {docs_url}.",

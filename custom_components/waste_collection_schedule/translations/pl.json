@@ -16323,31 +16323,6 @@
           "strasse": "Nazwa Twojej ulicy."
         }
       },
-      "args_prezero_helmstedt_de": {
-        "title": "Konfiguruj źródło",
-        "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
-        "data": {
-          "calendar_title": "Nazwa kalendarza",
-          "district": "Dzielnica",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "calendar_title": "Bardziej czytelna nazwa kalendarza wywozu odpadów. Jeśli jej nie podasz, zostanie użyta nazwa zwrócona przez źródło.",
-          "district": "Twoja dzielnica lub część gminy."
-        }
-      },
-      "reconfigure_prezero_helmstedt_de": {
-        "title": "Ponownie skonfiguruj źródło",
-        "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",
-        "data": {
-          "calendar_title": "Nazwa kalendarza",
-          "district": "Dzielnica",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "district": "Twoja dzielnica lub część gminy."
-        }
-      },
       "args_rh_entsorgung_de": {
         "title": "Konfiguruj źródło",
         "description": "Skonfiguruj usługodawcę. {howto}Więcej informacji: {docs_url}.",

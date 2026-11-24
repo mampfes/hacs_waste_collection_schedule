@@ -16323,31 +16323,6 @@
           "strasse": "Gatenavnet ditt."
         }
       },
-      "args_prezero_helmstedt_de": {
-        "title": "Konfigurer kilde",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "district": "Område",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "calendar_title": "Et mer lesbart navn på avfallskalenderen. Står feltet tomt, brukes navnet kilden oppgir.",
-          "district": "Bydelen eller delen av kommunen du bor i."
-        }
-      },
-      "reconfigure_prezero_helmstedt_de": {
-        "title": "Konfigurer kilde på nytt",
-        "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",
-        "data": {
-          "calendar_title": "Kalendernavn",
-          "district": "Område",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "district": "Bydelen eller delen av kommunen du bor i."
-        }
-      },
       "args_rh_entsorgung_de": {
         "title": "Konfigurer kilde",
         "description": "Konfigurer renovatøren din. {howto}Mer informasjon: {docs_url}.",

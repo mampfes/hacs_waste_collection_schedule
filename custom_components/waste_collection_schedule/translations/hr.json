@@ -16323,31 +16323,6 @@
           "strasse": "Naziv vaše ulice."
         }
       },
-      "args_prezero_helmstedt_de": {
-        "title": "Konfiguriraj izvor",
-        "description": "Konfigurirajte pružatelja usluge. {howto}Više pojedinosti: {docs_url}.",
-        "data": {
-          "calendar_title": "Naziv kalendara",
-          "district": "Četvrt",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "calendar_title": "Čitljiviji naziv kalendara odvoza otpada. Ako ga ne unesete, upotrebljava se naziv koji daje izvor.",
-          "district": "Vaša četvrt ili dio općine."
-        }
-      },
-      "reconfigure_prezero_helmstedt_de": {
-        "title": "Ponovno konfiguriraj izvor",
-        "description": "Konfigurirajte pružatelja usluge. {howto}Više pojedinosti: {docs_url}.",
-        "data": {
-          "calendar_title": "Naziv kalendara",
-          "district": "Četvrt",
-          "municipality": "Municipality"
-        },
-        "data_description": {
-          "district": "Vaša četvrt ili dio općine."
-        }
-      },
       "args_rh_entsorgung_de": {
         "title": "Konfiguriraj izvor",
         "description": "Konfigurirajte pružatelja usluge. {howto}Više pojedinosti: {docs_url}.",
