@@ -13,23 +13,25 @@ TEST_CASES = {
         "password": "!secret rosknroll_fi_bill_password",
     }
 }
-ICON_MAP = {
-    "SE": Icons.GENERAL_WASTE,
-    "MUO": Icons.GENERAL_WASTE,
-    "KAR": Icons.PAPER,
-    "LAS": Icons.GLASS_COLORED,
-    "MET": Icons.METAL,
-    "BIO": Icons.ORGANIC,
+
+API_URL = "https://oma.rosknroll.fi/api"
+TENANT_ID = "f792f414-5c5b-47ef-9176-9c9031d18227"
+
+# Mapping of Finnish waste type keywords in the contract name to
+# (type name, icon). The keyword match is case-insensitive substring.
+TYPE_MAP = {
+    "sekajäte": ("Sekajäte", Icons.GENERAL_WASTE),
+    "muovi": ("Muovi", Icons.GENERAL_WASTE),
+    "kartonki": ("Kartonki", Icons.PAPER),
+    "lasi": ("Lasi", Icons.GLASS_COLORED),
+    "metalli": ("Metalli", Icons.METAL),
+    "biojäte": ("Biojäte", Icons.ORGANIC),
+    "bio": ("Bio", Icons.ORGANIC),
 }
-NAME_DEF = {
-    "SE": "Sekajäte",
-    "MUO": "Muovi",
-    "KAR": "Kartonki",
-    "LAS": "Lasi",
-    "MET": "Metalli",
-    "BIO": "Bio",
-}
-API_URL = "https://web.rosknroll.fi/rosknroll"
+
+# Contracts whose name contains any of these are a fixed monthly fee
+# (perusmaksu) rather than an emptying and must be ignored.
+FEE_KEYWORDS = ("perusmaksu",)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -43,68 +45,58 @@ class Source:
         self._bill_number = bill_number
         self._password = password
 
-    def fetch(self):
-        session = requests.Session()
-        session.headers.update({"X-Requested-With": "XMLHttpRequest"})
-        session.get(API_URL)
-
-        # sign in
+    def _login(self, session: requests.Session) -> str:
         r = session.post(
-            API_URL + "/j_acegi_security_check?target=2",
-            data={
-                "j_username": self._bill_number,
-                "j_password": self._password,
-                "remember-me": "false",
+            API_URL + "/customers/Users/login",
+            json={"userName": self._bill_number, "password": self._password},
+            headers={
+                "Tenant-Id": TENANT_ID,
+                "Content-Type": "application/json;charset=utf-8",
             },
         )
         r.raise_for_status()
+        token = r.json().get("token")
+        if not token:
+            raise RuntimeError("Login failed: no token returned")
+        return token
 
-        # get customer info
+    def fetch(self):
+        session = requests.Session()
+        token = self._login(session)
+        session.headers.update({"Authorization": f"Vingo-e-services {token}"})
 
-        r = session.get(API_URL + "/secure/get_customer_datas.do")
+        r = session.get(API_URL + "/customers/Customers/emptying-infos")
         r.raise_for_status()
-        data = r.json()
+        customers = r.json()
 
         entries = []
 
-        for estate in data.values():
-            for customer in estate:
-                r = session.get(
-                    API_URL + "/secure/get_services_by_customer_numbers.do",
-                    params={"customerNumbers[]": customer["asiakasnro"]},
-                )
-                r.raise_for_status()
-                data = r.json()
-                for service in data:
-                    if service["tariff"].get("productgroup", "PER") == "PER":
-                        continue
-                    next_date_str = None
-                    if (
-                        "ASTSeurTyhj" in service
-                        and service["ASTSeurTyhj"] is not None
-                        and len(service["ASTSeurTyhj"]) > 0
-                    ):
-                        next_date_str = service["ASTSeurTyhj"]
-                    elif (
-                        "ASTNextDate" in service
-                        and service["ASTNextDate"] is not None
-                        and len(service["ASTNextDate"]) > 0
-                    ):
-                        next_date_str = service["ASTNextDate"]
+        for customer in customers:
+            customer_id = customer["id"]
+            r = session.get(
+                API_URL + f"/customers/Customers/emptying-infos/{customer_id}/contracts"
+            )
+            r.raise_for_status()
 
-                    if next_date_str is None:
-                        continue
+            for contract in r.json():
+                next_emptying = contract.get("nextEmptying")
+                if not next_emptying:
+                    continue
 
-                    next_date = datetime.strptime(next_date_str, "%Y-%m-%d").date()
-                    entries.append(
-                        Collection(
-                            date=next_date,
-                            t=service.get(
-                                "ASTNimi",
-                                NAME_DEF.get(service["tariff"]["productgroup"], "N/A"),
-                            ),
-                            icon=ICON_MAP.get(service["tariff"]["productgroup"]),
-                        )
-                    )
+                name = contract.get("name", "")
+                name_lower = name.lower()
+                if any(kw in name_lower for kw in FEE_KEYWORDS):
+                    continue
+
+                type_name, icon = None, None
+                for keyword, (tn, ic) in TYPE_MAP.items():
+                    if keyword in name_lower:
+                        type_name, icon = tn, ic
+                        break
+                if type_name is None:
+                    type_name = name
+
+                date = datetime.strptime(next_emptying[:10], "%Y-%m-%d").date()
+                entries.append(Collection(date=date, t=type_name, icon=icon))
 
         return entries
