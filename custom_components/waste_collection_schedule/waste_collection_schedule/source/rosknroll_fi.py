@@ -25,6 +25,7 @@ TYPE_MAP = {
     "kartonki": ("Kartonki", Icons.PAPER),
     "lasi": ("Lasi", Icons.GLASS_COLORED),
     "metalli": ("Metalli", Icons.METAL),
+    "energiajäte": ("Energiajäte", Icons.COMBUSTIBLE),
     "biojäte": ("Biojäte", Icons.ORGANIC),
     "bio": ("Bio", Icons.ORGANIC),
 }
