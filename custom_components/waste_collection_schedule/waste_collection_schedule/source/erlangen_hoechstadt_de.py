@@ -81,7 +81,7 @@ class Source:
         loc_id, _ = city_matches[0]
 
         # -------------------------------------------------------------
-        # 2. Straße (pois) über Autocomplete-Endpunkt ermitteln
+        # 2. Determine street(pois) via autocomplete endpoint
         # -------------------------------------------------------------
         resp = session.get(
             self._autocomplete_url,
