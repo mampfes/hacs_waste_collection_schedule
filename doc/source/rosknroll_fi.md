@@ -1,6 +1,6 @@
 # RosknRoll Finland
 
-Support for upcoming pick ups provided by [RosknRoll self-service portal](https://web.rosknroll.fi/).
+Support for upcoming pick ups provided by [RosknRoll self-service portal](https://oma.rosknroll.fi/).
 
 ## Configuration via configuration.yaml
 
@@ -23,6 +23,5 @@ waste_collection_schedule:
 
 ## How to get the source argument
 
-**You need to have a registered account in RosknRolls's self-service portal!**
-To register one, you need to get your customer number from your bills, and password is by default your home address. 
-System will prompt you a password change, after you've done it, you have now registered your user and it's ready to be configured here.
+**You need to have a registered account in RosknRoll's self-service portal!**
+Register at https://oma.rosknroll.fi with your username and password, and use the same credentials here.
