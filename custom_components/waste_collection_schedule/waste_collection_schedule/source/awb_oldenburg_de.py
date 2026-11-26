@@ -37,6 +37,27 @@ class Source:
         self._ics = ICS(regex=r"(.*)\:\s*\!")
 
     def fetch(self):
+        # The city publishes the calendar per year. Also fetch the next year as soon
+        # as it is offered, otherwise the schedule ends on 31 December. A failure for
+        # the next year must not hide the dates of the current year.
+        year = date.today().year
+        entries = self._fetch_year(year)
+        try:
+            entries += self._fetch_year(year + 1)
+        except Exception as err:
+            _LOGGER.debug("Calendar for %s not available: %s", year + 1, err)
+
+        # Remove duplicates in case both calendars overlap at the turn of the year
+        seen = set()
+        unique = []
+        for entry in entries:
+            key = (entry.date, entry.type)
+            if key not in seen:
+                seen.add(key)
+                unique.append(entry)
+        return unique
+
+    def _fetch_year(self, year: int) -> list[Collection]:
         s = requests.Session()
         r = s.get(API_URL)
         r.raise_for_status()
@@ -68,7 +89,16 @@ class Source:
             for inp in form.find_all("input", {"name": True})
         }
 
-        data["tx_collectioncalendar_collectioncalendar[year]"] = str(date.today().year)
+        # Skip years the city does not offer yet (the next year usually appears in autumn)
+        year_select = form.find(
+            "select", {"name": "tx_collectioncalendar_collectioncalendar[year]"}
+        )
+        if year != date.today().year and year_select is not None:
+            offered = [opt.get("value") for opt in year_select.find_all("option")]
+            if str(year) not in offered:
+                return []
+
+        data["tx_collectioncalendar_collectioncalendar[year]"] = str(year)
         data["tx_collectioncalendar_collectioncalendar[wasteTypes][1]"] = "1"
         data["tx_collectioncalendar_collectioncalendar[wasteTypes][2]"] = "2"
         data["tx_collectioncalendar_collectioncalendar[wasteTypes][3]"] = "3"
