@@ -1347,6 +1347,130 @@ def test_wm_com_parses_delay_length_after_the_word_delay() -> None:
         == {}
     )
 
+    # "delayed by <n>" phrasing.
+    delayed_by = module._parse_holiday_message(
+        "Due to the holiday, your service on 11/24/2026 will be delayed by one day.",
+    )
+    assert delayed_by == {
+        module.datetime.datetime(2026, 11, 24): module.datetime.datetime(2026, 11, 25)
+    }
+
+
+# Shape of a live /holidays entry whose notice carries no date of its own: the
+# date and delay are only in the structured fields.
+_WM_DATELESS_THANKSGIVING = {
+    "holidayName": "Thanksgiving Day 2026",
+    "holidayHours": (
+        "Service(s) scheduled during the holiday week will be delayed by one "
+        "day. Please ensure your cart(s) are accessible."
+    ),
+    "resiHolidayHours": (
+        "Service(s) scheduled during the holiday week will be delayed by one "
+        "day. Please ensure your cart(s) are accessible."
+    ),
+    "resiHolidayDelayType": "1 Day Delay",
+    "holidayDate": "2026-11-26",
+    "holidayId": "2",
+}
+
+
+def test_wm_com_uses_structured_holiday_date_for_dateless_notice() -> None:
+    module = _get_module("wm_com")
+
+    # The free text alone has no date to anchor on.
+    assert (
+        module._parse_holiday_message(_WM_DATELESS_THANKSGIVING["holidayHours"]) == {}
+    )
+
+    # Thursday and Friday of Thanksgiving week each move back a day.
+    assert module._parse_holiday_entry(_WM_DATELESS_THANKSGIVING) == {
+        module.datetime.datetime(2026, 11, 26): module.datetime.datetime(2026, 11, 27),
+        module.datetime.datetime(2026, 11, 27): module.datetime.datetime(2026, 11, 28),
+    }
+
+    # Without a delay type, the length comes from the notice text.
+    no_type = dict(_WM_DATELESS_THANKSGIVING, resiHolidayDelayType=None)
+    assert module._parse_holiday_entry(no_type) == module._parse_holiday_entry(
+        _WM_DATELESS_THANKSGIVING
+    )
+
+    two_days = dict(_WM_DATELESS_THANKSGIVING, resiHolidayDelayType="2 Day Delay")
+    assert module._parse_holiday_entry(two_days) == {
+        module.datetime.datetime(2026, 11, 26): module.datetime.datetime(2026, 11, 28),
+        module.datetime.datetime(2026, 11, 27): module.datetime.datetime(2026, 11, 29),
+    }
+
+
+def test_wm_com_structured_holiday_without_delay_is_ignored() -> None:
+    module = _get_module("wm_com")
+
+    no_delay = dict(
+        _WM_DATELESS_THANKSGIVING,
+        holidayHours=(
+            "Service(s) scheduled during the holiday week will not be affected. "
+            "Please ensure your cart(s) are accessible."
+        ),
+        resiHolidayHours=None,
+        resiHolidayDelayType="No Delay",
+    )
+    assert module._parse_holiday_entry(no_delay) == {}
+
+    no_date = dict(_WM_DATELESS_THANKSGIVING, holidayDate=None)
+    assert module._parse_holiday_entry(no_date) == {}
+
+
+def test_wm_com_prefers_dated_notice_text_over_structured_fields() -> None:
+    module = _get_module("wm_com")
+
+    # When the notice names its own dates, those stay authoritative.
+    dated = dict(
+        _WM_DATELESS_THANKSGIVING,
+        holidayHours=(
+            "Due to the Thanksgiving holiday, your service on 11/27/2026 will be "
+            "on a 1 day delay."
+        ),
+    )
+    assert module._parse_holiday_entry(dated) == {
+        module.datetime.datetime(2026, 11, 27): module.datetime.datetime(2026, 11, 28)
+    }
+
+
+def test_wm_com_fetch_applies_dateless_holiday_delay() -> None:
+    module = _get_module("wm_com")
+    source = module.Source(
+        street="1 Example St", city="Example", state="MI", zip_code="00000"
+    )
+
+    with (
+        patch.object(module.Source, "_search_account", return_value="token"),
+        patch.object(
+            module.Source,
+            "_get_services",
+            return_value=[{"serviceId": "1"}],
+        ),
+        patch.object(
+            module.Source,
+            "_get_pickup_info",
+            return_value=[
+                ("64 Gallon Cart Service", "MSW", module.datetime.date(2026, 11, 26)),
+                ("64 Gallon Cart Service", "MSW", module.datetime.date(2026, 12, 3)),
+            ],
+        ),
+        patch.object(
+            module.Source,
+            "_get_holiday_adjustments",
+            side_effect=lambda _session: module._parse_holiday_entry(
+                _WM_DATELESS_THANKSGIVING
+            ),
+        ),
+    ):
+        entries = source.fetch()
+
+    assert [entry.date.isoformat() for entry in entries] == [
+        "2026-11-27",
+        "2026-12-03",
+    ]
+
 
 # Zone names as Junker publishes them for CIDIU towns, including the shapes that
 # are not a plain "street + range": dedicated single-number zones, parity-only

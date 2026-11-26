@@ -84,11 +84,13 @@ _NUMBER_WORDS = {
 
 # Matches both orderings WM uses for the delay length:
 #   "...will be on a 1 day delay"      -> group "before"
+#   "1 Day Delay"                      -> group "before" (resiHolidayDelayType)
 #   "...a delay of up to 2 days"       -> group "after"
 #   "...a delay of one day"            -> group "word"
+#   "...will be delayed by one day"    -> group "word"
 _DELAY_RE = re.compile(
     r"(?:(?P<before>\d+)(?: days?)? delay"
-    r"|delay(?: of| by)?(?: up to)?\s+"
+    r"|delay(?:ed)?(?: of| by)?(?: up to)?\s+"
     r"(?:(?P<after>\d+)|(?P<word>" + "|".join(_NUMBER_WORDS) + r"))\b(?: days?)?)",
     re.IGNORECASE,
 )
@@ -165,6 +167,46 @@ def _guest_headers(api_key: str) -> dict[str, str]:
     }
 
 
+def _parse_delay_days(text: str) -> int | None:
+    """
+    Return the delay length, in days, that a WM delay phrase describes, or
+    ``None`` if the text names no delay length.
+    """
+    delay_match = _DELAY_RE.search(text)
+    if not delay_match:
+        return None
+
+    digits = delay_match.group("before") or delay_match.group("after")
+    if digits:
+        return int(digits)
+    return _NUMBER_WORDS.get((delay_match.group("word") or "").lower(), 1)
+
+
+def _holiday_week_shifts(
+    holiday: datetime.datetime, offset: int
+) -> dict[datetime.datetime, datetime.datetime]:
+    """
+    Shift every weekday collection from the holiday through the end of its
+    week by ``offset`` days.
+
+    WM observes a weekend holiday on the adjacent weekday: a Saturday holiday
+    moves to the Friday before, a Sunday holiday to the Monday after. Anchor
+    the window there, otherwise a weekend date would produce no shifts at all
+    even though collections are affected.
+    """
+    collection_date = holiday
+    if collection_date.weekday() == 5:  # Saturday
+        collection_date -= datetime.timedelta(days=1)
+    elif collection_date.weekday() == 6:  # Sunday
+        collection_date += datetime.timedelta(days=1)
+
+    result: dict[datetime.datetime, datetime.datetime] = {}
+    while collection_date.weekday() < 5:
+        result[collection_date] = collection_date + datetime.timedelta(days=offset)
+        collection_date += datetime.timedelta(days=1)
+    return result
+
+
 def _parse_holiday_message(
     message: str,
     today: datetime.date | None = None,
@@ -217,36 +259,57 @@ def _parse_holiday_message(
     for i, (dt, _start, end) in enumerate(date_spans):
         next_start = date_spans[i + 1][1] if i + 1 < len(date_spans) else len(message)
         segment = message[end:next_start]
-        delay_match = _DELAY_RE.search(segment)
-        if not delay_match:
+        offset = _parse_delay_days(segment)
+        if offset is None:
             continue
 
-        digits = delay_match.group("before") or delay_match.group("after")
-        if digits:
-            offset = int(digits)
-        else:
-            offset = _NUMBER_WORDS.get((delay_match.group("word") or "").lower(), 1)
-
         if "weekday collections" in segment.lower():
-            # WM observes a weekend holiday on the adjacent weekday: a Saturday
-            # holiday moves to the Friday before, a Sunday holiday to the Monday
-            # after. Anchor the window there, otherwise a weekend date would
-            # produce no shifts at all even though collections are affected.
-            collection_date = dt
-            if collection_date.weekday() == 5:  # Saturday
-                collection_date -= datetime.timedelta(days=1)
-            elif collection_date.weekday() == 6:  # Sunday
-                collection_date += datetime.timedelta(days=1)
-
-            while collection_date.weekday() < 5:
-                result[collection_date] = collection_date + datetime.timedelta(
-                    days=offset
-                )
-                collection_date += datetime.timedelta(days=1)
+            result.update(_holiday_week_shifts(dt, offset))
         else:
             result[dt] = dt + datetime.timedelta(days=offset)
 
     return result
+
+
+def _parse_holiday_entry(
+    holiday: dict,
+    today: datetime.date | None = None,
+) -> dict[datetime.datetime, datetime.datetime]:
+    """
+    Turn one ``holidayData`` entry from the holidays endpoint into a mapping
+    of original_date -> adjusted_date.
+
+    The free-text notice is used first when it names its own dates. Many
+    facilities, however, publish a dateless notice such as:
+      "Service(s) scheduled during the holiday week will be delayed by one
+       day. Please ensure your cart(s) are accessible."
+    and carry the date and delay only in the structured fields:
+      "holidayDate": "2026-11-26", "resiHolidayDelayType": "1 Day Delay"
+    In that case the holiday week is shifted from the holiday onwards, the
+    same as a "weekday collections" notice.
+    """
+    message = holiday.get("holidayHours") or ""
+    adjustments = _parse_holiday_message(message, today=today) if message else {}
+    if adjustments:
+        return adjustments
+
+    try:
+        holiday_date = datetime.datetime.strptime(
+            holiday.get("holidayDate") or "", "%Y-%m-%d"
+        )
+    except ValueError:
+        return {}
+
+    delay_type = holiday.get("resiHolidayDelayType") or ""
+    offset = _parse_delay_days(delay_type)
+    if offset is None:
+        if "no delay" in delay_type.lower():
+            return {}
+        offset = _parse_delay_days(holiday.get("resiHolidayHours") or message)
+    if not offset:
+        return {}
+
+    return _holiday_week_shifts(holiday_date, offset)
 
 
 # ---------------------------------------------------------------------------
@@ -399,9 +462,7 @@ class Source:
 
         adjustments: dict[datetime.datetime, datetime.datetime] = {}
         for holiday in resp.json().get("holidayData") or []:
-            msg = holiday.get("holidayHours") or ""
-            if msg:
-                adjustments.update(_parse_holiday_message(msg))
+            adjustments.update(_parse_holiday_entry(holiday))
         return adjustments
 
     # ------------------------------------------------------------------
