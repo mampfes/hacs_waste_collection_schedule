@@ -1,0 +1,20 @@
+title: atliekos.uk1s.lt (Lithuanian waste collection schedules)
+url: https://atliekos.uk1s.lt
+country: lt
+howto:
+  en: |
+    - Open <https://atliekos.uk1s.lt> and type your village or town (Lithuanian diacritics are optional, e.g. `Nakonys`, `Troskunai`).
+    - Pick the matching group. The page shows the upcoming collections and a calendar link.
+    - Optionally untick waste types you do not need, then press `Kopijuoti` (copy) next to the calendar link.
+    - Use this link as `url`. It has the form `https://atliekos.uk1s.lt/api/v1/zones/<region>/<zone>/calendar.ics`.
+    - The schedules are parsed from the official PDFs of the waste operators and re-checked twice a day.
+      Covered municipalities are listed at <https://atliekos.uk1s.lt/api/v1/regions>.
+test_cases:
+  Nakonys (Anykščių r., group 9):
+    url: https://atliekos.uk1s.lt/api/v1/zones/anyksciu-r/09-nakonys/calendar.ics
+  Troškūnai (Anykščių r., group 1):
+    url: https://atliekos.uk1s.lt/api/v1/zones/anyksciu-r/01-troskunai/calendar.ics
+  Anykščiai, right river bank (group 20):
+    url: https://atliekos.uk1s.lt/api/v1/zones/anyksciu-r/20-anyksciu-miestas/calendar.ics
+codeowners:
+  - "@kornelijusp"
