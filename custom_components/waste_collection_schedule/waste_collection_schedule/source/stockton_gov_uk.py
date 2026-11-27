@@ -135,12 +135,16 @@ class Source:
                     "p", attrs={"class": "myaccount-block__date--bin"}
                 )
 
-                # Get Both dates from Garden Waste
-                if date_nodes is None or len(date_nodes) == 0:
-                    date_nodes = [
-                        waste_type_div.find_all("p")[1].find_all("strong")[i]
-                        for i in range(2)
-                    ]
+                # Garden Waste lists its dates in <strong> tags: the next two
+                # in season, only the last collection of the year once the
+                # season has ended
+                if not date_nodes:
+                    paragraphs = waste_type_div.find_all("p")
+                    date_nodes = (
+                        paragraphs[1].find_all("strong")[:2]
+                        if len(paragraphs) > 1
+                        else []
+                    )
 
                 for date_node in date_nodes:
                     try:
