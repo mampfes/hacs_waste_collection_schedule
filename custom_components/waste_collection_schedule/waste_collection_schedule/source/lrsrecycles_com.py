@@ -20,10 +20,6 @@ COUNTRY = "us"
 SOURCE_CODEOWNERS = ["@Cornflake5414"]
 
 TEST_CASES = {
-    "10 E Washington St, Indianapolis IN": {
-        "address": "10 E WASHINGTON ST",
-        "zip": "46204",
-    },
     "Oak Park Village Hall, IL": {
         "address": "123 Madison Street",
         "zip": "60302",

@@ -97,5 +97,5 @@ Unknown service types are returned with their title-cased name and the general w
 - **Holidays are computed locally.** LRS observes New Year's Day, Memorial Day, Independence Day, Labor Day, Thanksgiving and Christmas. When one of them falls on a weekday, every pickup from the holiday through the end of that week moves one day later. Holidays on a weekend cause no delay. LRS posts its service notices as free text that a program can't read, so other delays (e.g. weather) are not shown.
 - **Biweekly recycling needs `recycling_date`.** Without it, residential recycling is shown weekly.
 - **The organics season is not provided by LRS.** Set `organics_start`/`organics_end` yourself; without them organics are shown weekly all year.
-- **Indianapolis:** only addresses served by LRS (since 2026-01-01) return results.
+- **Indianapolis residents should use the [`indy_gov`](./indy_gov.md) source instead.** In Indianapolis, LRS follows the City's schedule, which observes two extra holidays (MLK Jr. Day and Juneteenth) that this source does not apply, and the LRS lookup does not return every LRS-served Indianapolis address. The City source covers all City-served addresses, including LRS-hauled districts and LRS recycling.
 - The source uses the lookup endpoint behind the LRS website. LRS does not document it, and it may change without notice.
