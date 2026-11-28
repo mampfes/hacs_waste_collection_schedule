@@ -577,6 +577,16 @@ class AppAbfallplusDe:
         self._request("config.xml", base=API_BASE, data=data).raise_for_status()
         r = self._request("login/", base=API_BASE, data=data)
         r.raise_for_status()
+        # Some apps (e.g. de.k4systems.muellalarm) now show a privacy-consent page
+        # before the location setup. Accept it and reload the login page.
+        if 'name="f_datenschutz"' in r.text and 'name="f_id_landkreis"' not in r.text:
+            ds = re.search(r'awk-data-value="\|([0-9]+)"', r.text)
+            if ds:
+                self._request(
+                    "login/", base=API_BASE, data={"f_datenschutz": ds.group(1)}
+                ).raise_for_status()
+                r = self._request("login/", base=API_BASE, data=data)
+                r.raise_for_status()
         soup = BeautifulSoup(r.text, features="html.parser")
         if not (inputs := soup.find_all("input")):
             return None
