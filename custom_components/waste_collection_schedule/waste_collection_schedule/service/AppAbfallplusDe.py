@@ -521,7 +521,7 @@ class AppAbfallplusDe:
         else:
             headers["User-Agent"] = USER_AGENT.format(
                 MAP_APP_USERAGENTS.get(self._app_id, "%")
-            )
+            ).encode("utf-8")
             headers["x-abfallplus-client"] = self._client
             headers["x-abfallplus-appid"] = self._app_id
 
